@@ -1,0 +1,1086 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02FDD5872C3AC3FD44F3EAF606C1BD7E /* ViewCoordinatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7110405EC0FDC3825046C96B3BFEDAD2 /* ViewCoordinatableView.swift */; };
+		059D1B8E11641494CCB64775DE476491 /* Pods-MindGardenTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 895F7605D75F9D845C602C6840B7B84A /* Pods-MindGardenTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07537A613ACD21F0116CB530A48505E2 /* Pods-MindGarden-MindGardenUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AECBCEEDFE4FB403A1E266AFDA365B4F /* Pods-MindGarden-MindGardenUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F510310698FAD9F2CD665605497F008 /* Coordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89172EB34F83C16EDD4DB8865D5CF77 /* Coordinatable.swift */; };
+		190CF8C972F087C552C0230DAD02F7E2 /* TabCoordinatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7263D5975A541FB9DE333AF618362C16 /* TabCoordinatableView.swift */; };
+		1CA20FB73CFD58A95BD8176167EDF52F /* NavigationCoordinatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D04E9E0BD48D7D49715E01A59C7A7B3 /* NavigationCoordinatableView.swift */; };
+		1CEC231019C6E1456029718CF69BEF1C /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4406E31D044E028BE79E9BB04DA5F039 /* TabRouter.swift */; };
+		2A0C634FFF1BE6636CE99071C36665D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7C7CBF4366B196F4F8B133C8319AB1 /* Foundation.framework */; };
+		2ACC4AD2BB3546B8288518D499597BD7 /* ViewChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72A9A6F4F8FEA4810BE69747FE26751 /* ViewChild.swift */; };
+		2BCDDD6014C0A49A528925357BF61CD5 /* TabRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9018AAE1FD989182A61D2A062A924D2 /* TabRoute.swift */; };
+		2F622A0EA89F324B84FB12153E98124D /* Stinsen-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BD2198306409A5E36EF854B726375291 /* Stinsen-dummy.m */; };
+		333C6CBAF9E6C58E69BC2E39CFF100E2 /* NavigationRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E91CF8C54A7CDD902A28B7ABB16A55 /* NavigationRoutable.swift */; };
+		36B778B1DD7E7467A58C252764FAA53C /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3396B8B4EDA310001CFE9015B54C949B /* NavigationRouter.swift */; };
+		3F26EDFE898F391D75291515E3D044A4 /* Pods-MindGarden-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B031D245D0839F5B05E15CEB1D1B57F9 /* Pods-MindGarden-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		41BEFC4A6F41479EB807EC5DE6EE770B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20094AF9A05B5AFEE065EFE5403128D1 /* SwiftUI.framework */; };
+		4AB86E5C033CD95CB9430CF151547E70 /* Pods-MindGardenTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AFE8DD9DC6F79672CEBEBB1C5F7DDCB /* Pods-MindGardenTests-dummy.m */; };
+		4ADBE162B7872474C4BA3E8EB1C7C886 /* Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A75B523D20CB4547432083A9B10326 /* Presentable.swift */; };
+		546449ECA618E90DDD52030DAA616222 /* Array+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF7AF824D7E472E043FB5D05FAAE2D8 /* Array+SafeIndex.swift */; };
+		5E9081292BF068EC66B6CB935EE4249F /* ViewCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAF3353C2276AE5A731D8AEA6647162 /* ViewCoordinatable.swift */; };
+		6EED4580F939224A0B47A01E0DF07083 /* NavigationViewCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E079BFE29597952A472017AC34337D /* NavigationViewCoordinatable.swift */; };
+		73E0B90765EC2081760AFFC4179E9F49 /* NavigationViewCoordinatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4FB8220F5229420542E851913A3DE9 /* NavigationViewCoordinatableView.swift */; };
+		7A3172E927FF111844E058F1E9384D36 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DE610DF791C41F4E03AF7275F4ABDD /* RootCoordinator.swift */; };
+		84E3E81F6BF49C1509F12DC8A50EEF83 /* Pods-MindGarden-MindGardenUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8E1678EA5777AE4FC1B639681156B1 /* Pods-MindGarden-MindGardenUITests-dummy.m */; };
+		878347049D1034134F7C88D55161F3DE /* TabCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CE1B434F4AF9EB7C336F246F7D664E /* TabCoordinatable.swift */; };
+		8786C7BC0BC10BCC455C00D51D1463C4 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3657C53641C5A7CB55CB70EFF1300B2E /* ViewRouter.swift */; };
+		8FDA8E358B4DD3079170029A8BA4A6B1 /* Presented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24F8B933F138E6C1504275EF6062DF /* Presented.swift */; };
+		8FF0D83E0881147A492C39261E857B81 /* PresentationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDC30824EB2D0455CF55CD624548C23 /* PresentationHelper.swift */; };
+		91FE74DC19E3B4A8C8378DF111FDCAB6 /* AnyCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038D4184263101BBACF7DA054606BED0 /* AnyCoordinatable.swift */; };
+		936118CB3123957D174C388C0F8A89E4 /* ViewRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693040298626579E0C90E6F4B3A51F41 /* ViewRoutable.swift */; };
+		95A81444EE47961A482829C487685DDF /* TabChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BF6801D72371F3B66BDD2AAB20CD15 /* TabChild.swift */; };
+		9643403BC5D8A8E042E552E8E8FB8A34 /* NavigationViewChild.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDD57FE87BBB8415E2AF1991E9FEA5D /* NavigationViewChild.swift */; };
+		A3167D8E248B8410C0A0B8253C7AF83C /* Pods-MindGarden-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC714F2A4128BA9C077AD403B5FA9B1 /* Pods-MindGarden-dummy.m */; };
+		B5E42C5E2C8437A7EA69D167A55C8398 /* TabRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1D7C9AE12DEABC4EFFCF587E5BA85A /* TabRoutable.swift */; };
+		BEF313CB0153A7A36FF08620C4071288 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7C7CBF4366B196F4F8B133C8319AB1 /* Foundation.framework */; };
+		BF76348CC265A3971497ABE64E187AFE /* NavigationCoordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DF57BF4647B98209C68871C556C3E /* NavigationCoordinatable.swift */; };
+		BF8D3CCCE77E047AFA1CAA52B198100F /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0822A91BDD295A5D58363954EB2A57FD /* Transition.swift */; };
+		CB20CCE6C3C747BDF9E5267B1E61C3D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7C7CBF4366B196F4F8B133C8319AB1 /* Foundation.framework */; };
+		D3FBD4409B904C3AAB7E7D4FDAF0FEC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7C7CBF4366B196F4F8B133C8319AB1 /* Foundation.framework */; };
+		DF75A1076208B89D6F32D0E9FCE7EA58 /* ViewRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066DCE3855A51BB3733B6D6743EF7F0 /* ViewRoute.swift */; };
+		E7910C9BBFB1AD15C22D54BAF1AA7216 /* Stinsen-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D168C15B99FA0D2C8066013D0C30C1F5 /* Stinsen-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ECD85ADEF787074938CB74337995D32A /* NavigationRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBFC805BC4C850D054B8462C7AFE4BB /* NavigationRoute.swift */; };
+		EE22A5B8F49735FB2BA99FD6A7CF337C /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1AE824F23CBED02375BEB31A1E303 /* NavigationStack.swift */; };
+		FA6C81BD876375B1FB8FBB51416E1465 /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50894517CB72FEF673A04659EA376FD0 /* CoordinatorView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		958E34CB61475E94AD6AAC407DF540EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 269058AD0F6EFC30A9DE1699B09D0E6A;
+			remoteInfo = Stinsen;
+		};
+		96E441B627151D5F2E2F98F62A9C4E2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 269058AD0F6EFC30A9DE1699B09D0E6A;
+			remoteInfo = Stinsen;
+		};
+		BC9DC6DC65D889456ACBD8D2CFC178C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE5513D4888D55D4E7ED117F0324E1DA;
+			remoteInfo = "Pods-MindGarden";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01DE610DF791C41F4E03AF7275F4ABDD /* RootCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RootCoordinator.swift; path = Sources/Stinsen/Coordinatable/RootCoordinator.swift; sourceTree = "<group>"; };
+		02A75B523D20CB4547432083A9B10326 /* Presentable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Presentable.swift; path = Sources/Stinsen/Coordinatable/Presentable.swift; sourceTree = "<group>"; };
+		038D4184263101BBACF7DA054606BED0 /* AnyCoordinatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyCoordinatable.swift; path = Sources/Stinsen/Coordinatable/AnyCoordinatable.swift; sourceTree = "<group>"; };
+		0822A91BDD295A5D58363954EB2A57FD /* Transition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Transition.swift; path = Sources/Stinsen/NavigationCoordinatable/Transition.swift; sourceTree = "<group>"; };
+		12BF6801D72371F3B66BDD2AAB20CD15 /* TabChild.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabChild.swift; path = Sources/Stinsen/TabCoordinatable/TabChild.swift; sourceTree = "<group>"; };
+		172980F2159C90A00B46D4EB21337F2C /* Pods-MindGarden-MindGardenUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MindGarden-MindGardenUITests-Info.plist"; sourceTree = "<group>"; };
+		1CAF3353C2276AE5A731D8AEA6647162 /* ViewCoordinatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewCoordinatable.swift; path = Sources/Stinsen/ViewCoordinatable/ViewCoordinatable.swift; sourceTree = "<group>"; };
+		20094AF9A05B5AFEE065EFE5403128D1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
+		2AFE8DD9DC6F79672CEBEBB1C5F7DDCB /* Pods-MindGardenTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MindGardenTests-dummy.m"; sourceTree = "<group>"; };
+		3396B8B4EDA310001CFE9015B54C949B /* NavigationRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationRouter.swift; path = Sources/Stinsen/NavigationCoordinatable/NavigationRouter.swift; sourceTree = "<group>"; };
+		3657C53641C5A7CB55CB70EFF1300B2E /* ViewRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewRouter.swift; path = Sources/Stinsen/ViewCoordinatable/ViewRouter.swift; sourceTree = "<group>"; };
+		3C1D7C9AE12DEABC4EFFCF587E5BA85A /* TabRoutable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabRoutable.swift; path = Sources/Stinsen/TabCoordinatable/TabRoutable.swift; sourceTree = "<group>"; };
+		4406E31D044E028BE79E9BB04DA5F039 /* TabRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabRouter.swift; path = Sources/Stinsen/TabCoordinatable/TabRouter.swift; sourceTree = "<group>"; };
+		453CFE33E4D41F9AF84C1E2E701C11B2 /* Pods-MindGarden-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MindGarden-acknowledgements.markdown"; sourceTree = "<group>"; };
+		49963AB6E385EE25B3F2FF451E89557B /* Pods-MindGardenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MindGardenTests.release.xcconfig"; sourceTree = "<group>"; };
+		4AF7AF824D7E472E043FB5D05FAAE2D8 /* Array+SafeIndex.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+SafeIndex.swift"; path = "Sources/Stinsen/Extensions/Array+SafeIndex.swift"; sourceTree = "<group>"; };
+		4E4C44F56A3AC1009A0EB753F5244DEF /* Pods-MindGardenTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MindGardenTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		50894517CB72FEF673A04659EA376FD0 /* CoordinatorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoordinatorView.swift; path = Sources/Stinsen/Coordinatable/CoordinatorView.swift; sourceTree = "<group>"; };
+		51CE1B434F4AF9EB7C336F246F7D664E /* TabCoordinatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabCoordinatable.swift; path = Sources/Stinsen/TabCoordinatable/TabCoordinatable.swift; sourceTree = "<group>"; };
+		526B347A870B15610000B0910587A00A /* Pods-MindGarden-MindGardenUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MindGarden-MindGardenUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		5297C3B31C2B9299163EF576147C83A6 /* Pods_MindGarden_MindGardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MindGarden_MindGardenUITests.framework; path = "Pods-MindGarden-MindGardenUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53D6BC5C6F05801E719EA5F6D5F9C9C5 /* Pods-MindGarden-MindGardenUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MindGarden-MindGardenUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		5A24F8B933F138E6C1504275EF6062DF /* Presented.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Presented.swift; path = Sources/Stinsen/NavigationCoordinatable/Presented.swift; sourceTree = "<group>"; };
+		5DC714F2A4128BA9C077AD403B5FA9B1 /* Pods-MindGarden-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MindGarden-dummy.m"; sourceTree = "<group>"; };
+		5E680D113C74CF78FD13E7D941C27B23 /* Pods-MindGardenTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MindGardenTests.modulemap"; sourceTree = "<group>"; };
+		5EBFC805BC4C850D054B8462C7AFE4BB /* NavigationRoute.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationRoute.swift; path = Sources/Stinsen/NavigationCoordinatable/NavigationRoute.swift; sourceTree = "<group>"; };
+		638DF57BF4647B98209C68871C556C3E /* NavigationCoordinatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationCoordinatable.swift; path = Sources/Stinsen/NavigationCoordinatable/NavigationCoordinatable.swift; sourceTree = "<group>"; };
+		63C492EE7932D5C1D7BF2852E0895CF1 /* Stinsen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Stinsen.debug.xcconfig; sourceTree = "<group>"; };
+		693040298626579E0C90E6F4B3A51F41 /* ViewRoutable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewRoutable.swift; path = Sources/Stinsen/ViewCoordinatable/ViewRoutable.swift; sourceTree = "<group>"; };
+		6D04E9E0BD48D7D49715E01A59C7A7B3 /* NavigationCoordinatableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationCoordinatableView.swift; path = Sources/Stinsen/NavigationCoordinatable/NavigationCoordinatableView.swift; sourceTree = "<group>"; };
+		6D8256886D19D9FB91AD779C137AD63C /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MindGardenTests.framework; path = "Pods-MindGardenTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E4751DEDC83B97B02B9A76ED9F17A06 /* Pods-MindGardenTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-MindGardenTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7110405EC0FDC3825046C96B3BFEDAD2 /* ViewCoordinatableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewCoordinatableView.swift; path = Sources/Stinsen/ViewCoordinatable/ViewCoordinatableView.swift; sourceTree = "<group>"; };
+		7263D5975A541FB9DE333AF618362C16 /* TabCoordinatableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabCoordinatableView.swift; path = Sources/Stinsen/TabCoordinatable/TabCoordinatableView.swift; sourceTree = "<group>"; };
+		755162BB9CD48A8A6A8ADFA00C2F5561 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
+		75551EAB41277D637E3C36999E15CA12 /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
+		895F7605D75F9D845C602C6840B7B84A /* Pods-MindGardenTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MindGardenTests-umbrella.h"; sourceTree = "<group>"; };
+		89D22BAECC51B317C9527155DD69391C /* Pods-MindGarden-MindGardenUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MindGarden-MindGardenUITests-frameworks.sh"; sourceTree = "<group>"; };
+		914DBF5895AEEF4C94950F8C294764A9 /* Pods-MindGardenTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MindGardenTests-Info.plist"; sourceTree = "<group>"; };
+		92FEFA2F3ECE7FC685071D5D0E758295 /* Stinsen.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Stinsen.modulemap; sourceTree = "<group>"; };
+		9546FB15D3EDFD0636559CC08C5960C4 /* Pods-MindGarden-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MindGarden-acknowledgements.plist"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A066DCE3855A51BB3733B6D6743EF7F0 /* ViewRoute.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewRoute.swift; path = Sources/Stinsen/ViewCoordinatable/ViewRoute.swift; sourceTree = "<group>"; };
+		A8EF94994CAB00BC3789797584998148 /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
+		A9018AAE1FD989182A61D2A062A924D2 /* TabRoute.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabRoute.swift; path = Sources/Stinsen/TabCoordinatable/TabRoute.swift; sourceTree = "<group>"; };
+		AECBCEEDFE4FB403A1E266AFDA365B4F /* Pods-MindGarden-MindGardenUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MindGarden-MindGardenUITests-umbrella.h"; sourceTree = "<group>"; };
+		AF6040317A72C6A128CB17F7D7592350 /* Stinsen-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Stinsen-prefix.pch"; sourceTree = "<group>"; };
+		B031D245D0839F5B05E15CEB1D1B57F9 /* Pods-MindGarden-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-MindGarden-umbrella.h"; sourceTree = "<group>"; };
+		B2E91CF8C54A7CDD902A28B7ABB16A55 /* NavigationRoutable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationRoutable.swift; path = Sources/Stinsen/NavigationCoordinatable/NavigationRoutable.swift; sourceTree = "<group>"; };
+		B3C7D99CFD9F655E744DB24082869245 /* Pods-MindGarden-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-MindGarden-frameworks.sh"; sourceTree = "<group>"; };
+		B72A9A6F4F8FEA4810BE69747FE26751 /* ViewChild.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewChild.swift; path = Sources/Stinsen/ViewCoordinatable/ViewChild.swift; sourceTree = "<group>"; };
+		B89172EB34F83C16EDD4DB8865D5CF77 /* Coordinatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Coordinatable.swift; path = Sources/Stinsen/Coordinatable/Coordinatable.swift; sourceTree = "<group>"; };
+		BC4FB8220F5229420542E851913A3DE9 /* NavigationViewCoordinatableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewCoordinatableView.swift; path = Sources/Stinsen/NavigationViewCoordinator/NavigationViewCoordinatableView.swift; sourceTree = "<group>"; };
+		BD2198306409A5E36EF854B726375291 /* Stinsen-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Stinsen-dummy.m"; sourceTree = "<group>"; };
+		C3EE5C2D2534E0029AAB523483BDCF87 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D168C15B99FA0D2C8066013D0C30C1F5 /* Stinsen-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Stinsen-umbrella.h"; sourceTree = "<group>"; };
+		D2D5B332E2C3D3A14384224C9EBB5AC2 /* Stinsen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Stinsen.release.xcconfig; sourceTree = "<group>"; };
+		D443FCE5E6A02E9760F7C429C61E462C /* Stinsen-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Stinsen-Info.plist"; sourceTree = "<group>"; };
+		D4B18BA933E73BEC17EF8120B69E05F9 /* Stinsen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Stinsen.framework; path = Stinsen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D93EC14798D0E8C157D89FDF42F1968B /* Pods-MindGarden-MindGardenUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MindGarden-MindGardenUITests.modulemap"; sourceTree = "<group>"; };
+		DC7C7CBF4366B196F4F8B133C8319AB1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		DF18DF8E01D2068E9FC941B0DFDF0932 /* Pods-MindGarden.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MindGarden.modulemap"; sourceTree = "<group>"; };
+		EE09BC07167DD7F1C3D89D7441A3FC4E /* Pods-MindGarden-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-MindGarden-Info.plist"; sourceTree = "<group>"; };
+		EFDC30824EB2D0455CF55CD624548C23 /* PresentationHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PresentationHelper.swift; path = Sources/Stinsen/NavigationCoordinatable/PresentationHelper.swift; sourceTree = "<group>"; };
+		F17B6C8F7531CF88A5BC2BCAEFD96EE3 /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F18CD5ED469F74F6061E59B143A4E30F /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_MindGarden.framework; path = "Pods-MindGarden.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3E079BFE29597952A472017AC34337D /* NavigationViewCoordinatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewCoordinatable.swift; path = Sources/Stinsen/NavigationViewCoordinator/NavigationViewCoordinatable.swift; sourceTree = "<group>"; };
+		F6C1AE824F23CBED02375BEB31A1E303 /* NavigationStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationStack.swift; path = Sources/Stinsen/NavigationCoordinatable/NavigationStack.swift; sourceTree = "<group>"; };
+		FD8E1678EA5777AE4FC1B639681156B1 /* Pods-MindGarden-MindGardenUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-MindGarden-MindGardenUITests-dummy.m"; sourceTree = "<group>"; };
+		FDDD57FE87BBB8415E2AF1991E9FEA5D /* NavigationViewChild.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewChild.swift; path = Sources/Stinsen/NavigationViewCoordinator/NavigationViewChild.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3D536D598D9F915A3BD6C0946CF523BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3FBD4409B904C3AAB7E7D4FDAF0FEC8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AB4A26FBB14813F820020EDBC9CF043 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEF313CB0153A7A36FF08620C4071288 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1317E837291E02D141018A3AB0D5469 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A0C634FFF1BE6636CE99071C36665D8 /* Foundation.framework in Frameworks */,
+				41BEFC4A6F41479EB807EC5DE6EE770B /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7742038FA046E49D438383C8CFF7F66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB20CCE6C3C747BDF9E5267B1E61C3D5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				367350C0206CEB39C83981ABCAA29148 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		217288588DBCBA194D3A874FA7ADAFE9 /* Pods-MindGarden */ = {
+			isa = PBXGroup;
+			children = (
+				DF18DF8E01D2068E9FC941B0DFDF0932 /* Pods-MindGarden.modulemap */,
+				453CFE33E4D41F9AF84C1E2E701C11B2 /* Pods-MindGarden-acknowledgements.markdown */,
+				9546FB15D3EDFD0636559CC08C5960C4 /* Pods-MindGarden-acknowledgements.plist */,
+				5DC714F2A4128BA9C077AD403B5FA9B1 /* Pods-MindGarden-dummy.m */,
+				B3C7D99CFD9F655E744DB24082869245 /* Pods-MindGarden-frameworks.sh */,
+				EE09BC07167DD7F1C3D89D7441A3FC4E /* Pods-MindGarden-Info.plist */,
+				B031D245D0839F5B05E15CEB1D1B57F9 /* Pods-MindGarden-umbrella.h */,
+				75551EAB41277D637E3C36999E15CA12 /* Pods-MindGarden.debug.xcconfig */,
+				A8EF94994CAB00BC3789797584998148 /* Pods-MindGarden.release.xcconfig */,
+			);
+			name = "Pods-MindGarden";
+			path = "Target Support Files/Pods-MindGarden";
+			sourceTree = "<group>";
+		};
+		277F070848F4436A23744903C01CB8E4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C501D7A9D2E89D4D9420B9A8DE2F1FA3 /* Stinsen */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		35D3A2290B4DE7CA451464C970CAAD92 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				217288588DBCBA194D3A874FA7ADAFE9 /* Pods-MindGarden */,
+				601B6C98BEA5993EAB9B7FA75DE78B70 /* Pods-MindGarden-MindGardenUITests */,
+				BA9BD248D6CB6659ADA96AD1AC29BAC3 /* Pods-MindGardenTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		367350C0206CEB39C83981ABCAA29148 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DC7C7CBF4366B196F4F8B133C8319AB1 /* Foundation.framework */,
+				20094AF9A05B5AFEE065EFE5403128D1 /* SwiftUI.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		601B6C98BEA5993EAB9B7FA75DE78B70 /* Pods-MindGarden-MindGardenUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D93EC14798D0E8C157D89FDF42F1968B /* Pods-MindGarden-MindGardenUITests.modulemap */,
+				53D6BC5C6F05801E719EA5F6D5F9C9C5 /* Pods-MindGarden-MindGardenUITests-acknowledgements.markdown */,
+				526B347A870B15610000B0910587A00A /* Pods-MindGarden-MindGardenUITests-acknowledgements.plist */,
+				FD8E1678EA5777AE4FC1B639681156B1 /* Pods-MindGarden-MindGardenUITests-dummy.m */,
+				89D22BAECC51B317C9527155DD69391C /* Pods-MindGarden-MindGardenUITests-frameworks.sh */,
+				172980F2159C90A00B46D4EB21337F2C /* Pods-MindGarden-MindGardenUITests-Info.plist */,
+				AECBCEEDFE4FB403A1E266AFDA365B4F /* Pods-MindGarden-MindGardenUITests-umbrella.h */,
+				C3EE5C2D2534E0029AAB523483BDCF87 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */,
+				755162BB9CD48A8A6A8ADFA00C2F5561 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */,
+			);
+			name = "Pods-MindGarden-MindGardenUITests";
+			path = "Target Support Files/Pods-MindGarden-MindGardenUITests";
+			sourceTree = "<group>";
+		};
+		980D9A8A93C3C5B9602C2721640393BA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F18CD5ED469F74F6061E59B143A4E30F /* Pods_MindGarden.framework */,
+				5297C3B31C2B9299163EF576147C83A6 /* Pods_MindGarden_MindGardenUITests.framework */,
+				6D8256886D19D9FB91AD779C137AD63C /* Pods_MindGardenTests.framework */,
+				D4B18BA933E73BEC17EF8120B69E05F9 /* Stinsen.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C8462D82A80DE4554195B56F8B959BC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				92FEFA2F3ECE7FC685071D5D0E758295 /* Stinsen.modulemap */,
+				BD2198306409A5E36EF854B726375291 /* Stinsen-dummy.m */,
+				D443FCE5E6A02E9760F7C429C61E462C /* Stinsen-Info.plist */,
+				AF6040317A72C6A128CB17F7D7592350 /* Stinsen-prefix.pch */,
+				D168C15B99FA0D2C8066013D0C30C1F5 /* Stinsen-umbrella.h */,
+				63C492EE7932D5C1D7BF2852E0895CF1 /* Stinsen.debug.xcconfig */,
+				D2D5B332E2C3D3A14384224C9EBB5AC2 /* Stinsen.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Stinsen";
+			sourceTree = "<group>";
+		};
+		BA9BD248D6CB6659ADA96AD1AC29BAC3 /* Pods-MindGardenTests */ = {
+			isa = PBXGroup;
+			children = (
+				5E680D113C74CF78FD13E7D941C27B23 /* Pods-MindGardenTests.modulemap */,
+				6E4751DEDC83B97B02B9A76ED9F17A06 /* Pods-MindGardenTests-acknowledgements.markdown */,
+				4E4C44F56A3AC1009A0EB753F5244DEF /* Pods-MindGardenTests-acknowledgements.plist */,
+				2AFE8DD9DC6F79672CEBEBB1C5F7DDCB /* Pods-MindGardenTests-dummy.m */,
+				914DBF5895AEEF4C94950F8C294764A9 /* Pods-MindGardenTests-Info.plist */,
+				895F7605D75F9D845C602C6840B7B84A /* Pods-MindGardenTests-umbrella.h */,
+				F17B6C8F7531CF88A5BC2BCAEFD96EE3 /* Pods-MindGardenTests.debug.xcconfig */,
+				49963AB6E385EE25B3F2FF451E89557B /* Pods-MindGardenTests.release.xcconfig */,
+			);
+			name = "Pods-MindGardenTests";
+			path = "Target Support Files/Pods-MindGardenTests";
+			sourceTree = "<group>";
+		};
+		C501D7A9D2E89D4D9420B9A8DE2F1FA3 /* Stinsen */ = {
+			isa = PBXGroup;
+			children = (
+				038D4184263101BBACF7DA054606BED0 /* AnyCoordinatable.swift */,
+				4AF7AF824D7E472E043FB5D05FAAE2D8 /* Array+SafeIndex.swift */,
+				B89172EB34F83C16EDD4DB8865D5CF77 /* Coordinatable.swift */,
+				50894517CB72FEF673A04659EA376FD0 /* CoordinatorView.swift */,
+				638DF57BF4647B98209C68871C556C3E /* NavigationCoordinatable.swift */,
+				6D04E9E0BD48D7D49715E01A59C7A7B3 /* NavigationCoordinatableView.swift */,
+				B2E91CF8C54A7CDD902A28B7ABB16A55 /* NavigationRoutable.swift */,
+				5EBFC805BC4C850D054B8462C7AFE4BB /* NavigationRoute.swift */,
+				3396B8B4EDA310001CFE9015B54C949B /* NavigationRouter.swift */,
+				F6C1AE824F23CBED02375BEB31A1E303 /* NavigationStack.swift */,
+				FDDD57FE87BBB8415E2AF1991E9FEA5D /* NavigationViewChild.swift */,
+				F3E079BFE29597952A472017AC34337D /* NavigationViewCoordinatable.swift */,
+				BC4FB8220F5229420542E851913A3DE9 /* NavigationViewCoordinatableView.swift */,
+				02A75B523D20CB4547432083A9B10326 /* Presentable.swift */,
+				EFDC30824EB2D0455CF55CD624548C23 /* PresentationHelper.swift */,
+				5A24F8B933F138E6C1504275EF6062DF /* Presented.swift */,
+				01DE610DF791C41F4E03AF7275F4ABDD /* RootCoordinator.swift */,
+				12BF6801D72371F3B66BDD2AAB20CD15 /* TabChild.swift */,
+				51CE1B434F4AF9EB7C336F246F7D664E /* TabCoordinatable.swift */,
+				7263D5975A541FB9DE333AF618362C16 /* TabCoordinatableView.swift */,
+				3C1D7C9AE12DEABC4EFFCF587E5BA85A /* TabRoutable.swift */,
+				A9018AAE1FD989182A61D2A062A924D2 /* TabRoute.swift */,
+				4406E31D044E028BE79E9BB04DA5F039 /* TabRouter.swift */,
+				0822A91BDD295A5D58363954EB2A57FD /* Transition.swift */,
+				B72A9A6F4F8FEA4810BE69747FE26751 /* ViewChild.swift */,
+				1CAF3353C2276AE5A731D8AEA6647162 /* ViewCoordinatable.swift */,
+				7110405EC0FDC3825046C96B3BFEDAD2 /* ViewCoordinatableView.swift */,
+				693040298626579E0C90E6F4B3A51F41 /* ViewRoutable.swift */,
+				A066DCE3855A51BB3733B6D6743EF7F0 /* ViewRoute.swift */,
+				3657C53641C5A7CB55CB70EFF1300B2E /* ViewRouter.swift */,
+				9C8462D82A80DE4554195B56F8B959BC /* Support Files */,
+			);
+			name = Stinsen;
+			path = Stinsen;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
+				277F070848F4436A23744903C01CB8E4 /* Pods */,
+				980D9A8A93C3C5B9602C2721640393BA /* Products */,
+				35D3A2290B4DE7CA451464C970CAAD92 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3E8F824855FA5E7F8F1FBD3A948F928D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E7910C9BBFB1AD15C22D54BAF1AA7216 /* Stinsen-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3483B4D008A14F9E61FF13463164CE9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F26EDFE898F391D75291515E3D044A4 /* Pods-MindGarden-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA2BFB9B4558C982BF73CF2105D2AFD7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07537A613ACD21F0116CB530A48505E2 /* Pods-MindGarden-MindGardenUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFB6E31813B5BE61EE6453310AEB35B9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				059D1B8E11641494CCB64775DE476491 /* Pods-MindGardenTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1C59679297F015BCEEB1BF2A3E4BC27C /* Pods-MindGardenTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 109440D637BE7959647A8A68D484ADE3 /* Build configuration list for PBXNativeTarget "Pods-MindGardenTests" */;
+			buildPhases = (
+				FFB6E31813B5BE61EE6453310AEB35B9 /* Headers */,
+				A077023D24CE6E42B32DCC181D3544C1 /* Sources */,
+				3D536D598D9F915A3BD6C0946CF523BA /* Frameworks */,
+				0648030558B409739964A4D7E75AE4FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CF7D81E87E016605ACAEBACF74E79207 /* PBXTargetDependency */,
+			);
+			name = "Pods-MindGardenTests";
+			productName = "Pods-MindGardenTests";
+			productReference = 6D8256886D19D9FB91AD779C137AD63C /* Pods_MindGardenTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		269058AD0F6EFC30A9DE1699B09D0E6A /* Stinsen */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22AD528540222B18BB80BDF2FF21EFD6 /* Build configuration list for PBXNativeTarget "Stinsen" */;
+			buildPhases = (
+				3E8F824855FA5E7F8F1FBD3A948F928D /* Headers */,
+				CAB86C96866B9ADCA32A43B8C7656018 /* Sources */,
+				A1317E837291E02D141018A3AB0D5469 /* Frameworks */,
+				7772436D984050105CF5799950129D98 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stinsen;
+			productName = Stinsen;
+			productReference = D4B18BA933E73BEC17EF8120B69E05F9 /* Stinsen.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CE5513D4888D55D4E7ED117F0324E1DA /* Pods-MindGarden */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E7E47453A48A31661A5CD8E51A7A584 /* Build configuration list for PBXNativeTarget "Pods-MindGarden" */;
+			buildPhases = (
+				B3483B4D008A14F9E61FF13463164CE9 /* Headers */,
+				6478BAE5B027C95A3D2301FE21592178 /* Sources */,
+				5AB4A26FBB14813F820020EDBC9CF043 /* Frameworks */,
+				1CCAB43CDCB15396F66B9560DBD7EB04 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E53EC79AE9DBCA2A03EFBAC086C2E66D /* PBXTargetDependency */,
+			);
+			name = "Pods-MindGarden";
+			productName = "Pods-MindGarden";
+			productReference = F18CD5ED469F74F6061E59B143A4E30F /* Pods_MindGarden.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E55D26E3455ED935514608174F4EAB8F /* Pods-MindGarden-MindGardenUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D738D12DAAB230DCEFF9C425C2EABB0A /* Build configuration list for PBXNativeTarget "Pods-MindGarden-MindGardenUITests" */;
+			buildPhases = (
+				DA2BFB9B4558C982BF73CF2105D2AFD7 /* Headers */,
+				9BC467D86AAE64224CF82A5F9C901D81 /* Sources */,
+				A7742038FA046E49D438383C8CFF7F66 /* Frameworks */,
+				F0AD0E90DFAA4B758121826C880CD74D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5182FC69A8704E02475AEEBA6CB317FF /* PBXTargetDependency */,
+			);
+			name = "Pods-MindGarden-MindGardenUITests";
+			productName = "Pods-MindGarden-MindGardenUITests";
+			productReference = 5297C3B31C2B9299163EF576147C83A6 /* Pods_MindGarden_MindGardenUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 12.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 980D9A8A93C3C5B9602C2721640393BA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CE5513D4888D55D4E7ED117F0324E1DA /* Pods-MindGarden */,
+				E55D26E3455ED935514608174F4EAB8F /* Pods-MindGarden-MindGardenUITests */,
+				1C59679297F015BCEEB1BF2A3E4BC27C /* Pods-MindGardenTests */,
+				269058AD0F6EFC30A9DE1699B09D0E6A /* Stinsen */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0648030558B409739964A4D7E75AE4FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CCAB43CDCB15396F66B9560DBD7EB04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7772436D984050105CF5799950129D98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0AD0E90DFAA4B758121826C880CD74D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6478BAE5B027C95A3D2301FE21592178 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3167D8E248B8410C0A0B8253C7AF83C /* Pods-MindGarden-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9BC467D86AAE64224CF82A5F9C901D81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84E3E81F6BF49C1509F12DC8A50EEF83 /* Pods-MindGarden-MindGardenUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A077023D24CE6E42B32DCC181D3544C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AB86E5C033CD95CB9430CF151547E70 /* Pods-MindGardenTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CAB86C96866B9ADCA32A43B8C7656018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91FE74DC19E3B4A8C8378DF111FDCAB6 /* AnyCoordinatable.swift in Sources */,
+				546449ECA618E90DDD52030DAA616222 /* Array+SafeIndex.swift in Sources */,
+				0F510310698FAD9F2CD665605497F008 /* Coordinatable.swift in Sources */,
+				FA6C81BD876375B1FB8FBB51416E1465 /* CoordinatorView.swift in Sources */,
+				BF76348CC265A3971497ABE64E187AFE /* NavigationCoordinatable.swift in Sources */,
+				1CA20FB73CFD58A95BD8176167EDF52F /* NavigationCoordinatableView.swift in Sources */,
+				333C6CBAF9E6C58E69BC2E39CFF100E2 /* NavigationRoutable.swift in Sources */,
+				ECD85ADEF787074938CB74337995D32A /* NavigationRoute.swift in Sources */,
+				36B778B1DD7E7467A58C252764FAA53C /* NavigationRouter.swift in Sources */,
+				EE22A5B8F49735FB2BA99FD6A7CF337C /* NavigationStack.swift in Sources */,
+				9643403BC5D8A8E042E552E8E8FB8A34 /* NavigationViewChild.swift in Sources */,
+				6EED4580F939224A0B47A01E0DF07083 /* NavigationViewCoordinatable.swift in Sources */,
+				73E0B90765EC2081760AFFC4179E9F49 /* NavigationViewCoordinatableView.swift in Sources */,
+				4ADBE162B7872474C4BA3E8EB1C7C886 /* Presentable.swift in Sources */,
+				8FF0D83E0881147A492C39261E857B81 /* PresentationHelper.swift in Sources */,
+				8FDA8E358B4DD3079170029A8BA4A6B1 /* Presented.swift in Sources */,
+				7A3172E927FF111844E058F1E9384D36 /* RootCoordinator.swift in Sources */,
+				2F622A0EA89F324B84FB12153E98124D /* Stinsen-dummy.m in Sources */,
+				95A81444EE47961A482829C487685DDF /* TabChild.swift in Sources */,
+				878347049D1034134F7C88D55161F3DE /* TabCoordinatable.swift in Sources */,
+				190CF8C972F087C552C0230DAD02F7E2 /* TabCoordinatableView.swift in Sources */,
+				B5E42C5E2C8437A7EA69D167A55C8398 /* TabRoutable.swift in Sources */,
+				2BCDDD6014C0A49A528925357BF61CD5 /* TabRoute.swift in Sources */,
+				1CEC231019C6E1456029718CF69BEF1C /* TabRouter.swift in Sources */,
+				BF8D3CCCE77E047AFA1CAA52B198100F /* Transition.swift in Sources */,
+				2ACC4AD2BB3546B8288518D499597BD7 /* ViewChild.swift in Sources */,
+				5E9081292BF068EC66B6CB935EE4249F /* ViewCoordinatable.swift in Sources */,
+				02FDD5872C3AC3FD44F3EAF606C1BD7E /* ViewCoordinatableView.swift in Sources */,
+				936118CB3123957D174C388C0F8A89E4 /* ViewRoutable.swift in Sources */,
+				DF75A1076208B89D6F32D0E9FCE7EA58 /* ViewRoute.swift in Sources */,
+				8786C7BC0BC10BCC455C00D51D1463C4 /* ViewRouter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5182FC69A8704E02475AEEBA6CB317FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Stinsen;
+			target = 269058AD0F6EFC30A9DE1699B09D0E6A /* Stinsen */;
+			targetProxy = 958E34CB61475E94AD6AAC407DF540EA /* PBXContainerItemProxy */;
+		};
+		CF7D81E87E016605ACAEBACF74E79207 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-MindGarden";
+			target = CE5513D4888D55D4E7ED117F0324E1DA /* Pods-MindGarden */;
+			targetProxy = BC9DC6DC65D889456ACBD8D2CFC178C1 /* PBXContainerItemProxy */;
+		};
+		E53EC79AE9DBCA2A03EFBAC086C2E66D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Stinsen;
+			target = 269058AD0F6EFC30A9DE1699B09D0E6A /* Stinsen */;
+			targetProxy = 96E441B627151D5F2E2F98F62A9C4E2D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		060B325DE458B7BFD04EF6F373338E5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2D5B332E2C3D3A14384224C9EBB5AC2 /* Stinsen.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Stinsen/Stinsen-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Stinsen/Stinsen-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Stinsen/Stinsen.modulemap";
+				PRODUCT_MODULE_NAME = Stinsen;
+				PRODUCT_NAME = Stinsen;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3493F7081C1D5A1518496A69639209B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F17B6C8F7531CF88A5BC2BCAEFD96EE3 /* Pods-MindGardenTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3A5BE9DE5055CA7ACCB49D06A45EA32A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63C492EE7932D5C1D7BF2852E0895CF1 /* Stinsen.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Stinsen/Stinsen-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Stinsen/Stinsen-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Stinsen/Stinsen.modulemap";
+				PRODUCT_MODULE_NAME = Stinsen;
+				PRODUCT_NAME = Stinsen;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		70F7EA4F67A4A1B5316FCFB568192368 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8EF94994CAB00BC3789797584998148 /* Pods-MindGarden.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MindGarden/Pods-MindGarden-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MindGarden/Pods-MindGarden.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8DE5143C03248BB6CD542DE3963D6F3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		9E406C6AAF85E580207CD97B0044DEAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		A58EA763E50BF3117DFD1877E25E643D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 755162BB9CD48A8A6A8ADFA00C2F5561 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C1BDB863852261BBA227D2C55C3A2803 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3EE5C2D2534E0029AAB523483BDCF87 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DC116BC74952A6AEBD957C06084859B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49963AB6E385EE25B3F2FF451E89557B /* Pods-MindGardenTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DFF418FAD01C59B5C1CF1FCAF10AFA88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 75551EAB41277D637E3C36999E15CA12 /* Pods-MindGarden.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-MindGarden/Pods-MindGarden-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-MindGarden/Pods-MindGarden.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		109440D637BE7959647A8A68D484ADE3 /* Build configuration list for PBXNativeTarget "Pods-MindGardenTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3493F7081C1D5A1518496A69639209B4 /* Debug */,
+				DC116BC74952A6AEBD957C06084859B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1E7E47453A48A31661A5CD8E51A7A584 /* Build configuration list for PBXNativeTarget "Pods-MindGarden" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFF418FAD01C59B5C1CF1FCAF10AFA88 /* Debug */,
+				70F7EA4F67A4A1B5316FCFB568192368 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22AD528540222B18BB80BDF2FF21EFD6 /* Build configuration list for PBXNativeTarget "Stinsen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A5BE9DE5055CA7ACCB49D06A45EA32A /* Debug */,
+				060B325DE458B7BFD04EF6F373338E5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8DE5143C03248BB6CD542DE3963D6F3A /* Debug */,
+				9E406C6AAF85E580207CD97B0044DEAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D738D12DAAB230DCEFF9C425C2EABB0A /* Build configuration list for PBXNativeTarget "Pods-MindGarden-MindGardenUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1BDB863852261BBA227D2C55C3A2803 /* Debug */,
+				A58EA763E50BF3117DFD1877E25E643D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}
