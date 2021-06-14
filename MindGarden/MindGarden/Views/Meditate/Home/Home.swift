@@ -1,0 +1,162 @@
+//
+//  Home.swift
+//  MindGarden
+//
+//  Created by Dante Kim on 6/11/21.
+//
+
+import SwiftUI
+
+struct Home: View {
+    init() {
+    }
+    @State var isRecent = false
+
+    var body: some View {
+        NavigationView {
+            GeometryReader { g in
+                ZStack {
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                    VStack {
+                        HStack {
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                Text("Good Morning, User")
+                                    .font(Font.mada(.bold, size: 25))
+                                    .foregroundColor(Clr.black1)
+                                    .fontWeight(.bold)
+                                    .padding(.trailing, 20)
+                                HStack {
+                                    Text("Streak")
+                                        .font(Font.mada(.semiBold, size: 20))
+                                    Text("300")
+                                        .font(Font.mada(.semiBold, size: 20))
+                                }.padding(.trailing, 20)
+                            }
+                        }
+                        .padding(.top, -30)
+                        HStack {
+                            Button {
+
+                            } label: {
+                                HStack {
+                                    Text("Daily Bonus")
+                                        .font(Font.mada(.regular, size: 14))
+                                        .foregroundColor(.black)
+                                        .font(.footnote)
+                                }
+                            }
+                            .padding(8)
+                            .background(Clr.yellow)
+                            .cornerRadius(25)
+                            .neoShadow()
+                            Button {
+
+                            } label: {
+                                HStack {
+                                    Text("Daily Bonus")
+                                        .font(Font.mada(.regular, size: 14))
+                                        .foregroundColor(.black)
+                                        .font(.footnote)
+                                }
+                            }
+                            .padding(8)
+                            .background(Clr.yellow)
+                            .cornerRadius(25)
+                            .neoShadow()
+
+                        }
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .border(Clr.darkWhite)
+                            .cornerRadius(25)
+                            .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
+                            .neoShadow()
+                            .overlay(HStack(alignment: .top) {
+                                VStack(alignment: .leading) {
+                                Text("Featured")
+                                    .font(Font.mada(.regular, size: 16))
+                                    .foregroundColor(Clr.black1)
+                                Text("Anxiety and\nStress")
+                                    .font(Font.mada(.bold, size: 28))
+                                    .foregroundColor(Clr.black1)
+                                Spacer()
+                            }.padding(25)
+                                Spacer()
+                                ZStack {
+                                    Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
+                                        .foregroundColor(Clr.brightGreen)
+                                    Image(systemName: "play.fill")
+                                        .foregroundColor(.white)
+                                        .font(.title)
+                                }.neoShadow()
+                                .padding(25)
+                            }
+                                )
+                            .padding(.top, 20)
+                        VStack(spacing: 1) {
+                            HStack {
+                                Button {
+                                    withAnimation {
+                                        isRecent = true
+                                    }
+                                } label: {
+                                    Text("Recent")
+                                        .foregroundColor(.black)
+                                        .font(Font.mada(.regular, size: 20))
+                                }
+                                Button {
+                                    withAnimation {
+                                        isRecent = false
+                                    }
+                                } label: {
+                                    Text("Favorites")
+                                        .foregroundColor(.black)
+                                        .font(Font.mada(.regular, size: 20))
+                                }
+                            }
+                            Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
+                                .offset(x: isRecent ? -42.0 : 33.0)
+                        }.frame(width: g.size.width - 75, alignment: .leading)
+                        .padding(.top, 20)
+                        HStack(spacing: 15) {
+                            HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
+                                       HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                        }.padding(.top, 10)
+                        Button {
+                            print("see all categories")
+                        } label: {
+                            RoundedRectangle(cornerRadius: 25)
+                                .frame(width: g.size.width * 0.85, height: g.size.height/14)
+                                .foregroundColor(Clr.yellow)
+                                .neoShadow()
+                                .overlay(Text("See All Categories")
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.mada(.semiBold, size: 20))
+                                )
+                        }.padding(.top, 20)
+
+
+                        Spacer()
+                    }
+                }
+            }
+            .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
+                                trailing: Image(systemName: "magnifyingglass")
+                                    .font(.title)
+                                    .foregroundColor(Clr.darkgreen)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .padding()
+            )
+        }
+    }
+}
+
+struct Home_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewDisparateDevices {
+            Home()
+        }
+    }
+}
+

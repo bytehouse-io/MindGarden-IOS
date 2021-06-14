@@ -20,6 +20,14 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Mada-Regular.ttf</string>
+		<string>Mada-Bold.ttf</string>
+		<string>Mada-Light.ttf</string>
+		<string>Mada-Medium.ttf</string>
+		<string>Mada-SemiBold.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -26,13 +26,16 @@ struct TabBarIcon: View {
             //                .padding(.top, 5)
             Spacer()
         }.padding(.horizontal, -5)
+        .padding(.top, 10)
         .onTapGesture {
-            viewRouter.currentPage = assignedPage
+            withAnimation {
+                viewRouter.currentPage = assignedPage
+            }
         }
     }
 }
 struct TabBarIcon_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarIcon(viewRouter: ViewRouter(), assignedPage: .garden, width: 0, height: 0, tabName: "bing", img: Img.shopIcon).environmentObject(ViewRouter())
+        TabBarIcon(viewRouter: ViewRouter(), assignedPage: .shop, width: 0, height: 0, tabName: "bing", img: Img.shopIcon).environmentObject(ViewRouter())
     }
 }
