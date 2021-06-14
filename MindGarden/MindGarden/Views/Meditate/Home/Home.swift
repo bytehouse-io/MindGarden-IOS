@@ -117,7 +117,7 @@ struct Home: View {
                             }
                             Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
                                 .offset(x: isRecent ? -42.0 : 33.0)
-                        }.frame(width: g.size.width - 75, alignment: .leading)
+                        }.frame(width: abs(g.size.width - 75), alignment: .leading)
                         .padding(.top, 20)
                         HStack(spacing: 15) {
                             HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
