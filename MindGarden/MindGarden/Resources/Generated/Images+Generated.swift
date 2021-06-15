@@ -4,7 +4,9 @@ import SwiftUI
 
 /// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
 public enum Img {
+  public static let blueTulipsPacket = Image("Blue Tulips Packet")
   public static let chatBubble = Image("chatBubble")
+  public static let coin = Image("coin")
   public static let daisy = Image("daisy")
   public static let invite = Image("invite")
   public static let meditateIcon = Image("meditateIcon")

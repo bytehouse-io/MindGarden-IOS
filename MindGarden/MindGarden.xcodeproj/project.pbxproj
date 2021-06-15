@@ -50,6 +50,8 @@
 		FEB85FF526744085008CDAA4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FF426744085008CDAA4 /* Home.swift */; };
 		FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */; };
 		FEBA7E722677D66F00758E58 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA7E712677D66F00758E58 /* Store.swift */; };
+		FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC6515267817D400ECD32D /* PlantTile.swift */; };
+		FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC651726781FC800ECD32D /* PurchaseModal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +117,8 @@
 		FEB85FF426744085008CDAA4 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEBA7E712677D66F00758E58 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		FEEC6515267817D400ECD32D /* PlantTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTile.swift; sourceTree = "<group>"; };
+		FEEC651726781FC800ECD32D /* PurchaseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				FEB85FE2266D9224008CDAA4 /* TabBarIcon.swift */,
+				FEEC6515267817D400ECD32D /* PlantTile.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				FEBA7E712677D66F00758E58 /* Store.swift */,
+				FEEC651726781FC800ECD32D /* PurchaseModal.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -391,7 +397,6 @@
 				FEB6AF8E265D95F500224BFD /* Sources */,
 				FEB6AF8F265D95F500224BFD /* Frameworks */,
 				FEB6AF90265D95F500224BFD /* Resources */,
-				C3E51F4785A1AFA02CA8958E /* [CP] Embed Pods Frameworks */,
 				FEB85FD3266D4838008CDAA4 /* SwiftGen */,
 			);
 			buildRules = (
@@ -430,7 +435,6 @@
 				FEB6AFAF265D95F700224BFD /* Sources */,
 				FEB6AFB0265D95F700224BFD /* Frameworks */,
 				FEB6AFB1265D95F700224BFD /* Resources */,
-				6EF975D9A3BE65F849490769 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -575,23 +579,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6EF975D9A3BE65F849490769 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A5A2E15A4091B1751D76E944 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -612,23 +599,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C3E51F4785A1AFA02CA8958E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FEB85FD3266D4838008CDAA4 /* SwiftGen */ = {
@@ -663,6 +633,7 @@
 			files = (
 				FEB85FE3266D9224008CDAA4 /* TabBarIcon.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
+				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
@@ -675,6 +646,7 @@
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
 				FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */,
+				FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */,
 				FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */,
 				FEB85FD7266D4E5B008CDAA4 /* Colors+Generated.swift in Sources */,
 			);

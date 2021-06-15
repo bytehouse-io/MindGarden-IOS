@@ -8,13 +8,52 @@
 import SwiftUI
 
 struct Store: View {
+    @State var showModal = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Clr.darkWhite.edgesIgnoringSafeArea(.all)
+            GeometryReader { g in
+                ScrollView {
+                    HStack {
+                        Text("menu")
+                    }.frame(width: g.size.width, height: g.size.height / 14)
+                    .background(Color.red)
+                    HStack(alignment: .top, spacing: 20) {
+                        VStack(spacing: -10) {
+                            Text("🪴 Seed\nShop")
+                                .font(Font.mada(.bold, size: 32))
+                                .minimumScaleFactor(0.005)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Clr.black1)
+                                .padding()
+                            Button {
+
+                            } label: {
+                                PlantTile(width: g.size.width, height: g.size.height, title: "Blue Tulips", img: Img.blueTulipsPacket)
+                            }
+                        }
+                        VStack {
+                            Rectangle()
+                                .foregroundColor(Clr.darkWhite)
+                                .frame(width: g.size.width * 0.35, height: g.size.height * 0.27)
+                                .cornerRadius(15)
+                                .neoShadow()
+                                .padding()
+                        }
+
+                    }.padding()
+                }
+            }
+        }
     }
 }
 
 struct Store_Previews: PreviewProvider {
     static var previews: some View {
-        Store()
+        PreviewDisparateDevices {
+            Store()
+        }
     }
 }

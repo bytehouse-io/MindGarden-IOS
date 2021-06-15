@@ -6,9 +6,9 @@ target 'MindGarden' do
   use_frameworks!
 
   # Pods for MindGarden
-  pod 'Firebase/Auth'
-  pod 'Firebase/Firestore'
-  pod 'Firebase/Analytics'
+  # pod 'Firebase/Auth'
+  # pod 'Firebase/Firestore'
+  # pod 'Firebase/Analytics'
 
   target 'MindGardenTests' do
     inherit! :search_paths

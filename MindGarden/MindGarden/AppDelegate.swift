@@ -6,7 +6,9 @@
 //
 
 import UIKit
+#if canImport(Firebase)
 import Firebase
+#endif
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FirebaseApp.configure()
+        #if canImport(Firebase)
+          FirebaseApp.configure()
+          #endif
         return true
     }
 

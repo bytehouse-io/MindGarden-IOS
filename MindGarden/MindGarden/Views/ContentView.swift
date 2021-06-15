@@ -41,7 +41,7 @@ struct ContentView: View {
                 case .shop:
                     Text("shop")
                 case .profile:
-                    Home().frame(height: geometry.size.height -  geometry.size.height/18)
+                   Store().frame(height: geometry.size.height -  geometry.size.height/18)
                 }
 
                 ZStack {
@@ -78,11 +78,10 @@ struct ContentView: View {
                     .background(Clr.darkgreen.shadow(radius: 2))
                     
                 }
-                
-                
             }
             .edgesIgnoringSafeArea(.bottom)
-        }.environmentObject(viewRouter)
+        }.background(Clr.darkWhite)
+        .environmentObject(viewRouter)
     }
 }
 
