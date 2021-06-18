@@ -29,7 +29,9 @@ struct Store: View {
                                 .foregroundColor(Clr.black1)
                                 .padding()
                             Button {
-
+                                withAnimation {
+                                    showModal = true
+                                }
                             } label: {
                                 PlantTile(width: g.size.width, height: g.size.height, title: "Blue Tulips", img: Img.blueTulipsPacket)
                             }
@@ -42,9 +44,15 @@ struct Store: View {
                                 .neoShadow()
                                 .padding()
                         }
-
                     }.padding()
                 }
+                if showModal {
+                    Color.black
+                        .opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                    Spacer()
+                }
+                PurchaseModal(shown: $showModal).offset(y: showModal ? 0 : g.size.height)
             }
         }
     }

@@ -50,6 +50,7 @@
 		FEB85FF526744085008CDAA4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FF426744085008CDAA4 /* Home.swift */; };
 		FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */; };
 		FEBA7E722677D66F00758E58 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA7E712677D66F00758E58 /* Store.swift */; };
+		FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5B009267D2ACF00BC8D8C /* Play.swift */; };
 		FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC6515267817D400ECD32D /* PlantTile.swift */; };
 		FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC651726781FC800ECD32D /* PurchaseModal.swift */; };
 /* End PBXBuildFile section */
@@ -117,6 +118,7 @@
 		FEB85FF426744085008CDAA4 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEBA7E712677D66F00758E58 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		FEC5B009267D2ACF00BC8D8C /* Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
 		FEEC6515267817D400ECD32D /* PlantTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTile.swift; sourceTree = "<group>"; };
 		FEEC651726781FC800ECD32D /* PurchaseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -372,6 +374,7 @@
 		FEB85FF326744070008CDAA4 /* Meditate */ = {
 			isa = PBXGroup;
 			children = (
+				FEC5B008267D2ABE00BC8D8C /* Play */,
 				FE4E9E622676AE39002BC758 /* Home */,
 			);
 			path = Meditate;
@@ -384,6 +387,14 @@
 				FEEC651726781FC800ECD32D /* PurchaseModal.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		FEC5B008267D2ABE00BC8D8C /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				FEC5B009267D2ACF00BC8D8C /* Play.swift */,
+			);
+			path = Play;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -642,6 +653,7 @@
 				FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
+				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
