@@ -69,21 +69,21 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>19</integer>
+			<integer>1</integer>
 		</dict>
 		<key>Pods-MindGarden.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>18</integer>
+			<integer>0</integer>
 		</dict>
 		<key>Pods-MindGardenTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>2</integer>
 		</dict>
 		<key>PromisesObjC.xcscheme</key>
 		<dict>

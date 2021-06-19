@@ -41,7 +41,7 @@ struct ContentView: View {
                 case .shop:
                     Text("shop")
                 case .profile:
-                   Store().frame(height: geometry.size.height -  geometry.size.height/18)
+                   Home().frame(height: geometry.size.height -  geometry.size.height/18)
                 }
 
                 ZStack {

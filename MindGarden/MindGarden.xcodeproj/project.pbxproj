@@ -28,6 +28,11 @@
 		FE6289C726754C6100007889 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
 		FE6289C826754C6100007889 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
 		FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE962F112674651F002365A6 /* Color+Extensions.swift */; };
+		FEA592CB267E611F006558A2 /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CA267E611F006558A2 /* Garden.swift */; };
+		FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CC267E6153006558A2 /* SingleDay.swift */; };
+		FEA592CF267E8D98006558A2 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CE267E8D98006558A2 /* Util.swift */; };
+		FEA592D1267E9459006558A2 /* StatBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592D0267E9459006558A2 /* StatBox.swift */; };
+		FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592D2267E94B9006558A2 /* GridStack.swift */; };
 		FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB6AF95265D95F500224BFD /* AppDelegate.swift */; };
 		FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB6AF97265D95F500224BFD /* SceneDelegate.swift */; };
 		FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB6AF99265D95F500224BFD /* ContentView.swift */; };
@@ -90,6 +95,11 @@
 		FE6289BB26754C6100007889 /* Mada-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Light.ttf"; sourceTree = "<group>"; };
 		FE6289BC26754C6100007889 /* Mada-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Medium.ttf"; sourceTree = "<group>"; };
 		FE962F112674651F002365A6 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
+		FEA592CA267E611F006558A2 /* Garden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Garden.swift; sourceTree = "<group>"; };
+		FEA592CC267E6153006558A2 /* SingleDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleDay.swift; sourceTree = "<group>"; };
+		FEA592CE267E8D98006558A2 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		FEA592D0267E9459006558A2 /* StatBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatBox.swift; sourceTree = "<group>"; };
+		FEA592D2267E94B9006558A2 /* GridStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
 		FEB6AF92265D95F500224BFD /* MindGarden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindGarden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB6AF95265D95F500224BFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEB6AF97265D95F500224BFD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -191,6 +201,17 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
+		FEA592C9267E6077006558A2 /* Garden */ = {
+			isa = PBXGroup;
+			children = (
+				FEA592CA267E611F006558A2 /* Garden.swift */,
+				FEA592CC267E6153006558A2 /* SingleDay.swift */,
+				FEA592D0267E9459006558A2 /* StatBox.swift */,
+				FEA592D2267E94B9006558A2 /* GridStack.swift */,
+			);
+			path = Garden;
+			sourceTree = "<group>";
+		};
 		FEB6AF89265D95F500224BFD = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +298,7 @@
 			children = (
 				FE6289B22675477400007889 /* ViewModifiers */,
 				FEB85FC0266C19CD008CDAA4 /* Extensions */,
+				FEA592CE267E8D98006558A2 /* Util.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -322,6 +344,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FEA592C9267E6077006558A2 /* Garden */,
 				FEBA7E702677D65000758E58 /* Store */,
 				FEB85FF326744070008CDAA4 /* Meditate */,
 				FEB85FE826710B20008CDAA4 /* Preview */,
@@ -642,6 +665,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
+				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				FEB85FE3266D9224008CDAA4 /* TabBarIcon.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
@@ -651,9 +676,12 @@
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
 				FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */,
+				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
+				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
+				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
