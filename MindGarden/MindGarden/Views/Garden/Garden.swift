@@ -7,38 +7,6 @@
 
 import SwiftUI
 
-struct MenuButton: View {
-    var title: String
-    var isMonth: Bool
-
-    var body: some View {
-        ZStack {
-            Capsule()
-                .fill(isMonth ? Clr.gardenGreen : Clr.darkWhite)
-                .frame(width: 100, height: 35)
-                .neoShadow()
-            Text(title)
-                .font(Font.mada(.regular, size: 16))
-                .foregroundColor(isMonth ? .white : Clr.black1)
-        }
-    }
-}
-
-struct OperatorButton: View {
-    let imgName: String
-
-    var body: some View {
-        Image(systemName: imgName)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .background(Clr.darkgreen)
-            .foregroundColor(Clr.darkWhite)
-            .cornerRadius(10)
-            .frame(height: 35)
-            .neoShadow()
-    }
-}
-
 struct Garden: View {
     @State var isMonth: Bool = true
 
@@ -100,10 +68,25 @@ struct Garden: View {
                     }
                 }.frame(maxWidth: 200, maxHeight: 135)
             }
+            VStack(alignment: .leading, spacing: 5) {
+                Text("Favorite Plants:")
+                    .foregroundColor(.black)
+                    .font(Font.mada(.semiBold, size: 20))
+                    .padding(.leading, 5)
+                HStack {
+                    Rectangle()
+                        .fill(Clr.darkWhite)
+                        .cornerRadius(15)
+                        .neoShadow()
+                }.frame(maxWidth: 350, maxHeight: 150)
+            }.padding(.top, 25)
+
         }.padding(.horizontal, 25)
     }
 }
 
+
+//MARK: - preview
 struct Garden_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
@@ -112,6 +95,7 @@ struct Garden_Previews: PreviewProvider {
     }
 }
 
+//MARK: - components
 struct Mood: View {
     let mood: String
     let value: Int
@@ -132,3 +116,34 @@ struct Mood: View {
 }
 
 
+struct MenuButton: View {
+    var title: String
+    var isMonth: Bool
+
+    var body: some View {
+        ZStack {
+            Capsule()
+                .fill(isMonth ? Clr.gardenGreen : Clr.darkWhite)
+                .frame(width: 100, height: 35)
+                .neoShadow()
+            Text(title)
+                .font(Font.mada(.regular, size: 16))
+                .foregroundColor(isMonth ? .white : Clr.black1)
+        }
+    }
+}
+
+struct OperatorButton: View {
+    let imgName: String
+
+    var body: some View {
+        Image(systemName: imgName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .background(Clr.darkgreen)
+            .foregroundColor(Clr.darkWhite)
+            .cornerRadius(10)
+            .frame(height: 35)
+            .neoShadow()
+    }
+}
