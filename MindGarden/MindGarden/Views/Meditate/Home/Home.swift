@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct Home: View {
-    init() {
-    }
     @State var isRecent = false
 
     var body: some View {
@@ -141,6 +139,7 @@ struct Home: View {
                     }
                 }
             }
+
             .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
                                 trailing: Image(systemName: "magnifyingglass")
                                     .font(.title)
@@ -148,15 +147,15 @@ struct Home: View {
                                     .edgesIgnoringSafeArea(.all)
                                     .padding()
             )
+            .navigationViewStyle(StackNavigationViewStyle())
+
         }
     }
 }
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewDisparateDevices {
-            Home()
-        }
+            Home().navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
