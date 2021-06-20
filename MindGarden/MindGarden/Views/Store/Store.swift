@@ -60,8 +60,6 @@ struct Store: View {
 
 struct Store_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewDisparateDevices {
             Store()
-        }
     }
 }

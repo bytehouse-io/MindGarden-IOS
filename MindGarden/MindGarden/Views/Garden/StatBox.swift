@@ -27,14 +27,16 @@ struct StatBox: View {
                     Text(label)
                         .font(Font.mada(.regular, size: 12))
                         .minimumScaleFactor(0.05)
+                        .lineLimit(1)
                         .multilineTextAlignment(.center)
                     Text(value)
                         .font(Font.mada(.bold, size: 26))
-                }
-                .frame(maxWidth: 75)
+                        .minimumScaleFactor(0.05)
+                        .multilineTextAlignment(.center)
+                }.frame(maxWidth: 200, maxHeight: 100)
                 .padding(5)
             }
-        }  .frame(maxWidth: 150, maxHeight: 60)
+        } 
         .padding(.trailing, 10)
     }
 }
