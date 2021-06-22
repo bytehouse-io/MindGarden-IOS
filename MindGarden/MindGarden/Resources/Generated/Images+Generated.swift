@@ -15,6 +15,7 @@ public enum Img {
   public static let chatBubble = Image("chatBubble")
   public static let coin = Image("coin")
   public static let daisy = Image("daisy")
+  public static let greenBlob = Image("greenBlob")
   public static let iconSessions = Image("icon_sessions")
   public static let iconTotalTime = Image("icon_total_time")
   public static let invite = Image("invite")

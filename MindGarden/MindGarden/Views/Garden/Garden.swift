@@ -10,10 +10,11 @@ import SwiftUI
 struct Garden: View {
     @State var isMonth: Bool = true
     @State private var fitInScreen = false
+    @State var showSingleModal = false
 
     var body: some View {
         GeometryReader { gp in
-            ScrollView(.vertical) {
+            ScrollView(self.fitInScreen ? .vertical : []) {
                 VStack(alignment: .center, spacing: 20) {
                     HStack(spacing: 40) {
                         Button {
@@ -50,6 +51,9 @@ struct Garden: View {
                             .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                             .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
                     }.offset(y: -10)
+                    .onTapGesture {
+                        showSingleModal = true
+                    }
                     HStack(spacing: 5) {
                         VStack(spacing: 15) {
                             StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "255")
@@ -104,11 +108,14 @@ struct Garden: View {
                                 // view preference
                                 Color.clear.preference(key: ViewHeightKey.self,
                                                        value: $0.frame(in: .local).size.height) })
+
             }
             .onPreferenceChange(ViewHeightKey.self) {
                 self.fitInScreen = $0 < gp.size.height
             }
-            .disabled(self.fitInScreen)
+            .sheet(isPresented: $showSingleModal) {
+                SingleDay(showSingleModal: $showSingleModal)
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ struct ContentView: View {
                 case .shop:
                     Text("shop")
                 case .profile:
-                   Home()                    .navigationViewStyle(StackNavigationViewStyle())
+                   Garden()                    .navigationViewStyle(StackNavigationViewStyle())
                     .frame(height: geometry.size.height -  geometry.size.height/12)
 
                 }
