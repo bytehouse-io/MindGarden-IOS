@@ -9,12 +9,11 @@ import SwiftUI
 
 struct Garden: View {
     @State var isMonth: Bool = true
-    @State private var fitInScreen = false
     @State var showSingleModal = false
 
     var body: some View {
         GeometryReader { gp in
-            ScrollView(self.fitInScreen ? .vertical : []) {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .center, spacing: 20) {
                     HStack(spacing: 40) {
                         Button {
@@ -46,10 +45,12 @@ struct Garden: View {
                     }
                     .padding(.horizontal, 10)
                     GridStack(rows: 5, columns: 7) { row, col in
-                        Rectangle()
-                            .fill(Clr.dirtBrown)
-                            .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.dirtBrown)
+                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                        }
                     }.offset(y: -10)
                     .onTapGesture {
                         showSingleModal = true
@@ -59,7 +60,7 @@ struct Garden: View {
                             StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "255")
                             StatBox(label: "Total Sessions", img: Img.iconSessions, value: "23")
                         }
-                        .frame(maxWidth: gp.size.width * 0.33, maxHeight: gp.size.height * 0.16)
+                        .frame(maxWidth: gp.size.width * 0.33)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -70,13 +71,13 @@ struct Garden: View {
                                     Mood(mood: "happy", value: 13)
                                     Mood(mood: "sad", value: 2)
                                 }.padding(.horizontal, 10)
-                                HStack {
+                                HStack(alignment: .bottom) {
                                     Mood(mood: "okay", value: 7)
                                     Mood(mood: "angry", value: 5)
                                 }.padding(.horizontal, 10)
                             }
-                        }.frame(maxWidth: gp.size.width * 0.47, maxHeight: gp.size.height * 0.16)
-                    }
+                        }.frame(maxWidth: gp.size.width * 0.47)
+                    }.frame(maxHeight: gp.size.height * 0.16)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Favorite Plants:")
                             .foregroundColor(.black)
@@ -90,48 +91,32 @@ struct Garden: View {
                             HStack{
                                 Spacer()
                                 FavoritePlant(title: "Tulips", count: 5, img: Img.tulips3)
-                                    .frame(maxWidth: gp.size.width * 0.20)
                                 Spacer()
                                 FavoritePlant(title: "Tulips", count: 5, img: Img.tulips3)
-                                    .frame(maxWidth: gp.size.width * 0.20)
                                 Spacer()
                                 FavoritePlant(title: "Blue Tulips", count: 5, img: Img.tulips3)
-                                    .frame(maxWidth: gp.size.width * 0.20)
                                 Spacer()
-                            }.padding()
-                        }.frame(maxWidth: gp.size.width * 0.82, maxHeight: gp.size.height * 0.18)
+                            }
+                        }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)
                     }.padding(.top, 15)
                 }.padding(.horizontal, 25)
                 .padding(.vertical, 15)
-                .background(GeometryReader {
-                                // calculate height by consumed background and store in
-                                // view preference
-                                Color.clear.preference(key: ViewHeightKey.self,
-                                                       value: $0.frame(in: .local).size.height) })
-
-            }
-            .onPreferenceChange(ViewHeightKey.self) {
-                self.fitInScreen = $0 < gp.size.height
             }
             .sheet(isPresented: $showSingleModal) {
                 SingleDay(showSingleModal: $showSingleModal)
+                    .navigationViewStyle(StackNavigationViewStyle())
             }
         }
     }
 }
-struct ViewHeightKey: PreferenceKey {
-    static var defaultValue: CGFloat { 0 }
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value = value + nextValue()
-    }
-}
-
 
 
 //MARK: - preview
 struct Garden_Previews: PreviewProvider {
     static var previews: some View {
+        PreviewDisparateDevices {
             Garden()
+        }
     }
 }
 
@@ -154,7 +139,7 @@ struct Mood: View {
                     .font(.headline)
                     .bold()
             }.padding(.leading, 3)
-            .frame(maxWidth: 100)
+            .frame(maxWidth: 40)
         }.padding(3)
     }
 }
@@ -198,20 +183,22 @@ struct FavoritePlant: View {
     let img: Image
 
     var body: some View {
-        VStack {
-            img
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(10)
-                .overlay(RoundedRectangle(cornerRadius: 15)
-                            .stroke(Clr.darkgreen))
-            HStack {
-                Text("\(title)")
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                Text("\(count)").bold()
-            }
-
+            VStack(spacing: 0) {
+                img
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(8)
+                    .overlay(RoundedRectangle(cornerRadius: 15)
+                                .stroke(Clr.darkgreen))
+                HStack {
+                    Text("\(title)")
+                        .font(Font.mada(.regular, size: 16))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                    Text("\(count)").bold()
+                        .font(Font.mada(.bold, size: 16))
+                }.padding(.top, 8)
+            }.frame(width: 70, height: 120)
+            .padding(10)
         }
-    }
 }

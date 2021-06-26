@@ -41,15 +41,15 @@ struct ContentView: View {
                 case .shop:
                     Text("shop")
                 case .profile:
-                   Garden()                    .navigationViewStyle(StackNavigationViewStyle())
-                    .frame(height: geometry.size.height -  geometry.size.height/12)
-
+                    Garden()
+                        .frame(height: geometry.size.height - 45)
+                        .navigationViewStyle(StackNavigationViewStyle())
                 }
 
                 ZStack {
-//                    PlusMenu(width: geometry.size.width)
-//                        .offset(y: showPopUp ?  -geometry.size.height/6 : 0)
-//                        .opacity(showPopUp ? 1 : 0)
+                    //                    PlusMenu(width: geometry.size.width)
+                    //                        .offset(y: showPopUp ?  -geometry.size.height/6 : 0)
+                    //                        .opacity(showPopUp ? 1 : 0)
                     HStack {
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .meditate, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Meditate", img: Img.meditateIcon)
@@ -72,13 +72,11 @@ struct ContentView: View {
                                 showPopUp.toggle()
                             }
                         }
-                        
                         .offset(y: -geometry.size.height/16/2)
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
-                    }.frame(width: geometry.size.width, height: geometry.size.height/11)
+                    }.frame(width: geometry.size.width, height: 80)
                     .background(Clr.darkgreen.shadow(radius: 2))
-                    
                 }
             }
             .edgesIgnoringSafeArea(.bottom)
@@ -90,8 +88,9 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewDisparateDevices {
-            ContentView(viewRouter: ViewRouter())
-        }
+        //        PreviewDisparateDevices {
+        //            ContentView(viewRouter: ViewRouter())
+        //        }
+        ContentView(viewRouter: ViewRouter())
     }
 }

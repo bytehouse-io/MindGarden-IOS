@@ -33,7 +33,7 @@ struct StatBox: View {
                         .font(Font.mada(.bold, size: 26))
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.center)
-                }.frame(maxWidth: 200, maxHeight: 100)
+                }.frame(maxWidth: 50, maxHeight: 100)
                 .padding(5)
             }
         } 
