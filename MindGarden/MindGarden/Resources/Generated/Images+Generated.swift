@@ -20,6 +20,7 @@ public enum Img {
   public static let iconTotalTime = Image("icon_total_time")
   public static let invite = Image("invite")
   public static let meditateIcon = Image("meditateIcon")
+  public static let oneBlueberry = Image("oneBlueberry")
   public static let plantIcon = Image("plantIcon")
   public static let profile = Image("profile")
   public static let profileIcon = Image("profileIcon")

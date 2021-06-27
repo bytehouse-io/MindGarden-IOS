@@ -30,7 +30,6 @@ struct PurchaseModal: View {
                                     .font(.title)
                                     .padding()
                             }
-
                             Text(title)
                                 .font(Font.mada(.bold, size: 30))
                                 .foregroundColor(Clr.black1)
@@ -68,6 +67,7 @@ struct PurchaseModal: View {
                                 .padding()
                                 .overlay(HStack{
                                     Img.coin
+                                        .renderingMode(.original)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: g.size.width * 0.05, height: g.size.width * 0.05)

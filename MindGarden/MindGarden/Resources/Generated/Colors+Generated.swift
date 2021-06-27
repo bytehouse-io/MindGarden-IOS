@@ -28,6 +28,8 @@ public enum Clr {
   public static let shadow = Color("shadow")
   /// **Universal - Any**: `#F0F0F0` with alpha: `1.000`
   public static let superLightGray = Color("superLightGray")
+  /// **Universal - Any**: `#C3C3C3` with alpha: `1.000`
+  public static let unselectedIcon = Color("unselectedIcon")
   /// **Universal - Any**: `#B5F3F8` with alpha: `1.000`
   public static let yellow = Color("yellow")
 }

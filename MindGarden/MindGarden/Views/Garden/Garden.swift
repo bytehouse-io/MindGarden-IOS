@@ -50,6 +50,8 @@ struct Garden: View {
                                 .fill(Clr.dirtBrown)
                                 .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                 .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                            Img.oneBlueberry
+                                .padding(3)
                         }
                     }.offset(y: -10)
                     .onTapGesture {

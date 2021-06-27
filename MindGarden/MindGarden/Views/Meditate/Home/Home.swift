@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Home: View {
     @State var isRecent = false
+    @State var showModal = false
 
     var body: some View {
         NavigationView {
@@ -35,7 +36,9 @@ struct Home: View {
                         .padding(.top, -30)
                         HStack {
                             Button {
-
+                                withAnimation {
+                                    showModal = true
+                                }
                             } label: {
                                 HStack {
                                     Text("Daily Bonus")
@@ -138,6 +141,14 @@ struct Home: View {
                         Spacer()
                     }
                 }
+                if showModal {
+                    Color.black
+                        .opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                    Spacer()
+                }
+                BonusModal(shown: $showModal).offset(y: showModal ? 0 : g.size.height)
+                    .edgesIgnoringSafeArea(.top)
             }
 
             .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),

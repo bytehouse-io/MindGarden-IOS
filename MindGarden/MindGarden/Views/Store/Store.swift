@@ -15,19 +15,15 @@ struct Store: View {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
                 ScrollView {
-                    HStack {
-                        Text("menu")
-                    }.frame(width: g.size.width, height: g.size.height / 14)
-                    .background(Color.red)
                     HStack(alignment: .top, spacing: 20) {
                         VStack(spacing: -10) {
-                            Text("🪴 Seed\nShop")
-                                .font(Font.mada(.bold, size: 32))
-                                .minimumScaleFactor(0.005)
-                                .lineLimit(2)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(Clr.black1)
-                                .padding()
+                                Text("🌻 Seed\nShop")
+                                    .font(Font.mada(.bold, size: 32))
+                                    .minimumScaleFactor(0.005)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(Clr.black1)
+                                    .padding()
                             Button {
                                 withAnimation {
                                     showModal = true

@@ -22,15 +22,18 @@ struct PlantTile: View {
                 .padding()
             VStack(alignment: .leading, spacing: 0) {
                 img
+                    .renderingMode(.original)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: width * 0.30, height: height * 0.18)
                     .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
+
                 Text(title)
                     .font(Font.mada(.bold, size: 20))
                     .foregroundColor(Clr.black1)
                 HStack {
                     Img.coin
+                        .renderingMode(.original)
                     Text("20")
                         .font(Font.mada(.bold, size: 20))
                         .foregroundColor(Clr.black2)

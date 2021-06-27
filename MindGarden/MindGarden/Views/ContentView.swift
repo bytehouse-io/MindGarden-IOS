@@ -35,15 +35,19 @@ struct ContentView: View {
             VStack {
                 switch viewRouter.currentPage {
                 case .meditate:
-                    Text("med")
-                case .garden:
-                    Text("garden")
-                case .shop:
-                    Text("shop")
-                case .profile:
-                    Garden()
-                        .frame(height: geometry.size.height - 45)
+                    Home()
+                        .frame(height: geometry.size.height - 25)
                         .navigationViewStyle(StackNavigationViewStyle())
+                case .garden:
+                    Garden()
+                        .frame(height: geometry.size.height - 25)
+                        .navigationViewStyle(StackNavigationViewStyle())
+                case .shop:
+                    Store()
+                        .frame(height: geometry.size.height - 25)
+                        .navigationViewStyle(StackNavigationViewStyle())
+                case .profile:
+                    Text("profile")
                 }
 
                 ZStack {
@@ -57,14 +61,14 @@ struct ContentView: View {
                             Rectangle()
                                 .cornerRadius(21)
                                 .foregroundColor(.white)
-                                .frame(width: geometry.size.width/7, height: geometry.size.width/7)
+                                .frame(maxWidth: geometry.size.width/7, maxHeight: geometry.size.width/7)
                                 .shadow(color: showPopUp ? .black.opacity(0) : .black.opacity(0.25), radius: 4, x: 4, y: 4)
                                 .zIndex(1)
                             Image(systemName: "plus")
                                 .foregroundColor(Clr.darkgreen)
                                 .font(Font.title.weight(.semibold))
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: geometry.size.width/5.5-6 , height: geometry.size.width/5.5-6)
+                                .frame(maxWidth: geometry.size.width/5.5-6 , maxHeight: geometry.size.width/5.5-6)
                                 .zIndex(2)
                         }
                         .onTapGesture {
@@ -72,11 +76,12 @@ struct ContentView: View {
                                 showPopUp.toggle()
                             }
                         }
-                        .offset(y: -geometry.size.height/16/2)
+                        .offset(y: -geometry.size.height/14/2)
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
                     }.frame(width: geometry.size.width, height: 80)
                     .background(Clr.darkgreen.shadow(radius: 2))
+                    .offset(y: -20)
                 }
             }
             .edgesIgnoringSafeArea(.bottom)

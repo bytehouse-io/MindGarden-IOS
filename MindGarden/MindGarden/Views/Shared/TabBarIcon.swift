@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabBarIcon: View {
     @ObservedObject var viewRouter: ViewRouter
+    @State private var isSelected: Bool = false
     let assignedPage: Page
     let width, height: CGFloat
     let tabName: String
@@ -18,15 +19,19 @@ struct TabBarIcon: View {
         VStack {
             img
                 .renderingMode(.template)
-                .foregroundColor(.white)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: width, height: height)
                 .padding(.top, 10)
-            //            Rectangle().frame(width: width/2, height: height/8).foregroundColor(.white)
-            //                .padding(.top, 5)
+            if viewRouter.currentPage == assignedPage  {
+                withAnimation {
+                    Rectangle().frame(width: width/2, height: height/8).foregroundColor(.white)
+                        .padding(.top, 5)
+                }
+            }
             Spacer()
         }.padding(.horizontal, -5)
         .padding(.top, 10)
+        .foregroundColor(viewRouter.currentPage == assignedPage ? .white : Clr.unselectedIcon)
         .onTapGesture {
             withAnimation {
                 viewRouter.currentPage = assignedPage
