@@ -29,6 +29,8 @@
 		FE6289C826754C6100007889 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
 		FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE962F112674651F002365A6 /* Color+Extensions.swift */; };
 		FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C842687CA1A00321C07 /* BonusModal.swift */; };
+		FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C88268A662500321C07 /* PlusMenu.swift */; };
+		FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C8C268BF7AF00321C07 /* MoodCheck.swift */; };
 		FEA592CB267E611F006558A2 /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CA267E611F006558A2 /* Garden.swift */; };
 		FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CC267E6153006558A2 /* SingleDay.swift */; };
 		FEA592CF267E8D98006558A2 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CE267E8D98006558A2 /* Util.swift */; };
@@ -97,6 +99,8 @@
 		FE6289BC26754C6100007889 /* Mada-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Medium.ttf"; sourceTree = "<group>"; };
 		FE962F112674651F002365A6 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FEA53C842687CA1A00321C07 /* BonusModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusModal.swift; sourceTree = "<group>"; };
+		FEA53C88268A662500321C07 /* PlusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenu.swift; sourceTree = "<group>"; };
+		FEA53C8C268BF7AF00321C07 /* MoodCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodCheck.swift; sourceTree = "<group>"; };
 		FEA592CA267E611F006558A2 /* Garden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Garden.swift; sourceTree = "<group>"; };
 		FEA592CC267E6153006558A2 /* SingleDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleDay.swift; sourceTree = "<group>"; };
 		FEA592CE267E8D98006558A2 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -192,6 +196,8 @@
 				FEB85FF426744085008CDAA4 /* Home.swift */,
 				FE4E9E632676AE54002BC758 /* HomeSquare.swift */,
 				FEA53C842687CA1A00321C07 /* BonusModal.swift */,
+				FEA53C88268A662500321C07 /* PlusMenu.swift */,
+				FEA53C8C268BF7AF00321C07 /* MoodCheck.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -675,11 +681,13 @@
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
+				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
 				FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */,
+				FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */,
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
@@ -790,7 +798,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -845,7 +853,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

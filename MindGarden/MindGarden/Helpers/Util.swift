@@ -39,4 +39,8 @@ struct K {
     static func isPad() -> Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
+    static var hasNotch: Bool {
+         let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+         return bottom > 0
+     }
 }
