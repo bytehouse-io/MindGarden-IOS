@@ -37,14 +37,22 @@ struct ContentView: View {
                     }
                 }.edgesIgnoringSafeArea(.all)
 
-                if showPopUp {
-                    Color.black
-                        .opacity(0.3)
-                        .edgesIgnoringSafeArea(.all)
-                        .frame(height: showPopUp ? geometry.size.height: 0)
-                        .offset(y: K.hasNotch ? 40 : 0)
-                        .animation(.interpolatingSpring(stiffness: 10, damping: 1))
+                if showPopUp || addMood {
+                    Button {
+                        withAnimation {
+                            print("setting to false")
+                            showPopUp = false
+                            addMood = false
+                        }
+                    } label: {
+                        Color.black
+                            .opacity(0.3)
+                            .edgesIgnoringSafeArea(.all)
+                            .frame(height: showPopUp || addMood ? geometry.size.height: 0)
+                            .offset(y: K.hasNotch ? 40 : 0)
+                    }.animation(.easeInOut(duration: 0.1))
                 }
+
                     ZStack {
                         PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, width: geometry.size.width)
                             .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch ? 70 : 110) : geometry.size.height/2 + 60)
@@ -79,8 +87,12 @@ struct ContentView: View {
                         .background(Clr.darkgreen.shadow(radius: 2))
                         .offset(y: geometry.size.height/2 + (K.hasNotch ? 60 : 10))
                     }
+                MoodCheck(shown: $addMood)
+                    .frame(width: geometry.size.width, height: geometry.size.height * 0.35)
+                    .background(Clr.darkWhite)
+                    .cornerRadius(12)
+                    .offset(y: addMood ? geometry.size.height/(K.hasNotch ? 2.25 : 2.75) : geometry.size.height)
             }.edgesIgnoringSafeArea(.all)
-            MoodCheck(shown: $addMood).offset(y: addMood ? 80 : geometry.size.height + 80)
         }.background(Clr.darkWhite)
         .environmentObject(viewRouter)
     }

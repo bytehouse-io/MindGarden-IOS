@@ -53,11 +53,11 @@ struct SingleDay: View {
                                             .foregroundColor(.black)
                                             .font(Font.mada(.regular, size: 16))
                                         HStack(spacing: 0) {
-                                            K.getMoodImage(mood: "happy")
+                                            K.getMoodImage(mood: .happy)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .padding(5)
-                                            K.getMoodImage(mood: "angry")
+                                            K.getMoodImage(mood: .angry)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .padding(5)

@@ -10,15 +10,15 @@ import Foundation
 
 
 struct K {
-    static func getMoodImage(mood: String) -> Image {
+    static func getMoodImage(mood: Mood) -> Image {
         switch mood {
-        case "happy":
+        case .happy:
             return Img.happy
-        case "sad":
+        case .sad:
             return Img.sad
-        case "angry":
+        case .angry:
             return Img.angry
-        case "okay":
+        case .okay:
             return Img.okay
         default:
             return Img.okay

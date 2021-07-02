@@ -70,12 +70,12 @@ struct Garden: View {
                                 .neoShadow()
                             VStack(spacing: 10) {
                                 HStack(alignment: .bottom) {
-                                    Mood(mood: "happy", value: 13)
-                                    Mood(mood: "sad", value: 2)
+                                    MoodImage(mood: .happy, value: 13)
+                                    MoodImage(mood: .sad, value: 2)
                                 }.padding(.horizontal, 10)
                                 HStack(alignment: .bottom) {
-                                    Mood(mood: "okay", value: 7)
-                                    Mood(mood: "angry", value: 5)
+                                    MoodImage(mood: .okay, value: 7)
+                                    MoodImage(mood: .angry, value: 5)
                                 }.padding(.horizontal, 10)
                             }
                         }.frame(maxWidth: gp.size.width * 0.47)
@@ -123,8 +123,8 @@ struct Garden_Previews: PreviewProvider {
 }
 
 //MARK: - components
-struct Mood: View {
-    let mood: String
+struct MoodImage: View {
+    let mood: Mood
     let value: Int
 
     var body: some View {
@@ -133,7 +133,7 @@ struct Mood: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             VStack(alignment: .center) {
-                Text(mood)
+                Text(mood.title)
                     .font(.subheadline)
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
