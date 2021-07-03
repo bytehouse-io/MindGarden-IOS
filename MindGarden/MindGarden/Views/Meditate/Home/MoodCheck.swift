@@ -51,7 +51,9 @@ struct MoodCheck: View {
                     }.frame(width: g.size.width * 0.85, height: g.size.height/3, alignment: .center)
                         HStack {
                             Button {
-
+                                withAnimation {
+                                    shown = false
+                                }
                             } label: {
                                 Text("Done")
                                     .foregroundColor(.white)
@@ -63,7 +65,9 @@ struct MoodCheck: View {
                             .neoShadow()
                             .padding()
                             Button {
-
+                                withAnimation {
+                                    shown = false
+                                }
                             } label: {
                                 Text("Cancel")
                                     .foregroundColor(.white)

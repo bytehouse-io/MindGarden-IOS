@@ -13,6 +13,7 @@ struct ContentView: View {
     @ObservedObject var viewRouter: ViewRouter
     @State var showPopUp = false
     @State var addMood = false
+    @State var openPrompts = false
     @State var addGratitude = false
     
     var body: some View {
@@ -37,18 +38,18 @@ struct ContentView: View {
                     }
                 }.edgesIgnoringSafeArea(.all)
 
-                if showPopUp || addMood {
+                if showPopUp || addMood || addGratitude {
                     Button {
                         withAnimation {
-                            print("setting to false")
                             showPopUp = false
                             addMood = false
+                            addGratitude = false
                         }
                     } label: {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
-                            .frame(height: showPopUp || addMood ? geometry.size.height: 0)
+                            .frame(height: showPopUp || addMood || addGratitude ? geometry.size.height: 0)
                             .offset(y: K.hasNotch ? 40 : 0)
                     }.animation(.easeInOut(duration: 0.1))
                 }
@@ -92,6 +93,11 @@ struct ContentView: View {
                     .background(Clr.darkWhite)
                     .cornerRadius(12)
                     .offset(y: addMood ? geometry.size.height/(K.hasNotch ? 2.25 : 2.75) : geometry.size.height)
+                Gratitude(shown: $addGratitude, openPrompts: $openPrompts)
+                    .frame(width: geometry.size.width, height: geometry.size.height * 0.45 * (openPrompts ? 2.25 : 1))
+                    .background(Clr.darkWhite)
+                    .cornerRadius(12)
+                    .offset(y: addGratitude ? geometry.size.height/(K.hasNotch ? 2.25 * (openPrompts ? 2 : 1)  : 3.3 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
             }.edgesIgnoringSafeArea(.all)
         }.background(Clr.darkWhite)
         .environmentObject(viewRouter)
