@@ -103,7 +103,9 @@ struct Gratitude: View {
                             }
                         }
                     }.frame(width: g.size.width * 0.85, height: min(175, g.size.height * 0.6), alignment: .topLeading)
-                    .padding(.bottom, 20)
+                    DoneCancel(shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false)
+                        .padding(.bottom, 20)
+
                     Spacer()
                 }
                 Spacer()
@@ -115,7 +117,7 @@ struct Gratitude: View {
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         Gratitude(shown: .constant(true), openPrompts: .constant(true))
-            .frame(width: UIScreen.main.bounds.width, height: 500)
+            .frame(width: UIScreen.main.bounds.width, height: 800)
             .background(Clr.darkWhite)
             .cornerRadius(12)
     }

@@ -49,36 +49,8 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .angry)
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height/3, alignment: .center)
-                        HStack {
-                            Button {
-                                withAnimation {
-                                    shown = false
-                                }
-                            } label: {
-                                Text("Done")
-                                    .foregroundColor(.white)
-                                    .font(Font.mada(.semiBold, size: 22))
-                            }
-                            .frame(width:  g.size.width * 0.3, height: g.size.height/6)
-                            .background(Clr.brightGreen)
-                            .cornerRadius(12)
-                            .neoShadow()
-                            .padding()
-                            Button {
-                                withAnimation {
-                                    shown = false
-                                }
-                            } label: {
-                                Text("Cancel")
-                                    .foregroundColor(.white)
-                                    .font(Font.mada(.semiBold, size: 22))
-                            }
-                            .frame(width:  g.size.width * 0.3, height: g.size.height/6)
-                            .background(Color.gray)
-                            .cornerRadius(12)
-                            .neoShadow()
-                            .padding()
-                        }.padding(.bottom)
+                        DoneCancel(shown: $shown, width: g.size.width, height: g.size.height, mood: true)
+                            .padding(.bottom)
                     Spacer()
                 }
                 Spacer()
@@ -118,6 +90,45 @@ struct SingleMood: View {
                 Image(systemName: "checkmark")
                     .font(Font.title.weight(.bold))
             }
+        }
+    }
+}
+
+struct DoneCancel: View {
+    @Binding var shown: Bool
+    var width, height: CGFloat
+    var mood: Bool 
+
+    var body: some View {
+        HStack {
+            Button {
+                withAnimation {
+                    shown = false
+                }
+            } label: {
+                Text("Done")
+                    .foregroundColor(.white)
+                    .font(Font.mada(.semiBold, size: 22))
+            }
+            .frame(width:  width * 0.3, height: height/6)
+            .background(Clr.brightGreen)
+            .cornerRadius(12)
+            .neoShadow()
+            .padding()
+            Button {
+                withAnimation {
+                    shown = false
+                }
+            } label: {
+                Text("Cancel")
+                    .foregroundColor(.white)
+                    .font(Font.mada(.semiBold, size: 22))
+            }
+            .frame(width: width * 0.3, height: height/6)
+            .background(Color.gray)
+            .cornerRadius(12)
+            .neoShadow()
+            .padding()
         }
     }
 }
