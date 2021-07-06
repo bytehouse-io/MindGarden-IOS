@@ -26,5 +26,6 @@ public enum Img {
   public static let profileIcon = Image("profileIcon")
   public static let seed = Image("seed")
   public static let shopIcon = Image("shopIcon")
+  public static let siwg = Image("siwg")
   public static let topBranch = Image("topBranch")
 }

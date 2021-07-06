@@ -41,7 +41,7 @@ struct Store: View {
                                 .padding()
                         }
                     }.padding()
-                }
+                }.padding(.top)
                 if showModal {
                     Color.black
                         .opacity(0.3)

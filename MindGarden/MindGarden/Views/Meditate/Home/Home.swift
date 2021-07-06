@@ -11,6 +11,11 @@ struct Home: View {
     @State var isRecent = false
     @State var showModal = false
 
+    init() {
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
+    }
+    
     var body: some View {
         NavigationView {
             GeometryReader { g in
@@ -75,14 +80,14 @@ struct Home: View {
                             .neoShadow()
                             .overlay(HStack(alignment: .top) {
                                 VStack(alignment: .leading) {
-                                Text("Featured")
-                                    .font(Font.mada(.regular, size: 16))
-                                    .foregroundColor(Clr.black1)
-                                Text("Anxiety and\nStress")
-                                    .font(Font.mada(.bold, size: 28))
-                                    .foregroundColor(Clr.black1)
-                                Spacer()
-                            }.padding(25)
+                                    Text("Featured")
+                                        .font(Font.mada(.regular, size: 16))
+                                        .foregroundColor(Clr.black1)
+                                    Text("Anxiety and\nStress")
+                                        .font(Font.mada(.bold, size: 28))
+                                        .foregroundColor(Clr.black1)
+                                    Spacer()
+                                }.padding(25)
                                 Spacer()
                                 ZStack {
                                     Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
@@ -92,9 +97,7 @@ struct Home: View {
                                         .font(.title)
                                 }.neoShadow()
                                 .padding(25)
-                            }
-                                )
-                            .padding(.top, 20)
+                            }).padding(.top, 20)
                         VStack(spacing: 1) {
                             HStack {
                                 Button {
@@ -122,7 +125,7 @@ struct Home: View {
                         .padding(.top, 20)
                         HStack(spacing: 15) {
                             HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
-                                       HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                            HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
                         }.padding(.top, 10)
                         Button {
                             print("see all categories")
@@ -136,8 +139,6 @@ struct Home: View {
                                             .font(Font.mada(.semiBold, size: 20))
                                 )
                         }.padding(.top, 20)
-
-
                         Spacer()
                     }
                 }
@@ -150,23 +151,20 @@ struct Home: View {
                 BonusModal(shown: $showModal).offset(y: showModal ? 0 : g.size.height)
                     .edgesIgnoringSafeArea(.top)
             }
-
             .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
                                 trailing: Image(systemName: "magnifyingglass")
                                     .font(.title)
                                     .foregroundColor(Clr.darkgreen)
-                                    .edgesIgnoringSafeArea(.all)
                                     .padding()
             )
             .navigationViewStyle(StackNavigationViewStyle())
-
         }
     }
 }
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-            Home().navigationViewStyle(StackNavigationViewStyle())
+        Home().navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
