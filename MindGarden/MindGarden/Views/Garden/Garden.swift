@@ -103,6 +103,7 @@ struct Garden: View {
                     }.padding(.top, 15)
                 }.padding(.horizontal, 25)
                 .padding(.vertical, 15)
+                .padding(.top, 30)
             }
             .sheet(isPresented: $showSingleModal) {
                 SingleDay(showSingleModal: $showSingleModal)
