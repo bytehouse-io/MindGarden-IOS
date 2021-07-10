@@ -11,6 +11,7 @@ import Combine
 
 struct ContentView: View {
     @ObservedObject var viewRouter: ViewRouter
+    private let playViewModel = PlayViewModel()
     @State var showPopUp = false
     @State var addMood = false
     @State var openPrompts = false
@@ -20,6 +21,8 @@ struct ContentView: View {
         self.viewRouter = viewRouter
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
+
+        playViewModel.secondsRemaining = 150
     }
 
     var body: some View {
@@ -30,7 +33,7 @@ struct ContentView: View {
                     VStack {
                         switch viewRouter.currentPage {
                         case .meditate:
-                            Home()
+                            Home(viewRouter: viewRouter)
                                 .frame(height: geometry.size.height)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .garden:
@@ -43,66 +46,72 @@ struct ContentView: View {
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .profile:
                             Text("profile")
+                        case .play:
+                            Play(model: playViewModel, viewRouter: viewRouter)
+                                .frame(height: geometry.size.height)
+                                .navigationViewStyle(StackNavigationViewStyle())
                         }
                     }.edgesIgnoringSafeArea(.all)
-                    if showPopUp || addMood || addGratitude {
-                        Button {
-                            withAnimation {
-                                showPopUp = false
-                                addMood = false
-                                addGratitude = false
-                            }
-                        } label: {
-                            Color.black
-                                .opacity(0.3)
-                                .edgesIgnoringSafeArea(.all)
-                                .frame(height: showPopUp || addMood || addGratitude ? geometry.size.height: 0)
-                        }.animation(.easeInOut(duration: 0.1))
-                    }
-                    ZStack {
-                        PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, width: geometry.size.width)
-                            .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch ? 125 : K.isPad() ? 235 : 130) : geometry.size.height/2 + 60)
-                            .opacity(showPopUp ? 1 : 0)
-                        HStack {
-                            TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
-                            TabBarIcon(viewRouter: viewRouter, assignedPage: .meditate, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Meditate", img: Img.meditateIcon)
-                            ZStack {
-                                Rectangle()
-                                    .cornerRadius(21)
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: geometry.size.width/7, maxHeight: geometry.size.width/7)
-                                    .shadow(color: showPopUp ? .black.opacity(0) : .black.opacity(0.25), radius: 4, x: 4, y: 4)
-                                    .zIndex(1)
-                                Image(systemName: "plus")
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(Font.title.weight(.semibold))
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(maxWidth: geometry.size.width/5.5-6 , maxHeight: geometry.size.width/5.5-6)
-                                    .zIndex(2)
-                                    .rotationEffect(showPopUp ? .degrees(45) : .degrees(0))
-                            }
-                            .onTapGesture {
+                    if viewRouter.currentPage != .play {
+                        if showPopUp || addMood || addGratitude {
+                            Button {
                                 withAnimation {
-                                    showPopUp.toggle()
+                                    showPopUp = false
+                                    addMood = false
+                                    addGratitude = false
                                 }
-                            }
-                            .offset(y: -geometry.size.height/14/2)
-                            TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
-                            TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
-                        }.frame(width: geometry.size.width, height: 80)
-                        .background(Clr.darkgreen.shadow(radius: 2))
-                        .offset(y: geometry.size.height/2 + (K.hasNotch ? 0 : -10))
+                            } label: {
+                                Color.black
+                                    .opacity(0.3)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .frame(height: showPopUp || addMood || addGratitude ? geometry.size.height: 0)
+                            }.animation(.easeInOut(duration: 0.1))
+                        }
+                        ZStack {
+                            PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, width: geometry.size.width)
+                                .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch ? 125 : K.isPad() ? 235 : 130) : geometry.size.height/2 + 60)
+                                .opacity(showPopUp ? 1 : 0)
+                            HStack {
+                                TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
+                                TabBarIcon(viewRouter: viewRouter, assignedPage: .meditate, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Meditate", img: Img.meditateIcon)
+                                ZStack {
+                                    Rectangle()
+                                        .cornerRadius(21)
+                                        .foregroundColor(.white)
+                                        .frame(maxWidth: geometry.size.width/7, maxHeight: geometry.size.width/7)
+                                        .shadow(color: showPopUp ? .black.opacity(0) : .black.opacity(0.25), radius: 4, x: 4, y: 4)
+                                        .zIndex(1)
+                                    Image(systemName: "plus")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.title.weight(.semibold))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(maxWidth: geometry.size.width/5.5-6 , maxHeight: geometry.size.width/5.5-6)
+                                        .zIndex(2)
+                                        .rotationEffect(showPopUp ? .degrees(45) : .degrees(0))
+                                }
+                                .onTapGesture {
+                                    withAnimation {
+                                        showPopUp.toggle()
+                                    }
+                                }
+                                .offset(y: -geometry.size.height/14/2)
+                                TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
+                                TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
+                            }.frame(width: geometry.size.width, height: 80)
+                            .background(Clr.darkgreen.shadow(radius: 2))
+                            .offset(y: geometry.size.height/2 + (K.hasNotch ? 0 : -10))
+                        }
+                        MoodCheck(shown: $addMood)
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.35)
+                            .background(Clr.darkWhite)
+                            .cornerRadius(12)
+                            .offset(y: addMood ? geometry.size.height/(K.hasNotch ? 2.5 : 2.75) : geometry.size.height)
+                        Gratitude(shown: $addGratitude, openPrompts: $openPrompts)
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.45 * (openPrompts ? 2.25 : 1))
+                            .background(Clr.darkWhite)
+                            .cornerRadius(12)
+                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch ? 3.5 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
                     }
-                    MoodCheck(shown: $addMood)
-                        .frame(width: geometry.size.width, height: geometry.size.height * 0.35)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(12)
-                        .offset(y: addMood ? geometry.size.height/(K.hasNotch ? 2.5 : 2.75) : geometry.size.height)
-                    Gratitude(shown: $addGratitude, openPrompts: $openPrompts)
-                        .frame(width: geometry.size.width, height: geometry.size.height * 0.45 * (openPrompts ? 2.25 : 1))
-                        .background(Clr.darkWhite)
-                        .cornerRadius(12)
-                        .offset(y: addGratitude ? geometry.size.height/(K.hasNotch ? 3.5 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
                 }
                 .edgesIgnoringSafeArea(.all)
                 .navigationBarTitle("", displayMode: .inline)

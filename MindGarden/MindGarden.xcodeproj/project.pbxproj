@@ -63,6 +63,7 @@
 		FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */; };
 		FEBA7E722677D66F00758E58 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA7E712677D66F00758E58 /* Store.swift */; };
 		FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5B009267D2ACF00BC8D8C /* Play.swift */; };
+		FEDC430E269925FC008E0318 /* PlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDC430D269925FC008E0318 /* PlayViewModel.swift */; };
 		FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC6515267817D400ECD32D /* PlantTile.swift */; };
 		FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC651726781FC800ECD32D /* PurchaseModal.swift */; };
 /* End PBXBuildFile section */
@@ -144,6 +145,7 @@
 		FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEBA7E712677D66F00758E58 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		FEC5B009267D2ACF00BC8D8C /* Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
+		FEDC430D269925FC008E0318 /* PlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewModel.swift; sourceTree = "<group>"; };
 		FEEC6515267817D400ECD32D /* PlantTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTile.swift; sourceTree = "<group>"; };
 		FEEC651726781FC800ECD32D /* PurchaseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseModal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -447,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				FEC5B009267D2ACF00BC8D8C /* Play.swift */,
+				FEDC430D269925FC008E0318 /* PlayViewModel.swift */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -784,6 +787,7 @@
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
 				FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */,
+				FEDC430E269925FC008E0318 /* PlayViewModel.swift in Sources */,
 				FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */,
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,

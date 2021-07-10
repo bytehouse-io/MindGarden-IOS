@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct Play: View {
-    @State var progressValue: Float = 0.35
+    var progressValue: Float {
+        print((model.secondsRemaining, model.totalTime), "gaho")
+        return 1 - (model.secondsRemaining/model.totalTime)
+    }
+    @State var timerStarted: Bool = false
+    @ObservedObject var model: PlayViewModel
+    @ObservedObject var viewRouter: ViewRouter
 
     var body: some View {
         NavigationView {
@@ -33,9 +39,13 @@ struct Play: View {
                         }
                         .frame(width: 250)
                     }
+                    Text(model.secondsToMinutesSeconds(totalSeconds: model.isOpenEnded ? model.secondsCounted : model.secondsRemaining))
+                        .foregroundColor(Clr.black1)
+                        .font(Font.mada(.bold, size: 60))
+                        .padding(.horizontal)
                     HStack(alignment: .center, spacing: 20) {
                         Button {
-                            progressValue += 0.1
+                            model.secondsRemaining -= 15
                         } label: {
                             ZStack {
                                 Circle()
@@ -50,19 +60,23 @@ struct Play: View {
                                         .font(.caption)
                                         .foregroundColor(Clr.darkgreen)
                                 }
-
                             }
                         }
 
                         Button {
-                            progressValue += -0.1
+                            if timerStarted {
+                                model.stop()
+                            } else {
+                                model.isOpenEnded ? model.startTimer() : model.startCountdown()
+                            }
+                            timerStarted.toggle()
                         } label: {
                             ZStack {
                                 Circle()
                                     .fill(Clr.darkWhite)
                                     .frame(width: 90)
                                     .neoShadow()
-                                Image(systemName: "play.fill")
+                                Image(systemName: timerStarted ? "pause.fill" : "play.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(Clr.brightGreen)
@@ -71,7 +85,7 @@ struct Play: View {
                             }
                         }
                         Button {
-                            progressValue += 0.1
+                            model.secondsRemaining += 15
                         } label: {
                             ZStack {
                                 Circle()
@@ -86,20 +100,28 @@ struct Play: View {
                                         .font(.caption)
                                         .foregroundColor(Clr.darkgreen)
                                 }
-
                             }
                         }
                     }
+                }.animation(nil)
+            }.animation(nil)
+            .navigationBarItems(leading: Image(systemName: "chevron.backward")
+                                    .font(.title)
+                                    .foregroundColor(Clr.black1)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            viewRouter.currentPage = .meditate
+                                        }
+                                    }
+                                )
 
-                }
-            }
-
-        }
+        }.transition(.move(edge: .trailing))
+        .animation(.easeIn)
     }
 }
 
 struct Play_Previews: PreviewProvider {
     static var previews: some View {
-        Play()
+        Play(model: PlayViewModel(), viewRouter: ViewRouter())
     }
 }

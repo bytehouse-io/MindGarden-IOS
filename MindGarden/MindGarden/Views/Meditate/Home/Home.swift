@@ -10,8 +10,10 @@ import SwiftUI
 struct Home: View {
     @State var isRecent = false
     @State var showModal = false
+    @ObservedObject var viewRouter: ViewRouter
 
-    init() {
+    init(viewRouter: ViewRouter) {
+        self.viewRouter = viewRouter
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -20,7 +22,7 @@ struct Home: View {
         NavigationView {
             GeometryReader { g in
                 ZStack {
-                    Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack {
                         HStack {
                             Spacer()
@@ -98,6 +100,11 @@ struct Home: View {
                                 }.neoShadow()
                                 .padding(25)
                             }).padding(.top, 20)
+                            .onTapGesture {
+                                withAnimation {
+                                    viewRouter.currentPage = .play
+                                }
+                            }
                         VStack(spacing: 1) {
                             HStack {
                                 Button {
@@ -151,6 +158,8 @@ struct Home: View {
                 BonusModal(shown: $showModal).offset(y: showModal ? 0 : g.size.height)
                     .edgesIgnoringSafeArea(.top)
             }
+            .transition(.move(edge: .leading))
+            .animation(.default)
             .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
                                 trailing: Image(systemName: "magnifyingglass")
                                     .font(.title)
@@ -164,7 +173,7 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home().navigationViewStyle(StackNavigationViewStyle())
+        Home(viewRouter: ViewRouter()).navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

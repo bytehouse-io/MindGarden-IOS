@@ -17,4 +17,5 @@ enum Page {
     case garden
     case shop
     case profile
+    case play
 }
