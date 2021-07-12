@@ -15,6 +15,7 @@ enum settings {
 
 struct ProfileScene: View {
     @State private var selection: settings = .journey
+    @State private var showNotification = false
 
     var body: some View {
         NavigationView {
@@ -24,7 +25,7 @@ struct ProfileScene: View {
                 VStack(alignment: .center, spacing: 0) {
                     HStack(alignment: .bottom, spacing: 0) {
                         SelectionButton(selection: $selection, type: .setttings)
-                            .frame(width: g.size.width/2.5 - 2.5)
+                            .frame(width: abs(g.size.width/2.5 - 2.5))
                         VStack {
                             Rectangle().fill(Color.gray.opacity(0.3))
                                 .frame(width: 2, height: 35)
@@ -34,29 +35,55 @@ struct ProfileScene: View {
                                 .frame(height: 5)
                         }.frame(width: 5)
                         SelectionButton(selection: $selection, type: .journey)
-                            .frame(width: g.size.width/2.5 - 2.5)
+                            .frame(width: abs(g.size.width/2.5 - 2.5))
                     }.background(Clr.darkWhite)
                     .cornerRadius(12)
                     .padding(.top)
                     .neoShadow()
                     if selection == .setttings {
-                        List {
-                            Row(title: "Notifications", img: Image(systemName: "bell.fill"))
-                                .frame(height: 40)
-                            Row(title: "Notifications", img: Image(systemName: "bell.fill"))
-                                .frame(height: 40)
-                            Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"))
-                                .frame(height: 40)
-                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"))
-                                .frame(height: 40)
-                            Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"))
-                                .frame(height: 40)
-                            Row(title: "Join the Community", img: Img.redditIcon)
-                                .frame(height: 40)
-                            Row(title: "Daily Motivation", img: Img.instaIcon)
-                                .frame(height: 40)
+                        if showNotification {
+                            List {
+                                Row(title: "Contact Us", img: Image(systemName: "envelope.fill"))
+                                    .frame(height: 40)
+                                Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"))
+                                    .frame(height: 40)
+                                Row(title: "Join the Community", img: Img.redditIcon)
+                                    .frame(height: 40)
+                                Row(title: "Daily Motivation", img: Img.instaIcon)
+                                    .frame(height: 40)
+                            }.frame(maxHeight: g.size.height * 0.60)
+                            .padding()
+                            .neoShadow()
+                            .transition(.slide)
+                            .animation(.default)
+                        } else {
+                            List {
+                                Row(title: "Notifications", img: Image(systemName: "bell.fill"))
+                                    .frame(height: 40)
+                                    .onTapGesture {
+                                        showNotification = true
+                                    }
+                                Button {
+
+                                } label: {
+                                    Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"))
+                                        .frame(height: 40)
+                                }
+                                Row(title: "Contact Us", img: Image(systemName: "envelope.fill"))
+                                    .frame(height: 40)
+                                    .onTapGesture {
+                                        print("365")
+                                    }
+                                Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"))
+                                    .frame(height: 40)
+                                Row(title: "Join the Community", img: Img.redditIcon)
+                                    .frame(height: 40)
+                                Row(title: "Daily Motivation", img: Img.instaIcon)
+                                    .frame(height: 40)
+                            }.frame(maxHeight: g.size.height * 0.60)
+                            .padding()
+                            .neoShadow()
                         }
-                        .neoShadow()
                     } else {
                         ZStack {
                             Rectangle()
@@ -72,13 +99,13 @@ struct ProfileScene: View {
                                         .font(Font.mada(.regular, size: 20))
                                         .foregroundColor(Clr.black1)
                                         .padding(.top, 3)
-                                }.frame(width: width - 75, alignment: .leading)
+                                }.frame(width: abs(width - 75), alignment: .leading)
                                 .frame(height: 25)
                                 Text("July 1, 2020")
                                     .font(Font.mada(.bold, size: 34))
                                     .foregroundColor(Clr.darkgreen)
                             }
-                        }.frame(width: width - 75, height: height/6)
+                        }.frame(width: abs(width - 75), height: height/6)
                         .padding()
                         .padding(.leading)
                         ZStack {
@@ -95,7 +122,7 @@ struct ProfileScene: View {
                                         .font(Font.mada(.regular, size: 20))
                                         .foregroundColor(Clr.black1)
                                         .padding(.top, 3)
-                                }.frame(width: width - 100, alignment: .leading)
+                                }.frame(width: abs(width - 100), alignment: .leading)
                                 .frame(height: 25)
                                 HStack {
                                     Text("90")
@@ -106,7 +133,7 @@ struct ProfileScene: View {
                                         .foregroundColor(Clr.black1)
                                 }
                             }
-                        }.frame(width: width - 75, height: height/6)
+                        }.frame(width: abs(width - 75), height: height/6)
                         .padding()
                         .padding(.leading)
                         ZStack {
@@ -123,7 +150,7 @@ struct ProfileScene: View {
                                         .font(Font.mada(.regular, size: 20))
                                         .foregroundColor(Clr.black1)
                                         .padding(.top, 3)
-                                }.frame(width: width - 100, alignment: .leading)
+                                }.frame(width: abs(width - 100), alignment: .leading)
                                 .frame(height: 25)
                                 HStack {
                                     Text("90")
@@ -134,7 +161,7 @@ struct ProfileScene: View {
                                         .foregroundColor(Clr.black1)
                                 }
                             }
-                        }.frame(width: width - 75, height: height/6)
+                        }.frame(width: abs(width - 75), height: height/6)
                         .padding()
                         .padding(.leading)
                     }
@@ -146,7 +173,7 @@ struct ProfileScene: View {
                             .neoShadow()
                             .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
                     }
-                    .frame(width: width - 100, height: 50, alignment: .center)
+                    .frame(width: abs(width - 100), height: 50, alignment: .center)
 
                 }.navigationBarTitle("Dante", displayMode: .inline)
                 .frame(width: width)
@@ -179,8 +206,11 @@ struct ProfileScene: View {
                             .font(Font.mada(.medium, size: 20))
                             .foregroundColor(Clr.black1)
                         Spacer()
-                    }.padding([.top, .leading,.trailing])
-                    Divider()
+                        if title == "Notifications" {
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
+                        }
+                    }.padding()
                 }
                 .listRowBackground(Clr.darkWhite)
             }
@@ -214,6 +244,5 @@ struct SelectionButton: View {
                 .fill(selection == type ?  Clr.brightGreen : Color.gray.opacity(0.3))
                 .frame(height: 5)
         }
-
     }
 }

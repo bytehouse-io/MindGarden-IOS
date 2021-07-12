@@ -10,6 +10,7 @@ import Combine
 
 class PlayViewModel: ObservableObject {
     var totalTime: Float = 0
+    //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
     @Published var secondsRemaining: Float = 150
     @Published var secondsCounted: Float = 0

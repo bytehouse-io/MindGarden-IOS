@@ -21,7 +21,7 @@ struct ContentView: View {
         self.viewRouter = viewRouter
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-
+        playViewModel.isOpenEnded = true
         playViewModel.secondsRemaining = 150
     }
 
@@ -45,7 +45,9 @@ struct ContentView: View {
                                 .frame(height: geometry.size.height)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .profile:
-                            Text("profile")
+                            ProfileScene()
+                                .frame(height: geometry.size.height)
+                                .navigationViewStyle(StackNavigationViewStyle())
                         case .play:
                             Play(model: playViewModel, viewRouter: viewRouter)
                                 .frame(height: geometry.size.height)

@@ -9,10 +9,14 @@ import SwiftUI
 
 struct Play: View {
     var progressValue: Float {
-        print((model.secondsRemaining, model.totalTime), "gaho")
-        return 1 - (model.secondsRemaining/model.totalTime)
+        if model.isOpenEnded {
+            return 1
+        } else {
+            return 1 - (model.secondsRemaining/model.totalTime)
+        }
     }
     @State var timerStarted: Bool = false
+    @State var favorited: Bool = false
     @ObservedObject var model: PlayViewModel
     @ObservedObject var viewRouter: ViewRouter
 
@@ -105,16 +109,21 @@ struct Play: View {
                     }
                 }.animation(nil)
             }.animation(nil)
-            .navigationBarItems(leading: Image(systemName: "chevron.backward")
+            .navigationBarItems(leading: Image(systemName: "arrow.backward")
                                     .font(.title)
-                                    .foregroundColor(Clr.black1)
+                                    .foregroundColor(Clr.lightGray)
                                     .onTapGesture {
                                         withAnimation {
                                             viewRouter.currentPage = .meditate
                                         }
+                                    },
+                                trailing: Image(systemName: favorited ? "heart.fill" : "heart")
+                                    .font(.title)
+                                    .foregroundColor(favorited ? Color.red : Clr.lightGray)
+                                    .onTapGesture {
+                                            favorited.toggle()
                                     }
                                 )
-
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
     }
