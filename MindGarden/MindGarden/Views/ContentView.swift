@@ -12,6 +12,7 @@ import Combine
 struct ContentView: View {
     @ObservedObject var viewRouter: ViewRouter
     private let playViewModel = PlayViewModel()
+    private let meditationModel = MeditationViewModel()
     @State var showPopUp = false
     @State var addMood = false
     @State var openPrompts = false
@@ -33,7 +34,7 @@ struct ContentView: View {
                     VStack {
                         switch viewRouter.currentPage {
                         case .meditate:
-                            Home(viewRouter: viewRouter)
+                            Home(viewRouter: viewRouter, model: meditationModel)
                                 .frame(height: geometry.size.height)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .garden:

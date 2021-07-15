@@ -22,20 +22,10 @@ struct Authentication: View {
 
     init(isSignUp: Bool) {
         self.isSignUp = isSignUp
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.shadowImage = UIImage()
-        navBarAppearance.shadowColor = .clear
-        if #available(iOS 14.0, *) {
-            navBarAppearance.backgroundColor = UIColor(Clr.darkWhite)
-        } else {
-            // Fallback on earlier versions
-        }
-        UINavigationBar.appearance().standardAppearance = navBarAppearance
-        UINavigationBar.appearance().compactAppearance = navBarAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
     }
 
     var body: some View {
+
             LoadingView(isShowing: $viewModel.isLoading) {
                 NavigationView {
                     ZStack {
@@ -147,6 +137,7 @@ struct Authentication: View {
                             }
                         Spacer()
                     }
+                    .background(Clr.darkWhite)
                     .alert(isPresented: $viewModel.alertError) {
                         Alert(title: Text("Something went wrong"), message: Text("Please try again using a different email or method"), dismissButton: .default(Text("Got it!")))
                     }

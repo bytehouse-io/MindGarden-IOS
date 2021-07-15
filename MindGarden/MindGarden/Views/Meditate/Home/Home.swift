@@ -11,9 +11,11 @@ struct Home: View {
     @State var isRecent = false
     @State var showModal = false
     @ObservedObject var viewRouter: ViewRouter
+    @ObservedObject var model: MeditationViewModel
 
-    init(viewRouter: ViewRouter) {
+    init(viewRouter: ViewRouter, model: MeditationViewModel) {
         self.viewRouter = viewRouter
+        self.model = model
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -142,9 +144,9 @@ struct Home: View {
                                 HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
                             }.buttonStyle(NeumorphicPress())
                         }.padding(.top, 10)
-                        Button {
-                            print("see all categories")
-                        } label: {
+                        NavigationLink(destination: CategoriesScene(model: model)
+                                        .navigationBarTitle("")
+                                        .navigationBarHidden(true)) {
                             RoundedRectangle(cornerRadius: 25)
                                 .frame(width: g.size.width * 0.85, height: g.size.height/14)
                                 .foregroundColor(Clr.yellow)
@@ -181,7 +183,8 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home(viewRouter: ViewRouter()).navigationViewStyle(StackNavigationViewStyle())
+        Home(viewRouter: ViewRouter(),
+             model: MeditationViewModel()).navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
