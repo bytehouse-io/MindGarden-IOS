@@ -49,7 +49,7 @@ struct Store: View {
                     Spacer()
                 }
                 PurchaseModal(shown: $showModal).offset(y: showModal ? 0 : g.size.height)
-            }
+            }.padding(.top)
         }
     }
 }

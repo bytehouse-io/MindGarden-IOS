@@ -18,7 +18,6 @@ struct HomeSquare: View {
                 .border(Clr.darkWhite)
                 .cornerRadius(25)
                 .frame(width: width * 0.41, height: height * 0.225, alignment: .center)
-                .neoShadow()
                 .overlay( HStack {
                     VStack(alignment: .leading, spacing: -2) {
                         Text(title)
@@ -53,20 +52,15 @@ struct HomeSquare: View {
 
                 }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
                          , alignment: .topLeading)
-
-
-
         }
     }
 }
 
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewDisparateDevices {
+//        PreviewDisparateDevices {
                         HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation")
 
-        }
-
-
+//        }
     }
 }

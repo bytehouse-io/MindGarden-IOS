@@ -48,16 +48,16 @@ struct Home: View {
                                 }
                             } label: {
                                 HStack {
-                                    Text("Daily Bonus")
+                                    Text("Daily Bonus1")
                                         .font(Font.mada(.regular, size: 14))
                                         .foregroundColor(.black)
                                         .font(.footnote)
                                 }
+                                .padding(8)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
                             }
-                            .padding(8)
-                            .background(Clr.yellow)
-                            .cornerRadius(25)
-                            .neoShadow()
+                            .buttonStyle(NeumorphicPress())
                             Button {
 
                             } label: {
@@ -67,44 +67,44 @@ struct Home: View {
                                         .foregroundColor(.black)
                                         .font(.footnote)
                                 }
+                                .padding(8)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
                             }
-                            .padding(8)
-                            .background(Clr.yellow)
-                            .cornerRadius(25)
-                            .neoShadow()
-
+                            .buttonStyle(NeumorphicPress())
                         }
-                        Rectangle()
-                            .fill(Clr.darkWhite)
-                            .border(Clr.darkWhite)
-                            .cornerRadius(25)
-                            .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
-                            .neoShadow()
-                            .overlay(HStack(alignment: .top) {
-                                VStack(alignment: .leading) {
-                                    Text("Featured")
-                                        .font(Font.mada(.regular, size: 16))
-                                        .foregroundColor(Clr.black1)
-                                    Text("Anxiety and\nStress")
-                                        .font(Font.mada(.bold, size: 28))
-                                        .foregroundColor(Clr.black1)
-                                    Spacer()
-                                }.padding(25)
-                                Spacer()
-                                ZStack {
-                                    Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
-                                        .foregroundColor(Clr.brightGreen)
-                                    Image(systemName: "play.fill")
-                                        .foregroundColor(.white)
-                                        .font(.title)
-                                }.neoShadow()
-                                .padding(25)
-                            }).padding(.top, 20)
-                            .onTapGesture {
-                                withAnimation {
-                                    viewRouter.currentPage = .play
-                                }
+                        Button {
+                            withAnimation {
+                                viewRouter.currentPage = .play
                             }
+                        } label: {
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .border(Clr.darkWhite)
+                                .cornerRadius(25)
+                                .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
+                                .neoShadow()
+                                .overlay(HStack(alignment: .top) {
+                                    VStack(alignment: .leading) {
+                                        Text("Featured")
+                                            .font(Font.mada(.regular, size: 16))
+                                            .foregroundColor(Clr.black1)
+                                        Text("Anxiety and\nStress")
+                                            .font(Font.mada(.bold, size: 28))
+                                            .foregroundColor(Clr.black1)
+                                        Spacer()
+                                    }.padding(25)
+                                    Spacer()
+                                    ZStack {
+                                        Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
+                                            .foregroundColor(Clr.brightGreen)
+                                        Image(systemName: "play.fill")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                    }
+                                    .padding(25)
+                                }).padding(.top, 20)
+                        }.buttonStyle(NeumorphicPress())
                         VStack(spacing: 1) {
                             HStack {
                                 Button {
@@ -131,8 +131,16 @@ struct Home: View {
                         }.frame(width: abs(g.size.width - 75), alignment: .leading)
                         .padding(.top, 20)
                         HStack(spacing: 15) {
-                            HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
-                            HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                            Button {
+
+                            } label: {
+                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
+                            }.buttonStyle(NeumorphicPress())
+                            Button {
+
+                            } label: {
+                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                            }.buttonStyle(NeumorphicPress())
                         }.padding(.top, 10)
                         Button {
                             print("see all categories")
@@ -140,12 +148,12 @@ struct Home: View {
                             RoundedRectangle(cornerRadius: 25)
                                 .frame(width: g.size.width * 0.85, height: g.size.height/14)
                                 .foregroundColor(Clr.yellow)
-                                .neoShadow()
                                 .overlay(Text("See All Categories")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.semiBold, size: 20))
                                 )
                         }.padding(.top, 20)
+                        .buttonStyle(NeumorphicPress())
                         Spacer()
                     }
                 }

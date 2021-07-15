@@ -16,12 +16,15 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @State var currentNonce:String?
     @Published var email: String = ""
     @Published var password: String = ""
+    @Published var forgotEmail: String = ""
     @Published var alertError: Bool = false
+    @Published var goToHome: Bool = false
+    @Published var isLoading: Bool = false
 
     var siwa: some View {
         return Group {
             if #available(iOS 14.0, *) {
-                 SignInWithAppleButton(
+                SignInWithAppleButton(
 
                     //Request
                     onRequest: { [self] request in
@@ -33,13 +36,13 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
                     //Completion
                     onCompletion: { [self] result in
+                        isLoading = false
                         switch result {
                         case .success(let authResults):
                             switch authResults.credential {
                             case let appleIDCredential as ASAuthorizationAppleIDCredential:
 
                                 guard let nonce = currentNonce else {
-                                    print("here")
                                     alertError = true
                                     return
                                 }
@@ -55,13 +58,12 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
                                 Auth.auth().signIn(with: credential) { (authResult, error) in
                                     if (error != nil) {
-                                        // Error. If error.code == .MissingOrInvalidNonce, make sure
-                                        // you're sending the SHA256-hashed nonce as a hex string with
-                                        // your request to Apple.
+                                        alertError = true
                                         print(error?.localizedDescription as Any)
                                         return
                                     }
-                                    print("signed in")
+                                    alertError = false
+                                    goToHome = true
                                 }
 
                                 print("\(String(describing: Auth.auth().currentUser?.uid))")
@@ -79,68 +81,71 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             }
         }
     }
-  enum SignInState {
-    case signedIn
-    case signedOut
-  }
+    enum SignInState {
+        case signedIn
+        case signedOut
+    }
     
 
-  @Published var state: SignInState = .signedOut
+    @Published var state: SignInState = .signedOut
 
-  override init() {
-    super.init()
+    override init() {
+        super.init()
 
-    setupGoogleSignIn()
-  }
-
-  func signIn() {
-    if GIDSignIn.sharedInstance().currentUser == nil {
-      GIDSignIn.sharedInstance().presentingViewController = UIApplication.shared.windows.first?.rootViewController
-      GIDSignIn.sharedInstance().signIn()
+        setupGoogleSignIn()
     }
-  }
 
-  func signOut() {
-    GIDSignIn.sharedInstance().signOut()
-
-    do {
-      try Auth.auth().signOut()
-
-      state = .signedOut
-    } catch let signOutError as NSError {
-      print(signOutError.localizedDescription)
+    func signInWithGoogle() {
+        if GIDSignIn.sharedInstance().currentUser == nil {
+            GIDSignIn.sharedInstance().presentingViewController = UIApplication.shared.windows.first?.rootViewController
+            GIDSignIn.sharedInstance().signIn()
+        }
     }
-  }
 
-  private func setupGoogleSignIn() {
-    GIDSignIn.sharedInstance().delegate = self
-  }
+    func signOut() {
+        GIDSignIn.sharedInstance().signOut()
+
+        do {
+            try Auth.auth().signOut()
+            state = .signedOut
+        } catch let signOutError as NSError {
+            print(signOutError.localizedDescription)
+        }
+    }
+
+    private func setupGoogleSignIn() {
+        GIDSignIn.sharedInstance().delegate = self
+    }
 }
 
 extension AuthenticationViewModel: GIDSignInDelegate {
-  func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-    if error == nil {
-      firebaseAuthentication(withUser: user)
-    } else {
-      print(error.debugDescription)
-    }
-  }
-
-  private func firebaseAuthentication(withUser user: GIDGoogleUser) {
-    if let authentication = user.authentication {
-      let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-
-      Auth.auth().signIn(with: credential) { (_, error) in
-        if let error = error {
-          print(error.localizedDescription)
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if error == nil {
+            firebaseAuthentication(withUser: user)
         } else {
-          self.state = .signedIn
+            print(error.debugDescription)
         }
-      }
     }
-  }
+
+    private func firebaseAuthentication(withUser user: GIDGoogleUser) {
+        if let authentication = user.authentication {
+            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+
+            Auth.auth().signIn(with: credential) { [self] (_, error) in
+                isLoading = false
+                if let _ = error {
+                    alertError = true
+                } else {
+                    self.state = .signedIn
+                    goToHome = true
+                    alertError = false
+                }
+            }
+        }
+    }
 }
 
+//MARK: - regular sign up
 extension AuthenticationViewModel {
     var validatedPassword: AnyPublisher<String?, Never> {
         return $password
@@ -150,8 +155,7 @@ extension AuthenticationViewModel {
 
     var validatedEmail: AnyPublisher<String?, Never> {
         let emailFormat = "(?:[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[\\p{L}0-9!#$%\\&'*+/=?\\^_`{|}" + "~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\" + "x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[\\p{L}0-9](?:[a-" + "z0-9-]*[\\p{L}0-9])?\\.)+[\\p{L}0-9](?:[\\p{L}0-9-]*[\\p{L}0-9])?|\\[(?:(?:25[0-5" + "]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-" + "9][0-9]?|[\\p{L}0-9-]*[\\p{L}0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21" + "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
-         //let emailFormat = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
+        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailFormat)
         return $email
             .map { !emailPredicate.evaluate(with: $0) ? "invalid"  : $0}
             .eraseToAnyPublisher()
@@ -159,10 +163,45 @@ extension AuthenticationViewModel {
 
     var validatedCredentials: AnyPublisher<(String, String)?, Never> {
         validatedEmail.combineLatest(validatedPassword) { email, password in
-        guard let mail = email, let pwd = password else { return nil }
-        return (mail, pwd)
-      }
-      .eraseToAnyPublisher()
+            guard let mail = email, let pwd = password else { return nil }
+            return (mail, pwd)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func signUp() {
+        Auth.auth().createUser(withEmail: self.email, password: self.password) { [self] result,error in
+            isLoading = false
+            if error != nil  {
+                alertError = true
+                return
+            }
+            alertError = false
+            goToHome = true
+        }
+    }
+
+    func signIn() {
+        Auth.auth().signIn(withEmail: email, password: password) { [self] authResult, error in
+            isLoading = false
+            if error != nil {
+                alertError = true
+                return
+            }
+            alertError = false
+            goToHome = true
+        }
+    }
+
+    func forgotPassword() {
+        Auth.auth().sendPasswordReset(withEmail: forgotEmail) { [self] error in
+            isLoading = false
+            if error != nil {
+                alertError = true
+            } else {
+                alertError = false
+            }
+        }
     }
 }
 

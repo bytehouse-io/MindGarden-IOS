@@ -109,6 +109,7 @@ struct Play: View {
                     }
                 }.animation(nil)
             }.animation(nil)
+            .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(leading: Image(systemName: "arrow.backward")
                                     .font(.title)
                                     .foregroundColor(Clr.lightGray)
