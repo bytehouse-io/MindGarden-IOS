@@ -35,33 +35,72 @@ enum Category {
         }
     }
 }
+@available(iOS 14.0, *)
 struct CategoriesScene: View {
-    @State private var selectedCategory: Category? = .all
     @ObservedObject var model: MeditationViewModel
+    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -20), count: 2)
+
+    init(model: MeditationViewModel) {
+        self.model = model
+        UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
+        UINavigationBar.appearance().backgroundColor = UIColor(Clr.darkWhite)
+    }
 
     var body: some View {
+        ZStack {
+        Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
         NavigationView {
-            ZStack {
-            Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
             GeometryReader { g in
                 VStack(alignment: .center) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            CategoryButton(category: .all, selected: $selectedCategory)
-                            CategoryButton(category: .unguided, selected: $selectedCategory)
-                            CategoryButton(category: .courses, selected: $selectedCategory)
-                            CategoryButton(category: .anxiety, selected: $selectedCategory)
-                            CategoryButton(category: .focus, selected: $selectedCategory)
-                            CategoryButton(category: .growth, selected: $selectedCategory)
+                            CategoryButton(category: .all, selected: $model.selectedCategory)
+                            CategoryButton(category: .unguided, selected: $model.selectedCategory)
+                            CategoryButton(category: .courses, selected: $model.selectedCategory)
+                            CategoryButton(category: .anxiety, selected: $model.selectedCategory)
+                            CategoryButton(category: .focus, selected: $model.selectedCategory)
+                            CategoryButton(category: .growth, selected: $model.selectedCategory)
                         }.padding()
                     }
                     ScrollView(showsIndicators: false) {
+                        LazyVGrid(columns: gridItemLayout, content: {
+                            ForEach(model.selectedMeditations, id: \.self) { item in
+                                Button {
 
+                                } label: {
+                                    HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: item.title)
+                                }.buttonStyle(NeumorphicPress())
+                                .padding(.vertical, 8)
+                            }
+                        })
                     }
                     Spacer()
-                    }
-                }
-            }.navigationBarTitle("", displayMode: .inline)
+                }.background(Clr.darkWhite)
+            }.navigationBarTitle("Categrories", displayMode: .inline)
+            .navigationBarItems(leading: backButton
+                                   , trailing: searchButton)
+            }
+        }.transition(.move(edge: .trailing))
+
+    }
+    var backButton: some View {
+        Button {
+
+        } label: {
+            Image(systemName: "arrow.backward")
+                .foregroundColor(Clr.darkgreen)
+                .font(.title)
+        }
+    }
+
+    var searchButton: some View {
+        Button {
+
+        } label: {
+            Image(systemName: "magnifyingglass")
+                .font(.title)
+                .foregroundColor(Clr.darkgreen)
+                .padding()
         }
     }
 
@@ -94,6 +133,10 @@ struct CategoriesScene: View {
 
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesScene(model: MeditationViewModel())
+            if #available(iOS 14.0, *) {
+                CategoriesScene(model: MeditationViewModel())
+            } else {
+                // Fallback on earlier versions
+            }
     }
 }

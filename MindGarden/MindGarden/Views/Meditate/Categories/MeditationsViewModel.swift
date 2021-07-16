@@ -8,10 +8,11 @@
 import SwiftUI
 import Combine
 
-struct Meditation {
+struct Meditation: Hashable {
     let title: String
     let description: String
     let category: Category
+//    let img: Img
 }
 
 class MeditationViewModel: ObservableObject {
@@ -21,14 +22,13 @@ class MeditationViewModel: ObservableObject {
     private var validationCancellables: Set<AnyCancellable> = []
 
     init() {
-        $allMeditations
+        $selectedCategory
             .sink { [unowned self] value in
-                let filteredMeds = value.filter { med in
-                    med.category == selectedCategory
+                let filteredMeds = allMeditations.filter { med in
+                    med.category == value
                 }
                 self.selectedMeditations = filteredMeds
             }
             .store(in: &validationCancellables)
-        print("laroi", selectedMeditations)
     }
 }

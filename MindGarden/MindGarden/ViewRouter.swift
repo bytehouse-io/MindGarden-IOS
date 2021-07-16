@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
-    @Published var currentPage: Page = .profile
+    @Published var currentPage: Page = .meditate
     
 }
 
@@ -18,4 +18,5 @@ enum Page {
     case shop
     case profile
     case play
+    case categories
 }

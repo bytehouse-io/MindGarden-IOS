@@ -32,27 +32,35 @@ struct ContentView: View {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack {
-                        switch viewRouter.currentPage {
-                        case .meditate:
-                            Home(viewRouter: viewRouter, model: meditationModel)
-                                .frame(height: geometry.size.height)
-                                .navigationViewStyle(StackNavigationViewStyle())
-                        case .garden:
-                            Garden()
-                                .frame(height: geometry.size.height)
-                                .navigationViewStyle(StackNavigationViewStyle())
-                        case .shop:
-                            Store()
-                                .frame(height: geometry.size.height)
-                                .navigationViewStyle(StackNavigationViewStyle())
-                        case .profile:
-                            ProfileScene()
-                                .frame(height: geometry.size.height)
-                                .navigationViewStyle(StackNavigationViewStyle())
-                        case .play:
-                            Play(model: playViewModel, viewRouter: viewRouter)
-                                .frame(height: geometry.size.height)
-                                .navigationViewStyle(StackNavigationViewStyle())
+                        if #available(iOS 14.0, *) {
+                            switch viewRouter.currentPage {
+                            case .meditate:
+                                Home(viewRouter: viewRouter, model: meditationModel)
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .garden:
+                                Garden()
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .shop:
+                                Store()
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .profile:
+                                ProfileScene()
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .play:
+                                Play(model: playViewModel, viewRouter: viewRouter)
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .categories:
+                                CategoriesScene(model: meditationModel)
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            }
+                        } else {
+                            // Fallback on earlier versions
                         }
                     }.edgesIgnoringSafeArea(.all)
                     if viewRouter.currentPage != .play {

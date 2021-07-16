@@ -139,23 +139,28 @@ struct Home: View {
                                 HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
                             }.buttonStyle(NeumorphicPress())
                             Button {
-
+                                
                             } label: {
                                 HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
                             }.buttonStyle(NeumorphicPress())
                         }.padding(.top, 10)
-                        NavigationLink(destination: CategoriesScene(model: model)
-                                        .navigationBarTitle("")
-                                        .navigationBarHidden(true)) {
-                            RoundedRectangle(cornerRadius: 25)
-                                .frame(width: g.size.width * 0.85, height: g.size.height/14)
-                                .foregroundColor(Clr.yellow)
-                                .overlay(Text("See All Categories")
-                                            .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.semiBold, size: 20))
-                                )
-                        }.padding(.top, 20)
-                        .buttonStyle(NeumorphicPress())
+                        if #available(iOS 14.0, *) {
+                            Button {
+                                withAnimation {
+                                    viewRouter.currentPage = .categories
+                                }
+                            } label: { RoundedRectangle(cornerRadius: 25)
+                                    .frame(width: g.size.width * 0.85, height: g.size.height/14)
+                                    .foregroundColor(Clr.yellow)
+                                    .overlay(Text("See All Categories")
+                                                .foregroundColor(Clr.black2)
+                                                .font(Font.mada(.semiBold, size: 20))
+                                    )
+                            }.padding(.top, 20)
+                            .buttonStyle(NeumorphicPress())
+                        } else {
+                            // Fallback on earlier versions
+                        }
                         Spacer()
                     }
                 }
