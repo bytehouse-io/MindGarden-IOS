@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct Home: View {
-    @State var isRecent = false
-    @State var showModal = false
     @ObservedObject var viewRouter: ViewRouter
     @ObservedObject var model: MeditationViewModel
+    @State private var isRecent = false
+    @State private var showModal = false
 
     init(viewRouter: ViewRouter, model: MeditationViewModel) {
         self.viewRouter = viewRouter
@@ -50,7 +50,7 @@ struct Home: View {
                                 }
                             } label: {
                                 HStack {
-                                    Text("Daily Bonus1")
+                                    Text("Daily Bonus")
                                         .font(Font.mada(.regular, size: 14))
                                         .foregroundColor(.black)
                                         .font(.footnote)
@@ -64,7 +64,7 @@ struct Home: View {
 
                             } label: {
                                 HStack {
-                                    Text("Daily Bonus")
+                                    Text("Select Plant")
                                         .font(Font.mada(.regular, size: 14))
                                         .foregroundColor(.black)
                                         .font(.footnote)
@@ -130,6 +130,7 @@ struct Home: View {
                             }
                             Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
                                 .offset(x: isRecent ? -42.0 : 33.0)
+                                .animation(.default, value: isRecent)
                         }.frame(width: abs(g.size.width - 75), alignment: .leading)
                         .padding(.top, 20)
                         HStack(spacing: 15) {
@@ -170,9 +171,11 @@ struct Home: View {
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
                 }
-                BonusModal(shown: $showModal).offset(y: showModal ? 0 : g.size.height)
+                BonusModal(shown: $showModal)
+                    .offset(y: showModal ? 0 : g.size.height)
                     .edgesIgnoringSafeArea(.top)
-            }
+                    .animation(.default, value: showModal)
+            }.animation(nil)
             .transition(.move(edge: .leading))
             .animation(.default)
             .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
@@ -181,7 +184,6 @@ struct Home: View {
                                     .foregroundColor(Clr.darkgreen)
                                     .padding()
             )
-            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }

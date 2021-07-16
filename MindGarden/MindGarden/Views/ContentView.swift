@@ -44,7 +44,7 @@ struct ContentView: View {
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .shop:
                                 Store()
-                                    .frame(height: geometry.size.height)
+                                    .frame(height: geometry.size.height + 20)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .profile:
                                 ProfileScene()
@@ -55,7 +55,7 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
-                                CategoriesScene(model: meditationModel)
+                                CategoriesScene(viewRouter: viewRouter, model: meditationModel)
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             }
@@ -80,7 +80,7 @@ struct ContentView: View {
                         }
                         ZStack {
                             PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, width: geometry.size.width)
-                                .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch ? 125 : K.isPad() ? 235 : 130) : geometry.size.height/2 + 60)
+                                .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 125 : K.isPad() ? 235 : 130) : geometry.size.height/2 + 60)
                                 .opacity(showPopUp ? 1 : 0)
                             HStack {
                                 TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
@@ -110,24 +110,23 @@ struct ContentView: View {
                                 TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
                             }.frame(width: geometry.size.width, height: 80)
                             .background(Clr.darkgreen.shadow(radius: 2))
-                            .offset(y: geometry.size.height/2 + (K.hasNotch ? 0 : -10))
+                            .offset(y: geometry.size.height/2 - (K.hasNotch() ? 0 : 15))
                         }
                         MoodCheck(shown: $addMood)
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.35)
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
-                            .offset(y: addMood ? geometry.size.height/(K.hasNotch ? 2.5 : 2.75) : geometry.size.height)
+                            .offset(y: addMood ? geometry.size.height/(K.hasNotch() ? 2.5 : 2.75) : geometry.size.height)
                         Gratitude(shown: $addGratitude, openPrompts: $openPrompts)
                             .frame(width: geometry.size.width, height: geometry.size.height * 0.45 * (openPrompts ? 2.25 : 1))
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
-                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch ? 3.5 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
+                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch() ? 3.5 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
                     }
                 }
-                .edgesIgnoringSafeArea(.all)
                 .navigationBarTitle("", displayMode: .inline)
                 .navigationBarHidden(true)
-            }.background(Color.red)
+            }
             .environmentObject(viewRouter)
         }.navigationViewStyle(StackNavigationViewStyle())
     }

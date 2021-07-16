@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PurchaseModal: View {
     @Binding var shown: Bool
+    @Binding var showConfirm: Bool
+
     var title = "Blue Tulips"
 //    var img: Img = Image()
 
@@ -74,6 +76,10 @@ struct PurchaseModal: View {
                                     Text("20")
                                         .font(Font.mada(.bold, size: 20))
                                         .foregroundColor(Clr.black1)
+                                }.onTapGesture {
+                                    withAnimation {
+                                        showConfirm = true
+                                    }
                                 })
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height * 0.65, alignment: .center)
@@ -90,7 +96,7 @@ struct PurchaseModal: View {
 struct PurchaseModal_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            PurchaseModal(shown: .constant(true))
+            PurchaseModal(shown: .constant(true), showConfirm: .constant(false))
         }
     }
 }

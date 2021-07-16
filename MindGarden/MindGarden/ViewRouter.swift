@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
-    @Published var currentPage: Page = .meditate
+    @Published var currentPage: Page = .profile
     
 }
 

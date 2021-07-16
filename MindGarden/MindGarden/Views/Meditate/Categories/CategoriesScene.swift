@@ -37,20 +37,22 @@ enum Category {
 }
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
+    @ObservedObject var viewRouter: ViewRouter
     @ObservedObject var model: MeditationViewModel
     var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -20), count: 2)
 
-    init(model: MeditationViewModel) {
+    init(viewRouter: ViewRouter, model: MeditationViewModel) {
+        self.viewRouter = viewRouter
         self.model = model
-        UINavigationBar.appearance().standardAppearance.configureWithTransparentBackground()
-        UINavigationBar.appearance().backgroundColor = UIColor(Clr.darkWhite)
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
     }
 
     var body: some View {
-        ZStack {
-        Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
         NavigationView {
             GeometryReader { g in
+                ZStack {
+                Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 VStack(alignment: .center) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -81,11 +83,12 @@ struct CategoriesScene: View {
                                    , trailing: searchButton)
             }
         }.transition(.move(edge: .trailing))
-
     }
     var backButton: some View {
         Button {
-
+            withAnimation {
+                viewRouter.currentPage = .meditate
+            }
         } label: {
             Image(systemName: "arrow.backward")
                 .foregroundColor(Clr.darkgreen)
@@ -134,7 +137,7 @@ struct CategoriesScene: View {
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
             if #available(iOS 14.0, *) {
-                CategoriesScene(model: MeditationViewModel())
+                CategoriesScene(viewRouter: ViewRouter(), model: MeditationViewModel())
             } else {
                 // Fallback on earlier versions
             }
