@@ -12,6 +12,7 @@ public enum Img {
   public static let tulips1 = Image("tulips1")
   public static let tulips2 = Image("tulips2")
   public static let tulips3 = Image("tulips3")
+  public static let beach = Image("beach")
   public static let chatBubble = Image("chatBubble")
   public static let coin = Image("coin")
   public static let daisy = Image("daisy")

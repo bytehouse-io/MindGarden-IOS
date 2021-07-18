@@ -52,7 +52,7 @@ struct ContentView: View {
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .play:
                                 Play(model: playViewModel, viewRouter: viewRouter)
-                                    .frame(height: geometry.size.height)
+                                    .frame(height: geometry.size.height + 80)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
                                 CategoriesScene(viewRouter: viewRouter, model: meditationModel)

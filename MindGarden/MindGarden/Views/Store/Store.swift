@@ -10,10 +10,11 @@ import SwiftUI
 struct Store: View {
     @State var showModal = false
     @State var confirmModal = false
+    @State var showSuccess = false
     
     var body: some View {
         ZStack {
-            Clr.redGradientBottom.edgesIgnoringSafeArea(.all)
+            Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
                 ScrollView {
                     HStack(alignment: .top, spacing: 20) {
@@ -51,14 +52,71 @@ struct Store: View {
                     Spacer()
                 }
                 PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
-                    .opacity(confirmModal ? 0.3 : 1)
-                ConfirmModal(shown: $confirmModal).offset(y: confirmModal ? 0 : g.size.height)
+                    .opacity(confirmModal || showSuccess ? 0.3 : 1)
+                ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
+                    .opacity(showSuccess ? 0.3 : 1)
+                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
+        }
+    }
+
+    struct SuccessModal: View {
+        @Binding var showSuccess: Bool
+        @Binding var showMainModal: Bool
+
+        var title = "Blue Tulips"
+
+        var  body: some View {
+            GeometryReader { g in
+                VStack {
+                    Spacer()
+                    HStack(alignment: .center) {
+                        Spacer()
+                        VStack(alignment: .center, spacing: 0) {
+                            Text("Succesfully Unlocked!")
+                                .foregroundColor(Clr.black1)
+                                .font(Font.mada(.bold, size: 24))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                                .multilineTextAlignment(.center)
+                                .padding(.vertical)
+                            Text("Go to the home screen and press the select plant button to equip your new plant")
+                                .font(Font.mada(.medium, size: 18))
+                                .foregroundColor(Clr.black2.opacity(0.7))
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.05)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                            Button {
+                                withAnimation {
+                                    showSuccess = false
+                                    showMainModal = false
+                                }
+                            } label: {
+                                Text("Got it")
+                                    .font(Font.mada(.bold, size: 18))
+                                    .foregroundColor(.white)
+                                    .frame(width: g.size.width/3, height: 40)
+                                    .background(Clr.darkgreen)
+                                    .clipShape(Capsule())
+                                    .padding()
+                            }
+                            .buttonStyle(NeumorphicPress())
+                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
+                        .background(Clr.darkWhite)
+                        .cornerRadius(20)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            }
         }
     }
     struct ConfirmModal: View {
         @Binding var shown: Bool
+        @Binding var showSuccess: Bool
         var title = "Blue Tulips"
+        var coins = 300
 
         var body: some View {
             GeometryReader { g in
@@ -66,11 +124,55 @@ struct Store: View {
                     Spacer()
                     HStack(alignment: .center) {
                         Spacer()
-                        VStack(alignment: .center) {
-                            Text("jackie")
-                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.35, alignment: .center)
+                        VStack(alignment: .center, spacing: 0) {
+                            Text("Unlock this plant species?")
+                                .foregroundColor(Clr.black1)
+                                .font(Font.mada(.bold, size: 24))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                                .multilineTextAlignment(.center)
+                                .padding(.vertical)
+                            Text("Are you sure you want to spend \(coins) coins on unlocking \(title)")
+                                .font(Font.mada(.medium, size: 18))
+                                .foregroundColor(Clr.black2.opacity(0.7))
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.05)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                            HStack(alignment: .center, spacing: -10) {
+                                Button {
+                                    withAnimation {
+                                        shown = false
+                                    }
+                                } label: {
+                                    Text("Cancel")
+                                        .font(Font.mada(.bold, size: 18))
+                                        .foregroundColor(.white)
+                                        .frame(width: g.size.width/3, height: 40)
+                                        .background(Color.gray.opacity(0.5))
+                                        .clipShape(Capsule())
+                                        .padding()
+                                }
+                                .buttonStyle(NeumorphicPress())
+                                Button {
+                                    withAnimation {
+                                        shown = false
+                                        showSuccess = true
+                                    }
+                                } label: {
+                                    Text("Confirm")
+                                        .font(Font.mada(.bold, size: 18))
+                                        .foregroundColor(.white)
+                                        .frame(width: g.size.width/3, height: 40)
+                                        .background(Clr.darkgreen)
+                                        .clipShape(Capsule())
+                                        .padding()
+                                }
+                                .buttonStyle(NeumorphicPress())
+                            }.padding(.horizontal)
+                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
                         .background(Clr.darkWhite)
-                        .cornerRadius(12)
+                        .cornerRadius(20)
                         Spacer()
                     }
                     Spacer()
