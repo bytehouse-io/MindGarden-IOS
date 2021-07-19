@@ -18,6 +18,7 @@ struct Play: View {
             return 1 - (model.secondsRemaining/model.totalTime)
         }
     }
+    var unGuided: Bool = true
     @State var timerStarted: Bool = false
     @State var favorited: Bool = false
     @State var player : AVAudioPlayer!
@@ -26,7 +27,7 @@ struct Play: View {
     @State var del = AVdelegate()
     @State var finish = false
     @State var showNatureModal = true
-    @State var selectedSound: Sound? = .rain
+    @State var selectedSound: Sound? = .noSound
     @ObservedObject var model: PlayViewModel
     @ObservedObject var viewRouter: ViewRouter
 
@@ -136,7 +137,7 @@ struct Play: View {
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                     }
-                    NatureModal(show: $showNatureModal, sound: $selectedSound).offset(y: showNatureModal ? 0 : g.size.height)
+                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player).offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
                 }
             }.animation(nil)
@@ -147,20 +148,33 @@ struct Play: View {
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppear {
-            let url = Bundle.main.path(forResource: "rain", ofType: "mp3")
-            player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-            player.delegate = self.del
-            player.prepareToPlay()
-            player.volume = 3
-            player.numberOfLoops = -1
-            getData()
-            //            player.play()
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
-                self.finish = true
+            if unGuided {
+                if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+                    if defaultSound != "noSound"  {
+                        selectedSound = Sound.getSound(str: defaultSound)
+                        let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
+                        player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                        player.delegate = self.del
+                        player.prepareToPlay()
+                        if selectedSound == .beach {
+                            player.volume = 0.3
+                        } else {
+                            player.volume = 3
+                        }
+                        player.numberOfLoops = -1
+                        player.play()
+                        getData()
+                        //            player.play()
+                        NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
+                            self.finish = true
+                        }
+                    }
+                }
             }
         }
     }
 
+    //MARK: - nav
     var backArrow: some View {
         Image(systemName: "arrow.backward")
             .font(.title)
@@ -190,47 +204,13 @@ struct Play: View {
             }
     }
 
-    enum Sound {
-        case rain
-        case night
-        case nature
-        case fire
-        case beach
 
-        var img: Image {
-            switch self {
-            case .rain:
-                return Image(systemName: "cloud.rain")
-            case .night:
-                return Image(systemName: "moon.stars")
-            case .nature:
-                return Image(systemName: "leaf")
-            case .beach:
-                return Image("beach")
-            case .fire:
-                return Image(systemName: "flame")
-            }
-        }
-
-        var title: String {
-            switch self {
-            case .rain:
-                return "rain"
-            case .night:
-                return "night"
-            case .nature:
-                return "nature"
-            case .beach:
-                return "beach"
-            case .fire:
-                return "fire"
-            }
-        }
-    }
-
+    //MARK: - modal
     struct NatureModal: View {
         @Binding var show: Bool
         @Binding var sound: Sound?
+        var change: () -> Void
+        var player: AVAudioPlayer?
 
         var  body: some View {
             GeometryReader { g in
@@ -247,11 +227,11 @@ struct Play: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                             HStack {
-                                SoundButton(type: .nature, selectedType: $sound)
-                                SoundButton(type: .rain, selectedType: $sound)
-                                SoundButton(type: .night, selectedType: $sound)
-                                SoundButton(type: .beach, selectedType: $sound)
-                                SoundButton(type: .fire, selectedType: $sound)
+                                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player)
+                                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player)
+                                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player)
+                                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player)
+                                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player)
                             }
                             Button {
                                 withAnimation {
@@ -279,14 +259,87 @@ struct Play: View {
         }
     }
 
+    //MARK: - Sonud
+    enum Sound {
+        case rain
+        case night
+        case nature
+        case fire
+        case beach
+        case noSound
+
+        var img: Image {
+            switch self {
+            case .rain:
+                return Image(systemName: "cloud.rain")
+            case .night:
+                return Image(systemName: "moon.stars")
+            case .nature:
+                return Image(systemName: "leaf")
+            case .beach:
+                return Image("beach")
+            case .fire:
+                return Image(systemName: "flame")
+            case .noSound:
+                return Image("beach")
+            }
+        }
+
+        var title: String {
+            switch self {
+            case .rain:
+                return "rain"
+            case .night:
+                return "night"
+            case .nature:
+                return "nature"
+            case .beach:
+                return "beach"
+            case .fire:
+                return "fire"
+            case .noSound:
+                return "noSound"
+            }
+        }
+
+        static func getSound(str: String) -> Sound {
+            switch str {
+            case "rain":
+                return .rain
+            case "night":
+                return .night
+            case "nature":
+                return .nature
+            case "beach":
+                return .beach
+            case "fire":
+                return .fire
+            case "noSound":
+                return .noSound
+            default:
+                return .noSound
+            }
+        }
+    }
+
     struct SoundButton: View {
         var type: Sound?
         @Binding var selectedType: Sound?
+        var change: () -> Void
+        var player: AVAudioPlayer?
 
         var body: some View {
             Button {
                 withAnimation {
-                    selectedType = type
+                    if selectedType == type {
+                        selectedType = .noSound
+                        player?.pause()
+
+                    } else {
+                        selectedType = type
+                        change()
+                    }
+                    UserDefaults.standard.set(selectedType?.title, forKey: "sound")
                 }
             } label: {
                 ZStack {
@@ -311,7 +364,24 @@ struct Play: View {
         }
     }
 
-    func getData() {
+
+     func changeSound() {
+        let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
+        player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+        player.delegate = self.del
+        if selectedSound == .beach {
+            player.volume = 0.3
+        } else {
+            player.volume = 3
+        }
+        player.numberOfLoops = -1
+        self.data = .init(count: 0)
+        player.prepareToPlay()
+        self.player.play()
+        getData()
+    }
+
+     func getData() {
         let asset = AVAsset(url: self.player.url!)
         for i in asset.commonMetadata{
             if i.commonKey?.rawValue == "title"{
@@ -324,7 +394,6 @@ struct Play: View {
 
 class AVdelegate : NSObject,AVAudioPlayerDelegate{
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-
         NotificationCenter.default.post(name: NSNotification.Name("Finish"), object: nil)
     }
 }
