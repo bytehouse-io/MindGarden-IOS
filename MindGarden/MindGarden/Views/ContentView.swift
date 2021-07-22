@@ -13,10 +13,10 @@ struct ContentView: View {
     @ObservedObject var viewRouter: ViewRouter
     private let playViewModel = PlayViewModel()
     private let meditationModel = MeditationViewModel()
-    @State var showPopUp = false
-    @State var addMood = false
-    @State var openPrompts = false
-    @State var addGratitude = false
+    @State private var showPopUp = false
+    @State private var addMood = false
+    @State private var openPrompts = false
+    @State private var addGratitude = false
 
     init(viewRouter: ViewRouter) {
         self.viewRouter = viewRouter
@@ -56,6 +56,10 @@ struct ContentView: View {
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
                                 CategoriesScene(viewRouter: viewRouter, model: meditationModel)
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .middle:
+                                MiddleSelect(viewRouter: viewRouter, model: meditationModel)
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             }
@@ -129,6 +133,7 @@ struct ContentView: View {
             }
             .environmentObject(viewRouter)
         }.navigationViewStyle(StackNavigationViewStyle())
+        .environmentObject(meditationModel)
     }
 }
 

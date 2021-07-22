@@ -135,7 +135,7 @@ struct Home: View {
                         .padding(.top, 20)
                         HStack(spacing: 15) {
                             Button {
-
+                                viewRouter.currentPage = .middle
                             } label: {
                                 HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
                             }.buttonStyle(NeumorphicPress())
@@ -176,15 +176,15 @@ struct Home: View {
                     .edgesIgnoringSafeArea(.top)
                     .animation(.default, value: showModal)
             }.animation(nil)
-            .transition(.move(edge: .leading))
             .animation(.default)
-            .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
+            .navigationBarItems(
+                leading: Img.topBranch.padding(.leading, -20),
                                 trailing: Image(systemName: "magnifyingglass")
                                     .font(.title)
                                     .foregroundColor(Clr.darkgreen)
                                     .padding()
             )
-        }
+        }.transition(.move(edge: .leading))
     }
 }
 

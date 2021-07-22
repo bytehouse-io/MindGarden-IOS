@@ -8,8 +8,6 @@
 import SwiftUI
 import AVKit
 
-
-
 struct Play: View {
     var progressValue: Float {
         if model.isOpenEnded {
@@ -26,10 +24,11 @@ struct Play: View {
     @State var title = ""
     @State var del = AVdelegate()
     @State var finish = false
-    @State var showNatureModal = true
+    @State var showNatureModal = false
     @State var selectedSound: Sound? = .noSound
     @ObservedObject var model: PlayViewModel
     @ObservedObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditationModel: MeditationViewModel
 
     var body: some View {
         NavigationView {
@@ -81,7 +80,6 @@ struct Play: View {
                                         }
                                     }
                                 }
-
                                 Button {
                                     if player.isPlaying {
                                         player.pause()
@@ -141,7 +139,7 @@ struct Play: View {
                         .animation(.default)
                 }
             }.animation(nil)
-            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarTitle(Text(meditationModel.selectedMeditation?.title ?? ""), displayMode: .inline)
             .navigationBarItems(leading: backArrow,
                                 trailing: HStack{sound; heart}
             )
@@ -339,7 +337,7 @@ struct Play: View {
                         selectedType = type
                         change()
                     }
-                    UserDefaults.standard.set(selectedType?.title, forKey: "sound")
+                    UserDefaults.standard.setValue(selectedType?.title, forKey: "sound")
                 }
             } label: {
                 ZStack {
