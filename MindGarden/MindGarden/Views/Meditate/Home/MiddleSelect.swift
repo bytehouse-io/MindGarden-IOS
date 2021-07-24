@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MiddleSelect: View {
-    var viewRouter: ViewRouter
-    @ObservedObject var model: MeditationViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var model: MeditationViewModel
     @State var tappedMeditation: Bool = false
 
     var body: some View {
@@ -30,6 +30,7 @@ struct MiddleSelect: View {
                                     Text("Selected Plant: Pick Tulips")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 16))
+                                        .padding(.top)
                                     HStack(spacing: 0) {
                                         Img.daisy
                                             .resizable()
@@ -46,19 +47,30 @@ struct MiddleSelect: View {
                                                 .font(Font.mada(.regular, size: 16))
                                                 .padding(.trailing)
                                         }.frame(width: g.size.width/1.7)
-                                        .padding(.vertical)
+                                        .padding(.vertical, 5)
                                     }
                                     .padding()
                                     .frame(width: g.size.width)
                                     Divider().padding()
                                     VStack {
                                         ForEach(model.selectedMeditations, id: \.self) { meditation in
-                                            MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, tappedMeditation: $tappedMeditation)
+                                            MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, tappedMeditation: $tappedMeditation)
                                         }
                                     }
-                                    Divider().padding()
-                                    Spacer()
-                                }
+                                        Divider().padding()
+                                        HStack(spacing: 15) {
+                                            Button {
+
+                                            } label: {
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                                            }.buttonStyle(NeumorphicPress())
+                                            Button {
+
+                                            } label: {
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                                            }.buttonStyle(NeumorphicPress())
+                                        }.padding(.top)
+                                    }
                             }
                         }
                     }
@@ -90,11 +102,13 @@ struct MiddleSelect: View {
         let width: CGFloat
         let meditation: Meditation
         let viewRouter: ViewRouter
+        let model: MeditationViewModel
         @Binding var tappedMeditation: Bool
 
         var body: some View {
             Button {
                 tappedMeditation = true
+                model.selectedMeditation = meditation
                 withAnimation {
                     viewRouter.currentPage = .play
                 }
@@ -123,6 +137,6 @@ struct MiddleSelect: View {
 
 struct MiddleSelect_Previews: PreviewProvider {
     static var previews: some View {
-        MiddleSelect(viewRouter: ViewRouter(), model: MeditationViewModel())
+        MiddleSelect()
     }
 }

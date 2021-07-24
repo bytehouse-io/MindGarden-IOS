@@ -10,20 +10,18 @@ import Combine
 
 
 struct ContentView: View {
-    @ObservedObject var viewRouter: ViewRouter
-    private let playViewModel = PlayViewModel()
+    @EnvironmentObject var viewRouter: ViewRouter
     private let meditationModel = MeditationViewModel()
     @State private var showPopUp = false
     @State private var addMood = false
     @State private var openPrompts = false
     @State private var addGratitude = false
 
-    init(viewRouter: ViewRouter) {
-        self.viewRouter = viewRouter
+    init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-        playViewModel.isOpenEnded = true
-        playViewModel.secondsRemaining = 150
+        meditationModel.isOpenEnded = false
+        meditationModel.secondsRemaining = 150
     }
 
     var body: some View {
@@ -35,7 +33,7 @@ struct ContentView: View {
                         if #available(iOS 14.0, *) {
                             switch viewRouter.currentPage {
                             case .meditate:
-                                Home(viewRouter: viewRouter, model: meditationModel)
+                                Home()
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .garden:
@@ -51,15 +49,15 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .play:
-                                Play(model: playViewModel, viewRouter: viewRouter)
+                                Play()
                                     .frame(height: geometry.size.height + 80)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
-                                CategoriesScene(viewRouter: viewRouter, model: meditationModel)
+                                CategoriesScene()
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .middle:
-                                MiddleSelect(viewRouter: viewRouter, model: meditationModel)
+                                MiddleSelect()
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             }
@@ -131,7 +129,6 @@ struct ContentView: View {
                 .navigationBarTitle("", displayMode: .inline)
                 .navigationBarHidden(true)
             }
-            .environmentObject(viewRouter)
         }.navigationViewStyle(StackNavigationViewStyle())
         .environmentObject(meditationModel)
     }
@@ -140,7 +137,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            ContentView(viewRouter: ViewRouter())
+            ContentView()
         }
         //        ContentView(viewRouter: ViewRouter())
     }

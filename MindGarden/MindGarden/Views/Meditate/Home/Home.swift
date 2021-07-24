@@ -8,14 +8,12 @@
 import SwiftUI
 
 struct Home: View {
-    @ObservedObject var viewRouter: ViewRouter
-    @ObservedObject var model: MeditationViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var model: MeditationViewModel
     @State private var isRecent = false
     @State private var showModal = false
 
-    init(viewRouter: ViewRouter, model: MeditationViewModel) {
-        self.viewRouter = viewRouter
-        self.model = model
+    init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -190,8 +188,7 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home(viewRouter: ViewRouter(),
-             model: MeditationViewModel()).navigationViewStyle(StackNavigationViewStyle())
+        Home().navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

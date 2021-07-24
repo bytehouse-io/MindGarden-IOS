@@ -79,7 +79,7 @@ struct Authentication: View {
                             viewModel.isLoading = true
                             viewModel.signUp()
                         } label: {
-                            NavigationLink(destination: ContentView(viewRouter: ViewRouter())
+                            NavigationLink(destination: ContentView()
                                             .navigationBarTitle("")
                                             .navigationBarHidden(true), isActive: $viewModel.goToHome) {
                                 ZStack(alignment: .center) {

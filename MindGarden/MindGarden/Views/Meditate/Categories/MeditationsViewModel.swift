@@ -16,6 +16,7 @@ struct Meditation: Hashable {
     let img: Image
     let type: MeditationType
     let id: Int
+    let duration: Float
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -32,13 +33,22 @@ enum MeditationType {
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
-    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2)
+    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)
     @Published var courseMeditations: [Meditation] = []
-    @Published var allMeditations = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2),  Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3), Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4), Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5)]
+    @Published var allMeditations = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0),  Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3, duration: 5), Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4, duration: 120), Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5, duration: 300)]
     @Published var selectedCategory: Category? = .focus
+    var totalTime: Float = 0
+    //user needs to meditate at least 5 mins for plant
+    var isOpenEnded = false
+    @Published var secondsRemaining: Float = 150
+    @Published var secondsCounted: Float = 0
+    @Published var finishedMeditation: Bool = false
+    var timer: Timer = Timer()
     private var validationCancellables: Set<AnyCancellable> = []
 
     init() {
+        print("initing")
+
         $selectedCategory
             .sink { [unowned self] value in
                 self.selectedMeditations = allMeditations.filter { med in
@@ -48,13 +58,46 @@ class MeditationViewModel: ObservableObject {
             .store(in: &validationCancellables)
 
         $selectedMeditation
-            .sink { [unowned self] value in
+            .sink { [unowned self] value in 
                 if value?.type == .course {
                     selectedMeditations = allMeditations.filter { med in
                         med.belongsTo == value?.title
                     }
                 }
+                secondsRemaining = value?.duration ?? 0
+                totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
+    }
+
+
+    //MARK: - timer
+    func startCountdown() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
+            self.secondsRemaining -= 1
+            if secondsRemaining <= 0 {
+                print("in here aloha")
+                stop()
+                finishedMeditation = true
+                return
+            }
+        }
+        timer.fire()
+    }
+
+    func stop() {
+        timer.invalidate()
+    }
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in self.secondsCounted += 1 }
+        timer.fire()
+    }
+
+
+    func secondsToMinutesSeconds (totalSeconds: Float) -> String {
+        let minutes = Int(totalSeconds / 60)
+        let seconds = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
+        return String(format:"%02d:%02d", minutes, seconds)
     }
 }

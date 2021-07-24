@@ -37,13 +37,11 @@ enum Category {
 }
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
-    @ObservedObject var viewRouter: ViewRouter
-    @ObservedObject var model: MeditationViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var model: MeditationViewModel
     var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -20), count: 2)
 
-    init(viewRouter: ViewRouter, model: MeditationViewModel) {
-        self.viewRouter = viewRouter
-        self.model = model
+    init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -137,7 +135,7 @@ struct CategoriesScene: View {
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
             if #available(iOS 14.0, *) {
-                CategoriesScene(viewRouter: ViewRouter(), model: MeditationViewModel())
+                CategoriesScene()
             } else {
                 // Fallback on earlier versions
             }

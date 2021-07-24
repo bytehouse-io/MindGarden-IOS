@@ -19,16 +19,15 @@ struct Play: View {
     var unGuided: Bool = true
     @State var timerStarted: Bool = false
     @State var favorited: Bool = false
-    @State var player : AVAudioPlayer!
+    @State var player : AVAudioPlayer = AVAudioPlayer()
     @State var data : Data = .init(count: 0)
     @State var title = ""
     @State var del = AVdelegate()
     @State var finish = false
     @State var showNatureModal = false
     @State var selectedSound: Sound? = .noSound
-    @ObservedObject var model: PlayViewModel
-    @ObservedObject var viewRouter: ViewRouter
-    @EnvironmentObject var meditationModel: MeditationViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var model: MeditationViewModel
 
     var body: some View {
         NavigationView {
@@ -137,9 +136,10 @@ struct Play: View {
                     }
                     NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player).offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
+                    NavigationLink("", destination: Finished().navigationBarHidden(true), isActive: $model.finishedMeditation)
                 }
             }.animation(nil)
-            .navigationBarTitle(Text(meditationModel.selectedMeditation?.title ?? ""), displayMode: .inline)
+            .navigationBarTitle(Text(model.selectedMeditation?.title ?? ""), displayMode: .inline)
             .navigationBarItems(leading: backArrow,
                                 trailing: HStack{sound; heart}
             )
@@ -399,6 +399,7 @@ class AVdelegate : NSObject,AVAudioPlayerDelegate{
 
 struct Play_Previews: PreviewProvider {
     static var previews: some View {
-        Play(model: PlayViewModel(), viewRouter: ViewRouter())
+        Play()
+            .environmentObject(MeditationViewModel())
     }
 }
