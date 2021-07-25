@@ -47,8 +47,7 @@ class MeditationViewModel: ObservableObject {
     private var validationCancellables: Set<AnyCancellable> = []
 
     init() {
-        print("initing")
-
+        print("initing2")
         $selectedCategory
             .sink { [unowned self] value in
                 self.selectedMeditations = allMeditations.filter { med in

@@ -7,30 +7,36 @@
 
 import GoogleSignIn
 import FirebaseAuth
+import Firebase
 import CryptoKit
 import SwiftUI
 import AuthenticationServices
 import Combine
 
 class AuthenticationViewModel: NSObject, ObservableObject {
-    @State var currentNonce:String?
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var forgotEmail: String = ""
     @Published var alertError: Bool = false
+    @Published var alertMessage: String = "Please try again using a different email or method"
     @Published var goToHome: Bool = false
     @Published var isLoading: Bool = false
+    var currentNonce: String?
+    var googleIsNew: Bool = true
+
+    let db = Firestore.firestore()
+    var isSignUp: Bool = false
+    var appleAlreadySigned: Bool = false
 
     var siwa: some View {
         return Group {
             if #available(iOS 14.0, *) {
                 SignInWithAppleButton(
-
                     //Request
                     onRequest: { [self] request in
+                        request.requestedScopes = [.fullName, .email]
                         let nonce = randomNonceString()
                         currentNonce = nonce
-                        request.requestedScopes = [.fullName, .email]
                         request.nonce = sha256(nonce)
                     },
 
@@ -41,9 +47,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                         case .success(let authResults):
                             switch authResults.credential {
                             case let appleIDCredential as ASAuthorizationAppleIDCredential:
-
                                 guard let nonce = currentNonce else {
                                     alertError = true
+                                    alertMessage = "Please try again using a different email or method"
                                     return
                                 }
                                 guard let appleIDToken = appleIDCredential.identityToken else {
@@ -56,16 +62,23 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 }
 
                                 let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
-                                Auth.auth().signIn(with: credential) { (authResult, error) in
-                                    if (error != nil) {
-                                        alertError = true
-                                        print(error?.localizedDescription as Any)
-                                        return
-                                    }
-                                    alertError = false
-                                    goToHome = true
-                                }
-
+                                    Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                        if (error != nil) {
+                                            alertError = true
+                                            alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                            print(error?.localizedDescription ?? "high roe")
+                                            return
+                                        }
+                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+                                        alertError = false
+                                        goToHome = true
+                                        guard let _ = appleIDCredential.email else {
+                                            print("jangu")
+                                            // User already signed in with this appleId once
+                                            return
+                                        }
+                                        createUser()
+                                    })
                                 print("\(String(describing: Auth.auth().currentUser?.uid))")
                             default:
                                 break
@@ -91,7 +104,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
     override init() {
         super.init()
-
         setupGoogleSignIn()
     }
 
@@ -121,7 +133,20 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 extension AuthenticationViewModel: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if error == nil {
-            firebaseAuthentication(withUser: user)
+            if isSignUp {
+                Auth.auth().fetchSignInMethods(forEmail: user.profile.email, completion: { [self]
+                    (providers, error) in
+                    if let error = error {
+                        alertError = true
+                        alertMessage = error.localizedDescription
+                    } else if let providers = providers {
+                        if providers.count != 0 {
+                            googleIsNew = false
+                        }
+                    }
+                })
+                self.firebaseAuthentication(withUser: user)
+            }
         } else {
             print(error.debugDescription)
         }
@@ -135,7 +160,11 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 isLoading = false
                 if let _ = error {
                     alertError = true
+                    alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
                 } else {
+                    if googleIsNew {
+                        createUser()
+                    }
                     self.state = .signedIn
                     goToHome = true
                     alertError = false
@@ -170,15 +199,18 @@ extension AuthenticationViewModel {
     }
 
     func signUp() {
+        print("signing up")
         Auth.auth().createUser(withEmail: self.email, password: self.password) { [self] result,error in
             isLoading = false
             if error != nil  {
                 alertError = true
+                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
                 return
             }
             alertError = false
             goToHome = true
         }
+        createUser()
     }
 
     func signIn() {
@@ -186,8 +218,10 @@ extension AuthenticationViewModel {
             isLoading = false
             if error != nil {
                 alertError = true
+                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
                 return
             }
+            getData()
             alertError = false
             goToHome = true
         }
@@ -198,8 +232,50 @@ extension AuthenticationViewModel {
             isLoading = false
             if error != nil {
                 alertError = true
+                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
             } else {
                 alertError = false
+            }
+        }
+    }
+
+    func createUser() {
+        print("Creating user")
+        if let email = Auth.auth().currentUser?.email {
+            db.collection(K.userPreferences).document(email).setData([
+                "name": "Bingo",
+                "coins": 100,
+                "favorited": [""],
+                "plants": [""],
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved")
+                }
+            }
+        }
+    }
+
+    func getData() {
+        print("saving data")
+        if let email = Auth.auth().currentUser?.email {
+            db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+                if let document = snapshot, document.exists {
+                    if let c = document["coins"] {
+                        UserDefaults.standard.setValue(c, forKey: "coins")
+                    }
+                    if let name = document["name"] {
+                        UserDefaults.standard.setValue(name, forKey: "name")
+                    }
+                    if let plants = document["plants"] {
+                        UserDefaults.standard.setValue(plants, forKey: "plants")
+                    }
+                    if let favorited = document["favorited"] {
+                        UserDefaults.standard.setValue(favorited, forKey: "favorited")
+                    }
+                    print(UserDefaults.standard.string(forKey: "name") ?? "nepume", "aloha")
+                }
             }
         }
     }

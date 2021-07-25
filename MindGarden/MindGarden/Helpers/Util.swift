@@ -10,6 +10,7 @@ import Foundation
 
 
 struct K {
+    static var userPreferences = "userPreferences"
     static func getMoodImage(mood: Mood) -> Image {
         switch mood {
         case .happy:

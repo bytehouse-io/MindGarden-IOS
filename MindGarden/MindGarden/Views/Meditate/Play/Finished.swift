@@ -83,6 +83,7 @@ struct Finished: View {
                                         .foregroundColor(Clr.black1)
                                     Spacer()
                                     Button {
+                                        print("finished")
                                         withAnimation {
                                             viewRouter.currentPage = .garden
                                         }

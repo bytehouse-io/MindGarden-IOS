@@ -11,7 +11,7 @@ import Combine
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
-    private let meditationModel = MeditationViewModel()
+    @EnvironmentObject var meditationModel: MeditationViewModel
     @State private var showPopUp = false
     @State private var addMood = false
     @State private var openPrompts = false
@@ -20,8 +20,8 @@ struct ContentView: View {
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-        meditationModel.isOpenEnded = false
-        meditationModel.secondsRemaining = 150
+//        meditationModel.isOpenEnded = false
+//        meditationModel.secondsRemaining = 150
     }
 
     var body: some View {
@@ -130,7 +130,6 @@ struct ContentView: View {
                 .navigationBarHidden(true)
             }
         }.navigationViewStyle(StackNavigationViewStyle())
-        .environmentObject(meditationModel)
     }
 }
 

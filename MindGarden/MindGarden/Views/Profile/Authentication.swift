@@ -14,18 +14,24 @@ struct Authentication: View {
     @State private var isShowingDetailView = false
     @State private var alertError = false
     @State private var showForgotAlert = false
-
-    @StateObject var viewModel = AuthenticationViewModel()
+    @ObservedObject var viewModel: AuthenticationViewModel
     @State private var isEmailValid = true
     @State private var isPasswordValid = true
     @State private var signUpDisabled = true
 
-    init(isSignUp: Bool) {
+    init(isSignUp: Bool, viewModel: AuthenticationViewModel) {
+//        do {
+//            try! Auth.auth().signOut()
+//        } catch {
+//            print("running")
+//        }
+        print(Auth.auth().currentUser?.email, "gulunah")
         self.isSignUp = isSignUp
+        self.viewModel = viewModel
+        viewModel.isSignUp = isSignUp
     }
 
     var body: some View {
-
             LoadingView(isShowing: $viewModel.isLoading) {
                 NavigationView {
                     ZStack {
@@ -54,7 +60,7 @@ struct Authentication: View {
                                     }
                             }
                         }
-                        .frame(maxHeight: 100)
+                        .frame(height: 100)
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 24)
                                 .fill(Clr.darkWhite)
@@ -74,10 +80,15 @@ struct Authentication: View {
                                     }
                             }
                         }
-                        .frame(maxHeight: 60)
+                        .frame(height: 60)
                         Button {
                             viewModel.isLoading = true
-                            viewModel.signUp()
+                            if isSignUp {
+                                viewModel.signUp()
+                            } else {
+                                viewModel.signIn()
+                            }
+
                         } label: {
                             NavigationLink(destination: ContentView()
                                             .navigationBarTitle("")
@@ -86,7 +97,7 @@ struct Authentication: View {
                                     RoundedRectangle(cornerRadius: 24)
                                         .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
                                         .neoShadow()
-                                    Text("Register")
+                                    Text(isSignUp ? "Register" : "Login")
                                         .foregroundColor(Color.white)
                                         .font(Font.mada(.bold, size: 20))
                                         .padding()
@@ -124,13 +135,13 @@ struct Authentication: View {
                             .siwa
                             .padding(20)
                             .padding(.horizontal, 20)
-                            .frame(maxHeight: 100)
+                            .frame(height: 100)
                             .neoShadow()
                         Img.siwg
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .padding(40)
-                            .frame(maxHeight: 70)
+                            .frame(height: 70)
                             .neoShadow()
                             .onTapGesture {
                                 viewModel.signInWithGoogle()
@@ -139,7 +150,9 @@ struct Authentication: View {
                     }
                     .background(Clr.darkWhite)
                     .alert(isPresented: $viewModel.alertError) {
-                        Alert(title: Text("Something went wrong"), message: Text("Please try again using a different email or method"), dismissButton: .default(Text("Got it!")))
+                        Alert(title: Text("Something went wrong"), message:
+                                Text(viewModel.alertMessage)
+                              , dismissButton: .default(Text("Got it!")))
                     }
                     .alert(isPresented: $showForgotAlert, TextAlert(title: "Reset Password", action: {
                         if $0 != nil {
@@ -167,6 +180,6 @@ struct Authentication: View {
 //MARK: - preview
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
-        Authentication(isSignUp: false)
+        Authentication(isSignUp: false, viewModel: AuthenticationViewModel())
     }
 }
