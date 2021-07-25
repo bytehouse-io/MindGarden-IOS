@@ -68,7 +68,7 @@ struct CategoriesScene: View {
                                 Button {
 
                                 } label: {
-                                    HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: item.title)
+                                    HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: item.title, id: item.id)
                                 }.buttonStyle(NeumorphicPress())
                                 .padding(.vertical, 8)
                             }

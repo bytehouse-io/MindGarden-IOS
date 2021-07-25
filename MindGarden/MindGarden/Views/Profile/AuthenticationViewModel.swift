@@ -14,6 +14,7 @@ import AuthenticationServices
 import Combine
 
 class AuthenticationViewModel: NSObject, ObservableObject {
+    @EnvironmentObject var userModel: UserViewModel
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var forgotEmail: String = ""
@@ -240,13 +241,17 @@ extension AuthenticationViewModel {
     }
 
     func createUser() {
-        print("Creating user")
+        // localize
+        print("creating User")
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd,yyyy"
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": "Bingo",
                 "coins": 100,
-                "favorited": [""],
+                "favorited": [0],
                 "plants": [""],
+                "joinDate": formatter.string(from: Date())
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -262,19 +267,12 @@ extension AuthenticationViewModel {
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
-                    if let c = document["coins"] {
-                        UserDefaults.standard.setValue(c, forKey: "coins")
+                    if let name = document[K.defaults.name] {
+                        UserDefaults.standard.setValue(name, forKey: K.defaults.name)
                     }
-                    if let name = document["name"] {
-                        UserDefaults.standard.setValue(name, forKey: "name")
+                    if let joinDate = document[K.defaults.joinDate] {
+                        UserDefaults.standard.setValue(joinDate, forKey: K.defaults.joinDate)
                     }
-                    if let plants = document["plants"] {
-                        UserDefaults.standard.setValue(plants, forKey: "plants")
-                    }
-                    if let favorited = document["favorited"] {
-                        UserDefaults.standard.setValue(favorited, forKey: "favorited")
-                    }
-                    print(UserDefaults.standard.string(forKey: "name") ?? "nepume", "aloha")
                 }
             }
         }

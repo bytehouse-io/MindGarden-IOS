@@ -25,6 +25,14 @@ struct K {
             return Img.okay
         }
     }
+
+    struct defaults {
+        static var favorites = "favorited"
+        static var name = "name"
+        static var plants = "plants"
+        static var coins = "coins"
+        static var joinDate = "joinDate"
+    }
     struct ScreenSize
     {
         static let SCREEN_WIDTH         = UIScreen.main.bounds.size.width

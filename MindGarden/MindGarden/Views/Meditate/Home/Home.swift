@@ -131,18 +131,28 @@ struct Home: View {
                                 .animation(.default, value: isRecent)
                         }.frame(width: abs(g.size.width - 75), alignment: .leading)
                         .padding(.top, 20)
-                        HStack(spacing: 15) {
-                            Button {
-                                viewRouter.currentPage = .middle
-                            } label: {
-                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.chatBubble, title: "Open Ended Meditation")
-                            }.buttonStyle(NeumorphicPress())
-                            Button {
-                                
-                            } label: {
-                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
-                            }.buttonStyle(NeumorphicPress())
-                        }.padding(.top, 10)
+                        ScrollView(.horizontal, showsIndicators: false, content: {
+                            HStack(spacing: 15) {
+                                if model.favoritedMeditations.isEmpty && !isRecent {
+                                    Text("No Favorited Meditations")
+                                        .font(Font.mada(.semiBold, size: 20))
+                                        .foregroundColor(Color.gray)
+                                } else if model.recentMeditations.isEmpty && isRecent {
+                                    Text("No Recent Meditations")
+                                        .font(Font.mada(.semiBold, size: 20))
+                                        .foregroundColor(Color.gray)
+                                } else {
+                                    ForEach(model.favoritedMeditations, id: \.self) { meditation in
+                                        Button {
+                                            model.selectedMeditation = meditation
+                                            viewRouter.currentPage = .middle
+                                        } label: {
+                                            HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id)
+                                        }.buttonStyle(NeumorphicPress())
+                                    }
+                                }
+                            }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
+                        })
                         if #available(iOS 14.0, *) {
                             Button {
                                 withAnimation {

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Firebase
 
 struct Meditation: Hashable {
     let title: String
@@ -33,7 +34,9 @@ enum MeditationType {
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
-    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)
+    @Published var favoritedMeditations: [Meditation] = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)]
+    @Published var recentMeditations: [Meditation] = []
+    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0)
     @Published var courseMeditations: [Meditation] = []
     @Published var allMeditations = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0),  Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3, duration: 5), Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4, duration: 120), Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5, duration: 300)]
     @Published var selectedCategory: Category? = .focus
@@ -45,6 +48,12 @@ class MeditationViewModel: ObservableObject {
     @Published var finishedMeditation: Bool = false
     var timer: Timer = Timer()
     private var validationCancellables: Set<AnyCancellable> = []
+
+    let db = Firestore.firestore()
+
+    var isFavorited: Bool {
+        return favoritedMeditations.contains(selectedMeditation!)
+    }
 
     init() {
         print("initing2")
@@ -69,13 +78,45 @@ class MeditationViewModel: ObservableObject {
             .store(in: &validationCancellables)
     }
 
+    func favorite() {
+        if let email = Auth.auth().currentUser?.email {
+            let docRef = db.collection(K.userPreferences).document(email)
+            //Read Data from firebase, for syncing
+            var favorites: [Int] = []
+            docRef.getDocument { (snapshot, error) in
+                if let document = snapshot, document.exists {
+                    if let favorited = document[K.defaults.favorites] {
+                        favorites = favorited as! [Int]
+                    }
+                    if favorites.contains(where: { id in
+                        id == self.selectedMeditation?.id
+                    }) {
+                        favorites.removeAll { id in
+                            id == self.selectedMeditation?.id
+                        }
+                    } else {
+                        favorites.append(self.selectedMeditation?.id ?? -1)
+                    }
+                }
+                self.db.collection(K.userPreferences).document(email).updateData([
+                    "favorited": favorites,
+                ]) { (error) in
+                    if let e = error {
+                        print("There was a issue saving data to firestore \(e) ")
+                    } else {
+                        print("Succesfully saved")
+                    }
+                }
+            }
+        }
+    }
+
 
     //MARK: - timer
     func startCountdown() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
             self.secondsRemaining -= 1
             if secondsRemaining <= 0 {
-                print("in here aloha")
                 stop()
                 finishedMeditation = true
                 return

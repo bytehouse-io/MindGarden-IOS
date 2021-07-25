@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct MiddleSelect: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
@@ -42,7 +43,7 @@ struct MiddleSelect: View {
                                                 .font(Font.mada(.semiBold, size: 28))
                                                 .lineLimit(2)
                                                 .minimumScaleFactor(0.05)
-                                            Text("Descriptionon Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ")
+                                            Text("Description Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.regular, size: 16))
                                                 .padding(.trailing)
@@ -51,36 +52,40 @@ struct MiddleSelect: View {
                                     }
                                     .padding()
                                     .frame(width: g.size.width)
-                                    Divider().padding()
-                                    VStack {
-                                        ForEach(model.selectedMeditations, id: \.self) { meditation in
-                                            MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, tappedMeditation: $tappedMeditation)
+                                        Divider().padding()
+                                        VStack {
+                                            ForEach(model.selectedMeditations, id: \.self) { meditation in
+                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, tappedMeditation: $tappedMeditation)
+                                            }
                                         }
-                                    }
                                         Divider().padding()
                                         HStack(spacing: 15) {
                                             Button {
 
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 0)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
 
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation")
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 1)
                                             }.buttonStyle(NeumorphicPress())
                                         }.padding(.top)
                                     }
-                            }
+                                }
                         }
                     }
                 }
             }.animation(nil)
             .navigationBarTitle("")
             .navigationBarItems(
-                leading: backButton,
-                trailing: Img.topBranch.padding(.trailing, UIScreen.main.bounds.width/2)
+                leading: ZStack {
+                    backButton.padding(.trailing, UIScreen.main.bounds.width/2.5)
+                    Img.topBranch
+                }.offset(x: -25),
+                trailing: heart
             )
+
             .edgesIgnoringSafeArea(.bottom)
         }.transition(.move(edge: .trailing))
         .animation(tappedMeditation ? nil : .default)
@@ -95,6 +100,16 @@ struct MiddleSelect: View {
             Image(systemName: "arrow.backward")
                 .font(.title)
                 .foregroundColor(Clr.darkgreen)
+        }
+    }
+
+    var heart: some View {
+        Button {
+            model.favorite()
+        } label: {
+            Image(systemName: model.isFavorited ? "heart.fill" : "heart")
+                .font(.title)
+                .foregroundColor(.red)
         }
     }
 
@@ -135,6 +150,7 @@ struct MiddleSelect: View {
     }
 }
 
+@available(iOS 14.0, *)
 struct MiddleSelect_Previews: PreviewProvider {
     static var previews: some View {
         MiddleSelect()

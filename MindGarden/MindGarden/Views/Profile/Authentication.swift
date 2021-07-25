@@ -20,12 +20,7 @@ struct Authentication: View {
     @State private var signUpDisabled = true
 
     init(isSignUp: Bool, viewModel: AuthenticationViewModel) {
-//        do {
-//            try! Auth.auth().signOut()
-//        } catch {
-//            print("running")
-//        }
-        print(Auth.auth().currentUser?.email, "gulunah")
+
         self.isSignUp = isSignUp
         self.viewModel = viewModel
         viewModel.isSignUp = isSignUp

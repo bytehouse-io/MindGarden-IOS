@@ -11,6 +11,7 @@ struct HomeSquare: View {
     let width, height: CGFloat
     let img: Image
     let title: String
+    let id: Int 
     var body: some View {
         ZStack() {
             Rectangle()
@@ -59,7 +60,7 @@ struct HomeSquare: View {
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
 //        PreviewDisparateDevices {
-                        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation")
+        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0)
 
 //        }
     }

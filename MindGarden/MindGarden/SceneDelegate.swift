@@ -17,14 +17,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-//        let contentView = ContentView()
-//                            .environmentObject(ViewRouter())
-//                            .environmentObject(MeditationViewModel())
+        let contentView = ContentView()
+                            .environmentObject(ViewRouter())
+                            .environmentObject(MeditationViewModel())
+                            .environmentObject(UserViewModel())
 
 
-        let contentView = Authentication(isSignUp: true, viewModel: AuthenticationViewModel())
-            .environmentObject(ViewRouter())
-            .environmentObject(MeditationViewModel())
+//
+//        let contentView = Authentication(isSignUp: false, viewModel: AuthenticationViewModel())
+//            .environmentObject(ViewRouter())
+//            .environmentObject(MeditationViewModel())
+//            .environmentObject(UserViewModel())
 
 
         // Use a UIHostingController as window root view controller.
