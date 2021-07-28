@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct Store: View {
+    @EnvironmentObject var userModel: UserViewModel
     @State var showModal = false
     @State var confirmModal = false
     @State var showSuccess = false
+    @State var selectedPlant: String = ""
+    var isShop: Bool = true
     
     var body: some View {
         ZStack {
@@ -18,30 +21,36 @@ struct Store: View {
             GeometryReader { g in
                 ScrollView {
                     HStack(alignment: .top, spacing: 20) {
-                        VStack(spacing: -10) {
-                                Text("🌻 Seed\nShop")
+                        ForEach(Plant.plants.suffix(2), id: \.self) { plant in
+                            VStack(spacing: -10) {
+                                Text(isShop ? "🌻 Seed\nShop" : "🌻 Plant Select")
                                     .font(Font.mada(.bold, size: 32))
                                     .minimumScaleFactor(0.005)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Clr.black1)
                                     .padding()
-                            Button {
-                                withAnimation {
-                                    showModal = true
-                                }
-                            } label: {
-                                PlantTile(width: g.size.width, height: g.size.height, title: "Blue Tulips", img: Img.blueTulipsPacket)
+                                Button {
+                                    if isShop {
+                                        withAnimation {
+                                            showModal = true
+                                        }
+                                    } else {
+
+                                    }
+                                } label: {
+                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                }.buttonStyle(NeumorphicPress())
                             }
                         }
-                        VStack {
-                            Rectangle()
-                                .foregroundColor(Clr.darkWhite)
-                                .frame(width: g.size.width * 0.35, height: g.size.height * 0.27)
-                                .cornerRadius(15)
-                                .neoShadow()
-                                .padding()
-                        }
+                            VStack {
+                                Rectangle()
+                                    .foregroundColor(Clr.darkWhite)
+                                    .frame(width: g.size.width * 0.35, height: g.size.height * 0.27)
+                                    .cornerRadius(15)
+                                    .neoShadow()
+                                    .padding()
+                            }
                     }.padding()
                 }.padding(.top)
                 .opacity(confirmModal ? 0.3 : 1)
@@ -57,10 +66,13 @@ struct Store: View {
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
+        }.onAppear {
+            print("jun", isShop)
         }
     }
 
     struct SuccessModal: View {
+        @EnvironmentObject var userModel: UserViewModel
         @Binding var showSuccess: Bool
         @Binding var showMainModal: Bool
 
@@ -113,10 +125,9 @@ struct Store: View {
         }
     }
     struct ConfirmModal: View {
+        @EnvironmentObject var userModel: UserViewModel
         @Binding var shown: Bool
         @Binding var showSuccess: Bool
-        var title = "Blue Tulips"
-        var coins = 300
 
         var body: some View {
             GeometryReader { g in
@@ -132,7 +143,7 @@ struct Store: View {
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.center)
                                 .padding(.vertical)
-                            Text("Are you sure you want to spend \(coins) coins on unlocking \(title)")
+                            Text("Are you sure you want to spend \(userModel.coins) coins on unlocking \(userModel.willBuyPlant?.title ?? "")")
                                 .font(Font.mada(.medium, size: 18))
                                 .foregroundColor(Clr.black2.opacity(0.7))
                                 .lineLimit(2)

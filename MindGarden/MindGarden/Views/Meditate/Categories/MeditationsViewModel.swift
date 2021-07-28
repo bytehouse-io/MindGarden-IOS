@@ -34,27 +34,31 @@ enum MeditationType {
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
-    @Published var favoritedMeditations: [Meditation] = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)]
+    @Published var favoritedMeditations: [Meditation] = []
+//    Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)
     @Published var recentMeditations: [Meditation] = []
     @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0)
     @Published var courseMeditations: [Meditation] = []
     @Published var allMeditations = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0),  Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3, duration: 5), Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4, duration: 120), Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5, duration: 300)]
     @Published var selectedCategory: Category? = .focus
-    var totalTime: Float = 0
+    @Published var isFavorited: Bool = false
+
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
+    var totalTime: Float = 0
     @Published var secondsRemaining: Float = 150
     @Published var secondsCounted: Float = 0
     @Published var finishedMeditation: Bool = false
     var timer: Timer = Timer()
     private var validationCancellables: Set<AnyCancellable> = []
-
     let db = Firestore.firestore()
 
-    var isFavorited: Bool {
-        return favoritedMeditations.contains(selectedMeditation!)
+    func checkIfFavorited() {
+        Just(0)
+            .map{ _ in self.favoritedMeditations.contains(self.selectedMeditation!) }
+            .assign(to: \.isFavorited, on: self)
+            .store(in: &validationCancellables)
     }
-
     init() {
         print("initing2")
         $selectedCategory
@@ -76,6 +80,20 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
+
+
+    }
+
+    func updateSelf() {
+        if let email = Auth.auth().currentUser?.email {
+            db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+                if let document = snapshot, document.exists {
+                    if let favorites = document[K.defaults.favorites] as? [Int] {
+                        self.favoritedMeditations = self.allMeditations.filter({ med in favorites.contains(med.id) })
+                    }
+                }
+            }
+        }
     }
 
     func favorite() {
@@ -88,15 +106,19 @@ class MeditationViewModel: ObservableObject {
                     if let favorited = document[K.defaults.favorites] {
                         favorites = favorited as! [Int]
                     }
-                    if favorites.contains(where: { id in
-                        id == self.selectedMeditation?.id
-                    }) {
+                    if favorites.contains(where: { id in id == self.selectedMeditation?.id }) {
                         favorites.removeAll { id in
-                            id == self.selectedMeditation?.id
+                            self.favoritedMeditations.removeAll { med in
+                                med.id == id
+                            }
+                            return id == self.selectedMeditation?.id
                         }
+
                     } else {
+                        self.favoritedMeditations.append(self.selectedMeditation!)
                         favorites.append(self.selectedMeditation?.id ?? -1)
                     }
+                    self.checkIfFavorited()
                 }
                 self.db.collection(K.userPreferences).document(email).updateData([
                     "favorited": favorites,

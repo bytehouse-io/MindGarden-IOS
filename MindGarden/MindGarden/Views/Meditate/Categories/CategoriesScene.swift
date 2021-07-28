@@ -66,7 +66,8 @@ struct CategoriesScene: View {
                         LazyVGrid(columns: gridItemLayout, content: {
                             ForEach(model.selectedMeditations, id: \.self) { item in
                                 Button {
-
+                                    model.selectedMeditation = item
+                                    viewRouter.currentPage = .middle
                                 } label: {
                                     HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: item.title, id: item.id)
                                 }.buttonStyle(NeumorphicPress())

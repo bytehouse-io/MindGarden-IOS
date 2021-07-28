@@ -12,6 +12,8 @@ struct Home: View {
     @EnvironmentObject var model: MeditationViewModel
     @State private var isRecent = false
     @State private var showModal = false
+    @State private var showPlantSelect = false
+
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -59,7 +61,7 @@ struct Home: View {
                             }
                             .buttonStyle(NeumorphicPress())
                             Button {
-
+                                showPlantSelect = true
                             } label: {
                                 HStack {
                                     Text("Select Plant")
@@ -192,7 +194,11 @@ struct Home: View {
                                     .foregroundColor(Clr.darkgreen)
                                     .padding()
             )
+            .sheet(isPresented: $showPlantSelect, content: {
+                Store(isShop: false)
+            })
         }.transition(.move(edge: .leading))
+  
     }
 }
 

@@ -80,8 +80,8 @@ struct MiddleSelect: View {
             .navigationBarTitle("")
             .navigationBarItems(
                 leading: ZStack {
-                    backButton.padding(.trailing, UIScreen.main.bounds.width/2.5)
                     Img.topBranch
+                    backButton.padding(.trailing, UIScreen.main.bounds.width/2.5)
                 }.offset(x: -25),
                 trailing: heart
             )
@@ -89,10 +89,14 @@ struct MiddleSelect: View {
             .edgesIgnoringSafeArea(.bottom)
         }.transition(.move(edge: .trailing))
         .animation(tappedMeditation ? nil : .default)
+        .onAppear {
+            model.checkIfFavorited()
+        }
     }
 
     var backButton: some View {
         Button {
+            print("calling")
             withAnimation {
                 viewRouter.currentPage = .meditate
             }
@@ -109,7 +113,7 @@ struct MiddleSelect: View {
         } label: {
             Image(systemName: model.isFavorited ? "heart.fill" : "heart")
                 .font(.title)
-                .foregroundColor(.red)
+                .foregroundColor(model.isFavorited ? .red : .gray)
         }
     }
 
