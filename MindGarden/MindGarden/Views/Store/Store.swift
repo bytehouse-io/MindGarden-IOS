@@ -12,7 +12,7 @@ struct Store: View {
     @State var showModal = false
     @State var confirmModal = false
     @State var showSuccess = false
-    @State var selectedPlant: String = ""
+    @State var selectedPlant: Plant = Plant(title: "White Daisy", price: 100, selected: false, description: "", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy)
     var isShop: Bool = true
     
     var body: some View {
@@ -32,6 +32,7 @@ struct Store: View {
                                     .padding()
                                 Button {
                                     if isShop {
+                                        selectedPlant = plant
                                         withAnimation {
                                             showModal = true
                                         }
@@ -60,14 +61,12 @@ struct Store: View {
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
                 }
-                PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
+                PurchaseModal(shown: $showModal, showConfirm: $confirmModal, plant: selectedPlant).offset(y: showModal ? 0 : g.size.height)
                     .opacity(confirmModal || showSuccess ? 0.3 : 1)
                 ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
-        }.onAppear {
-            print("jun", isShop)
         }
     }
 
@@ -169,6 +168,7 @@ struct Store: View {
                                     withAnimation {
                                         shown = false
                                         showSuccess = true
+
                                     }
                                 } label: {
                                     Text("Confirm")

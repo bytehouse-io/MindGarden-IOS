@@ -9,7 +9,7 @@ target 'MindGarden' do
    pod 'Firebase/Auth'
    pod 'Firebase/Firestore'
    pod 'Firebase/Analytics'
-   pod 'FirebaseUI'
+   pod 'GoogleSignIn'
 
   target 'MindGardenTests' do
     inherit! :search_paths

@@ -10,8 +10,7 @@ import SwiftUI
 struct PurchaseModal: View {
     @Binding var shown: Bool
     @Binding var showConfirm: Bool
-
-    var title = "Blue Tulips"
+    var plant: Plant
 //    var img: Img = Image()
 
     var body: some View {
@@ -32,7 +31,7 @@ struct PurchaseModal: View {
                                     .font(.title)
                                     .padding()
                             }
-                            Text(title)
+                            Text(plant.title)
                                 .font(Font.mada(.bold, size: 30))
                                 .foregroundColor(Clr.black1)
                                 .padding()
@@ -96,7 +95,7 @@ struct PurchaseModal: View {
 struct PurchaseModal_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            PurchaseModal(shown: .constant(true), showConfirm: .constant(false))
+            PurchaseModal(shown: .constant(true), showConfirm: .constant(false), plant: Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy))
         }
     }
 }
