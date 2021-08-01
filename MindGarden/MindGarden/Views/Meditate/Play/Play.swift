@@ -33,6 +33,8 @@ struct Play: View {
         NavigationView {
             ZStack {
                 GeometryReader { g in
+                    let width = g.size.width
+                    let height = g.size.height
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     HStack(alignment: .center) {
                         Spacer()
@@ -52,6 +54,37 @@ struct Play: View {
                                         .frame(width: 230)
                                         .foregroundColor(Clr.darkWhite)
                                         .shadow(color: .black.opacity(0.35), radius: 20, x: 10, y: 5)
+                                    //four different plant stages
+                                    if model.secondsRemaining <= model.totalTime * 0.25 { //secoond
+                                        withAnimation {
+                                            model.playImage
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: model.lastSeconds ? width/2 : width/4, height: model.lastSeconds ? height/4 : height/6)
+                                                .animation(.spring())
+                                        }
+                                    } else if model.secondsRemaining <= model.totalTime * 0.5 {
+                                        model.playImage
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .animation(.easeIn(duration: 1))
+                                            .frame(width: width/4, height: height/6)
+                                            .offset(y: 25)
+                                    } else if model.secondsRemaining <= model.totalTime * 0.75 {
+                                        model.playImage
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .animation(.easeIn(duration: 1))
+                                            .frame(width: width/6, height: height/8)
+                                            .offset(y: 50)
+                                    } else {
+                                        model.playImage
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .animation(.easeIn(duration: 1))
+                                            .frame(width: width/10, height: height/12)
+                                            .offset(y: 75)
+                                    }
                                 }
                                 .frame(width: 250)
                             }

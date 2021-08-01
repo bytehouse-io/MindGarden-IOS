@@ -175,6 +175,6 @@ struct Authentication: View {
 //MARK: - preview
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
-        Authentication(isSignUp: false, viewModel: AuthenticationViewModel())
+        Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: UserViewModel()))
     }
 }

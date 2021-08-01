@@ -10,6 +10,7 @@ import SwiftUI
 struct Finished: View {
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @State private var animateViews = false
 
     var body: some View {
         NavigationView {
@@ -42,6 +43,10 @@ struct Finished: View {
                                 Text("87")
                                     .font(Font.mada(.bold, size: 70))
                                     .foregroundColor(.white)
+                                    .animation(.easeInOut(duration: 1.0))
+                                    .opacity(animateViews ? 0 : 1)
+                                    .offset(x: animateViews ? 500 : 0)
+
                                 HStack {
                                     Text("You received:")
                                         .font(Font.mada(.semiBold, size: 24))
@@ -71,6 +76,14 @@ struct Finished: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: g.size.height/2.75)
                                     .padding(10)
+                                    .offset(y: animateViews ? 500 : 0)
+                                    .onAppear {
+                                        withAnimation(.easeIn(duration: 2.0)) {
+                                            print("toggling")
+                                            self.animateViews.toggle()
+                                        }
+                                    }
+
                                 Spacer()
                                 HStack {
                                     Image(systemName: "heart")
@@ -83,7 +96,6 @@ struct Finished: View {
                                         .foregroundColor(Clr.black1)
                                     Spacer()
                                     Button {
-                                        print("finished")
                                         withAnimation {
                                             viewRouter.currentPage = .garden
                                         }
@@ -112,8 +124,15 @@ struct Finished: View {
                     .offset(y: -40)
                 }
             }
+
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
+        .onDisappear {
+            model.finishedMeditation = false
+            model.playImage = Img.seed
+            model.lastSeconds = false
+        }
+
     }
 }
 

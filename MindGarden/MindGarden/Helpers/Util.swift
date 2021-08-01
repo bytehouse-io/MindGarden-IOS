@@ -32,6 +32,7 @@ struct K {
         static var plants = "plants"
         static var coins = "coins"
         static var joinDate = "joinDate"
+        static var selectedPlant = "selectedPlant"
     }
     struct ScreenSize
     {

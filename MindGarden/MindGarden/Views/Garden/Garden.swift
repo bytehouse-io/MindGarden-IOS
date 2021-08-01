@@ -92,11 +92,11 @@ struct Garden: View {
                                 .neoShadow()
                             HStack{
                                 Spacer()
-                                FavoritePlant(title: "Tulips", count: 5, img: Img.tulips3)
+                                FavoritePlant(title: "Tulips", count: 5, img: Img.redTulips3)
                                 Spacer()
-                                FavoritePlant(title: "Tulips", count: 5, img: Img.tulips3)
+                                FavoritePlant(title: "Tulips", count: 5, img: Img.redTulips3)
                                 Spacer()
-                                FavoritePlant(title: "Blue Tulips", count: 5, img: Img.tulips3)
+                                FavoritePlant(title: "Blue Tulips", count: 5, img: Img.redTulips3)
                                 Spacer()
                             }
                         }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)

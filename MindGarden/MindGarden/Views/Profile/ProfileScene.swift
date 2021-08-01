@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+
 
 enum settings {
     case setttings
@@ -14,8 +16,11 @@ enum settings {
 
 
 struct ProfileScene: View {
+    @EnvironmentObject var userModel: UserViewModel
     @State private var selection: settings = .journey
     @State private var showNotification = false
+    @State private var isSignedIn = true
+    @State private var tappedSignedIn = false
 
     var body: some View {
         NavigationView {
@@ -166,7 +171,15 @@ struct ProfileScene: View {
                         .padding(.leading)
                     }
                     Button {
-                        print("sign out")
+                        print("signing out")
+                        if isSignedIn {
+                            do { try Auth.auth().signOut() }
+                            catch { print("already logged out") }
+                        } else {
+                            tappedSignedIn = true
+                            NavigationLink("", destination: Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel)), isActive: $tappedSignedIn)
+                        }
+                        isSignedIn.toggle()
                     } label: {
                         Capsule()
                             .fill(Clr.redGradientBottom)
@@ -183,6 +196,11 @@ struct ProfileScene: View {
         .onAppear {
             // Set the default to clear
             UITableView.appearance().backgroundColor = .clear
+            if let _ = Auth.auth().currentUser?.email {
+                isSignedIn = true
+            } else {
+                isSignedIn = false
+            }
         }
     }
 

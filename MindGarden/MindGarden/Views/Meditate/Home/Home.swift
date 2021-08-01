@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+
 
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -151,6 +153,10 @@ struct Home: View {
                                         } label: {
                                             HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id)
                                         }.buttonStyle(NeumorphicPress())
+                                        .padding(.leading, model.favoritedMeditations.count == 1 ? 25 : 0 )
+                                    }
+                                    if model.favoritedMeditations.count == 1 {
+                                        Spacer()
                                     }
                                 }
                             }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
@@ -198,6 +204,11 @@ struct Home: View {
                 Store(isShop: false)
             })
         }.transition(.move(edge: .leading))
+        .onAppear {
+            if let email = Auth.auth().currentUser?.email {
+                print("go mas", email)
+            }
+        }
   
     }
 }

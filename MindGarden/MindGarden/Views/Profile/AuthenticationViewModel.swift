@@ -14,13 +14,13 @@ import AuthenticationServices
 import Combine
 
 class AuthenticationViewModel: NSObject, ObservableObject {
-    @EnvironmentObject var userModel: UserViewModel
+    @ObservedObject var userModel: UserViewModel
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var forgotEmail: String = ""
     @Published var alertError: Bool = false
     @Published var alertMessage: String = "Please try again using a different email or method"
-    @Published var goToHome: Bool = false
+    @Published var  goToHome: Bool = false
     @Published var isLoading: Bool = false
     var currentNonce: String?
     var googleIsNew: Bool = true
@@ -28,7 +28,11 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     let db = Firestore.firestore()
     var isSignUp: Bool = false
     var appleAlreadySigned: Bool = false
-
+    init(userModel: UserViewModel) {
+        self.userModel = userModel
+        super.init()
+        setupGoogleSignIn()
+    }
     var siwa: some View {
         return Group {
             if #available(iOS 14.0, *) {
@@ -102,11 +106,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     
 
     @Published var state: SignInState = .signedOut
-
-    override init() {
-        super.init()
-        setupGoogleSignIn()
-    }
 
     func signInWithGoogle() {
         if GIDSignIn.sharedInstance().currentUser == nil {
@@ -208,10 +207,10 @@ extension AuthenticationViewModel {
                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
                 return
             }
+            createUser()
             alertError = false
             goToHome = true
         }
-        createUser()
     }
 
     func signIn() {
@@ -249,8 +248,8 @@ extension AuthenticationViewModel {
             db.collection(K.userPreferences).document(email).setData([
                 "name": "Bingo",
                 "coins": 100,
-                "favorited": [0],
-                "plants": [""],
+//                "favorited": [0],
+//                "plants": [],
                 "joinDate": formatter.string(from: Date())
             ]) { (error) in
                 if let e = error {
@@ -260,6 +259,9 @@ extension AuthenticationViewModel {
                 }
             }
         }
+        userModel.coins = 100
+        userModel.name = "Bingo"
+        userModel.joinDate = formatter.string(from: Date())
     }
 
     func getData() {

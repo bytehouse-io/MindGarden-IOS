@@ -12,7 +12,6 @@ struct Store: View {
     @State var showModal = false
     @State var confirmModal = false
     @State var showSuccess = false
-    @State var selectedPlant: Plant = Plant(title: "White Daisy", price: 100, selected: false, description: "", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy)
     var isShop: Bool = true
     
     var body: some View {
@@ -21,37 +20,65 @@ struct Store: View {
             GeometryReader { g in
                 ScrollView {
                     HStack(alignment: .top, spacing: 20) {
-                        ForEach(Plant.plants.suffix(2), id: \.self) { plant in
-                            VStack(spacing: -10) {
-                                Text(isShop ? "🌻 Seed\nShop" : "🌻 Plant Select")
-                                    .font(Font.mada(.bold, size: 32))
-                                    .minimumScaleFactor(0.005)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Clr.black1)
-                                    .padding()
-                                Button {
-                                    if isShop {
-                                        selectedPlant = plant
-                                        withAnimation {
-                                            showModal = true
+                        VStack(spacing: -10) {
+                            Text(isShop ? "🌻 Seed\nShop" : "🌻 Plant Select")
+                                .font(Font.mada(.bold, size: 32))
+                                .minimumScaleFactor(0.005)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Clr.black1)
+                                .padding()
+                            ForEach(Plant.plants.prefix(Plant.plants.count/2), id: \.self) { plant in
+                                if userModel.ownedPlants.contains(plant) && isShop {
+                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                } else {
+                                    Button {
+                                        if isShop {
+                                            userModel.willBuyPlant = plant
+                                            withAnimation {
+                                                showModal = true
+                                            }
+                                        } else {
+                                            UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                            userModel.selectedPlant = plant
                                         }
-                                    } else {
-
-                                    }
-                                } label: {
-                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                }.buttonStyle(NeumorphicPress())
+                                    } label: {
+                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                    }.buttonStyle(NeumorphicPress())
+                                }
                             }
                         }
-                            VStack {
-                                Rectangle()
-                                    .foregroundColor(Clr.darkWhite)
-                                    .frame(width: g.size.width * 0.35, height: g.size.height * 0.27)
-                                    .cornerRadius(15)
-                                    .neoShadow()
-                                    .padding()
+                        VStack {
+                            HStack {
+                                Img.coin
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 25)
+                                    .padding(5)
+                                Text(String(userModel.coins))
+                                    .font(Font.mada(.semiBold, size: 24))
+                                    .foregroundColor(Clr.black1)
+                            }.padding(.bottom, -10)
+                            ForEach(Plant.plants.suffix(Plant.plants.count/2), id: \.self) { plant in
+                                if userModel.ownedPlants.contains(plant) && isShop {
+                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                } else {
+                                    Button {
+                                        if isShop {
+                                            userModel.willBuyPlant = plant
+                                            withAnimation {
+                                                showModal = true
+                                            }
+                                        } else {
+                                            UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                            userModel.selectedPlant = plant
+                                        }
+                                    } label: {
+                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                    }.buttonStyle(NeumorphicPress())
+                                }
                             }
+                        }
                     }.padding()
                 }.padding(.top)
                 .opacity(confirmModal ? 0.3 : 1)
@@ -61,7 +88,7 @@ struct Store: View {
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
                 }
-                PurchaseModal(shown: $showModal, showConfirm: $confirmModal, plant: selectedPlant).offset(y: showModal ? 0 : g.size.height)
+                PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
                     .opacity(confirmModal || showSuccess ? 0.3 : 1)
                 ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
@@ -84,7 +111,7 @@ struct Store: View {
                     HStack(alignment: .center) {
                         Spacer()
                         VStack(alignment: .center, spacing: 0) {
-                            Text("Succesfully Unlocked!")
+                            Text("Successfully Unlocked!")
                                 .foregroundColor(Clr.black1)
                                 .font(Font.mada(.bold, size: 24))
                                 .lineLimit(1)
@@ -111,8 +138,8 @@ struct Store: View {
                                     .background(Clr.darkgreen)
                                     .clipShape(Capsule())
                                     .padding()
+                                    .neoShadow()
                             }
-                            .buttonStyle(NeumorphicPress())
                         }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
                         .background(Clr.darkWhite)
                         .cornerRadius(20)
@@ -161,14 +188,14 @@ struct Store: View {
                                         .frame(width: g.size.width/3, height: 40)
                                         .background(Color.gray.opacity(0.5))
                                         .clipShape(Capsule())
+                                        .neoShadow()
                                         .padding()
                                 }
-                                .buttonStyle(NeumorphicPress())
                                 Button {
+                                    userModel.buyPlant()
                                     withAnimation {
                                         shown = false
                                         showSuccess = true
-
                                     }
                                 } label: {
                                     Text("Confirm")
@@ -177,9 +204,9 @@ struct Store: View {
                                         .frame(width: g.size.width/3, height: 40)
                                         .background(Clr.darkgreen)
                                         .clipShape(Capsule())
+                                        .neoShadow()
                                         .padding()
                                 }
-                                .buttonStyle(NeumorphicPress())
                             }.padding(.horizontal)
                         }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
                         .background(Clr.darkWhite)

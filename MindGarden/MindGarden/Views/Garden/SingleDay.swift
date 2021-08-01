@@ -28,7 +28,7 @@ struct SingleDay: View {
                                 .frame(width: g.size
                                         .width/1, height: g.size.height/1.6)
                                 .offset(x: g.size.width/6, y: -g.size.height/4)
-                            Img.tulips3
+                            Img.redTulips3
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: g.size.width/2.2)
