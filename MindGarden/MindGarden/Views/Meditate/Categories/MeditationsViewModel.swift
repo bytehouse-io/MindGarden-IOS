@@ -18,6 +18,7 @@ struct Meditation: Hashable {
     let type: MeditationType
     let id: Int
     let duration: Float
+    let reward: Int
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -37,9 +38,9 @@ class MeditationViewModel: ObservableObject {
     @Published var favoritedMeditations: [Meditation] = []
 //    Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)
     @Published var recentMeditations: [Meditation] = []
-    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0)
+    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0, reward: 0)
     @Published var courseMeditations: [Meditation] = []
-    @Published var allMeditations = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0),  Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3, duration: 15), Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4, duration: 120), Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5, duration: 300)]
+    @Published var allMeditations = [Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0, reward: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0, reward: 0),  Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3, duration: 15, reward: 3), Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4, duration: 120, reward: 6), Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5, duration: 300, reward: 10)]
     @Published var selectedCategory: Category? = .focus
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
@@ -56,11 +57,10 @@ class MeditationViewModel: ObservableObject {
     let db = Firestore.firestore()
 
     func checkIfFavorited() {
-        Just(0)
-            .map{ _ in self.favoritedMeditations.contains(self.selectedMeditation!) }
-            .assign(to: \.isFavorited, on: self)
-            .store(in: &validationCancellables)
+        print(self.favoritedMeditations.contains(self.selectedMeditation!) ? true : false, "joha")
+        isFavorited = self.favoritedMeditations.contains(self.selectedMeditation!) ? true : false
     }
+
     init() {
         $selectedCategory
             .sink { [unowned self] value in
@@ -81,8 +81,6 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
-
-
     }
 
     func updateSelf() {
@@ -97,7 +95,7 @@ class MeditationViewModel: ObservableObject {
         }
     }
 
-    func favorite() {
+    func favorite(selectMeditation: Meditation) {
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             //Read Data from firebase, for syncing
@@ -107,17 +105,16 @@ class MeditationViewModel: ObservableObject {
                     if let favorited = document[K.defaults.favorites] {
                         favorites = favorited as! [Int]
                     }
-                    if favorites.contains(where: { id in id == self.selectedMeditation?.id }) {
-                        favorites.removeAll { id in
-                            self.favoritedMeditations.removeAll { med in
-                                med.id == id
-                            }
-                            return id == self.selectedMeditation?.id
+                    if favorites.contains(where: { id in id == selectMeditation.id }) {
+                        favorites.removeAll { fbId in
+                            return fbId == selectMeditation.id
                         }
-
+                        self.favoritedMeditations.removeAll { med in
+                            med.id == selectMeditation.id
+                        }
                     } else {
-                        self.favoritedMeditations.append(self.selectedMeditation!)
-                        favorites.append(self.selectedMeditation?.id ?? -1)
+                        self.favoritedMeditations.append(selectMeditation)
+                        favorites.append(selectMeditation.id)
                     }
                     self.checkIfFavorited()
                 }

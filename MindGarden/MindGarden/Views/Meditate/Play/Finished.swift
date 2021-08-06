@@ -9,8 +9,16 @@ import SwiftUI
 
 struct Finished: View {
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var animateViews = false
+    var minsMed: Int {
+        if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
+            return 1
+        } else {
+            return Int(model.selectedMeditation?.duration ?? 0)/60
+        }
+    }
 
     var body: some View {
         NavigationView {
@@ -40,7 +48,7 @@ struct Finished: View {
                                             viewRouter.currentPage  = .garden
                                         }
                                     }
-                                Text("87")
+                                Text(String(minsMed))
                                     .font(Font.mada(.bold, size: 70))
                                     .foregroundColor(.white)
                                     .animation(.easeInOut(duration: 1.0))
@@ -76,6 +84,7 @@ struct Finished: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: g.size.height/2.75)
                                     .padding(10)
+                                    .animation(.easeInOut(duration: 1.0))
                                     .offset(y: animateViews ? 500 : 0)
                                     .onAppear {
                                         withAnimation(.easeIn(duration: 2.0)) {

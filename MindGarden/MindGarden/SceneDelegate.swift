@@ -27,12 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             .environmentObject(userModel)
 
 //
-//        let contentView = Authentication(isSignUp: true, viewModel: AuthenticationViewModel(userModel: userModel)
+//        let contentView = Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel)
 //        )
 //            .environmentObject(ViewRouter())
-//            .environmentObject(MeditationViewModel())
+//            .environmentObject(medModel)
 //            .environmentObject(userModel)
-
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

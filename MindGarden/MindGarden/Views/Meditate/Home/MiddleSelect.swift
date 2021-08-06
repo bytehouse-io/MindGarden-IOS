@@ -96,7 +96,6 @@ struct MiddleSelect: View {
 
     var backButton: some View {
         Button {
-            print("calling")
             withAnimation {
                 viewRouter.currentPage = .meditate
             }
@@ -109,7 +108,9 @@ struct MiddleSelect: View {
 
     var heart: some View {
         Button {
-            model.favorite()
+            if let med = model.selectedMeditation {
+                model.favorite(selectMeditation: med)
+            }
         } label: {
             Image(systemName: model.isFavorited ? "heart.fill" : "heart")
                 .font(.title)
@@ -123,7 +124,7 @@ struct MiddleSelect: View {
         let viewRouter: ViewRouter
         let model: MeditationViewModel
         @Binding var tappedMeditation: Bool
-
+        @State var isFavorited: Bool = false
         var body: some View {
             Button {
                 tappedMeditation = true
@@ -143,13 +144,20 @@ struct MiddleSelect: View {
                         .foregroundColor(Clr.darkgreen)
                         .font(.system(size: 24))
                         .padding(.horizontal, 10)
-                    Image(systemName: "heart")
-                        .foregroundColor(Color.gray)
+                    Image(systemName: isFavorited ? "heart.fill" : "heart")
+                        .foregroundColor(isFavorited ? Color.red : Color.gray)
                         .font(.system(size: 24))
+                        .onTapGesture {
+                            model.favorite(selectMeditation: meditation)
+                            isFavorited.toggle()
+                        }
                 }
             }
             .padding(8)
             .frame(width: width)
+            .onAppear {
+                isFavorited = model.favoritedMeditations.contains { $0 == meditation}
+            }
         }
     }
 }
