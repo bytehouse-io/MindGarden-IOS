@@ -82,6 +82,9 @@ struct CategoriesScene: View {
                                    , trailing: searchButton)
             }
         }.transition(.move(edge: .trailing))
+        .onAppear {
+            model.selectedCategory = .all
+        }
     }
     var backButton: some View {
         Button {

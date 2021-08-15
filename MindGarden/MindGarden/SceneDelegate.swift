@@ -19,19 +19,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let medModel = MeditationViewModel()
         let userModel = UserViewModel()
+        let gardenModel = GardenViewModel()
+//
         medModel.updateSelf()
         userModel.updateSelf()
         let contentView = ContentView()
                             .environmentObject(ViewRouter())
                             .environmentObject(medModel)
                             .environmentObject(userModel)
-
-//
-//        let contentView = Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel)
-//        )
-//            .environmentObject(ViewRouter())
-//            .environmentObject(medModel)
-//            .environmentObject(userModel)
+                            .environmentObject(gardenModel)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

@@ -52,11 +52,14 @@ struct Home: View {
                                 }
                             } label: {
                                 HStack {
+                                    Img.coin
+                                        .font(.title)
                                     Text("Daily Bonus")
                                         .font(Font.mada(.regular, size: 14))
                                         .foregroundColor(.black)
                                         .font(.footnote)
                                 }
+                                .frame(width: g.size.width * 0.3, height: 20)
                                 .padding(8)
                                 .background(Clr.yellow)
                                 .cornerRadius(25)
@@ -66,17 +69,22 @@ struct Home: View {
                                 showPlantSelect = true
                             } label: {
                                 HStack {
-                                    Text("Select Plant")
+                                    Img.yellowHead
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                    Text("Plant Select")
                                         .font(Font.mada(.regular, size: 14))
                                         .foregroundColor(.black)
                                         .font(.footnote)
                                 }
+                                .frame(width: g.size.width * 0.3, height: 20)
                                 .padding(8)
                                 .background(Clr.yellow)
                                 .cornerRadius(25)
                             }
                             .buttonStyle(NeumorphicPress())
                         }
+
                         Button {
                             withAnimation {
                                 viewRouter.currentPage = .play
@@ -159,8 +167,9 @@ struct Home: View {
                                         Spacer()
                                     }
                                 }
-                            }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
-                        })
+                            }.frame(height: g.size.height * 0.25)
+                            .padding([.leading, .trailing], 25)
+                        }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
                         if #available(iOS 14.0, *) {
                             Button {
                                 withAnimation {
@@ -204,12 +213,6 @@ struct Home: View {
                 Store(isShop: false)
             })
         }.transition(.move(edge: .leading))
-        .onAppear {
-            if let email = Auth.auth().currentUser?.email {
-                print("go mas", email)
-            }
-        }
-  
     }
 }
 

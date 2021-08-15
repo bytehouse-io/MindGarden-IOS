@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Garden: View {
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State var isMonth: Bool = true
     @State var showSingleModal = false
 

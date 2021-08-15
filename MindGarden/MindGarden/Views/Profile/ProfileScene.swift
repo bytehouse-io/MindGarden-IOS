@@ -177,7 +177,7 @@ struct ProfileScene: View {
                             catch { print("already logged out") }
                         } else {
                             tappedSignedIn = true
-                            NavigationLink("", destination: Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel)), isActive: $tappedSignedIn)
+//                            NavigationLink("", destination: Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel)), isActive: $tappedSignedIn)
                         }
                         isSignedIn.toggle()
                     } label: {

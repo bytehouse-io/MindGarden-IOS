@@ -11,6 +11,8 @@ struct Finished: View {
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var gardenModel: GardenViewModel
+    
     @State private var animateViews = false
     var minsMed: Int {
         if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
@@ -88,11 +90,9 @@ struct Finished: View {
                                     .offset(y: animateViews ? 500 : 0)
                                     .onAppear {
                                         withAnimation(.easeIn(duration: 2.0)) {
-                                            print("toggling")
                                             self.animateViews.toggle()
                                         }
                                     }
-
                                 Spacer()
                                 HStack {
                                     Image(systemName: "heart")
@@ -133,13 +133,19 @@ struct Finished: View {
                     .offset(y: -40)
                 }
             }
-
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onDisappear {
             model.finishedMeditation = false
             model.playImage = Img.seed
             model.lastSeconds = false
+        }
+        .onAppear {
+            var session = [String: String]()
+            session[K.defaults.plantSelected] = userModel.selectedPlant?.title
+            session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
+            session[K.defaults.duration] = String(model.selectedMeditation?.duration ?? 0)
+            gardenModel.save(key: "sessions", saveValue: session)
         }
 
     }

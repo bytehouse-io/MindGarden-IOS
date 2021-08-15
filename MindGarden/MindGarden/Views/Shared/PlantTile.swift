@@ -58,20 +58,16 @@ struct PlantTile: View {
                             }
                         }
                     } else {
-                        Button {
-                            
-                        } label: {
-                            Capsule()
-                                .fill(plant == userModel.selectedPlant  ? Clr.yellow : Clr.darkgreen)
-                                .overlay(Text(plant == userModel.selectedPlant ? "Selected" : "Select")
-                                            .font(Font.mada(.semiBold, size: 18))
-                                            .foregroundColor(plant == userModel.selectedPlant ? Clr.black1 : .white)
-                                            .padding()
-                                )
-                        }
-                        .frame(width: width * 0.30, height: height * 0.04)
-                        .buttonStyle(NeumorphicPress())
-                        .padding(.top, 5)
+                        Capsule()
+                            .fill(plant == userModel.selectedPlant  ? Clr.yellow : Clr.darkgreen)
+                            .overlay(Text(plant == userModel.selectedPlant ? "Selected" : "Select")
+                                        .font(Font.mada(.semiBold, size: 18))
+                                        .foregroundColor(plant == userModel.selectedPlant ? Clr.black1 : .white)
+                                        .padding()
+                            )
+                            .frame(width: width * 0.30, height: height * 0.04)
+                            .buttonStyle(NeumorphicPress())
+                            .padding(.top, 5)
                     }
                 }
             }
@@ -81,6 +77,6 @@ struct PlantTile: View {
 
 struct PlantTile_Previews: PreviewProvider {
     static var previews: some View {
-        PlantTile(width: 300, height: 700, plant: Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy), isShop: false)
+        PlantTile(width: 300, height: 700, plant: Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy, head: Img.daisyHead), isShop: false)
     }
 }

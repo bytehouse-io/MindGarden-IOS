@@ -12,6 +12,7 @@ import Combine
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State private var showPopUp = false
     @State private var addMood = false
     @State private var openPrompts = false
@@ -60,12 +61,16 @@ struct ContentView: View {
                                 MiddleSelect()
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
+                            case .authentication:
+                                Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel, viewRouter: viewRouter))
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
                             }
                         } else {
                             // Fallback on earlier versions
                         }
                     }.edgesIgnoringSafeArea(.all)
-                    if viewRouter.currentPage != .play {
+                    if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication {
                         if showPopUp || addMood || addGratitude {
                             Button {
                                 withAnimation {
@@ -120,10 +125,10 @@ struct ContentView: View {
                             .cornerRadius(12)
                             .offset(y: addMood ? geometry.size.height/(K.hasNotch() ? 2.5 : 2.75) : geometry.size.height)
                         Gratitude(shown: $addGratitude, openPrompts: $openPrompts)
-                            .frame(width: geometry.size.width, height: geometry.size.height * 0.45 * (openPrompts ? 2.25 : 1))
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.5 * (openPrompts ? 2.25 : 1))
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
-                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch() ? 3.5 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
+                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch() ? 3.25 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
                     }
                 }
                 .navigationBarTitle("", displayMode: .inline)

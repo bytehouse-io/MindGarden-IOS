@@ -12,6 +12,10 @@
 		D5AFCD9338EB951DB1E087B8 /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739E73C3FBCCA14827AD5096 /* Pods_MindGarden.framework */; };
 		FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B2268FAABE00E1E71A /* Gratitude.swift */; };
 		FE11F0B62691073300E1E71A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B52691073200E1E71A /* Authentication.swift */; };
+		FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */; };
+		FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */; };
+		FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
+		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
 		FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4E9E632676AE54002BC758 /* HomeSquare.swift */; };
 		FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6289B326754A1200007889 /* ShadowViewModifier.swift */; };
 		FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
@@ -111,6 +115,10 @@
 		FE11F0B2268FAABE00E1E71A /* Gratitude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gratitude.swift; sourceTree = "<group>"; };
 		FE11F0B52691073200E1E71A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		FE11F0B726910D5A00E1E71A /* MindGarden.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MindGarden.entitlements; sourceTree = "<group>"; };
+		FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenViewModel.swift; sourceTree = "<group>"; };
+		FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
+		FE17B8AF26C06C20002CF8C2 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		FE4E9E632676AE54002BC758 /* HomeSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSquare.swift; sourceTree = "<group>"; };
 		FE6289B326754A1200007889 /* ShadowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewModifier.swift; sourceTree = "<group>"; };
 		FE6289B526754B5200007889 /* Mada-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Regular.ttf"; sourceTree = "<group>"; };
@@ -276,6 +284,7 @@
 				FEA592CC267E6153006558A2 /* SingleDay.swift */,
 				FEA592D0267E9459006558A2 /* StatBox.swift */,
 				FEA592D2267E94B9006558A2 /* GridStack.swift */,
+				FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */,
 			);
 			path = Garden;
 			sourceTree = "<group>";
@@ -382,6 +391,7 @@
 			children = (
 				FEB85FC1266C1A97008CDAA4 /* View+Extensions.swift */,
 				FE962F112674651F002365A6 /* Color+Extensions.swift */,
+				FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -441,6 +451,8 @@
 			isa = PBXGroup;
 			children = (
 				FEA7FBE326B0DF5A0073C62D /* Plant.swift */,
+				FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */,
+				FE17B8AF26C06C20002CF8C2 /* Sound.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -830,6 +842,7 @@
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
+				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
@@ -845,13 +858,16 @@
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
+				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
+				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
 				FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */,
 				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
+				FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */,
 				FE683F3C269FC550009A66DF /* CategoriesScene.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,

@@ -33,6 +33,13 @@ struct K {
         static var coins = "coins"
         static var joinDate = "joinDate"
         static var selectedPlant = "selectedPlant"
+        static var gardenGrid = "gardenGrid"
+        static var sessions = "sessions"
+        static var moods = "moods"
+        static var gratitudes = "gratitudes"
+        static var plantSelected = "plantSelected"
+        static var meditationId = "meditationId"
+        static var duration = "duration"
     }
     struct ScreenSize
     {

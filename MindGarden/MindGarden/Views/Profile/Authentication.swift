@@ -20,7 +20,6 @@ struct Authentication: View {
     @State private var signUpDisabled = true
 
     init(isSignUp: Bool, viewModel: AuthenticationViewModel) {
-
         self.isSignUp = isSignUp
         self.viewModel = viewModel
         viewModel.isSignUp = isSignUp
@@ -83,11 +82,7 @@ struct Authentication: View {
                             } else {
                                 viewModel.signIn()
                             }
-
                         } label: {
-                            NavigationLink(destination: ContentView()
-                                            .navigationBarTitle("")
-                                            .navigationBarHidden(true), isActive: $viewModel.goToHome) {
                                 ZStack(alignment: .center) {
                                     RoundedRectangle(cornerRadius: 24)
                                         .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
@@ -97,7 +92,6 @@ struct Authentication: View {
                                         .font(Font.mada(.bold, size: 20))
                                         .padding()
                                 }
-                            }
                             .padding(20)
                             .frame(maxHeight: 100)
                             .disabled(true)
@@ -175,6 +169,6 @@ struct Authentication: View {
 //MARK: - preview
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
-        Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: UserViewModel()))
+        Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
     }
 }

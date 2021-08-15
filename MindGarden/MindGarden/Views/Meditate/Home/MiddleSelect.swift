@@ -74,16 +74,18 @@ struct MiddleSelect: View {
                                     }
                                 }
                         }
-                    }
+                        }.zIndex(25)
                 }
             }.animation(nil)
             .navigationBarTitle("")
             .navigationBarItems(
                 leading: ZStack {
-                    Img.topBranch
-                    backButton.padding(.trailing, UIScreen.main.bounds.width/2.5)
-                }.offset(x: -25),
+                    Img.morningSun
+                        .zIndex(-25)
+                    backButton.padding(.trailing, UIScreen.main.bounds.width/1.35)
+                }.offset(x: -10),
                 trailing: heart
+                    .offset(x: -20)
             )
 
             .edgesIgnoringSafeArea(.bottom)
@@ -166,5 +168,7 @@ struct MiddleSelect: View {
 struct MiddleSelect_Previews: PreviewProvider {
     static var previews: some View {
         MiddleSelect()
+            .environmentObject(MeditationViewModel())
+            .environmentObject(ViewRouter())
     }
 }

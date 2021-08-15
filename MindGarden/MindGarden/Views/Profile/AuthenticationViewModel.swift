@@ -14,13 +14,13 @@ import AuthenticationServices
 import Combine
 
 class AuthenticationViewModel: NSObject, ObservableObject {
+    @ObservedObject var viewRouter: ViewRouter
     @ObservedObject var userModel: UserViewModel
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var forgotEmail: String = ""
     @Published var alertError: Bool = false
     @Published var alertMessage: String = "Please try again using a different email or method"
-    @Published var  goToHome: Bool = false
     @Published var isLoading: Bool = false
     var currentNonce: String?
     var googleIsNew: Bool = true
@@ -28,8 +28,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     let db = Firestore.firestore()
     var isSignUp: Bool = false
     var appleAlreadySigned: Bool = false
-    init(userModel: UserViewModel) {
+    init(userModel: UserViewModel, viewRouter: ViewRouter) {
         self.userModel = userModel
+        self.viewRouter = viewRouter
         super.init()
         setupGoogleSignIn()
     }
@@ -76,7 +77,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         }
                                         UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                         alertError = false
-                                        goToHome = true
+                                        withAnimation {
+                                            viewRouter.currentPage = .meditate
+                                        }
                                         guard let _ = appleIDCredential.email else {
                                             print("jangu")
                                             // User already signed in with this appleId once
@@ -166,7 +169,9 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                         createUser()
                     }
                     self.state = .signedIn
-                    goToHome = true
+                    withAnimation {
+                        viewRouter.currentPage = .meditate
+                    }
                     alertError = false
                 }
             }
@@ -209,7 +214,9 @@ extension AuthenticationViewModel {
             }
             createUser()
             alertError = false
-            goToHome = true
+            withAnimation {
+                viewRouter.currentPage = .meditate
+            }
         }
     }
 
@@ -223,7 +230,9 @@ extension AuthenticationViewModel {
             }
             getData()
             alertError = false
-            goToHome = true
+            withAnimation {
+                viewRouter.currentPage = .meditate
+            }
         }
     }
 

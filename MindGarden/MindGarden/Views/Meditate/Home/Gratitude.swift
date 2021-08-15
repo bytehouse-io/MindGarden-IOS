@@ -11,6 +11,7 @@ struct Gratitude: View {
     @Binding var shown: Bool
     @State var text: String = "Thankful for "
     @Binding var openPrompts: Bool
+    @EnvironmentObject var gardenModel: GardenViewModel
 
     var body: some View {
         GeometryReader { g in
@@ -93,17 +94,19 @@ struct Gratitude: View {
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
                             .neoShadow()
-                        ScrollView(showsIndicators: false) {
+                        ScrollView(.vertical, showsIndicators: false) {
                             if #available(iOS 14.0, *) {
                                 TextEditor(text: $text)
                                     .disableAutocorrection(true)
-                                    .padding(10)
-                                    .frame(width: g.size.width * 0.85, height: min(150, g.size.height * 0.6), alignment: .topLeading)
+                                    .padding(EdgeInsets(top: 10, leading: 10, bottom: -10, trailing: 10))
+                                    .frame(width: g.size.width * 0.85, height: min(150, g.size.height * 0.7), alignment: .topLeading)
                                     .colorMultiply(Clr.darkWhite)
                             }
                         }
                     }.frame(width: g.size.width * 0.85, height: min(175, g.size.height * 0.6), alignment: .topLeading)
-                    DoneCancel(shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false)
+                    DoneCancel(shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
+                        gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
+                    })
                         .padding(.bottom, 20)
 
                     Spacer()

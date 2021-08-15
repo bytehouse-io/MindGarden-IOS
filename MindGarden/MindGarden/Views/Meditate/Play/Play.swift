@@ -19,7 +19,7 @@ struct Play: View {
     var unGuided: Bool = true
     @State var timerStarted: Bool = false
     @State var favorited: Bool = false
-    @State var player : AVAudioPlayer = AVAudioPlayer()
+    @State var player : AVAudioPlayer!
     @State var data : Data = .init(count: 0)
     @State var title = ""
     @State var del = AVdelegate()
@@ -194,8 +194,7 @@ struct Play: View {
                         }
                         player.numberOfLoops = -1
                         player.play()
-                        getData()
-                        //            player.play()
+//                        getData()
                         NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
                             self.finish = true
                         }
@@ -290,69 +289,6 @@ struct Play: View {
         }
     }
 
-    //MARK: - Sonud
-    enum Sound {
-        case rain
-        case night
-        case nature
-        case fire
-        case beach
-        case noSound
-
-        var img: Image {
-            switch self {
-            case .rain:
-                return Image(systemName: "cloud.rain")
-            case .night:
-                return Image(systemName: "moon.stars")
-            case .nature:
-                return Image(systemName: "leaf")
-            case .beach:
-                return Image("beach")
-            case .fire:
-                return Image(systemName: "flame")
-            case .noSound:
-                return Image("beach")
-            }
-        }
-
-        var title: String {
-            switch self {
-            case .rain:
-                return "rain"
-            case .night:
-                return "night"
-            case .nature:
-                return "nature"
-            case .beach:
-                return "beach"
-            case .fire:
-                return "fire"
-            case .noSound:
-                return "noSound"
-            }
-        }
-
-        static func getSound(str: String) -> Sound {
-            switch str {
-            case "rain":
-                return .rain
-            case "night":
-                return .night
-            case "nature":
-                return .nature
-            case "beach":
-                return .beach
-            case "fire":
-                return .fire
-            case "noSound":
-                return .noSound
-            default:
-                return .noSound
-            }
-        }
-    }
-
     struct SoundButton: View {
         var type: Sound?
         @Binding var selectedType: Sound?
@@ -390,7 +326,6 @@ struct Play: View {
                         .opacity(0.9)
                         .rotationEffect(.degrees(-45))
                 }.frame(width: 50, height: 50)
-
             }.buttonStyle(NeumorphicPress())
         }
     }
@@ -409,7 +344,7 @@ struct Play: View {
         self.data = .init(count: 0)
         player.prepareToPlay()
         self.player.play()
-        getData()
+//        getData()
     }
 
      func getData() {

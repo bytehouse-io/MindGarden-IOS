@@ -6,6 +6,7 @@ import SwiftUI
 public enum Img {
   public static let blueTulipsPacket = Image("Blue Tulips Packet")
   public static let daisy = Image("daisy")
+  public static let daisyHead = Image("daisyHead")
   public static let daisyBadge = Image("daisy_badge")
   public static let angry = Image("angry")
   public static let happy = Image("happy")
@@ -20,10 +21,13 @@ public enum Img {
   public static let instaIcon = Image("instaIcon")
   public static let invite = Image("invite")
   public static let meditateIcon = Image("meditateIcon")
+  public static let morningBackground = Image("morningBackground")
+  public static let morningSun = Image("morningSun")
   public static let oneBlueberry = Image("oneBlueberry")
   public static let plantIcon = Image("plantIcon")
   public static let profile = Image("profile")
   public static let profileIcon = Image("profileIcon")
+  public static let redTulipHead = Image("redTulipHead")
   public static let redTulips1 = Image("redTulips1")
   public static let redTulips2 = Image("redTulips2")
   public static let redTulips3 = Image("redTulips3")
@@ -33,4 +37,5 @@ public enum Img {
   public static let shopIcon = Image("shopIcon")
   public static let siwg = Image("siwg")
   public static let topBranch = Image("topBranch")
+  public static let yellowHead = Image("yellowHead")
 }

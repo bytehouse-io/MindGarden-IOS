@@ -20,4 +20,5 @@ enum Page {
     case play
     case categories
     case middle
+    case authentication
 }

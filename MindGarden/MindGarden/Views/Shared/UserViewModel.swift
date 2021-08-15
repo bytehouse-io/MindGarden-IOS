@@ -46,6 +46,11 @@ class UserViewModel: ObservableObject {
                 }
             }
         }
+        
+        //set selected plant
+        selectedPlant = Plant.plants.first(where: { plant in
+            return plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
+        })
     }
 
     func buyPlant() {

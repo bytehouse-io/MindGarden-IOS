@@ -27,6 +27,7 @@ enum Mood: String {
 struct MoodCheck: View {
     @Binding var shown: Bool
     @State var moodSelected: Mood = .none
+    @EnvironmentObject var gardenModel: GardenViewModel
 
     var body: some View {
         GeometryReader { g in
@@ -49,7 +50,11 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .angry)
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height/3, alignment: .center)
-                        DoneCancel(shown: $shown, width: g.size.width, height: g.size.height, mood: true)
+                        DoneCancel(shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
+                            if moodSelected != .none {
+                                gardenModel.save(key: "moods", saveValue: moodSelected.title)
+                            }
+                        })
                             .padding(.bottom)
                     Spacer()
                 }
@@ -97,11 +102,13 @@ struct SingleMood: View {
 struct DoneCancel: View {
     @Binding var shown: Bool
     var width, height: CGFloat
-    var mood: Bool 
+    var mood: Bool
+    var save: () -> ()
 
     var body: some View {
         HStack {
             Button {
+                save()
                 withAnimation {
                     shown = false
                 }
