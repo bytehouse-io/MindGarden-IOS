@@ -23,6 +23,23 @@ enum Mood: String {
         case .none: return "none"
         }
     }
+
+    static func getMood(str: String) -> Mood {
+        switch str {
+        case "happy":
+            return .happy
+        case "okay":
+            return .okay
+        case "sad":
+            return .sad
+        case "angry":
+            return .angry
+        case "none":
+            return .none
+        default:
+            return .none
+        }
+    }
 }
 struct MoodCheck: View {
     @Binding var shown: Bool

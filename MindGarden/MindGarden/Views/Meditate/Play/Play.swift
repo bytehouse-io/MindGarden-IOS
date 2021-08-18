@@ -199,7 +199,13 @@ struct Play: View {
                             self.finish = true
                         }
                     }
+                } else {
+                    let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
+                    player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 }
+            } else {
+                let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
+                player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
             }
         }
     }

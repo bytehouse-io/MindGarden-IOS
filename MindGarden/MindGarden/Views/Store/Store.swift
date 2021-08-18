@@ -28,7 +28,8 @@ struct Store: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Clr.black1)
                                 .padding()
-                            ForEach(Plant.plants.prefix(Plant.plants.count/2), id: \.self) { plant in
+                            ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
+                                { plant in
                                 if userModel.ownedPlants.contains(plant) && isShop {
                                     PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                 } else {
@@ -48,37 +49,38 @@ struct Store: View {
                                 }
                             }
                         }
-                        VStack {
-                            HStack {
-                                Img.coin
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 25)
-                                    .padding(5)
-                                Text(String(userModel.coins))
-                                    .font(Font.mada(.semiBold, size: 24))
-                                    .foregroundColor(Clr.black1)
-                            }.padding(.bottom, -10)
-                            ForEach(Plant.plants.suffix(Plant.plants.count/2), id: \.self) { plant in
-                                if userModel.ownedPlants.contains(plant) && isShop {
-                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                } else {
-                                    Button {
-                                        if isShop {
-                                            userModel.willBuyPlant = plant
-                                            withAnimation {
-                                                showModal = true
+                            VStack {
+                                HStack {
+                                    Img.coin
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 25)
+                                        .padding(5)
+                                    Text(String(userModel.coins))
+                                        .font(Font.mada(.semiBold, size: 24))
+                                        .foregroundColor(Clr.black1)
+                                }.padding(.bottom, -10)
+                                ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
+                                            : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
+                                    if userModel.ownedPlants.contains(plant) && isShop {
+                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                    } else {
+                                        Button {
+                                            if isShop {
+                                                userModel.willBuyPlant = plant
+                                                withAnimation {
+                                                    showModal = true
+                                                }
+                                            } else {
+                                                UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                userModel.selectedPlant = plant
                                             }
-                                        } else {
-                                            UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                            userModel.selectedPlant = plant
-                                        }
-                                    } label: {
-                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                    }.buttonStyle(NeumorphicPress())
+                                        } label: {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                        }.buttonStyle(NeumorphicPress())
+                                    }
                                 }
                             }
-                        }
                     }.padding()
                 }.padding(.top)
                 .opacity(confirmModal ? 0.3 : 1)

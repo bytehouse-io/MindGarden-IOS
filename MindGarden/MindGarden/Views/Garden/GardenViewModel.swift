@@ -13,14 +13,58 @@ class GardenViewModel: ObservableObject {
     @Published var selectedMonth: String = ""
     @Published var isYear: Bool = false
     @Published var selectedYear: String = ""
-    @Published var tiles = []
+    @Published var monthTiles = [Int: [Int: (Plant?, Mood?)]]()
     let db = Firestore.firestore()
 //    let formatter: DateFormatter {
 //        let formatter = DateFormatter()
 //        formatter.dateFormat = ""
 //    }
 
+    init() {
+        selectedMonth = Date().get(.month)
+        selectedYear = Date().get(.year)
+        populateMonth()
+    }
 
+    func populateMonth() {
+        let numOfDays = Date().getNumberOfDays(month: selectedMonth, year: selectedYear)
+        let weekday = Date.dayOfWeek(day: "1", month: selectedMonth, year: selectedYear)
+        let weekInt = Date().weekDayToInt(weekDay: weekday)
+        for idx in 0...weekInt {
+            monthTiles[0] = [idx: (nil,nil)]
+        }
+        var weekNumber = 0
+        for day in 1...numOfDays {
+            let weekday = Date.dayOfWeek(day: String(day), month: selectedMonth, year: selectedYear)
+            let weekInt = Date().weekDayToInt(weekDay: weekday)
+            if weekInt == 0 {
+                weekNumber += 1
+            }
+            var plant: Plant? = nil
+            var mood: Mood? = nil
+            if let session = grid[selectedYear]?[selectedMonth]?[String(day)]?[K.defaults.sessions] as? [String: String] {
+                let fbPlant = session[K.defaults.plantSelected]
+                plant = Plant.plants.first(where: { $0.title ==  fbPlant })
+            }
+            if let moods = grid[selectedYear]?[selectedMonth]?[String(day)]?[K.defaults.moods] as? [String] {
+                mood = Mood.getMood(str: moods[moods.count - 1])
+            }
+            monthTiles[weekNumber] = [day: (plant, mood)]
+            monthTiles[Int(selectedMonth) ?? 0] = [day: (nil,nil)]
+        }
+    }
+ 
+    func updateSelf() {
+        if let email = Auth.auth().currentUser?.email {
+            db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+                if let document = snapshot, document.exists {
+                    if let gardenGrid = document[K.defaults.gardenGrid] as? [String: [String:[String:[String:Any]]]] {
+                        self.grid = gardenGrid
+                    }
+                }
+            }
+        }
+    }
 
     func save(key: String, saveValue: Any) {
         if let email = Auth.auth().currentUser?.email {
@@ -61,9 +105,5 @@ class GardenViewModel: ObservableObject {
                 }
             }
         }
-    }
-
-    func saveGratitude(gratitude: String) {
-
     }
 }

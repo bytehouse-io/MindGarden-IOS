@@ -110,6 +110,9 @@ struct Garden: View {
                 SingleDay(showSingleModal: $showSingleModal)
                     .navigationViewStyle(StackNavigationViewStyle())
             }
+            .onAppear {
+                print(gardenModel.grid, "yoo")
+            }
         }
     }
 }

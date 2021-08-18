@@ -146,13 +146,17 @@ struct Home: View {
                         ScrollView(.horizontal, showsIndicators: false, content: {
                             HStack(spacing: 15) {
                                 if model.favoritedMeditations.isEmpty && !isRecent {
+                                    Spacer()
                                     Text("No Favorited Meditations")
                                         .font(Font.mada(.semiBold, size: 20))
                                         .foregroundColor(Color.gray)
+                                    Spacer()
                                 } else if model.recentMeditations.isEmpty && isRecent {
+                                    Spacer()
                                     Text("No Recent Meditations")
                                         .font(Font.mada(.semiBold, size: 20))
                                         .foregroundColor(Color.gray)
+                                    Spacer()
                                 } else {
                                     ForEach(model.favoritedMeditations, id: \.self) { meditation in
                                         Button {

@@ -19,9 +19,9 @@ extension Date {
         let userCalendar = Calendar(identifier: .gregorian) // since the components above (like year 1980) are for Gregorian
         let someDateTime = userCalendar.date(from: dateComponents)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-//        let weekDay = dateFormatter.string(from: )
-        return "someDateTime"
+        dateFormatter.dateFormat = "EEE"
+        let weekDay = dateFormatter.string(from: someDateTime ?? Date())
+        return weekDay
      }
     func get(_ type: Calendar.Component)-> String {
         let calendar = Calendar.current
@@ -29,38 +29,90 @@ extension Date {
         return "\(t)"
     }
 
+    func weekDayToInt(weekDay: String) -> Int {
+        switch weekDay {
+        case "Sun":
+            return 0
+        case "Mon":
+            return 1
+        case "Tue":
+            return 2
+        case "Wed":
+            return 3
+        case "Thu":
+            return 4
+        case "Fri":
+            return 5
+        case "Sat":
+            return 6
+        default:
+            return 0
+        }
+    }
+
     func getNumberOfDays(month: String, year: String) -> Int {
         switch month {
-        case "Jan":
+        case "1":
             return 31
-        case "Feb":
+        case "2":
             if isLeapYear(Int(year) ?? 2000) {
                 return 29
             } else {
                 return 28
             }
-        case "Mar":
+        case "3":
             return 31
-        case "Apr":
+        case "4":
             return 30
-        case "May":
+        case "5":
             return 31
-        case "Jun":
+        case "6":
             return 30
-        case "Jul":
+        case "7":
             return 31
-        case "Aug":
+        case "8":
             return 31
-        case "Sep":
+        case "9":
             return 30
-        case "Oct":
+        case "10":
             return 31
-        case "Nov":
+        case "11":
             return 30
-        case "Dec":
+        case "12":
             return 31
         default:
             return -1
+        }
+    }
+
+    func getMonthName(month: String) -> String {
+        switch month {
+        case "1":
+            return "January"
+        case "2":
+           return "February"
+        case "3":
+            return "March"
+        case "4":
+            return "April"
+        case "5":
+            return "May"
+        case "6":
+            return "June"
+        case "7":
+            return "July"
+        case "8":
+            return "August"
+        case "9":
+            return "September"
+        case "10":
+            return "October"
+        case "11":
+            return "November"
+        case "12":
+            return "December"
+        default:
+            return "-1"
         }
     }
 
