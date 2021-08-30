@@ -40,6 +40,16 @@ enum Mood: String {
             return .none
         }
     }
+
+    var color: Color {
+        switch self {
+        case .happy: return Clr.gardenGreen
+        case .okay: return Clr.gardenGray
+        case .sad: return Clr.gardenBlue
+        case .angry: return Clr.gardenRed
+        case .none: return Clr.dirtBrown
+        }
+    }
 }
 struct MoodCheck: View {
     @Binding var shown: Bool

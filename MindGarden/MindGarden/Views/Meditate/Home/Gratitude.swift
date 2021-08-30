@@ -106,6 +106,7 @@ struct Gratitude: View {
                     }.frame(width: g.size.width * 0.85, height: min(175, g.size.height * 0.6), alignment: .topLeading)
                     DoneCancel(shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
+                        text = "Thankful for "
                     })
                         .padding(.bottom, 20)
 

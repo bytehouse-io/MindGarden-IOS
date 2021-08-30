@@ -22,8 +22,14 @@ public enum Clr {
   ///
   /// **Universal - Dark**: `#74804B` with alpha: `1.000`
   public static let finishedGreen = Color("finishedGreen")
+  /// **Universal - Any**: `#DDAA69` with alpha: `1.000`
+  public static let gardenBlue = Color("gardenBlue")
+  /// **Universal - Any**: `#D7C7BD` with alpha: `1.000`
+  public static let gardenGray = Color("gardenGray")
   /// **Universal - Any**: `#94B81D` with alpha: `1.000`
   public static let gardenGreen = Color("gardenGreen")
+  /// **Universal - Any**: `#028269` with alpha: `1.000`
+  public static let gardenRed = Color("gardenRed")
   /// **Universal - Any**: `#B7B7B7` with alpha: `1.000`
   public static let lightGray = Color("lightGray")
   /// **Universal - Any**: `#414127` with alpha: `1.000`

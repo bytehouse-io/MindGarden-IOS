@@ -214,7 +214,7 @@ struct Home: View {
                                     .padding()
             )
             .sheet(isPresented: $showPlantSelect, content: {
-                Store(isShop: false)
+                Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
         }.transition(.move(edge: .leading))
     }

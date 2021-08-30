@@ -11,57 +11,98 @@ struct Garden: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @State var isMonth: Bool = true
     @State var showSingleModal = false
+    @State var day: Int = 0
+    @State var topThreePlants: [FavoritePlant] = [FavoritePlant]()
 
     var body: some View {
         GeometryReader { gp in
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .center, spacing: 20) {
-                    HStack(spacing: 40) {
-                        Button {
-                            isMonth = true
-                        } label: {
-                            MenuButton(title: "Month", isMonth: isMonth)
-                        }
-                        Button {
-                            isMonth = false
-                        } label: {
-                            MenuButton(title: "Year", isMonth: !isMonth)
-                        }
-                    }
+                    //Version 2
+//                    HStack(spacing: 40) {
+//                        Button {
+//                            isMonth = true
+//                        } label: {
+//                            MenuButton(title: "Month", isMonth: isMonth)
+//                        }
+//                        Button {
+//                            isMonth = false
+//                        } label: {
+//                            MenuButton(title: "Year", isMonth: !isMonth)
+//                        }
+//                    }
+                    Text("🪴 Your MindGarden")
+                        .font(Font.mada(.semiBold, size: 22))
+                        .foregroundColor(Clr.darkgreen)
+                        .padding()
                     HStack {
-                        Text("April 2021")
+                        Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear))")
                             .font(Font.mada(.bold, size: 30))
                         Spacer()
                         Button {
-
+                            if gardenModel.selectedMonth == 1 {
+                                gardenModel.selectedMonth = 12
+                                gardenModel.selectedYear -= 1
+                            } else {
+                                gardenModel.selectedMonth -= 1
+                            }
+                            gardenModel.populateMonth()
+                            getFavoritePlants()
                         } label: {
                             OperatorButton(imgName: "lessthan.square.fill")
                         }
 
                         Button {
-
+                            if gardenModel.selectedMonth == 12 {
+                                gardenModel.selectedMonth = 1
+                                gardenModel.selectedYear += 1
+                            } else {
+                                gardenModel.selectedMonth += 1
+                            }
+                            gardenModel.populateMonth()
+                            getFavoritePlants()
                         } label: {
                             OperatorButton(imgName: "greaterthan.square.fill")
                         }
                     }
                     .padding(.horizontal, 10)
+                    .padding(.top, -15)
                     GridStack(rows: 5, columns: 7) { row, col in
                         ZStack {
-                            Rectangle()
-                                .fill(Clr.dirtBrown)
-                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                            Img.oneBlueberry
-                                .padding(3)
+                            if gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1 != nil { //mood & plant both exist
+                                Rectangle()
+                                    .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1?.color ?? Clr.dirtBrown)
+                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                Img.oneBlueberry
+                                    .padding(3)
+                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.0 != nil { // only mood is nil
+                                Rectangle()
+                                    .fill(Clr.dirtBrown)
+                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                Img.oneBlueberry
+                                    .padding(3)
+                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1 != nil{ // only plant is nil
+                                Rectangle()
+                                    .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1?.color ?? Clr.dirtBrown)
+                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                            } else { //both are nil
+                                Rectangle()
+                                    .fill(Clr.dirtBrown)
+                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                            }
+                        } .onTapGesture {
+                            day = col + (row * 7) + 1
+                            showSingleModal = true
                         }
                     }.offset(y: -10)
-                    .onTapGesture {
-                        showSingleModal = true
-                    }
                     HStack(spacing: 5) {
                         VStack(spacing: 15) {
-                            StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "255")
-                            StatBox(label: "Total Sessions", img: Img.iconSessions, value: "23")
+                            StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "\(gardenModel.totalMins)")
+                            StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
                         }
                         .frame(maxWidth: gp.size.width * 0.33)
                         ZStack {
@@ -71,12 +112,12 @@ struct Garden: View {
                                 .neoShadow()
                             VStack(spacing: 10) {
                                 HStack(alignment: .bottom) {
-                                    MoodImage(mood: .happy, value: 13)
-                                    MoodImage(mood: .sad, value: 2)
+                                    MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
+                                    MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
                                 }.padding(.horizontal, 10)
                                 HStack(alignment: .bottom) {
-                                    MoodImage(mood: .okay, value: 7)
-                                    MoodImage(mood: .angry, value: 5)
+                                    MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
+                                    MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
                                 }.padding(.horizontal, 10)
                             }
                         }.frame(maxWidth: gp.size.width * 0.47)
@@ -91,13 +132,26 @@ struct Garden: View {
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(15)
                                 .neoShadow()
-                            HStack{
+                            HStack(spacing: 25){
                                 Spacer()
-                                FavoritePlant(title: "Tulips", count: 5, img: Img.redTulips3)
-                                Spacer()
-                                FavoritePlant(title: "Tulips", count: 5, img: Img.redTulips3)
-                                Spacer()
-                                FavoritePlant(title: "Blue Tulips", count: 5, img: Img.redTulips3)
+                                if topThreePlants.isEmpty {
+                                    Text("You have no favorite plants")
+                                        .foregroundColor(.black)
+                                        .font(Font.mada(.semiBold, size: 20))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
+                                        .padding()
+                                } else {
+                                    if let favPlant1 = topThreePlants[0] {
+                                        favPlant1
+                                    }
+                                    if let favPlant2 = topThreePlants[1] {
+                                        favPlant2
+                                    }
+                                    if topThreePlants.indices.contains(2), let favPlant3 = topThreePlants[2] {
+                                        favPlant3
+                                    }
+                                }
                                 Spacer()
                             }
                         }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)
@@ -107,11 +161,25 @@ struct Garden: View {
                 .padding(.top, 30)
             }
             .sheet(isPresented: $showSingleModal) {
-                SingleDay(showSingleModal: $showSingleModal)
+                SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
+                    .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
             }
             .onAppear {
-                print(gardenModel.grid, "yoo")
+                getFavoritePlants()
+            }
+
+        }
+    }
+    private func getFavoritePlants() {
+        topThreePlants = [FavoritePlant]()
+        let topThreeStrings = gardenModel.favoritePlants.sorted { $0.value > $1.value }.prefix(3)
+        for str in topThreeStrings {
+            if let plnt = Plant.plants.first(where: { plt in
+                plt.title == str.key
+            }) {
+                topThreePlants.append(FavoritePlant(title: str.key, count: str.value,
+                                                    img: plnt.coverImage))
             }
         }
     }
@@ -150,7 +218,6 @@ struct MoodImage: View {
         }.padding(3)
     }
 }
-
 
 struct MenuButton: View {
     var title: String

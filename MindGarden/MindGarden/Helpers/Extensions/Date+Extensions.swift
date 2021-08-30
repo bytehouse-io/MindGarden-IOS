@@ -10,14 +10,11 @@ import Foundation
 extension Date {
     static func dayOfWeek(day: String, month: String, year: String)-> String{
         // Specify date components
-        var dateComponents = DateComponents()
-        dateComponents.year = Int(day) ?? 0
-        dateComponents.month = Int(month) ?? 0
-        dateComponents.day = Int(year) ?? 0
-
+        let userCalendar = Calendar.current // since the components above (like year 1980) are for Gregorian
+        var dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current, year: Int(year) ?? 0, month: Int(month) ?? 0, day: Int(day) ?? 0)
         // Create date from components
-        let userCalendar = Calendar(identifier: .gregorian) // since the components above (like year 1980) are for Gregorian
         let someDateTime = userCalendar.date(from: dateComponents)
+        let dat = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE"
         let weekDay = dateFormatter.string(from: someDateTime ?? Date())
@@ -150,8 +147,6 @@ extension Date {
 
     func intToMonth(num: Int) -> String {
         switch num {
-        case 0:
-            return "Dec"
         case 1:
             return "Jan"
         case 2:

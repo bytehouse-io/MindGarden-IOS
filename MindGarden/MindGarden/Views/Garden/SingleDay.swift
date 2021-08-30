@@ -8,13 +8,27 @@
 import SwiftUI
 
 struct SingleDay: View {
+    @EnvironmentObject var gardenModel: GardenViewModel
     @Binding var showSingleModal: Bool
+    @Binding var day: Int
+    var month: Int
+    var year: Int
+    @State var moods: [String]?
+    @State var gratitudes: [String]?
+    @State var sessions: [[String: String]]?
+    @State var totalTime: Int = 0
+    @State var totalSessions: Int = 0
+    @State var minutesMeditated: Int = 0
+    @State var plant: Plant?
+    @State var sessionCounter: Int = 0
 
-    var date : String {
-        let formatter = DateFormatter()
-        return "January 1, 2020"
+    init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
+        self._showSingleModal = showSingleModal
+        self._day = day
+        self.month = month 
+        self.year = year
     }
-    
+
     var body: some View {
         NavigationView {
             GeometryReader { g in
@@ -28,21 +42,76 @@ struct SingleDay: View {
                                 .frame(width: g.size
                                         .width/1, height: g.size.height/1.6)
                                 .offset(x: g.size.width/6, y: -g.size.height/4)
-                            Img.redTulips3
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: g.size.width/2.2)
-                                .offset(y: -35)
+                            if plant != nil && totalSessions > 1 {
+                                HStack {
+                                    if sessionCounter - 1 >= 0 {
+                                        Button {
+                                            withAnimation {
+                                                sessionCounter -= 1
+                                                updateSession()
+                                            }
+                                        } label: {
+                                            Image(systemName: "chevron.left")
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .aspectRatio(contentMode: .fit)
+                                                .font(Font.title.weight(.bold))
+                                                .frame(width: 30)
+                                                .foregroundColor(Clr.darkWhite)
+                                                .padding()
+                                                .offset(y: -25)
+                                        }.buttonStyle(NeumorphicPress())
+                                    }
+                                    Spacer()
+                                    plant?.coverImage
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: g.size.width/2.2)
+                                        .offset(y: -35)
+                                    Spacer()
+                                    if sessionCounter + 1 < totalSessions {
+                                        Button {
+                                            withAnimation {
+                                                sessionCounter += 1
+                                                updateSession()
+                                            }
+                                            print("for you")
+                                        } label: {
+                                            Image(systemName: "chevron.right")
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .aspectRatio(contentMode: .fit)
+                                                .font(Font.title.weight(.bold))
+                                                .frame(width: 30)
+                                                .foregroundColor(.white)
+                                                .padding()
+                                                .offset(y: -25)
+                                                .shadow(radius: 10)
+                                        }
+                                    }
+                                }
+                            } else if plant != nil {
+                                plant?.coverImage
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: g.size.width/2.2)
+                                    .offset(y: -35)
+                            } else {
+                                Text("No sessions for \nthis day :(")
+                                    .foregroundColor(.black)
+                                    .font(Font.mada(.bold, size: 30))
+                                    .offset(y: -65)
+                                    .multilineTextAlignment(.center)
+                            }
                         }.padding(.bottom, -95)
-
                         Text("Stats For the Day: ")
                             .foregroundColor(.black)
                             .font(Font.mada(.semiBold, size: 26))
-                            .padding(.leading, 35)
+                            .padding(.leading, g.size.width * 0.1)
                         HStack(spacing: 15) {
                             VStack(spacing: 25) {
-                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "255")
-                                StatBox(label: "Total Sessions", img: Img.iconSessions, value: "23")
+                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "\(totalTime)")
+                                StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(totalSessions)")
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
@@ -52,17 +121,17 @@ struct SingleDay: View {
                                         Text("Moods:")
                                             .foregroundColor(.black)
                                             .font(Font.mada(.regular, size: 16))
+                                            .padding(5)
                                         HStack(spacing: 0) {
-                                            K.getMoodImage(mood: .happy)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(5)
-                                            K.getMoodImage(mood: .angry)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(5)
-
-                                        }
+                                            ForEach(self.moods ?? ["none"], id: \.self) { mood in
+                                                if mood != "none" {
+                                                    K.getMoodImage(mood: Mood.getMood(str: mood))
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .padding(5)
+                                                }
+                                            }
+                                        }.frame(height: g.size.height * 0.07)
                                     }.padding(3)
                                 }
                                 .padding(.trailing, 10)
@@ -78,20 +147,45 @@ struct SingleDay: View {
                                         .foregroundColor(.black)
                                         .font(Font.mada(.semiBold, size: 16))
                                     ScrollView(showsIndicators: false) {
-                                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-                                            .fixedSize(horizontal: false, vertical: true)
-                                            .foregroundColor(.black)
-                                            .font(Font.mada(.regular, size: 14))
+                                        ForEach(self.gratitudes ?? ["No gratitude written this day"], id: \.self) { gratitude in
+                                            Text(gratitude)
+                                                .fixedSize(horizontal: false, vertical: true)
+                                                .foregroundColor(.black)
+                                                .font(Font.mada(.regular, size: 14))
+                                                .padding(10)
+                                            Divider()
+                                        }
                                     }
                                 }.padding(5)
                             }
                         }.frame(maxHeight: g.size.height * 0.40)
                         .padding(.horizontal, g.size.width * 0.1)
-
                         Spacer()
                     }
                 }.navigationBarItems(leading: xButton,
                                      trailing: title)
+            }
+        }.onAppear {
+            if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [String] {
+                self.moods = moods
+            }
+            if let gratitudes = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.gratitudes] as? [String] {
+                self.gratitudes = gratitudes
+            }
+            if let sessions = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.sessions] as? [[String: String]] {
+                self.sessions = sessions
+                self.totalSessions = sessions.count
+                for session in sessions {
+                    if let duration = session["duration"] {
+                        self.totalTime += (Double(duration) ?? 0.0).toInt() ?? 0
+                    }
+                }
+                if let selectedPlant = sessions[sessionCounter][K.defaults.plantSelected] {
+                    self.plant = Plant.plants.first(where: {$0.title == selectedPlant})
+                }
+                if let duration = sessions[sessionCounter][K.defaults.duration] {
+                    self.minutesMeditated = (Double(duration) ?? 0.0).toInt() ?? 0
+                }
             }
         }
     }
@@ -106,23 +200,35 @@ struct SingleDay: View {
     }
 
     var title: some View {
-        VStack(alignment: .trailing){
-            Text(date)
-                .font(Font.mada(.semiBold, size: 26))
-            Text("Blueberry Plant")
-                .font(Font.mada(.bold, size: 38))
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            Text("Total Sessions")
-                .font(Font.mada(.semiBold, size: 18))
-        }.padding(.top, 60)
-        .foregroundColor(.white)
+        HStack {
+            Spacer()
+            VStack(alignment: .trailing){
+                Text("\(Date().getMonthName(month: String(month))) \(day), \(String(year))")
+                    .font(Font.mada(.semiBold, size: 26))
+                Text("\(plant?.title ?? "" )")
+                    .font(Font.mada(.bold, size: 38))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                Text("Minutes Meditated: \(minutesMeditated)")
+                    .font(Font.mada(.semiBold, size: 18))
+            }.padding(.top, 60)
+            .foregroundColor(.white)
+        }
+    }
+
+    private func updateSession() {
+        plant = Plant.plants.first(where: { plant in
+            plant.title == sessions?[sessionCounter][K.defaults.plantSelected]
+        })
+        if let duration = sessions?[sessionCounter][K.defaults.duration] {
+            self.minutesMeditated = (Double(duration) ?? 0.0).toInt() ?? 0
+        }
     }
 }
 
 struct SingleDay_Previews: PreviewProvider {
     static var previews: some View {
-            SingleDay(showSingleModal: .constant(true))
+        SingleDay(showSingleModal: .constant(true), day: .constant(1), month: 8, year: 2021)
                 .navigationViewStyle(StackNavigationViewStyle())
     }
 }

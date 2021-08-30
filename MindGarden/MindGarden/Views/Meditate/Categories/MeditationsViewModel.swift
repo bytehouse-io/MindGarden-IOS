@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import Firebase
+import AVKit
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
@@ -22,6 +23,7 @@ class MeditationViewModel: ObservableObject {
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
     var totalTime: Float = 0
+    var bellPlayer: AVAudioPlayer!
     @Published var secondsRemaining: Float = 0
     @Published var secondsCounted: Float = 0
     @Published var finishedMeditation: Bool = false
@@ -112,6 +114,7 @@ class MeditationViewModel: ObservableObject {
 
     //MARK: - timer
     func startCountdown() {
+        bellPlayer.prepareToPlay()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
             self.secondsRemaining -= 1
             withAnimation {
@@ -126,6 +129,7 @@ class MeditationViewModel: ObservableObject {
                     playImage = Img.seed
                 }
                 if secondsRemaining <= 0 {
+                    bellPlayer.play()
                     stop()
                     finishedMeditation = true
                     return

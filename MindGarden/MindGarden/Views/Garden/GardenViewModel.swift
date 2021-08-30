@@ -10,47 +10,85 @@ import Firebase
 
 class GardenViewModel: ObservableObject {
     @Published var grid = [String: [String:[String:[String:Any]]]]()
-    @Published var selectedMonth: String = ""
     @Published var isYear: Bool = false
-    @Published var selectedYear: String = ""
+    @Published var selectedYear: Int = 2021
+    @Published var selectedMonth: Int = 1
     @Published var monthTiles = [Int: [Int: (Plant?, Mood?)]]()
+    @Published var totalMoods = [Mood:Int]()
+    @Published var totalMins = 0
+    @Published var totalSessions = 0
+    @Published var favoritePlants = [String: Int]()
     let db = Firestore.firestore()
-//    let formatter: DateFormatter {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = ""
-//    }
 
     init() {
-        selectedMonth = Date().get(.month)
-        selectedYear = Date().get(.year)
-        populateMonth()
+        selectedMonth = Int(Date().get(.month)) ?? 1
+        selectedYear = Int(Date().get(.year)) ?? 2021
     }
 
     func populateMonth() {
-        let numOfDays = Date().getNumberOfDays(month: selectedMonth, year: selectedYear)
-        let weekday = Date.dayOfWeek(day: "1", month: selectedMonth, year: selectedYear)
-        let weekInt = Date().weekDayToInt(weekDay: weekday)
-        for idx in 0...weekInt {
-            monthTiles[0] = [idx: (nil,nil)]
+        totalMins = 0
+        totalSessions = 0
+        totalMoods = [Mood:Int]()
+        favoritePlants = [String: Int]()
+        let strMonth = String(selectedMonth)
+        let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
+        let intWeek = Date().weekDayToInt(weekDay: Date.dayOfWeek(day: "1", month: strMonth, year: String(selectedYear)))
+        var startsOnSunday = false
+        if intWeek != 0 {
+            monthTiles[0] = [0: (nil,nil)]
+            for idx in 1...intWeek {
+                monthTiles = [0 : [idx: (nil,nil)]]
+            }
+        } else { //it starts on a sunday
+            startsOnSunday = true
         }
+
         var weekNumber = 0
         for day in 1...numOfDays {
-            let weekday = Date.dayOfWeek(day: String(day), month: selectedMonth, year: selectedYear)
+            let weekday = Date.dayOfWeek(day: String(day), month: strMonth, year: String(selectedYear))
             let weekInt = Date().weekDayToInt(weekDay: weekday)
-            if weekInt == 0 {
+            if weekInt == 0 && !startsOnSunday {
                 weekNumber += 1
+            } else if startsOnSunday {
+                startsOnSunday = false
             }
+
             var plant: Plant? = nil
             var mood: Mood? = nil
-            if let session = grid[selectedYear]?[selectedMonth]?[String(day)]?[K.defaults.sessions] as? [String: String] {
-                let fbPlant = session[K.defaults.plantSelected]
-                plant = Plant.plants.first(where: { $0.title ==  fbPlant })
+            if let sessions = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.sessions] as? [[String: String]] {
+                let fbPlant = sessions[sessions.count - 1][K.defaults.plantSelected]
+                plant = Plant.plants.first(where: { $0.title == fbPlant })
+                for session in sessions {
+                    totalMins += (Double(session[K.defaults.duration] ?? "0.0") ?? 0).toInt() ?? 0
+                    let plant = session[K.defaults.plantSelected] ?? ""
+                    if var count = favoritePlants[plant] {
+                        count += 1
+                        favoritePlants[plant] = count
+                    } else {
+                        favoritePlants[plant] = 1
+                    }
+                }
+                totalSessions += sessions.count
             }
-            if let moods = grid[selectedYear]?[selectedMonth]?[String(day)]?[K.defaults.moods] as? [String] {
+
+            if let moods = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.moods] as? [String] {
                 mood = Mood.getMood(str: moods[moods.count - 1])
+                for forMood in moods {
+                    let singleMood = Mood.getMood(str: forMood)
+                    if var count = totalMoods[singleMood] {
+                        count += 1
+                        totalMoods[singleMood] = count
+                    } else {
+                        totalMoods[singleMood] = 1
+                    }
+                }
             }
-            monthTiles[weekNumber] = [day: (plant, mood)]
-            monthTiles[Int(selectedMonth) ?? 0] = [day: (nil,nil)]
+
+            if let _ = monthTiles[weekNumber] {
+                monthTiles[weekNumber]?[day] = (plant, mood)
+            } else { // first for this week
+                monthTiles[weekNumber] = [day: (plant,mood)]
+            }
         }
     }
  
@@ -61,6 +99,7 @@ class GardenViewModel: ObservableObject {
                     if let gardenGrid = document[K.defaults.gardenGrid] as? [String: [String:[String:[String:Any]]]] {
                         self.grid = gardenGrid
                     }
+                    self.populateMonth()
                 }
             }
         }
@@ -88,7 +127,7 @@ class GardenViewModel: ObservableObject {
                                 self.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)] = [key: [saveValue]]
                             }
                         } else { //first session of month
-                            self.grid[Date().get(.year)]?[Date().get(.month)] = [Date().get(.month): [key: [saveValue]]]
+                            self.grid[Date().get(.year)]?[Date().get(.month)] = [Date().get(.day): [key: [saveValue]]]
                         }
                     } else {
                         self.grid[Date().get(.year)] = [Date().get(.month): [Date().get(.day): [key: [saveValue]]]]

@@ -81,13 +81,10 @@ struct MiddleSelect: View {
             .navigationBarItems(
                 leading: ZStack {
                     Img.morningSun
-                        .zIndex(-25)
                     backButton.padding(.trailing, UIScreen.main.bounds.width/1.35)
-                }.offset(x: -10),
-                trailing: heart
-                    .offset(x: -20)
+                    heart.padding(.leading, UIScreen.main.bounds.width/1.2)
+                }.offset(x: -10)
             )
-
             .edgesIgnoringSafeArea(.bottom)
         }.transition(.move(edge: .trailing))
         .animation(tappedMeditation ? nil : .default)
@@ -110,6 +107,7 @@ struct MiddleSelect: View {
 
     var heart: some View {
         Button {
+            print("tap tap")
             if let med = model.selectedMeditation {
                 model.favorite(selectMeditation: med)
             }

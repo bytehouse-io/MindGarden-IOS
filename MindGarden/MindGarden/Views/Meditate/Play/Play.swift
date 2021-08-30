@@ -29,6 +29,9 @@ struct Play: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
 
+    init() {
+        
+    }
     var body: some View {
         NavigationView {
             ZStack {
@@ -113,10 +116,12 @@ struct Play: View {
                                     }
                                 }
                                 Button {
-                                    if player.isPlaying {
-                                        player.pause()
-                                    } else {
-                                        player.play()
+                                    if !unGuided {
+                                        if player.isPlaying {
+                                            player.pause()
+                                        } else {
+                                            player.play()
+                                        }
                                     }
 
                                     if timerStarted {
@@ -199,6 +204,11 @@ struct Play: View {
                             self.finish = true
                         }
                     }
+
+                    //bell at the end of a session
+                    let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
+                    model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                    model.bellPlayer.delegate = self.del
                 } else {
                     let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
                     player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))

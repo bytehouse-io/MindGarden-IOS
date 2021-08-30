@@ -13,6 +13,7 @@ struct Store: View {
     @State var confirmModal = false
     @State var showSuccess = false
     var isShop: Bool = true
+    @Binding var showPlantSelect: Bool
     
     var body: some View {
         ZStack {
@@ -20,14 +21,29 @@ struct Store: View {
             GeometryReader { g in
                 ScrollView {
                     HStack(alignment: .top, spacing: 20) {
-                        VStack(spacing: -10) {
-                            Text(isShop ? "🌻 Seed\nShop" : "🌻 Plant Select")
-                                .font(Font.mada(.bold, size: 32))
-                                .minimumScaleFactor(0.005)
-                                .lineLimit(2)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(Clr.black1)
-                                .padding()
+                        VStack(alignment: .leading, spacing: -10) {
+                            HStack {
+                                if !isShop {
+                                    Button {
+                                        showPlantSelect = false
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                            .resizable()
+                                            .renderingMode(.template)
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 20)
+                                            .foregroundColor(Clr.black1)
+                                            .padding(.leading)
+                                    }
+                                }
+                                Text(isShop ? "🌻 Seed\nShop" : "🌻 Plant Select")
+                                    .font(Font.mada(.bold, size: 32))
+                                    .minimumScaleFactor(0.005)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(Clr.black1)
+                                    .padding(isShop ? 25 : 10)
+                            }
                             ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
                                 { plant in
                                 if userModel.ownedPlants.contains(plant) && isShop {
@@ -225,6 +241,6 @@ struct Store: View {
 
 struct Store_Previews: PreviewProvider {
     static var previews: some View {
-            Store()
+        Store(showPlantSelect: .constant(false))
     }
 }

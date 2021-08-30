@@ -42,7 +42,7 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .shop:
-                                Store()
+                                Store(showPlantSelect: .constant(false))
                                     .frame(height: geometry.size.height + 20)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .profile:
