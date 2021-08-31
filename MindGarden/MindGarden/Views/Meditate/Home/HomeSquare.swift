@@ -35,7 +35,7 @@ struct HomeSquare: View {
                             .foregroundColor(Clr.black2)
                             .padding(.top, 5)
 
-                        HStack(spacing: 3){
+                        HStack(spacing: 3) {
                             Image(systemName: "timer")
                                 .font(.caption)
                             Text("15 min")
@@ -44,13 +44,11 @@ struct HomeSquare: View {
                         .padding(.top, 5)
                     }.padding(.leading, 25)
                     .frame(width: width * 0.25, height: height * 0.18, alignment: .top)
-
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: width * 0.18, height: height * 0.135, alignment: .center)
                         .padding(.leading, -22)
-
                 }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
                          , alignment: .topLeading)
         }
@@ -59,9 +57,6 @@ struct HomeSquare: View {
 
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
-//        PreviewDisparateDevices {
         HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0)
-
-//        }
     }
 }

@@ -15,7 +15,7 @@ struct Home: View {
     @State private var isRecent = false
     @State private var showModal = false
     @State private var showPlantSelect = false
-
+    @State private var showSearch = false
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -212,9 +212,17 @@ struct Home: View {
                                     .font(.title)
                                     .foregroundColor(Clr.darkgreen)
                                     .padding()
+                                    .onTapGesture {
+                                        showSearch = true
+                                    }
             )
             .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
+            })
+            .sheet(isPresented: $showSearch, content: {
+                if #available(iOS 14.0, *) {
+                    CategoriesScene(isSearch: true)
+                }
             })
         }.transition(.move(edge: .leading))
     }
