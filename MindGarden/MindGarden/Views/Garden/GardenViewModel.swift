@@ -139,7 +139,7 @@ class GardenViewModel: ObservableObject {
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
-                        print("Succesfully saved")
+                        print("Succesfully saved garden model")
                     }
                 }
             }

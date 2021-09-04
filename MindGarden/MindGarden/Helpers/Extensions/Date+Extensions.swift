@@ -11,19 +11,29 @@ extension Date {
     static func dayOfWeek(day: String, month: String, year: String)-> String{
         // Specify date components
         let userCalendar = Calendar.current // since the components above (like year 1980) are for Gregorian
-        var dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current, year: Int(year) ?? 0, month: Int(month) ?? 0, day: Int(day) ?? 0)
+        let dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current, year: Int(year) ?? 0, month: Int(month) ?? 0, day: Int(day) ?? 0)
         // Create date from components
         let someDateTime = userCalendar.date(from: dateComponents)
-        let dat = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEE"
         let weekDay = dateFormatter.string(from: someDateTime ?? Date())
         return weekDay
      }
+
     func get(_ type: Calendar.Component)-> String {
         let calendar = Calendar.current
         let t = calendar.component(type, from: self)
         return "\(t)"
+    }
+
+    func toString(withFormat format: String = "MM/dd/yyyy HH:mm") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        let str = dateFormatter.string(from: self)
+        return str
+    }
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
 
     func weekDayToInt(weekDay: String) -> Int {
@@ -185,3 +195,16 @@ extension Date {
     }
 
 }
+
+extension TimeInterval{
+        func stringFromTimeInterval() -> String {
+
+            let time = NSInteger(self)
+
+            let seconds = time % 60
+            let minutes = (time / 60) % 60
+            let hours = (time / 3600)
+
+            return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
+        }
+    }

@@ -17,10 +17,12 @@ struct ContentView: View {
     @State private var addMood = false
     @State private var openPrompts = false
     @State private var addGratitude = false
+    var bonusModel: BonusViewModel
 
-    init() {
+    init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
+        self.bonusModel = bonusModel
 //        meditationModel.isOpenEnded = false
 //        meditationModel.secondsRemaining = 150
     }
@@ -34,7 +36,7 @@ struct ContentView: View {
                         if #available(iOS 14.0, *) {
                             switch viewRouter.currentPage {
                             case .meditate:
-                                Home()
+                                Home(bonusModel: bonusModel)
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .garden:
@@ -141,8 +143,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            ContentView()
+            ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()))
         }
-        //        ContentView(viewRouter: ViewRouter())
     }
 }

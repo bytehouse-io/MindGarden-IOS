@@ -81,12 +81,12 @@ struct CategoriesScene: View {
                     Spacer()
                 }
                 .background(Clr.darkWhite)
-                }.navigationBarTitle("", displayMode: .inline)
+                }.navigationBarTitle(isSearch ? "" : "Categories", displayMode: .inline)
                 .navigationBarItems(leading: isSearch ? AnyView(EmptyView()) : AnyView(backButton)
                                     , trailing: isSearch ? AnyView(EmptyView()) : AnyView(searchButton))
             }
         }
-        .transition(.move(edge: .trailing))
+        .transition(.move(edge: .bottom))
         .onAppear {
             model.selectedCategory = .all
         }
@@ -121,7 +121,6 @@ struct CategoriesScene: View {
             Image(systemName: "magnifyingglass")
                 .font(.title)
                 .foregroundColor(Clr.darkgreen)
-                .padding()
         }
     }
 

@@ -40,6 +40,11 @@ struct K {
         static var plantSelected = "plantSelected"
         static var meditationId = "meditationId"
         static var duration = "duration"
+        static var lastStreakDate = "lastStreakDate"
+        static var streak = "streak"
+        static var seven = "seven"
+        static var thirty = "thirty"
+        static var dailyBonus = "dailyBonus"
     }
     struct ScreenSize
     {
@@ -56,6 +61,7 @@ struct K {
     static func isPad() -> Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
+    
     static func hasNotch() -> Bool {
         let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         return bottom > 0

@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct BonusModal: View {
+    @ObservedObject var bonusModel: BonusViewModel
     @Binding var shown: Bool
-    @State private var progress: CGFloat = 1.5
-
 
     var body: some View {
         GeometryReader { g in
@@ -39,17 +38,13 @@ struct BonusModal: View {
                         }.frame(height: g.size.height * 0.08)
 
                         Button {
-
+                            if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                                bonusModel.saveDaily(plusCoins: 5)
+                            }
                         } label: {
-                            BonusBox(width: g.size.width, height: g.size.height, video: false)
+                            BonusBox(bonusModel: bonusModel, width: g.size.width, height: g.size.height, video: false)
                         }.padding(.bottom, 10)
-
-                        Button {
-
-                        } label: {
-                            BonusBox(width: g.size.width, height: g.size.height, video: true)
-                        }
-
+                        .buttonStyle(NeumorphicPress())
                         Spacer()
                         if !K.isIpod() {
                             Text("Streaks")
@@ -76,9 +71,11 @@ struct BonusModal: View {
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.center)
                                     Button {
-
+                                        if bonusModel.sevenDayProgress > 1.0 {
+                                            bonusModel.saveSeven()
+                                        }
                                     } label: {
-                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: progress)
+                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: bonusModel.sevenDayProgress)
                                     }
 
                                     Text("30 days")
@@ -87,9 +84,11 @@ struct BonusModal: View {
                                         .multilineTextAlignment(.center)
                                         .padding(.top)
                                     Button {
-
+                                        if bonusModel.thirtyDayProgress > 1.0 {
+                                            bonusModel.saveThirty()
+                                        }
                                     } label: {
-                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: progress)
+                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: bonusModel.thirtyDayProgress)
                                     }
                                 }
                                 .padding()
@@ -97,21 +96,25 @@ struct BonusModal: View {
                         }.frame(width: g.size.width * 0.65, height: g.size.height * 0.25, alignment: .center)
                         Spacer()
                     }
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.65, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.55, alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(12)
                     Spacer()
                 }
                 Spacer()
             }
+        }.onAppear {
+            bonusModel.updateBonus()
         }
     }
+    
     struct ProgressBar: View {
         let width, height: CGFloat
         let weekly: Bool
-        let progress: CGFloat
+        let progress: Double
 
         var body: some View {
+            let _ = print(progress, "progress")
             ZStack(alignment: .leading) {
                 Capsule()
                     .frame(width: width/3 , height: height/25)
@@ -145,8 +148,11 @@ struct BonusModal: View {
     }
 
     struct BonusBox: View {
+        @ObservedObject var bonusModel: BonusViewModel
+        @State private var dailyCooldown = ""
         let width, height: CGFloat
         let video: Bool
+
 
         var body: some View {
             ZStack(alignment: .center){
@@ -156,35 +162,45 @@ struct BonusModal: View {
                     .cornerRadius(15)
                     .neoShadow()
                 HStack {
-                    Img.coin
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: width * 0.07)
-                    Text("30")
-                        .foregroundColor(Clr.black1)
-                        .font(Font.mada(.semiBold, size: 24))
-                        .minimumScaleFactor(0.5)
-                        .padding(.trailing)
-                    Capsule()
-                        .fill(Clr.brightGreen)
-                        .overlay(
-                            Group {
-                                if video {
-                                    Image(systemName: "play.fill")
-                                        .foregroundColor(.white)
-                                } else {
-                                    Text("CLAIM")
-                                        .font(Font.mada(.bold, size: 20))
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.5)
+                    if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                        Img.coin
+                            .resizable()
+                            .renderingMode(.original)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: width * 0.07)
+                        Text("30")
+                            .foregroundColor(Clr.black1)
+                            .font(Font.mada(.semiBold, size: 24))
+                            .minimumScaleFactor(0.5)
+                            .padding(.trailing)
+                        Capsule()
+                            .fill(Clr.brightGreen)
+                            .overlay(
+                                Group {
+                                    if video {
+                                        Image(systemName: "play.fill")
+                                            .foregroundColor(.white)
+                                    } else {
+                                        Text("CLAIM")
+                                            .font(Font.mada(.bold, size: 20))
+                                            .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
+                                    }
                                 }
-                            }
-                        )
-                        .frame(width: width * 0.3, height: height * 0.04)
-                        .padding(.leading)
-                        .neoShadow()
+                            )
+                            .frame(width: width * 0.3, height: height * 0.04)
+                            .padding(.leading)
+                            .neoShadow()
+                    } else {
+                        Text(bonusModel.dailyInterval)
+                            .foregroundColor(Clr.darkgreen)
+                            .font(Font.mada(.bold, size: 30))
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                            .padding(.trailing)
+                    }
+
                 }.padding()
             }
         }
@@ -194,7 +210,7 @@ struct BonusModal: View {
 struct BonusModal_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            BonusModal(shown: .constant(true))
+            BonusModal(bonusModel: BonusViewModel(userModel: UserViewModel()), shown: .constant(true))
         }
     }
 }

@@ -204,10 +204,7 @@ struct Store: View {
                                         .font(Font.mada(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .frame(width: g.size.width/3, height: 40)
-                                        .background(Color.gray.opacity(0.5))
-                                        .clipShape(Capsule())
-                                        .neoShadow()
-                                        .padding()
+                                        
                                 }
                                 Button {
                                     userModel.buyPlant()

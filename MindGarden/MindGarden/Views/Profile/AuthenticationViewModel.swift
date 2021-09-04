@@ -81,7 +81,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             viewRouter.currentPage = .meditate
                                         }
                                         guard let _ = appleIDCredential.email else {
-                                            print("jangu")
                                             // User already signed in with this appleId once
                                             return
                                         }
@@ -264,7 +263,7 @@ extension AuthenticationViewModel {
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    print("Succesfully saved")
+                    print("Succesfully saved new user")
                 }
             }
         }

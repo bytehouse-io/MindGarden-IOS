@@ -12,14 +12,17 @@ import FirebaseAuth
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State private var isRecent = false
     @State private var showModal = false
     @State private var showPlantSelect = false
     @State private var showSearch = false
+    var bonusModel: BonusViewModel
 
-    init() {
+    init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
+        self.bonusModel = bonusModel
     }
     
     var body: some View {
@@ -200,7 +203,7 @@ struct Home: View {
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
                 }
-                BonusModal(shown: $showModal)
+                BonusModal(bonusModel: bonusModel,shown: $showModal)
                     .offset(y: showModal ? 0 : g.size.height)
                     .edgesIgnoringSafeArea(.top)
                     .animation(.default, value: showModal)
@@ -230,7 +233,7 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home().navigationViewStyle(StackNavigationViewStyle())
+        Home(bonusModel: BonusViewModel(userModel: UserViewModel())).navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
