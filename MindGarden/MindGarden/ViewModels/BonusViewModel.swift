@@ -23,7 +23,6 @@ class BonusViewModel: ObservableObject {
     @Published var totalBonuses: Int = 0
     @Published var dailyInterval: String = ""
     var userModel: UserViewModel
-
     var streakNumber = 1
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -168,36 +167,33 @@ class BonusViewModel: ObservableObject {
                             self.totalBonuses += 1
                         }
 
-                        var sevenDayProgress:Double = 0.0
-                        var thirtyDayProgress:Double = 0.0
 
                         if self.sevenDay > 0 {
                             let leftOver = self.streakNumber - (self.sevenDay * 7)
-                            sevenDayProgress = Double(leftOver)/7.0
+                            self.sevenDayProgress = Double(leftOver)/7.0
                         } else {
-                            sevenDayProgress = Double(self.streakNumber)/7.0
-                            if sevenDayProgress <= 0.1 {
-                                sevenDayProgress = 0.1
+                            self.sevenDayProgress = Double(self.streakNumber)/7.0
+                            if self.sevenDayProgress <= 0.1 {
+                                self.sevenDayProgress = 0.1
                             }
                         }
 
                         if self.thirtyDay > 0 {
                             let leftOver = self.streakNumber - (self.thirtyDay * 30)
-                            thirtyDayProgress = Double(leftOver)/30.0
+                            self.thirtyDayProgress = Double(leftOver)/30.0
                         } else {
-                            thirtyDayProgress = Double(self.streakNumber)/30.0
-                            if thirtyDayProgress <= 0.1 {
-                                thirtyDayProgress = 0.1
+                            self.thirtyDayProgress = Double(self.streakNumber)/30.0
+                            if self.thirtyDayProgress <= 0.1 {
+                                self.thirtyDayProgress = 0.08
                             }
                         }
-                        if sevenDayProgress >= 1.0 {self.totalBonuses += 1}
-                        if thirtyDayProgress >= 1.0 {self.totalBonuses += 1}
+                        if self.sevenDayProgress >= 1.0 {self.totalBonuses += 1}
+                        if self.thirtyDayProgress >= 1.0 {self.totalBonuses += 1}
                     } else {
                         lastStreakDate  = formatter.string(from: Date())
                         self.streakNumber = 1
                     }
 
-                    //
                     if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
                         self.createDailyCountdown()
                     }

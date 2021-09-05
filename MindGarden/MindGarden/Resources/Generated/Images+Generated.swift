@@ -25,6 +25,7 @@ public enum Img {
   public static let morningSun = Image("morningSun")
   public static let oneBlueberry = Image("oneBlueberry")
   public static let plantIcon = Image("plantIcon")
+  public static let pottedPlants = Image("pottedPlants")
   public static let profile = Image("profile")
   public static let profileIcon = Image("profileIcon")
   public static let redTulipHead = Image("redTulipHead")
@@ -36,6 +37,7 @@ public enum Img {
   public static let seed = Image("seed")
   public static let shopIcon = Image("shopIcon")
   public static let siwg = Image("siwg")
+  public static let streakStar = Image("streakStar")
   public static let topBranch = Image("topBranch")
   public static let yellowHead = Image("yellowHead")
 }

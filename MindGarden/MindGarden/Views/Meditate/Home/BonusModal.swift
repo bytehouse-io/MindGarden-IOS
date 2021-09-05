@@ -59,10 +59,10 @@ struct BonusModal: View {
                                 .neoShadow()
                             HStack(spacing: 0) {
                                 VStack {
-                                    Img.daisy
+                                    Img.streakStar
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                    Text("6 ").bold().foregroundColor(Clr.black1) + Text("days").foregroundColor(Clr.black1)
+                                    Text("\(bonusModel.streakNumber) ").bold().foregroundColor(Clr.black1) + Text(bonusModel.streakNumber == 1 ? "day" : "days").foregroundColor(Clr.black1)
                                 }.frame(width: g.size.width * 0.15)
                                 .padding()
                                 VStack(spacing: -5) {
@@ -76,7 +76,7 @@ struct BonusModal: View {
                                         }
                                     } label: {
                                         ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: bonusModel.sevenDayProgress)
-                                    }
+                                    }.buttonStyle(NeumorphicPress())
 
                                     Text("30 days")
                                         .font(Font.mada(.bold, size: 20))
@@ -89,7 +89,7 @@ struct BonusModal: View {
                                         }
                                     } label: {
                                         ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: bonusModel.thirtyDayProgress)
-                                    }
+                                    }.buttonStyle(NeumorphicPress())
                                 }
                                 .padding()
                             }.padding(.leading)
@@ -114,7 +114,6 @@ struct BonusModal: View {
         let progress: Double
 
         var body: some View {
-            let _ = print(progress, "progress")
             ZStack(alignment: .leading) {
                 Capsule()
                     .frame(width: width/3 , height: height/25)
@@ -143,7 +142,6 @@ struct BonusModal: View {
                 }.padding()
                 .frame(alignment: .center)
             }
-            .neoShadow()
         }
     }
 
