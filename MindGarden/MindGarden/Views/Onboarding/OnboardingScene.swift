@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingScene: View {
     @State private var index = 0
-
+    @State private var goToExperience = false
     init() {
         if #available(iOS 14.0, *) {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Clr.gardenGreen)
@@ -29,6 +29,10 @@ struct OnboardingScene: View {
                 let height = g.size.height
                 let width = g.size.height
                 ZStack {
+                    NavigationLink(destination: ExperienceScene()
+                                    .navigationBarTitle("", displayMode: .inline)
+                                    .navigationBarBackButtonHidden(true)
+                      , isActive: $goToExperience) {EmptyView()}
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack {
                         if #available(iOS 14.0, *) {
@@ -70,7 +74,7 @@ struct OnboardingScene: View {
                             // Fallback on earlier versions
                         }
                         Button {
-
+                            goToExperience = true
                         } label: {
                             Capsule()
                                 .fill(Clr.darkWhite)

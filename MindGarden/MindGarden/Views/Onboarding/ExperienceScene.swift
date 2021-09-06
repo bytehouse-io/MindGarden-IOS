@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExperienceScene: View {
     @State var selected: String = ""
-
+    @State var goToNotifications: Bool = false
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -22,6 +22,10 @@ struct ExperienceScene: View {
                 let width = g.size.width
                 let height = g.size.height
                 ZStack {
+                    NavigationLink(destination: NotificationScene()
+                                    .navigationBarTitle("", displayMode: .inline)
+                                    .navigationBarBackButtonHidden(true)
+                      , isActive: $goToNotifications) {EmptyView()}
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack {
                         Text("What is your experience with meditation?")
@@ -33,7 +37,9 @@ struct ExperienceScene: View {
                         SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                         SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
                         Button {
-
+                            withAnimation {
+                                goToNotifications = true
+                            }
                         } label: {
                             Capsule()
                                 .fill(Clr.darkWhite)
