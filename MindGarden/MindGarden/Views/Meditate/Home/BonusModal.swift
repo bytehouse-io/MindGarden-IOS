@@ -103,8 +103,6 @@ struct BonusModal: View {
                 }
                 Spacer()
             }
-        }.onAppear {
-            bonusModel.updateBonus()
         }
     }
     

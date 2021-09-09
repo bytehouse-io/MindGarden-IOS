@@ -81,8 +81,7 @@ struct MoodCheck: View {
                             if moodSelected != .none {
                                 gardenModel.save(key: "moods", saveValue: moodSelected.title)
                             }
-                        })
-                            .padding(.bottom)
+                        }).padding(.bottom)
                     Spacer()
                 }
                 Spacer()

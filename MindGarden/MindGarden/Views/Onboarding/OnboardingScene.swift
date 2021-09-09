@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingScene: View {
     @State private var index = 0
-    @State private var goToExperience = false
+    @EnvironmentObject var viewRouter: ViewRouter
     init() {
         if #available(iOS 14.0, *) {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Clr.gardenGreen)
@@ -17,8 +17,8 @@ struct OnboardingScene: View {
             // Fallback on earlier versions
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
+//        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+//        UINavigationBar.appearance().shadowImage = UIImage()
     }
     let titles = ["Simple meditation that actually sticks", "Simple meditation that actually sticks"]
     let subtitles = ["Stress less. Get 1% happier everyday by making meditation your lifestyle.", "Stress less. Get 1% happier everyday by making meditation your lifestyle."]
@@ -29,10 +29,6 @@ struct OnboardingScene: View {
                 let height = g.size.height
                 let width = g.size.height
                 ZStack {
-                    NavigationLink(destination: ExperienceScene()
-                                    .navigationBarTitle("", displayMode: .inline)
-                                    .navigationBarBackButtonHidden(true)
-                      , isActive: $goToExperience) {EmptyView()}
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack {
                         if #available(iOS 14.0, *) {
@@ -69,12 +65,13 @@ struct OnboardingScene: View {
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                             .frame(height: height * 0.7)
-//                            .background(Color.red)
                         } else {
                             // Fallback on earlier versions
                         }
                         Button {
-                            goToExperience = true
+                            withAnimation {
+                                viewRouter.currentPage = .experience
+                            }
                         } label: {
                             Capsule()
                                 .fill(Clr.darkWhite)
@@ -89,7 +86,8 @@ struct OnboardingScene: View {
                         Spacer()
                     }
                 }
-            }.navigationBarTitle("", displayMode: .inline)
+            }
+            .navigationBarTitle("", displayMode: .inline)
         }
     }
 }

@@ -16,24 +16,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
+        let router = ViewRouter()
         let medModel = MeditationViewModel()
         let userModel = UserViewModel()
         let gardenModel = GardenViewModel()
-//
+        let bonusModel = BonusViewModel(userModel: userModel)
+
         medModel.updateSelf()
         userModel.updateSelf()
         gardenModel.updateSelf()
-        let bonusModel = BonusViewModel(userModel: userModel)
+        bonusModel.updateBonus()
+
         let contentView = ContentView(bonusModel: bonusModel)
-                            .environmentObject(ViewRouter())
-                            .environmentObject(medModel)
-                            .environmentObject(userModel)
-                            .environmentObject(gardenModel)
+
 
         // Use a UIHostingController as window root view controller.
+        let rootHost = UIHostingController(rootView: contentView
+                                            .environmentObject(router)
+                                            .environmentObject(medModel)
+                                            .environmentObject(userModel)
+                                            .environmentObject(gardenModel))
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: OnboardingScene())
+            window.rootViewController = rootHost
             self.window = window
             window.makeKeyAndVisible()
         }

@@ -18,6 +18,8 @@ class GardenViewModel: ObservableObject {
     @Published var totalMins = 0
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
+    var placeHolders = 0
+    var startsOnSunday = false
     let db = Firestore.firestore()
 
     init() {
@@ -28,17 +30,16 @@ class GardenViewModel: ObservableObject {
     func populateMonth() {
         totalMins = 0
         totalSessions = 0
+        placeHolders = 0
+        monthTiles = [Int: [Int: (Plant?, Mood?)]]()
         totalMoods = [Mood:Int]()
         favoritePlants = [String: Int]()
+        startsOnSunday = false
         let strMonth = String(selectedMonth)
         let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
         let intWeek = Date().weekDayToInt(weekDay: Date.dayOfWeek(day: "1", month: strMonth, year: String(selectedYear)))
-        var startsOnSunday = false
         if intWeek != 0 {
-            monthTiles[0] = [0: (nil,nil)]
-            for idx in 1...intWeek {
-                monthTiles = [0 : [idx: (nil,nil)]]
-            }
+            placeHolders = intWeek
         } else { //it starts on a sunday
             startsOnSunday = true
         }
@@ -140,6 +141,7 @@ class GardenViewModel: ObservableObject {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
                         print("Succesfully saved garden model")
+                        self.populateMonth()
                     }
                 }
             }

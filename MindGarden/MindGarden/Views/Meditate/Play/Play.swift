@@ -29,9 +29,6 @@ struct Play: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
 
-    init() {
-        
-    }
     var body: some View {
         NavigationView {
             ZStack {
@@ -97,8 +94,13 @@ struct Play: View {
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: 20) {
                                 Button {
-                                    player.currentTime -= 15
-                                    model.secondsRemaining -= 15
+                                    if player.currentTime >= 15 {
+                                        player.currentTime -= 15
+                                        model.secondsRemaining -= 15
+                                    } else {
+                                        player.currentTime = 0
+                                        model.secondsRemaining = 0
+                                    }
                                 } label: {
                                     ZStack {
                                         Circle()
@@ -129,6 +131,7 @@ struct Play: View {
                                     } else {
                                         model.isOpenEnded ? model.startTimer() : model.startCountdown()
                                     }
+
                                     timerStarted.toggle()
                                 } label: {
                                     ZStack {

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ExperienceScene: View {
     @State var selected: String = ""
-    @State var goToNotifications: Bool = false
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditationModel: MeditationViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -22,12 +24,8 @@ struct ExperienceScene: View {
                 let width = g.size.width
                 let height = g.size.height
                 ZStack {
-                    NavigationLink(destination: NotificationScene()
-                                    .navigationBarTitle("", displayMode: .inline)
-                                    .navigationBarBackButtonHidden(true)
-                      , isActive: $goToNotifications) {EmptyView()}
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack {
+                    VStack {  
                         Text("What is your experience with meditation?")
                             .font(Font.mada(.bold, size: 24))
                             .foregroundColor(Clr.darkgreen)
@@ -37,8 +35,11 @@ struct ExperienceScene: View {
                         SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                         SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
                         Button {
-                            withAnimation {
-                                goToNotifications = true
+                            if selected != "" {
+                                UserDefaults.standard.set(selected, forKey: "experience")
+                                withAnimation {
+                                    viewRouter.currentPage = .notification
+                                }
                             }
                         } label: {
                             Capsule()
@@ -52,12 +53,10 @@ struct ExperienceScene: View {
                         .padding()
                         .buttonStyle(NeumorphicPress())
                         Spacer()
-                    }
+                    }.navigationBarItems(
+                        leading: Img.topBranch
+                            .padding(.leading, -20))
                 }
-                .navigationBarItems(
-                    leading: Img.topBranch.padding(.leading, -20))
-                .navigationBarTitle("", displayMode: .inline)
-
             }
         }
     }

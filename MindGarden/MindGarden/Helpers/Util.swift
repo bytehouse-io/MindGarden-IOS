@@ -46,6 +46,7 @@ struct K {
         static var thirty = "thirty"
         static var dailyBonus = "dailyBonus"
         static var meditationReminder = "meditationReminder"
+        static var loggedIn = "loggedIn"
     }
     struct ScreenSize
     {

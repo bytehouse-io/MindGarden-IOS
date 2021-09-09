@@ -61,6 +61,7 @@ class BonusViewModel: ObservableObject {
         if let email = Auth.auth().currentUser?.email {
             userModel.coins += plusCoins
             dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
+            createDailyCountdown()
                 self.db.collection(K.userPreferences).document(email).updateData([
                     K.defaults.dailyBonus: self.dailyBonus,
                     K.defaults.coins: self.userModel.coins
@@ -183,7 +184,7 @@ class BonusViewModel: ObservableObject {
                             self.thirtyDayProgress = Double(leftOver)/30.0
                         } else {
                             self.thirtyDayProgress = Double(self.streakNumber)/30.0
-                            if self.thirtyDayProgress <= 0.1 {
+                            if self.thirtyDayProgress <= 0.08 {
                                 self.thirtyDayProgress = 0.08
                             }
                         }

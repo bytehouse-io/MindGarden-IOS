@@ -78,6 +78,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                         alertError = false
                                         withAnimation {
+                                            UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                                             viewRouter.currentPage = .meditate
                                         }
                                         guard let _ = appleIDCredential.email else {
@@ -169,6 +170,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                     }
                     self.state = .signedIn
                     withAnimation {
+                        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                         viewRouter.currentPage = .meditate
                     }
                     alertError = false
@@ -214,6 +216,7 @@ extension AuthenticationViewModel {
             createUser()
             alertError = false
             withAnimation {
+                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 viewRouter.currentPage = .meditate
             }
         }
@@ -230,6 +233,7 @@ extension AuthenticationViewModel {
             getData()
             alertError = false
             withAnimation {
+                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 viewRouter.currentPage = .meditate
             }
         }

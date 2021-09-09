@@ -105,6 +105,7 @@ struct Finished: View {
                                         .foregroundColor(Clr.black1)
                                     Spacer()
                                     Button {
+                                        print("calling")
                                         withAnimation {
                                             viewRouter.currentPage = .garden
                                         }

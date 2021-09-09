@@ -25,16 +25,24 @@ struct ContentView: View {
         self.bonusModel = bonusModel
 //        meditationModel.isOpenEnded = false
 //        meditationModel.secondsRemaining = 150
+        //check for auth here
     }
 
     var body: some View {
         GeometryReader { geometry in
-            NavigationView {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack {
                         if #available(iOS 14.0, *) {
                             switch viewRouter.currentPage {
+                            case .onboarding:
+                                OnboardingScene()
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .experience:
+                                ExperienceScene()
+                                    .frame(height: geometry.size.height)
+                                    .navigationViewStyle(StackNavigationViewStyle())
                             case .meditate:
                                 Home(bonusModel: bonusModel)
                                     .frame(height: geometry.size.height)
@@ -45,15 +53,11 @@ struct ContentView: View {
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .shop:
                                 Store(showPlantSelect: .constant(false))
-                                    .frame(height: geometry.size.height + 20)
+                                    .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .profile:
                                 ProfileScene()
                                     .frame(height: geometry.size.height)
-                                    .navigationViewStyle(StackNavigationViewStyle())
-                            case .play:
-                                Play()
-                                    .frame(height: geometry.size.height + 80)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
                                 CategoriesScene()
@@ -63,8 +67,20 @@ struct ContentView: View {
                                 MiddleSelect()
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
+                            case .play:
+                                Play()
+                                    .frame(height: geometry.size.height + 80)
+                                    .navigationViewStyle(StackNavigationViewStyle())
+                            case .finished:
+                                Finished()
+                                    .frame(height: geometry.size.height + 80)
+                                    .navigationViewStyle(StackNavigationViewStyle())
                             case .authentication:
-                                Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel, viewRouter: viewRouter))
+                                    Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: userModel, viewRouter: viewRouter))
+                                        .frame(height: geometry.size.height)
+                                        .navigationViewStyle(StackNavigationViewStyle())
+                            case .notification:
+                                NotificationScene()
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             }
@@ -72,7 +88,9 @@ struct ContentView: View {
                             // Fallback on earlier versions
                         }
                     }.edgesIgnoringSafeArea(.all)
-                    if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication {
+                    if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
+                        && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
+                        && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished {
                         if showPopUp || addMood || addGratitude {
                             Button {
                                 withAnimation {
@@ -135,7 +153,6 @@ struct ContentView: View {
                 }
                 .navigationBarTitle("", displayMode: .inline)
                 .navigationBarHidden(true)
-            }
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

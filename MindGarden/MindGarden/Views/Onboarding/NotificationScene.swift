@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct NotificationScene: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var dateTime = Date()
     @State private var bottomSheetShown = false
-    @State private var goToExperience = false
+    @State private var goToAuthentication = false
     var displayedTime: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
         return formatter.string(from: dateTime)
     }
     init() {
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
+        //        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        //        UINavigationBar.appearance().shadowImage = UIImage()
     }
 
     var body: some View {
@@ -26,9 +27,6 @@ struct NotificationScene: View {
             GeometryReader { g in
                 let width = g.size.width
                 ZStack {
-                    NavigationLink(destination: NotificationScene().navigationBarHidden(true), isActive: $goToExperience) {
-                        EmptyView()
-                    }
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(spacing: -5) {
                         Text("Set Your Daily Reminder")
@@ -64,7 +62,7 @@ struct NotificationScene: View {
                         Button {
                             UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                             withAnimation {
-                                goToExperience = true
+                                viewRouter.currentPage = .authentication
                             }
                         } label: {
                             Capsule()
@@ -81,9 +79,10 @@ struct NotificationScene: View {
                             .foregroundColor(.gray)
                             .padding()
                             .onTapGesture {
-
+                                withAnimation {
+                                    goToAuthentication = true
+                                }
                             }
-
                     }.frame(width: width * 0.9)
                     if bottomSheetShown {
                         Color.black
@@ -105,6 +104,14 @@ struct NotificationScene: View {
                     }.frame(width: width, alignment: .center)
                 }.offset(y: g.size.height * 0.3)
             }.navigationBarTitle("", displayMode: .inline)
+            .navigationBarItems(trailing: Image(systemName: "arrow.backward")
+                                    .font(.title)
+                                    .foregroundColor(Clr.darkgreen)
+                                    .padding()
+                                    .onTapGesture {
+                                        viewRouter.currentPage = .experience
+                                    }
+            )
         }
     }
 }

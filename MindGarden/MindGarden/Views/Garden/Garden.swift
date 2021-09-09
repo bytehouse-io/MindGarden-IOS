@@ -19,18 +19,18 @@ struct Garden: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .center, spacing: 20) {
                     //Version 2
-//                    HStack(spacing: 40) {
-//                        Button {
-//                            isMonth = true
-//                        } label: {
-//                            MenuButton(title: "Month", isMonth: isMonth)
-//                        }
-//                        Button {
-//                            isMonth = false
-//                        } label: {
-//                            MenuButton(title: "Year", isMonth: !isMonth)
-//                        }
-//                    }
+                    //                    HStack(spacing: 40) {
+                    //                        Button {
+                    //                            isMonth = true
+                    //                        } label: {
+                    //                            MenuButton(title: "Month", isMonth: isMonth)
+                    //                        }
+                    //                        Button {
+                    //                            isMonth = false
+                    //                        } label: {
+                    //                            MenuButton(title: "Year", isMonth: !isMonth)
+                    //                        }
+                    //                    }
                     Text("🪴 Your MindGarden")
                         .font(Font.mada(.semiBold, size: 22))
                         .foregroundColor(Clr.darkgreen)
@@ -69,34 +69,51 @@ struct Garden: View {
                     .padding(.top, -15)
                     GridStack(rows: 5, columns: 7) { row, col in
                         ZStack {
-                            if gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1 != nil { //mood & plant both exist
-                                Rectangle()
-                                    .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1?.color ?? Clr.dirtBrown)
-                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                Img.oneBlueberry
-                                    .padding(3)
-                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.0 != nil { // only mood is nil
+                            let c = gardenModel.placeHolders
+                            if col < c && row == 0 {
                                 Rectangle()
                                     .fill(Clr.dirtBrown)
                                     .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                     .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                Img.oneBlueberry
-                                    .padding(3)
-                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1 != nil{ // only plant is nil
-                                Rectangle()
-                                    .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1]?.1?.color ?? Clr.dirtBrown)
-                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                            } else { //both are nil
-                                Rectangle()
-                                    .fill(Clr.dirtBrown)
-                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                            } else {
+                                if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
+                                    // mood & plant both exist
+                                    ZStack {
+                                        Rectangle()
+                                            .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
+                                            .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                        Img.oneBlueberry
+                                            .padding(3)
+                                    }
+                                } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
+                                    ZStack {
+                                        Rectangle()
+                                            .fill(Clr.dirtBrown)
+                                            .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                        Img.oneBlueberry
+                                            .padding(3)
+                                    }
+                                } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
+                                    Rectangle()
+                                        .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
+                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                        .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+
+                                } else { //both are nil
+                                    Rectangle()
+                                        .fill(Clr.dirtBrown)
+                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                        .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+
+                                }
                             }
-                        } .onTapGesture {
-                            day = col + (row * 7) + 1
-                            showSingleModal = true
+                        }.onTapGesture {
+                            day = col + (row * 7) + 1  - gardenModel.placeHolders
+                            if day <= 31 && day >= 1 {
+                                showSingleModal = true
+                            }
                         }
                     }.offset(y: -10)
                     HStack(spacing: 5) {
@@ -142,10 +159,10 @@ struct Garden: View {
                                         .minimumScaleFactor(0.05)
                                         .padding()
                                 } else {
-                                    if let favPlant1 = topThreePlants[0] {
+                                    if !topThreePlants.isEmpty, let favPlant1 = topThreePlants[0] {
                                         favPlant1
                                     }
-                                    if let favPlant2 = topThreePlants[1] {
+                                    if topThreePlants.count > 1, let favPlant2 = topThreePlants[1] {
                                         favPlant2
                                     }
                                     if topThreePlants.indices.contains(2), let favPlant3 = topThreePlants[2] {
@@ -257,22 +274,22 @@ struct FavoritePlant: View {
     let img: Image
 
     var body: some View {
-            VStack(spacing: 0) {
-                img
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(8)
-                    .overlay(RoundedRectangle(cornerRadius: 15)
-                                .stroke(Clr.darkgreen))
-                HStack {
-                    Text("\(title)")
-                        .font(Font.mada(.regular, size: 16))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                    Text("\(count)").bold()
-                        .font(Font.mada(.bold, size: 16))
-                }.padding(.top, 8)
-            }.frame(width: 70, height: 120)
-            .padding(10)
-        }
+        VStack(spacing: 0) {
+            img
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(8)
+                .overlay(RoundedRectangle(cornerRadius: 15)
+                            .stroke(Clr.darkgreen))
+            HStack {
+                Text("\(title)")
+                    .font(Font.mada(.regular, size: 16))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                Text("\(count)").bold()
+                    .font(Font.mada(.bold, size: 16))
+            }.padding(.top, 8)
+        }.frame(width: 70, height: 120)
+        .padding(10)
+    }
 }

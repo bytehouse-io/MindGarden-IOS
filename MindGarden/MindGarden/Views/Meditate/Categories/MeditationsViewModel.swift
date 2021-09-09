@@ -13,7 +13,6 @@ import AVKit
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
-//    Meditation(title: "Open-Ended Meditation", description: "description", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 1, duration: 0), Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0)
     @Published var recentMeditations: [Meditation] = []
     @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0, reward: 0)
     @Published var courseMeditations: [Meditation] = []
@@ -132,6 +131,7 @@ class MeditationViewModel: ObservableObject {
                     bellPlayer.play()
                     stop()
                     finishedMeditation = true
+//                    viewRouter.currentPage = .finished
                     return
                 }
             }

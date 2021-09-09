@@ -8,7 +8,7 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
-    @Published var currentPage: Page = .meditate
+    @Published var currentPage: Page = UserDefaults.standard.bool(forKey: K.defaults.loggedIn) ? .meditate : .onboarding
 }
 
 enum Page {
@@ -20,4 +20,8 @@ enum Page {
     case categories
     case middle
     case authentication
+    case finished
+    case onboarding
+    case experience
+    case notification
 }

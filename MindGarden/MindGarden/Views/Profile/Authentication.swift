@@ -11,6 +11,7 @@ import GoogleSignIn
 
 struct Authentication: View {
     var isSignUp: Bool
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var isShowingDetailView = false
     @State private var alertError = false
     @State private var showForgotAlert = false
@@ -158,7 +159,13 @@ struct Authentication: View {
                                             .foregroundColor(Clr.darkgreen)
                                             .edgesIgnoringSafeArea(.all)
                                             .padding()
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    viewRouter.currentPage = .notification
+                                                }
+                                            }
                     )
+                    .navigationBarBackButtonHidden(true)
                 }
             }
         }
