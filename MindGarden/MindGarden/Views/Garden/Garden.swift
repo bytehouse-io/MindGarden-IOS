@@ -86,7 +86,7 @@ struct Garden: View {
                                         Img.oneBlueberry
                                             .padding(3)
                                     }
-                                } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
+                                } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nilr
                                     ZStack {
                                         Rectangle()
                                             .fill(Clr.dirtBrown)

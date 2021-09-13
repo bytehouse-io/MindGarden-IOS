@@ -79,6 +79,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         alertError = false
                                         withAnimation {
                                             UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                            if isSignUp {
+                                                UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                                            }
                                             viewRouter.currentPage = .meditate
                                         }
                                         guard let _ = appleIDCredential.email else {
@@ -171,6 +174,9 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                     self.state = .signedIn
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                        if isSignUp {
+                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                        }
                         viewRouter.currentPage = .meditate
                     }
                     alertError = false
@@ -217,6 +223,9 @@ extension AuthenticationViewModel {
             alertError = false
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                if isSignUp {
+                    UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                }
                 viewRouter.currentPage = .meditate
             }
         }
@@ -234,6 +243,9 @@ extension AuthenticationViewModel {
             alertError = false
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                if isSignUp {
+                    UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                }
                 viewRouter.currentPage = .meditate
             }
         }

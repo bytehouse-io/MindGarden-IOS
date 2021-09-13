@@ -27,16 +27,16 @@ struct Authentication: View {
     }
 
     var body: some View {
-            LoadingView(isShowing: $viewModel.isLoading) {
-                NavigationView {
-                    ZStack {
-                        Clr.darkWhite.edgesIgnoringSafeArea(.all)
-                        VStack(spacing: 0)  {
-                            Text(isSignUp ?  "Sign Up." : "Sign In.")
-                                .foregroundColor(Color.black)
-                                .font(Font.mada(.bold, size: 32))
-                                .padding()
-                            ZStack(alignment: .leading) {
+        LoadingView(isShowing: $viewModel.isLoading) {
+            NavigationView {
+                ZStack {
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                    VStack(spacing: 0)  {
+                        Text(isSignUp ?  "Sign Up." : "Sign In.")
+                            .foregroundColor(Color.black)
+                            .font(Font.mada(.bold, size: 32))
+                            .padding()
+                        ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 24)
                                 .fill(Clr.darkWhite)
                                 .neoShadow()
@@ -84,15 +84,15 @@ struct Authentication: View {
                                 viewModel.signIn()
                             }
                         } label: {
-                                ZStack(alignment: .center) {
-                                    RoundedRectangle(cornerRadius: 24)
-                                        .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
-                                        .neoShadow()
-                                    Text(isSignUp ? "Register" : "Login")
-                                        .foregroundColor(Color.white)
-                                        .font(Font.mada(.bold, size: 20))
-                                        .padding()
-                                }
+                            ZStack(alignment: .center) {
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
+                                    .neoShadow()
+                                Text(isSignUp ? "Register" : "Login")
+                                    .foregroundColor(Color.white)
+                                    .font(Font.mada(.bold, size: 20))
+                                    .padding()
+                            }
                             .padding(20)
                             .frame(maxHeight: 100)
                             .disabled(true)

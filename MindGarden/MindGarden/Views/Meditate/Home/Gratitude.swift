@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Gratitude: View {
     @Binding var shown: Bool
+    @Binding var showPopUp: Bool
     @State var text: String = "Thankful for "
     @Binding var openPrompts: Bool
     @EnvironmentObject var gardenModel: GardenViewModel
@@ -107,7 +108,11 @@ struct Gratitude: View {
                     DoneCancel(shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
                         text = "Thankful for "
-                    })
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                            showPopUp = true
+                        }
+                    }, moodSelected: .angry)
                         .padding(.bottom, 20)
 
                     Spacer()
@@ -120,7 +125,7 @@ struct Gratitude: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        Gratitude(shown: .constant(true), openPrompts: .constant(true))
+        Gratitude(shown: .constant(true), showPopUp: .constant(false), openPrompts: .constant(true))
             .frame(width: UIScreen.main.bounds.width, height: 800)
             .background(Clr.darkWhite)
             .cornerRadius(12)

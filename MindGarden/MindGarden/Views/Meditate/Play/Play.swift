@@ -181,44 +181,51 @@ struct Play: View {
                 }
             }.animation(nil)
             .navigationBarTitle(Text(model.selectedMeditation?.title ?? ""), displayMode: .inline)
-            .navigationBarItems(leading: backArrow,
+            .navigationBarItems(leading: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? backArrow.opacity(0) : backArrow.opacity(1),
                                 trailing: HStack{sound; heart}
             )
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppear {
-            if unGuided {
-                if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
-                    if defaultSound != "noSound"  {
-                        selectedSound = Sound.getSound(str: defaultSound)
-                        let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                model.selectedMeditation = Meditation.allMeditations[2]
+            } else {
+                if unGuided {
+                    if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+                        if defaultSound != "noSound"  {
+                            selectedSound = Sound.getSound(str: defaultSound)
+                            let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
+                            player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                            player.delegate = self.del
+                            player.prepareToPlay()
+                            if selectedSound == .beach {
+                                player.volume = 0.3
+                            } else {
+                                player.volume = 3
+                            }
+                            player.numberOfLoops = -1
+                            player.play()
+                            NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
+                                self.finish = true
+                            }
+                        }
+                    } else {
+                        let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
                         player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                        player.delegate = self.del
-                        player.prepareToPlay()
-                        if selectedSound == .beach {
-                            player.volume = 0.3
-                        } else {
-                            player.volume = 3
-                        }
-                        player.numberOfLoops = -1
-                        player.play()
-//                        getData()
-                        NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
-                            self.finish = true
-                        }
                     }
-
-                    //bell at the end of a session
-                    let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
-                    model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                    model.bellPlayer.delegate = self.del
                 } else {
                     let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
                     player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 }
-            } else {
-                let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
-                player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+            }
+            //bell at the end of a session
+            let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
+            model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+            model.bellPlayer.delegate = self.del
+        }
+        .onDisappear {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
             }
         }
     }
@@ -230,7 +237,9 @@ struct Play: View {
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
                 withAnimation {
-                    viewRouter.currentPage = .meditate
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
+                        viewRouter.currentPage = .meditate
+                    }
                 }
             }
     }
@@ -363,17 +372,6 @@ struct Play: View {
         self.data = .init(count: 0)
         player.prepareToPlay()
         self.player.play()
-//        getData()
-    }
-
-     func getData() {
-        let asset = AVAsset(url: self.player.url!)
-        for i in asset.commonMetadata{
-            if i.commonKey?.rawValue == "title"{
-                let title = i.value as! String
-                self.title = title
-            }
-        }
     }
 }
 

@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct PlusMenu: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @Binding var showPopUp: Bool
     @Binding var addMood: Bool
     @Binding var addGratitude: Bool
-
+    var isOnboarding: Bool
+    
     let width: CGFloat
     var body: some View {
         ZStack {
@@ -22,25 +24,29 @@ struct PlusMenu: View {
                         addMood = true
                     }
                 } label: {
-                    MenuChoice(title: "Mood Check", img: Image(systemName: "face.smiling"))
+                    MenuChoice(title: "Mood Check", img: Image(systemName: "face.smiling"),  isOnboarding: false, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                         .frame(width: width/2.25, height: width/10)
-                }
+                }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                 Button {
                     withAnimation {
                         showPopUp = false
                         addGratitude = true
                     }
                 } label: {
-                    MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"))
+                    MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"), isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                         .frame(width: width/2.25, height: width/10)
-                }
+                }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                 Button {
                     withAnimation {
                         showPopUp = false
-                    }                } label: {
-                        MenuChoice(title: "Meditate", img: Image(systemName: "play"))
-                            .frame(width: width/2.25, height: width/10)
                     }
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                        viewRouter.currentPage = .play
+                    }
+                } label: {
+                    MenuChoice(title: "Meditate", img: Image(systemName: "play"),  isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
+                        .frame(width: width/2.25, height: width/10)
+                }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
             }
         }
         .frame(width: width/2, height: width/2.25)
@@ -54,6 +60,8 @@ struct PlusMenu: View {
     struct MenuChoice: View {
         let title: String
         let img: Image
+        let isOnboarding: Bool
+        let disabled: Bool
 
         var body: some View {
             ZStack {
@@ -72,6 +80,7 @@ struct PlusMenu: View {
                 }
                 .padding(5)
             }
+            .opacity(disabled ? 0.3 : 1)
             .neoShadow()
         }
     }

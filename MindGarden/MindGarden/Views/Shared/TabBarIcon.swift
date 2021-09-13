@@ -35,7 +35,10 @@ struct TabBarIcon: View {
         .foregroundColor(viewRouter.currentPage == assignedPage || isCategory ? .white : Clr.unselectedIcon)
         .onTapGesture {
             withAnimation {
-                viewRouter.currentPage = assignedPage
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" ||
+                    UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" {
+                    viewRouter.currentPage = assignedPage
+                }
             }
         }
     }

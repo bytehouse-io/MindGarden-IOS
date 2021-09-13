@@ -53,8 +53,10 @@ enum Mood: String {
 }
 struct MoodCheck: View {
     @Binding var shown: Bool
+    @Binding var showPopUp: Bool
     @State var moodSelected: Mood = .none
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var onboardingModel: OnboardingViewModel
 
     var body: some View {
         GeometryReader { g in
@@ -79,9 +81,13 @@ struct MoodCheck: View {
                     }.frame(width: g.size.width * 0.85, height: g.size.height/3, alignment: .center)
                         DoneCancel(shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
                             if moodSelected != .none {
+                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                                    UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
+                                    showPopUp = true
+                                }
                                 gardenModel.save(key: "moods", saveValue: moodSelected.title)
                             }
-                        }).padding(.bottom)
+                        }, moodSelected: moodSelected).padding(.bottom)
                     Spacer()
                 }
                 Spacer()
@@ -92,7 +98,7 @@ struct MoodCheck: View {
 
 struct MoodCheck_Previews: PreviewProvider {
     static var previews: some View {
-        MoodCheck(shown: .constant(true))
+        MoodCheck(shown: .constant(true), showPopUp: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 250)
             .background(Clr.darkWhite)
             .cornerRadius(12)
@@ -130,13 +136,16 @@ struct DoneCancel: View {
     var width, height: CGFloat
     var mood: Bool
     var save: () -> ()
+    var moodSelected: Mood
 
     var body: some View {
         HStack {
             Button {
-                save()
-                withAnimation {
-                    shown = false
+                if moodSelected != .none {
+                    save()
+                    withAnimation {
+                        shown = false
+                    }
                 }
             } label: {
                 Text("Done")
@@ -149,8 +158,10 @@ struct DoneCancel: View {
             .neoShadow()
             .padding()
             Button {
-                withAnimation {
-                    shown = false
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+                    withAnimation {
+                        shown = false
+                    }
                 }
             } label: {
                 Text("Cancel")

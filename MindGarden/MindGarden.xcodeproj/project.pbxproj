@@ -16,6 +16,9 @@
 		FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */; };
 		FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
 		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
+		FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4D80EA26ED4B15002FE291 /* LottieView.swift */; };
+		FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */ = {isa = PBXBuildFile; fileRef = FE4D80EC26ED4E36002FE291 /* side-arrow.json */; };
+		FE4D80F126ED63F8002FE291 /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = FE4D80F026ED63F8002FE291 /* confetti.json */; };
 		FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4E9E632676AE54002BC758 /* HomeSquare.swift */; };
 		FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6289B326754A1200007889 /* ShadowViewModifier.swift */; };
 		FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
@@ -125,6 +128,9 @@
 		FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
 		FE17B8AF26C06C20002CF8C2 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		FE4D80EA26ED4B15002FE291 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		FE4D80EC26ED4E36002FE291 /* side-arrow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "side-arrow.json"; sourceTree = "<group>"; };
+		FE4D80F026ED63F8002FE291 /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		FE4E9E632676AE54002BC758 /* HomeSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSquare.swift; sourceTree = "<group>"; };
 		FE6289B326754A1200007889 /* ShadowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewModifier.swift; sourceTree = "<group>"; };
 		FE6289B526754B5200007889 /* Mada-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Regular.ttf"; sourceTree = "<group>"; };
@@ -256,6 +262,15 @@
 				FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				FE4D80F026ED63F8002FE291 /* confetti.json */,
+				FE4D80EC26ED4E36002FE291 /* side-arrow.json */,
+			);
+			path = Lottie;
 			sourceTree = "<group>";
 		};
 		FE4E9E622676AE39002BC758 /* Home */ = {
@@ -414,6 +429,7 @@
 		FEB85FC3266C1B75008CDAA4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FE4D80E926ED4A3C002FE291 /* Lottie */,
 				FEB85FBE266C19A4008CDAA4 /* Fonts */,
 				FEB6AF9B265D95F700224BFD /* Assets.xcassets */,
 				FEB85FC4266C1C11008CDAA4 /* Colors.xcassets */,
@@ -491,6 +507,7 @@
 				FEEC6515267817D400ECD32D /* PlantTile.swift */,
 				FE683F36269E47D0009A66DF /* LoadingView.swift */,
 				FE683F38269F74F6009A66DF /* TextFieldAlert.swift */,
+				FE4D80EA26ED4B15002FE291 /* LottieView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -650,10 +667,12 @@
 				FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
+				FE4D80F126ED63F8002FE291 /* confetti.json in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
+				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
@@ -881,6 +900,7 @@
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
 				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
+				FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
 				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
@@ -1073,6 +1093,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				ENABLE_PREVIEWS = YES;
@@ -1097,6 +1118,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				ENABLE_PREVIEWS = YES;
