@@ -265,21 +265,22 @@ extension AuthenticationViewModel {
 
     func createUser() {
         // localize
-        print("creating User")
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": "Bingo",
                 "coins": 100,
-//                "favorited": [0],
-//                "plants": [],
-                "joinDate": formatter.string(from: Date())
+                "joinDate": formatter.string(from: Date()),
+                "totalSessions": 0,
+                "totalMins": 0,
+                K.defaults.plants: "Red Tulips"
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
                     print("Succesfully saved new user")
+                    UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
                 }
             }
         }

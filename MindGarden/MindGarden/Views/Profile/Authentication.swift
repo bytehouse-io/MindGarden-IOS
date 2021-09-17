@@ -116,7 +116,6 @@ struct Authentication: View {
                                 .underline()
                                 .padding(5)
                                 .onTapGesture {
-                                    print("tapping")
                                     showForgotAlert = true
                                 }
                         }

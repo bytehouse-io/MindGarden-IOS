@@ -18,6 +18,8 @@ class GardenViewModel: ObservableObject {
     @Published var totalMins = 0
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
+    var allTimeMinutes = 0
+    var allTimeSessions = 0
     var placeHolders = 0
     var startsOnSunday = false
     let db = Firestore.firestore()
@@ -38,6 +40,7 @@ class GardenViewModel: ObservableObject {
         let strMonth = String(selectedMonth)
         let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
         let intWeek = Date().weekDayToInt(weekDay: Date.dayOfWeek(day: "1", month: strMonth, year: String(selectedYear)))
+
         if intWeek != 0 {
             placeHolders = intWeek
         } else { //it starts on a sunday
@@ -100,6 +103,12 @@ class GardenViewModel: ObservableObject {
                     if let gardenGrid = document[K.defaults.gardenGrid] as? [String: [String:[String:[String:Any]]]] {
                         self.grid = gardenGrid
                     }
+                    if let allTimeMins = document["totalMins"] as? Int {
+                        self.allTimeMinutes = allTimeMins
+                    }
+                    if let allTimeSess = document["totalSessions"] as? Int {
+                        self.allTimeSessions = allTimeSess
+                    }
                     self.populateMonth()
                 }
             }
@@ -107,6 +116,12 @@ class GardenViewModel: ObservableObject {
     }
 
     func save(key: String, saveValue: Any) {
+        if key == "sessions" {
+            if let session = saveValue as? [String: String] {
+                self.totalSessions += 1
+                self.totalMins += Int(session[K.defaults.duration] ?? "0") ?? 0
+            }
+        }
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             docRef.getDocument { (snapshot, error) in
@@ -136,6 +151,8 @@ class GardenViewModel: ObservableObject {
                 }
                 self.db.collection(K.userPreferences).document(email).updateData([
                     "gardenGrid": self.grid,
+                    "totalMins": self.allTimeMinutes,
+                    "totalSessions": self.allTimeSessions,
                 ]) { (error) in
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")

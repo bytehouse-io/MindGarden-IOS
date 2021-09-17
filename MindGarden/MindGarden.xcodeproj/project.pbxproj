@@ -88,6 +88,7 @@
 		FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF22C926DC3860002572E2 /* bell.mp3 */; };
 		FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */; };
 		FEBF22CE26E16B68002572E2 /* BonusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CD26E16B68002572E2 /* BonusViewModel.swift */; };
+		FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC3FFCA26F1219F009F58EE /* MailView.swift */; };
 		FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEC5B009267D2ACF00BC8D8C /* Play.swift */; };
 		FEDC4310269A553B008E0318 /* Finished.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDC430F269A553B008E0318 /* Finished.swift */; };
 		FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC6515267817D400ECD32D /* PlantTile.swift */; };
@@ -196,6 +197,7 @@
 		FEBF22C926DC3860002572E2 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FEBF22CD26E16B68002572E2 /* BonusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusViewModel.swift; sourceTree = "<group>"; };
+		FEC3FFCA26F1219F009F58EE /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		FEC5B009267D2ACF00BC8D8C /* Play.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Play.swift; sourceTree = "<group>"; };
 		FEDC430F269A553B008E0318 /* Finished.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finished.swift; sourceTree = "<group>"; };
 		FEEC6515267817D400ECD32D /* PlantTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTile.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				FEAA837726927B9400E4C62F /* AuthenticationViewModel.swift */,
 				FEAA837C2695447300E4C62F /* ProfileScene.swift */,
 				FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */,
+				FEC3FFCA26F1219F009F58EE /* MailView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -913,6 +916,7 @@
 				FE683F3C269FC550009A66DF /* CategoriesScene.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
+				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
 				FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */,
 				FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */,

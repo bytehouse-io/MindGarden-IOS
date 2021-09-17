@@ -56,7 +56,6 @@ struct MoodCheck: View {
     @Binding var showPopUp: Bool
     @State var moodSelected: Mood = .none
     @EnvironmentObject var gardenModel: GardenViewModel
-    @EnvironmentObject var onboardingModel: OnboardingViewModel
 
     var body: some View {
         GeometryReader { g in

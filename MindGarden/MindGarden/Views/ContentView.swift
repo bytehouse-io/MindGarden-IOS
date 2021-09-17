@@ -19,14 +19,16 @@ struct ContentView: View {
     @State private var addGratitude = false
     @State private var isOnboarding = false
     var bonusModel: BonusViewModel
+    var profileModel: ProfileViewModel
 
-    init(bonusModel: BonusViewModel) {
+    init(bonusModel: BonusViewModel, profileModel: ProfileViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         self.bonusModel = bonusModel
+        self.profileModel = profileModel
 //        meditationModel.isOpenEnded = false
 //        meditationModel.secondsRemaining = 150
-        //check for auth here
+    // check for auth here
     }
 
     var body: some View {
@@ -61,7 +63,7 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .profile:
-                                ProfileScene()
+                                ProfileScene(profileModel: profileModel)
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
@@ -116,6 +118,8 @@ struct ContentView: View {
                             PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, isOnboarding: isOnboarding, width: geometry.size.width)
                                 .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 125 : K.isPad() ? 235 : 130) : geometry.size.height/2 + 60)
                                 .opacity(showPopUp ? 1 : 0)
+                            //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
+                            //onboarding userdefault should be equal to signedUp because we just completed it. 
                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "mood" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude"  {
                                 LottieView(fileName: "side-arrow")
                                     .frame(width: 75, height: 25)
@@ -175,7 +179,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()))
+            ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
         }
     }
 }

@@ -9,173 +9,254 @@ import SwiftUI
 
 struct Garden: View {
     @EnvironmentObject var gardenModel: GardenViewModel
-    @State var isMonth: Bool = true
-    @State var showSingleModal = false
-    @State var day: Int = 0
-    @State var topThreePlants: [FavoritePlant] = [FavoritePlant]()
+    @State private var isMonth: Bool = true
+    @State private var showSingleModal = false
+    @State private var day: Int = 0
+    @State private var topThreePlants: [FavoritePlant] = [FavoritePlant]()
+    @State private var isOnboarding = false
+    @State private var tileOpacity = 1.0
+    @State private var gotItOpacity = 1.0
+    @State private var forceRefresh = false
+    @State private var color = Clr.yellow
 
     var body: some View {
         GeometryReader { gp in
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .center, spacing: 20) {
-                    //Version 2
-                    //                    HStack(spacing: 40) {
-                    //                        Button {
-                    //                            isMonth = true
-                    //                        } label: {
-                    //                            MenuButton(title: "Month", isMonth: isMonth)
-                    //                        }
-                    //                        Button {
-                    //                            isMonth = false
-                    //                        } label: {
-                    //                            MenuButton(title: "Year", isMonth: !isMonth)
-                    //                        }
-                    //                    }
-                    Text("🪴 Your MindGarden")
-                        .font(Font.mada(.semiBold, size: 22))
-                        .foregroundColor(Clr.darkgreen)
-                        .padding()
-                    HStack {
-                        Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear))")
-                            .font(Font.mada(.bold, size: 30))
-                        Spacer()
-                        Button {
-                            if gardenModel.selectedMonth == 1 {
-                                gardenModel.selectedMonth = 12
-                                gardenModel.selectedYear -= 1
-                            } else {
-                                gardenModel.selectedMonth -= 1
+                ZStack {
+                    VStack(alignment: .center, spacing: 20) {
+                        //Version 2
+                        //                    HStack(spacing: 40) {
+                        //                        Button {
+                        //                            isMonth = true
+                        //                        } label: {
+                        //                            MenuButton(title: "Month", isMonth: isMonth)
+                        //                        }
+                        //                        Button {
+                        //                            isMonth = false
+                        //                        } label: {
+                        //                            MenuButton(title: "Year", isMonth: !isMonth)
+                        //                        }
+                        //                    }
+                        Text("👨‍🌾 Your MindGarden")
+                            .font(Font.mada(.semiBold, size: 22))
+                            .foregroundColor(Clr.darkgreen)
+                            .padding()
+                        HStack {
+                            Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear))")
+                                .font(Font.mada(.bold, size: 30))
+                            Spacer()
+                            Button {
+                                if gardenModel.selectedMonth == 1 {
+                                    gardenModel.selectedMonth = 12
+                                    gardenModel.selectedYear -= 1
+                                } else {
+                                    gardenModel.selectedMonth -= 1
+                                }
+                                gardenModel.populateMonth()
+                                getFavoritePlants()
+                            } label: {
+                                OperatorButton(imgName: "lessthan.square.fill")
                             }
-                            gardenModel.populateMonth()
-                            getFavoritePlants()
-                        } label: {
-                            OperatorButton(imgName: "lessthan.square.fill")
-                        }
 
-                        Button {
-                            if gardenModel.selectedMonth == 12 {
-                                gardenModel.selectedMonth = 1
-                                gardenModel.selectedYear += 1
-                            } else {
-                                gardenModel.selectedMonth += 1
+                            Button {
+                                if gardenModel.selectedMonth == 12 {
+                                    gardenModel.selectedMonth = 1
+                                    gardenModel.selectedYear += 1
+                                } else {
+                                    gardenModel.selectedMonth += 1
+                                }
+                                gardenModel.populateMonth()
+                                getFavoritePlants()
+                            } label: {
+                                OperatorButton(imgName: "greaterthan.square.fill")
                             }
-                            gardenModel.populateMonth()
-                            getFavoritePlants()
-                        } label: {
-                            OperatorButton(imgName: "greaterthan.square.fill")
                         }
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.top, -15)
-                    GridStack(rows: 5, columns: 7) { row, col in
-                        ZStack {
-                            let c = gardenModel.placeHolders
-                            if col < c && row == 0 {
-                                Rectangle()
-                                    .fill(Clr.dirtBrown)
-                                    .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                            } else {
-                                if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
-                                    // mood & plant both exist
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
-                                            .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                        Img.oneBlueberry
-                                            .padding(3)
-                                    }
-                                } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nilr
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(Clr.dirtBrown)
-                                            .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                        Img.oneBlueberry
-                                            .padding(3)
-                                    }
-                                } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
-                                    Rectangle()
-                                        .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
-                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                        .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-
-                                } else { //both are nil
+                        .padding(.horizontal, 10)
+                        .padding(.top, -15)
+                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? 1 : 0.1 : 1)
+                        GridStack(rows: 5, columns: 7) { row, col in
+                            ZStack {
+                                let c = gardenModel.placeHolders
+                                if col < c && row == 0 {
                                     Rectangle()
                                         .fill(Clr.dirtBrown)
                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                         .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-
-                                }
-                            }
-                        }.onTapGesture {
-                            day = col + (row * 7) + 1  - gardenModel.placeHolders
-                            if day <= 31 && day >= 1 {
-                                showSingleModal = true
-                            }
-                        }
-                    }.offset(y: -10)
-                    HStack(spacing: 5) {
-                        VStack(spacing: 15) {
-                            StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "\(gardenModel.totalMins)")
-                            StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                        }
-                        .frame(maxWidth: gp.size.width * 0.33)
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(15)
-                                .neoShadow()
-                            VStack(spacing: 10) {
-                                HStack(alignment: .bottom) {
-                                    MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
-                                    MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
-                                }.padding(.horizontal, 10)
-                                HStack(alignment: .bottom) {
-                                    MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
-                                    MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
-                                }.padding(.horizontal, 10)
-                            }
-                        }.frame(maxWidth: gp.size.width * 0.47)
-                    }.frame(maxHeight: gp.size.height * 0.16)
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Favorite Plants:")
-                            .foregroundColor(.black)
-                            .font(Font.mada(.semiBold, size: 20))
-                            .padding(.leading, 5)
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(15)
-                                .neoShadow()
-                            HStack(spacing: 25){
-                                Spacer()
-                                if topThreePlants.isEmpty {
-                                    Text("You have no favorite plants")
-                                        .foregroundColor(.black)
-                                        .font(Font.mada(.semiBold, size: 20))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                        .padding()
+                                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
                                 } else {
-                                    if !topThreePlants.isEmpty, let favPlant1 = topThreePlants[0] {
-                                        favPlant1
-                                    }
-                                    if topThreePlants.count > 1, let favPlant2 = topThreePlants[1] {
-                                        favPlant2
-                                    }
-                                    if topThreePlants.indices.contains(2), let favPlant3 = topThreePlants[2] {
-                                        favPlant3
+                                    if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
+                                        // mood & plant both exist
+                                        // first tile in onboarding
+                                        ZStack {
+                                            Rectangle()
+                                                .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
+                                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                                //if onboarding
+                                                .opacity(isOnboarding ? tileOpacity : 1)
+                                                .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+                                            Img.oneBlueberry
+                                                .padding(3)
+                                        }
+                                    } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
+                                        ZStack {
+                                            Rectangle()
+                                                .fill(Clr.dirtBrown)
+                                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                            Img.oneBlueberry
+                                                .padding(3)
+                                        }
+                                    } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
+                                        Rectangle()
+                                            .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
+                                            .frame(width: 75, height: 25)
+                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                    } else { //both are nil
+                                        ZStack {
+                                            Rectangle()
+                                                .fill(Clr.dirtBrown)
+                                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                                .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
+                                        }
                                     }
                                 }
-                                Spacer()
+                            }.onTapGesture {
+                                day = col + (row * 7) + 1  - gardenModel.placeHolders
+                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
+                                    if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
+                                        showSingleModal = true
+                                        isOnboarding = false
+                                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                    }
+                                } else {
+                                    if day <= 31 && day >= 1 {
+                                        if !isOnboarding {
+                                            showSingleModal = true
+                                        }
+                                    }
+                                }
+
                             }
-                        }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)
-                    }.padding(.top, 15)
-                }.padding(.horizontal, 25)
-                .padding(.vertical, 15)
-                .padding(.top, 30)
+                        }.offset(y: -10)
+                        .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
+                        .zIndex(-1000)
+                        HStack(spacing: 5) {
+                            VStack(spacing: 15) {
+                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "\(gardenModel.totalMins)")
+                                StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
+                            }
+                            .frame(maxWidth: gp.size.width * 0.33)
+                            ZStack {
+                                Rectangle()
+                                    .fill(Clr.darkWhite)
+                                    .cornerRadius(15)
+                                    .neoShadow()
+                                VStack(spacing: 10) {
+                                    HStack(alignment: .bottom) {
+                                        MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
+                                        MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
+                                    }.padding(.horizontal, 10)
+                                    HStack(alignment: .bottom) {
+                                        MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
+                                        MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
+                                    }.padding(.horizontal, 10)
+                                }
+                            }.frame(maxWidth: gp.size.width * 0.47)
+                        }.frame(maxHeight: gp.size.height * 0.16)
+                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Favorite Plants:")
+                                .foregroundColor(.black)
+                                .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
+                                .padding(.leading, 5)
+                            ZStack {
+                                Rectangle()
+                                    .fill(Clr.darkWhite)
+                                    .cornerRadius(15)
+                                    .neoShadow()
+                                HStack(spacing: 25){
+                                    Spacer()
+                                    if topThreePlants.isEmpty {
+                                        Text("You have no favorite plants")
+                                            .foregroundColor(.black)
+                                            .font(Font.mada(.semiBold, size: 20))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.05)
+                                            .padding()
+                                    } else {
+                                        if !topThreePlants.isEmpty, let favPlant1 = topThreePlants[0] {
+                                            favPlant1
+                                        }
+                                        if topThreePlants.count > 1, let favPlant2 = topThreePlants[1] {
+                                            favPlant2
+                                        }
+                                        if topThreePlants.indices.contains(2), let favPlant3 = topThreePlants[2] {
+                                            favPlant3
+                                        }
+                                    }
+                                    Spacer()
+                                }
+                            }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)
+                        }.padding(.top, 15)
+                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                    }.padding(.horizontal, 25)
+                    .padding(.vertical, 15)
+                    .padding(.top, 30)
+                    if isOnboarding && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ){
+                        VStack(spacing: 0) {
+                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                                Triangle()
+                                    .fill(Clr.yellow)
+                                    .frame(width: 40, height: 20)
+                            }
+                            Rectangle()
+                                .fill(Clr.yellow)
+                                .frame(width: 250, height: 125)
+                                .overlay(
+                                    VStack {
+                                        Text(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate"  ? "📅 This is your calendar /garden view of the month" : "📊 These are your monthly statistics")
+                                            .font(Font.mada(.semiBold, size: 18))
+                                            .lineLimit(2)
+                                            .minimumScaleFactor(0.05)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.bottom, 5)
+                                        Text("Got it")
+                                            .foregroundColor(Color.white)
+                                            .colorMultiply(self.color)
+                                            .font(Font.mada(.bold, size: 18))
+                                            .onAppear {
+                                                print("yoma")
+                                                withAnimation {
+                                                    self.color = Clr.darkgreen
+                                                }
+                                            }
+                                            .animation(Animation.easeInOut(duration: 0.5).repeatForever(autoreverses:true), value: self.color)
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                                                        UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
+                                                    } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
+                                                        UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
+                                                        tileOpacity = 0.2
+                                                    }
+                                                    forceRefresh.toggle()
+                                                }
+                                            }
+                                    }.padding()
+                                )
+                                .cornerRadius(12)
+                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
+                                Triangle()
+                                    .fill(Clr.yellow)
+                                    .frame(width: 40, height: 20)
+                                    .rotationEffect(.radians(.pi))
+                            }
+                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? gp.size.height * 0.1 : gp.size.height * -0.03)
+                    }
+
+                }
             }
             .sheet(isPresented: $showSingleModal) {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
@@ -184,6 +265,9 @@ struct Garden: View {
             }
             .onAppear {
                 getFavoritePlants()
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                    isOnboarding = true
+                }
             }
 
         }
@@ -202,13 +286,24 @@ struct Garden: View {
     }
 }
 
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+
+        return path
+    }
+}
+
 
 //MARK: - preview
 struct Garden_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewDisparateDevices {
-            Garden()
-        }
+        Garden().environmentObject(GardenViewModel())
     }
 }
 
