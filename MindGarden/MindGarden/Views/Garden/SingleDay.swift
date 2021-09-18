@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//TODO - fix iphone 8 bug, selectedplant bug.
 struct SingleDay: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @Binding var showSingleModal: Bool
@@ -21,7 +21,9 @@ struct SingleDay: View {
     @State var minutesMeditated: Int = 0
     @State var plant: Plant?
     @State var sessionCounter: Int = 0
-
+    @State var isOnboarding = false
+    @State var showOnboardingModal = true
+    
     init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
         self._showSingleModal = showSingleModal
         self._day = day
@@ -75,7 +77,6 @@ struct SingleDay: View {
                                                 sessionCounter += 1
                                                 updateSession()
                                             }
-                                            print("for you")
                                         } label: {
                                             Image(systemName: "chevron.right")
                                                 .resizable()
@@ -164,8 +165,20 @@ struct SingleDay: View {
                     }
                 }.navigationBarItems(leading: xButton,
                                      trailing: title)
+                if showOnboardingModal {
+                    Color.black
+                        .opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                    Spacer()
+                }
+                OnboardingModal(shown: $showOnboardingModal)
+                    .offset(y: showOnboardingModal ? 0 : g.size.height)
+                    .animation(.default)
             }
         }.onAppear {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
+                isOnboarding = true
+            }
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [String] {
                 self.moods = moods
             }
@@ -202,7 +215,7 @@ struct SingleDay: View {
     var title: some View {
         HStack {
             Spacer()
-            VStack(alignment: .trailing){
+            VStack(alignment: .trailing) {
                 Text("\(Date().getMonthName(month: String(month))) \(day), \(String(year))")
                     .font(Font.mada(.semiBold, size: 26))
                 Text("\(plant?.title ?? "" )")

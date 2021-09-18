@@ -12,6 +12,7 @@ struct Finished: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var gardenModel: GardenViewModel
+    @State var isOnboarding = false
     
     @State private var animateViews = false
     var minsMed: Int {
@@ -30,13 +31,13 @@ struct Finished: View {
                     Rectangle()
                         .fill(Clr.finishedGreen)
                         .frame(width: g.size
-                                .width/1, height: g.size.height/1.8)
+                                .width/1, height: g.size.height/2)
                         .offset(y: -g.size.height/4)
                     Img.greenBlob
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: g.size
-                                .width/1, height: g.size.height/1.8)
+                                .width/1, height: g.size.height/2)
                         .offset(x: g.size.width/6, y: -g.size.height/4)
                     HStack(alignment: .center) {
                         Spacer()
@@ -70,8 +71,7 @@ struct Finished: View {
                                         .foregroundColor(.white)
                                         .offset(x: -5)
                                 }.offset(y: -20)
-                            }
-                            Spacer()
+                            }.padding(.bottom, g.size.height * 0.08)
                             VStack {
                                 Text("With patience and mindfulness you were able to grow a daisy!")
                                     .font(Font.mada(.bold, size: 22))
@@ -80,7 +80,7 @@ struct Finished: View {
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Clr.black1)
                                     .frame(height: g.size.height/12)
-                                    .padding()
+                                    .padding(.horizontal)
                                 Img.daisyBadge
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -94,36 +94,45 @@ struct Finished: View {
                                         }
                                     }
                                 Spacer()
-                                HStack {
-                                    Image(systemName: "heart")
-                                        .font(.system(size: 36, weight: .bold))
-                                        .foregroundColor(Clr.black1)
-                                        .padding()
-                                        .padding(.leading)
-                                    Image(systemName: "square.and.arrow.up")
-                                        .font(.system(size: 32, weight: .bold))
-                                        .foregroundColor(Clr.black1)
-                                    Spacer()
-                                    Button {
-                                        print("calling")
-                                        withAnimation {
-                                            viewRouter.currentPage = .garden
-                                        }
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.yellow)
-                                            .padding(.horizontal)
-                                            .overlay(
-                                                HStack {
-                                                    Text("Finished")
-                                                        .foregroundColor(Clr.black1)
-                                                        .font(Font.mada(.bold, size: 22))
-                                                    Image(systemName: "arrow.right")
-                                                        .foregroundColor(Clr.black1)
-                                                        .font(.system(size: 22, weight: .bold))
-                                                }
-                                            )
-                                    }.buttonStyle(NeumorphicPress())
+                                ZStack {
+                                    if isOnboarding {
+                                        LottieView(fileName: "confetti")
+                                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                                            .offset(x: 0, y: -g.size.height * 0.5)
+                                    }
+                                    HStack {
+                                        Image(systemName: "heart")
+                                            .font(.system(size: 36, weight: .bold))
+                                            .foregroundColor(Clr.black1)
+                                            .padding()
+                                            .padding(.leading)
+                                        Image(systemName: "square.and.arrow.up")
+                                            .font(.system(size: 32, weight: .bold))
+                                            .foregroundColor(Clr.black1)
+                                        Spacer()
+                                        Button {
+                                            withAnimation {
+                                                viewRouter.currentPage = .garden
+                                            }
+                                        } label: {
+                                            Capsule()
+                                                .fill(Clr.yellow)
+                                                .padding(.horizontal)
+                                                .overlay(
+                                                    HStack {
+                                                        Text("Finished")
+                                                            .foregroundColor(Clr.black1)
+                                                            .font(Font.mada(.bold, size: 22))
+                                                        Image(systemName: "arrow.right")
+                                                            .foregroundColor(Clr.black1)
+                                                            .font(.system(size: 22, weight: .bold))
+                                                    }
+                                                )
+                                        }.buttonStyle(NeumorphicPress())
+                                        .zIndex(100)
+                                        .frame(width: g.size.width * 0.6, height: g.size.height/12)
+                                    }
+
                                 }.frame(width: g.size.width, height: g.size.height/12)
                                 .padding()
                             }
@@ -131,8 +140,9 @@ struct Finished: View {
                         }
                         Spacer()
                     }.frame(width: g.size.width, height: g.size.height)
-                    .offset(y: -40)
+                    .offset(y: -60)
                 }
+
             }
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
@@ -142,6 +152,10 @@ struct Finished: View {
             model.lastSeconds = false
         }
         .onAppear {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+                isOnboarding = true
+            }
             var session = [String: String]()
             session[K.defaults.plantSelected] = userModel.selectedPlant?.title
             session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
@@ -155,5 +169,9 @@ struct Finished: View {
 struct Finished_Previews: PreviewProvider {
     static var previews: some View {
         Finished()
+            .environmentObject(GardenViewModel())
+            .environmentObject(UserViewModel())
+            .environmentObject(MeditationViewModel())
+
     }
 }

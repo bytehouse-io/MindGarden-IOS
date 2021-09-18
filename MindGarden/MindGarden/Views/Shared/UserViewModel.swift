@@ -21,6 +21,10 @@ class UserViewModel: ObservableObject {
     let db = Firestore.firestore()
 
     init() {
+        getSelectedPlant()
+    }
+
+    func getSelectedPlant() {
         if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
             self.selectedPlant = Plant.plants.filter({ plant in
                 return plant.title == plantTitle

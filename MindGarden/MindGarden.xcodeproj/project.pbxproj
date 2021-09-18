@@ -10,6 +10,8 @@
 		2ADF9BDB582AC427D2B34036 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4566B8BE4A0F86529871AAA8 /* Pods_MindGarden_MindGardenUITests.framework */; };
 		4B7F08F4BE8750B58570C880 /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B41F27A3AB83BCBC4A614E /* Pods_MindGardenTests.framework */; };
 		D5AFCD9338EB951DB1E087B8 /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739E73C3FBCCA14827AD5096 /* Pods_MindGarden.framework */; };
+		FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE09DA2026F52DCD0018099F /* OnboardingModal.swift */; };
+		FE09DA2326F53BD00018099F /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = FE09DA2226F53BD00018099F /* confetti.json */; };
 		FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B2268FAABE00E1E71A /* Gratitude.swift */; };
 		FE11F0B62691073300E1E71A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B52691073200E1E71A /* Authentication.swift */; };
 		FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */; };
@@ -18,7 +20,6 @@
 		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
 		FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4D80EA26ED4B15002FE291 /* LottieView.swift */; };
 		FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */ = {isa = PBXBuildFile; fileRef = FE4D80EC26ED4E36002FE291 /* side-arrow.json */; };
-		FE4D80F126ED63F8002FE291 /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = FE4D80F026ED63F8002FE291 /* confetti.json */; };
 		FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4E9E632676AE54002BC758 /* HomeSquare.swift */; };
 		FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6289B326754A1200007889 /* ShadowViewModifier.swift */; };
 		FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
@@ -122,6 +123,8 @@
 		B5D900E8FB0A6AB93E7E719D /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CD9FBC43C2257776623E9759 /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
 		F4408C06C66B231B81214DA5 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		FE09DA2026F52DCD0018099F /* OnboardingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModal.swift; sourceTree = "<group>"; };
+		FE09DA2226F53BD00018099F /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		FE11F0B2268FAABE00E1E71A /* Gratitude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gratitude.swift; sourceTree = "<group>"; };
 		FE11F0B52691073200E1E71A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		FE11F0B726910D5A00E1E71A /* MindGarden.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MindGarden.entitlements; sourceTree = "<group>"; };
@@ -131,7 +134,6 @@
 		FE17B8AF26C06C20002CF8C2 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		FE4D80EA26ED4B15002FE291 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		FE4D80EC26ED4E36002FE291 /* side-arrow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "side-arrow.json"; sourceTree = "<group>"; };
-		FE4D80F026ED63F8002FE291 /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		FE4E9E632676AE54002BC758 /* HomeSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSquare.swift; sourceTree = "<group>"; };
 		FE6289B326754A1200007889 /* ShadowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewModifier.swift; sourceTree = "<group>"; };
 		FE6289B526754B5200007889 /* Mada-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Regular.ttf"; sourceTree = "<group>"; };
@@ -270,7 +272,7 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				FE4D80F026ED63F8002FE291 /* confetti.json */,
+				FE09DA2226F53BD00018099F /* confetti.json */,
 				FE4D80EC26ED4E36002FE291 /* side-arrow.json */,
 			);
 			path = Lottie;
@@ -316,6 +318,7 @@
 				FEA592D0267E9459006558A2 /* StatBox.swift */,
 				FEA592D2267E94B9006558A2 /* GridStack.swift */,
 				FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */,
+				FE09DA2026F52DCD0018099F /* OnboardingModal.swift */,
 			);
 			path = Garden;
 			sourceTree = "<group>";
@@ -670,9 +673,9 @@
 				FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
-				FE4D80F126ED63F8002FE291 /* confetti.json in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
+				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
@@ -876,6 +879,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,

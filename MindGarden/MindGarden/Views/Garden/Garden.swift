@@ -110,7 +110,7 @@ struct Garden: View {
                                     } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
                                         Rectangle()
                                             .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
-                                            .frame(width: 75, height: 25)
+                                            .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
                                             .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
                                     } else { //both are nil
                                         ZStack {
@@ -128,7 +128,7 @@ struct Garden: View {
                                     if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
                                         showSingleModal = true
                                         isOnboarding = false
-                                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                        UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
                                     }
                                 } else {
                                     if day <= 31 && day >= 1 {

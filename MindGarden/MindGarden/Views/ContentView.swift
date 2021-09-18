@@ -116,7 +116,7 @@ struct ContentView: View {
                         }
                         ZStack {
                             PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, isOnboarding: isOnboarding, width: geometry.size.width)
-                                .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 125 : K.isPad() ? 235 : 130) : geometry.size.height/2 + 60)
+                                .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 125 : K.isPad() ? 235 : geometry.size.height/5) : geometry.size.height/2 + 60)
                                 .opacity(showPopUp ? 1 : 0)
                             //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                             //onboarding userdefault should be equal to signedUp because we just completed it. 
@@ -124,9 +124,8 @@ struct ContentView: View {
                                 LottieView(fileName: "side-arrow")
                                     .frame(width: 75, height: 25)
                                     .padding(.horizontal)
-                                    .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? -20 : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? 70 : 10)
+                                    .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? geometry.size.height * (K.hasNotch()  ? -0.05 : -0.125) : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? geometry.size.height * (K.hasNotch()  ? 0.1 : 0.025) : geometry.size.height * (K.hasNotch()  ? 0.015 : -0.045))
                             }
-
                             HStack {
                                 TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
                                 TabBarIcon(viewRouter: viewRouter, assignedPage: .meditate, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Meditate", img: Img.meditateIcon)
@@ -158,12 +157,12 @@ struct ContentView: View {
                             .offset(y: geometry.size.height/2 - (K.hasNotch() ? 0 : 15))
                         }
                         MoodCheck(shown: $addMood, showPopUp: $showPopUp)
-                            .frame(width: geometry.size.width, height: geometry.size.height * 0.35)
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
                             .offset(y: addMood ? geometry.size.height/(K.hasNotch() ? 2.5 : 2.75) : geometry.size.height)
                         Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts)
-                            .frame(width: geometry.size.width, height: geometry.size.height * 0.5 * (openPrompts ? 2.25 : 1))
+                            .frame(width: geometry.size.width, height: geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1))
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
                             .offset(y: addGratitude ? geometry.size.height/(K.hasNotch() ? 3.25 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
@@ -178,8 +177,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewDisparateDevices {
-            ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
-        }
+        ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
     }
 }
