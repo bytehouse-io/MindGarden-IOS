@@ -66,13 +66,7 @@ struct Gratitude: View {
                                 .minimumScaleFactor(0.5)
                                 .padding(.vertical, 5)
                                 .fixedSize(horizontal: false, vertical: true)
-                            Text("4. Write about a happy memory this week")
-                                .font(Font.mada(.regular, size: 20))
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.5)
-                                .padding(.vertical, 5)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Text("5. What mistake or failure are you grateful for?")
+                            Text("4. What mistake or failure are you grateful for?")
                                 .font(Font.mada(.regular, size: 20))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
@@ -105,7 +99,7 @@ struct Gratitude: View {
                             }
                         }
                     }.frame(width: g.size.width * 0.85, height: min(175, g.size.height * 0.6), alignment: .topLeading)
-                    DoneCancel(shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
+                    DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
                         text = "Thankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {

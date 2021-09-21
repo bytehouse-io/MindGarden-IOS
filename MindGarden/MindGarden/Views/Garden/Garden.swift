@@ -227,7 +227,6 @@ struct Garden: View {
                                             .colorMultiply(self.color)
                                             .font(Font.mada(.bold, size: 18))
                                             .onAppear {
-                                                print("yoma")
                                                 withAnimation {
                                                     self.color = Clr.darkgreen
                                                 }

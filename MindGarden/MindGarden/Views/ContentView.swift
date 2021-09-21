@@ -51,9 +51,12 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                                     .onAppear {
-                                        self.isOnboarding = false
-                                        self.showPopUp = false
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                                            self.isOnboarding = true
+                                            self.showPopUp = true
+                                        }
                                     }
+                                    .disabled(isOnboarding)
                             case .garden:
                                 Garden()
                                     .frame(height: geometry.size.height)
@@ -78,6 +81,12 @@ struct ContentView: View {
                                 Play()
                                     .frame(height: geometry.size.height + 80)
                                     .navigationViewStyle(StackNavigationViewStyle())
+                                    .onAppear {
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                                            self.isOnboarding = false
+                                            self.showPopUp = false
+                                        }
+                                    }
                             case .finished:
                                 Finished()
                                     .frame(height: geometry.size.height + 80)
@@ -124,7 +133,7 @@ struct ContentView: View {
                                 LottieView(fileName: "side-arrow")
                                     .frame(width: 75, height: 25)
                                     .padding(.horizontal)
-                                    .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? geometry.size.height * (K.hasNotch()  ? -0.05 : -0.125) : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? geometry.size.height * (K.hasNotch()  ? 0.1 : 0.025) : geometry.size.height * (K.hasNotch()  ? 0.015 : -0.045))
+                                    .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? geometry.size.height * (K.hasNotch()  ? -0.025 : -0.125) : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? geometry.size.height * (K.hasNotch()  ? 0.1 : 0.025) : geometry.size.height * (K.hasNotch()  ? 0.03 : -0.045))
                             }
                             HStack {
                                 TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
@@ -165,7 +174,11 @@ struct ContentView: View {
                             .frame(width: geometry.size.width, height: geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1))
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
-                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch() ? 3.25 * (openPrompts ? 2 : 1)  : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1) : 4.5 * (openPrompts ? 4.5 : 1) )  : geometry.size.height)
+                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch()
+                                ? 3.25 * (openPrompts ? 2 : 1)
+                                : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
+                                : 4.5 * (openPrompts ? 3.5 : 1) )
+                                        : geometry.size.height)
                     }
                 }
                 .navigationBarTitle("", displayMode: .inline)

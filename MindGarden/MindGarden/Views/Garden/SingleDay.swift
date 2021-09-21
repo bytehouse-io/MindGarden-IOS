@@ -22,7 +22,7 @@ struct SingleDay: View {
     @State var plant: Plant?
     @State var sessionCounter: Int = 0
     @State var isOnboarding = false
-    @State var showOnboardingModal = true
+    @State var showOnboardingModal = false
     
     init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
         self._showSingleModal = showSingleModal
@@ -178,6 +178,7 @@ struct SingleDay: View {
         }.onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 isOnboarding = true
+                showOnboardingModal = true
             }
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [String] {
                 self.moods = moods

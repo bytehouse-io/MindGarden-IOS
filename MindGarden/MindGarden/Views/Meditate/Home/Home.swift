@@ -30,7 +30,6 @@ struct Home: View {
                 GeometryReader { g in
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                        ScrollView(showsIndicators: false){
                         VStack {
                             HStack {
                                 Spacer()
@@ -196,8 +195,7 @@ struct Home: View {
                                 // Fallback on earlier versions
                             }
                             Spacer()
-                        }
-                        }.disabled(K.hasNotch() ? true : false)
+                        }.scrollOnOverflow()
                     if showModal {
                         Color.black
                             .opacity(0.3)
@@ -209,7 +207,8 @@ struct Home: View {
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
                 }
-            }.animation(nil)
+                }
+                .animation(nil)
             .animation(.default)
             .navigationBarItems(
                 leading: Img.topBranch.padding(.leading, -20),

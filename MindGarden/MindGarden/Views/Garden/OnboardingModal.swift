@@ -34,6 +34,7 @@ struct OnboardingModal: View {
                             Button {
                                 withAnimation {
                                     shown = false
+                                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                 }
                             } label: {
                                 Capsule()

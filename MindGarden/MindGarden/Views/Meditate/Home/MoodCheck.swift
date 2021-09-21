@@ -78,7 +78,7 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .angry)
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height/3, alignment: .center)
-                        DoneCancel(shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
+                        DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
                             if moodSelected != .none {
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                     UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
@@ -131,6 +131,7 @@ struct SingleMood: View {
 }
 
 struct DoneCancel: View {
+    @Binding var showPrompt: Bool
     @Binding var shown: Bool
     var width, height: CGFloat
     var mood: Bool
@@ -159,6 +160,7 @@ struct DoneCancel: View {
             Button {
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
                     withAnimation {
+                        showPrompt = false
                         shown = false
                     }
                 }
