@@ -71,6 +71,7 @@ struct ExperienceScene: View {
             Button {
                 withAnimation {
                     selected = title
+                    UserDefaults.standard.setValue(title, forKey: "experience")
                 }
             } label: {
                 ZStack {

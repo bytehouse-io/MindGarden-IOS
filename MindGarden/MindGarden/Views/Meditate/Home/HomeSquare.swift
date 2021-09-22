@@ -11,7 +11,9 @@ struct HomeSquare: View {
     let width, height: CGFloat
     let img: Image
     let title: String
-    let id: Int 
+    let id: Int
+    let description: String
+    let duration: Float
     var body: some View {
         ZStack() {
             Rectangle()
@@ -19,31 +21,31 @@ struct HomeSquare: View {
                 .border(Clr.darkWhite)
                 .cornerRadius(25)
                 .frame(width: width * 0.41, height: height * 0.225, alignment: .center)
-                .overlay( HStack {
-                    VStack(alignment: .leading, spacing: -2) {
-                        Text(title)
-                                    .frame(width: width * 0.225, alignment: .leading)
-                                    .font(Font.mada(.semiBold, size: 16))
-                                    .foregroundColor(Clr.black2)
-                                    .minimumScaleFactor(0.005)
-                                    .lineLimit(2)
-                        Text("Lorem Ipsum has been the industry's")
-                            .frame(width: width * 0.2, alignment: .leading)
-                            .font(Font.mada(.regular, size: 12))
-                            .minimumScaleFactor(0.005)
-                            .lineLimit(3)
-                            .foregroundColor(Clr.black2)
+                .overlay(
+                    HStack(alignment: .center) {
+                        VStack(alignment: .leading, spacing: -2) {
+                            Text(title)
+                                .frame(width: width * 0.225, alignment: .leading)
+                                .font(Font.mada(.semiBold, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .minimumScaleFactor(0.005)
+                                .lineLimit(2)
+                            Text(description)
+                                .frame(width: width * 0.2, alignment: .leading)
+                                .font(Font.mada(.regular, size: 12))
+                                .lineLimit(4)
+                                .foregroundColor(Clr.black2)
+                                .padding(.top, 5)
+                                .truncationMode(.tail)
+                            HStack(spacing: 3) {
+                                Image(systemName: "timer")
+                                    .font(.caption)
+                                Text(Int(duration) == 0 ? "Course" : "\(Int(duration/60))" + " mins")
+                                    .font(.caption)
+                            }
                             .padding(.top, 5)
-
-                        HStack(spacing: 3) {
-                            Image(systemName: "timer")
-                                .font(.caption)
-                            Text("15 min")
-                                .font(.caption)
-                        }
-                        .padding(.top, 5)
                     }.padding(.leading, 25)
-                    .frame(width: width * 0.25, height: height * 0.18, alignment: .top)
+                        .frame(width: width * 0.25, height: height * 0.18, alignment: .top)
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -57,6 +59,6 @@ struct HomeSquare: View {
 
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
-        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0)
+        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0, description: "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum", duration: 15)
     }
 }

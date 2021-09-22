@@ -34,7 +34,7 @@ struct Home: View {
                             HStack {
                                 Spacer()
                                 VStack(alignment: .trailing) {
-                                    Text("Good Morning, User")
+                                    Text("Good Morning, \(userModel.name)")
                                         .font(Font.mada(.bold, size: 25))
                                         .foregroundColor(Clr.black1)
                                         .fontWeight(.bold)
@@ -99,25 +99,36 @@ struct Home: View {
                                     .cornerRadius(25)
                                     .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
                                     .neoShadow()
-                                    .overlay(HStack(alignment: .top) {
+                                    .overlay(
+                                    HStack(alignment: .top) {
                                         VStack(alignment: .leading) {
                                             Text("Featured")
-                                                .font(Font.mada(.regular, size: 16))
+                                                .font(Font.mada(.regular, size: 18))
                                                 .foregroundColor(Clr.black1)
-                                            Text("Anxiety and\nStress")
+                                            Text("\(model.featuredMeditation?.title ?? "")")
                                                 .font(Font.mada(.bold, size: 28))
                                                 .foregroundColor(Clr.black1)
+                                                .lineLimit(3)
+                                                .minimumScaleFactor(0.05)
                                             Spacer()
-                                        }.padding(25)
-                                        Spacer()
-                                        ZStack {
-                                            Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
-                                                .foregroundColor(Clr.brightGreen)
-                                            Image(systemName: "play.fill")
-                                                .foregroundColor(.white)
-                                                .font(.title)
-                                        }
-                                        .padding(25)
+                                        }.padding(15)
+                                        .offset(x: 20, y: 30)
+                                        .frame(width: g.size.width * 0.85 * 0.5)
+                                        VStack(spacing: 0) {
+                                            ZStack {
+                                                Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
+                                                    .foregroundColor(Clr.brightGreen)
+                                                Image(systemName: "play.fill")
+                                                    .foregroundColor(.white)
+                                                    .font(.title)
+                                            }.offset(x: 20, y: 10)
+                                            .padding([.top, .leading])
+                                            (model.featuredMeditation?.img ?? Img.morningSun)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
+                                                .offset(x: -40, y: -25)
+                                        }.padding([.top, .bottom, .trailing])
                                     }).padding(.top, 20)
                             }.buttonStyle(NeumorphicPress())
                             VStack(spacing: 1) {
@@ -166,7 +177,7 @@ struct Home: View {
                                                 model.selectedMeditation = meditation
                                                 viewRouter.currentPage = .middle
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id)
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, description: meditation.description, duration: meditation.duration)
                                             }.buttonStyle(NeumorphicPress())
                                             .padding(.leading, model.favoritedMeditations.count == 1 ? 25 : 0 )
                                         }
@@ -235,6 +246,9 @@ struct Home: View {
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home(bonusModel: BonusViewModel(userModel: UserViewModel())).navigationViewStyle(StackNavigationViewStyle())
+            .environmentObject(MeditationViewModel())
+            .environmentObject(UserViewModel())
+
     }
 }
 

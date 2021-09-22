@@ -63,12 +63,12 @@ struct MiddleSelect: View {
                                             Button {
 
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 0)
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 0, description: "", duration: 15)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
 
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 1)
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 1, description: "",  duration: 15)
                                             }.buttonStyle(NeumorphicPress())
                                         }.padding(.top)
                                     }

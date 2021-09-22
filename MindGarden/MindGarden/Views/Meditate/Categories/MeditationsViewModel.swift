@@ -26,6 +26,7 @@ class MeditationViewModel: ObservableObject {
     @Published var secondsRemaining: Float = 0
     @Published var secondsCounted: Float = 0
     @Published var finishedMeditation: Bool = false
+    @Published var featuredMeditation: Meditation?
     //animation glitch with a picture so added this var to trigger it manually
     @Published var lastSeconds: Bool = false
     var timer: Timer = Timer()
@@ -56,6 +57,20 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
+
+        getFeaturedMeditation()
+    }
+
+    private func getFeaturedMeditation()  {
+        if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
+            if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
+                featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
+            } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
+                featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+            }
+        } else {
+            featuredMeditation = Meditation.allMeditations[0]
+        }
     }
 
     func updateSelf() {
@@ -131,6 +146,11 @@ class MeditationViewModel: ObservableObject {
                     bellPlayer.play()
                     stop()
                     finishedMeditation = true
+                    if self.selectedMeditation?.id == 13 {
+                        UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
+                    } else if self.selectedMeditation?.id == 21 {
+                        UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
+                    }
 //                    viewRouter.currentPage = .finished
                     return
                 }

@@ -20,6 +20,7 @@ public enum Img {
   public static let iconTotalTime = Image("icon_total_time")
   public static let instaIcon = Image("instaIcon")
   public static let invite = Image("invite")
+  public static let juiceBoxes = Image("juiceBoxes")
   public static let meditateIcon = Image("meditateIcon")
   public static let morningBackground = Image("morningBackground")
   public static let morningSun = Image("morningSun")
@@ -37,7 +38,9 @@ public enum Img {
   public static let seed = Image("seed")
   public static let shopIcon = Image("shopIcon")
   public static let siwg = Image("siwg")
+  public static let starfish = Image("starfish")
   public static let streakStar = Image("streakStar")
   public static let topBranch = Image("topBranch")
+  public static let wateredPot = Image("wateredPot")
   public static let yellowHead = Image("yellowHead")
 }
