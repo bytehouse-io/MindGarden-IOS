@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlusMenu: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditateModel: MeditationViewModel
     @Binding var showPopUp: Bool
     @Binding var addMood: Bool
     @Binding var addGratitude: Bool
@@ -42,7 +43,15 @@ struct PlusMenu: View {
                     }
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                         viewRouter.currentPage = .play
+                    } else {
+                        meditateModel.selectedMeditation = meditateModel.featuredMeditation
+                        if meditateModel.selectedMeditation?.type == .course {
+                            viewRouter.currentPage = .middle
+                        } else {
+                            viewRouter.currentPage = .play
+                        }
                     }
+
                 } label: {
                     MenuChoice(title: "Meditate", img: Image(systemName: "play"),  isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
                         .frame(width: width/2.25, height: width/10)

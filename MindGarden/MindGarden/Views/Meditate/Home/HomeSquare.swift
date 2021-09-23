@@ -40,7 +40,7 @@ struct HomeSquare: View {
                             HStack(spacing: 3) {
                                 Image(systemName: "timer")
                                     .font(.caption)
-                                Text(Int(duration) == 0 ? "Course" : "\(Int(duration/60))" + " mins")
+                                Text(Int(duration) == 0 ? "Course" : (Int(duration/60) == 0 ? "1/2" : "\(Int(duration/60))") + " mins")
                                     .font(.caption)
                             }
                             .padding(.top, 5)

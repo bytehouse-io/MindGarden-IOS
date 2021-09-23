@@ -233,6 +233,10 @@ struct Play: View {
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
             }
         }
+        .onAppear {
+            model.checkIfFavorited()
+            favorited = model.isFavorited
+        }
     }
 
     //MARK: - nav
@@ -263,6 +267,9 @@ struct Play: View {
             .font(.title)
             .foregroundColor(favorited ? Color.red : Clr.lightGray)
             .onTapGesture {
+                if let med = model.selectedMeditation {
+                    model.favorite(selectMeditation: med)
+                }
                 favorited.toggle()
             }
     }

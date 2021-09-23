@@ -30,7 +30,7 @@ class GardenViewModel: ObservableObject {
         selectedYear = Int(Date().get(.year)) ?? 2021
     }
 
-    private func getRecentMeditations() {
+    func getRecentMeditations() {
         if totalSessions >= 1 {
             var meds = [String]()
             grid.values.forEach { value in //TODO sort years
@@ -41,7 +41,6 @@ class GardenViewModel: ObservableObject {
                         for day in days { // we can improve performance by stopping when we get the last two different sessions
                             if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
                                 for sess in sessions {
-                                    print(sess["meditationId"] ?? "1", "erase")
                                     meds.append(sess["meditationId"] ?? "1")
                                 }
                             }
@@ -57,19 +56,29 @@ class GardenViewModel: ObservableObject {
                         String(medd.id) == meds[0]
                     })
                 }
-                if meds.count >= 2 {
-                     med2 = Meditation.allMeditations.first(where: { medd in
-                        String(medd.id) == meds[1]
-                    })
-                }
 
+                var index = 0
+                while index < meds.count {
+                    if med2 != nil && med1 != med2 {
+                        break
+                    } else {
+                        med2 = Meditation.allMeditations.first(where: { medd in
+                           String(medd.id) == meds[index]
+                       })
+                    }
+                    index += 1
+                }
+                recentMeditations = []
                 if med1 != nil {
                     recentMeditations.append(med1!)
                     ids.append(med1!.id)
                 }
+
                 if med2 != nil {
-                    recentMeditations.append(med2!)
-                    ids.append(med2!.id)
+                    if med1 != med2 {
+                        recentMeditations.append(med2!)
+                        ids.append(med2!.id)
+                    }
                 }
 
                 UserDefaults.standard.setValue(ids, forKey: "recent")

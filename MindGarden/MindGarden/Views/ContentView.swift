@@ -70,7 +70,7 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .categories:
-                                CategoriesScene()
+                                CategoriesScene(showSearch: .constant(false))
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                             case .middle:

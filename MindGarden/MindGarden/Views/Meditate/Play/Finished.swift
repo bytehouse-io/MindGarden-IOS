@@ -150,6 +150,7 @@ struct Finished: View {
             model.finishedMeditation = false
             model.playImage = Img.seed
             model.lastSeconds = false
+            gardenModel.getRecentMeditations()
         }
         .onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {

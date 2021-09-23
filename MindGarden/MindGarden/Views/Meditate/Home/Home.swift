@@ -14,7 +14,7 @@ struct Home: View {
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    @State private var isRecent = false
+    @State private var isRecent = true
     @State private var showModal = false
     @State private var showPlantSelect = false
     @State private var showSearch = false
@@ -140,7 +140,7 @@ struct Home: View {
                                         }
                                     } label: {
                                         Text("Recent")
-                                            .foregroundColor(.black)
+                                            .foregroundColor(isRecent ? Clr.darkgreen : .black)
                                             .font(Font.mada(.regular, size: 20))
                                     }
                                     Button {
@@ -149,11 +149,12 @@ struct Home: View {
                                         }
                                     } label: {
                                         Text("Favorites")
-                                            .foregroundColor(.black)
+                                            .foregroundColor(isRecent ? .black : Clr.darkgreen)
                                             .font(Font.mada(.regular, size: 20))
                                     }
                                 }
                                 Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
+                                    .foregroundColor(Clr.darkgreen)
                                     .offset(x: isRecent ? -42.0 : 33.0)
                                     .animation(.default, value: isRecent)
                             }.frame(width: abs(g.size.width - 75), alignment: .leading)
@@ -176,17 +177,21 @@ struct Home: View {
                                         ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                             Button {
                                                 model.selectedMeditation = meditation
-                                                viewRouter.currentPage = .middle
+                                                if meditation.type == .course {
+                                                    viewRouter.currentPage = .middle
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, description: meditation.description, duration: meditation.duration)
                                             }.buttonStyle(NeumorphicPress())
                                             .padding(.leading, model.favoritedMeditations.count == 1 ? 25 : 0 )
                                         }
-                                        if !isRecent && model.favoritedMeditations.count == 1 {
-                                            Spacer()
-                                        } else if isRecent && gardenModel.recentMeditations.count == 1 {
-                                            Spacer()
-                                        }
+                                    }
+                                    if !isRecent && model.favoritedMeditations.count == 1 {
+                                        Spacer()
+                                    } else if isRecent && gardenModel.recentMeditations.count == 1 {
+                                        Spacer()
                                     }
                                 }.frame(height: g.size.height * 0.25)
                                 .padding([.leading, .trailing], 25)
@@ -227,19 +232,19 @@ struct Home: View {
             .navigationBarItems(
                 leading: Img.topBranch.padding(.leading, -20),
                 trailing: Image(systemName: "magnifyingglass")
-                    .font(.title)
                     .foregroundColor(Clr.darkgreen)
+                    .font(.system(size: 22))
                     .padding()
                     .onTapGesture {
                         showSearch = true
                     }
             )
-            .sheet(isPresented: $showPlantSelect, content: {
+            .popover(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
             .sheet(isPresented: $showSearch, content: {
                 if #available(iOS 14.0, *) {
-                    CategoriesScene(isSearch: true)
+                    CategoriesScene(isSearch: true, showSearch: $showSearch)
                 }
             })
         }.transition(.move(edge: .leading))

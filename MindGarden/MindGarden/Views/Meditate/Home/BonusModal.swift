@@ -133,7 +133,7 @@ struct BonusModal: View {
                     }
                     Img.coin
                         .renderingMode(.original)
-                    Text(weekly ? "80" : "200")
+                    Text(weekly ? "30" : "100")
                         .foregroundColor(Clr.black1)
                         .font(Font.mada(.semiBold, size: 16))
                     Spacer()
@@ -164,7 +164,7 @@ struct BonusModal: View {
                             .renderingMode(.original)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.07)
-                        Text("30")
+                        Text("5")
                             .foregroundColor(Clr.black1)
                             .font(Font.mada(.semiBold, size: 24))
                             .minimumScaleFactor(0.5)

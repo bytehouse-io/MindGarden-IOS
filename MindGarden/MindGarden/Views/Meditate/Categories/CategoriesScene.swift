@@ -10,15 +10,18 @@ import Combine
 
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
+    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -20), count: 2)
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @Environment(\.presentationMode) var presentationMode
     @State var searchText: String = ""
-    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -20), count: 2)
     var isSearch: Bool = false
-    
-    init(isSearch: Bool = false) {
+    @Binding var showSearch: Bool
+    @State var tappedMed = false
+
+    init(isSearch: Bool = false, showSearch: Binding<Bool>) {
         self.isSearch = isSearch
+        self._showSearch = showSearch
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -64,31 +67,27 @@ struct CategoriesScene: View {
                         }
                     }
                     ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: gridItemLayout, content: {
-                            ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
-                                return meditation.title.hasPrefix(searchText) || searchText == ""
-                            }), id: \.self) { item in
-                                Button {
-                                    presentationMode.wrappedValue.dismiss()
-                                    model.selectedMeditation = item
-                                    if model.selectedMeditation?.type == .course {
-                                        viewRouter.currentPage = .middle
-                                    } else {
-                                        viewRouter.currentPage = .play
-                                    }
-                                } label: {
-                                    HomeSquare(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75, img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
-                                }.buttonStyle(NeumorphicPress())
-                                .padding(.vertical, 8)
-                            }
-                        })
+                            LazyVGrid(columns: gridItemLayout, content: {
+                                ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
+                                    return meditation.title.hasPrefix(searchText) || searchText == ""
+                                }), id: \.self) { item in
+                                    Button {
+                                        print("wtf?")
+                                        presentationMode.wrappedValue.dismiss()
+                                        model.selectedMeditation = item
+                                        tappedMed = true
+                                    } label: {
+                                        HomeSquare(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75, img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
+                                    }.buttonStyle(NeumorphicPress())
+                                        .padding(.vertical, 8)
+                                }
+                            })
                     }
                     Spacer()
                 }
                 .background(Clr.darkWhite)
                 }.navigationBarTitle(isSearch ? "" : "Categories", displayMode: .inline)
-                .navigationBarItems(leading: isSearch ? AnyView(EmptyView()) : AnyView(backButton)
-                                    , trailing: isSearch ? AnyView(EmptyView()) : AnyView(searchButton))
+                .navigationBarItems(leading: isSearch ? AnyView(EmptyView()) : AnyView(backButton))
             }
         }
         .transition(.move(edge: .bottom))
@@ -100,6 +99,13 @@ struct CategoriesScene: View {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                      })
          )
+        .onDisappear {
+            if model.selectedMeditation?.type == .course {
+                viewRouter.currentPage = .middle
+            } else {
+                viewRouter.currentPage = .play
+            }
+        }
     }
 
     var backButton: some View {
@@ -115,16 +121,16 @@ struct CategoriesScene: View {
         } label: {
             Image(systemName: "arrow.backward")
                 .foregroundColor(Clr.darkgreen)
-                .font(.title)
+                .font(.system(size: 22))
+                .padding(.leading, 10)
         }
     }
 
     var searchButton: some View {
         Button {
-
         } label: {
             Image(systemName: "magnifyingglass")
-                .font(.title)
+                .font(.system(size: 22))
                 .foregroundColor(Clr.darkgreen)
         }
     }
@@ -187,8 +193,8 @@ enum Category {
 
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
-            if #available(iOS 14.0, *) {
-                CategoriesScene()
-            }
+        if #available(iOS 14.0, *) {
+            CategoriesScene(showSearch: .constant(false))
+        }
     }
 }
