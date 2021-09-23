@@ -51,7 +51,8 @@ struct Meditation: Hashable {
         Meditation(title: "Day 7", description: "Day 7 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 21, duration: 0, reward: 0),
 
         // Singles
-        
+        Meditation(title: "30 Second  Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 22, duration: 30, reward: 3),
+
     ]
 }
 

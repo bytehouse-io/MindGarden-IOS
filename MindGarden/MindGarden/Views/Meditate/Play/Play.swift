@@ -94,12 +94,12 @@ struct Play: View {
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: 20) {
                                 Button {
-                                    if player.currentTime >= 15 {
-                                        player.currentTime -= 15
-                                        model.secondsRemaining -= 15
+                                    if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
+                                        player.currentTime += 15
+                                        model.secondsRemaining += 15
                                     } else {
-                                        player.currentTime = 0
-                                        model.secondsRemaining = 0
+                                        player.currentTime = Double(model.selectedMeditation?.duration ?? 0.0)
+                                        model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
                                     }
                                 } label: {
                                     ZStack {
@@ -148,8 +148,13 @@ struct Play: View {
                                     }
                                 }
                                 Button {
-                                    player.currentTime += 15
-                                    model.secondsRemaining += 15
+                                    if model.secondsRemaining >= 15 {
+                                        player.currentTime -= 15
+                                        model.secondsRemaining -= 15
+                                    } else {
+                                        player.currentTime = 0
+                                        model.secondsRemaining = 0
+                                    }
                                 } label: {
                                     ZStack {
                                         Circle()

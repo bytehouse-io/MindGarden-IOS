@@ -13,23 +13,23 @@ import AVKit
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
-    @Published var recentMeditations: [Meditation] = []
+    @Published var finishedMeditation: Bool = false
+    @Published var featuredMeditation: Meditation?
     @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0, reward: 0)
-    @Published var courseMeditations: [Meditation] = []
     @Published var selectedCategory: Category? = .all
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
+
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
     var totalTime: Float = 0
     var bellPlayer: AVAudioPlayer!
     @Published var secondsRemaining: Float = 0
     @Published var secondsCounted: Float = 0
-    @Published var finishedMeditation: Bool = false
-    @Published var featuredMeditation: Meditation?
     //animation glitch with a picture so added this var to trigger it manually
     @Published var lastSeconds: Bool = false
     var timer: Timer = Timer()
+
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
 
@@ -72,6 +72,7 @@ class MeditationViewModel: ObservableObject {
             featuredMeditation = Meditation.allMeditations[0]
         }
     }
+
 
     func updateSelf() {
         if let defaultFavorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {

@@ -59,12 +59,12 @@ class BonusViewModel: ObservableObject {
 
     func saveDaily(plusCoins: Int) {
         if let email = Auth.auth().currentUser?.email {
-            userModel.coins += plusCoins
+            userCoins += plusCoins
             dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
             createDailyCountdown()
                 self.db.collection(K.userPreferences).document(email).updateData([
                     K.defaults.dailyBonus: self.dailyBonus,
-                    K.defaults.coins: self.userModel.coins
+                    K.defaults.coins: userCoins
                 ]) { (error) in
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
@@ -77,13 +77,13 @@ class BonusViewModel: ObservableObject {
 
     func saveSeven() {
         if let email = Auth.auth().currentUser?.email {
-            userModel.coins += 30
+            userCoins += 30
             sevenDay += 1
             let leftOver = streakNumber - (sevenDay * 7)
             sevenDayProgress = Double(leftOver)/7.0
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.seven: sevenDay,
-                K.defaults.coins: self.userModel.coins
+                K.defaults.coins: userCoins
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -96,13 +96,13 @@ class BonusViewModel: ObservableObject {
 
     func saveThirty() {
         if let email = Auth.auth().currentUser?.email {
-            userModel.coins += 100
+            userCoins += 100
             thirtyDay += 1
             let leftOver = streakNumber - (thirtyDay * 30)
             thirtyDayProgress = Double(leftOver)/30.0
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.thirty: thirtyDay,
-                K.defaults.coins: self.userModel.coins
+                K.defaults.coins: userCoins
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")

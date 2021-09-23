@@ -18,6 +18,7 @@ class GardenViewModel: ObservableObject {
     @Published var totalMins = 0
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
+    @Published var recentMeditations: [Meditation?] = []
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -25,8 +26,46 @@ class GardenViewModel: ObservableObject {
     let db = Firestore.firestore()
 
     init() {
-        selectedMonth = Int(Date().get(.month)) ?? 1
+        selectedMonth = (Int(Date().get(.month)) ?? 1)
         selectedYear = Int(Date().get(.year)) ?? 2021
+    }
+
+    private func getRecentMeditations() {
+        if totalSessions >= 1 {
+            var meds = [String]()
+            grid.values.forEach { value in //TODO sort years
+                let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
+                for mo in months  {
+                    if let singleDay = value[String(mo)]{
+                        let days = singleDay.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
+                        for day in days { // we can improve performance by stopping when we get the last two different sessions
+                            if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
+                                for sess in sessions {
+                                    print(sess["meditationId"] ?? "1", "erase")
+                                    meds.append(sess["meditationId"] ?? "1")
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var med1: Meditation?
+                var med2: Meditation?
+                if meds.count >= 1 {
+                     med1 = Meditation.allMeditations.first(where: { medd in
+                        String(medd.id) == meds[0]
+                    })
+                }
+                if meds.count >= 2 {
+                     med2 = Meditation.allMeditations.first(where: { medd in
+                        String(medd.id) == meds[1]
+                    })
+                }
+                    recentMeditations = [med1, med2]
+                UserDefaults.standard.setValue(recentMeditations, forKey: "recent")
+                print(recentMeditations)
+            }
+        }
     }
 
     func populateMonth() {
@@ -97,6 +136,9 @@ class GardenViewModel: ObservableObject {
     }
  
     func updateSelf() {
+        if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Meditation?] {
+            self.recentMeditations = defaultRecents
+        }
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
@@ -110,6 +152,7 @@ class GardenViewModel: ObservableObject {
                         self.allTimeSessions = allTimeSess
                     }
                     self.populateMonth()
+                    self.getRecentMeditations()
                 }
             }
         }
@@ -153,6 +196,7 @@ class GardenViewModel: ObservableObject {
                     "gardenGrid": self.grid,
                     "totalMins": self.allTimeMinutes,
                     "totalSessions": self.allTimeSessions,
+                    "coins": userCoins,
                 ]) { (error) in
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")

@@ -285,7 +285,7 @@ extension AuthenticationViewModel {
                 }
             }
         }
-        userModel.coins = 100
+        userCoins = 100
         userModel.name = "Bingo"
         userModel.joinDate = formatter.string(from: Date())
     }

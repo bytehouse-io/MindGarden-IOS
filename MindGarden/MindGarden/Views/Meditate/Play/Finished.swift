@@ -66,7 +66,7 @@ struct Finished: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(height: 20)
-                                    Text("20!")
+                                    Text("\(model.selectedMeditation?.reward ?? 0)!")
                                         .font(Font.mada(.bold, size: 24))
                                         .foregroundColor(.white)
                                         .offset(x: -5)
@@ -160,6 +160,7 @@ struct Finished: View {
             session[K.defaults.plantSelected] = userModel.selectedPlant?.title
             session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
             session[K.defaults.duration] = String(model.selectedMeditation?.duration ?? 0)
+            userCoins += model.selectedMeditation?.reward ?? 0
             gardenModel.save(key: "sessions", saveValue: session)
         }
 

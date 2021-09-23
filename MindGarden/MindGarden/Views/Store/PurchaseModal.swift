@@ -60,7 +60,7 @@ struct PurchaseModal: View {
                             Img.redTulips3
                         }
                         Button {
-                            if userModel.coins >= userModel.willBuyPlant?.price ?? 0 {
+                            if userCoins >= userModel.willBuyPlant?.price ?? 0 {
                                 withAnimation {
                                     showConfirm = true
                                 }

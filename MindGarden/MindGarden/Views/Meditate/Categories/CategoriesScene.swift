@@ -71,7 +71,11 @@ struct CategoriesScene: View {
                                 Button {
                                     presentationMode.wrappedValue.dismiss()
                                     model.selectedMeditation = item
-                                    viewRouter.currentPage = .middle
+                                    if model.selectedMeditation?.type == .course {
+                                        viewRouter.currentPage = .middle
+                                    } else {
+                                        viewRouter.currentPage = .play
+                                    }
                                 } label: {
                                     HomeSquare(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75, img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
                                 }.buttonStyle(NeumorphicPress())

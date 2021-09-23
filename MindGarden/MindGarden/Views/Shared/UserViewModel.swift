@@ -9,8 +9,8 @@ import Foundation
 import Combine
 import Firebase
 
+var userCoins: Int = 0
 class UserViewModel: ObservableObject {
-    @Published var coins: Int = 0
     @Published var ownedPlants: [Plant] = [Plant(title: "Red Tulips", price: 90, selected: false, description: "Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. The flowers are usually large, showy and brightly colored, generally red, pink, yellow, or white. ", packetImage: Img.redTulipsPacket, coverImage: Img.redTulips3, head: Img.redTulipHead)]
     @Published var selectedPlant: Plant?
     @Published var willBuyPlant: Plant?
@@ -37,7 +37,7 @@ class UserViewModel: ObservableObject {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
                     if let coins = document[K.defaults.coins] as? Int {
-                        self.coins = coins
+                        userCoins = coins
                     }
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.plants.filter({ plant in
@@ -58,7 +58,7 @@ class UserViewModel: ObservableObject {
     }
 
     func buyPlant() {
-        coins -= willBuyPlant?.price ?? 0
+        userCoins -= willBuyPlant?.price ?? 0
         if let plant = willBuyPlant {
             ownedPlants.append(plant)
             selectedPlant = willBuyPlant
@@ -74,7 +74,7 @@ class UserViewModel: ObservableObject {
                     }
                     self.db.collection(K.userPreferences).document(email).updateData([
                         K.defaults.plants: finalPlants,
-                        K.defaults.coins: self.coins
+                        K.defaults.coins: userCoins
                     ]) { (error) in
                         if let e = error {
                             print("There was a issue saving data to firestore \(e) ")

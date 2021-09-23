@@ -76,12 +76,12 @@ struct Gratitude: View {
                         }.frame(width: g.size.width * 0.85)
                     }
                     Text("What are you thankful for today?")
-                        .font(Font.mada(.bold, size: 24))
+                        .font(Font.mada(.bold, size: 20))
                         .frame(width: g.size.width * 0.85)
                         .foregroundColor(Clr.black1)
                         .offset(y: -10)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.5)
+//                        .minimumScaleFactor(0.5)
                         .padding(.top)
                     ZStack {
                         Rectangle()

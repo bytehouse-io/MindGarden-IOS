@@ -13,6 +13,7 @@ struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State private var isRecent = false
     @State private var showModal = false
     @State private var showPlantSelect = false
@@ -165,7 +166,7 @@ struct Home: View {
                                             .font(Font.mada(.semiBold, size: 20))
                                             .foregroundColor(Color.gray)
                                         Spacer()
-                                    } else if model.recentMeditations.isEmpty && isRecent {
+                                    } else if gardenModel.recentMeditations.isEmpty && isRecent {
                                         Spacer()
                                         Text("No Recent Meditations")
                                             .font(Font.mada(.semiBold, size: 20))
