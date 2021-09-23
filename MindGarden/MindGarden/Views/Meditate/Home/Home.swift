@@ -173,7 +173,7 @@ struct Home: View {
                                             .foregroundColor(Color.gray)
                                         Spacer()
                                     } else {
-                                        ForEach(model.favoritedMeditations, id: \.self) { meditation in
+                                        ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                             Button {
                                                 model.selectedMeditation = meditation
                                                 viewRouter.currentPage = .middle
@@ -182,7 +182,9 @@ struct Home: View {
                                             }.buttonStyle(NeumorphicPress())
                                             .padding(.leading, model.favoritedMeditations.count == 1 ? 25 : 0 )
                                         }
-                                        if model.favoritedMeditations.count == 1 {
+                                        if !isRecent && model.favoritedMeditations.count == 1 {
+                                            Spacer()
+                                        } else if isRecent && gardenModel.recentMeditations.count == 1 {
                                             Spacer()
                                         }
                                     }

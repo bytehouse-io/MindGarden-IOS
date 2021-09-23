@@ -18,7 +18,7 @@ class GardenViewModel: ObservableObject {
     @Published var totalMins = 0
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
-    @Published var recentMeditations: [Meditation?] = []
+    @Published var recentMeditations: [Meditation] = []
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -51,6 +51,7 @@ class GardenViewModel: ObservableObject {
 
                 var med1: Meditation?
                 var med2: Meditation?
+                var ids = [Int]()
                 if meds.count >= 1 {
                      med1 = Meditation.allMeditations.first(where: { medd in
                         String(medd.id) == meds[0]
@@ -61,8 +62,17 @@ class GardenViewModel: ObservableObject {
                         String(medd.id) == meds[1]
                     })
                 }
-                    recentMeditations = [med1, med2]
-                UserDefaults.standard.setValue(recentMeditations, forKey: "recent")
+
+                if med1 != nil {
+                    recentMeditations.append(med1!)
+                    ids.append(med1!.id)
+                }
+                if med2 != nil {
+                    recentMeditations.append(med2!)
+                    ids.append(med2!.id)
+                }
+
+                UserDefaults.standard.setValue(ids, forKey: "recent")
                 print(recentMeditations)
             }
         }
@@ -136,8 +146,8 @@ class GardenViewModel: ObservableObject {
     }
  
     func updateSelf() {
-        if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Meditation?] {
-            self.recentMeditations = defaultRecents
+        if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
+            self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) })
         }
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
