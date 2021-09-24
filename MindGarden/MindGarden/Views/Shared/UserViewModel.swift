@@ -39,6 +39,10 @@ class UserViewModel: ObservableObject {
                     if let coins = document[K.defaults.coins] as? Int {
                         userCoins = coins
                     }
+                    if tappedSignIn, let name = document["name"] as? String {
+                        self.name = name
+                        tappedSignIn = false
+                    }
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.plants.filter({ plant in
                             if let _ = fbPlants.firstIndex(where: { $0 == plant.title }) {

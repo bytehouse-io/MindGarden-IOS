@@ -12,6 +12,9 @@ import GoogleSignIn
 struct Authentication: View {
     var isSignUp: Bool
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State private var isShowingDetailView = false
     @State private var alertError = false
     @State private var showForgotAlert = false
@@ -170,6 +173,12 @@ struct Authentication: View {
                                             }
                     )
                     .navigationBarBackButtonHidden(true)
+                }
+            }.onDisappear {
+                if tappedSignIn {
+                    userModel.updateSelf()
+                    gardenModel.updateSelf()
+                    medModel.updateSelf()
                 }
             }
         }
