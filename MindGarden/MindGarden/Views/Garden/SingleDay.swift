@@ -208,7 +208,8 @@ struct SingleDay: View {
         Button {
             showSingleModal = false
         } label: {
-            Image(systemName: "xmark").font(.title)
+            Image(systemName: "xmark")
+                .font(.system(size: 22))
                 .foregroundColor(Clr.black1)
         }
     }

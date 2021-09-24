@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+var tappedSignIn = false
 struct OnboardingScene: View {
     @State private var index = 0
     @EnvironmentObject var viewRouter: ViewRouter
@@ -74,7 +75,7 @@ struct OnboardingScene: View {
                             }
                         } label: {
                             Capsule()
-                                .fill(Clr.darkWhite)
+                                .fill(Clr.yellow)
                                 .overlay(
                                     Text("Continue")
                                         .foregroundColor(Clr.darkgreen)
@@ -82,6 +83,22 @@ struct OnboardingScene: View {
                                 )
                         }.frame(height: 50)
                         .padding()
+                        .buttonStyle(NeumorphicPress())
+                        Button {
+                            withAnimation {
+                                tappedSignIn = true
+                                viewRouter.currentPage = .authentication
+                            }
+                        } label: {
+                            Capsule()
+                                .fill(Clr.darkWhite)
+                                .overlay(
+                                    Text("Already have an account")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.mada(.bold, size: 20))
+                                )
+                        }.frame(height: 50)
+                            .padding([.bottom, .horizontal])
                         .buttonStyle(NeumorphicPress())
                         Spacer()
                     }

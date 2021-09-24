@@ -57,7 +57,7 @@ struct Home: View {
                                 } label: {
                                     HStack {
                                         Img.coin
-                                            .font(.title)
+                                            .font(.system(size: 22))
                                         Text("Daily Bonus")
                                             .font(Font.mada(.regular, size: 14))
                                             .foregroundColor(.black)

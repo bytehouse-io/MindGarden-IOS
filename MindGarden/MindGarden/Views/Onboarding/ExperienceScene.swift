@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
     @State var selected: String = ""
     @EnvironmentObject var viewRouter: ViewRouter
@@ -19,43 +19,45 @@ struct ExperienceScene: View {
     }
 
     var body: some View {
-        NavigationView {
-            GeometryReader { g in
-                let width = g.size.width
-                let height = g.size.height
-                ZStack {
-                    Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack {  
-                        Text("What is your experience with meditation?")
-                            .font(Font.mada(.bold, size: 24))
-                            .foregroundColor(Clr.darkgreen)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 50)
-                        SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
-                        SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
-                        SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
-                        Button {
-                            if selected != "" {
-                                UserDefaults.standard.set(selected, forKey: "experience")
-                                withAnimation {
-                                    viewRouter.currentPage = .notification
+        VStack {
+            NavigationView {
+                GeometryReader { g in
+                    let width = g.size.width
+                    let height = g.size.height
+                    ZStack {
+                        Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+                        VStack {
+                            Text("What is your experience with meditation?")
+                                .font(Font.mada(.bold, size: 24))
+                                .foregroundColor(Clr.darkgreen)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 50)
+                            SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
+                            Button {
+                                if selected != "" {
+                                    UserDefaults.standard.set(selected, forKey: "experience")
+                                    withAnimation {
+                                        viewRouter.currentPage = .notification
+                                    }
                                 }
-                            }
-                        } label: {
-                            Capsule()
-                                .fill(Clr.darkWhite)
-                                .overlay(
-                                    Text("Continue")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 20))
-                                )
-                        }.frame(height: 50)
-                        .padding()
-                        .buttonStyle(NeumorphicPress())
-                        Spacer()
-                    }.navigationBarItems(
-                        leading: Img.topBranch
-                            .padding(.leading, -20))
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.darkWhite)
+                                    .overlay(
+                                        Text("Continue")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(Font.mada(.bold, size: 20))
+                                    )
+                            }.frame(height: 50)
+                                .padding()
+                                .buttonStyle(NeumorphicPress())
+                            Spacer()
+                        }.navigationBarTitle("", displayMode: .inline)
+                            .navigationBarItems(leading: Img.topBranch.padding(.leading, -20))
+                            .navigationBarBackButtonHidden(true)
+                    }
                 }
             }
         }

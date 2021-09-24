@@ -26,7 +26,7 @@ struct BonusModal: View {
                             } label: {
                                 Image(systemName: "xmark")
                                     .foregroundColor(.gray.opacity(0.5))
-                                    .font(.title)
+                                    .font(.system(size: 22))
                                     .padding()
                             }.position(x: 30, y: 35)
                             HStack(alignment: .center) {

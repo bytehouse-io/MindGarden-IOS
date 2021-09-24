@@ -242,7 +242,7 @@ struct Play: View {
     //MARK: - nav
     var backArrow: some View {
         Image(systemName: "arrow.backward")
-            .font(.title)
+            .font(.system(size: 22))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
                 withAnimation {
@@ -254,7 +254,7 @@ struct Play: View {
     }
     var sound: some View {
         Image(systemName: "music.note.list")
-            .font(.title)
+            .font(.system(size: 22))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
                 withAnimation {
@@ -264,7 +264,7 @@ struct Play: View {
     }
     var heart: some View {
         Image(systemName: favorited ? "heart.fill" : "heart")
-            .font(.title)
+            .font(.system(size: 22))
             .foregroundColor(favorited ? Color.red : Clr.lightGray)
             .onTapGesture {
                 if let med = model.selectedMeditation {

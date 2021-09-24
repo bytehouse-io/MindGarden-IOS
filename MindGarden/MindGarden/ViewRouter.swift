@@ -24,4 +24,5 @@ enum Page {
     case onboarding
     case experience
     case notification
+    case name
 }

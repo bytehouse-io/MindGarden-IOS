@@ -154,13 +154,18 @@ struct Authentication: View {
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
                                         trailing: Image(systemName: "arrow.backward")
-                                            .font(.title)
+                                            .font(.system(size: 22))
                                             .foregroundColor(Clr.darkgreen)
                                             .edgesIgnoringSafeArea(.all)
                                             .padding()
                                             .onTapGesture {
                                                 withAnimation {
-                                                    viewRouter.currentPage = .notification
+                                                    if tappedSignIn {
+                                                        tappedSignIn = false
+                                                        viewRouter.currentPage = .onboarding
+                                                    } else {
+                                                        viewRouter.currentPage = .notification
+                                                    }
                                                 }
                                             }
                     )

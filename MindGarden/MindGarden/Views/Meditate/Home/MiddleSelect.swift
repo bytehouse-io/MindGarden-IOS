@@ -113,7 +113,7 @@ struct MiddleSelect: View {
             }
         } label: {
             Image(systemName: model.isFavorited ? "heart.fill" : "heart")
-                .font(.title)
+                .font(.system(size: 22))
                 .foregroundColor(model.isFavorited ? .red : .gray)
         }
     }
