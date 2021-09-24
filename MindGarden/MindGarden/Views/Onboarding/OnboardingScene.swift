@@ -28,9 +28,9 @@ struct OnboardingScene: View {
             GeometryReader { g in
                 let height = g.size.height
                 let width = g.size.height
-                ZStack {
+                ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack {
+                    VStack(alignment: .center) {
                         if #available(iOS 14.0, *) {
                             TabView(selection: $index) {
                                 ForEach((0..<2), id: \.self) { index in
@@ -64,7 +64,7 @@ struct OnboardingScene: View {
                                 }
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .frame(height: height * 0.7)
+                            .frame(width: width * 0.55, height: height * 0.7, alignment: .center)
                         } else {
                             // Fallback on earlier versions
                         }

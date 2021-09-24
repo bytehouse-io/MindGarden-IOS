@@ -18,6 +18,7 @@ struct ContentView: View {
     @State private var openPrompts = false
     @State private var addGratitude = false
     @State private var isOnboarding = false
+    @State private var isKeyboardVisible = false
     var bonusModel: BonusViewModel
     var profileModel: ProfileViewModel
 
@@ -51,7 +52,7 @@ struct ContentView: View {
                                     .frame(height: geometry.size.height)
                                     .navigationViewStyle(StackNavigationViewStyle())
                                     .onAppear {
-                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                                             self.isOnboarding = true
                                             self.showPopUp = true
                                         }
@@ -170,15 +171,15 @@ struct ContentView: View {
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
                             .offset(y: addMood ? geometry.size.height/(K.hasNotch() ? 2.5 : 2.75) : geometry.size.height)
-                        Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts)
-                            .frame(width: geometry.size.width, height: geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1))
+                        Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts, contentKeyVisible: $isKeyboardVisible)
+                            .frame(width: geometry.size.width, height: (geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1)) + (isKeyboardVisible ? geometry.size.height * 0.2 : 0))
                             .background(Clr.darkWhite)
                             .cornerRadius(12)
-                            .offset(y: addGratitude ? geometry.size.height/(K.hasNotch()
+                            .offset(y: (addGratitude ? geometry.size.height/(K.hasNotch()
                                 ? 3.25 * (openPrompts ? 2 : 1)
                                 : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
                                 : 4.5 * (openPrompts ? 3.5 : 1) )
-                                        : geometry.size.height)
+                                        : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.15 : 0))
                     }
                 }
                 .navigationBarTitle("", displayMode: .inline)

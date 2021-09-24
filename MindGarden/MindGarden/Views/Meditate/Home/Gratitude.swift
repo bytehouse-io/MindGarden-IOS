@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import Combine
+import UIKit
 
-struct Gratitude: View {
+struct Gratitude: View, KeyboardReadable {
     @Binding var shown: Bool
     @Binding var showPopUp: Bool
     @State var text: String = "Thankful for "
     @Binding var openPrompts: Bool
     @EnvironmentObject var gardenModel: GardenViewModel
-
+    @Binding var contentKeyVisible: Bool
+    
     var body: some View {
         GeometryReader { g in
             HStack(alignment: .center) {
@@ -75,6 +78,8 @@ struct Gratitude: View {
 
                         }.frame(width: g.size.width * 0.85)
                     }
+                    // TODO move this back to bottom
+
                     Text("What are you thankful for today?")
                         .font(Font.mada(.bold, size: 20))
                         .frame(width: g.size.width * 0.85)
@@ -83,6 +88,15 @@ struct Gratitude: View {
                         .lineLimit(1)
 //                        .minimumScaleFactor(0.5)
                         .padding(.top)
+                    DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
+                        gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
+                        text = "Thankful for "
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                            showPopUp = true
+                        }
+                    }, moodSelected: .angry)
+                        .padding(.bottom, 5)
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
@@ -96,17 +110,14 @@ struct Gratitude: View {
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: -10, trailing: 10))
                                     .frame(width: g.size.width * 0.85, height: min(150, g.size.height * 0.7), alignment: .topLeading)
                                     .colorMultiply(Clr.darkWhite)
+                                    .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                        withAnimation {
+                                            contentKeyVisible = newIsKeyboardVisible
+                                        }
+                                    }
                             }
                         }
                     }.frame(width: g.size.width * 0.85, height: min(175, g.size.height * 0.6), alignment: .topLeading)
-                    DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
-                        gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
-                        text = "Thankful for "
-                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                            showPopUp = true
-                        }
-                    }, moodSelected: .angry)
                         .padding(.bottom, 20)
 
                     Spacer()
@@ -119,9 +130,29 @@ struct Gratitude: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        Gratitude(shown: .constant(true), showPopUp: .constant(false), openPrompts: .constant(true))
+        Gratitude(shown: .constant(true), showPopUp: .constant(false), openPrompts: .constant(true), contentKeyVisible: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 800)
             .background(Clr.darkWhite)
             .cornerRadius(12)
+    }
+}
+
+/// Publisher to read keyboard changes.
+protocol KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
+}
+
+extension KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> {
+        Publishers.Merge(
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillShowNotification)
+                .map { _ in true },
+
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in false }
+        )
+        .eraseToAnyPublisher()
     }
 }

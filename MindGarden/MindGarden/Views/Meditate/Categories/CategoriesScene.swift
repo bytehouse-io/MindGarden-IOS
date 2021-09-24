@@ -100,10 +100,12 @@ struct CategoriesScene: View {
                      })
          )
         .onDisappear {
-            if model.selectedMeditation?.type == .course {
-                viewRouter.currentPage = .middle
-            } else {
-                viewRouter.currentPage = .play
+            if tappedMed {
+                if model.selectedMeditation?.type == .course {
+                    viewRouter.currentPage = .middle
+                } else {
+                    viewRouter.currentPage = .play
+                }
             }
         }
     }

@@ -144,6 +144,8 @@ struct DoneCancel: View {
                 if moodSelected != .none {
                     save()
                     withAnimation {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        showPrompt = false
                         shown = false
                     }
                 }
@@ -160,6 +162,7 @@ struct DoneCancel: View {
             Button {
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
                     withAnimation {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         showPrompt = false
                         shown = false
                     }
@@ -177,3 +180,4 @@ struct DoneCancel: View {
         }
     }
 }
+
