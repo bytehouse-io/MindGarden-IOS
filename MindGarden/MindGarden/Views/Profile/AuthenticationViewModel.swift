@@ -67,7 +67,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     return
                                 }
 
-                                let credential = OAuthProvider.credential(withProviderID: "apple.com",idToken: idTokenString,rawNonce: nonce)
+                                let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString,rawNonce: nonce)
                                     Auth.auth().signIn(with: credential, completion: { (user, error) in
                                         if (error != nil) {
                                             alertError = true

@@ -49,7 +49,7 @@ struct Play: View {
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
                                         .foregroundColor(Clr.brightGreen)
                                         .rotationEffect(Angle(degrees: 270.0))
-                                        .animation(.linear)
+                                        .animation(.linear(duration: 2.0))
                                     Circle()
                                         .frame(width: 230)
                                         .foregroundColor(Clr.darkWhite)
@@ -61,27 +61,28 @@ struct Play: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: model.lastSeconds ? width/2 : width/4, height: model.lastSeconds ? height/4 : height/6)
-                                                .animation(.spring())
+                                                .animation(.easeIn(duration: 2.0))
                                         }
                                     } else if model.secondsRemaining <= model.totalTime * 0.5 {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .animation(.easeIn(duration: 1))
+                                            .animation(.easeIn(duration: 2.0))
                                             .frame(width: width/4, height: height/6)
                                             .offset(y: 25)
+                                        
                                     } else if model.secondsRemaining <= model.totalTime * 0.75 {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .animation(.easeIn(duration: 1))
+                                            .animation(.easeIn(duration: 2.0))
                                             .frame(width: width/6, height: height/8)
                                             .offset(y: 50)
                                     } else {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .animation(.easeIn(duration: 1))
+                                            .animation(.easeIn(duration: 2.0))
                                             .frame(width: width/10, height: height/12)
                                             .offset(y: 75)
                                     }

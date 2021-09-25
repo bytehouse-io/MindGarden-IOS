@@ -91,7 +91,12 @@ struct Home: View {
 
                             Button {
                                 withAnimation {
-                                    viewRouter.currentPage = .play
+                                    model.selectedMeditation = model.featuredMeditation
+                                    if model.featuredMeditation?.type == .course {
+                                        viewRouter.currentPage = .middle
+                                    } else {
+                                        viewRouter.currentPage = .play
+                                    }
                                 }
                             } label: {
                                 Rectangle()
