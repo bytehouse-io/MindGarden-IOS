@@ -54,7 +54,7 @@ struct Finished: View {
                                 Text(String(minsMed))
                                     .font(Font.mada(.bold, size: 70))
                                     .foregroundColor(.white)
-                                    .animation(.easeInOut(duration: 1.0))
+                                    .animation(.easeInOut(duration: 1.5))
                                     .opacity(animateViews ? 0 : 1)
                                     .offset(x: animateViews ? 500 : 0)
 
@@ -86,13 +86,8 @@ struct Finished: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: g.size.height/2.75)
                                     .padding(10)
-                                    .animation(.easeInOut(duration: 1.0))
-                                    .offset(y: animateViews ? 500 : 0)
-                                    .onAppear {
-                                        withAnimation(.easeIn(duration: 2.0)) {
-                                            self.animateViews.toggle()
-                                        }
-                                    }
+                                    .animation(.easeInOut(duration: 2.0))
+                                    .offset(y: 0)
                                 Spacer()
                                 ZStack {
                                     if isOnboarding {
@@ -147,7 +142,6 @@ struct Finished: View {
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onDisappear {
-            model.finishedMeditation = false
             model.playImage = Img.seed
             model.lastSeconds = false
             gardenModel.getRecentMeditations()

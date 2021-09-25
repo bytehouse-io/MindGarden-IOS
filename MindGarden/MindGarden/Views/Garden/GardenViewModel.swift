@@ -19,6 +19,7 @@ class GardenViewModel: ObservableObject {
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
     @Published var recentMeditations: [Meditation] = []
+    var medIds: [String] = [] //TODO turn this into a set 
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -32,7 +33,7 @@ class GardenViewModel: ObservableObject {
 
     func getRecentMeditations() {
         if totalSessions >= 1 {
-            var meds = [String]()
+            medIds = [String]()
             grid.values.forEach { value in //TODO sort years
                 let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
                 for mo in months  {
@@ -41,7 +42,7 @@ class GardenViewModel: ObservableObject {
                         for day in days { // we can improve performance by stopping when we get the last two different sessions
                             if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
                                 for sess in sessions {
-                                    meds.append(sess["meditationId"] ?? "1")
+                                    medIds.append(sess["meditationId"] ?? "1")
                                 }
                             }
                         }
@@ -51,19 +52,19 @@ class GardenViewModel: ObservableObject {
                 var med1: Meditation?
                 var med2: Meditation?
                 var ids = [Int]()
-                if meds.count >= 1 {
+                if medIds.count >= 1 {
                      med1 = Meditation.allMeditations.first(where: { medd in
-                        String(medd.id) == meds[0]
+                        String(medd.id) == medIds[0]
                     })
                 }
 
                 var index = 0
-                while index < meds.count {
+                while index < medIds.count {
                     if med2 != nil && med1 != med2 {
                         break
                     } else {
                         med2 = Meditation.allMeditations.first(where: { medd in
-                           String(medd.id) == meds[index]
+                           String(medd.id) == medIds[index]
                        })
                     }
                     index += 1
@@ -82,7 +83,6 @@ class GardenViewModel: ObservableObject {
                 }
 
                 UserDefaults.standard.setValue(ids, forKey: "recent")
-                print(recentMeditations)
             }
         }
     }

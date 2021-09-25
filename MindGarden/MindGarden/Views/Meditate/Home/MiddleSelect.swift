@@ -11,6 +11,7 @@ import SwiftUI
 struct MiddleSelect: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State var tappedMeditation: Bool = false
 
     var body: some View {
@@ -33,29 +34,30 @@ struct MiddleSelect: View {
                                         .font(Font.mada(.semiBold, size: 16))
                                         .padding(.top)
                                     HStack(spacing: 0) {
-                                        Img.daisy
+                                        model.selectedMeditation?.img
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: g.size.width/3, height: g.size.height/6)
                                         VStack(alignment: .leading) {
-                                            Text("Anxiety and Stress")
+                                            Text(model.selectedMeditation?.title ?? "")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.semiBold, size: 28))
                                                 .lineLimit(2)
                                                 .minimumScaleFactor(0.05)
-                                            Text("Description Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, ")
+                                            Text(model.selectedMeditation?.description ?? "")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.regular, size: 16))
                                                 .padding(.trailing)
                                         }.frame(width: g.size.width/1.7)
                                         .padding(.vertical, 5)
+                                        .offset(x: -10)
                                     }
                                     .padding()
                                     .frame(width: g.size.width)
                                         Divider().padding()
                                         VStack {
-                                            ForEach(model.selectedMeditations, id: \.self) { meditation in
-                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, tappedMeditation: $tappedMeditation)
+                                            ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
+                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: (meditation.type == .lesson && gardenModel.medIds.contains(String(meditation.id))), tappedMeditation: $tappedMeditation, idx: idx)
                                             }
                                         }
                                         Divider().padding()
@@ -89,6 +91,7 @@ struct MiddleSelect: View {
         }.transition(.move(edge: .trailing))
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
+            print(gardenModel.medIds.contains { $0 == "7" })
             model.checkIfFavorited()
         }
     }
@@ -107,7 +110,6 @@ struct MiddleSelect: View {
 
     var heart: some View {
         Button {
-            print("tap tap")
             if let med = model.selectedMeditation {
                 model.favorite(selectMeditation: med)
             }
@@ -123,8 +125,11 @@ struct MiddleSelect: View {
         let meditation: Meditation
         let viewRouter: ViewRouter
         let model: MeditationViewModel
+        let didComplete: Bool
         @Binding var tappedMeditation: Bool
         @State var isFavorited: Bool = false
+        let idx: Int
+
         var body: some View {
             Button {
                 tappedMeditation = true
@@ -134,16 +139,29 @@ struct MiddleSelect: View {
                 }
             } label: {
                 HStack {
+                    Text("\(idx + 1).")
+                        .foregroundColor(Clr.darkgreen)
+                        .font(Font.mada(.semiBold, size: 22))
+                        .padding(.trailing, 3)
                     Text(meditation.title)
                         .foregroundColor(Clr.black2)
-                        .font(Font.mada(.semiBold, size: 22))
+                        .font(Font.mada(.semiBold, size: 20))
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                     Spacer()
-                    Image(systemName: "play.fill")
-                        .foregroundColor(Clr.darkgreen)
-                        .font(.system(size: 24))
-                        .padding(.horizontal, 10)
+                    if didComplete {
+                        Image(systemName: "checkmark.circle.fill")
+                            .renderingMode(.template)
+                            .foregroundColor(Clr.darkgreen)
+                            .font(.system(size: 24))
+                            .padding(.horizontal, 10)
+                    } else {
+                        Image(systemName: "play.fill")
+                            .foregroundColor(Clr.darkgreen)
+                            .font(.system(size: 24))
+                            .padding(.horizontal, 10)
+                    }
+
                     Image(systemName: isFavorited ? "heart.fill" : "heart")
                         .foregroundColor(isFavorited ? Color.red : Color.gray)
                         .font(.system(size: 24))
@@ -153,7 +171,7 @@ struct MiddleSelect: View {
                         }
                 }
             }
-            .padding(8)
+            .padding(5)
             .frame(width: width)
             .onAppear {
                 isFavorited = model.favoritedMeditations.contains { $0 == meditation}

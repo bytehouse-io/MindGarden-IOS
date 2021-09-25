@@ -134,6 +134,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
     func signInWithGoogle() {
         if GIDSignIn.sharedInstance().currentUser == nil {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             GIDSignIn.sharedInstance().presentingViewController = UIApplication.shared.windows.first?.rootViewController
             GIDSignIn.sharedInstance().signIn()
         }
@@ -205,6 +206,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                         if isSignUp {
                             UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                         } else {
+                            UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                         }
                         viewRouter.currentPage = .meditate
@@ -304,7 +306,7 @@ extension AuthenticationViewModel {
                 "joinDate": formatter.string(from: Date()),
                 "totalSessions": 0,
                 "totalMins": 0,
-                K.defaults.plants: "Red Tulips"
+                K.defaults.plants: "Red Tulips",
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")

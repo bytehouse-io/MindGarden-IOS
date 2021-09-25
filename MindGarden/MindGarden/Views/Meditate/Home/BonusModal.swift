@@ -40,6 +40,7 @@ struct BonusModal: View {
                         Button {
                             if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
                                 bonusModel.saveDaily(plusCoins: 5)
+                                bonusModel.totalBonuses -= 1
                             }
                         } label: {
                             BonusBox(bonusModel: bonusModel, width: g.size.width, height: g.size.height, video: false)
@@ -96,11 +97,11 @@ struct BonusModal: View {
                         }.frame(width: g.size.width * 0.65, height: g.size.height * 0.25, alignment: .center)
                         Spacer()
                     }
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.55, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.55 : 0.6), alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(12)
                     Spacer()
-                }
+                } 
                 Spacer()
             }
         }

@@ -18,10 +18,12 @@ class UserViewModel: ObservableObject {
 
     var name: String = ""
     var joinDate: String = ""
+    var greeting: String = ""
     let db = Firestore.firestore()
 
     init() {
         getSelectedPlant()
+        getGreeting()
     }
 
     func getSelectedPlant() {
@@ -29,18 +31,27 @@ class UserViewModel: ObservableObject {
             self.selectedPlant = Plant.plants.filter({ plant in
                 return plant.title == plantTitle
             })[0]
-        }
+        } 
     }
 
     func updateSelf() {
+        if let defaultName = UserDefaults.standard.string(forKey: "name") {
+            self.name = defaultName
+        }
+        if let coins = UserDefaults.standard.value(forKey: "coins") as? Int {
+            userCoins = coins
+        }
+        
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
                     if let coins = document[K.defaults.coins] as? Int {
                         userCoins = coins
+                        UserDefaults.standard.set(userCoins, forKey: "coins")
                     }
                     if tappedSignIn, let name = document["name"] as? String {
                         self.name = name
+                        UserDefaults.standard.set(self.name, forKey: "name")
                         tappedSignIn = false
                     }
                     if let fbPlants = document[K.defaults.plants] as? [String] {
@@ -59,6 +70,20 @@ class UserViewModel: ObservableObject {
         selectedPlant = Plant.plants.first(where: { plant in
             return plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
         })
+    }
+
+    func getGreeting() {
+        let hour = Calendar.current.component( .hour, from:Date() )
+
+        if hour < 11 {
+            greeting = "Good Morning"
+        }
+        else if hour < 16 {
+            greeting = "Good Afternoon"
+        }
+        else {
+            greeting = "Good Evening"
+        }
     }
 
     func buyPlant() {

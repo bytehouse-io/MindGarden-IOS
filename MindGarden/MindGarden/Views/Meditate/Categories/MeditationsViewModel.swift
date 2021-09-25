@@ -13,13 +13,12 @@ import AVKit
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
-    @Published var finishedMeditation: Bool = false
     @Published var featuredMeditation: Meditation?
     @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 0, duration: 0, reward: 0)
     @Published var selectedCategory: Category? = .all
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
-
+    var viewRouter: ViewRouter?
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
     var totalTime: Float = 0
@@ -146,19 +145,22 @@ class MeditationViewModel: ObservableObject {
                 if secondsRemaining <= 0 {
                     bellPlayer.play()
                     stop()
-                    finishedMeditation = true
                     if self.selectedMeditation?.id == 13 {
                         UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
                     } else if self.selectedMeditation?.id == 21 {
                         UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
                     }
-//                    viewRouter.currentPage = .finished
+                    viewRouter?.currentPage = .finished
                     return
                 }
             }
         }
         timer.fire()
     }
+
+    func setup(_ viewRouter: ViewRouter) {
+       self.viewRouter = viewRouter
+     }
 
     func stop() {
         timer.invalidate()

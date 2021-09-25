@@ -183,7 +183,6 @@ struct Play: View {
                     }
                     NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player).offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
-                    NavigationLink("", destination: Finished().navigationBarHidden(true), isActive: $model.finishedMeditation)
                 }
             }.animation(nil)
             .navigationBarTitle(Text(model.selectedMeditation?.title ?? ""), displayMode: .inline)
@@ -237,6 +236,7 @@ struct Play: View {
         .onAppear {
             model.checkIfFavorited()
             favorited = model.isFavorited
+            model.setup(viewRouter)
         }
     }
 

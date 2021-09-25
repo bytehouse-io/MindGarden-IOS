@@ -63,6 +63,7 @@ class BonusViewModel: ObservableObject {
             dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
             createDailyCountdown()
                 self.db.collection(K.userPreferences).document(email).updateData([
+                    //TODO turn this into userdefault
                     K.defaults.dailyBonus: self.dailyBonus,
                     K.defaults.coins: userCoins
                 ]) { (error) in

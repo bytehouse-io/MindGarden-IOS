@@ -199,7 +199,7 @@ struct Garden: View {
                                     Spacer()
                                 }
                             }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)
-                        }.padding(.top, 15)
+                        }.padding(.vertical, 15)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                     }.padding(.horizontal, 25)
                     .padding(.vertical, 15)

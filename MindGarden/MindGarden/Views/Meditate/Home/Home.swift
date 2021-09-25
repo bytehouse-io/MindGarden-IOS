@@ -35,17 +35,25 @@ struct Home: View {
                             HStack {
                                 Spacer()
                                 VStack(alignment: .trailing) {
-                                    Text("Good Morning, \(userModel.name)")
+                                    Text("\(userModel.greeting), \(userModel.name)")
                                         .font(Font.mada(.bold, size: 25))
                                         .foregroundColor(Clr.black1)
                                         .fontWeight(.bold)
                                         .padding(.trailing, 20)
                                     HStack {
-                                        Text("Streak")
+                                        Text("Streak: ")
+                                            .foregroundColor(Clr.black2)
+                                        + Text("\(bonusModel.streakNumber)")
                                             .font(Font.mada(.semiBold, size: 20))
-                                        Text("300")
+                                            .foregroundColor(Clr.darkgreen)
+                                        Img.coin
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 15)
+                                        Text("\(userCoins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                     }.padding(.trailing, 20)
+                                    .padding(.top, -10)
                                 }
                             }
                             .padding(.top, -30)
@@ -56,8 +64,21 @@ struct Home: View {
                                     }
                                 } label: {
                                     HStack {
-                                        Img.coin
-                                            .font(.system(size: 22))
+                                        if bonusModel.totalBonuses == 0 {
+                                            Img.coin
+                                                .font(.system(size: 22))
+                                        } else {
+                                            ZStack {
+                                                Circle().frame(height: 16)
+                                                    .foregroundColor(Clr.redGradientBottom)
+                                                Text("\(bonusModel.totalBonuses)")
+                                                    .font(Font.mada(.bold, size: 12))
+                                                    .foregroundColor(.white)
+                                                    .lineLimit(1)
+                                                    .minimumScaleFactor(0.005)
+                                                    .frame(width: 10)
+                                            }.frame(width: 15)
+                                        }
                                         Text("Daily Bonus")
                                             .font(Font.mada(.regular, size: 14))
                                             .foregroundColor(.black)

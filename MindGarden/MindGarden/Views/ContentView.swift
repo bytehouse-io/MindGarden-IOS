@@ -183,7 +183,7 @@ struct ContentView: View {
                                                                          ? 3.25 * (openPrompts ? 2 : 1)
                                                                          : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
                                                                          : 4.5 * (openPrompts ? 3.5 : 1) )
-                                    : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.15 : 0))
+                                    : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.12 : 0))
                 }
             }
             .navigationBarTitle("", displayMode: .inline)
