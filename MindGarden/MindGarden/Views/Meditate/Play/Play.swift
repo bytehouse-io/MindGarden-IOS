@@ -95,6 +95,7 @@ struct Play: View {
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: 20) {
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
                                             mainPlayer.currentTime += 15
@@ -123,6 +124,7 @@ struct Play: View {
                                     }
                                 }
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.selectedMeditation?.belongsTo != "Timed Meditation" {
                                         if mainPlayer.isPlaying {
                                             mainPlayer.pause()
@@ -153,6 +155,7 @@ struct Play: View {
                                     }
                                 }
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.secondsRemaining >= 15 {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
                                             mainPlayer.currentTime -= 15
@@ -277,6 +280,7 @@ struct Play: View {
             .font(.system(size: 22))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     showNatureModal = true
                 }
@@ -287,6 +291,7 @@ struct Play: View {
             .font(.system(size: 22))
             .foregroundColor(favorited ? Color.red : Clr.lightGray)
             .onTapGesture {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if let med = model.selectedMeditation {
                     model.favorite(selectMeditation: med)
                 }
@@ -324,6 +329,7 @@ struct Play: View {
                                 SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player)
                             }
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     show = false
                                 }
@@ -357,6 +363,7 @@ struct Play: View {
 
         var body: some View {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     if selectedType == type {
                         selectedType = .noSound

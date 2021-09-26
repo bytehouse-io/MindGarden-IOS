@@ -15,8 +15,9 @@ struct Finished: View {
     var gardenModel: GardenViewModel
     @State private var sharedImage: UIImage?
     @State private var shotting = true
-    @State var isOnboarding = false
+    @State private var isOnboarding = false
     @State private var animateViews = false
+    @State private var favorited = false
 
     var minsMed: Int {
         if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
@@ -105,15 +106,23 @@ struct Finished: View {
                                             .offset(x: 0, y: -g.size.height * 0.5)
                                     }
                                     HStack {
-                                        Image(systemName: "heart")
+                                        Image(systemName: favorited ? "heart.fill" : "heart")
                                             .font(.system(size: 36, weight: .bold))
-                                            .foregroundColor(Clr.black1)
+                                            .foregroundColor(favorited ? Color.red : Clr.black1)
                                             .padding()
                                             .padding(.leading)
+                                            .onTapGesture {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                if let med = model.selectedMeditation {
+                                                    model.favorite(selectMeditation: med)
+                                                }
+                                                favorited.toggle()
+                                            }
                                         Image(systemName: "square.and.arrow.up")
                                             .font(.system(size: 32, weight: .bold))
                                             .foregroundColor(Clr.black1)
                                             .onTapGesture {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 PHPhotoLibrary.requestAuthorization { (status) in
                                                           // No crash
                                                 }
@@ -125,6 +134,7 @@ struct Finished: View {
                                             }
                                         Spacer()
                                         Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 viewRouter.currentPage = .garden
                                             }
@@ -164,6 +174,8 @@ struct Finished: View {
             model.lastSeconds = false
         }
         .onAppear {
+            model.checkIfFavorited()
+            favorited = model.isFavorited
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                 isOnboarding = true
