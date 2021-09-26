@@ -18,6 +18,7 @@ class MeditationViewModel: ObservableObject {
     @Published var selectedCategory: Category? = .all
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
+    @Published var recommendedMeds: [Meditation] = []
     var viewRouter: ViewRouter?
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
@@ -56,20 +57,41 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
-
         getFeaturedMeditation()
+        getRecommendedMeds()
     }
 
     private func getFeaturedMeditation()  {
+        let filtedMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 }
+        let randomInt = Int.random(in: 0..<filtedMeds.count)
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
                 featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+            } else {
+                featuredMeditation = filtedMeds[randomInt]
             }
         } else {
-            featuredMeditation = Meditation.allMeditations[0]
+            featuredMeditation = filtedMeds[randomInt]
         }
+    }
+
+    private func getRecommendedMeds() {
+        var filteredMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 }
+        if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
+            if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
+                filteredMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 22 }
+            } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
+                filteredMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 14 && med.id != 22 }
+            }
+        }
+        let randomInt = Int.random(in: 0..<filteredMeds.count)
+        var randomInt2 =  Int.random(in: 0..<filteredMeds.count)
+        while randomInt2 == randomInt {
+            randomInt2 = Int.random(in: 0..<filteredMeds.count)
+        }
+        recommendedMeds = [filteredMeds[randomInt], filteredMeds[randomInt2]]
     }
 
 

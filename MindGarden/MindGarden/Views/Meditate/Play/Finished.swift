@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Photos
 
 struct Finished: View {
     @EnvironmentObject var model: MeditationViewModel
@@ -13,8 +14,8 @@ struct Finished: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var gardenModel: GardenViewModel
     @State var isOnboarding = false
-    
     @State private var animateViews = false
+
     var minsMed: Int {
         if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
             return 1
@@ -104,6 +105,16 @@ struct Finished: View {
                                         Image(systemName: "square.and.arrow.up")
                                             .font(.system(size: 32, weight: .bold))
                                             .foregroundColor(Clr.black1)
+                                            .onTapGesture {
+                                                PHPhotoLibrary.requestAuthorization { (status) in
+                                                          // No crash
+                                                }
+                                                let snap = snapshot()
+                                                let myURL = URL(string: "https://mindgarden.io")
+                                                let objectToshare = [snap, myURL] as [Any]
+                                                let activityVC = UIActivityViewController(activityItems: objectToshare, applicationActivities: nil)
+                                                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                                            }
                                         Spacer()
                                         Button {
                                             withAnimation {
@@ -144,7 +155,6 @@ struct Finished: View {
         .onDisappear {
             model.playImage = Img.seed
             model.lastSeconds = false
-            gardenModel.getRecentMeditations()
         }
         .onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
@@ -160,6 +170,8 @@ struct Finished: View {
         }
 
     }
+
+
 }
 
 struct Finished_Previews: PreviewProvider {

@@ -22,8 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let userModel = UserViewModel()
         let gardenModel = GardenViewModel()
         let bonusModel = BonusViewModel(userModel: userModel)
-        let profileModel = ProfileViewModel(userModel: userModel, gardenModel: gardenModel)
-
+        let profileModel = ProfileViewModel()
         medModel.updateSelf()
         userModel.updateSelf()
         gardenModel.updateSelf()

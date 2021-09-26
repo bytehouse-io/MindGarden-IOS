@@ -16,10 +16,10 @@ struct Play: View {
             return 1 - (model.secondsRemaining/model.totalTime)
         }
     }
-    var unGuided: Bool = true
-    @State var timerStarted: Bool = false
+    @State var timerStarted: Bool = true
     @State var favorited: Bool = false
     @State var player : AVAudioPlayer!
+    @State var mainPlayer: AVAudioPlayer!
     @State var data : Data = .init(count: 0)
     @State var title = ""
     @State var del = AVdelegate()
@@ -49,7 +49,7 @@ struct Play: View {
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
                                         .foregroundColor(Clr.brightGreen)
                                         .rotationEffect(Angle(degrees: 270.0))
-                                        .animation(.linear(duration: 2.0))
+                                        .animation(.linear(duration: 2), value: model.secondsRemaining)
                                     Circle()
                                         .frame(width: 230)
                                         .foregroundColor(Clr.darkWhite)
@@ -82,7 +82,7 @@ struct Play: View {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .animation(.easeIn(duration: 2.0))
+                                            .animation(.easeIn(duration: 1.0))
                                             .frame(width: width/10, height: height/12)
                                             .offset(y: 75)
                                     }
@@ -96,10 +96,14 @@ struct Play: View {
                             HStack(alignment: .center, spacing: 20) {
                                 Button {
                                     if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
-                                        player.currentTime += 15
+                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                            mainPlayer.currentTime += 15
+                                        }
                                         model.secondsRemaining += 15
                                     } else {
-                                        player.currentTime = Double(model.selectedMeditation?.duration ?? 0.0)
+                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                            mainPlayer.currentTime = Double(model.selectedMeditation?.duration ?? 0.0)
+                                        }
                                         model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
                                     }
                                 } label: {
@@ -119,11 +123,11 @@ struct Play: View {
                                     }
                                 }
                                 Button {
-                                    if !unGuided {
-                                        if player.isPlaying {
-                                            player.pause()
+                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                        if mainPlayer.isPlaying {
+                                            mainPlayer.pause()
                                         } else {
-                                            player.play()
+                                            mainPlayer.play()
                                         }
                                     }
 
@@ -150,10 +154,14 @@ struct Play: View {
                                 }
                                 Button {
                                     if model.secondsRemaining >= 15 {
-                                        player.currentTime -= 15
+                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                            mainPlayer.currentTime -= 15
+                                        }
                                         model.secondsRemaining -= 15
                                     } else {
-                                        player.currentTime = 0
+                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                            mainPlayer.currentTime = 0
+                                        }
                                         model.secondsRemaining = 0
                                     }
                                 } label: {
@@ -195,38 +203,49 @@ struct Play: View {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 model.selectedMeditation = Meditation.allMeditations[2]
             } else {
-                if unGuided {
-                    if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
-                        if defaultSound != "noSound"  {
-                            selectedSound = Sound.getSound(str: defaultSound)
-                            let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
-                            player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                            player.delegate = self.del
-                            player.prepareToPlay()
-                            if selectedSound == .beach {
-                                player.volume = 0.3
-                            } else {
-                                player.volume = 3
-                            }
-                            player.numberOfLoops = -1
-                            player.play()
-                            NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
-                                self.finish = true
-                            }
-                        }
-                    } else {
-                        let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
-                        player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                    }
-                } else {
-                    let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
+
+            }
+            if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+                if defaultSound != "noSound"  {
+                    selectedSound = Sound.getSound(str: defaultSound)
+                    let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
                     player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                    player.delegate = self.del
+                    player.prepareToPlay()
+
+                    if selectedSound == .beach {
+                        player.volume = 0.3
+                    } else {
+                        player.volume = 3
+                    }
+                    player.numberOfLoops = -1
+                    player.play()
+                    NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
+                        self.finish = true
+                    }
                 }
             }
+
             //bell at the end of a session
             let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
             model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
             model.bellPlayer.delegate = self.del
+
+            if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
+                mainPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                mainPlayer.delegate = self.del
+                mainPlayer.prepareToPlay()
+                mainPlayer.play()
+                model.startCountdown()
+                NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
+                    self.finish = true
+                }
+            } else {
+                model.startCountdown()
+            }
+
+
         }
         .onDisappear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {

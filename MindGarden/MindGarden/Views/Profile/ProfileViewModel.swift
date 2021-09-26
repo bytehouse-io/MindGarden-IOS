@@ -16,12 +16,10 @@ class ProfileViewModel: ObservableObject {
     @Published var totalMins: Int = 0
     @Published var totalSessions: Int = 0
     @Published var name: String = ""
-    var userModel: UserViewModel
-    var gardenModel: GardenViewModel
 
-    init(userModel: UserViewModel, gardenModel: GardenViewModel) {
-        self.userModel = userModel
-        self.gardenModel = gardenModel
+    init() {}
+
+    func update(userModel: UserViewModel, gardenModel: GardenViewModel) {
         if Auth.auth().currentUser != nil {
             isLoggedIn = true
         } else {

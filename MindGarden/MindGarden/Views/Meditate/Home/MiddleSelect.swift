@@ -57,22 +57,32 @@ struct MiddleSelect: View {
                                         Divider().padding()
                                         VStack {
                                             ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
-                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: (meditation.type == .lesson && gardenModel.medIds.contains(String(meditation.id))), tappedMeditation: $tappedMeditation, idx: idx)
+                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: (meditation.type == .lesson && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation"), tappedMeditation: $tappedMeditation, idx: idx)
                                             }
                                         }
                                         Divider().padding()
                                         HStack(spacing: 15) {
                                             Button {
-
+                                                model.selectedMeditation = model.recommendedMeds[0]
+                                                if model.selectedMeditation?.type == .course {
+                                                    viewRouter.currentPage = .middle
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 0, description: "", duration: 15)
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, description: model.recommendedMeds[0].description, duration: model.recommendedMeds[0].duration)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
-
+                                                model.selectedMeditation = model.recommendedMeds[1]
+                                                if model.selectedMeditation?.type == .course {
+                                                    viewRouter.currentPage = .middle
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: Img.daisy, title: "Timed Meditation", id: 1, description: "",  duration: 15)
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, description: model.recommendedMeds[1].description, duration: model.recommendedMeds[1].duration)
                                             }.buttonStyle(NeumorphicPress())
-                                        }.padding(.top)
+                                        }.padding(.vertical)
                                     }
                                 }
                         }

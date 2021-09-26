@@ -28,8 +28,8 @@ struct OverflowContentViewModifier: ViewModifier {
 extension View {
     @ViewBuilder
     func wrappedInScrollView(when condition: Bool) -> some View {
-        if condition {
-            ScrollView {
+        if condition && !K.hasNotch() {
+            ScrollView(showsIndicators: false) {
                 self
             }
         } else {

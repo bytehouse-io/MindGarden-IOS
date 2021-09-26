@@ -272,11 +272,13 @@ extension AuthenticationViewModel {
             }
             getData()
             alertError = false
-            print("sigining in")
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 if isSignUp {
                     UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                } else {
+                    UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
+                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
                 viewRouter.currentPage = .meditate
             }

@@ -111,7 +111,7 @@ struct SingleDay: View {
                             .padding(.leading, g.size.width * 0.1)
                         HStack(spacing: 15) {
                             VStack(spacing: 25) {
-                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "\(totalTime)")
+                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)")
                                 StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(totalSessions)")
                                 ZStack {
                                     Rectangle()

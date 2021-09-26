@@ -45,6 +45,10 @@ class UserViewModel: ObservableObject {
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
+                    if let joinDate = document[K.defaults.joinDate] as? String {
+                        self.joinDate = joinDate
+                    }
+                
                     if let coins = document[K.defaults.coins] as? Int {
                         userCoins = coins
                         UserDefaults.standard.set(userCoins, forKey: "coins")

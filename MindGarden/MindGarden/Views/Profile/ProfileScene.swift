@@ -15,6 +15,7 @@ enum settings {
 
 struct ProfileScene: View {
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @ObservedObject var profileModel: ProfileViewModel
     @State private var selection: settings = .journey
     @State private var showNotification = false
@@ -81,10 +82,11 @@ struct ProfileScene: View {
                                     List {
                                         Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: { showNotification = true })
                                             .frame(height: 40)
-                                        Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {})
+                                        Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: { actionSheet() })
                                                 .frame(height: 40)
                                         Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
                                             if MFMailComposeViewController.canSendMail() {
+                                                print("jermaine")
                                                 showMailView = true
                                             } else {
                                                 mailNeedsSetup = true
@@ -97,7 +99,7 @@ struct ProfileScene: View {
                                             .frame(height: 40)
                                         Row(title: "Daily Motivation", img: Img.instaIcon, action: {print("shji")})
                                             .frame(height: 40)
-                                    }.frame(maxHeight: g.size.height * 0.60)
+                                    }.frame(maxHeight: g.size.height * 0.65)
                                     .padding()
                                     .neoShadow()
                                 }
@@ -119,7 +121,7 @@ struct ProfileScene: View {
                                                 .padding(.top, 3)
                                         }.frame(width: abs(width - 75), alignment: .leading)
                                         .frame(height: 25)
-                                        Text("July 1, 2020")
+                                        Text("\(profileModel.signUpDate)")
                                             .font(Font.mada(.bold, size: 34))
                                             .foregroundColor(Clr.darkgreen)
                                     }
@@ -200,23 +202,27 @@ struct ProfileScene: View {
                 }
             }
             Text("been").hidden()
+            .onAppear {
+                // Set the default to clear
+                UITableView.appearance().backgroundColor = .clear
+                UITableView.appearance().isScrollEnabled = false
+                profileModel.update(userModel: userModel, gardenModel: gardenModel)
+            }
             .sheet(isPresented: $showMailView) {
-                Text("romain")
-             }
-//            .popover(isPresented: $mailNeedsSetup) {
-//                Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
-//            }
+                MailView()
+            }
+            .alert(isPresented: $mailNeedsSetup) {
+                Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
+            }
         }
-        .onAppear {
-            // Set the default to clear
-            UITableView.appearance().backgroundColor = .clear
-        }
-
-//        .popover(isPresented: $showMailView) {
-//            Text("jimmy")
-//        }
-
     }
+    func actionSheet() {
+           guard let urlShare = URL(string: "https://mindgarden.io") else { return }
+           let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+           UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+        
+       }
+
 
     struct Row: View {
         var title: String
@@ -233,7 +239,7 @@ struct ProfileScene: View {
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 25)
+                            .frame(width: 25, height: 20)
                             .offset(x: -10)
                             .foregroundColor(Clr.darkgreen)
                         Text(title)
@@ -260,7 +266,7 @@ struct ProfileScene: View {
 
 struct ProfileScene_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileScene(profileModel: ProfileViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
+        ProfileScene(profileModel: ProfileViewModel())
     }
 }
 

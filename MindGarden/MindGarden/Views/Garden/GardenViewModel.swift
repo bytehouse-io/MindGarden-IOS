@@ -56,6 +56,12 @@ class GardenViewModel: ObservableObject {
                      med1 = Meditation.allMeditations.first(where: { medd in
                         String(medd.id) == medIds[0]
                     })
+                    if med1?.type == .lesson {
+                        let parentCourse = Meditation.allMeditations.first { medd in
+                            medd.title == med1?.belongsTo
+                        }
+                        med1 = parentCourse
+                    }
                 }
 
                 var index = 0
@@ -66,6 +72,12 @@ class GardenViewModel: ObservableObject {
                         med2 = Meditation.allMeditations.first(where: { medd in
                            String(medd.id) == medIds[index]
                        })
+                        if med2?.type == .lesson {
+                            let parentCourse = Meditation.allMeditations.first { medd in
+                                medd.title == med2?.belongsTo
+                            }
+                            med2 = parentCourse
+                        }
                     }
                     index += 1
                 }
@@ -157,6 +169,8 @@ class GardenViewModel: ObservableObject {
     func updateSelf() {
         if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
             self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) })
+        } else {
+            self.getRecentMeditations()
         }
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
@@ -171,7 +185,6 @@ class GardenViewModel: ObservableObject {
                         self.allTimeSessions = allTimeSess
                     }
                     self.populateMonth()
-                    self.getRecentMeditations()
                 }
             }
         }
@@ -180,10 +193,11 @@ class GardenViewModel: ObservableObject {
     func save(key: String, saveValue: Any) {
         if key == "sessions" {
             if let session = saveValue as? [String: String] {
-                self.totalSessions += 1
-                self.totalMins += Int(session[K.defaults.duration] ?? "0") ?? 0
+                self.allTimeSessions += 1
+                self.allTimeMinutes += Int(session[K.defaults.duration] ?? "0") ?? 0
             }
         }
+        
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             docRef.getDocument { (snapshot, error) in
@@ -210,6 +224,9 @@ class GardenViewModel: ObservableObject {
                     } else {
                         self.grid[Date().get(.year)] = [Date().get(.month): [Date().get(.day): [key: [saveValue]]]]
                     }
+                }
+                if key == "sessions" {
+                    self.getRecentMeditations()
                 }
                 self.db.collection(K.userPreferences).document(email).updateData([
                     "gardenGrid": self.grid,

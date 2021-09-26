@@ -144,7 +144,7 @@ struct Garden: View {
                         .zIndex(-1000)
                         HStack(spacing: 5) {
                             VStack(spacing: 15) {
-                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: "\(gardenModel.totalMins)")
+                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: gardenModel.totalMins/60 == 0 && gardenModel.totalMins != 0 ? "0.5" : "\(gardenModel.totalMins/60)")
                                 StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
                             }
                             .frame(maxWidth: gp.size.width * 0.33)
