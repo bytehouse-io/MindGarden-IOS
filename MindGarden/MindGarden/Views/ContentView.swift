@@ -13,6 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State private var showPopUp = false
     @State private var addMood = false
     @State private var openPrompts = false
@@ -89,7 +90,7 @@ struct ContentView: View {
                                     }
                                 }
                         case .finished:
-                            Finished()
+                            Finished(model: meditationModel, userModel: userModel, gardenModel: gardenModel)
                                 .frame(height: geometry.size.height + 80)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .authentication:

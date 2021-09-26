@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
@@ -22,20 +23,30 @@ extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
     }
+}
 
-    func snapshot() -> UIImage {
-        let controller = UIHostingController(rootView: self)
-        let view = controller.view
-
-        let targetSize = controller.view.intrinsicContentSize
-        view?.bounds = CGRect(origin: .zero, size: targetSize)
-        view?.backgroundColor = .clear
-
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-
-        return renderer.image { _ in
-            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
-        }
+extension UIView {
+    var renderedImage: UIImage {
+        // rect of capure
+        let rect = self.bounds
+        // create the context of bitmap
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+        let context: CGContext = UIGraphicsGetCurrentContext()!
+        self.layer.render(in: context)
+        // get a image from current context bitmap
+        let capturedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return capturedImage
     }
 }
 
+extension View {
+    func takeScreenshot(origin: CGPoint, size: CGSize) -> UIImage {
+        let window = UIWindow(frame: CGRect(origin: origin, size: size))
+        let hosting = UIHostingController(rootView: self)
+        hosting.view.frame = window.frame
+        window.addSubview(hosting.view)
+        window.makeKeyAndVisible()
+        return hosting.view.renderedImage
+    }
+}

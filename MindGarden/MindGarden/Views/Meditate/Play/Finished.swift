@@ -9,10 +9,12 @@ import SwiftUI
 import Photos
 
 struct Finished: View {
-    @EnvironmentObject var model: MeditationViewModel
-    @EnvironmentObject var userModel: UserViewModel
+    var model: MeditationViewModel
+    var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
-    @EnvironmentObject var gardenModel: GardenViewModel
+    var gardenModel: GardenViewModel
+    @State private var sharedImage: UIImage?
+    @State private var shotting = true
     @State var isOnboarding = false
     @State private var animateViews = false
 
@@ -22,6 +24,12 @@ struct Finished: View {
         } else {
             return Int(model.selectedMeditation?.duration ?? 0)/60
         }
+    }
+
+    init(model: MeditationViewModel, userModel: UserViewModel, gardenModel: GardenViewModel) {
+        self.model = model
+        self.userModel = userModel
+        self.gardenModel = gardenModel
     }
 
     var body: some View {
@@ -109,9 +117,9 @@ struct Finished: View {
                                                 PHPhotoLibrary.requestAuthorization { (status) in
                                                           // No crash
                                                 }
-                                                let snap = snapshot()
+                                                let snap = self.takeScreenshot(origin: g.frame(in: .global).origin, size: g.size)
                                                 let myURL = URL(string: "https://mindgarden.io")
-                                                let objectToshare = [snap, myURL] as [Any]
+                                                let objectToshare = [snap, myURL!] as [Any]
                                                 let activityVC = UIActivityViewController(activityItems: objectToshare, applicationActivities: nil)
                                                 UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
                                             }
@@ -148,7 +156,6 @@ struct Finished: View {
                     }.frame(width: g.size.width, height: g.size.height)
                     .offset(y: -60)
                 }
-
             }
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
@@ -176,10 +183,7 @@ struct Finished: View {
 
 struct Finished_Previews: PreviewProvider {
     static var previews: some View {
-        Finished()
-            .environmentObject(GardenViewModel())
-            .environmentObject(UserViewModel())
-            .environmentObject(MeditationViewModel())
-
+        Finished(model: MeditationViewModel(), userModel: UserViewModel(), gardenModel: GardenViewModel())
     }
 }
+
