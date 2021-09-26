@@ -51,6 +51,7 @@ struct ProfileScene: View {
                             .neoShadow()
                             if showNotification && selection == .settings {
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showNotification = false
                                 } label: {
                                     Capsule()
@@ -186,6 +187,7 @@ struct ProfileScene: View {
                                 .padding(.leading)
                             }
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 profileModel.signOut()
                             } label: {
                                 Capsule()
@@ -232,6 +234,7 @@ struct ProfileScene: View {
 
         var body: some View {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 action()
             } label: {
                 VStack(spacing: 20) {
@@ -277,6 +280,7 @@ struct SelectionButton: View {
     var body: some View {
         VStack {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 selection = type
             } label: {
                 HStack {

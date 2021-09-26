@@ -59,6 +59,7 @@ struct Home: View {
                             .padding(.top, -30)
                             HStack {
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         showModal = true
                                     }
@@ -91,6 +92,7 @@ struct Home: View {
                                 }
                                 .buttonStyle(NeumorphicPress())
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showPlantSelect = true
                                 } label: {
                                     HStack {
@@ -111,6 +113,7 @@ struct Home: View {
                             }
 
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     model.selectedMeditation = model.featuredMeditation
                                     if model.featuredMeditation?.type == .course {
@@ -202,6 +205,7 @@ struct Home: View {
                                     } else {
                                         ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                             Button {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
                                                 if meditation.type == .course {
                                                     viewRouter.currentPage = .middle
@@ -224,6 +228,8 @@ struct Home: View {
                             }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
                             if #available(iOS 14.0, *) {
                                 Button {
+                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                    impact.impactOccurred()
                                     withAnimation {
                                         viewRouter.currentPage = .categories
                                     }
@@ -262,6 +268,7 @@ struct Home: View {
                     .font(.system(size: 22))
                     .padding()
                     .onTapGesture {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         showSearch = true
                     }
             )

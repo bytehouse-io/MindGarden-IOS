@@ -20,6 +20,7 @@ struct BonusModal: View {
                     VStack(alignment: .center, spacing: 0) {
                         ZStack {
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
                                 }
@@ -38,6 +39,7 @@ struct BonusModal: View {
                         }.frame(height: g.size.height * 0.08)
 
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
                                 bonusModel.saveDaily(plusCoins: 5)
                                 bonusModel.totalBonuses -= 1
@@ -72,6 +74,7 @@ struct BonusModal: View {
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.center)
                                     Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.sevenDayProgress > 1.0 {
                                             bonusModel.saveSeven()
                                         }
@@ -85,6 +88,7 @@ struct BonusModal: View {
                                         .multilineTextAlignment(.center)
                                         .padding(.top)
                                     Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.thirtyDayProgress > 1.0 {
                                             bonusModel.saveThirty()
                                         }

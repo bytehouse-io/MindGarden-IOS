@@ -206,6 +206,7 @@ struct SingleDay: View {
 
     var xButton: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             showSingleModal = false
         } label: {
             Image(systemName: "xmark")

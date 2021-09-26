@@ -123,6 +123,7 @@ struct Garden: View {
                                     }
                                 }
                             }.onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 day = col + (row * 7) + 1  - gardenModel.placeHolders
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
                                     if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
@@ -233,6 +234,7 @@ struct Garden: View {
                                             }
                                             .animation(Animation.easeInOut(duration: 0.5).repeatForever(autoreverses:true), value: self.color)
                                             .onTapGesture {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)

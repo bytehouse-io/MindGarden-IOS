@@ -32,6 +32,7 @@ struct OnboardingModal: View {
                                 .minimumScaleFactor(0.05)
                                 .padding(.vertical)
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
                                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)

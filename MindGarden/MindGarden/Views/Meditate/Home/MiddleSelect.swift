@@ -89,7 +89,7 @@ struct MiddleSelect: View {
                         }.zIndex(25)
                 }
             }.animation(nil)
-            .navigationBarTitle("")
+            .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(
                 leading: ZStack {
                     Img.morningSun
@@ -101,13 +101,13 @@ struct MiddleSelect: View {
         }.transition(.move(edge: .trailing))
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
-            print(gardenModel.medIds.contains { $0 == "7" })
             model.checkIfFavorited()
         }
     }
 
     var backButton: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 viewRouter.currentPage = .meditate
             }
@@ -120,6 +120,7 @@ struct MiddleSelect: View {
 
     var heart: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if let med = model.selectedMeditation {
                 model.favorite(selectMeditation: med)
             }
@@ -176,6 +177,7 @@ struct MiddleSelect: View {
                         .foregroundColor(isFavorited ? Color.red : Color.gray)
                         .font(.system(size: 24))
                         .onTapGesture {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             model.favorite(selectMeditation: meditation)
                             isFavorited.toggle()
                         }

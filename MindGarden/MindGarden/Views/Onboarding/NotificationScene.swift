@@ -41,6 +41,7 @@ struct NotificationScene: View {
                                 .multilineTextAlignment(.center)
                                 .padding()
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     bottomSheetShown.toggle()
                                 }
@@ -62,6 +63,7 @@ struct NotificationScene: View {
                                 .padding()
                             Spacer()
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                                 withAnimation {
                                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in

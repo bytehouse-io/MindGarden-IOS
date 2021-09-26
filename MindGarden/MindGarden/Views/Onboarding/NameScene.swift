@@ -36,6 +36,7 @@ struct NameScene: View {
                                 .neoShadow()
                             Spacer()
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     if !name.isEmpty {
                                         UserDefaults.standard.set(name, forKey: "name")

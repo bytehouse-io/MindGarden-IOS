@@ -194,8 +194,15 @@ class GardenViewModel: ObservableObject {
         if key == "sessions" {
             if let session = saveValue as? [String: String] {
                 self.allTimeSessions += 1
-                self.allTimeMinutes += Int(session[K.defaults.duration] ?? "0") ?? 0
+                if let myNumber = NumberFormatter().number(from: session[K.defaults.duration] ?? "0") {
+                    if myNumber.intValue/60 == 0 {
+                        self.allTimeMinutes += 1
+                    } else {
+                        self.allTimeMinutes += myNumber.intValue/60
+                    }
+                }
             }
+            print(self.allTimeMinutes, "goat")
         }
         
         if let email = Auth.auth().currentUser?.email {

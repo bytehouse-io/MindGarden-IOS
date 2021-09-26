@@ -35,6 +35,7 @@ struct TabBarIcon: View {
         .foregroundColor(viewRouter.currentPage == assignedPage || isCategory ? .white : Clr.unselectedIcon)
         .onTapGesture {
             withAnimation {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                     viewRouter.currentPage = assignedPage
                 }

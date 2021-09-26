@@ -160,6 +160,7 @@ struct ContentView: View {
                                     .rotationEffect(showPopUp ? .degrees(45) : .degrees(0))
                             }
                             .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                 withAnimation {
                                     showPopUp.toggle()
                                 }

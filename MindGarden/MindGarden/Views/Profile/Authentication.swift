@@ -80,6 +80,7 @@ struct Authentication: View {
                         }
                         .frame(height: 60)
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             viewModel.isLoading = true
                             if isSignUp {
                                 viewModel.signUp()

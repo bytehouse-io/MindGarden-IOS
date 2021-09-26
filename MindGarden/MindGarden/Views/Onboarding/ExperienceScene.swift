@@ -36,12 +36,13 @@ struct ExperienceScene: View {
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
                                     UserDefaults.standard.set(selected, forKey: "experience")
                                     withAnimation {
                                         viewRouter.currentPage = .notification
                                     }
-                                }
+                                } //TODO gray out button if not selected
                             } label: {
                                 Capsule()
                                     .fill(Clr.darkWhite)
@@ -71,6 +72,7 @@ struct ExperienceScene: View {
 
         var body: some View {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     selected = title
                     UserDefaults.standard.setValue(title, forKey: "experience")

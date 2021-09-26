@@ -25,6 +25,7 @@ struct Store: View {
                             HStack {
                                 if !isShop {
                                     Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         showPlantSelect = false
                                     } label: {
                                         Image(systemName: "xmark")
@@ -82,6 +83,7 @@ struct Store: View {
                                         PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                     } else {
                                         Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             if isShop {
                                                 userModel.willBuyPlant = plant
                                                 withAnimation {
@@ -144,6 +146,7 @@ struct Store: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     showSuccess = false
                                     showMainModal = false
@@ -196,6 +199,7 @@ struct Store: View {
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: -10) {
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         shown = false
                                     }
@@ -207,6 +211,7 @@ struct Store: View {
                                         
                                 }
                                 Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     userModel.buyPlant()
                                     withAnimation {
                                         shown = false

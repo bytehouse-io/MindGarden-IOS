@@ -70,6 +70,7 @@ struct OnboardingScene: View {
                             // Fallback on earlier versions
                         }
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 viewRouter.currentPage = .experience
                             }
@@ -85,6 +86,7 @@ struct OnboardingScene: View {
                         .padding()
                         .buttonStyle(NeumorphicPress())
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 tappedSignIn = true
                                 viewRouter.currentPage = .authentication
