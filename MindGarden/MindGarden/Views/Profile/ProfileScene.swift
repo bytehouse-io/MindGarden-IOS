@@ -17,12 +17,14 @@ struct ProfileScene: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @ObservedObject var profileModel: ProfileViewModel
-    @State private var selection: settings = .journey
+    @State private var selection: settings = .settings
     @State private var showNotification = false
     @State private var isSignedIn = true
     @State private var tappedSignedIn = false
     @State private var showMailView = false
     @State private var mailNeedsSetup = false
+    @State private var notificationOn = false
+    @State private var showNotif = false
 
     var body: some View {
         VStack {
@@ -35,7 +37,7 @@ struct ProfileScene: View {
                         VStack(alignment: .center, spacing: 0) {
                             HStack(alignment: .bottom, spacing: 0) {
                                 SelectionButton(selection: $selection, type: .settings)
-                                    .frame(width: abs(g.size.width/2.5 - 2.5))
+                                    .frame(width: abs(g.size.width/2.5 - 1))
                                 VStack {
                                     Rectangle().fill(Color.gray.opacity(0.3))
                                         .frame(width: 2, height: 35)
@@ -45,8 +47,8 @@ struct ProfileScene: View {
                                         .frame(height: 5)
                                 }.frame(width: 5)
                                 SelectionButton(selection: $selection, type: .journey)
-                                    .frame(width: abs(g.size.width/2.5 - 2.5))
-                            }.background(Clr.darkWhite)
+                                    .frame(width: abs(g.size.width/2.5 - 1))
+                            }.background(Clr.darkWhite).frame(height: 50)
                             .cornerRadius(12)
                             .neoShadow()
                             if showNotification && selection == .settings {
@@ -67,12 +69,11 @@ struct ProfileScene: View {
                                 .buttonStyle(NeumorphicPress())
                                 .padding(.top)
                             }
+
                             if selection == .settings {
                                 if showNotification {
                                     List {
-                                        Row(title: "Mindful Reminders", img: Image(systemName: "envelope.fill"), swtch: true,action: {})
-                                            .frame(height: 40)
-                                        Row(title: "Motivational Quotes", img: Image(systemName: "arrow.triangle.2.circlepath"), swtch: true,action: {})
+                                        Row(title: "Daily Reminder", img: Image(systemName: "bell.fill"), swtch: true, action: {}, showNotif: $showNotif)
                                             .frame(height: 40)
                                     }.frame(maxHeight: g.size.height * 0.60)
                                     .padding()
@@ -81,26 +82,33 @@ struct ProfileScene: View {
                                     .animation(.default)
                                 } else {
                                     List {
-                                        Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: { showNotification = true })
+                                        Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: { showNotification = true }, showNotif: $showNotif)
                                             .frame(height: 40)
-                                        Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: { actionSheet() })
+                                        Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: { actionSheet() }, showNotif: $showNotif)
                                                 .frame(height: 40)
                                         Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
                                             if MFMailComposeViewController.canSendMail() {
-                                                print("jermaine")
                                                 showMailView = true
                                             } else {
                                                 mailNeedsSetup = true
                                             }
-                                        })
+                                        }, showNotif: $showNotif)
                                             .frame(height: 40)
-                                        Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: { print("bing")})
+                                        Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: { print("bing")
+                                        }, showNotif: $showNotif)
                                             .frame(height: 40)
-                                        Row(title: "Join the Community", img: Img.redditIcon, action: {print("romain")})
-                                            .frame(height: 40)
-                                        Row(title: "Daily Motivation", img: Img.instaIcon, action: {print("shji")})
-                                            .frame(height: 40)
-                                    }.frame(maxHeight: g.size.height * 0.65)
+                                        Row(title: "Join the Community", img: Img.redditIcon, action: {
+                                            if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
+                                                UIApplication.shared.open(url)
+                                            }
+                                        }, showNotif: $showNotif).frame(height: 40)
+                                        Row(title: "Daily Motivation", img: Img.instaIcon, action: {
+                                            if let url = URL(string: "https://www.instagram.com/mindgardn/") {
+                                                UIApplication.shared.open(url)
+                                            }
+                                    }, showNotif: $showNotif)
+                                     .frame(height: 40)
+                                    }.frame(maxHeight: g.size.height * 0.6)
                                     .padding()
                                     .neoShadow()
                                 }
@@ -197,13 +205,12 @@ struct ProfileScene: View {
                             }
                             .frame(width: abs(width - 100), height: 50, alignment: .center)
                             Spacer()
-                        }.navigationBarTitle("Dante", displayMode: .inline)
+                        }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
                         .frame(width: width, height: height)
                         .background(Clr.darkWhite)
                     }
                 }
             }
-            Text("been").hidden()
             .onAppear {
                 // Set the default to clear
                 UITableView.appearance().backgroundColor = .clear
@@ -213,17 +220,20 @@ struct ProfileScene: View {
             .sheet(isPresented: $showMailView) {
                 MailView()
             }
+            .popover(isPresented: $showNotif) {
+                NotificationScene(fromSettings: true)
+            }
             .alert(isPresented: $mailNeedsSetup) {
                 Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
             }
         }
     }
+
     func actionSheet() {
-           guard let urlShare = URL(string: "https://mindgarden.io") else { return }
-           let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-           UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-        
-       }
+        guard let urlShare = URL(string: "https://mindgarden.io") else { return }
+        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+    }
 
 
     struct Row: View {
@@ -231,6 +241,8 @@ struct ProfileScene: View {
         var img: Image
         var swtch: Bool = false
         var action: () -> ()
+        @State var notifOn = false
+        @Binding var showNotif: Bool
 
         var body: some View {
             Button {
@@ -254,14 +266,24 @@ struct ProfileScene: View {
                                 .foregroundColor(.gray)
                         } else if swtch {
                             if #available(iOS 14.0, *) {
-                                Toggle("", isOn: .constant(true))
-                                    .toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+                                Toggle("", isOn: $notifOn)
+                                    .onChange(of: notifOn) { val in
+                                        UserDefaults.standard.setValue(val, forKey: "notifOn")
+                                        if val {
+                                            showNotif = true
+                                        } else { //turned off
+                                            UserDefaults.standard.setValue(false, forKey: "notifOn")
+                                            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                                        }
+                                    }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
                                     .frame(width: UIScreen.main.bounds.width * 0.1)
                             }
                         }
                     }.padding()
                 }
                 .listRowBackground(Clr.darkWhite)
+            }.onAppear {
+                notifOn = UserDefaults.standard.bool(forKey: "notifOn")
             }
         }
     }
@@ -279,20 +301,23 @@ struct SelectionButton: View {
 
     var body: some View {
         VStack {
+            Spacer()
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 selection = type
             } label: {
-                HStack {
+                HStack(alignment: .top) {
                     Text(type == .settings ? "Settings" : "Journey")
                         .font(Font.mada(.bold, size: 20))
                         .foregroundColor(selection == type ? Clr.brightGreen : Clr.black1)
                         .padding(.top, 10)
                 }
-            }.frame(height: 25)
+            }.frame(height: 25, alignment: .center)
+            Spacer()
             Rectangle()
                 .fill(selection == type ?  Clr.brightGreen : Color.gray.opacity(0.3))
-                .frame(height: 5)
-        }
+                .frame(height: 8)
+        }.frame(height: 52)
+
     }
 }

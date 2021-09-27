@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct NotificationScene: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var dateTime = Date()
     @State private var bottomSheetShown = false
+    var fromSettings: Bool
 
     var displayedTime: String {
         let formatter = DateFormatter()
@@ -18,7 +20,8 @@ struct NotificationScene: View {
         return formatter.string(from: dateTime)
     }
 
-    init() {
+    init(fromSettings: Bool = false) {
+        self.fromSettings = fromSettings
         //        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         //        UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -68,7 +71,8 @@ struct NotificationScene: View {
                                 withAnimation {
                                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                                         if success {
-                                            print("All set!")
+                                            UserDefaults.standard.setValue(dateTime, forKey: "notif")
+                                            UserDefaults.standard.setValue(true, forKey: "notifOn")
                                             let content = UNMutableNotificationContent()
                                             content.title = "It's time to meditate"
                                             content.subtitle = "Let's grow and become 1% happier and more present today."
@@ -82,32 +86,46 @@ struct NotificationScene: View {
 
                                             // add our notification request
                                             UNUserNotificationCenter.current().add(request)
+                                            if fromSettings {
+                                                presentationMode.wrappedValue.dismiss()
+                                            } else {
+                                                viewRouter.currentPage = .name
+                                            }
                                         } else if let error = error {
                                             print(error.localizedDescription)
+                                        } else {
+                                            if fromSettings {
+                                                presentationMode.wrappedValue.dismiss()
+                                            } else {
+                                                viewRouter.currentPage = .name
+                                            }
                                         }
                                     }
-                                    viewRouter.currentPage = .name
                                 }
                             } label: {
                                 Capsule()
                                     .fill(Clr.darkWhite)
                                     .overlay(
-                                        Text("Continue")
+                                        Text(fromSettings ? "Turn On" : "Continue")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.mada(.bold, size: 20))
                                     )
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
-                            Text("Skip")
-                                .foregroundColor(.gray)
-                                .padding()
-                                .onTapGesture {
-                                    withAnimation {
-                                        viewRouter.currentPage = .name
+                            if !fromSettings {
+                                Text("Skip")
+                                    .foregroundColor(.gray)
+                                    .padding()
+                                    .onTapGesture {
+                                        withAnimation {
+                                            viewRouter.currentPage = .name
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        }
                                     }
-                                }
+                            }
                         }.frame(width: width * 0.9)
+                        .padding(.top, fromSettings ? 40 : 0)
                         if bottomSheetShown {
                             Color.black
                                 .opacity(0.2)
@@ -118,14 +136,26 @@ struct NotificationScene: View {
                     BottomSheetView(
                         dateSelected: $dateTime,
                         isOpen: self.$bottomSheetShown,
-                        maxHeight: g.size.height * 0.6
+                        maxHeight: g.size.height * (fromSettings ? 0.45 : 0.6)
                     ) {
-                        HStack {
+                        if fromSettings {
+                            HStack {
+                                if #available(iOS 14.0, *) {
+                                    DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
+                                        .datePickerStyle(CompactDatePickerStyle())
+                                        .labelsHidden()
+                                        .offset(y: -25)
+                                } else {
+                                    // Fallback on earlier versions
+                                }
+                            }.frame(width: width, alignment: .center)
+                        } else {
                             DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
                                 .datePickerStyle(WheelDatePickerStyle())
                                 .labelsHidden()
                                 .offset(y: -25)
-                        }.frame(width: width, alignment: .center)
+                        }
+
                     }.offset(y: g.size.height * 0.3)
                 }.navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(
@@ -135,8 +165,15 @@ struct NotificationScene: View {
                             .foregroundColor(Clr.darkgreen)
                             .padding()
                             .onTapGesture {
-                                viewRouter.currentPage = .experience
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                if fromSettings {
+                                    presentationMode.wrappedValue.dismiss()
+                                } else {
+                                    viewRouter.currentPage = .experience
+                                }
                             }
+                            .opacity(fromSettings ? 0 : 1)
+                            .disabled(fromSettings)
                     )
             }
         }
@@ -180,6 +217,7 @@ struct BottomSheetView<Content: View>: View {
                 .font(Font.mada(.bold, size: 18))
                 .foregroundColor(Clr.darkgreen)
                 .onTapGesture {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     self.isOpen.toggle()
                 }
                 .padding(.horizontal)
@@ -216,9 +254,7 @@ struct BottomSheetView<Content: View>: View {
                     state = value.translation.height
                 }.onEnded { value in
                     let snapDistance = self.maxHeight * Constants.snapRatio
-                    guard abs(value.translation.height) > snapDistance else {
-                        return
-                    }
+                    guard abs(value.translation.height) > snapDistance else { return }
                     self.isOpen = value.translation.height < 0
                 }
             )
