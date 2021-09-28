@@ -71,7 +71,6 @@ struct PlantTile: View {
                     }
                 }
             }
-       
     }
 }
 

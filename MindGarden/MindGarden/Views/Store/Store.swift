@@ -114,6 +114,9 @@ struct Store: View {
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
+                .onAppear {
+                    print(userModel.selectedPlant, "lo")
+                }
         }
     }
 

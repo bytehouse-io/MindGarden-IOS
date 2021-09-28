@@ -110,7 +110,7 @@ struct Play: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            mainPlayer.currentTime += 15
+                                            mainPlayer.currentTime -= 15
                                         }
                                         model.secondsRemaining += 15
                                     } else {
@@ -170,7 +170,7 @@ struct Play: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.secondsRemaining >= 15 {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            mainPlayer.currentTime -= 15
+                                            mainPlayer.currentTime += 15
                                         }
                                         model.secondsRemaining -= 15
                                     } else {

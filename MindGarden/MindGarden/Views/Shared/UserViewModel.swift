@@ -11,7 +11,7 @@ import Firebase
 
 var userCoins: Int = 0
 class UserViewModel: ObservableObject {
-    @Published var ownedPlants: [Plant] = [Plant(title: "Red Tulips", price: 90, selected: false, description: "Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. The flowers are usually large, showy and brightly colored, generally red, pink, yellow, or white. ", packetImage: Img.redTulipsPacket, coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redditIcon)]
+    @Published var ownedPlants: [Plant] = [Plant(title: "Red Tulip", price: 90, selected: false, description: "Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. The flowers are usually large, showy and brightly colored, generally red, pink, yellow, or white. ", packetImage: Img.redTulipsPacket, coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redTulipsBadge)]
     @Published var selectedPlant: Plant?
     @Published var willBuyPlant: Plant?
     private var validationCancellables: Set<AnyCancellable> = []

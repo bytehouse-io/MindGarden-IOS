@@ -160,7 +160,7 @@ struct ContentView: View {
                                     .rotationEffect(showPopUp ? .degrees(45) : .degrees(0))
                             }
                             .onTapGesture {
-                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done"  && viewRouter.currentPage != .garden {
+                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done"  && viewRouter.currentPage == .garden {} else {
                                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                     withAnimation {
                                         showPopUp.toggle()
