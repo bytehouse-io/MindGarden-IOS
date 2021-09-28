@@ -315,6 +315,7 @@ extension AuthenticationViewModel {
                 } else {
                     print("Succesfully saved new user")
                     UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
+                    UserDefaults.standard.setValue("nature", forKey: "sound")
                     self.userModel.getSelectedPlant()
                 }
             }

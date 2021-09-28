@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+
 struct Plant: Hashable {
     let title: String
     let price: Int
@@ -14,6 +15,7 @@ struct Plant: Hashable {
     let packetImage: Image
     let coverImage: Image
     let head: Image
+    let badge: Image
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
@@ -21,6 +23,8 @@ struct Plant: Hashable {
     static func == (lhs: Plant, rhs: Plant) -> Bool {
         return lhs.title == rhs.title
     }
-    static var plants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy, head: Img.daisyHead), Plant(title: "Red Tulips", price: 90, selected: false, description: "Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. The flowers are usually large, showy and brightly colored, generally red, pink, yellow, or white. ", packetImage: Img.redTulipsPacket, coverImage: Img.redTulips3, head: Img.redTulipHead)
+    static var plants: [Plant] = [
+        Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy, head: Img.daisyHead, badge: Img.daisyBadge),
+        Plant(title: "Red Tulip", price: 90, selected: false, description: "Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. The flowers are usually large, showy and brightly colored, generally red, pink, yellow, or white. ", packetImage: Img.redTulipsPacket, coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redTulipsBadge)
     ]
 }

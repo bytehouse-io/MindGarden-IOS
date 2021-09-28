@@ -33,6 +33,7 @@ public enum Img {
   public static let redTulips1 = Image("redTulips1")
   public static let redTulips2 = Image("redTulips2")
   public static let redTulips3 = Image("redTulips3")
+  public static let redTulipsBadge = Image("redTulipsBadge")
   public static let redTulipsPacket = Image("redTulips_packet")
   public static let redditIcon = Image("reddit-icon")
   public static let seed = Image("seed")

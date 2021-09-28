@@ -72,7 +72,7 @@ struct Play: View {
                                             model.playImage
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: model.lastSeconds ? width/2 : width/4, height: model.lastSeconds ? height/4 : height/6)
+                                                .frame(width: model.lastSeconds ? width/3 : width/5, height: model.lastSeconds ? height/5 : height/7)
                                                 .animation(.easeIn(duration: 2.0))
                                         }
                                     } else if model.secondsRemaining <= model.totalTime * 0.5 {

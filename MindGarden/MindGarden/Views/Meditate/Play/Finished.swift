@@ -83,7 +83,7 @@ struct Finished: View {
                                 }.offset(y: -20)
                             }.padding(.bottom, g.size.height * 0.08)
                             VStack {
-                                Text("With patience and mindfulness you were able to grow a daisy!")
+                                Text("With patience and mindfulness you were able to grow a \(userModel.selectedPlant?.title ?? "")!")
                                     .font(Font.mada(.bold, size: 22))
                                     .lineLimit(2)
                                     .minimumScaleFactor(0.05)
@@ -91,7 +91,7 @@ struct Finished: View {
                                     .foregroundColor(Clr.black1)
                                     .frame(height: g.size.height/12)
                                     .padding(.horizontal)
-                                Img.daisyBadge
+                                userModel.selectedPlant?.badge
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: g.size.height/2.75)
