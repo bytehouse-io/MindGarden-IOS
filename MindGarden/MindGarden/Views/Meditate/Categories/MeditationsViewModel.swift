@@ -50,11 +50,11 @@ class MeditationViewModel: ObservableObject {
         $selectedMeditation
             .sink { [unowned self] value in 
                 if value?.type == .course {
-                    selectedMeditations = Meditation.allMeditations.filter { med in med.belongsTo == value?.title
-                    }
+                    selectedMeditations = Meditation.allMeditations.filter { med in med.belongsTo == value?.title }
                 }
                 secondsRemaining = value?.duration ?? 0
                 totalTime = secondsRemaining
+                print("gajung", value)
             }
             .store(in: &validationCancellables)
         getFeaturedMeditation()

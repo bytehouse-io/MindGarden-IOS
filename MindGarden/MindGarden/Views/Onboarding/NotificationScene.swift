@@ -28,12 +28,30 @@ struct NotificationScene: View {
 
     var body: some View {
         ZStack {
-            NavigationView {
-                GeometryReader { g in
-                    let width = g.size.width
-                    ZStack {
-                        Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                        VStack(spacing: -5) {
+            GeometryReader { g in
+                let width = g.size.width
+                ZStack {
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+                    VStack(spacing: -5) {
+                        HStack {
+                            Img.topBranch.padding(.leading, -20)
+                            Spacer()
+                            Image(systemName: "arrow.backward")
+                                .font(.system(size: 22))
+                                .foregroundColor(Clr.darkgreen)
+                                .padding()
+                                .onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    if fromSettings {
+                                        presentationMode.wrappedValue.dismiss()
+                                    } else {
+                                        viewRouter.currentPage = .experience
+                                    }
+                                }
+                                .opacity(fromSettings ? 0 : 1)
+                                .disabled(fromSettings)
+                        }
+                        VStack {
                             Text("Set Your Daily Reminder")
                                 .font(Font.mada(.bold, size: 30))
                                 .foregroundColor(Clr.darkgreen)
@@ -86,14 +104,17 @@ struct NotificationScene: View {
 
                                             // add our notification request
                                             UNUserNotificationCenter.current().add(request)
-                                            if fromSettings {
-                                                presentationMode.wrappedValue.dismiss()
-                                            } else {
-                                                viewRouter.currentPage = .name
+                                            DispatchQueue.main.async {
+                                                if fromSettings {
+                                                    presentationMode.wrappedValue.dismiss()
+                                                } else {
+                                                    viewRouter.currentPage = .name
+                                                }
                                             }
                                         } else if let error = error {
                                             print(error.localizedDescription)
                                         } else {
+                                            
                                             if fromSettings {
                                                 presentationMode.wrappedValue.dismiss()
                                             } else {
@@ -125,7 +146,7 @@ struct NotificationScene: View {
                                     }
                             }
                         }.frame(width: width * 0.9)
-                        .padding(.top, fromSettings ? 40 : 0)
+                        .padding(.top, 40)
                         if bottomSheetShown {
                             Color.black
                                 .opacity(0.2)
@@ -133,48 +154,31 @@ struct NotificationScene: View {
                             Spacer()
                         }
                     }
-                    BottomSheetView(
-                        dateSelected: $dateTime,
-                        isOpen: self.$bottomSheetShown,
-                        maxHeight: g.size.height * (fromSettings ? 0.45 : 0.6)
-                    ) {
-                        if fromSettings {
-                            HStack {
-                                if #available(iOS 14.0, *) {
-                                    DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
-                                        .datePickerStyle(CompactDatePickerStyle())
-                                        .labelsHidden()
-                                        .offset(y: -25)
-                                } else {
-                                    // Fallback on earlier versions
-                                }
-                            }.frame(width: width, alignment: .center)
-                        } else {
-                            DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
-                                .datePickerStyle(WheelDatePickerStyle())
-                                .labelsHidden()
-                                .offset(y: -25)
-                        }
-
-                    }.offset(y: g.size.height * 0.3)
-                }.navigationBarTitle("", displayMode: .inline)
-                    .navigationBarItems(
-                        leading: Img.topBranch.padding(.leading, -20),
-                        trailing: Image(systemName: "arrow.backward")
-                            .font(.system(size: 22))
-                            .foregroundColor(Clr.darkgreen)
-                            .padding()
-                            .onTapGesture {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                if fromSettings {
-                                    presentationMode.wrappedValue.dismiss()
-                                } else {
-                                    viewRouter.currentPage = .experience
-                                }
+                }
+                BottomSheetView(
+                    dateSelected: $dateTime,
+                    isOpen: self.$bottomSheetShown,
+                    maxHeight: g.size.height * (fromSettings ? 0.45 : 0.6)
+                ) {
+                    if fromSettings {
+                        HStack {
+                            if #available(iOS 14.0, *) {
+                                DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
+                                    .datePickerStyle(CompactDatePickerStyle())
+                                    .labelsHidden()
+                                    .offset(y: -25)
+                            } else {
+                                // Fallback on earlier versions
                             }
-                            .opacity(fromSettings ? 0 : 1)
-                            .disabled(fromSettings)
-                    )
+                        }.frame(width: width, alignment: .center)
+                    } else {
+                        DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .offset(y: -25)
+                    }
+
+                }.offset(y: g.size.height * 0.3)
             }
         }
     }

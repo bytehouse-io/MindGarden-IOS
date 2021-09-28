@@ -42,6 +42,9 @@ struct PlusMenu: View {
                         showPopUp = false
                     }
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                        meditateModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
+                            med.id == 22
+                        })
                         viewRouter.currentPage = .play
                     } else {
                         meditateModel.selectedMeditation = meditateModel.featuredMeditation

@@ -87,8 +87,8 @@ struct OnboardingScene: View {
                         .buttonStyle(NeumorphicPress())
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            tappedSignIn = true
                             withAnimation {
-                                tappedSignIn = true
                                 viewRouter.currentPage = .authentication
                             }
                         } label: {

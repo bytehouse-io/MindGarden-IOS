@@ -20,21 +20,26 @@ struct ExperienceScene: View {
 
     var body: some View {
         VStack {
-            NavigationView {
                 GeometryReader { g in
                     let width = g.size.width
                     let height = g.size.height
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
-                            Text("What is your experience with meditation?")
+                            HStack {
+                                Img.topBranch.padding(.leading, -20)
+                                Spacer()
+                            }
+                            Text("What is your experience \nwith meditation?")
                                 .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(Clr.darkgreen)
+                                .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
-                                .padding(.top, 50)
+                                .padding(.top, 20)
+                                .padding(.horizontal)
                             SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Have never meditating", img: Img.redTulips1, selected: $selected)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
@@ -55,10 +60,7 @@ struct ExperienceScene: View {
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
                             Spacer()
-                        }.navigationBarTitle("", displayMode: .inline)
-                            .navigationBarItems(leading: Img.topBranch.padding(.leading, -20))
-                            .navigationBarBackButtonHidden(true)
-                    }
+                        }
                 }
             }
         }

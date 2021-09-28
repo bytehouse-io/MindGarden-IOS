@@ -15,11 +15,18 @@ struct MiddleSelect: View {
     @State var tappedMeditation: Bool = false
 
     var body: some View {
-        NavigationView {
             GeometryReader { g in
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
+                            ZStack {
+                                Img.morningSun
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                backButton.padding(.trailing, UIScreen.main.bounds.width/1.35)
+                                heart
+                                    .padding(.leading, UIScreen.main.bounds.width/1.2)
+                            }.frame(width: g.size.width)
                             Spacer()
                             ZStack {
                                 Rectangle()
@@ -83,6 +90,7 @@ struct MiddleSelect: View {
                                                 HomeSquare(width: g.size.width, height: g.size.height, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, description: model.recommendedMeds[1].description, duration: model.recommendedMeds[1].duration)
                                             }.buttonStyle(NeumorphicPress())
                                         }.padding(.vertical)
+                                        .padding(.bottom, g.size.height * 0.15)
                                     }
                                 }
                         }
@@ -92,13 +100,11 @@ struct MiddleSelect: View {
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(
                 leading: ZStack {
-                    Img.morningSun
-                    backButton.padding(.trailing, UIScreen.main.bounds.width/1.35)
-                    heart.padding(.leading, UIScreen.main.bounds.width/1.2)
+
                 }.offset(x: -10)
             )
             .edgesIgnoringSafeArea(.bottom)
-        }.transition(.move(edge: .trailing))
+        .transition(.move(edge: .trailing))
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
             model.checkIfFavorited()
@@ -126,7 +132,7 @@ struct MiddleSelect: View {
             }
         } label: {
             Image(systemName: model.isFavorited ? "heart.fill" : "heart")
-                .font(.system(size: 22))
+                .font(.system(size: 26))
                 .foregroundColor(model.isFavorited ? .red : .gray)
         }
     }

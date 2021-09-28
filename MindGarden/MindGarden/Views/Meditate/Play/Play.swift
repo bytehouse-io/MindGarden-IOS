@@ -7,6 +7,8 @@
 
 import SwiftUI
 import AVKit
+import UIKit
+import MediaPlayer
 
 struct Play: View {
     var progressValue: Float {
@@ -28,9 +30,9 @@ struct Play: View {
     @State var selectedSound: Sound? = .noSound
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @State var sliderData = SliderData()
 
     var body: some View {
-        NavigationView {
             ZStack {
                 GeometryReader { g in
                     let width = g.size.width
@@ -39,6 +41,16 @@ struct Play: View {
                     HStack(alignment: .center) {
                         Spacer()
                         VStack(alignment: .center) {
+                            //Navbar
+                            HStack {
+                                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? backArrow.opacity(0) : backArrow.opacity(1)
+                                Spacer()
+                                Text(model.selectedMeditation?.title ?? "")
+                                    .padding(.leading, 10)
+                                Spacer()
+                                HStack{sound; heart}
+                            }.padding(.horizontal)
+                            .padding(.top, height * 0.07)
                             HStack(alignment: .center) {
                                 ZStack {
                                     Circle()
@@ -192,22 +204,13 @@ struct Play: View {
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                     }
-                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player).offset(y: showNatureModal ? 0 : g.size.height)
+                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player, sliderData: $sliderData).offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
                 }
             }.animation(nil)
-            .navigationBarTitle(Text(model.selectedMeditation?.title ?? ""), displayMode: .inline)
-            .navigationBarItems(leading: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? backArrow.opacity(0) : backArrow.opacity(1),
-                                trailing: HStack{sound; heart}
-            )
-        }.transition(.move(edge: .trailing))
+        .transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppear {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                model.selectedMeditation = Meditation.allMeditations[2]
-            } else {
-
-            }
             if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
                 if defaultSound != "noSound"  {
                     selectedSound = Sound.getSound(str: defaultSound)
@@ -215,17 +218,22 @@ struct Play: View {
                     player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                     player.delegate = self.del
                     player.prepareToPlay()
-
-                    if selectedSound == .beach {
-                        player.volume = 0.3
+                    if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
+                        player.volume = vol
+                        sliderData.sliderValue = vol
                     } else {
-                        player.volume = 3
+                        player.volume = 0.5
+                        sliderData.sliderValue = 0.5
                     }
+                    sliderData.setPlayer(player: self.player!)
                     player.numberOfLoops = -1
                     player.play()
                     NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
                         self.finish = true
                     }
+                } else {
+                    let url = Bundle.main.path(forResource: "", ofType: "mp3")
+                    player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 }
             }
 
@@ -235,7 +243,7 @@ struct Play: View {
             model.bellPlayer.delegate = self.del
 
             if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                let url = Bundle.main.path(forResource: "fire", ofType: "mp3")
+                let url = Bundle.main.path(forResource: "30 Second Meditation", ofType: "mp3")
                 mainPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 mainPlayer.delegate = self.del
                 mainPlayer.prepareToPlay()
@@ -247,13 +255,13 @@ struct Play: View {
             } else {
                 model.startCountdown()
             }
-
-
         }
         .onDisappear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
             }
+            player.stop()
+            mainPlayer.stop()
         }
         .onAppear {
             model.checkIfFavorited()
@@ -265,11 +273,12 @@ struct Play: View {
     //MARK: - nav
     var backArrow: some View {
         Image(systemName: "arrow.backward")
-            .font(.system(size: 22))
+            .font(.system(size: 24))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
                 withAnimation {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
+                        model.stop()
                         viewRouter.currentPage = .meditate
                     }
                 }
@@ -277,7 +286,7 @@ struct Play: View {
     }
     var sound: some View {
         Image(systemName: "music.note.list")
-            .font(.system(size: 22))
+            .font(.system(size: 24))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -288,7 +297,7 @@ struct Play: View {
     }
     var heart: some View {
         Image(systemName: favorited ? "heart.fill" : "heart")
-            .font(.system(size: 22))
+            .font(.system(size: 24))
             .foregroundColor(favorited ? Color.red : Clr.lightGray)
             .onTapGesture {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -302,10 +311,12 @@ struct Play: View {
 
     //MARK: - modal
     struct NatureModal: View {
+        @State private var volume: Double = 0.0
         @Binding var show: Bool
         @Binding var sound: Sound?
         var change: () -> Void
         var player: AVAudioPlayer?
+        @Binding var sliderData: SliderData
 
         var  body: some View {
             GeometryReader { g in
@@ -322,17 +333,24 @@ struct Play: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                             HStack {
-                                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player)
-                                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player)
-                                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player)
-                                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player)
-                                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player)
+                                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
                             }
+                            GeometryReader { geometry in
+                                Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
+                                    .accentColor(Clr.darkgreen)
+                            }.frame(height: 30)
+                                .padding(.horizontal, 30)
+                                .padding(.top)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     show = false
                                 }
+                                UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
                             } label: {
                                 Text("Done")
                                     .font(Font.mada(.bold, size: 18))
@@ -360,6 +378,7 @@ struct Play: View {
         @Binding var selectedType: Sound?
         var change: () -> Void
         var player: AVAudioPlayer?
+        @Binding var sliderData: SliderData
 
         var body: some View {
             Button {
@@ -368,7 +387,6 @@ struct Play: View {
                     if selectedType == type {
                         selectedType = .noSound
                         player?.pause()
-
                     } else {
                         selectedType = type
                         change()
@@ -394,25 +412,47 @@ struct Play: View {
                         .rotationEffect(.degrees(-45))
                 }.frame(width: 50, height: 50)
             }.buttonStyle(NeumorphicPress())
+
         }
     }
 
 
      func changeSound() {
+        player.stop()
         let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
         player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
         player.delegate = self.del
-        if selectedSound == .beach {
-            player.volume = 0.3
-        } else {
-            player.volume = 3
-        }
         player.numberOfLoops = -1
+        player.volume = sliderData.sliderValue
         self.data = .init(count: 0)
         player.prepareToPlay()
         self.player.play()
+        self.sliderData.setPlayer(player: player!)
     }
 }
+
+import Combine
+
+final class SliderData: ObservableObject {
+  let didChange = PassthroughSubject<SliderData,Never>()
+    var player: AVAudioPlayer?
+
+    var sliderValue: Float = 0 {
+        willSet {
+            updateVolume(vol: newValue)
+            didChange.send(self)
+        }
+    }
+
+    func updateVolume(vol: Float) {
+        self.player?.volume = vol
+    }
+
+    func setPlayer(player: AVAudioPlayer) {
+        self.player = player
+    }
+}
+
 
 class AVdelegate : NSObject,AVAudioPlayerDelegate{
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
