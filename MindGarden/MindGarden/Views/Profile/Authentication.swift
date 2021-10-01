@@ -10,23 +10,24 @@ import FirebaseAuth
 import GoogleSignIn
 
 struct Authentication: View {
-    var isSignUp: Bool
+    @State var isSignUp: Bool = false
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    @State private var isShowingDetailView = false
     @State private var alertError = false
     @State private var showForgotAlert = false
     @ObservedObject var viewModel: AuthenticationViewModel
     @State private var isEmailValid = true
     @State private var isPasswordValid = true
     @State private var signUpDisabled = true
+    var tappedSignOut: Bool = false
 
     init(isSignUp: Bool, viewModel: AuthenticationViewModel) {
         self.isSignUp = isSignUp
         self.viewModel = viewModel
         viewModel.isSignUp = isSignUp
+        tappedSignOut = UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
     }
 
     var body: some View {
@@ -139,6 +140,22 @@ struct Authentication: View {
                             .onTapGesture {
                                 viewModel.signInWithGoogle()
                             }
+                        Button {
+                            self.isSignUp.toggle()
+                            viewModel.isSignUp = self.isSignUp
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        } label: {
+                            Capsule()
+                                .fill(Clr.darkWhite)
+                                .overlay(
+                                    Text(isSignUp ? "Already have an account" : "Sign up for an account")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.mada(.bold, size: 18))
+                                )
+                        }.frame(height: 50)
+                            .padding(.horizontal, 40)
+                            .padding(.top, 20)
+                        .buttonStyle(NeumorphicPress())
                         Spacer()
                     }
                     .background(Clr.darkWhite)
@@ -172,11 +189,13 @@ struct Authentication: View {
                                                     }
                                                 }
                                             }
+                                            .opacity(tappedSignOut ? 0 : 1)
+                                            .disabled(tappedSignOut)
                     )
                     .navigationBarBackButtonHidden(true)
                 }
             }.onDisappear {
-                if tappedSignIn {
+                if tappedSignIn || tappedSignOut {
                     userModel.updateSelf()
                     gardenModel.updateSelf()
                     medModel.updateSelf()

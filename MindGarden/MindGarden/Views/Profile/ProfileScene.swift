@@ -16,6 +16,7 @@ enum settings {
 struct ProfileScene: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
     @ObservedObject var profileModel: ProfileViewModel
     @State private var selection: settings = .settings
     @State private var showNotification = false
@@ -198,6 +199,10 @@ struct ProfileScene: View {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     profileModel.signOut()
+                                    UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
+                                    withAnimation {
+                                        viewRouter.currentPage = .authentication
+                                    }
                                 } label: {
                                     Capsule()
                                         .fill(Clr.redGradientBottom)

@@ -124,13 +124,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             }
         }
     }
-    enum SignInState {
-        case signedIn
-        case signedOut
-    }
-    
-
-    @Published var state: SignInState = .signedOut
 
     func signInWithGoogle() {
         if GIDSignIn.sharedInstance().currentUser == nil {
@@ -142,10 +135,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
     func signOut() {
         GIDSignIn.sharedInstance().signOut()
-
         do {
             try Auth.auth().signOut()
-            state = .signedOut
         } catch let signOutError as NSError {
             print(signOutError.localizedDescription)
         }
@@ -200,7 +191,6 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                     if googleIsNew {
                         createUser()
                     }
-                    self.state = .signedIn
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                         if isSignUp {
@@ -280,6 +270,7 @@ extension AuthenticationViewModel {
                     UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
+                UserDefaults.standard.setValue("nature", forKey: "sound")
                 viewRouter.currentPage = .meditate
             }
         }
@@ -313,7 +304,6 @@ extension AuthenticationViewModel {
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    print("Succesfully saved new user")
                     UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("nature", forKey: "sound")
                     self.userModel.getSelectedPlant()
