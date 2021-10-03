@@ -140,22 +140,24 @@ struct Authentication: View {
                             .onTapGesture {
                                 viewModel.signInWithGoogle()
                             }
-                        Button {
-                            self.isSignUp.toggle()
-                            viewModel.isSignUp = self.isSignUp
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        } label: {
-                            Capsule()
-                                .fill(Clr.darkWhite)
-                                .overlay(
-                                    Text(isSignUp ? "Already have an account" : "Sign up for an account")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 18))
-                                )
-                        }.frame(height: 50)
-                            .padding(.horizontal, 40)
-                            .padding(.top, 20)
-                        .buttonStyle(NeumorphicPress())
+                        if tappedSignOut {
+                            Button {
+                                self.isSignUp.toggle()
+                                viewModel.isSignUp = self.isSignUp
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.darkWhite)
+                                    .overlay(
+                                        Text(isSignUp ? "Already have an account" : "Sign up for an account")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(Font.mada(.bold, size: 18))
+                                    )
+                            }.frame(height: 50)
+                                .padding(.horizontal, 40)
+                                .padding(.top, 20)
+                            .buttonStyle(NeumorphicPress())
+                        }
                         Spacer()
                     }
                     .background(Clr.darkWhite)

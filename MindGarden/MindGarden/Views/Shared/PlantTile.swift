@@ -76,6 +76,6 @@ struct PlantTile: View {
 
 struct PlantTile_Previews: PreviewProvider {
     static var previews: some View {
-        PlantTile(width: 300, height: 700, plant: Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.blueTulipsPacket, coverImage: Img.daisy, head: Img.daisyHead, badge: Img.redditIcon), isShop: false)
+        PlantTile(width: 300, height: 700, plant: Plant(title: "Red Tulip", price: 90, selected: false, description: "Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redTulipsBadge), isShop: false)
     }
 }

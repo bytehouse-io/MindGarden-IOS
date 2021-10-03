@@ -179,6 +179,7 @@ enum Category {
     case focus
     case confidence
     case growth
+    case sleep
 
     var value: String {
         switch self {
@@ -192,6 +193,8 @@ enum Category {
             return "Anxiety"
         case .focus:
             return "Focus"
+        case .sleep:
+            return "Sleep"
         case .confidence:
             return "Confidence"
         case .growth:

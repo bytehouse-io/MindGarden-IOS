@@ -50,7 +50,7 @@ struct ContentView: View {
                                     .navigationViewStyle(StackNavigationViewStyle())
                         case .meditate:
                             Home(bonusModel: bonusModel)
-                                .frame(height: geometry.size.height)
+                                .frame(height: geometry.size.height + 10)
                                 .navigationViewStyle(StackNavigationViewStyle())
                                 .onAppear {
                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
@@ -61,15 +61,15 @@ struct ContentView: View {
                                 .disabled(isOnboarding)
                         case .garden:
                             Garden()
-                                .frame(height: geometry.size.height)
+                                .frame(height: geometry.size.height + 10)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .shop:
                             Store(showPlantSelect: .constant(false))
-                                .frame(height: geometry.size.height)
+                                .frame(height: geometry.size.height + 10)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .profile:
-                            ProfileScene(profileModel: profileModel)
-                                .frame(height: geometry.size.height)
+                            ProfileScene(profileModel: profileModel )
+                                .frame(height: geometry.size.height + 10)
                                 .navigationViewStyle(StackNavigationViewStyle())
                         case .categories:
                             CategoriesScene(showSearch: .constant(false))

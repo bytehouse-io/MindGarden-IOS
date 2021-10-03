@@ -27,10 +27,10 @@ struct Meditation: Hashable {
     static var allMeditations = [
         Meditation(title: "Open-Ended Meditation", description: "Unguided meditation with no time limit, with the option to add a gong sounds every couple of minutes.", belongsTo: "none", category: .unguided, img: Img.starfish, type: .course, id: 1, duration: 0, reward: 0),
 
-        Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy, type: .course, id: 2, duration: 0, reward: 0),
-        Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 3, duration: 30, reward: 2),
-        Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 4, duration: 120, reward: 4),
-        Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy, type: .lesson, id: 5, duration: 300, reward: 6),
+        Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 2, duration: 0, reward: 0),
+        Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 3, duration: 30, reward: 2),
+        Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 4, duration: 120, reward: 4),
+        Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 5, duration: 300, reward: 6),
 
         // Beginners Course
         Meditation(title: "Intro to Meditation", description: "Learn how to meditate and why making it a habit can drastically improve happiness, focus and so much more", belongsTo: "none", category: .courses, img: Img.juiceBoxes, type: .course, id: 6, duration: 300, reward: 0),
@@ -54,7 +54,12 @@ struct Meditation: Hashable {
 
         // Singles
         Meditation(title: "30 Second  Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 22, duration: 40, reward: 1),
-
+        Meditation(title: "Basic Guided Meditation", description: "A 5 minute guided meditation to help you start or end the day in a mindful matter.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 23, duration: 300, reward: 5),
+        Meditation(title: "Basic Semi-Guided Meditation", description: "A 10 minute semi-guided meditation for more advanced meditators looking to start or end their day present, focused, and calm.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 24, duration: 600, reward: 10),
+        Meditation(title: "Meditation for Focus", description: "A simple 5 minute guided meditation to help you calm your mind, and enter a relaxed focused state.", belongsTo: "none", category: .focus, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),
+        Meditation(title: "Anxiety & Stress", description: "A simple 5 minute guided meditation to help you let go and minimize anxiety & stress.", belongsTo: "none", category: .anxiety, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),
+        Meditation(title: "Body Scan", description: "A short guided meditation to help you tune into your body, reconnect to your physical self and notice any sensations without any judgement. ", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),
+        Meditation(title: "Mediation for Sleep", description: "A 10 minute guided meditation to help you relax, let go and fall into a deep restful sleep.", belongsTo: "none", category: .sleep, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),
     ]
 }
 

@@ -261,7 +261,9 @@ struct Play: View {
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
             }
             player.stop()
-            mainPlayer.stop()
+            if  model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                mainPlayer.stop()
+            }
         }
         .onAppear {
             model.checkIfFavorited()

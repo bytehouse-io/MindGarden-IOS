@@ -87,6 +87,7 @@ struct Garden: View {
                                     if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
                                         // mood & plant both exist
                                         // first tile in onboarding
+                                        let plantHead = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0?.head
                                         ZStack {
                                             Rectangle()
                                                 .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
@@ -95,16 +96,17 @@ struct Garden: View {
                                                 //if onboarding
                                                 .opacity(isOnboarding ? tileOpacity : 1)
                                                 .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                            Img.oneBlueberry
+                                            plantHead
                                                 .padding(3)
                                         }
                                     } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
                                         ZStack {
+                                            let plantHead = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0?.head
                                             Rectangle()
                                                 .fill(Clr.dirtBrown)
                                                 .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                 .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                            Img.oneBlueberry
+                                            plantHead
                                                 .padding(3)
                                         }
                                     } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil

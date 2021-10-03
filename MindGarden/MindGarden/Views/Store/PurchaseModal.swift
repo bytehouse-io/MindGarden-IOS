@@ -31,33 +31,49 @@ struct PurchaseModal: View {
                                     .font(.title)
                                     .padding()
                             }
+                            Spacer()
                             Text(userModel.willBuyPlant?.title ?? "")
                                 .font(Font.mada(.bold, size: 30))
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.05)
                                 .foregroundColor(Clr.black1)
                                 .padding()
-                                .padding(.leading, 10)
                             Spacer()
+                            Image(systemName: "xmark")
+                                .font(.title)
+                                .padding()
+                                .opacity(0)
                         }
-
+                        Spacer()
                         userModel.willBuyPlant?.packetImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: g.size.width * 0.35, height: g.size.height * 0.25, alignment: .center)
+                        Spacer()
                         HStack(spacing: 5) {
                             Text(" \(userModel.willBuyPlant?.description ?? "")")
-                                .font(Font.mada(.semiBold, size: 16))
+                                .font(Font.mada(.semiBold, size: 18))
                                 .foregroundColor(Clr.black1)
                         }.padding(.horizontal, 40)
                         .minimumScaleFactor(0.05)
                         .lineLimit(5)
                         HStack(spacing: 10){
-                            Img.seed
+                            userModel.willBuyPlant?.title == "Aloe" || userModel.willBuyPlant?.title == "Monstera" ? Img.pot : Img.seed
                             Image(systemName: "arrow.right")
-                            Img.redTulips1
+                            userModel.willBuyPlant?.one
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: g.size.width * 0.16)
                             Image(systemName: "arrow.right")
-                            Img.redTulips2
+                            userModel.willBuyPlant?.two
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: g.size.width * 0.18)
                             Image(systemName: "arrow.right")
-                            Img.redTulips3
+                            userModel.willBuyPlant?.coverImage
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: g.size.width * 0.2)
                         }
                         Button {
                             if userCoins >= userModel.willBuyPlant?.price ?? 0 {
@@ -82,8 +98,9 @@ struct PurchaseModal: View {
                                         .foregroundColor(Clr.black1)
                                 })
                         }
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.65, alignment: .center)
+                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.70, alignment: .center)
                     .background(Clr.darkWhite)
+                    .padding(.bottom)
                     .cornerRadius(12)
                     Spacer()
                 }

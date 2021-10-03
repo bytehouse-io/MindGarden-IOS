@@ -96,7 +96,7 @@ struct Home: View {
                                     showPlantSelect = true
                                 } label: {
                                     HStack {
-                                        Img.yellowHead
+                                        Img.daisyHead
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                         Text("Plant Select")

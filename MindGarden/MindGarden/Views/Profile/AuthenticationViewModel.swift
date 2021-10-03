@@ -196,7 +196,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                         if isSignUp {
                             UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                         } else {
-                            UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
+                            UserDefaults.standard.setValue("Red Tulip", forKey: K.defaults.selectedPlant)
                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                         }
                         viewRouter.currentPage = .meditate
@@ -267,7 +267,7 @@ extension AuthenticationViewModel {
                 if isSignUp {
                     UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                 } else {
-                    UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
+                    UserDefaults.standard.setValue("Red Tulip", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
                 UserDefaults.standard.setValue("nature", forKey: "sound")
@@ -304,7 +304,7 @@ extension AuthenticationViewModel {
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    UserDefaults.standard.setValue("Red Tulips", forKey: K.defaults.selectedPlant)
+                    UserDefaults.standard.setValue("Red Tulip", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("nature", forKey: "sound")
                     self.userModel.getSelectedPlant()
                 }
