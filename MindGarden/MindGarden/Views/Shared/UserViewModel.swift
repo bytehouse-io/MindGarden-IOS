@@ -59,11 +59,11 @@ class UserViewModel: ObservableObject {
                         tappedSignIn = false
                     }
                     if let fbPlants = document[K.defaults.plants] as? [String] {
+                        print(fbPlants, "fbPlants")
                         self.ownedPlants = Plant.plants.filter({ plant in
-                            if let _ = fbPlants.firstIndex(where: { $0 == plant.title }) {
-                                return true
-                            }
-                            return false
+                           return fbPlants.contains(where: { str in
+                                plant.title == str
+                            })
                         })
                     }
                 }

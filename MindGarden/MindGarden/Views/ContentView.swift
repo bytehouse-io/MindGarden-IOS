@@ -126,7 +126,7 @@ struct ContentView: View {
                             Color.black
                                 .opacity(0.3)
                                 .edgesIgnoringSafeArea(.all)
-                                .frame(height: showPopUp || addMood || addGratitude || isOnboarding ? geometry.size.height: 0)
+                                .frame(height: showPopUp || addMood || addGratitude || isOnboarding ? geometry.size.height + 10: 0)
                         }.animation(.easeInOut(duration: 0.1))
                     }
                     ZStack {

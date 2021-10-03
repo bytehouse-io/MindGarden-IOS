@@ -77,7 +77,7 @@ struct MiddleSelect: View {
                                                     viewRouter.currentPage = .play
                                                 }
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, description: model.recommendedMeds[0].description, duration: model.recommendedMeds[0].duration)
+                                                HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, description: model.recommendedMeds[0].description, duration: model.recommendedMeds[0].duration)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
                                                 model.selectedMeditation = model.recommendedMeds[1]
@@ -87,7 +87,7 @@ struct MiddleSelect: View {
                                                     viewRouter.currentPage = .play
                                                 }
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, description: model.recommendedMeds[1].description, duration: model.recommendedMeds[1].duration)
+                                                HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, description: model.recommendedMeds[1].description, duration: model.recommendedMeds[1].duration)
                                             }.buttonStyle(NeumorphicPress())
                                         }.padding(.vertical)
                                         .padding(.bottom, g.size.height * 0.15)

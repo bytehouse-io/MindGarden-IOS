@@ -54,7 +54,6 @@ class MeditationViewModel: ObservableObject {
                 }
                 secondsRemaining = value?.duration ?? 0
                 totalTime = secondsRemaining
-                print("gajung", value)
             }
             .store(in: &validationCancellables)
         getFeaturedMeditation()

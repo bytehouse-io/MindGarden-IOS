@@ -136,12 +136,12 @@ struct DoneCancel: View {
     var width, height: CGFloat
     var mood: Bool
     var save: () -> ()
-    var moodSelected: Mood
+    var moodSelected: Mood?
 
     var body: some View {
         HStack {
             Button {
-                if moodSelected != .none {
+                if moodSelected != Mood.none {
                     save()
                     withAnimation {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -154,7 +154,7 @@ struct DoneCancel: View {
                     .foregroundColor(.white)
                     .font(Font.mada(.semiBold, size: 22))
             }
-            .frame(width:  width * 0.3, height: height/6)
+            .frame(width:  width * 0.3, height: min(height/6, 40))
             .background(Clr.brightGreen)
             .cornerRadius(12)
             .neoShadow()
@@ -172,7 +172,7 @@ struct DoneCancel: View {
                     .foregroundColor(.white)
                     .font(Font.mada(.semiBold, size: 22))
             }
-            .frame(width: width * 0.3, height: height/6)
+            .frame(width: width * 0.3, height: min(height/6, 40))
             .background(Color.gray)
             .cornerRadius(12)
             .neoShadow()
