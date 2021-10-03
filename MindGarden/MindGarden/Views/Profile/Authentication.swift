@@ -102,18 +102,18 @@ struct Authentication: View {
                             .frame(maxHeight: 100)
                             .disabled(true)
                         }.disabled(signUpDisabled)
-                        .onReceive(viewModel.validatedCredentials) {
-                            guard let credentials = $0 else {
-                                self.signUpDisabled = true
-                                return
+                            .onReceive(viewModel.validatedCredentials) {
+                                guard let credentials = $0 else {
+                                    self.signUpDisabled = true
+                                    return
+                                }
+                                let (_, validPassword) = credentials
+                                guard validPassword != "invalid"  else {
+                                    self.signUpDisabled = true
+                                    return
+                                }
+                                self.signUpDisabled = false
                             }
-                            let (_, validPassword) = credentials
-                            guard validPassword != "invalid"  else {
-                                self.signUpDisabled = true
-                                return
-                            }
-                            self.signUpDisabled = false
-                        }
                         if !isSignUp {
                             Text("Forgot Password?")
                                 .font(Font.mada(.medium, size: 18))
@@ -156,7 +156,7 @@ struct Authentication: View {
                             }.frame(height: 50)
                                 .padding(.horizontal, 40)
                                 .padding(.top, 20)
-                            .buttonStyle(NeumorphicPress())
+                                .buttonStyle(NeumorphicPress())
                         }
                         Spacer()
                     }
@@ -182,15 +182,15 @@ struct Authentication: View {
                                             .edgesIgnoringSafeArea(.all)
                                             .padding()
                                             .onTapGesture {
-                                                withAnimation {
-                                                    if tappedSignIn {
-                                                        tappedSignIn = false
-                                                        viewRouter.currentPage = .onboarding
-                                                    } else {
-                                                        viewRouter.currentPage = .notification
-                                                    }
-                                                }
-                                            }
+                        withAnimation {
+                            if tappedSignIn {
+                                tappedSignIn = false
+                                viewRouter.currentPage = .onboarding
+                            } else {
+                                viewRouter.currentPage = .notification
+                            }
+                        }
+                    }
                                             .opacity(tappedSignOut ? 0 : 1)
                                             .disabled(tappedSignOut)
                     )

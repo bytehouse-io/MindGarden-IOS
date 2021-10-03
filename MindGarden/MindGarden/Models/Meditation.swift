@@ -24,6 +24,10 @@ struct Meditation: Hashable {
         return lhs.title == rhs.title
     }
 
+    func returnEventName() -> String {
+        return self.title.lowercased().replacingOccurrences(of: " ", with: "_")
+    }
+
     static var allMeditations = [
 //        Meditation(title: "Open-Ended Meditation", description: "Unguided meditation with no time limit, with the option to add a gong sounds every couple of minutes.", belongsTo: "none", category: .unguided, img: Img.starfish, type: .course, id: 1, duration: 0, reward: 0),
 
@@ -62,7 +66,7 @@ struct Meditation: Hashable {
 //        Meditation(title: "Day 7", description: "Day 7 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 21, duration: 0, reward: 0),
 
         // Singles
-        Meditation(title: "30 Second  Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 22, duration: 40, reward: 1),
+        Meditation(title: "30 Second Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 22, duration: 40, reward: 1),
         Meditation(title: "Basic Guided Meditation", description: "A 5 minute guided meditation to help you start or end the day in a mindful matter.", belongsTo: "none", category: .all, img: Img.starfish, type: .single, id: 23, duration: 300, reward: 5),
         Meditation(title: "Semi-Guided Meditation", description: "A 10 minute semi-guided meditation for more advanced meditators looking to start or end their day present, focused, and calm.", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 24, duration: 600, reward: 10),
         Meditation(title: "Meditation for Focus", description: "A simple 5 minute guided meditation to help you calm your mind, and enter a relaxed focused state.", belongsTo: "none", category: .focus, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),

@@ -41,9 +41,12 @@ struct ContentView: View {
                     if #available(iOS 14.0, *) {
                         switch viewRouter.currentPage {
                         case .onboarding:
+                            NavigationView {
                             OnboardingScene()
                                 .frame(height: geometry.size.height)
                                 .navigationViewStyle(StackNavigationViewStyle())
+                                .navigationBarTitle("", displayMode: .inline)
+                            }
                         case .experience:
                                 ExperienceScene()
                                     .frame(height: geometry.size.height)

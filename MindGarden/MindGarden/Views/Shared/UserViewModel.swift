@@ -53,13 +53,14 @@ class UserViewModel: ObservableObject {
                         userCoins = coins
                         UserDefaults.standard.set(userCoins, forKey: "coins")
                     }
+
                     if tappedSignIn, let name = document["name"] as? String {
                         self.name = name
                         UserDefaults.standard.set(self.name, forKey: "name")
                         tappedSignIn = false
                     }
+
                     if let fbPlants = document[K.defaults.plants] as? [String] {
-                        print(fbPlants, "fbPlants")
                         self.ownedPlants = Plant.plants.filter({ plant in
                            return fbPlants.contains(where: { str in
                                 plant.title == str

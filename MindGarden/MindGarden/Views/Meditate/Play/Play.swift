@@ -210,7 +210,11 @@ struct Play: View {
             }.animation(nil)
         .transition(.move(edge: .trailing))
         .animation(.easeIn)
+        .onAppearAnalytics(event: "start_\(model.selectedMeditation?.returnEventName() ?? "")")
         .onAppear {
+            model.checkIfFavorited()
+            favorited = model.isFavorited
+            model.setup(viewRouter)
             if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
                 if defaultSound != "noSound"  {
                     selectedSound = Sound.getSound(str: defaultSound)
@@ -265,11 +269,6 @@ struct Play: View {
                 mainPlayer.stop()
             }
         }
-        .onAppear {
-            model.checkIfFavorited()
-            favorited = model.isFavorited
-            model.setup(viewRouter)
-        }
     }
 
     //MARK: - nav
@@ -280,6 +279,7 @@ struct Play: View {
             .onTapGesture {
                 withAnimation {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
+                        Analytics.shared.log(event: "tapped_back_in_play")
                         model.stop()
                         viewRouter.currentPage = .meditate
                     }
@@ -293,6 +293,7 @@ struct Play: View {
             .onTapGesture {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
+                    Analytics.shared.log(event: "tapped_sound")
                     showNatureModal = true
                 }
             }
@@ -304,6 +305,7 @@ struct Play: View {
             .onTapGesture {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if let med = model.selectedMeditation {
+                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
                     model.favorite(selectMeditation: med)
                 }
                 favorited.toggle()
@@ -387,9 +389,11 @@ struct Play: View {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     if selectedType == type {
+                        Analytics.shared.log(event: "sound_turned_off")
                         selectedType = .noSound
                         player?.pause()
                     } else {
+                        Analytics.shared.log(event: "sound_\(type?.title ?? "")")
                         selectedType = type
                         change()
                     }

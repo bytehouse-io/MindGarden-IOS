@@ -1,0 +1,57 @@
+//
+//  AnalyticServices.swift
+//  MindGarden
+//
+//  Created by Dante Kim on 10/3/21.
+//
+
+import SwiftUI
+import Combine
+import Firebase
+import OSLog
+
+final class Analytics: ObservableObject {
+    static let shared = Analytics()
+    var logSubject = PassthroughSubject<String, Never>()
+    private var cancellables = Set<AnyCancellable>()
+
+    /// Submit a single analytics event for logging from anywhere
+    /// - Parameter event: analytics event to log
+    /// This function uses the dedicated combine pipeline to submit analytics events. This allows per-event
+    /// management of deduplication and anything else required and ensures that all events are treated equally
+    /// whether they come in from a function call like this or through a publisher.
+    func log(event: String) {
+        logSubject.send(event)
+    }
+
+    /// Log a single analytics event with all appropriate analytics services
+    /// - Parameter event: analytics event to log
+    /// Currently submits to FirebaseAnalytics in all cases and GoogleAnalytics if not running in a simulator.
+    /// This function shuold only be called from within the `logSubject` Combine subject, never directly from code.
+    /// To log an event from code, use the `log(event:)` function above.
+     func logActual(event: String) {
+        #if !targetEnvironment(simulator)
+         Firebase.Analytics.logEvent(event, parameters: [:])
+        #endif
+         print("logging, \(event)")
+     }
+
+    init() {
+        logSubject
+            .sink { [self] event in
+                logActual(event: event)
+            }
+            .store(in: &cancellables)
+    }
+
+}
+
+// MARK: - SwiftUI extensions
+extension View {
+    func onAppearAnalytics(event: String?) -> some View {
+        onAppear {
+            guard let event = event else { return }
+            Analytics.shared.log(event: event)
+        }
+    }
+}
