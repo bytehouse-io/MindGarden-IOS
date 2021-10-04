@@ -257,7 +257,7 @@ struct Home: View {
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
-                }
+                    }
                 }
                 .animation(nil)
             .animation(.default)

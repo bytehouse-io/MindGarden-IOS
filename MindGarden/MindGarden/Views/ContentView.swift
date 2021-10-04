@@ -45,7 +45,6 @@ struct ContentView: View {
                             OnboardingScene()
                                 .frame(height: geometry.size.height)
                                 .navigationViewStyle(StackNavigationViewStyle())
-                                .navigationBarTitle("", displayMode: .inline)
                             }
                         case .experience:
                                 ExperienceScene()

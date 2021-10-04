@@ -18,13 +18,12 @@ struct OnboardingScene: View {
             // Fallback on earlier versions
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-//        UINavigationBar.appearance().shadowImage = UIImage()
     }
     let titles = ["Simple meditation that actually sticks", "Visualize Your Progress", "Collect all the flowers, fruits and trees!"]
     let subtitles = ["Stress less. Get 1% happier everyday by making meditation a lifestyle.", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
     let images = [Img.pottedPlants, Img.gardenCalender, Img.packets]
     var body: some View {
+        NavigationView {
             GeometryReader { g in
                 let height = g.size.height
                 let width = g.size.height
@@ -111,7 +110,7 @@ struct OnboardingScene: View {
                                 }
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .frame(width: width * 0.55, height: height * 0.75, alignment: .center)
+                            .frame(width: width * 0.55, height: height * 0.95, alignment: .center)
                         } else {
                             // Fallback on earlier versions
                         }
@@ -149,9 +148,11 @@ struct OnboardingScene: View {
                             .padding([.bottom, .horizontal])
                         .buttonStyle(NeumorphicPress())
                         Spacer()
-                    }.edgesIgnoringSafeArea(.top)
+                    }
+                    .offset(y: g.size.height * -0.45)
                 }
-            }
+            }.navigationBarTitle("", displayMode: .inline)
+        }
     }
 }
 
