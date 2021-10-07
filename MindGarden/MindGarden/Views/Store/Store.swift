@@ -21,6 +21,7 @@ struct Store: View {
             GeometryReader { g in
                 ScrollView {
                     HStack(alignment: .top, spacing: 20) {
+                        Spacer()
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 if !isShop {
@@ -99,6 +100,7 @@ struct Store: View {
                                     }
                                 }
                             }
+                        Spacer()
                     }.padding()
                 }.padding(.top)
                 .opacity(confirmModal ? 0.3 : 1)

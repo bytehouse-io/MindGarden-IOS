@@ -64,7 +64,7 @@ struct MoodCheck: View {
                     VStack(alignment: .center, spacing: 10) {
                     Spacer()
                     Text("How are we feeling today?")
-                        .font(Font.mada(.bold, size: 24))
+                            .font(Font.mada(.bold, size: K.isPad() ? 40 : 24))
                         .foregroundColor(Clr.black1)
                     ZStack(alignment: .center) {
                         Rectangle()
@@ -77,7 +77,7 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .sad)
                             SingleMood(moodSelected: $moodSelected, mood: .angry)
                         }
-                    }.frame(width: g.size.width * 0.85, height: g.size.height/3, alignment: .center)
+                    }.frame(width: g.size.width * 0.85, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
                         DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
                             if moodSelected != .none {
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
@@ -87,10 +87,13 @@ struct MoodCheck: View {
                                 gardenModel.save(key: "moods", saveValue: moodSelected.title)
                             }
                         }, moodSelected: moodSelected).padding(.bottom)
+                        Spacer()
+                        if K.isPad() {
+                            Spacer()
+                        }
+                    }
                     Spacer()
                 }
-                Spacer()
-            }
         }
     }
 }

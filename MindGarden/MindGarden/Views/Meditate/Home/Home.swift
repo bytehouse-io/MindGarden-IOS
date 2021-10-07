@@ -18,6 +18,7 @@ struct Home: View {
     @State private var showModal = false
     @State private var showPlantSelect = false
     @State private var showSearch = false
+    @State private var showUpdateModal = true
     var bonusModel: BonusViewModel
 
     init(bonusModel: BonusViewModel) {
@@ -133,10 +134,10 @@ struct Home: View {
                                     HStack(alignment: .top) {
                                         VStack(alignment: .leading) {
                                             Text("Featured")
-                                                .font(Font.mada(.regular, size: 18))
+                                                .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
                                                 .foregroundColor(Clr.black1)
                                             Text("\(model.featuredMeditation?.title ?? "")")
-                                                .font(Font.mada(.bold, size: 28))
+                                                .font(Font.mada(.bold, size: K.isPad() ? 40 : 28))
                                                 .foregroundColor(Clr.black1)
                                                 .lineLimit(3)
                                                 .minimumScaleFactor(0.05)
@@ -144,20 +145,21 @@ struct Home: View {
                                         }.padding(15)
                                         .offset(x: 20, y: 30)
                                         .frame(width: g.size.width * 0.85 * 0.5)
+                                        .padding(K.isPad() ? 20 : 0)
                                         VStack(spacing: 0) {
                                             ZStack {
                                                 Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
                                                     .foregroundColor(Clr.brightGreen)
                                                 Image(systemName: "play.fill")
                                                     .foregroundColor(.white)
-                                                    .font(.title)
-                                            }.offset(x: 20, y: 10)
+                                                    .font(.system(size: K.isPad() ? 50 : 26))
+                                            }.offset(x: 20, y: K.isPad() ? 30 : 10)
                                             .padding([.top, .leading])
                                             (model.featuredMeditation?.img ?? Img.morningSun)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
-                                                .offset(x: -40, y: -25)
+                                                .offset(x: K.isPad() ? -150 : -40, y: K.isPad() ? -40 : -25)
                                         }.padding([.top, .bottom, .trailing])
                                     }).padding(.top, 20)
                             }.buttonStyle(NeumorphicPress())
@@ -247,7 +249,7 @@ struct Home: View {
                             }
                             Spacer()
                         }.scrollOnOverflow()
-                    if showModal {
+                    if showModal || showUpdateModal {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
@@ -258,6 +260,9 @@ struct Home: View {
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
                     }
+                    NewUpdateModal(shown: $showUpdateModal)
+                        .offset(y: showUpdateModal ? 0 : g.size.height)
+                        .animation(.default, value: showUpdateModal)
                 }
                 .animation(nil)
             .animation(.default)
@@ -272,7 +277,7 @@ struct Home: View {
                         showSearch = true
                     }
             )
-            .popover(isPresented: $showPlantSelect, content: {
+            .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
             .sheet(isPresented: $showSearch, content: {
@@ -281,6 +286,9 @@ struct Home: View {
                 }
             })
         }.transition(.move(edge: .leading))
+        .onAppear {
+            showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate")
+        }
     }
 }
 

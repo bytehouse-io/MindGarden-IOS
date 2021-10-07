@@ -84,7 +84,7 @@ struct CategoriesScene: View {
                                             }
                                         }
                                     } label: {
-                                        HomeSquare(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75, img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
+                                        HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
                                     }.buttonStyle(NeumorphicPress())
                                         .padding(.vertical, 8)
                                 }

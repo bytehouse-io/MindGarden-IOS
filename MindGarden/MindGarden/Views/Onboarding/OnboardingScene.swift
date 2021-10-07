@@ -110,7 +110,7 @@ struct OnboardingScene: View {
                                 }
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .frame(width: width * 0.55, height: height * 0.95, alignment: .center)
+                            .frame(width: width * 0.55, height: height * 0.75, alignment: .center)
                         } else {
                             // Fallback on earlier versions
                         }
@@ -149,7 +149,7 @@ struct OnboardingScene: View {
                         .buttonStyle(NeumorphicPress())
                         Spacer()
                     }
-                    .offset(y: g.size.height * -0.45)
+                    .offset(y: K.isPad() ? 0 : g.size.height * -0.45)
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }

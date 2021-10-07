@@ -133,9 +133,9 @@ struct Authentication: View {
                             .neoShadow()
                         Img.siwg
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .aspectRatio(contentMode: K.isPad() ? .fit : .fill)
                             .padding(40)
-                            .frame(height: 70)
+                            .frame(height: K.isPad() ? 250 : 70)
                             .neoShadow()
                             .onTapGesture {
                                 viewModel.signInWithGoogle()

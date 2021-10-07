@@ -63,9 +63,9 @@ struct Play: View {
                                         .rotationEffect(Angle(degrees: 270.0))
                                         .animation(.linear(duration: 2), value: model.secondsRemaining)
                                     Circle()
-                                        .frame(width: 230)
+                                        .frame(width: K.isPad() ? 480 : 230)
                                         .foregroundColor(Clr.darkWhite)
-                                        .shadow(color: .black.opacity(0.35), radius: 20, x: 10, y: 5)
+                                        .shadow(color: .black.opacity(0.35), radius: 20.0, x: 10, y: 5)
                                     //four different plant stages
                                     if model.secondsRemaining <= model.totalTime * 0.25 { //secoond
                                         withAnimation {
@@ -99,7 +99,7 @@ struct Play: View {
                                             .offset(y: 75)
                                     }
                                 }
-                                .frame(width: 250)
+                                .frame(width: K.isPad() ? 500 : 250)
                             }
                             Text(model.secondsToMinutesSeconds(totalSeconds: model.isOpenEnded ? model.secondsCounted : model.secondsRemaining))
                                 .foregroundColor(Clr.black1)

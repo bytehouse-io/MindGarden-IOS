@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
 
-        UserDefaults.standard.setValue("", forKey: K.defaults.onboarding)
+        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         let router = ViewRouter()
         let medModel = MeditationViewModel()
         let userModel = UserViewModel()
@@ -37,13 +37,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let contentView = ContentView(bonusModel: bonusModel, profileModel: profileModel)
 
-
         // Use a UIHostingController as window root view controller.
         let rootHost = UIHostingController(rootView: contentView
                                             .environmentObject(router)
                                             .environmentObject(medModel)
                                             .environmentObject(userModel)
                                             .environmentObject(gardenModel))
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = rootHost
