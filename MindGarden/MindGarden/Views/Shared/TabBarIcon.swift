@@ -34,6 +34,7 @@ struct TabBarIcon: View {
         .padding(.top, 10)
         .foregroundColor(viewRouter.currentPage == assignedPage || isCategory ? .white : Clr.unselectedIcon)
         .onTapGesture {
+            Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
             withAnimation {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {

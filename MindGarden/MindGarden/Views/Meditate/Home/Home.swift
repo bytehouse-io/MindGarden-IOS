@@ -60,6 +60,7 @@ struct Home: View {
                             .padding(.top, -30)
                             HStack {
                                 Button {
+                                    Analytics.shared.log(event: .home_tapped_bonus)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         showModal = true
@@ -93,6 +94,7 @@ struct Home: View {
                                 }
                                 .buttonStyle(NeumorphicPress())
                                 Button {
+                                    Analytics.shared.log(event: .home_tapped_plant_select)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showPlantSelect = true
                                 } label: {
@@ -114,6 +116,7 @@ struct Home: View {
                             }
 
                             Button {
+                                Analytics.shared.log(event: .home_tapped_featured)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     model.selectedMeditation = model.featuredMeditation
@@ -166,6 +169,7 @@ struct Home: View {
                             VStack(spacing: 1) {
                                 HStack {
                                     Button {
+                                        Analytics.shared.log(event: .home_tapped_recents)
                                         withAnimation {
                                             isRecent = true
                                         }
@@ -175,6 +179,7 @@ struct Home: View {
                                             .font(Font.mada(.regular, size: 20))
                                     }
                                     Button {
+                                        Analytics.shared.log(event: .home_tapped_favorites)
                                         withAnimation {
                                             isRecent = false
                                         }
@@ -209,6 +214,7 @@ struct Home: View {
                                             Button {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
+                                                Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
                                                 if meditation.type == .course {
                                                     viewRouter.currentPage = .middle
                                                 } else {
@@ -230,6 +236,7 @@ struct Home: View {
                             }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
                             if #available(iOS 14.0, *) {
                                 Button {
+                                    Analytics.shared.log(event: .home_tapped_categories)
                                     let impact = UIImpactFeedbackGenerator(style: .light)
                                     impact.impactOccurred()
                                     withAnimation {
@@ -273,6 +280,7 @@ struct Home: View {
                     .font(.system(size: 22))
                     .padding()
                     .onTapGesture {
+                        Analytics.shared.log(event: .home_tapped_search)
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         showSearch = true
                     }
@@ -289,6 +297,8 @@ struct Home: View {
         .onAppear {
             showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate")
         }
+        .onAppearAnalytics(event: .screen_load_home)
+
     }
 }
 

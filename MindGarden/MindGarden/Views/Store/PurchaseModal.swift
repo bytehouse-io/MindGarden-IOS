@@ -44,15 +44,13 @@ struct PurchaseModal: View {
                                 .padding()
                                 .opacity(0)
                         }
-                        Spacer()
                         userModel.willBuyPlant?.packetImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: g.size.width * 0.35, height: g.size.height * 0.25, alignment: .center)
-                        Spacer()
+                            .frame(width: g.size.width * 0.325, height: g.size.height * 0.225, alignment: .center)
                         HStack(spacing: 5) {
                             Text(" \(userModel.willBuyPlant?.description ?? "")")
-                                .font(Font.mada(.semiBold, size: 18))
+                                .font(Font.mada(.semiBold, size: 20))
                                 .foregroundColor(Clr.black1)
                         }.padding(.horizontal, 40)
                         .minimumScaleFactor(0.05)

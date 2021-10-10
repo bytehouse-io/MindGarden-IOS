@@ -41,6 +41,7 @@ struct BonusModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                                Analytics.shared.log(event: .home_claim_daily)
                                 bonusModel.saveDaily(plusCoins: 5)
                                 bonusModel.totalBonuses -= 1
                             }
@@ -76,6 +77,7 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.sevenDayProgress > 1.0 {
+                                            Analytics.shared.log(event: .home_claim_seven)
                                             bonusModel.saveSeven()
                                         }
                                     } label: {
@@ -90,6 +92,7 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.thirtyDayProgress > 1.0 {
+                                            Analytics.shared.log(event: .home_claim_thirty)
                                             bonusModel.saveThirty()
                                         }
                                     } label: {

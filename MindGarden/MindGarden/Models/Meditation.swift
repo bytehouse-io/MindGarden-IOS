@@ -25,7 +25,9 @@ struct Meditation: Hashable {
     }
 
     func returnEventName() -> String {
-        return self.title.lowercased().replacingOccurrences(of: " ", with: "_")
+        return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "").replacingOccurrences(of: "-", with: "")
+            .replacingOccurrences(of: " ", with: "_")
+            .lowercased()
     }
 
     static var allMeditations = [
@@ -48,12 +50,12 @@ struct Meditation: Hashable {
         // Beginners Course
         Meditation(title: "Intro to Meditation", description: "Learn how to meditate and why making it a habit can drastically improve happiness, focus and so much more", belongsTo: "none", category: .courses, img: Img.juiceBoxes, type: .course, id: 6, duration: 300, reward: 0),
         Meditation(title: "Why Meditate?", description: "Learn why millions of people around the world use this daily practice.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 7, duration: 300, reward: 8),
-        Meditation(title: "Power of breathing", description: "Discover the amazing power of the breath, and how you can use it to become present and calm in every situation.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 8, duration: 5, reward: 8),
-        Meditation(title: "Concentration Muscle", description: "Discover how meditating can help you exercise one the most important muscles in the brain.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 9, duration: 300, reward: 8),
+        Meditation(title: "Create Your Anchor", description: "Learn how to create an anchor that can help ground you during your most busy and stormy seasons.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 8, duration: 5, reward: 8),
+        Meditation(title: "Tuning Into Your Body", description: "Discover how to use the body scan meditation to become more aware of your bodily experiences and the emotions tied to them.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 9, duration: 300, reward: 8),
         Meditation(title: "Gaining Clarity", description: "Learn how meditating can help you think and observe much more clearly.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 10, duration: 300, reward: 8),
+        Meditation(title: "Stress Antitode", description: "Learn how daily meditation can be the perfect cure and preventer of stress and anxiety", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 12, duration: 300, reward: 8),
+        Meditation(title: "Compassion & Self-Love", description: "Discover how meditating can create boundless amounts of love & compassion for yourself & the people around you", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 13, duration: 300, reward: 8),
         Meditation(title: "Joy on demand", description: "Discover how meditating can help you create the super power of generating happiness on demand.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 11, duration: 5, reward: 8),
-        Meditation(title: "No Agenda", description: "Learn how meditation can help you let go, and help you become a person with no hidden motives.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 12, duration: 300, reward: 8),
-        Meditation(title: "Create Your Safe Place", description: "Discover how meditating can create a safe haven you acccess at a moments notice.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 13, duration: 300, reward: 8),
 
         //Intermediate Course
 //        Meditation(title: "Guided Meditation", description: "A 7 day series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 14, duration: 0, reward: 0),
@@ -72,7 +74,7 @@ struct Meditation: Hashable {
         Meditation(title: "Meditation for Focus", description: "A simple 5 minute guided meditation to help you calm your mind, and enter a relaxed focused state.", belongsTo: "none", category: .focus, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),
         Meditation(title: "Anxiety & Stress", description: "A simple 5 minute guided meditation to help you let go and minimize anxiety & stress.", belongsTo: "none", category: .anxiety, img: Img.morningSun, type: .single, id: 26, duration: 300, reward: 5),
         Meditation(title: "Body Scan", description: "A short guided meditation to help you tune into your body, reconnect to your physical self and notice any sensations without any judgement. ", belongsTo: "none", category: .all, img: Img.morningSun, type: .single, id: 25, duration: 300, reward: 5),
-        Meditation(title: "Mediation for Sleep", description: "A 10 minute guided meditation to help you relax, let go and fall into a deep restful sleep.", belongsTo: "none", category: .sleep, img: Img.morningSun, type: .single, id: 27, duration: 300, reward: 5),
+        Meditation(title: "Better Faster Sleep", description: "A 10 minute guided meditation to help you relax, let go and fall into a deep restful sleep.", belongsTo: "none", category: .sleep, img: Img.morningSun, type: .single, id: 27, duration: 300, reward: 5),
     ]
 }
 

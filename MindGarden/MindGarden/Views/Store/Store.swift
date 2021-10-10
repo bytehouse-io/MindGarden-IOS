@@ -21,7 +21,9 @@ struct Store: View {
             GeometryReader { g in
                 ScrollView {
                     HStack(alignment: .top, spacing: 20) {
-                        Spacer()
+                        if K.isPad() {
+                            Spacer()
+                        }
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 if !isShop {
@@ -47,7 +49,7 @@ struct Store: View {
                                     .padding(isShop ? 25 : 10)
                             }
                             ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
-                                { plant in
+                            { plant in
                                 if userModel.ownedPlants.contains(plant) && isShop {
                                     PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                 } else {
@@ -67,43 +69,45 @@ struct Store: View {
                                 }
                             }
                         }
-                            VStack {
-                                HStack {
-                                    Img.coin
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 25)
-                                        .padding(5)
-                                    Text(String(userCoins))
-                                        .font(Font.mada(.semiBold, size: 24))
-                                        .foregroundColor(Clr.black1)
-                                }.padding(.bottom, -10)
-                                ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
-                                            : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
-                                    if userModel.ownedPlants.contains(plant) && isShop {
-                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                    } else {
-                                        Button {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if isShop {
-                                                userModel.willBuyPlant = plant
-                                                withAnimation {
-                                                    showModal = true
-                                                }
-                                            } else {
-                                                UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                                userModel.selectedPlant = plant
+                        VStack {
+                            HStack {
+                                Img.coin
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 25)
+                                    .padding(5)
+                                Text(String(userCoins))
+                                    .font(Font.mada(.semiBold, size: 24))
+                                    .foregroundColor(Clr.black1)
+                            }.padding(.bottom, -10)
+                            ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
+                                    : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
+                                if userModel.ownedPlants.contains(plant) && isShop {
+                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                } else {
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        if isShop {
+                                            userModel.willBuyPlant = plant
+                                            withAnimation {
+                                                showModal = true
                                             }
-                                        } label: {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                        }.buttonStyle(NeumorphicPress())
-                                    }
+                                        } else {
+                                            UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                            userModel.selectedPlant = plant
+                                        }
+                                    } label: {
+                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                    }.buttonStyle(NeumorphicPress())
                                 }
                             }
-                        Spacer()
+                        }
+                        if K.isPad() {
+                            Spacer()
+                        }
                     }.padding()
                 }.padding(.top)
-                .opacity(confirmModal ? 0.3 : 1)
+                    .opacity(confirmModal ? 0.3 : 1)
                 if showModal || confirmModal {
                     Color.black
                         .opacity(0.3)
@@ -122,8 +126,6 @@ struct Store: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var showSuccess: Bool
         @Binding var showMainModal: Bool
-
-        var title = "Blue Tulips"
 
         var  body: some View {
             GeometryReader { g in
@@ -163,8 +165,8 @@ struct Store: View {
                                     .neoShadow()
                             }
                         }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(20)
+                            .background(Clr.darkWhite)
+                            .cornerRadius(20)
                         Spacer()
                     }
                     Spacer()
@@ -209,7 +211,7 @@ struct Store: View {
                                         .font(Font.mada(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .frame(width: g.size.width/3, height: 40)
-                                        
+                                        .background(Color.gray)
                                 }
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -230,8 +232,8 @@ struct Store: View {
                                 }
                             }.padding(.horizontal)
                         }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(20)
+                            .background(Clr.darkWhite)
+                            .cornerRadius(20)
                         Spacer()
                     }
                     Spacer()

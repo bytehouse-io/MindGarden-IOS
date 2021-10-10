@@ -38,6 +38,9 @@ class MeditationViewModel: ObservableObject {
     }
 
     init() {
+        for med in Meditation.allMeditations {
+            print(med.returnEventName(),"so")
+        }
         $selectedCategory
             .sink { [unowned self] value in
                 if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
@@ -61,7 +64,8 @@ class MeditationViewModel: ObservableObject {
     }
 
     private func getFeaturedMeditation()  {
-        let filtedMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 }
+        let filtedMeds = Meditation.allMeditations.filter { med in
+            med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 }
         let randomInt = Int.random(in: 0..<filtedMeds.count)
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {

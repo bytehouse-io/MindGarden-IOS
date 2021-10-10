@@ -67,6 +67,7 @@
 		FEA7FBE426B0DF5A0073C62D /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7FBE326B0DF5A0073C62D /* Plant.swift */; };
 		FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAA837726927B9400E4C62F /* AuthenticationViewModel.swift */; };
 		FEAA837D2695447300E4C62F /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAA837C2695447300E4C62F /* ProfileScene.swift */; };
+		FEB2E3C8270F9AC700F5C23C /* AnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB2E3C7270F9AC700F5C23C /* AnalyticEvent.swift */; };
 		FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB6AF95265D95F500224BFD /* AppDelegate.swift */; };
 		FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB6AF97265D95F500224BFD /* SceneDelegate.swift */; };
 		FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB6AF99265D95F500224BFD /* ContentView.swift */; };
@@ -90,6 +91,17 @@
 		FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */; };
 		FEBA7E722677D66F00758E58 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA7E712677D66F00758E58 /* Store.swift */; };
 		FEBD4C6126F979500050A701 /* OverflowScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBD4C6026F9794F0050A701 /* OverflowScrollView.swift */; };
+		FEBF1AB527138623000BF1BD /* day_1_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB427138623000BF1BD /* day_1_how_to_meditate.mp3 */; };
+		FEBF1ABC27138635000BF1BD /* day_3_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB627138630000BF1BD /* day_3_how_to_meditate.mp3 */; };
+		FEBF1ABD27138635000BF1BD /* day_2_how_to_meditate-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB727138631000BF1BD /* day_2_how_to_meditate-2.mp3 */; };
+		FEBF1ABE27138635000BF1BD /* day_2_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB827138632000BF1BD /* day_2_how_to_meditate.mp3 */; };
+		FEBF1ABF27138635000BF1BD /* day_5_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB927138633000BF1BD /* day_5_how_to_meditate.mp3 */; };
+		FEBF1AC027138635000BF1BD /* day_6_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABA27138634000BF1BD /* day_6_how_to_meditate.mp3 */; };
+		FEBF1AC127138635000BF1BD /* day_4_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABB27138635000BF1BD /* day_4_how_to_meditate.mp3 */; };
+		FEBF1AC32713863A000BF1BD /* day_7_how_to_meditate.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC227138639000BF1BD /* day_7_how_to_meditate.mp3 */; };
+		FEBF1AC627138647000BF1BD /* semiguided_meditation_10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC427138646000BF1BD /* semiguided_meditation_10.mp3 */; };
+		FEBF1AC727138647000BF1BD /* guided_meditation_5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC527138647000BF1BD /* guided_meditation_5.mp3 */; };
+		FEBF1AC92713864E000BF1BD /* body_scan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC82713864E000BF1BD /* body_scan.mp3 */; };
 		FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */; };
 		FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF22C926DC3860002572E2 /* bell.mp3 */; };
 		FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */; };
@@ -176,6 +188,7 @@
 		FEA7FBE326B0DF5A0073C62D /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		FEAA837726927B9400E4C62F /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		FEAA837C2695447300E4C62F /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
+		FEB2E3C7270F9AC700F5C23C /* AnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticEvent.swift; sourceTree = "<group>"; };
 		FEB6AF92265D95F500224BFD /* MindGarden.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindGarden.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB6AF95265D95F500224BFD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEB6AF97265D95F500224BFD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -205,6 +218,17 @@
 		FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEBA7E712677D66F00758E58 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		FEBD4C6026F9794F0050A701 /* OverflowScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverflowScrollView.swift; sourceTree = "<group>"; };
+		FEBF1AB427138623000BF1BD /* day_1_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_1_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1AB627138630000BF1BD /* day_3_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_3_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1AB727138631000BF1BD /* day_2_how_to_meditate-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "day_2_how_to_meditate-2.mp3"; sourceTree = "<group>"; };
+		FEBF1AB827138632000BF1BD /* day_2_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_2_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1AB927138633000BF1BD /* day_5_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_5_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1ABA27138634000BF1BD /* day_6_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_6_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1ABB27138635000BF1BD /* day_4_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_4_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1AC227138639000BF1BD /* day_7_how_to_meditate.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = day_7_how_to_meditate.mp3; sourceTree = "<group>"; };
+		FEBF1AC427138646000BF1BD /* semiguided_meditation_10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = semiguided_meditation_10.mp3; sourceTree = "<group>"; };
+		FEBF1AC527138647000BF1BD /* guided_meditation_5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = guided_meditation_5.mp3; sourceTree = "<group>"; };
+		FEBF1AC82713864E000BF1BD /* body_scan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = body_scan.mp3; sourceTree = "<group>"; };
 		FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extension.swift"; sourceTree = "<group>"; };
 		FEBF22C926DC3860002572E2 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -360,13 +384,6 @@
 		FEB6AF94265D95F500224BFD /* MindGarden */ = {
 			isa = PBXGroup;
 			children = (
-				FEBF22C926DC3860002572E2 /* bell.mp3 */,
-				FE9B407F26A65A40000DF00C /* fire.mp3 */,
-				FE9B407D26A65820000DF00C /* nature.mp3 */,
-				FE9B407B26A4D0D9000DF00C /* beach.mp3 */,
-				FE6B515E2703AB97000118E8 /* 30 Second Meditation.mp3 */,
-				FE9B408126A65A72000DF00C /* night.mp3 */,
-				FE9B407926A4B334000DF00C /* rain.mp3 */,
 				FE11F0B726910D5A00E1E71A /* MindGarden.entitlements */,
 				FEB85FBF266C19BB008CDAA4 /* Helpers */,
 				FEB85FC3266C1B75008CDAA4 /* Resources */,
@@ -447,6 +464,8 @@
 		FEB85FC3266C1B75008CDAA4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FEBF1AB327138608000BF1BD /* Meditations */,
+				FEBF1AB2271385A1000BF1BD /* BackgroundSounds */,
 				FE4D80E926ED4A3C002FE291 /* Lottie */,
 				FEB85FBE266C19A4008CDAA4 /* Fonts */,
 				FEB6AF9B265D95F700224BFD /* Assets.xcassets */,
@@ -471,6 +490,7 @@
 			isa = PBXGroup;
 			children = (
 				FE6B5160270A36FB000118E8 /* AnalyticServices.swift */,
+				FEB2E3C7270F9AC700F5C23C /* AnalyticEvent.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -558,6 +578,38 @@
 				FEEC651726781FC800ECD32D /* PurchaseModal.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		FEBF1AB2271385A1000BF1BD /* BackgroundSounds */ = {
+			isa = PBXGroup;
+			children = (
+				FEBF22C926DC3860002572E2 /* bell.mp3 */,
+				FE9B407F26A65A40000DF00C /* fire.mp3 */,
+				FE9B407D26A65820000DF00C /* nature.mp3 */,
+				FE9B407B26A4D0D9000DF00C /* beach.mp3 */,
+				FE6B515E2703AB97000118E8 /* 30 Second Meditation.mp3 */,
+				FE9B408126A65A72000DF00C /* night.mp3 */,
+				FE9B407926A4B334000DF00C /* rain.mp3 */,
+			);
+			path = BackgroundSounds;
+			sourceTree = "<group>";
+		};
+		FEBF1AB327138608000BF1BD /* Meditations */ = {
+			isa = PBXGroup;
+			children = (
+				FEBF1AB427138623000BF1BD /* day_1_how_to_meditate.mp3 */,
+				FEBF1AB727138631000BF1BD /* day_2_how_to_meditate-2.mp3 */,
+				FEBF1AB827138632000BF1BD /* day_2_how_to_meditate.mp3 */,
+				FEBF1AB627138630000BF1BD /* day_3_how_to_meditate.mp3 */,
+				FEBF1ABB27138635000BF1BD /* day_4_how_to_meditate.mp3 */,
+				FEBF1AB927138633000BF1BD /* day_5_how_to_meditate.mp3 */,
+				FEBF1ABA27138634000BF1BD /* day_6_how_to_meditate.mp3 */,
+				FEBF1AC227138639000BF1BD /* day_7_how_to_meditate.mp3 */,
+				FEBF1AC527138647000BF1BD /* guided_meditation_5.mp3 */,
+				FEBF1AC427138646000BF1BD /* semiguided_meditation_10.mp3 */,
+				FEBF1AC82713864E000BF1BD /* body_scan.mp3 */,
+			);
+			path = Meditations;
 			sourceTree = "<group>";
 		};
 		FEC5B008267D2ABE00BC8D8C /* Play */ = {
@@ -687,20 +739,31 @@
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
+				FEBF1AC127138635000BF1BD /* day_4_how_to_meditate.mp3 in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
+				FEBF1AB527138623000BF1BD /* day_1_how_to_meditate.mp3 in Resources */,
+				FEBF1ABE27138635000BF1BD /* day_2_how_to_meditate.mp3 in Resources */,
 				FE6B515F2703AB99000118E8 /* 30 Second Meditation.mp3 in Resources */,
+				FEBF1AC027138635000BF1BD /* day_6_how_to_meditate.mp3 in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
+				FEBF1AC32713863A000BF1BD /* day_7_how_to_meditate.mp3 in Resources */,
+				FEBF1AC627138647000BF1BD /* semiguided_meditation_10.mp3 in Resources */,
+				FEBF1ABF27138635000BF1BD /* day_5_how_to_meditate.mp3 in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
+				FEBF1ABD27138635000BF1BD /* day_2_how_to_meditate-2.mp3 in Resources */,
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
+				FEBF1AC92713864E000BF1BD /* body_scan.mp3 in Resources */,
+				FEBF1ABC27138635000BF1BD /* day_3_how_to_meditate.mp3 in Resources */,
+				FEBF1AC727138647000BF1BD /* guided_meditation_5.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,6 +1001,7 @@
 				FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */,
 				FE6B5163270B9E05000118E8 /* NewUpdateModal.swift in Sources */,
 				FE683F3C269FC550009A66DF /* CategoriesScene.swift in Sources */,
+				FEB2E3C8270F9AC700F5C23C /* AnalyticEvent.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
 				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
