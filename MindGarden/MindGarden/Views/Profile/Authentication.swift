@@ -121,6 +121,7 @@ struct Authentication: View {
                                 .underline()
                                 .padding(5)
                                 .onTapGesture {
+                                    Analytics.shared.log(event: .authentication_tapped_forgot_password)
                                     showForgotAlert = true
                                 }
                         }
@@ -138,10 +139,14 @@ struct Authentication: View {
                             .frame(height: K.isPad() ? 250 : 70)
                             .neoShadow()
                             .onTapGesture {
+                                Analytics.shared.log(event: .authentication_tapped_google)
                                 viewModel.signInWithGoogle()
                             }
                         if tappedSignOut {
                             Button {
+                                if isSignUp && tappedSignOut {
+                                    Analytics.shared.log(event: .screen_load_signin)
+                                }
                                 self.isSignUp.toggle()
                                 viewModel.isSignUp = self.isSignUp
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -201,6 +206,14 @@ struct Authentication: View {
                     userModel.updateSelf()
                     gardenModel.updateSelf()
                     medModel.updateSelf()
+                }
+            }.onAppear {
+                if !tappedSignOut && isSignUp {
+                    Analytics.shared.log(event: .screen_load_onboarding_signup)
+                } else if !tappedSignOut {
+                    Analytics.shared.log(event: .screen_load_onboarding_signin)
+                } else if tappedSignOut && isSignUp {
+                    Analytics.shared.log(event: .screen_load_signup)
                 }
             }
         }

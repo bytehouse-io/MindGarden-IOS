@@ -20,6 +20,7 @@ struct PlusMenu: View {
         ZStack {
             VStack {
                 Button {
+                    Analytics.shared.log(event: .plus_tapped_mood)
                     withAnimation {
                         showPopUp = false
                         addMood = true
@@ -29,6 +30,10 @@ struct PlusMenu: View {
                         .frame(width: width/2.25, height: width/10)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                 Button {
+                    Analytics.shared.log(event: .plus_tapped_gratitude)
+                    if isOnboarding {
+                        Analytics.shared.log(event: .onboarding_finished_meditation)
+                    }
                     withAnimation {
                         showPopUp = false
                         addGratitude = true
@@ -38,10 +43,13 @@ struct PlusMenu: View {
                         .frame(width: width/2.25, height: width/10)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                 Button {
+                    Analytics.shared.log(event: .plus_tapped_meditate)
                     withAnimation {
                         showPopUp = false
                     }
+                    
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                        Analytics.shared.log(event: .onboarding_finished_gratitude)
                         meditateModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
                             med.id == 22
                         })
@@ -54,7 +62,6 @@ struct PlusMenu: View {
                             viewRouter.currentPage = .play
                         }
                     }
-
                 } label: {
                     MenuChoice(title: "Meditate", img: Image(systemName: "play"),  isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
                         .frame(width: width/2.25, height: width/10)

@@ -88,6 +88,7 @@ struct Store: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if isShop {
+                                            Analytics.shared.log(event: .store_tapped_plant_tile)
                                             userModel.willBuyPlant = plant
                                             withAnimation {
                                                 showModal = true
@@ -95,6 +96,7 @@ struct Store: View {
                                         } else {
                                             UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
                                             userModel.selectedPlant = plant
+                                            Analytics.shared.log(event: .home_selected_plant)
                                         }
                                     } label: {
                                         PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
@@ -119,7 +121,7 @@ struct Store: View {
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
-        }
+        }.onAppearAnalytics(event: .screen_load_store)
     }
 
     struct SuccessModal: View {
@@ -149,6 +151,7 @@ struct Store: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                             Button {
+                                Analytics.shared.log(event: .store_tapped_success_modal_okay)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     showSuccess = false
@@ -202,6 +205,7 @@ struct Store: View {
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: -10) {
                                 Button {
+                                    Analytics.shared.log(event: .store_tapped_confirm_modal_cancel)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         shown = false
@@ -214,6 +218,7 @@ struct Store: View {
                                         .background(Color.gray)
                                 }
                                 Button {
+                                    Analytics.shared.log(event: .store_tapped_confirm_modal_confirm)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     userModel.buyPlant()
                                     withAnimation {

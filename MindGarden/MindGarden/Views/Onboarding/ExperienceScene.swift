@@ -39,11 +39,22 @@ struct ExperienceScene: View {
                                 .padding(.horizontal)
                             SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Have never meditating", img: Img.redTulips1, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
                             Button {
+                                Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
                                     UserDefaults.standard.set(selected, forKey: "experience")
+                                    switch selected {
+                                    case "Meditate often":
+                                        Analytics.shared.log(event: .experience_tapped_alot)
+                                    case "Have tried to meditate":
+                                        Analytics.shared.log(event: .experience_tapped_some)
+                                    case "Have never meditated":
+                                        Analytics.shared.log(event: .experience_tapped_none)
+                                    default:
+                                        break
+                                    }
                                     withAnimation {
                                         viewRouter.currentPage = .notification
                                     }

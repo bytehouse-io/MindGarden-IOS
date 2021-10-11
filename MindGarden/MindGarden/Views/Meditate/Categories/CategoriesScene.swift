@@ -72,6 +72,7 @@ struct CategoriesScene: View {
                                     return meditation.title.hasPrefix(searchText) || searchText == ""
                                 }), id: \.self) { item in
                                     Button {
+                                        Analytics.shared.log(event: .categories_tapped_meditation)
                                         model.selectedMeditation = item
                                         if isSearch {
                                             tappedMed = true
@@ -115,6 +116,7 @@ struct CategoriesScene: View {
                 }
             }
         }
+        .onAppearAnalytics(event: .screen_load_categories)
     }
 
     var backButton: some View {
@@ -150,6 +152,7 @@ struct CategoriesScene: View {
 
         var body: some View {
             Button {
+                Analytics.shared.log(event: AnalyticEvent.getCategory(category: category.value))
                 withAnimation {
                     selected = category
                 }

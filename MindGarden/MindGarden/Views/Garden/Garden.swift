@@ -46,6 +46,7 @@ struct Garden: View {
                                 .font(Font.mada(.bold, size: 30))
                             Spacer()
                             Button {
+                                Analytics.shared.log(event: .garden_previous_month)
                                 if gardenModel.selectedMonth == 1 {
                                     gardenModel.selectedMonth = 12
                                     gardenModel.selectedYear -= 1
@@ -59,6 +60,7 @@ struct Garden: View {
                             }
 
                             Button {
+                                Analytics.shared.log(event: .garden_next_month)
                                 if gardenModel.selectedMonth == 12 {
                                     gardenModel.selectedMonth = 1
                                     gardenModel.selectedYear += 1
@@ -125,10 +127,12 @@ struct Garden: View {
                                     }
                                 }
                             }.onTapGesture {
+                                Analytics.shared.log(event: .garden_tapped_single_day)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 day = col + (row * 7) + 1  - gardenModel.placeHolders
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
                                     if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
+                                        Analytics.shared.log(event: .onboarding_finished_single)
                                         showSingleModal = true
                                         isOnboarding = false
                                         UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
@@ -239,10 +243,12 @@ struct Garden: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                                                        Analytics.shared.log(event: .onboarding_finished_calendar)
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                                         UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
                                                         tileOpacity = 0.2
+                                                        Analytics.shared.log(event: .onboarding_finished_stats)
                                                     }
                                                     forceRefresh.toggle()
                                                 }
@@ -272,7 +278,7 @@ struct Garden: View {
                     isOnboarding = true
                 }
             }
-
+            .onAppearAnalytics(event: .screen_load_garden)
         }
     }
     private func getFavoritePlants() {

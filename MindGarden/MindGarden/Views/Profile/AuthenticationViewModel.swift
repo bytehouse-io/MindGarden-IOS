@@ -40,6 +40,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                 SignInWithAppleButton(
                     //Request
                     onRequest: { [self] request in
+                        Analytics.shared.log(event: .authentication_tapped_apple)
                         request.requestedScopes = [.fullName, .email]
                         let nonce = randomNonceString()
                         currentNonce = nonce
@@ -84,7 +85,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                 if isSignUp {
                                                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                                 }
-                                                viewRouter.currentPage = .meditate
+
                                             }
 //                                            guard let _ = appleIDCredential.email else {
 //                                                // User already signed in with this appleId once
@@ -103,7 +104,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                     if isSignUp {
                                                         UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                                                     }
-                                                    viewRouter.currentPage = .meditate
+                                                    goToHome()
                                                 }
                                             }
                                         }
@@ -125,7 +126,12 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         }
     }
 
-    func signInWithGoogle() {
+    private func goToHome() {
+        viewRouter.currentPage = .meditate
+        Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
+    }
+
+     func signInWithGoogle() {
         if GIDSignIn.sharedInstance().currentUser == nil {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             GIDSignIn.sharedInstance().presentingViewController = UIApplication.shared.windows.first?.rootViewController
@@ -199,7 +205,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                             UserDefaults.standard.setValue("Red Tulip", forKey: K.defaults.selectedPlant)
                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                         }
-                        viewRouter.currentPage = .meditate
+                        goToHome()
                     }
                     alertError = false
                 }
@@ -247,7 +253,7 @@ extension AuthenticationViewModel {
                 if isSignUp {
                     UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                 }
-                viewRouter.currentPage = .meditate
+                goToHome()
             }
         }
     }
@@ -271,7 +277,7 @@ extension AuthenticationViewModel {
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
                 UserDefaults.standard.setValue("nature", forKey: "sound")
-                viewRouter.currentPage = .meditate
+                goToHome()
             }
         }
     }
@@ -316,7 +322,6 @@ extension AuthenticationViewModel {
     }
 
     func getData() {
-        print("saving data")
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {

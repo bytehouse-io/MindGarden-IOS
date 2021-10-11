@@ -36,6 +36,7 @@ struct NameScene: View {
                                 .neoShadow()
                             Spacer()
                             Button {
+                                Analytics.shared.log(event: .name_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     if !name.isEmpty {
@@ -67,6 +68,7 @@ struct NameScene: View {
                             .onTapGesture {
                                 viewRouter.currentPage = .notification
                             })
+                .onAppearAnalytics(event: .screen_load_name)
             }
         }
     }

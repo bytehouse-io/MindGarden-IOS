@@ -112,6 +112,7 @@ struct Finished: View {
                                             .padding()
                                             .padding(.leading)
                                             .onTapGesture {
+                                                Analytics.shared.log(event: .finished_tapped_favorite)
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 if let med = model.selectedMeditation {
                                                     model.favorite(selectMeditation: med)
@@ -134,6 +135,7 @@ struct Finished: View {
                                             }
                                         Spacer()
                                         Button {
+                                            Analytics.shared.log(event: .finished_tapped_finished)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 viewRouter.currentPage = .garden
@@ -174,12 +176,15 @@ struct Finished: View {
             model.lastSeconds = false
         }
         .onAppear {
+            print("what?")
             model.checkIfFavorited()
             favorited = model.isFavorited
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                Analytics.shared.log(event: .onboarding_finished_meditation)
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                 isOnboarding = true
             }
+            Analytics.shared.log(event: AnalyticEvent.getMeditation(meditation: "finished_\(model.selectedMeditation?.returnEventName() ?? "")"))
             var session = [String: String]()
             session[K.defaults.plantSelected] = userModel.selectedPlant?.title
             session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
@@ -187,6 +192,7 @@ struct Finished: View {
             userCoins += model.selectedMeditation?.reward ?? 0
             gardenModel.save(key: "sessions", saveValue: session)
         }
+        .onAppearAnalytics(event: .screen_load_finished)
 
     }
 

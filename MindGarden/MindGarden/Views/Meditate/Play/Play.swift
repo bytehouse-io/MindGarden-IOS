@@ -303,6 +303,7 @@ struct Play: View {
             .font(.system(size: 24))
             .foregroundColor(favorited ? Color.red : Clr.lightGray)
             .onTapGesture {
+                Analytics.shared.log(event: .play_tapped_favorite)
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if let med = model.selectedMeditation {
 //                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")

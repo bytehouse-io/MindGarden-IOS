@@ -35,6 +35,7 @@ struct OnboardingModal: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
+                                    Analytics.shared.log(event: .onboarding_finished_single_okay)
                                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                 }
                             } label: {

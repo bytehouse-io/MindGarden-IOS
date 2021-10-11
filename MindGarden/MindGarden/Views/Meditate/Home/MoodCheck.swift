@@ -80,6 +80,7 @@ struct MoodCheck: View {
                     }.frame(width: g.size.width * 0.85, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
                         DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
                             if moodSelected != .none {
+                                Analytics.shared.log(event: .mood_tapped_done)
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                     UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
                                     showPopUp = true
@@ -118,6 +119,12 @@ struct SingleMood: View {
                 .aspectRatio(contentMode: .fit)
                 .padding(5)
                 .onTapGesture {
+                    switch mood {
+                    case .angry: Analytics.shared.log(event: .mood_tapped_angry)
+                    case .sad: Analytics.shared.log(event: .mood_tapped_sad)
+                    case .okay: Analytics.shared.log(event: .mood_tapped_okay)
+                    case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                    }
                     if moodSelected == mood {
                         moodSelected = .none
                     } else {

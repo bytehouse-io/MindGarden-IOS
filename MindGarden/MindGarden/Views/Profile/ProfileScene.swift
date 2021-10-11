@@ -84,11 +84,17 @@ struct ProfileScene: View {
                                             .animation(.default)
                                     } else {
                                         List {
-                                            Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: { showNotification = true }, showNotif: $showNotif)
+                                            Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
+                                                showNotification = true
+                                                Analytics.shared.log(event: .profile_tapped_notifications)
+                                            }, showNotif: $showNotif)
                                                 .frame(height: 40)
-                                            Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: { actionSheet() }, showNotif: $showNotif)
+                                            Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_invite)
+                                                actionSheet() }, showNotif: $showNotif)
                                                 .frame(height: 40)
                                             Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_email)
                                                 if MFMailComposeViewController.canSendMail() {
                                                     showMailView = true
                                                 } else {
@@ -96,15 +102,19 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif)
                                                 .frame(height: 40)
-                                            Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: { print("bing")
+                                            Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_restore)
+                                                print("bing")
                                             }, showNotif: $showNotif)
                                                 .frame(height: 40)
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
+                                                Analytics.shared.log(event: .profile_tapped_reddit)
                                                 if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif).frame(height: 40)
                                             Row(title: "Daily Motivation", img: Img.instaIcon, action: {
+                                                Analytics.shared.log(event: .profile_tapped_instagram)
                                                 if let url = URL(string: "https://www.instagram.com/mindgardn/") {
                                                     UIApplication.shared.open(url)
                                                 }
@@ -197,6 +207,7 @@ struct ProfileScene: View {
                                         .padding(.leading)
                                 }
                                 Button {
+                                    Analytics.shared.log(event: .profile_tapped_logout)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     profileModel.signOut()
                                     UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
@@ -233,6 +244,7 @@ struct ProfileScene: View {
                 .alert(isPresented: $mailNeedsSetup) {
                     Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
                 }
+                .onAppearAnalytics(event: .screen_load_profile)
             } else {
                 // Fallback on earlier versions
             }
@@ -280,8 +292,10 @@ struct ProfileScene: View {
                                     .onChange(of: notifOn) { val in
                                         UserDefaults.standard.setValue(val, forKey: "notifOn")
                                         if val {
+                                            Analytics.shared.log(event: .profile_tapped_toggle_on_notifs)
                                             showNotif = true
                                         } else { //turned off
+                                            Analytics.shared.log(event: .profile_tapped_toggle_off_notifs)
                                             UserDefaults.standard.setValue(false, forKey: "notifOn")
                                             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                                         }
@@ -313,6 +327,11 @@ struct SelectionButton: View {
         VStack {
             Spacer()
             Button {
+                if type == .settings {
+                    Analytics.shared.log(event: .profile_tapped_settings)
+                } else {
+                    Analytics.shared.log(event: .profile_tapped_journey)
+                }
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 selection = type
             } label: {

@@ -74,6 +74,7 @@ struct PurchaseModal: View {
                                 .frame(height: g.size.width * 0.2)
                         }
                         Button {
+                            Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
                             if userCoins >= userModel.willBuyPlant?.price ?? 0 {
                                 withAnimation {
                                     showConfirm = true

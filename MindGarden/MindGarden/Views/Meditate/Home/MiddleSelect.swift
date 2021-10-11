@@ -70,6 +70,7 @@ struct MiddleSelect: View {
                                         Divider().padding()
                                         HStack(spacing: 15) {
                                             Button {
+                                                Analytics.shared.log(event: .middle_tapped_recommended)
                                                 model.selectedMeditation = model.recommendedMeds[0]
                                                 if model.selectedMeditation?.type == .course {
                                                     viewRouter.currentPage = .middle
@@ -80,6 +81,7 @@ struct MiddleSelect: View {
                                                 HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, description: model.recommendedMeds[0].description, duration: model.recommendedMeds[0].duration)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
+                                                Analytics.shared.log(event: .middle_tapped_recommended)
                                                 model.selectedMeditation = model.recommendedMeds[1]
                                                 if model.selectedMeditation?.type == .course {
                                                     viewRouter.currentPage = .middle
@@ -109,10 +111,12 @@ struct MiddleSelect: View {
         .onAppear {
             model.checkIfFavorited()
         }
+        .onAppearAnalytics(event: .screen_load_middle)
     }
 
     var backButton: some View {
         Button {
+            Analytics.shared.log(event: .middle_tapped_back)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 viewRouter.currentPage = .meditate
@@ -128,6 +132,7 @@ struct MiddleSelect: View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if let med = model.selectedMeditation {
+                Analytics.shared.log(event: .middle_tapped_favorite)
                 model.favorite(selectMeditation: med)
             }
         } label: {
@@ -149,6 +154,7 @@ struct MiddleSelect: View {
 
         var body: some View {
             Button {
+                Analytics.shared.log(event: .middle_tapped_row)
                 tappedMeditation = true
                 model.selectedMeditation = meditation
                 withAnimation {
@@ -183,6 +189,7 @@ struct MiddleSelect: View {
                         .foregroundColor(isFavorited ? Color.red : Color.gray)
                         .font(.system(size: 24))
                         .onTapGesture {
+                            Analytics.shared.log(event: .middle_tapped_row_favorite)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             model.favorite(selectMeditation: meditation)
                             isFavorited.toggle()

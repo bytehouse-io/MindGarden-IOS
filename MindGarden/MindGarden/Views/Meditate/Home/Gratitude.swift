@@ -23,6 +23,7 @@ struct Gratitude: View, KeyboardReadable {
                 Spacer()
                 VStack(alignment: .center, spacing: 10) {
                         Button {
+                            Analytics.shared.log(event: .gratitude_tapped_prompts)
                             withAnimation {
                                 openPrompts.toggle()
                             }
@@ -89,6 +90,7 @@ struct Gratitude: View, KeyboardReadable {
 //                        .minimumScaleFactor(0.5)
                         .padding(.top)
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
+                        Analytics.shared.log(event: .gratitude_tapped_done)
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
                         text = "Thankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {

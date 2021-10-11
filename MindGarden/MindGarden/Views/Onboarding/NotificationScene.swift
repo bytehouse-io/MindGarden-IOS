@@ -84,11 +84,13 @@ struct NotificationScene: View {
                                 .padding()
                             Spacer()
                             Button {
+                                Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                                 withAnimation {
                                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                                         if success {
+                                            Analytics.shared.log(event: .notification_success)
                                             UserDefaults.standard.setValue(dateTime, forKey: "notif")
                                             UserDefaults.standard.setValue(true, forKey: "notifOn")
                                             let content = UNMutableNotificationContent()
@@ -139,6 +141,7 @@ struct NotificationScene: View {
                                     .foregroundColor(.gray)
                                     .padding()
                                     .onTapGesture {
+                                        Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
                                             viewRouter.currentPage = .name
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -180,7 +183,7 @@ struct NotificationScene: View {
 
                 }.offset(y: g.size.height * 0.3)
             }
-        }
+        }.onAppearAnalytics(event: .screen_load_notification)
     }
 }
 
@@ -221,6 +224,7 @@ struct BottomSheetView<Content: View>: View {
                 .font(Font.mada(.bold, size: 18))
                 .foregroundColor(Clr.darkgreen)
                 .onTapGesture {
+                    Analytics.shared.log(event: .notification_tapped_done)
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     self.isOpen.toggle()
                 }

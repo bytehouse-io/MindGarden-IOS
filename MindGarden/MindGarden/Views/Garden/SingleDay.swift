@@ -48,6 +48,7 @@ struct SingleDay: View {
                                 HStack {
                                     if sessionCounter - 1 >= 0 {
                                         Button {
+                                            Analytics.shared.log(event: .garden_tapped_single_previous_session)
                                             withAnimation {
                                                 sessionCounter -= 1
                                                 updateSession()
@@ -73,6 +74,7 @@ struct SingleDay: View {
                                     Spacer()
                                     if sessionCounter + 1 < totalSessions {
                                         Button {
+                                            Analytics.shared.log(event: .garden_tapped_single_next_session)
                                             withAnimation {
                                                 sessionCounter += 1
                                                 updateSession()

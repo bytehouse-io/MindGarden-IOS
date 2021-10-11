@@ -115,6 +115,7 @@ struct OnboardingScene: View {
                             // Fallback on earlier versions
                         }
                         Button {
+                            Analytics.shared.log(event: .onboarding_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 viewRouter.currentPage = .experience
@@ -131,6 +132,7 @@ struct OnboardingScene: View {
                         .padding()
                         .buttonStyle(NeumorphicPress())
                         Button {
+                            Analytics.shared.log(event: .onboarding_tapped_sign_in)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             tappedSignIn = true
                             withAnimation {
@@ -152,7 +154,7 @@ struct OnboardingScene: View {
                     .offset(y: K.isPad() ? 0 : g.size.height * -0.45)
                 }
             }.navigationBarTitle("", displayMode: .inline)
-        }
+        }.onAppearAnalytics(event: .screen_load_onboarding)
     }
 }
 
