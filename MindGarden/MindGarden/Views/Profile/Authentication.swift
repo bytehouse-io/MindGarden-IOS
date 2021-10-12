@@ -21,6 +21,7 @@ struct Authentication: View {
     @State private var isEmailValid = true
     @State private var isPasswordValid = true
     @State private var signUpDisabled = true
+    @State private var focusedText = false
     var tappedSignOut: Bool = false
 
     init(isSignUp: Bool, viewModel: AuthenticationViewModel) {
@@ -46,7 +47,11 @@ struct Authentication: View {
                                 .neoShadow()
                                 .padding(20)
                             HStack {
-                                TextField("Email", text: $viewModel.email)
+                                TextField("Email", text: $viewModel.email, onEditingChanged: { focused in
+                                    withAnimation {
+                                        focusedText = focused
+                                    }
+                                })
                                     .foregroundColor(Color.black)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
@@ -180,7 +185,8 @@ struct Authentication: View {
                     }))
                     .edgesIgnoringSafeArea(.bottom)
                     .navigationBarTitle("", displayMode: .inline)
-                    .navigationBarItems(leading: Img.topBranch.padding(.leading, -20),
+                    .navigationBarItems(leading: Img.topBranch.padding(.leading, -20)
+                                            .opacity(focusedText ? 0.1 : 1),
                                         trailing: Image(systemName: "arrow.backward")
                                             .font(.system(size: 22))
                                             .foregroundColor(Clr.darkgreen)

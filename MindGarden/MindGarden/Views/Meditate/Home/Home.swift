@@ -54,7 +54,7 @@ struct Home: View {
                                         Text("\(userCoins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                     }.padding(.trailing, 20)
-                                    .padding(.top, -10)
+                                    .padding(.top, -20)
                                 }
                             }
                             .padding(.top, -30)
@@ -140,14 +140,16 @@ struct Home: View {
                                                 .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
                                                 .foregroundColor(Clr.black1)
                                             Text("\(model.featuredMeditation?.title ?? "")")
-                                                .font(Font.mada(.bold, size: K.isPad() ? 40 : 28))
+                                                .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
                                                 .foregroundColor(Clr.black1)
                                                 .lineLimit(3)
                                                 .minimumScaleFactor(0.05)
                                             Spacer()
-                                        }.padding(15)
+                                        }
+                                        .padding(15)
+                                        .padding(.leading, 5)
                                         .offset(x: 20, y: 30)
-                                        .frame(width: g.size.width * 0.85 * 0.5)
+                                        .frame(width: g.size.width * 0.85 * 0.6)
                                         .padding(K.isPad() ? 20 : 0)
                                         VStack(spacing: 0) {
                                             ZStack {
@@ -215,11 +217,14 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
                                                 Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
-                                                if meditation.type == .course {
-                                                    viewRouter.currentPage = .middle
-                                                } else {
-                                                    viewRouter.currentPage = .play
-                                                }
+                                                    if meditation.type == .course {
+                                                        withAnimation {
+                                                        viewRouter.currentPage = .middle
+                                                        }
+                                                    } else {
+                                                        viewRouter.currentPage = .play
+                                                    }
+
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, description: meditation.description, duration: meditation.duration)
                                             }.buttonStyle(NeumorphicPress())
@@ -295,7 +300,7 @@ struct Home: View {
             })
         }.transition(.move(edge: .leading))
         .onAppear {
-            showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate")
+            showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
         }
         .onAppearAnalytics(event: .screen_load_home)
 

@@ -104,7 +104,6 @@ struct ProfileScene: View {
                                                 .frame(height: 40)
                                             Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_restore)
-                                                print("bing")
                                             }, showNotif: $showNotif)
                                                 .frame(height: 40)
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {

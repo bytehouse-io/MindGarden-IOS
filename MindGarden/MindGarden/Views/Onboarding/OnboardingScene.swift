@@ -34,52 +34,6 @@ struct OnboardingScene: View {
                             TabView(selection: $index) {
                                 ForEach((0..<3), id: \.self) { index in
                                     VStack {
-                                        if index == 1 {
-                                            images[index]
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: width * 0.75 , height: height * 0.4)
-                                                .padding(.horizontal)
-                                            VStack(alignment: .leading) {
-                                                Text(titles[index])
-                                                    .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.bold, size: 36))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                    .lineSpacing(0)
-                                                    .lineLimit(2)
-                                                    .padding(.bottom, 5)
-                                                Text(subtitles[index])
-                                                    .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.medium, size: 18))
-                                                    .foregroundColor(Clr.black1)
-                                                    .lineSpacing(10)
-                                                    .lineLimit(2)
-                                            }
-                                            .offset(y: -15)
-                                            .frame(width: width * 0.5)
-                                        } else if index == 2 {
-                                            VStack(alignment: .leading) {
-                                                Text(titles[index])
-                                                    .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.bold, size: 36))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                    .lineSpacing(0)
-                                                    .lineLimit(2)
-                                                    .padding(.bottom, 5)
-                                                Text(subtitles[index])
-                                                    .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.medium, size: 18))
-                                                    .foregroundColor(Clr.black1)
-                                                    .lineSpacing(10)
-                                                    .lineLimit(2)
-                                            }
-                                            .frame(width: width * 0.5)
-                                            images[index]
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: width * 0.65 , height: height * 0.30)
-                                                .padding(.horizontal)
-                                        } else {
                                             images[index]
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
@@ -88,7 +42,7 @@ struct OnboardingScene: View {
                                             Spacer()
                                             VStack(alignment: .leading) {
                                                 Text(titles[index])
-                                                    .font(Font.mada(.bold, size: 44))
+                                                    .font(Font.mada(.bold, size: 42))
                                                     .minimumScaleFactor(0.05)
                                                     .lineSpacing(0)
                                                     .padding(.bottom, 5)
@@ -107,7 +61,6 @@ struct OnboardingScene: View {
                                             Spacer()
                                         }
                                     }.offset(y: index == 0 ? 0 : -20)
-                                }
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                             .frame(width: width * 0.55, height: height * 0.75, alignment: .center)
@@ -151,10 +104,13 @@ struct OnboardingScene: View {
                         .buttonStyle(NeumorphicPress())
                         Spacer()
                     }
-                    .offset(y: K.isPad() ? 0 : g.size.height * -0.45)
+//                    .offset(y: K.isPad() ? 0 : g.size.height * -0.45)
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
+            .onAppear(perform: {
+                UIScrollView.appearance().bounces = false
+            })
     }
 }
 

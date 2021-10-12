@@ -177,7 +177,6 @@ struct Finished: View {
         }
         .onAppear {
             print("what?")
-            model.checkIfFavorited()
             favorited = model.isFavorited
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 Analytics.shared.log(event: .onboarding_finished_meditation)

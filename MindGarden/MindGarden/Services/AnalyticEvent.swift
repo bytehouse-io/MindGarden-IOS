@@ -127,7 +127,7 @@ enum AnalyticEvent {
     case finished_med_create_your_anchor
     case finished_med_tuning_into_your_body
     case finished_med_gaining_clarity
-    case finished_med_stress_antitode
+    case finished_med_stress_antidote
     case finished_med_compassion_x_selflove
     case finished_med_joy_on_demand
 
@@ -234,7 +234,6 @@ extension AnalyticEvent {
         }
     }
     static func getMeditation(meditation: String) -> AnalyticEvent {
-        print("hong", meditation)
         switch meditation {
         case "finished_1_minute_meditation": return .finished_med_1_minute_meditation
         case "finished_2_minute_meditation": return .finished_med_2_minute_meditation
@@ -252,7 +251,7 @@ extension AnalyticEvent {
         case "finished_create_your_anchor": return .finished_med_create_your_anchor
         case "finished_tuning_into_your_body": return .finished_med_tuning_into_your_body
         case "finished_gaining_clarity": return .finished_med_gaining_clarity
-        case "finished_stress_antitode": return .finished_med_stress_antitode
+        case "finished_stress_antidote": return .finished_med_stress_antidote
         case "finished_compassion_x_selflove": return .finished_med_compassion_x_selflove
         case "finished_joy_on_demand": return .finished_med_joy_on_demand
 
@@ -366,7 +365,7 @@ extension AnalyticEvent {
         case .finished_med_create_your_anchor: return "finished_med_create_your_anchor"
         case .finished_med_tuning_into_your_body: return "finished_med_tuning_into_your_body"
         case .finished_med_gaining_clarity: return "finished_med_gaining_clarity"
-        case .finished_med_stress_antitode: return "finished_med_stress_antitode"
+        case .finished_med_stress_antidote: return "finished_med_stress_antidote"
         case .finished_med_compassion_x_selflove: return "finished_med_compassion_x_selflove"
         case .finished_med_joy_on_demand: return "finished_med_joy_on_demand"
         case .finished_30_second_meditation: return "finished_30_second_meditation"

@@ -48,11 +48,9 @@ struct ContentView: View {
                                 if #available(iOS 14.0, *) {
                                     switch viewRouter.currentPage {
                                     case .onboarding:
-                                        NavigationView {
                                             OnboardingScene()
                                                 .frame(height: geometry.size.height)
                                                 .navigationViewStyle(StackNavigationViewStyle())
-                                        }
                                     case .experience:
                                             ExperienceScene()
                                                 .frame(height: geometry.size.height)
@@ -140,7 +138,7 @@ struct ContentView: View {
                                 }
                                 ZStack {
                                     PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, isOnboarding: isOnboarding, width: geometry.size.width)
-                                        .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 130 : K.isPad() ? geometry.size.height : geometry.size.height/5) : geometry.size.height/2 + 60)
+                                        .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5) : geometry.size.height/2 + 60)
                                         .opacity(showPopUp ? 1 : 0)
                                     //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                                     //onboarding userdefault should be equal to signedUp because we just completed it.

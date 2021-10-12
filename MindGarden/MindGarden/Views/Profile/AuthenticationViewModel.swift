@@ -259,8 +259,9 @@ extension AuthenticationViewModel {
     }
 
     func signIn() {
+        print("sigining IN ")
         Auth.auth().signIn(withEmail: email, password: password) { [self] authResult, error in
-            isLoading = false
+//            isLoading = false
             if error != nil {
                 alertError = true
                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"

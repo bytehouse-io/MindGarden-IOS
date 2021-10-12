@@ -69,7 +69,7 @@ struct SingleDay: View {
                                     plant?.coverImage
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: g.size.width/2.2)
+                                        .frame(width: g.size.width/2.2, height: g.size.height/2)
                                         .offset(y: -35)
                                     Spacer()
                                     if sessionCounter + 1 < totalSessions {
@@ -97,7 +97,7 @@ struct SingleDay: View {
                                 plant?.coverImage
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: g.size.width/2.2)
+                                    .frame(width: g.size.width/2.2, height: g.size.height/2)
                                     .offset(y: -35)
                             } else {
                                 Text("No sessions for \nthis day :(")
@@ -227,7 +227,7 @@ struct SingleDay: View {
                     .font(Font.mada(.bold, size: 38))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-                Text("Minutes Meditated: \(minutesMeditated)")
+                Text("Minutes Meditated: \(minutesMeditated/60 == 0 && minutesMeditated != 0 ? "0.5" : "\(minutesMeditated/60)")")
                     .font(Font.mada(.semiBold, size: 18))
             }.padding(.top, 60)
             .foregroundColor(.white)

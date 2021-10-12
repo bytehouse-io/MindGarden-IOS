@@ -98,7 +98,7 @@ struct MiddleSelect: View {
                         }
                         }.zIndex(25)
                 }
-            }.animation(nil)
+            }
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(
                 leading: ZStack {
@@ -154,6 +154,7 @@ struct MiddleSelect: View {
 
         var body: some View {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 Analytics.shared.log(event: .middle_tapped_row)
                 tappedMeditation = true
                 model.selectedMeditation = meditation

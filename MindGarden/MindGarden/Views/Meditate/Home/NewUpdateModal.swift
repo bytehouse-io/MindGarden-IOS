@@ -76,6 +76,7 @@ struct NewUpdateModal: View {
                     }
                     .font(Font.mada(.regular, size: 18))
                     .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.7 : 0.75), alignment: .center)
+                    .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()
                     .cornerRadius(12)

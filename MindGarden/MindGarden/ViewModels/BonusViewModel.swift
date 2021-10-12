@@ -32,7 +32,6 @@ class BonusViewModel: ObservableObject {
     let db = Firestore.firestore()
 
     init(userModel: UserViewModel) {
-        print("initing")
         self.userModel = userModel
     }
 

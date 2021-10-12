@@ -20,6 +20,7 @@ struct PlusMenu: View {
         ZStack {
             VStack {
                 Button {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     Analytics.shared.log(event: .plus_tapped_mood)
                     withAnimation {
                         showPopUp = false
@@ -30,6 +31,7 @@ struct PlusMenu: View {
                         .frame(width: width/2.25, height: width/10)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                 Button {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     Analytics.shared.log(event: .plus_tapped_gratitude)
                     if isOnboarding {
                         Analytics.shared.log(event: .onboarding_finished_meditation)
@@ -43,6 +45,7 @@ struct PlusMenu: View {
                         .frame(width: width/2.25, height: width/10)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                 Button {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     Analytics.shared.log(event: .plus_tapped_meditate)
                     withAnimation {
                         showPopUp = false

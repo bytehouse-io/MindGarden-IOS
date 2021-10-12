@@ -119,11 +119,13 @@ struct SingleMood: View {
                 .aspectRatio(contentMode: .fit)
                 .padding(5)
                 .onTapGesture {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     switch mood {
                     case .angry: Analytics.shared.log(event: .mood_tapped_angry)
                     case .sad: Analytics.shared.log(event: .mood_tapped_sad)
                     case .okay: Analytics.shared.log(event: .mood_tapped_okay)
                     case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                    case .none: Analytics.shared.log(event: .mood_tapped_cancel)
                     }
                     if moodSelected == mood {
                         moodSelected = .none
@@ -151,6 +153,7 @@ struct DoneCancel: View {
     var body: some View {
         HStack {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if moodSelected != Mood.none {
                     save()
                     withAnimation {
@@ -170,6 +173,7 @@ struct DoneCancel: View {
             .neoShadow()
             .padding()
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
                     withAnimation {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

@@ -20,6 +20,7 @@ class MeditationViewModel: ObservableObject {
     @Published var playImage: Image = Img.seed
     @Published var recommendedMeds: [Meditation] = []
     var viewRouter: ViewRouter?
+    var selectedPlant: Plant?
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
     var totalTime: Float = 0
@@ -38,9 +39,6 @@ class MeditationViewModel: ObservableObject {
     }
 
     init() {
-        for med in Meditation.allMeditations {
-            print(med.returnEventName(),"so")
-        }
         $selectedCategory
             .sink { [unowned self] value in
                 if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
@@ -64,8 +62,12 @@ class MeditationViewModel: ObservableObject {
     }
 
     private func getFeaturedMeditation()  {
-        let filtedMeds = Meditation.allMeditations.filter { med in
+        var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 }
+        if Calendar.current.component( .hour, from:Date() ) > 16 {
+            filtedMeds = Meditation.allMeditations.filter { med in
+                med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 && med.id != 27 }
+        } 
         let randomInt = Int.random(in: 0..<filtedMeds.count)
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
@@ -157,13 +159,13 @@ class MeditationViewModel: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
             self.secondsRemaining -= 1
             withAnimation {
-                if secondsRemaining <= totalTime * 0.25 { //15 = 0
+                if secondsRemaining - 0.2 <= totalTime * 0.25 { //15 = 0
                     lastSeconds = true
-                    playImage = Img.redTulips3
-                } else if secondsRemaining <= totalTime * 0.5 { //30 - 15
-                    playImage = Img.redTulips2
-                } else if secondsRemaining <= totalTime * 0.75 { //45-30
-                    playImage = Img.redTulips1
+                    playImage = selectedPlant?.coverImage ?? Img.redTulips3
+                } else if secondsRemaining - 0.2 <= totalTime * 0.5 { //30 - 15
+                    playImage = selectedPlant?.two ?? Img.redTulips2
+                } else if secondsRemaining - 0.2 <= totalTime * 0.75 { //45-30
+                    playImage = selectedPlant?.one ?? Img.redTulips1
                 } else { //60 - 45
                     playImage = Img.seed
                 }

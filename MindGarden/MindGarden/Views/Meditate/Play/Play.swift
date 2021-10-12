@@ -30,6 +30,7 @@ struct Play: View {
     @State var selectedSound: Sound? = .noSound
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State var sliderData = SliderData()
 
     var body: some View {
@@ -207,11 +208,18 @@ struct Play: View {
                     NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player, sliderData: $sliderData).offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
                 }
-            }.animation(nil)
+            }
         .transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onAppear {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+               try AVAudioSession.sharedInstance().setActive(true)
+             } catch {
+               print(error)
+             }
+            model.selectedPlant = userModel.selectedPlant
             model.checkIfFavorited()
             favorited = model.isFavorited
             model.setup(viewRouter)
@@ -247,7 +255,7 @@ struct Play: View {
             model.bellPlayer.delegate = self.del
 
             if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                let url = Bundle.main.path(forResource: "30 Second Meditation", ofType: "mp3")
+                let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3")
                 mainPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 mainPlayer.delegate = self.del
                 mainPlayer.prepareToPlay()
@@ -266,7 +274,9 @@ struct Play: View {
             }
             player.stop()
             if  model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                mainPlayer.stop()
+                if mainPlayer.isPlaying {
+                    mainPlayer.stop()
+                }
             }
         }
     }
