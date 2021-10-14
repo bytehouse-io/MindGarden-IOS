@@ -22,11 +22,11 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var alertError: Bool = false
     @Published var alertMessage: String = "Please try again using a different email or method"
     @Published var isLoading: Bool = false
+    @Published var isSignUp: Bool = false
+    @Published var falseAppleId: Bool = false
     var currentNonce: String?
     var googleIsNew: Bool = true
-
     let db = Firestore.firestore()
-    var isSignUp: Bool = false
     var appleAlreadySigned: Bool = false
     init(userModel: UserViewModel, viewRouter: ViewRouter) {
         self.userModel = userModel
@@ -67,50 +67,63 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                                     return
                                 }
-
                                 let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString,rawNonce: nonce)
-                                    Auth.auth().signIn(with: credential, completion: { (user, error) in
-                                        if (error != nil) {
-                                            alertError = true
-                                            alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
-                                            print(error?.localizedDescription ?? "high roe")
-                                            return
-                                        }
 
-                                        if user != nil { // user exists
-                                            UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
-                                            alertError = false
+                                // User already signed in with this appleId once
+
+                                if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId")  { // new user
+                                    print("fact fact")
+                                    if !isSignUp { // login
+                                        alertError = true
+                                        alertMessage = "Email is not associated with account, please try using a different sign in method"
+                                        UserDefaults.standard.set(true, forKey: "falseAppleId")
+                                        falseAppleId = true
+                                        return
+                                    } else { // sign up
+                                        Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                            if (error != nil) {
+                                                alertError = true
+                                                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                                print(error?.localizedDescription ?? "high roe")
+                                                return
+                                            }
+                                            //User never used this appleid before
+                                            createUser()
                                             withAnimation {
+                                                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                                                 if isSignUp {
-                                                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                    UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                                                 }
-
+                                                goToHome()
                                             }
-//                                            guard let _ = appleIDCredential.email else {
-//                                                // User already signed in with this appleId once
-//                                                return
-//                                            }
-                                        } else {
-                                            //if sign in user does not exist
-                                            if !isSignUp {
+                                        })
+                                    }
+                                } else { // used this id before
+                                    if isSignUp {
+                                        alertError = true
+                                        alertMessage = "Please use the login page"
+                                        return
+                                    } else { // login
+                                        Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                            if (error != nil) {
                                                 alertError = true
-                                                alertMessage = "Email is not associated with account"
+                                                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                                print(error?.localizedDescription ?? "high roe")
                                                 return
-                                            } else {
-                                                createUser()
-                                                withAnimation {
-                                                    UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                    if isSignUp {
-                                                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                                                    }
-                                                    goToHome()
-                                                }
                                             }
-                                        }
 
-                                    })
-                                print("\(String(describing: Auth.auth().currentUser?.uid))")
+                                            withAnimation {
+                                                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+                                                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                goToHome()
+                                            }
+                                        })
+                                    }
+                                    return
+                                }
+                                print("\(String(describing: Auth.auth().currentUser?.uid)) bruh")
                             default:
                                 break
 
@@ -127,6 +140,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
 
     private func goToHome() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         viewRouter.currentPage = .meditate
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }
@@ -156,7 +170,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 extension AuthenticationViewModel: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if error == nil {
-            isLoading = true
+//            isLoading = true
             Auth.auth().fetchSignInMethods(forEmail: user.profile.email, completion: { [self]
                 (providers, error) in
                 if let error = error {
@@ -296,7 +310,7 @@ extension AuthenticationViewModel {
     }
 
     func createUser() {
-        // localize
+        print("creating user")
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
         if let email = Auth.auth().currentUser?.email {

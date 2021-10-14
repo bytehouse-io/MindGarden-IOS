@@ -12,6 +12,7 @@ struct MiddleSelect: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State var tappedMeditation: Bool = false
 
     var body: some View {
@@ -36,7 +37,7 @@ struct MiddleSelect: View {
                                     .neoShadow()
                                 ScrollView(showsIndicators: false) {
                                     VStack(spacing: 0) {
-                                    Text("Selected Plant: Pick Tulips")
+                                        Text("Selected Plant: \(userModel.selectedPlant?.title ?? "none")")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 16))
                                         .padding(.top)

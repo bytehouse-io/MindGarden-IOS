@@ -25,12 +25,14 @@ struct ContentView: View {
     @State private var animationAmount: CGFloat = 1
     var bonusModel: BonusViewModel
     var profileModel: ProfileViewModel
+    var authModel: AuthenticationViewModel
 
-    init(bonusModel: BonusViewModel, profileModel: ProfileViewModel) {
+    init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         self.bonusModel = bonusModel
         self.profileModel = profileModel
+        self.authModel = authModel
         //        meditationModel.isOpenEnded = false
         //        meditationModel.secondsRemaining = 150
         // check for auth here
@@ -101,7 +103,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .authentication:
-                                        Authentication(isSignUp: !tappedSignIn, viewModel: AuthenticationViewModel(userModel: userModel, viewRouter: viewRouter))
+                                        Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
                                             .frame(height: geometry.size.height)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .notification:
@@ -233,6 +235,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel())
+        ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel(), authModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
     }
 }

@@ -87,7 +87,7 @@ struct Authentication: View {
                         .frame(height: 60)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            viewModel.isLoading = true
+//                            viewModel.isLoading = true
                             if isSignUp {
                                 viewModel.signUp()
                             } else {
@@ -137,6 +137,7 @@ struct Authentication: View {
                             .padding(.horizontal, 20)
                             .frame(height: 100)
                             .neoShadow()
+                            .disabled(viewModel.falseAppleId)
                         Img.siwg
                             .resizable()
                             .aspectRatio(contentMode: K.isPad() ? .fit : .fill)
@@ -154,6 +155,7 @@ struct Authentication: View {
                                 }
                                 self.isSignUp.toggle()
                                 viewModel.isSignUp = self.isSignUp
+                                print(viewModel.isSignUp, "101")
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
                                 Capsule()
@@ -220,6 +222,9 @@ struct Authentication: View {
                     Analytics.shared.log(event: .screen_load_onboarding_signin)
                 } else if tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_signup)
+                }
+                if !tappedSignIn {
+                    viewModel.falseAppleId = false
                 }
             }
         }

@@ -17,13 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
 
-        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+        print(UserDefaults.standard.value(forKey: "falseAppleId"), "my first story")
+//        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         let router = ViewRouter()
         let medModel = MeditationViewModel()
         let userModel = UserViewModel()
         let gardenModel = GardenViewModel()
         let bonusModel = BonusViewModel(userModel: userModel)
         let profileModel = ProfileViewModel()
+        let authModel =  AuthenticationViewModel(userModel: userModel, viewRouter: router)
+
         medModel.updateSelf()
         userModel.updateSelf()
         gardenModel.updateSelf()
@@ -35,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             bonusModel.thirtyDayProgress = 0.08
         }
 
-        let contentView = ContentView(bonusModel: bonusModel, profileModel: profileModel)
+        let contentView = ContentView(bonusModel: bonusModel, profileModel: profileModel, authModel: authModel)
 
         // Use a UIHostingController as window root view controller.
         let rootHost = UIHostingController(rootView: contentView

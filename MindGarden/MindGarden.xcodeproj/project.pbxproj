@@ -101,6 +101,8 @@
 		FEBF1AC727138647000BF1BD /* Basic Guided Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC527138647000BF1BD /* Basic Guided Meditation.mp3 */; };
 		FEBF1AC92713864E000BF1BD /* Body Scan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC82713864E000BF1BD /* Body Scan.mp3 */; };
 		FEBF1ACB271511CA000BF1BD /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */; };
+		FEBF1ACD27175872000BF1BD /* Better Faster Sleep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACC27175872000BF1BD /* Better Faster Sleep.mp3 */; };
+		FEBF1ACF27175880000BF1BD /* Meditation for Focus.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACE27175880000BF1BD /* Meditation for Focus.mp3 */; };
 		FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */; };
 		FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF22C926DC3860002572E2 /* bell.mp3 */; };
 		FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */; };
@@ -227,6 +229,8 @@
 		FEBF1AC527138647000BF1BD /* Basic Guided Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Basic Guided Meditation.mp3"; sourceTree = "<group>"; };
 		FEBF1AC82713864E000BF1BD /* Body Scan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Body Scan.mp3"; sourceTree = "<group>"; };
 		FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
+		FEBF1ACC27175872000BF1BD /* Better Faster Sleep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Better Faster Sleep.mp3"; sourceTree = "<group>"; };
+		FEBF1ACE27175880000BF1BD /* Meditation for Focus.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Meditation for Focus.mp3"; sourceTree = "<group>"; };
 		FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extension.swift"; sourceTree = "<group>"; };
 		FEBF22C926DC3860002572E2 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -605,6 +609,8 @@
 				FEBF1AC527138647000BF1BD /* Basic Guided Meditation.mp3 */,
 				FEBF1AC427138646000BF1BD /* Semi-Guided Meditation.mp3 */,
 				FEBF1AC82713864E000BF1BD /* Body Scan.mp3 */,
+				FEBF1ACC27175872000BF1BD /* Better Faster Sleep.mp3 */,
+				FEBF1ACE27175880000BF1BD /* Meditation for Focus.mp3 */,
 			);
 			path = Meditations;
 			sourceTree = "<group>";
@@ -730,6 +736,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
+				FEBF1ACD27175872000BF1BD /* Better Faster Sleep.mp3 in Resources */,
+				FEBF1ACF27175880000BF1BD /* Meditation for Focus.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
@@ -1192,6 +1200,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1218,6 +1227,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

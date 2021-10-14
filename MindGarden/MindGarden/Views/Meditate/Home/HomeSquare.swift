@@ -32,7 +32,7 @@ struct HomeSquare: View {
                                 .lineLimit(2)
                             Text(description)
                                 .frame(width: width * 0.2, alignment: .leading)
-                                .font(Font.mada(.regular, size: K.isPad() ? 24 : 12))
+                                .font(Font.mada(.regular, size: K.isPad() ? 24 : 10))
                                 .lineLimit(4)
                                 .foregroundColor(Clr.black2)
                                 .padding(.top, 5)
@@ -49,8 +49,8 @@ struct HomeSquare: View {
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: width * 0.18, height: height * 0.135, alignment: .center)
-                        .padding(.leading, -22)
+                        .frame(width: width * 0.175, height: height * 0.135, alignment: .center)
+                        .padding(.leading, -16)
                 }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
                          , alignment: .topLeading)
         }

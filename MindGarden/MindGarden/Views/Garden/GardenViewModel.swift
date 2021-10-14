@@ -19,7 +19,8 @@ class GardenViewModel: ObservableObject {
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
     @Published var recentMeditations: [Meditation] = []
-    var medIds: [String] = [] //TODO turn this into a set 
+    var medIds: [String] = [] //TODO turn this into a set
+
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -232,9 +233,7 @@ class GardenViewModel: ObservableObject {
                         self.grid[Date().get(.year)] = [Date().get(.month): [Date().get(.day): [key: [saveValue]]]]
                     }
                 }
-                if key == "sessions" {
-                    self.getRecentMeditations()
-                }
+
                 self.db.collection(K.userPreferences).document(email).updateData([
                     "gardenGrid": self.grid,
                     "totalMins": self.allTimeMinutes,
@@ -245,7 +244,11 @@ class GardenViewModel: ObservableObject {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
                         print("Succesfully saved garden model")
+
                         self.populateMonth()
+                        if key == "sessions" {
+                            self.getRecentMeditations()
+                        }
                     }
                 }
             }

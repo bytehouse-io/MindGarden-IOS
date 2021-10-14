@@ -56,7 +56,10 @@ struct PurchaseModal: View {
                         .minimumScaleFactor(0.05)
                         .lineLimit(5)
                         HStack(spacing: 10){
-                            userModel.willBuyPlant?.title == "Aloe" || userModel.willBuyPlant?.title == "Monstera" ? Img.pot : Img.seed
+//                            userModel.willBuyPlant?.title == "Aloe" || userModel.willBuyPlant?.title == "Monstera" ?
+//                            Img.pot
+//                            :
+                            Img.seed
                             Image(systemName: "arrow.right")
                             userModel.willBuyPlant?.one
                                 .resizable()

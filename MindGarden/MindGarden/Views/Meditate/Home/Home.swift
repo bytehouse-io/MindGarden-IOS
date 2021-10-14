@@ -54,7 +54,8 @@ struct Home: View {
                                         Text("\(userCoins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                     }.padding(.trailing, 20)
-                                    .padding(.top, -20)
+                                    .padding(.top, -10)
+                                    .padding(.bottom, 10)
                                 }
                             }
                             .padding(.top, -30)
@@ -160,11 +161,11 @@ struct Home: View {
                                                     .font(.system(size: K.isPad() ? 50 : 26))
                                             }.offset(x: 20, y: K.isPad() ? 30 : 10)
                                             .padding([.top, .leading])
-                                            (model.featuredMeditation?.img ?? Img.morningSun)
+                                            (model.featuredMeditation?.img ?? Img.daisy3)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
-                                                .offset(x: K.isPad() ? -150 : -40, y: K.isPad() ? -40 : -25)
+                                                .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
                                         }.padding([.top, .bottom, .trailing])
                                     }).padding(.top, 20)
                             }.buttonStyle(NeumorphicPress())
@@ -290,7 +291,7 @@ struct Home: View {
                         showSearch = true
                     }
             )
-            .sheet(isPresented: $showPlantSelect, content: {
+            .popover(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
             .sheet(isPresented: $showSearch, content: {

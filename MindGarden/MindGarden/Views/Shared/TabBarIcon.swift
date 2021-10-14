@@ -37,7 +37,7 @@ struct TabBarIcon: View {
             Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
             withAnimation {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single"  {
                     viewRouter.currentPage = assignedPage
                 }
             }

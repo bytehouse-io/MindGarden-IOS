@@ -63,17 +63,17 @@ class MeditationViewModel: ObservableObject {
 
     private func getFeaturedMeditation()  {
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 }
-        if Calendar.current.component( .hour, from:Date() ) > 16 {
+            med.type != .lesson && med.id != 22 }
+        if Calendar.current.component( .hour, from:Date() ) < 16 {
             filtedMeds = Meditation.allMeditations.filter { med in
-                med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 && med.id != 27 }
+                med.type != .lesson && med.id != 22 && med.id != 27 }
         } 
         let randomInt = Int.random(in: 0..<filtedMeds.count)
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+                featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
             } else {
                 featuredMeditation = filtedMeds[randomInt]
             }
@@ -170,7 +170,12 @@ class MeditationViewModel: ObservableObject {
                     playImage = Img.seed
                 }
                 if secondsRemaining <= 0 {
-                    bellPlayer.play()
+                    if let med = self.selectedMeditation {
+                        if med.id != 27 {
+                            bellPlayer.play()
+                        }
+                    }
+
                     stop()
                     if self.selectedMeditation?.id == 13 {
                         UserDefaults.standard.setValue(true, forKey: "beginnerCourse")

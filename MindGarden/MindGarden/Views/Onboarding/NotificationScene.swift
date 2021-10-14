@@ -150,12 +150,12 @@ struct NotificationScene: View {
                             }
                         }.frame(width: width * 0.9)
                         .padding(.top, 40)
-                        if bottomSheetShown {
-                            Color.black
-                                .opacity(0.2)
-                                .edgesIgnoringSafeArea(.all)
-                            Spacer()
-                        }
+                    }
+                    if bottomSheetShown  {
+                        Color.black
+                            .opacity(0.3)
+                            .edgesIgnoringSafeArea(.all)
+                        Spacer()
                     }
                 }
                 BottomSheetView(

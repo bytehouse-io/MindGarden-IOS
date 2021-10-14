@@ -52,7 +52,7 @@ struct OnboardingModal: View {
                                     .padding(.leading)
                             }.buttonStyle(NeumorphicPress())
                         }.frame(width: g.size.width * 0.65, height: g.size.height * 0.45, alignment: .center)
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.55, alignment: .center)
+                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.50, alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(12)
                     Spacer()
