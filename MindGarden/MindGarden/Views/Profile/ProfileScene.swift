@@ -210,7 +210,7 @@ struct ProfileScene: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     profileModel.signOut()
                                     UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
-                                    UserDefaults.standard.setValue("Red Tulip", forKey: K.defaults.selectedPlant)
+                                    UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                                     withAnimation {
                                         viewRouter.currentPage = .authentication
                                     }

@@ -19,7 +19,7 @@ struct Store: View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     HStack(alignment: .top, spacing: 20) {
                         if K.isPad() {
                             Spacer()

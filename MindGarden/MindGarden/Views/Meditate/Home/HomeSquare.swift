@@ -24,6 +24,7 @@ struct HomeSquare: View {
                 .overlay(
                     HStack(alignment: .center) {
                         VStack(alignment: .leading, spacing: -2) {
+                            Spacer()
                             Text(title)
                                 .frame(width: width * 0.225, alignment: .leading)
                                 .font(Font.mada(.semiBold, size: K.isPad() ? 28 : 16))
@@ -44,13 +45,14 @@ struct HomeSquare: View {
                                     .font(.caption)
                             }
                             .padding(.top, 5)
+                            Spacer()
                     }.padding(.leading, 25)
                         .frame(width: width * 0.25, height: height * 0.18, alignment: .top)
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: width * 0.175, height: height * 0.135, alignment: .center)
-                        .padding(.leading, -16)
+                        .padding(.leading, -20)
                 }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
                          , alignment: .topLeading)
         }
