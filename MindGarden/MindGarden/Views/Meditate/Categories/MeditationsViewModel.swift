@@ -61,7 +61,7 @@ class MeditationViewModel: ObservableObject {
         getRecommendedMeds()
     }
 
-    private func getFeaturedMeditation()  {
+    func getFeaturedMeditation()  {
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 }
         if Calendar.current.component( .hour, from:Date() ) < 16 {

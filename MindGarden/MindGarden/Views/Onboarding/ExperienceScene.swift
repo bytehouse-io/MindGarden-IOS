@@ -44,7 +44,6 @@ struct ExperienceScene: View {
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
-                                    UserDefaults.standard.set(selected, forKey: "experience")
                                     switch selected {
                                     case "Meditate often":
                                         Analytics.shared.log(event: .experience_tapped_alot)
@@ -74,6 +73,8 @@ struct ExperienceScene: View {
                         }
                 }
             }
+        }.onDisappear {
+            meditationModel.getFeaturedMeditation()
         }
     }
 
@@ -89,6 +90,7 @@ struct ExperienceScene: View {
                 withAnimation {
                     selected = title
                     UserDefaults.standard.setValue(title, forKey: "experience")
+                    print("george", title)
                 }
             } label: {
                 ZStack {

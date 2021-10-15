@@ -58,7 +58,7 @@ struct Home: View {
                                     .padding(.bottom, 10)
                                 }
                             }
-                            .padding(.top, -30)
+                            .padding(.top, K.isSmall() ? -50 : -30 )
                             HStack {
                                 Button {
                                     Analytics.shared.log(event: .home_tapped_bonus)
@@ -152,6 +152,7 @@ struct Home: View {
                                         .offset(x: 20, y: 30)
                                         .frame(width: g.size.width * 0.85 * 0.6)
                                         .padding(K.isPad() ? 20 : 0)
+                                        .padding(.top, -5)
                                         VStack(spacing: 0) {
                                             ZStack {
                                                 Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
@@ -167,7 +168,7 @@ struct Home: View {
                                                 .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
                                                 .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
                                         }.padding([.top, .bottom, .trailing])
-                                    }).padding(.top, 20)
+                                    }).padding(.top, K.isSmall() ? 10 : 20)
                             }.buttonStyle(NeumorphicPress())
                             VStack(spacing: 1) {
                                 HStack {
@@ -255,7 +256,7 @@ struct Home: View {
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.semiBold, size: 20))
                                     )
-                                }.padding(.top, 20)
+                                }.padding(.top, 10)
                                 .buttonStyle(NeumorphicPress())
                             } else {
                                 // Fallback on earlier versions
