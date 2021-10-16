@@ -177,8 +177,14 @@ class MeditationViewModel: ObservableObject {
                     }
 
                     stop()
-                    if self.selectedMeditation?.id == 13 {
-                        UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
+                    switch selectedMeditation?.id {
+                    case 11: UserDefaults.standard.setValue(true, forKey: "day5")
+                    case 12: UserDefaults.standard.setValue(true, forKey: "day6")
+                    case 13: UserDefaults.standard.setValue(true, forKey: "day7")
+                    default: break
+                    }
+                    if UserDefaults.standard.bool(forKey: "day5") &&  UserDefaults.standard.bool(forKey: "day6") &&  UserDefaults.standard.bool(forKey: "day7") {
+                        UserDefaults.standard.setValue(true, forKey: "unlockStrawberry")
                     } else if self.selectedMeditation?.id == 21 {
                         UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
                     }

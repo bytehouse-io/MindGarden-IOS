@@ -37,8 +37,14 @@ struct MiddleSelect: View {
                                     .neoShadow()
                                 ScrollView(showsIndicators: false) {
                                     VStack(spacing: 0) {
-                                        Text("Selected Plant: \(userModel.selectedPlant?.title ?? "none")")
-                                        .foregroundColor(Clr.black2)
+                                        HStack {
+                                            Text("Selected Plant:")
+                                            userModel.selectedPlant?.head
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20)
+                                            Text("\(userModel.selectedPlant?.title ?? "none")")
+                                        }.foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 16))
                                         .padding(.top)
                                     HStack(spacing: 0) {

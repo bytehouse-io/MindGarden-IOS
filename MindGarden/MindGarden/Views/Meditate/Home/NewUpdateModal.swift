@@ -51,7 +51,7 @@ struct NewUpdateModal: View {
                         .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                         .padding(.bottom, 10)
 
-                        Text("- 😊 Dante (Founder of MindGarden)")
+                        Text("- 🥳 Dante (Founder of MindGarden)")
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .trailing)
                             .padding(.bottom, 10)
                         Button {

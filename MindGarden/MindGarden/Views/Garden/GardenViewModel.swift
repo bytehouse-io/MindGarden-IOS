@@ -168,6 +168,7 @@ class GardenViewModel: ObservableObject {
     }
  
     func updateSelf() {
+        print("updating self")
         if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
             self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) })
         } else {

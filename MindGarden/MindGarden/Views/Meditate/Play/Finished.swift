@@ -18,6 +18,7 @@ struct Finished: View {
     @State private var isOnboarding = false
     @State private var animateViews = false
     @State private var favorited = false
+    @State private var showUnlockedModal = false
 
     var minsMed: Int {
         if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
@@ -167,16 +168,26 @@ struct Finished: View {
                         Spacer()
                     }.frame(width: g.size.width, height: g.size.height)
                     .offset(y: -60)
+                    if showUnlockedModal {
+                        Color.black
+                            .opacity(0.3)
+                            .edgesIgnoringSafeArea(.all)
+                        Spacer()
+                    }
+                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
+                        .offset(y: showUnlockedModal ? 0 : g.size.height)
+                        .animation(.default)
                 }
             }
         }.transition(.move(edge: .trailing))
         .animation(.easeIn)
+
         .onDisappear {
             model.playImage = Img.seed
             model.lastSeconds = false
         }
         .onAppear {
-            print("what?")
+            showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
             favorited = model.isFavorited
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 Analytics.shared.log(event: .onboarding_finished_meditation)

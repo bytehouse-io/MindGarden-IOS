@@ -11,7 +11,7 @@ import Firebase
 
 var userCoins: Int = 0
 class UserViewModel: ObservableObject {
-    @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redTulipsBadge)]
+    @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge)]
     @Published var selectedPlant: Plant?
     @Published var willBuyPlant: Plant?
     private var validationCancellables: Set<AnyCancellable> = []
@@ -48,7 +48,7 @@ class UserViewModel: ObservableObject {
                     if let joinDate = document[K.defaults.joinDate] as? String {
                         self.joinDate = joinDate
                     }
-                
+
                     if let coins = document[K.defaults.coins] as? Int {
                         userCoins = coins
                         UserDefaults.standard.set(userCoins, forKey: "coins")
@@ -62,7 +62,7 @@ class UserViewModel: ObservableObject {
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.plants.filter({ plant in
-                           return fbPlants.contains(where: { str in
+                            return fbPlants.contains(where: { str in
                                 plant.title == str
                             })
                         })
@@ -91,11 +91,13 @@ class UserViewModel: ObservableObject {
         }
     }
 
-    func buyPlant() {
+    func buyPlant(isUnlocked: Bool = false) {
         userCoins -= willBuyPlant?.price ?? 0
         if let plant = willBuyPlant {
             ownedPlants.append(plant)
-            selectedPlant = willBuyPlant
+            if !isUnlocked {
+                selectedPlant = willBuyPlant
+            }
             var finalPlants: [String] = [String]()
             if let email = Auth.auth().currentUser?.email {
                 let docRef = db.collection(K.userPreferences).document(email)

@@ -35,6 +35,8 @@ enum AnalyticEvent {
     case onboarding_finished_stats //
     case onboarding_finished_single //
     case onboarding_finished_single_okay //
+    case onboarding_finished_single_course //
+    case onboarding_claimed_strawberry //
 
     //MARK: - Authentication
     case screen_load_onboarding_signup //
@@ -292,7 +294,9 @@ extension AnalyticEvent {
         case .onboarding_finished_stats: return "onboarding_finished_stats"
         case .onboarding_finished_single: return "onboarding_finshed_single"
         case .onboarding_finished_single_okay: return "onboarding_finshed_single_okay"
+        case .onboarding_finished_single_course: return "onboarding_finished_single_course"
         case .screen_load_onboarding_signup: return "screen_load_onboarding_signup"
+        case .onboarding_claimed_strawberry: return "onboarding_claimed_strawberry"
         case .screen_load_onboarding_signin:  return "screen_load_onboarding_signin:"
         case .screen_load_signup: return "screen_load_signup"
         case .screen_load_signin: return "screen_load_signin"
