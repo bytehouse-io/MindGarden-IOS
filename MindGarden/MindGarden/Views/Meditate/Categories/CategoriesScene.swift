@@ -122,6 +122,7 @@ struct CategoriesScene: View {
     var backButton: some View {
         Button {
             if isSearch {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 self.presentationMode.wrappedValue.dismiss()
             } else {
@@ -152,6 +153,7 @@ struct CategoriesScene: View {
 
         var body: some View {
             Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 Analytics.shared.log(event: AnalyticEvent.getCategory(category: category.value))
                 withAnimation {
                     selected = category

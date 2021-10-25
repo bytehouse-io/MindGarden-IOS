@@ -302,6 +302,7 @@ struct Home: View {
             })
         }.transition(.move(edge: .leading))
         .onAppear {
+            print(gardenModel.medIds, "kimse")
             showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
         }
         .onAppearAnalytics(event: .screen_load_home)

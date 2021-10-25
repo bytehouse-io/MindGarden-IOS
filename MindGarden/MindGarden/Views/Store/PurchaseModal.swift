@@ -75,7 +75,7 @@ struct PurchaseModal: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.width * 0.2)
-                        }
+                        }.padding(.horizontal, 10)
                         Button {
                             Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
                             if userCoins >= userModel.willBuyPlant?.price ?? 0 {

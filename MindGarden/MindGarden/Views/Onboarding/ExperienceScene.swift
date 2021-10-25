@@ -110,6 +110,9 @@ struct ExperienceScene: View {
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)
                         img
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: width * 0.15)
                     }
                 }
             }.buttonStyle(NeumorphicPress())

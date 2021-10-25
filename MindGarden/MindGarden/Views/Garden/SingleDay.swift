@@ -22,7 +22,7 @@ struct SingleDay: View {
     @State var plant: Plant?
     @State var sessionCounter: Int = 0
     @State var isOnboarding = false
-    @State var showOnboardingModal = true
+    @State var showOnboardingModal = false
     
     init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
         self._showSingleModal = showSingleModal

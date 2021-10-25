@@ -33,70 +33,69 @@ class GardenViewModel: ObservableObject {
     }
 
     func getRecentMeditations() {
-        if totalSessions >= 1 {
-            medIds = [String]()
-            grid.values.forEach { value in //TODO sort years
-                let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
-                for mo in months  {
-                    if let singleDay = value[String(mo)]{
-                        let days = singleDay.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
-                        for day in days { // we can improve performance by stopping when we get the last two different sessions
-                            if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
-                                for sess in sessions {
-                                    medIds.append(sess["meditationId"] ?? "1")
-                                }
+        medIds = [String]()
+        print(grid, "grid")
+        grid.values.forEach { value in //TODO sort years
+            let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
+            for mo in months  {
+                if let singleDay = value[String(mo)]{
+                    let days = singleDay.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
+                    for day in days { // we can improve performance by stopping when we get the last two different sessions
+                        if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
+                            for sess in sessions {
+                                medIds.append(sess["meditationId"] ?? "1")
                             }
                         }
                     }
                 }
-
-                var med1: Meditation?
-                var med2: Meditation?
-                var ids = [Int]()
-                if medIds.count >= 1 {
-                     med1 = Meditation.allMeditations.first(where: { medd in
-                        String(medd.id) == medIds[0]
-                    })
-                    if med1?.type == .lesson {
-                        let parentCourse = Meditation.allMeditations.first { medd in
-                            medd.title == med1?.belongsTo
-                        }
-                        med1 = parentCourse
-                    }
-                }
-
-                var index = 0
-                while index < medIds.count {
-                    if med2 != nil && med1 != med2 {
-                        break
-                    } else {
-                        med2 = Meditation.allMeditations.first(where: { medd in
-                           String(medd.id) == medIds[index]
-                       })
-                        if med2?.type == .lesson {
-                            let parentCourse = Meditation.allMeditations.first { medd in
-                                medd.title == med2?.belongsTo
-                            }
-                            med2 = parentCourse
-                        }
-                    }
-                    index += 1
-                }
-                recentMeditations = []
-                if med1 != nil {
-                    recentMeditations.append(med1!)
-                    ids.append(med1!.id)
-                }
-
-                if med2 != nil {
-                    if med1 != med2 {
-                        recentMeditations.append(med2!)
-                        ids.append(med2!.id)
-                    }
-                }
-
-                UserDefaults.standard.setValue(ids, forKey: "recent")
             }
+
+            var med1: Meditation?
+            var med2: Meditation?
+            var ids = [Int]()
+            if medIds.count >= 1 {
+                med1 = Meditation.allMeditations.first(where: { medd in
+                    String(medd.id) == medIds[0]
+                })
+                if med1?.type == .lesson {
+                    let parentCourse = Meditation.allMeditations.first { medd in
+                        medd.title == med1?.belongsTo
+                    }
+                    med1 = parentCourse
+                }
+            }
+
+            var index = 0
+            while index < medIds.count {
+                if med2 != nil && med1 != med2 {
+                    break
+                } else {
+                    med2 = Meditation.allMeditations.first(where: { medd in
+                        String(medd.id) == medIds[index]
+                    })
+                    if med2?.type == .lesson {
+                        let parentCourse = Meditation.allMeditations.first { medd in
+                            medd.title == med2?.belongsTo
+                        }
+                        med2 = parentCourse
+                    }
+                }
+                index += 1
+            }
+            recentMeditations = []
+            if med1 != nil {
+                recentMeditations.append(med1!)
+                ids.append(med1!.id)
+            }
+
+            if med2 != nil {
+                if med1 != med2 {
+                    recentMeditations.append(med2!)
+                    ids.append(med2!.id)
+                }
+            }
+
+            UserDefaults.standard.setValue(ids, forKey: "recent")
         }
     }
 
@@ -166,14 +165,12 @@ class GardenViewModel: ObservableObject {
             }
         }
     }
- 
+
     func updateSelf() {
-        print("updating self")
         if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
             self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) })
-        } else {
-            self.getRecentMeditations()
         }
+
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
@@ -187,6 +184,7 @@ class GardenViewModel: ObservableObject {
                         self.allTimeSessions = allTimeSess
                     }
                     self.populateMonth()
+                    self.getRecentMeditations()
                 }
             }
         }
@@ -204,7 +202,6 @@ class GardenViewModel: ObservableObject {
                     }
                 }
             }
-            print(self.allTimeMinutes, "goat")
         }
         
         if let email = Auth.auth().currentUser?.email {
