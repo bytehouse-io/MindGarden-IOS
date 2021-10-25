@@ -94,8 +94,8 @@ struct NotificationScene: View {
                                             UserDefaults.standard.setValue(dateTime, forKey: "notif")
                                             UserDefaults.standard.setValue(true, forKey: "notifOn")
                                             let content = UNMutableNotificationContent()
-                                            content.title = "It's time to meditate"
-                                            content.subtitle = "Let's grow and become 1% happier and more present today."
+                                            content.title = "It's time to meditate!"
+                                            content.subtitle = "Let's tend to our garden & become happier."
                                             content.sound = UNNotificationSound.default
 
                                             let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateTime)
@@ -116,7 +116,6 @@ struct NotificationScene: View {
                                         } else if let error = error {
                                             print(error.localizedDescription)
                                         } else {
-                                            
                                             if fromSettings {
                                                 presentationMode.wrappedValue.dismiss()
                                             } else {

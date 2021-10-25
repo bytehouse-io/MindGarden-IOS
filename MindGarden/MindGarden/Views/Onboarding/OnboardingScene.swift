@@ -108,9 +108,11 @@ struct OnboardingScene: View {
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
-            .onAppear(perform: {
+        .onAppear(perform: {
+
                 UIScrollView.appearance().bounces = false
-            })
+        })
+
     }
 }
 

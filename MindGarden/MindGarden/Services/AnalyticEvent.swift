@@ -10,6 +10,8 @@ import Foundation
 enum AnalyticEvent {
     //MARK: - Onboarding
     case screen_load_onboarding //
+    case onboarding_notification_on
+    case onboarding_notification_off
     case onboarding_tapped_continue //
     case onboarding_tapped_sign_in //
     //experience
@@ -288,6 +290,8 @@ extension AnalyticEvent {
         case .notification_success: return "notification_success"
         case .notification_tapped_skip: return "notification_tapped_skip"
         case .onboarding_finished_mood: return "onboarding_finished_mood"
+        case .onboarding_notification_off: return "onboarding_notification_off"
+        case .onboarding_notification_on: return "onboarding_notification_on"
         case .onboarding_finished_gratitude: return "onboarding_finished_meditation"
         case .onboarding_finished_meditation: return "onboarding_finished_meditation"
         case .onboarding_finished_calendar: return "onboarding_finished_calendar"

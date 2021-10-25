@@ -18,6 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 
 //        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                Analytics.shared.log(event: .onboarding_notification_on)
+            } else {
+                Analytics.shared.log(event: .onboarding_notification_off)
+            }
+        }
         let router = ViewRouter()
         let medModel = MeditationViewModel()
         let userModel = UserViewModel()

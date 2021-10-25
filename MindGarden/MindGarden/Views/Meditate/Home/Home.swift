@@ -230,7 +230,6 @@ struct Home: View {
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, description: meditation.description, duration: meditation.duration)
                                             }.buttonStyle(NeumorphicPress())
-                                            .padding(.leading, model.favoritedMeditations.count == 1 ? 25 : 0 )
                                         }
                                     }
                                     if !isRecent && model.favoritedMeditations.count == 1 {
