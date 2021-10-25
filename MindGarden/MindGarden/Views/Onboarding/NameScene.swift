@@ -34,6 +34,7 @@ struct NameScene: View {
                                 )
                                 .frame(width: width * 0.8, height: 60)
                                 .neoShadow()
+                                .disableAutocorrection(true)
                             Spacer()
                             Button {
                                 Analytics.shared.log(event: .name_tapped_continue)

@@ -52,6 +52,7 @@ struct Authentication: View {
                                         focusedText = focused
                                     }
                                 })
+                                    .disableAutocorrection(true)
                                     .foregroundColor(Color.black)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
@@ -76,6 +77,7 @@ struct Authentication: View {
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
                                     .padding(.trailing, 60)
+                                    .disableAutocorrection(true)
                                 Image(systemName: isPasswordValid ? "xmark" : "checkmark")
                                     .foregroundColor(isPasswordValid ? Color.red : Clr.brightGreen)
                                     .offset(x: -40)

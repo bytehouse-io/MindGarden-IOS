@@ -101,11 +101,9 @@ struct Finished: View {
                                     .offset(y: 0)
                                 Spacer()
                                 ZStack {
-                                    if isOnboarding {
-                                        LottieView(fileName: "confetti")
-                                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-                                            .offset(x: 0, y: -g.size.height * 0.5)
-                                    }
+                                    LottieView(fileName: "confetti")
+                                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                                        .offset(x: 0, y: -g.size.height * 0.5)
                                     HStack {
                                         Image(systemName: favorited ? "heart.fill" : "heart")
                                             .font(.system(size: 36, weight: .bold))

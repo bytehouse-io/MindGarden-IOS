@@ -144,6 +144,13 @@ struct Play: View {
                                         } else {
                                             mainPlayer.play()
                                         }
+
+                                    }
+
+                                    if player.isPlaying {
+                                        player.pause()
+                                    } else {
+                                        player.play()
                                     }
 
                                     if timerStarted {

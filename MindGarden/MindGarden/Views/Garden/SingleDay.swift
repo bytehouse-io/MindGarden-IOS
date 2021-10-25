@@ -50,8 +50,10 @@ struct SingleDay: View {
                                         Button {
                                             Analytics.shared.log(event: .garden_tapped_single_previous_session)
                                             withAnimation {
-                                                sessionCounter -= 1
-                                                updateSession()
+                                                if sessionCounter > 0 {
+                                                    sessionCounter -= 1
+                                                    updateSession()
+                                                }
                                             }
                                         } label: {
                                             Image(systemName: "chevron.left")
@@ -76,8 +78,10 @@ struct SingleDay: View {
                                         Button {
                                             Analytics.shared.log(event: .garden_tapped_single_next_session)
                                             withAnimation {
-                                                sessionCounter += 1
-                                                updateSession()
+                                                if sessionCounter < totalSessions - 1 {
+                                                    sessionCounter += 1
+                                                    updateSession()
+                                                }
                                             }
                                         } label: {
                                             Image(systemName: "chevron.right")
@@ -236,7 +240,7 @@ struct SingleDay: View {
 
     private func updateSession() {
         plant = Plant.plants.first(where: { plant in
-            plant.title == sessions?[sessionCounter][K.defaults.plantSelected]
+            return plant.title == sessions?[sessionCounter][K.defaults.plantSelected]
         })
         if let duration = sessions?[sessionCounter][K.defaults.duration] {
             self.minutesMeditated = (Double(duration) ?? 0.0).toInt() ?? 0

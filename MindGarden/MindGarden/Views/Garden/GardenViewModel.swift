@@ -34,7 +34,6 @@ class GardenViewModel: ObservableObject {
 
     func getRecentMeditations() {
         medIds = [String]()
-        print(grid, "grid")
         grid.values.forEach { value in //TODO sort years
             let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
             for mo in months  {
