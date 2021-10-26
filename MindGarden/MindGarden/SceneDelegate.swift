@@ -21,6 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 Analytics.shared.log(event: .onboarding_notification_on)
+                NotificationHelper.addOneDay()
+                NotificationHelper.addThreeDay()
             } else {
                 Analytics.shared.log(event: .onboarding_notification_off)
             }

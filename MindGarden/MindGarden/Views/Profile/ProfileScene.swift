@@ -26,6 +26,7 @@ struct ProfileScene: View {
     @State private var mailNeedsSetup = false
     @State private var notificationOn = false
     @State private var showNotif = false
+    @State private var dateTime = Date()
 
     var body: some View {
         VStack {
@@ -231,7 +232,7 @@ struct ProfileScene: View {
                 .onAppear {
                     // Set the default to clear
                     UITableView.appearance().backgroundColor = .clear
-                    UITableView.appearance().isScrollEnabled = false
+//                    UITableView.appearance().isScrollEnabled = false
                     profileModel.update(userModel: userModel, gardenModel: gardenModel)
                 }
                 .sheet(isPresented: $showMailView) {

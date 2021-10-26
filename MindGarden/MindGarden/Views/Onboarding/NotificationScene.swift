@@ -12,6 +12,7 @@ struct NotificationScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var dateTime = Date()
     @State private var bottomSheetShown = false
+    @State private var showAlert = false
     var fromSettings: Bool
 
     var displayedTime: String {
@@ -88,41 +89,51 @@ struct NotificationScene: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                                 withAnimation {
-                                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                                        if success {
-                                            Analytics.shared.log(event: .notification_success)
-                                            UserDefaults.standard.setValue(dateTime, forKey: "notif")
-                                            UserDefaults.standard.setValue(true, forKey: "notifOn")
-                                            let content = UNMutableNotificationContent()
-                                            content.title = "It's time to meditate!"
-                                            content.subtitle = "Let's tend to our garden & become happier."
-                                            content.sound = UNNotificationSound.default
+                                    let current = UNUserNotificationCenter.current()
+                                            current.getNotificationSettings(completionHandler: { permission in
+                                                switch permission.authorizationStatus  {
+                                                case .authorized:
+                                                    Analytics.shared.log(event: .notification_success)
+                                                    UserDefaults.standard.setValue(dateTime, forKey: "notif")
+                                                    UserDefaults.standard.setValue(true, forKey: "notifOn")
+                                                    let content = UNMutableNotificationContent()
+                                                    content.title = "It's time to meditate!"
+                                                    content.subtitle = "Let's tend to our garden & become happier."
+                                                    content.sound = UNNotificationSound.default
 
-                                            let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateTime)
-                                            let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+                                                    let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateTime)
+                                                    let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
 
-                                            // choose a random identifier
-                                            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                                                    // choose a random identifier
+                                                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
-                                            // add our notification request
-                                            UNUserNotificationCenter.current().add(request)
-                                            DispatchQueue.main.async {
-                                                if fromSettings {
-                                                    presentationMode.wrappedValue.dismiss()
-                                                } else {
-                                                    viewRouter.currentPage = .name
+                                                    // add our notification request
+                                                    UNUserNotificationCenter.current().add(request)
+                                                    DispatchQueue.main.async {
+                                                        if fromSettings {
+                                                            presentationMode.wrappedValue.dismiss()
+                                                        } else {
+                                                            viewRouter.currentPage = .name
+                                                        }
+                                                    }
+                                                case .denied:
+                                                    Analytics.shared.log(event: .notification_go_to_settings)
+                                                    DispatchQueue.main.async {
+                                                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                                                            UIApplication.shared.open(appSettings)
+                                                        }
+                                                    }
+                                                case .notDetermined:
+                                                    Analytics.shared.log(event: .notification_go_to_settings)
+                                                    DispatchQueue.main.async {
+                                                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                                                            UIApplication.shared.open(appSettings)
+                                                        }
+                                                    }
+                                                default:
+                                                    print("Unknow Status")
                                                 }
-                                            }
-                                        } else if let error = error {
-                                            print(error.localizedDescription)
-                                        } else {
-                                            if fromSettings {
-                                                presentationMode.wrappedValue.dismiss()
-                                            } else {
-                                                viewRouter.currentPage = .name
-                                            }
-                                        }
-                                    }
+                                            })
                                 }
                             } label: {
                                 Capsule()
@@ -162,27 +173,23 @@ struct NotificationScene: View {
                     isOpen: self.$bottomSheetShown,
                     maxHeight: g.size.height * (fromSettings ? 0.45 : 0.6)
                 ) {
-                    if fromSettings {
-                        HStack {
-                            if #available(iOS 14.0, *) {
-                                DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
-                                    .datePickerStyle(CompactDatePickerStyle())
-                                    .labelsHidden()
-                                    .offset(y: -25)
-                            } else {
-                                // Fallback on earlier versions
-                            }
-                        }.frame(width: width, alignment: .center)
-                    } else {
-                        DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
-                            .datePickerStyle(WheelDatePickerStyle())
-                            .labelsHidden()
-                            .offset(y: -25)
-                    }
 
-                }.offset(y: g.size.height * 0.3)
+                    DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .labelsHidden()
+                        .offset(y: -25)
+                }.offset(y: g.size.height * (fromSettings ? 0.1 : 0.3))
             }
         }.onAppearAnalytics(event: .screen_load_notification)
+//            .alert(isPresented: $showAlert) {
+//                Alert(title: Text("Turn on Notifications"), message: Text("We'll do our best not to annoy you"), dismissButton: .default(Text("Go to Settings"), action: {
+//                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+//                        UIApplication.shared.open(appSettings)
+//                    }
+//                    showAlert = false
+//                }))
+//            }
+
     }
 }
 

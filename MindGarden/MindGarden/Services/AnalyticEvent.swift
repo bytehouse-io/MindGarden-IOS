@@ -29,6 +29,7 @@ enum AnalyticEvent {
     case notification_tapped_turn_on //
     case notification_success //
     case notification_tapped_skip //
+    case notification_go_to_settings
     // home + garden
     case onboarding_finished_mood //
     case onboarding_finished_gratitude //
@@ -289,6 +290,7 @@ extension AnalyticEvent {
         case .notification_tapped_turn_on: return "notifcation_tapped_turn_on"
         case .notification_success: return "notification_success"
         case .notification_tapped_skip: return "notification_tapped_skip"
+        case .notification_go_to_settings: return "notification_go_to_settings"
         case .onboarding_finished_mood: return "onboarding_finished_mood"
         case .onboarding_notification_off: return "onboarding_notification_off"
         case .onboarding_notification_on: return "onboarding_notification_on"
