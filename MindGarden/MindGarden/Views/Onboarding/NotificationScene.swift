@@ -94,6 +94,12 @@ struct NotificationScene: View {
                                                 switch permission.authorizationStatus  {
                                                 case .authorized:
                                                     Analytics.shared.log(event: .notification_success)
+                                                    if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                                                        NotificationHelper.addOneDay()
+                                                    }
+                                                    if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                                                        NotificationHelper.addThreeDay()
+                                                    }
                                                     UserDefaults.standard.setValue(dateTime, forKey: "notif")
                                                     UserDefaults.standard.setValue(true, forKey: "notifOn")
                                                     let content = UNMutableNotificationContent()
@@ -171,14 +177,14 @@ struct NotificationScene: View {
                 BottomSheetView(
                     dateSelected: $dateTime,
                     isOpen: self.$bottomSheetShown,
-                    maxHeight: g.size.height * (fromSettings ? 0.45 : 0.6)
+                    maxHeight: g.size.height * 0.6
                 ) {
 
                     DatePicker("", selection: $dateTime, displayedComponents: .hourAndMinute)
                         .datePickerStyle(WheelDatePickerStyle())
                         .labelsHidden()
                         .offset(y: -25)
-                }.offset(y: g.size.height * (fromSettings ? 0.1 : 0.3))
+                }.offset(y: g.size.height * 0.3)
             }
         }.onAppearAnalytics(event: .screen_load_notification)
 //            .alert(isPresented: $showAlert) {

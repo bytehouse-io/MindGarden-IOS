@@ -32,8 +32,8 @@ struct Authentication: View {
     }
 
     var body: some View {
-        LoadingView(isShowing: $viewModel.isLoading) {
             NavigationView {
+                LoadingView(isShowing: $viewModel.isLoading) {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack(spacing: 0)  {
@@ -89,7 +89,7 @@ struct Authentication: View {
                         .frame(height: 60)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                            viewModel.isLoading = true
+                            viewModel.isLoading = true
                             if isSignUp {
                                 viewModel.signUp()
                             } else {
@@ -218,6 +218,8 @@ struct Authentication: View {
                     medModel.updateSelf()
                 }
             }.onAppear {
+//                viewModel.isLoading = true
+
                 if !tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_onboarding_signup)
                 } else if !tappedSignOut {
