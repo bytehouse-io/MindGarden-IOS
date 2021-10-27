@@ -8,7 +8,7 @@
 import GoogleSignIn
 import FirebaseAuth
 import Firebase
-import CryptoKit
+import CryptoKit 
 import SwiftUI
 import AuthenticationServices
 import Combine
@@ -77,6 +77,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         alertError = true
                                         alertMessage = "Email is not associated with account, please try using a different sign in method"
                                         UserDefaults.standard.set(true, forKey: "falseAppleId")
+                                        isLoading = false
                                         falseAppleId = true
                                         return
                                     } else { // sign up
@@ -85,6 +86,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                 alertError = true
                                                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
                                                 print(error?.localizedDescription ?? "high roe")
+                                                isLoading = false
                                                 return
                                             }
                                             //User never used this appleid before
@@ -103,12 +105,14 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     if isSignUp {
                                         alertError = true
                                         alertMessage = "Please use the login page"
+                                        isLoading = false
                                         return
                                     } else { // login
                                         Auth.auth().signIn(with: credential, completion: { (user, error) in
                                             if (error != nil) {
                                                 alertError = true
                                                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                                isLoading = false
                                                 print(error?.localizedDescription ?? "high roe")
                                                 return
                                             }
@@ -176,6 +180,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 if let error = error {
                     alertError = true
                     alertMessage = error.localizedDescription
+                    isLoading = false
                 } else if let providers = providers {
                     if providers.count != 0 {
                         googleIsNew = false
@@ -207,18 +212,17 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 if let _ = error {
                     alertError = true
                     alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                    isLoading = false
                 } else {
                     if googleIsNew {
                         createUser()
+                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                    } else {
+                        UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
+                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                     }
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                        if isSignUp {
-                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                        } else {
-                            UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
-                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                        }
                         goToHome()
                     }
                     alertError = false
@@ -273,7 +277,6 @@ extension AuthenticationViewModel {
     }
 
     func signIn() {
-        print("sigining IN ")
         Auth.auth().signIn(withEmail: email, password: password) { [self] authResult, error in
 //            isLoading = false
             if error != nil {

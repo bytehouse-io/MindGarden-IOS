@@ -89,7 +89,7 @@ struct Authentication: View {
                         .frame(height: 60)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            viewModel.isLoading = true
+//                            viewModel.isLoading = true
                             if isSignUp {
                                 viewModel.signUp()
                             } else {
@@ -109,7 +109,7 @@ struct Authentication: View {
                             .frame(maxHeight: 100)
                             .disabled(true)
                         }.disabled(signUpDisabled)
-                            .onReceive(viewModel.validatedCredentials) {
+                        .onReceive(viewModel.validatedCredentials) {
                                 guard let credentials = $0 else {
                                     self.signUpDisabled = true
                                     return

@@ -54,7 +54,7 @@ class UserViewModel: ObservableObject {
                         UserDefaults.standard.set(userCoins, forKey: "coins")
                     }
 
-                    if tappedSignIn, let name = document["name"] as? String {
+                    if let name = document["name"] as? String {
                         self.name = name
                         UserDefaults.standard.set(self.name, forKey: "name")
                         tappedSignIn = false
