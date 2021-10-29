@@ -291,10 +291,10 @@ struct Home: View {
                         showSearch = true
                     }
             )
-            .popover(isPresented: $showPlantSelect, content: {
+            .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
-            .sheet(isPresented: $showSearch, content: {
+            .popover(isPresented: $showSearch, content: {
                 if #available(iOS 14.0, *) {
                     CategoriesScene(isSearch: true, showSearch: $showSearch)
                 }

@@ -254,6 +254,8 @@ struct Play: View {
                     let url = Bundle.main.path(forResource: "", ofType: "mp3")
                     player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 }
+            } else {
+                print("joma tech")
             }
 
             //bell at the end of a session
@@ -279,7 +281,9 @@ struct Play: View {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
             }
-            player.stop()
+            if player.isPlaying {
+                player.stop()
+            }
             if  model.selectedMeditation?.belongsTo != "Timed Meditation" {
                 if mainPlayer.isPlaying {
                     mainPlayer.stop()

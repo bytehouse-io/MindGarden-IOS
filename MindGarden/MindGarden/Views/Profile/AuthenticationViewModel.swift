@@ -72,7 +72,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 // User already signed in with this appleId once
 
                                 if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId")  { // new user
-                                    print("fact fact")
                                     if !isSignUp { // login
                                         alertError = true
                                         alertMessage = "Email is not associated with account, please try using a different sign in method"
@@ -96,6 +95,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                                                 if isSignUp {
                                                     UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                                                    UserDefaults.standard.setValue("nature", forKey: "sound")
                                                 }
                                                 goToHome()
                                             }
@@ -121,6 +121,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                UserDefaults.standard.setValue("nature", forKey: "sound")
                                                 goToHome()
                                             }
                                         })
@@ -221,6 +222,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                         UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                     }
+                    UserDefaults.standard.setValue("nature", forKey: "sound")
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                         goToHome()
@@ -271,6 +273,7 @@ extension AuthenticationViewModel {
                 if isSignUp {
                     UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                 }
+                UserDefaults.standard.setValue("nature", forKey: "sound")
                 goToHome()
             }
         }
