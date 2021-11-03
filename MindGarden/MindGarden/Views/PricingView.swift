@@ -62,10 +62,8 @@ struct PricingView: View {
                                                 .font(Font.mada(.regular, size: 14))
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
-                                        }                                                .padding(.trailing)
-
-
-                                        }
+                                        }.padding(.trailing)
+                                    }
                                 }
                             }.buttonStyle(NeumorphicPress())
                                 .frame(width: width * 0.8, height: height * 0.08)

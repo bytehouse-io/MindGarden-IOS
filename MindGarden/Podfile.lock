@@ -492,6 +492,9 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
+  - Purchases (3.12.8):
+    - PurchasesCoreSwift (= 3.12.8)
+  - PurchasesCoreSwift (3.12.8)
 
 DEPENDENCIES:
   - AppsFlyerFramework
@@ -500,6 +503,7 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/firebase/firebase-ios-sdk.git`, branch `master`)
   - GoogleSignIn (~> 5.0)
   - lottie-ios
+  - Purchases
 
 SPEC REPOS:
   trunk:
@@ -525,6 +529,8 @@ SPEC REPOS:
     - lottie-ios
     - nanopb
     - PromisesObjC
+    - Purchases
+    - PurchasesCoreSwift
 
 EXTERNAL SOURCES:
   FirebaseFirestore:
@@ -560,7 +566,9 @@ SPEC CHECKSUMS:
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Purchases: 4e410d75f18b544aba8aa41ddc4bffbf8e787246
+  PurchasesCoreSwift: 93fa64c1a70e7f493f54aba64e01ff42d1ed9109
 
-PODFILE CHECKSUM: 64054fc627c1ec1d7caac69fee90a67dbc80fa5a
+PODFILE CHECKSUM: df13b1250f64b76a2b3d8c31ad2a63471e01e695
 
 COCOAPODS: 1.11.2

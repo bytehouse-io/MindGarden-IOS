@@ -12,7 +12,7 @@ target 'MindGarden' do
    pod 'GoogleSignIn', '~> 5.0'
    pod 'lottie-ios'
    pod 'AppsFlyerFramework'
-
+   pod 'Purchases'
 
   target 'MindGardenTests' do
     inherit! :search_paths

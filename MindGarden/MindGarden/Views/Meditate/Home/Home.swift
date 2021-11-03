@@ -29,9 +29,10 @@ struct Home: View {
     
     var body: some View {
         NavigationView {
-                GeometryReader { g in
-                    ZStack {
-                        Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+            GeometryReader { g in
+                ZStack {
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+                    ScrollView(showsIndicators: false) {
                         VStack {
                             HStack {
                                 Spacer()
@@ -54,8 +55,8 @@ struct Home: View {
                                         Text("\(userCoins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                     }.padding(.trailing, 20)
-                                    .padding(.top, -10)
-                                    .padding(.bottom, 10)
+                                        .padding(.top, -10)
+                                        .padding(.bottom, 10)
                                 }
                             }
                             .padding(.top, K.isSmall() ? -50 : -30 )
@@ -135,40 +136,40 @@ struct Home: View {
                                     .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
                                     .neoShadow()
                                     .overlay(
-                                    HStack(alignment: .top) {
-                                        VStack(alignment: .leading) {
-                                            Text("Featured")
-                                                .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
-                                                .foregroundColor(Clr.black1)
-                                            Text("\(model.featuredMeditation?.title ?? "")")
-                                                .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
-                                                .foregroundColor(Clr.black1)
-                                                .lineLimit(3)
-                                                .minimumScaleFactor(0.05)
-                                            Spacer()
-                                        }
-                                        .padding(15)
-                                        .padding(.leading, 5)
-                                        .offset(x: 20, y: 30)
-                                        .frame(width: g.size.width * 0.85 * 0.6)
-                                        .padding(K.isPad() ? 20 : 0)
-                                        .padding(.top, -5)
-                                        VStack(spacing: 0) {
-                                            ZStack {
-                                                Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
-                                                    .foregroundColor(Clr.brightGreen)
-                                                Image(systemName: "play.fill")
-                                                    .foregroundColor(.white)
-                                                    .font(.system(size: K.isPad() ? 50 : 26))
-                                            }.offset(x: 20, y: K.isPad() ? 30 : 10)
-                                            .padding([.top, .leading])
-                                            (model.featuredMeditation?.img ?? Img.daisy3)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
-                                                .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
-                                        }.padding([.top, .bottom, .trailing])
-                                    }).padding(.top, K.isSmall() ? 10 : 20)
+                                        HStack(alignment: .top) {
+                                            VStack(alignment: .leading) {
+                                                Text("Featured")
+                                                    .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
+                                                    .foregroundColor(Clr.black1)
+                                                Text("\(model.featuredMeditation?.title ?? "")")
+                                                    .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
+                                                    .foregroundColor(Clr.black1)
+                                                    .lineLimit(3)
+                                                    .minimumScaleFactor(0.05)
+                                                Spacer()
+                                            }
+                                            .padding(15)
+                                            .padding(.leading, 5)
+                                            .offset(x: 20, y: 30)
+                                            .frame(width: g.size.width * 0.85 * 0.6)
+                                            .padding(K.isPad() ? 20 : 0)
+                                            .padding(.top, -5)
+                                            VStack(spacing: 0) {
+                                                ZStack {
+                                                    Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
+                                                        .foregroundColor(Clr.brightGreen)
+                                                    Image(systemName: "play.fill")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: K.isPad() ? 50 : 26))
+                                                }.offset(x: 20, y: K.isPad() ? 30 : 10)
+                                                    .padding([.top, .leading])
+                                                (model.featuredMeditation?.img ?? Img.daisy3)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
+                                                    .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
+                                            }.padding([.top, .bottom, .trailing])
+                                        }).padding(.top, K.isSmall() ? 10 : 20)
                             }.buttonStyle(NeumorphicPress())
                             VStack(spacing: 1) {
                                 HStack {
@@ -198,7 +199,7 @@ struct Home: View {
                                     .offset(x: isRecent ? -42.0 : 33.0)
                                     .animation(.default, value: isRecent)
                             }.frame(width: abs(g.size.width - 75), alignment: .leading)
-                            .padding(.top, 20)
+                                .padding(.top, 20)
                             ScrollView(.horizontal, showsIndicators: false, content: {
                                 HStack(spacing: 15) {
                                     if model.favoritedMeditations.isEmpty && !isRecent {
@@ -219,13 +220,13 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
                                                 Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
-                                                    if meditation.type == .course {
-                                                        withAnimation {
+                                                if meditation.type == .course {
+                                                    withAnimation {
                                                         viewRouter.currentPage = .middle
-                                                        }
-                                                    } else {
-                                                        viewRouter.currentPage = .play
                                                     }
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
 
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, description: meditation.description, duration: meditation.duration)
@@ -238,7 +239,7 @@ struct Home: View {
                                         Spacer()
                                     }
                                 }.frame(height: g.size.height * 0.25)
-                                .padding([.leading, .trailing], 25)
+                                    .padding([.leading, .trailing], 25)
                             }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
                             if #available(iOS 14.0, *) {
                                 Button {
@@ -249,19 +250,31 @@ struct Home: View {
                                         viewRouter.currentPage = .categories
                                     }
                                 } label: { RoundedRectangle(cornerRadius: 25)
-                                    .frame(width: g.size.width * 0.85, height: g.size.height/14)
-                                    .foregroundColor(Clr.yellow)
-                                    .overlay(Text("See All Categories")
-                                                .foregroundColor(Clr.black2)
-                                                .font(Font.mada(.semiBold, size: 20))
-                                    )
+                                        .frame(width: g.size.width * 0.85, height: g.size.height/14)
+                                        .foregroundColor(Clr.yellow)
+                                        .overlay(Text("See All Categories")
+                                                    .foregroundColor(Clr.black2)
+                                                    .font(Font.mada(.semiBold, size: 20))
+                                        )
                                 }.padding(.top, 10)
-                                .buttonStyle(NeumorphicPress())
+                                    .buttonStyle(NeumorphicPress())
                             } else {
                                 // Fallback on earlier versions
                             }
                             Spacer()
-                        }.scrollOnOverflow()
+                        }
+                        HStack(spacing: 15) {
+                            Text("\(numberOfMeds)")
+                                .font(Font.mada(.bold, size: 36))
+                                .foregroundColor(Clr.black1)
+                            Text("people are meditating \nright now")
+                                .font(Font.mada(.regular, size: 22))
+                                .minimumScaleFactor(0.05)
+                                .lineLimit(2)
+                                .foregroundColor(.gray)
+                        }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
+                        .padding(30)
+                    }
                     if showModal || showUpdateModal {
                         Color.black
                             .opacity(0.3)
@@ -272,12 +285,13 @@ struct Home: View {
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
-                    }
-                    NewUpdateModal(shown: $showUpdateModal)
-                        .offset(y: showUpdateModal ? 0 : g.size.height)
-                        .animation(.default, value: showUpdateModal)
                 }
-                .animation(nil)
+                NewUpdateModal(shown: $showUpdateModal)
+                    .offset(y: showUpdateModal ? 0 : g.size.height)
+                    .animation(.default, value: showUpdateModal)
+                    .animation(.default, value: showModal)
+            }
+            .animation(nil)
             .animation(.default)
             .navigationBarItems(
                 leading: Img.topBranch.padding(.leading, -20),
@@ -300,10 +314,11 @@ struct Home: View {
                 }
             })
         }.transition(.move(edge: .leading))
-        .onAppear {
-            showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
-        }
-        .onAppearAnalytics(event: .screen_load_home)
+            .onAppear {
+                numberOfMeds += Int.random(in: -3 ... 3)
+                showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
+            }
+            .onAppearAnalytics(event: .screen_load_home)
 
     }
 }
