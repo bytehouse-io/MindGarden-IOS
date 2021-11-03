@@ -226,6 +226,16 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2018 AppsFlyer Ltd. All rights reserved.</string>
+			<key>License</key>
+			<string>Proprietary</string>
+			<key>Title</key>
+			<string>AppsFlyerFramework</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>BoringSSL is a fork of OpenSSL. As such, large parts of it fall under OpenSSL
 licensing. Files that are completely new have a Google copyright and an ISC
 license. This license is reproduced at the bottom of this file.

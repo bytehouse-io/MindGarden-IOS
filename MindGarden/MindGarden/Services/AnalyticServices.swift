@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import Firebase
 import OSLog
+import AppsFlyerLib
 
 final class Analytics: ObservableObject {
     static let shared = Analytics()
@@ -32,6 +33,7 @@ final class Analytics: ObservableObject {
      func logActual(event: AnalyticEvent) {
         #if !targetEnvironment(simulator)
          Firebase.Analytics.logEvent(event.eventName, parameters: [:])
+         AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
         #endif
          print("logging, \(event.eventName)")
      }

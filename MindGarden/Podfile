@@ -6,11 +6,13 @@ target 'MindGarden' do
   use_frameworks!
 
   # Pods for MindGarden
-   pod 'Firebase/Auth'
-   pod 'Firebase/Firestore'
-   pod 'Firebase/Analytics'
-   pod 'GoogleSignIn'
+   pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
+   pod 'FirebaseAuth', '~> 8.9'
+   pod 'Firebase'
+   pod 'GoogleSignIn', '~> 5.0'
    pod 'lottie-ios'
+   pod 'AppsFlyerFramework'
+
 
   target 'MindGardenTests' do
     inherit! :search_paths
