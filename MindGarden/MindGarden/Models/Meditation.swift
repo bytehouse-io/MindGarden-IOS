@@ -58,14 +58,14 @@ struct Meditation: Hashable {
         Meditation(title: "Joy on demand", description: "Discover how meditating can help you create the super power of generating happiness on demand.", belongsTo: "Intro to Meditation", category: .courses, img: Img.juiceBoxes, type: .lesson, id: 11, duration: 324, reward: 8),
 
         //Intermediate Course
-//        Meditation(title: "Guided Meditation", description: "A 7 day series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 14, duration: 0, reward: 0),
-//        Meditation(title: "Day 1", description: "Day 1 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 15, duration: 0, reward: 0),
-//        Meditation(title: "Day 2", description: "Day 2 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 16, duration: 0, reward: 0),
-//        Meditation(title: "Day 3", description: "Day 3 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 17, duration: 0, reward: 0),
-//        Meditation(title: "Day 4", description: "Day 4 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 18, duration: 0, reward: 0),
-//        Meditation(title: "Day 5", description: "Day 5 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 19, duration: 0, reward: 0),
-//        Meditation(title: "Day 6", description: "Day 6 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 20, duration: 0, reward: 0),
-//        Meditation(title: "Day 7", description: "Day 7 of the 7 day guided meditation series, where we focus on the breath and try to become present and grateful.", belongsTo: "none", category: .courses, img: Img.morningSun, type: .lesson, id: 21, duration: 0, reward: 0),
+        Meditation(title: "7 Days to Happiness", description: "A 7 day series, where we use meditation to become focused, happier and motivated.", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .course, id: 14, duration: 0, reward: 0),
+        Meditation(title: "Clearing the Mind", description: "Learn the fundamentals of clearing all the noise in your head so you can finally learn to listen the right signals.", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 15, duration: 0, reward: 0),
+        Meditation(title: "Cultivate Self Love", description: "Do you constantly put your self down? Learn the basics of loving yourself and accepting who you are.", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 16, duration: 0, reward: 0),
+        Meditation(title: "Enhance Creativity", description: "Do you constantly feel stuck? Learn how to break-through and unleash the creativity hidden inside you", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 17, duration: 0, reward: 0),
+        Meditation(title: "Sustain Focus & Increase Motivation", description: "Build the discipline of laser like focus and rock solid motivation through some breath work and simple observation", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 18, duration: 0, reward: 0),
+        Meditation(title: "The Basics", description: "A simple 10 minute guided meditaiton you can do anywhere at anytime, empty the mind, get relaxed and receive clarity.", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 19, duration: 0, reward: 0),
+        Meditation(title: "Thankful Meditaiton for Gratitude", description: "Gratitude is the easiest thing you can do to become happier, learn to truly be thankful when having a clear focused mind.", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 20, duration: 0, reward: 0),
+        Meditation(title: "Life is Beautiful", description: "When you have no agenda, and simply observe you come to realize just how breath taking life truly is.", belongsTo: "7 Days to Happiness", category: .courses, img: Img.morningSun, type: .single_and_lesson, id: 21, duration: 0, reward: 0),
 
         // Singles
         Meditation(title: "30 Second Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "none", category: .all, img: Img.strawberryMilk, type: .single, id: 22, duration: 37, reward: 1),
@@ -74,7 +74,7 @@ struct Meditation: Hashable {
         Meditation(title: "Meditation for Focus", description: "A simple 5 minute guided meditation to help you calm your mind, and enter a relaxed focused state.", belongsTo: "none", category: .focus, img: Img.magnifyingGlass, type: .single, id: 25, duration: 341, reward: 5),
 //        Meditation(title: "Anxiety & Stress", description: "A simple 5 minute guided meditation to help you let go and minimize anxiety & stress.", belongsTo: "none", category: .anxiety, img: Img.morningSun, type: .single, id: 26, duration: 300, reward: 5),
         Meditation(title: "Body Scan", description: "A short guided meditation to help you tune into your body, reconnect to your physical self and notice any sensations without any judgement. ", belongsTo: "none", category: .all, img: Img.heart, type: .single, id: 25, duration: 300, reward: 5),
-        Meditation(title: "Better Faster Sleep", description: "A 10 minute guided meditation to help you relax, let go and fall into a deep restful sleep.", belongsTo: "none", category: .sleep, img: Img.moon, type: .single, id: 27, duration: 341, reward: 5),
+        Meditation(title: "Better Faster Sleep", description: "A 5 minute guided meditation to help you relax, let go and fall into a deep restful sleep.", belongsTo: "none", category: .sleep, img: Img.moon, type: .single, id: 27, duration: 341, reward: 5),
     ]
 }
 
@@ -82,4 +82,5 @@ enum MeditationType {
     case single
     case lesson
     case course
+    case single_and_lesson
 }

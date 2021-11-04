@@ -254,8 +254,6 @@ struct Play: View {
                     let url = Bundle.main.path(forResource: "", ofType: "mp3")
                     player = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 }
-            } else {
-                print("joma tech")
             }
 
             //bell at the end of a session
@@ -300,6 +298,7 @@ struct Play: View {
             .onTapGesture {
                 withAnimation {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         Analytics.shared.log(event: .play_tapped_back)
                         model.stop()
                         viewRouter.currentPage = .meditate

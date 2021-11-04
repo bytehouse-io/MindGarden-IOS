@@ -51,7 +51,7 @@ struct MiddleSelect: View {
                                         model.selectedMeditation?.img
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(width: g.size.width/3, height: g.size.height/6)
+                                            .frame(width: g.size.width/3, height: g.size.height/(K.isSmall() ? 5 : 6))
                                         VStack(alignment: .leading) {
                                             Text(model.selectedMeditation?.title ?? "")
                                                 .foregroundColor(Clr.black2)
@@ -61,8 +61,10 @@ struct MiddleSelect: View {
                                             Text(model.selectedMeditation?.description ?? "")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.regular, size: 16))
-                                                .padding(.trailing)
+                                                .lineLimit(4)
+                                                .minimumScaleFactor(0.05)
                                         }.frame(width: g.size.width/1.7)
+                                        .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .offset(x: -10)
                                     }
@@ -71,7 +73,7 @@ struct MiddleSelect: View {
                                         Divider().padding()
                                         VStack {
                                             ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
-                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: (meditation.type == .lesson && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation"), tappedMeditation: $tappedMeditation, idx: idx)
+                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation"), tappedMeditation: $tappedMeditation, idx: idx)
                                             }
                                         }
                                         Divider().padding()
@@ -177,8 +179,9 @@ struct MiddleSelect: View {
                     Text(meditation.title)
                         .foregroundColor(Clr.black2)
                         .font(Font.mada(.semiBold, size: 20))
-                        .lineLimit(1)
+                        .lineLimit(2)
                         .minimumScaleFactor(0.05)
+                        .multilineTextAlignment(.leading)
                     Spacer()
                     if didComplete {
                         Image(systemName: "checkmark.circle.fill")
