@@ -21,7 +21,7 @@ struct Play: View {
     @State var timerStarted: Bool = true
     @State var favorited: Bool = false
     @State var player : AVAudioPlayer!
-    @State var mainPlayer: AVAudioPlayer!
+    @State var mainPlayer: AVPlayer!
     @State var data : Data = .init(count: 0)
     @State var title = ""
     @State var del = AVdelegate()
@@ -111,12 +111,12 @@ struct Play: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            mainPlayer.currentTime -= 15
+//                                            mainPlayer.currentTime -= 15
                                         }
                                         model.secondsRemaining += 15
                                     } else {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            mainPlayer.currentTime = Double(model.selectedMeditation?.duration ?? 0.0)
+//                                            mainPlayer.currentTime = Double(model.selectedMeditation?.duration ?? 0.0)
                                         }
                                         model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
                                     }
@@ -139,12 +139,11 @@ struct Play: View {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                        if mainPlayer.isPlaying {
-                                            mainPlayer.pause()
+                                        if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
+                                            self.mainPlayer.rate = 0
                                         } else {
                                             mainPlayer.play()
                                         }
-
                                     }
 
                                     if player.isPlaying {
@@ -178,12 +177,12 @@ struct Play: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if model.secondsRemaining >= 15 {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            mainPlayer.currentTime += 15
+//                                            mainPlayer.currentTime += 15
                                         }
                                         model.secondsRemaining -= 15
                                     } else {
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            mainPlayer.currentTime = 0
+//                                            mainPlayer.currentTime = 0
                                         }
                                         model.secondsRemaining = 0
                                     }
@@ -262,12 +261,19 @@ struct Play: View {
             model.bellPlayer.delegate = self.del
 
             if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3")
-                mainPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                mainPlayer.delegate = self.del
-                mainPlayer.prepareToPlay()
-                mainPlayer.play()
-                model.startCountdown()
+//                let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3")
+                let url = URL(string: "https://mcdn.podbean.com/mf/web/jic84u/429_Bedtime_-_10_Minauk2b.mp3")
+                do {
+                    let playerItem = AVPlayerItem(url: url!)
+                    self.mainPlayer = try AVPlayer(playerItem: playerItem)
+                    //                mainPlayer.delegate = self.del
+                    mainPlayer.play()
+                    model.startCountdown()
+                } catch  {
+
+                }
+//                mainPlayer = try! AVAudioPlayer(contentsOf: url!)
+
                 NotificationCenter.default.addObserver(forName: NSNotification.Name("Finish"), object: nil, queue: .main) { (_) in
                     self.finish = true
                 }
@@ -283,8 +289,8 @@ struct Play: View {
                 player.stop()
             }
             if  model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                if mainPlayer.isPlaying {
-                    mainPlayer.stop()
+                if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
+                    self.mainPlayer.rate = 0
                 }
             }
         }
