@@ -14,7 +14,7 @@ class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
     @Published var featuredMeditation: Meditation?
-    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 0, duration: 0, reward: 0)
+    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 0, duration: 0, reward: 0, url: "")
     @Published var selectedCategory: Category? = .all
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
@@ -43,7 +43,13 @@ class MeditationViewModel: ObservableObject {
             .sink { [unowned self] value in
                 if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
                 } else {
-                    self.selectedMeditations = Meditation.allMeditations.filter     { med in med.category == value && med.type != .lesson }
+                    self.selectedMeditations = Meditation.allMeditations.filter { med in
+                        if value == .courses && med.title == "Intro to Meditation" {
+                            return true
+                        } else {
+                            return med.category == value && med.type != .lesson
+                        }
+                    }
                 }
             }
             .store(in: &validationCancellables)

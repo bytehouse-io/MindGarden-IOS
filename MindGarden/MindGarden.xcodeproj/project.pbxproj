@@ -99,12 +99,7 @@
 		FEBF1AC027138635000BF1BD /* Compassion & Self-Love.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */; };
 		FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */; };
 		FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */; };
-		FEBF1AC627138647000BF1BD /* Semi-Guided Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC427138646000BF1BD /* Semi-Guided Meditation.mp3 */; };
-		FEBF1AC727138647000BF1BD /* Basic Guided Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC527138647000BF1BD /* Basic Guided Meditation.mp3 */; };
-		FEBF1AC92713864E000BF1BD /* Body Scan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC82713864E000BF1BD /* Body Scan.mp3 */; };
 		FEBF1ACB271511CA000BF1BD /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */; };
-		FEBF1ACD27175872000BF1BD /* Better Faster Sleep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACC27175872000BF1BD /* Better Faster Sleep.mp3 */; };
-		FEBF1ACF27175880000BF1BD /* Meditation for Focus.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACE27175880000BF1BD /* Meditation for Focus.mp3 */; };
 		FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */; };
 		FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF22C926DC3860002572E2 /* bell.mp3 */; };
 		FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */; };
@@ -229,12 +224,7 @@
 		FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Compassion & Self-Love.mp3"; sourceTree = "<group>"; };
 		FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Gaining Clarity.mp3"; sourceTree = "<group>"; };
 		FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Joy on demand.mp3"; sourceTree = "<group>"; };
-		FEBF1AC427138646000BF1BD /* Semi-Guided Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Semi-Guided Meditation.mp3"; sourceTree = "<group>"; };
-		FEBF1AC527138647000BF1BD /* Basic Guided Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Basic Guided Meditation.mp3"; sourceTree = "<group>"; };
-		FEBF1AC82713864E000BF1BD /* Body Scan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Body Scan.mp3"; sourceTree = "<group>"; };
 		FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
-		FEBF1ACC27175872000BF1BD /* Better Faster Sleep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Better Faster Sleep.mp3"; sourceTree = "<group>"; };
-		FEBF1ACE27175880000BF1BD /* Meditation for Focus.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Meditation for Focus.mp3"; sourceTree = "<group>"; };
 		FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extension.swift"; sourceTree = "<group>"; };
 		FEBF22C926DC3860002572E2 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -612,11 +602,6 @@
 				FEBF1AB927138633000BF1BD /* Stress Antidote.mp3 */,
 				FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */,
 				FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */,
-				FEBF1AC527138647000BF1BD /* Basic Guided Meditation.mp3 */,
-				FEBF1AC427138646000BF1BD /* Semi-Guided Meditation.mp3 */,
-				FEBF1AC82713864E000BF1BD /* Body Scan.mp3 */,
-				FEBF1ACC27175872000BF1BD /* Better Faster Sleep.mp3 */,
-				FEBF1ACE27175880000BF1BD /* Meditation for Focus.mp3 */,
 			);
 			path = Meditations;
 			sourceTree = "<group>";
@@ -742,8 +727,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
-				FEBF1ACD27175872000BF1BD /* Better Faster Sleep.mp3 in Resources */,
-				FEBF1ACF27175880000BF1BD /* Meditation for Focus.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
@@ -760,7 +743,6 @@
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
-				FEBF1AC627138647000BF1BD /* Semi-Guided Meditation.mp3 in Resources */,
 				FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
@@ -771,9 +753,7 @@
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
-				FEBF1AC92713864E000BF1BD /* Body Scan.mp3 in Resources */,
 				FEBF1ABC27138635000BF1BD /* Tuning Into Your Body.mp3 in Resources */,
-				FEBF1AC727138647000BF1BD /* Basic Guided Meditation.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

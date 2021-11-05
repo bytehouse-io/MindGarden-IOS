@@ -23,18 +23,28 @@ struct NewUpdateModal: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.height * 0.12)
-                            Text("Welcome to \nMindGarden!")
+                            Text("Welcome to \nMindGarden! \nUpdate 1.0")
                                 .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(Clr.black1)
                                 .frame(height: g.size.height * 0.12)
                             Spacer()
                         }.padding()
-                        Text("📱 This is the beta version, so our catalog of meditations and plants is still very small!")
+                        Text("📱 In this update we added 24 new meditations! & fixed 5 different bugs")
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                             .padding(.bottom, 10)
-                        Text("🐞 Please report any bugs through testflight using a screenshot and a thorough description. Thank you!")
-                            .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
-                            .padding(.bottom, 10)
+                        Button {
+
+                        } label: {
+                            HStack {
+                                Text("🗺 Check out our ") + Text("roadmap").bold().underline().foregroundColor(.blue) + Text(" to request any features")
+                            }.multilineTextAlignment(.leading)
+
+                        }
+                        .foregroundColor(.black)
+                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
+                        .padding(.bottom, 10)
+
+
                         Button {
                             guard let url = URL(string: "https://www.reddit.com/r/MindGarden/") else { return }
                             UIApplication.shared.open(url)
@@ -54,11 +64,12 @@ struct NewUpdateModal: View {
                         Text("- 🥳 Dante (Founder of MindGarden)")
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .trailing)
                             .padding(.bottom, 10)
+                            .padding(.top, 15)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "betaUpdate")
+                                UserDefaults.standard.setValue(true, forKey: "1.0Update")
                             }
                         } label: {
                             Capsule()

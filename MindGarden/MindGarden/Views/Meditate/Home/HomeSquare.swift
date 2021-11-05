@@ -27,7 +27,7 @@ struct HomeSquare: View {
                             Spacer()
                             Text(title)
                                 .frame(width: width * 0.225, alignment: .leading)
-                                .font(Font.mada(.semiBold, size: K.isPad() ? 28 : 16))
+                                .font(Font.mada(.semiBold, size: K.isPad() ? 28 : K.isSmall() ? 12 : 16))
                                 .foregroundColor(Clr.black2)
                                 .minimumScaleFactor(0.005)
                                 .lineLimit(2)

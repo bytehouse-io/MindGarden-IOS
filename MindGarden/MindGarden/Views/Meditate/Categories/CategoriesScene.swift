@@ -58,11 +58,12 @@ struct CategoriesScene: View {
                         if !isSearch {
                             HStack {
                                 CategoryButton(category: .all, selected: $model.selectedCategory)
-                                CategoryButton(category: .unguided, selected: $model.selectedCategory)
-                                CategoryButton(category: .courses, selected: $model.selectedCategory)
+                                CategoryButton(category: .beginners, selected: $model.selectedCategory)
                                 CategoryButton(category: .anxiety, selected: $model.selectedCategory)
-                                CategoryButton(category: .focus, selected: $model.selectedCategory)
                                 CategoryButton(category: .growth, selected: $model.selectedCategory)
+                                CategoryButton(category: .focus, selected: $model.selectedCategory)
+                                CategoryButton(category: .courses, selected: $model.selectedCategory)
+                                CategoryButton(category: .unguided, selected: $model.selectedCategory)
                             }.padding()
                         }
                     }
@@ -180,6 +181,7 @@ enum Category {
     case all
     case unguided
     case courses
+    case beginners
     case anxiety
     case focus
     case confidence
@@ -192,6 +194,8 @@ enum Category {
             return "All"
         case .unguided:
             return "Unguided"
+        case .beginners:
+            return "Beginners"
         case .courses:
             return "Courses"
         case .anxiety:

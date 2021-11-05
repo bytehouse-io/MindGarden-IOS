@@ -289,7 +289,6 @@ struct Home: View {
                 NewUpdateModal(shown: $showUpdateModal)
                     .offset(y: showUpdateModal ? 0 : g.size.height)
                     .animation(.default, value: showUpdateModal)
-                    .animation(.default, value: showModal)
             }
             .animation(nil)
             .animation(.default)
@@ -316,7 +315,7 @@ struct Home: View {
         }.transition(.move(edge: .leading))
             .onAppear {
                 numberOfMeds += Int.random(in: -3 ... 3)
-                showUpdateModal = !UserDefaults.standard.bool(forKey: "betaUpdate") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
+                showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
             }
             .onAppearAnalytics(event: .screen_load_home)
 
