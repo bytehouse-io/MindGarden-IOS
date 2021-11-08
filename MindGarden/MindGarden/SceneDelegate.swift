@@ -10,7 +10,9 @@ import SwiftUI
 var numberOfMeds = 0
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    
+    static let userModel = UserViewModel()
+    static let bonusModel = BonusViewModel(userModel: userModel)
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -30,33 +32,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 UserDefaults.standard.setValue(true, forKey: "showedNotif")
             }
         }
+        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        launchNum += 1
+        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
 
         let router = ViewRouter()
         let medModel = MeditationViewModel()
-        let userModel = UserViewModel()
-        let gardenModel = GardenViewModel()
-        let bonusModel = BonusViewModel(userModel: userModel)
-        let profileModel = ProfileViewModel()
-        let authModel =  AuthenticationViewModel(userModel: userModel, viewRouter: router)
 
+        let gardenModel = GardenViewModel()
+        let profileModel = ProfileViewModel()
+        let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
+        let userModel = UserViewModel()
         medModel.updateSelf()
-        userModel.updateSelf()
+        SceneDelegate.userModel.updateSelf()
         gardenModel.updateSelf()
-        bonusModel.updateBonus()
+        SceneDelegate.bonusModel.updateBonus()
 
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
-            bonusModel.totalBonuses = 1
-            bonusModel.sevenDayProgress = 0.1
-            bonusModel.thirtyDayProgress = 0.08
+            SceneDelegate.bonusModel.totalBonuses = 1
+            SceneDelegate.bonusModel.sevenDayProgress = 0.1
+            SceneDelegate.bonusModel.thirtyDayProgress = 0.08
         }
 
-        let contentView = ContentView(bonusModel: bonusModel, profileModel: profileModel, authModel: authModel)
+        let contentView = ContentView(bonusModel:  SceneDelegate.bonusModel, profileModel: profileModel, authModel: authModel)
 
         // Use a UIHostingController as window root view controller.
         let rootHost = UIHostingController(rootView: contentView
                                             .environmentObject(router)
                                             .environmentObject(medModel)
-                                            .environmentObject(userModel)
+                                            .environmentObject(SceneDelegate.userModel)
                                             .environmentObject(gardenModel))
         
         if let windowScene = scene as? UIWindowScene {
@@ -77,6 +81,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        SceneDelegate.bonusModel.updateBonus()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

@@ -91,12 +91,14 @@ class UserViewModel: ObservableObject {
         }
     }
 
-    func buyPlant(isUnlocked: Bool = false) {
+    func buyPlant(isUnlocked: Bool = false, unlockedStrawberry: Bool = false) {
         userCoins -= willBuyPlant?.price ?? 0
         if let plant = willBuyPlant {
             ownedPlants.append(plant)
             if !isUnlocked {
-                selectedPlant = willBuyPlant
+                if !unlockedStrawberry {
+                    selectedPlant = willBuyPlant
+                }
             }
             var finalPlants: [String] = [String]()
             if let email = Auth.auth().currentUser?.email {

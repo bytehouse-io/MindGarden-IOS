@@ -166,7 +166,7 @@ struct ProfileScene: View {
                                             }.frame(width: abs(width - 100), alignment: .leading)
                                                 .frame(height: 25)
                                             HStack {
-                                                Text("\(profileModel.totalMins)")
+                                                Text(profileModel.totalMins/60 == 0 ? "0.5" : "\(profileModel.totalMins/60)")
                                                     .font(Font.mada(.bold, size: 40))
                                                     .foregroundColor(Clr.darkgreen)
                                                 Text("minutes")
@@ -213,6 +213,7 @@ struct ProfileScene: View {
                                     UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
                                     UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                                     withAnimation {
+
                                         viewRouter.currentPage = .authentication
                                     }
                                 } label: {

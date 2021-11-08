@@ -51,8 +51,9 @@ struct HomeSquare: View {
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: width * 0.175, height: height * 0.135, alignment: .center)
-                        .padding(.leading, -20)
+                        .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
+                        .padding(.leading, -17)
+                        .padding(.top, 10)
                 }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
                          , alignment: .topLeading)
         }

@@ -321,7 +321,7 @@ extension AuthenticationViewModel {
         formatter.dateFormat = "MMM dd,yyyy"
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
-                "name": "Bingo",
+                "name": UserDefaults.standard.string(forKey: "name") ?? "hg",
                 "coins": 100,
                 "joinDate": formatter.string(from: Date()),
                 "totalSessions": 0,
@@ -338,7 +338,7 @@ extension AuthenticationViewModel {
             }
         }
         userCoins = 100
-        userModel.name = "Bingo"
+        userModel.name = UserDefaults.standard.string(forKey: "name") ?? "hg"
         userModel.joinDate = formatter.string(from: Date())
     }
 

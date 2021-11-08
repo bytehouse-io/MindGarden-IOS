@@ -7,7 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
-
+import StoreKit
 
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -18,7 +18,7 @@ struct Home: View {
     @State private var showModal = false
     @State private var showPlantSelect = false
     @State private var showSearch = false
-    @State private var showUpdateModal = true
+    @State private var showUpdateModal = false
     var bonusModel: BonusViewModel
 
     init(bonusModel: BonusViewModel) {
@@ -285,10 +285,11 @@ struct Home: View {
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
+                    NewUpdateModal(shown: $showUpdateModal)
+                        .offset(y: showUpdateModal ? 0 : g.size.height)
+                        .animation(.default, value: showUpdateModal)
                 }
-                NewUpdateModal(shown: $showUpdateModal)
-                    .offset(y: showUpdateModal ? 0 : g.size.height)
-                    .animation(.default, value: showUpdateModal)
+
             }
             .animation(nil)
             .animation(.default)
@@ -316,9 +317,17 @@ struct Home: View {
             .onAppear {
                 numberOfMeds += Int.random(in: -3 ... 3)
                 showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
+                if UserDefaults.standard.integer(forKey: "launchNumber") == 3 || UserDefaults.standard.integer(forKey: "launchNumber") == 7 {
+                    if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                    if UserDefaults.standard.integer(forKey: "launchNumber") == 3 {
+                        UserDefaults.standard.setValue(4, forKey: "launchNumber")
+                    } else {
+                        UserDefaults.standard.setValue(8, forKey: "launchNumber")
+                    }
+                }
             }
             .onAppearAnalytics(event: .screen_load_home)
-
     }
 }
 
@@ -327,7 +336,6 @@ struct Home_Previews: PreviewProvider {
         Home(bonusModel: BonusViewModel(userModel: UserViewModel())).navigationViewStyle(StackNavigationViewStyle())
             .environmentObject(MeditationViewModel())
             .environmentObject(UserViewModel())
-
     }
 }
 

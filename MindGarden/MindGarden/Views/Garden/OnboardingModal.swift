@@ -42,7 +42,7 @@ struct OnboardingModal: View {
                                     .lineLimit(4)
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)
-                                    .padding(.top)
+                                    .padding(.top, 5)
                             }
 
                             Img.strawberryPacket
@@ -60,7 +60,7 @@ struct OnboardingModal: View {
                                             UserDefaults.standard.setValue(true, forKey: "strawberryUnlocked")
                                             userModel.willBuyPlant = Plant.plants.first(where: { $0.title == "Strawberry" })
                                             userCoins += 150
-                                            userModel.buyPlant()
+                                            userModel.buyPlant(unlockedStrawberry: true)
                                         }
                                     } label: {
                                         Capsule()

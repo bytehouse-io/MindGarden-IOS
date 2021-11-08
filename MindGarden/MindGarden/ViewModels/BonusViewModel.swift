@@ -79,8 +79,6 @@ class BonusViewModel: ObservableObject {
         if let email = Auth.auth().currentUser?.email {
             userCoins += 30
             sevenDay += 1
-            let leftOver = streakNumber - (sevenDay * 7)
-            sevenDayProgress = Double(leftOver)/7.0
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.seven: sevenDay,
                 K.defaults.coins: userCoins
@@ -89,6 +87,7 @@ class BonusViewModel: ObservableObject {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
                     print("Succesfully saved seven")
+                    self.calculateProgress()
                 }
             }
         }
@@ -98,8 +97,6 @@ class BonusViewModel: ObservableObject {
         if let email = Auth.auth().currentUser?.email {
             userCoins += 100
             thirtyDay += 1
-            let leftOver = streakNumber - (thirtyDay * 30)
-            thirtyDayProgress = Double(leftOver)/30.0
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.thirty: thirtyDay,
                 K.defaults.coins: userCoins
@@ -108,6 +105,7 @@ class BonusViewModel: ObservableObject {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
                     print("Succesfully saved thirty")
+                    self.calculateProgress()
                 }
             }
         }
@@ -121,6 +119,7 @@ class BonusViewModel: ObservableObject {
             let docRef = db.collection(K.userPreferences).document(email)
             docRef.getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
+                    self.totalBonuses = 0
                     if let lSD = document[K.defaults.lastStreakDate] as? String {
                         lastStreakDate = lSD
                     }
@@ -166,38 +165,7 @@ class BonusViewModel: ObservableObject {
                                 }
                             }
                         } // else no need to update
-                        if self.dailyBonus != "" {
-                            if (Date() - formatter.date(from: self.dailyBonus)! >= 0) {
-                                self.totalBonuses += 1
-                            } else {
-                                self.createDailyCountdown()
-                            }
-                        } else {
-                            self.totalBonuses += 1
-                        }
-
-
-                        if self.sevenDay > 0 {
-                            let leftOver = self.streakNumber - (self.sevenDay * 7)
-                            self.sevenDayProgress = Double(leftOver)/7.0
-                        } else {
-                            self.sevenDayProgress = Double(self.streakNumber)/7.0
-                            if self.sevenDayProgress <= 0.1 {
-                                self.sevenDayProgress = 0.1
-                            }
-                        }
-
-                        if self.thirtyDay > 0 {
-                            let leftOver = self.streakNumber - (self.thirtyDay * 30)
-                            self.thirtyDayProgress = Double(leftOver)/30.0
-                        } else {
-                            self.thirtyDayProgress = Double(self.streakNumber)/30.0
-                            if self.thirtyDayProgress <= 0.08 {
-                                self.thirtyDayProgress = 0.08
-                            }
-                        }
-                        if self.sevenDayProgress >= 1.0 {self.totalBonuses += 1}
-                        if self.thirtyDayProgress >= 1.0 {self.totalBonuses += 1}
+                        self.calculateProgress()
                     } else {
                         lastStreakDate  = formatter.string(from: Date())
                         self.streakNumber = 1
@@ -221,5 +189,43 @@ class BonusViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    private func calculateProgress() {
+        totalBonuses = 0
+        if self.dailyBonus != "" {
+            if (Date() - formatter.date(from: self.dailyBonus)! >= 0) {
+                self.totalBonuses += 1
+            } else {
+                self.createDailyCountdown()
+            }
+        } else {
+            self.totalBonuses += 1
+        }
+
+
+        if self.sevenDay > 0 {
+            let leftOver = self.streakNumber - (self.sevenDay * 7)
+            self.sevenDayProgress = Double(leftOver)/7.0
+        } else {
+            self.sevenDayProgress = Double(self.streakNumber)/7.0
+        }
+        if self.sevenDayProgress <= 0.1 {
+            self.sevenDayProgress = 0.1
+        }
+
+        if self.thirtyDay > 0 {
+            let leftOver = self.streakNumber - (self.thirtyDay * 30)
+            self.thirtyDayProgress = Double(leftOver)/30.0
+        } else {
+            self.thirtyDayProgress = Double(self.streakNumber)/30.0
+        }
+        if self.thirtyDayProgress <= 0.08 {
+            self.thirtyDayProgress = 0.08
+        }
+        
+        if self.sevenDayProgress >= 1.0 {
+            self.totalBonuses += 1}
+        if self.thirtyDayProgress >= 1.0 {self.totalBonuses += 1}
     }
 }

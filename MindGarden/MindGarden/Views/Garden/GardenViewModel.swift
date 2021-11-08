@@ -42,7 +42,7 @@ class GardenViewModel: ObservableObject {
                     for day in days { // we can improve performance by stopping when we get the last two different sessions
                         if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
                             for sess in sessions {
-                                medIds.append(sess["meditationId"] ?? "1")
+                                medIds.insert(sess["meditationId"] ?? "1", at: 0)
                             }
                         }
                     }
@@ -193,12 +193,8 @@ class GardenViewModel: ObservableObject {
         if key == "sessions" {
             if let session = saveValue as? [String: String] {
                 self.allTimeSessions += 1
-                if let myNumber = NumberFormatter().number(from: session[K.defaults.duration] ?? "0") {
-                    if myNumber.intValue/60 == 0 {
-                        self.allTimeMinutes += 1
-                    } else {
-                        self.allTimeMinutes += myNumber.intValue/60
-                    }
+                if let myNumber = (Double(session[K.defaults.duration] ?? "0.0") ?? 0).toInt() {
+                    self.allTimeMinutes += myNumber
                 }
             }
         }

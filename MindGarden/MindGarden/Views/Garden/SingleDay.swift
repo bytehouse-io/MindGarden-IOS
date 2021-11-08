@@ -179,7 +179,7 @@ struct SingleDay: View {
                 }
                 OnboardingModal(shown: $showOnboardingModal)
                     .offset(y: showOnboardingModal ? 0 : g.size.height)
-                    .animation(.default)
+                    .animation(.default, value: showOnboardingModal)
             }
         }.onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {

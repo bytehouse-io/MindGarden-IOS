@@ -109,12 +109,13 @@ struct Play: View {
                             HStack(alignment: .center, spacing: 20) {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    goBackward()
+                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                        goBackward()
+                                    }
                                     if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
-                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
 
-                                        }
-                                        model.secondsRemaining += 15
+
+                                        model.secondsRemaining += model.selectedMeditation?.url != "" ? 14 : 15
                                     } else {
                                         model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
                                     }
@@ -173,11 +174,11 @@ struct Play: View {
                                 }
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    goForward()
+                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                        goForward()
+                                    }
                                     if model.secondsRemaining >= 15 {
-                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                        }
-                                        model.secondsRemaining -= 15
+                                        model.secondsRemaining -= model.selectedMeditation?.url != "" ? 14 : 15
                                     } else {
                                         model.secondsRemaining = 0
                                     }
@@ -275,7 +276,7 @@ struct Play: View {
             if player.isPlaying {
                 player.stop()
             }
-            if  model.selectedMeditation?.belongsTo != "Timed Meditation" {
+            if model.selectedMeditation?.belongsTo != "Timed Meditation" {
                 if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
                     self.mainPlayer.rate = 0
                 }

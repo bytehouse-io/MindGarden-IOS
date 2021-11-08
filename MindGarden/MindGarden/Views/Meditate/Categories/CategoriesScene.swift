@@ -72,22 +72,23 @@ struct CategoriesScene: View {
                                 ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
                                     return meditation.title.hasPrefix(searchText) || searchText == ""
                                 }), id: \.self) { item in
-                                    Button {
-                                        Analytics.shared.log(event: .categories_tapped_meditation)
-                                        model.selectedMeditation = item
-                                        if isSearch {
-                                            tappedMed = true
-                                            presentationMode.wrappedValue.dismiss()
-                                        } else {
-                                            if model.selectedMeditation?.type == .course {
-                                                viewRouter.currentPage = .middle
+                                    HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
+                                        .onTapGesture {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            Analytics.shared.log(event: .categories_tapped_meditation)
+                                            model.selectedMeditation = item
+                                            if isSearch {
+                                                tappedMed = true
+                                                presentationMode.wrappedValue.dismiss()
                                             } else {
-                                                viewRouter.currentPage = .play
+                                                if model.selectedMeditation?.type == .course {
+                                                    viewRouter.currentPage = .middle
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
                                             }
                                         }
-                                    } label: {
-                                        HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
-                                    }.buttonStyle(NeumorphicPress())
+                                        .neoShadow()
                                         .padding(.vertical, 8)
                                 }
                             })
@@ -216,6 +217,19 @@ struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
             CategoriesScene(showSearch: .constant(false))
+        }
+    }
+}
+
+extension ScrollView {
+    private typealias PaddedContent = ModifiedContent<Content, _PaddingLayout>
+
+    func fixFlickering() -> some View {
+        GeometryReader { geo in
+            ScrollView<PaddedContent>(axes, showsIndicators: showsIndicators) {
+                content.padding(geo.safeAreaInsets) as! PaddedContent
+            }
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }

@@ -17,6 +17,7 @@ struct NewUpdateModal: View {
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center, spacing: 0) {
+                        Spacer()
                         HStack {
                             Spacer()
                             Img.mainIcon
@@ -28,10 +29,11 @@ struct NewUpdateModal: View {
                                 .foregroundColor(Clr.black1)
                                 .frame(height: g.size.height * 0.12)
                             Spacer()
-                        }.padding()
-                        Text("📱 In this update we added 24 new meditations! & fixed 5 different bugs")
+                        }.padding(.horizontal)
+                        Text("📱 In this update we added 24 new meditations!")
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                             .padding(.bottom, 10)
+                            .padding(.top)
                         Button {
 
                         } label: {
@@ -64,7 +66,7 @@ struct NewUpdateModal: View {
                         Text("- 🥳 Dante (Founder of MindGarden)")
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .trailing)
                             .padding(.bottom, 10)
-                            .padding(.top, 15)
+                            .padding(.top, 5)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {

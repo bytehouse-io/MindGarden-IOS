@@ -76,7 +76,7 @@ struct BonusModal: View {
                                         .multilineTextAlignment(.center)
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if bonusModel.sevenDayProgress > 1.0 {
+                                        if bonusModel.sevenDayProgress >= 1.0 {
                                             Analytics.shared.log(event: .home_claim_seven)
                                             bonusModel.saveSeven()
                                         }
@@ -91,7 +91,7 @@ struct BonusModal: View {
                                         .padding(.top)
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if bonusModel.thirtyDayProgress > 1.0 {
+                                        if bonusModel.thirtyDayProgress >= 1.0 {
                                             Analytics.shared.log(event: .home_claim_thirty)
                                             bonusModel.saveThirty()
                                         }
