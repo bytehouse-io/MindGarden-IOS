@@ -13,6 +13,7 @@ public enum Img {
   public static let aloe2 = Image("aloe2")
   public static let aloe3 = Image("aloe3")
   public static let aloeBadge = Image("aloeBadge")
+  public static let aloeHead = Image("aloeHead")
   public static let aloePacket = Image("aloePacket")
   public static let blueberry1 = Image("blueberry1")
   public static let blueberry2 = Image("blueberry2")

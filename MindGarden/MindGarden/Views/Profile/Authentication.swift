@@ -218,8 +218,7 @@ struct Authentication: View {
                     medModel.updateSelf()
                 }
             }.onAppear {
-//                viewModel.isLoading = true
-
+                //                viewModel.isLoading = true
                 if !tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_onboarding_signup)
                 } else if !tappedSignOut {

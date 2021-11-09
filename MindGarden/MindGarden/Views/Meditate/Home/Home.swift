@@ -29,9 +29,9 @@ struct Home: View {
     
     var body: some View {
         NavigationView {
-            GeometryReader { g in
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+                    GeometryReader { g in
                     ScrollView(showsIndicators: false) {
                         VStack {
                             HStack {
@@ -43,6 +43,10 @@ struct Home: View {
                                         .fontWeight(.bold)
                                         .padding(.trailing, 20)
                                     HStack {
+                                        Img.newStar
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 15)
                                         Text("Streak: ")
                                             .foregroundColor(Clr.black2)
                                         + Text("\(bonusModel.streakNumber)")
@@ -174,6 +178,7 @@ struct Home: View {
                             VStack(spacing: 1) {
                                 HStack {
                                     Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         Analytics.shared.log(event: .home_tapped_recents)
                                         withAnimation {
                                             isRecent = true
@@ -184,6 +189,7 @@ struct Home: View {
                                             .font(Font.mada(.regular, size: 20))
                                     }
                                     Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         Analytics.shared.log(event: .home_tapped_favorites)
                                         withAnimation {
                                             isRecent = false
@@ -274,7 +280,7 @@ struct Home: View {
                                 .foregroundColor(.gray)
                         }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
                         .padding(30)
-                    }
+                    }.frame(width: UIScreen.main.bounds.size.width)
                     if showModal || showUpdateModal {
                         Color.black
                             .opacity(0.3)
@@ -323,6 +329,7 @@ struct Home: View {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 3 {
                         UserDefaults.standard.setValue(4, forKey: "launchNumber")
                     } else {
+                        Analytics.shared.log(event: .seventh_time_coming_back)
                         UserDefaults.standard.setValue(8, forKey: "launchNumber")
                     }
                 }

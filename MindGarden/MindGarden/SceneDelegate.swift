@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
         numberOfMeds = Int.random(in: 60..<83)
-//        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+//        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                 if success {
@@ -42,7 +42,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let gardenModel = GardenViewModel()
         let profileModel = ProfileViewModel()
         let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
-        let userModel = UserViewModel()
         medModel.updateSelf()
         SceneDelegate.userModel.updateSelf()
         gardenModel.updateSelf()

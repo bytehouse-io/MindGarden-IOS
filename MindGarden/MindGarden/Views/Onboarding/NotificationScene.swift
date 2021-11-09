@@ -54,12 +54,12 @@ struct NotificationScene: View {
                         }
                         VStack {
                             Text("Set Your Daily Reminder")
-                                .font(Font.mada(.bold, size: 30))
-                                .foregroundColor(Clr.darkgreen)
-                                .multilineTextAlignment(.center)
-                            Text("You're twice as likely to stick with the habit of meditation if you set a reminder. Pick a time you want us to give you a nudge.")
-                                .font(Font.mada(.light, size: 20))
+                                .font(Font.mada(.semiBold, size: 28))
                                 .foregroundColor(Clr.black1)
+                                .multilineTextAlignment(.center)
+                            Text("You're 74% more likely to stick with meditation if you set a reminder. ")
+                                .font(Font.mada(.bold, size: 22))
+                                .foregroundColor(Clr.darkgreen)
                                 .multilineTextAlignment(.center)
                                 .padding()
                             Button {

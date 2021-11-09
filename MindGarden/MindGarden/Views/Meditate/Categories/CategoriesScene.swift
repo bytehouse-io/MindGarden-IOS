@@ -128,6 +128,7 @@ struct CategoriesScene: View {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 self.presentationMode.wrappedValue.dismiss()
             } else {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     viewRouter.currentPage = .meditate
                 }

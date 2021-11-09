@@ -101,6 +101,7 @@ struct OnboardingModal: View {
                                             Analytics.shared.log(event: .onboarding_finished_single_course)
                                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                             meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+                                            shown = false
                                             viewRouter.currentPage = .middle
                                         }
                                     } label: {

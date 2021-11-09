@@ -63,7 +63,7 @@ struct BonusModal: View {
                                 .neoShadow()
                             HStack(spacing: 0) {
                                 VStack {
-                                    Img.streakStar
+                                    Img.newStar
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                     Text("\(bonusModel.streakNumber) ").bold().foregroundColor(Clr.black1) + Text(bonusModel.streakNumber == 1 ? "day" : "days").foregroundColor(Clr.black1)

@@ -223,7 +223,7 @@ class BonusViewModel: ObservableObject {
         if self.thirtyDayProgress <= 0.08 {
             self.thirtyDayProgress = 0.08
         }
-        
+
         if self.sevenDayProgress >= 1.0 {
             self.totalBonuses += 1}
         if self.thirtyDayProgress >= 1.0 {self.totalBonuses += 1}

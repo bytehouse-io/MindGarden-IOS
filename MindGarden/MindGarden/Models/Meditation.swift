@@ -26,8 +26,10 @@ struct Meditation: Hashable {
     }
 
     func returnEventName() -> String {
-        return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "").replacingOccurrences(of: "-", with: "")
+        return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "x").replacingOccurrences(of: "-", with: "")
+            .replacingOccurrences(of: ",", with: "_")
             .replacingOccurrences(of: " ", with: "_")
+            .replacingOccurrences(of: "7", with: "seven")
             .lowercased()
     }
 

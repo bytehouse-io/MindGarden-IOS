@@ -39,6 +39,9 @@ class MeditationViewModel: ObservableObject {
     }
 
     init() {
+        for med in Meditation.allMeditations {
+            print(med.returnEventName())
+        }
         $selectedCategory
             .sink { [unowned self] value in
                 if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
@@ -79,7 +82,6 @@ class MeditationViewModel: ObservableObject {
                 med.id != 53 && med.id != 49
             }
         }
-        print(UserDefaults.standard.bool(forKey: "intermediateCourse"), "unofficial")
         if UserDefaults.standard.bool(forKey: "intermediateCourse") {
             filtedMeds = filtedMeds.filter { med in
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14

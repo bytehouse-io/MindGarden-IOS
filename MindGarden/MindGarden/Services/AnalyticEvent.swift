@@ -143,6 +143,32 @@ enum AnalyticEvent {
     case finished_anxiety_x_stress
     case finished_body_scan
     case finished_better_faster_sleep
+    // girl
+    case finished_good_morning__positive_energy
+    case finished_affirmations
+    case finished_clearing_fears
+    case finished_relieve_anxiety
+    case relieve_stress__activate_intuition
+    case finished_how_to_meditate
+    case finished_it_lies_within_you
+    case finished_basic_confidence_meditation
+    case finished_emotional_balance
+    case finished_deep_sleep
+    case finished_a_sense_of_gratitude
+    case finished_chronic_pain__safe_place
+    case finished_life_is_beautiful
+    case thankful_meditaiton_for_gratitude
+    case sustain_focus_x_increase_motivation
+    case finished_cultivate_self_love
+    case finished_clearing_the_mind
+    case finished_seven_days_to_happiness
+    case finished_creativity_x_inspiration
+    case finished_the_basics
+    case finished_meditation_for_happiness
+    case finished_build_confidence
+    case finished_handle_insecurity
+    case finished_seize_the_day
+    case finished_bedtime_meditation
 
     //MARK: - Profile
     case screen_load_profile //
@@ -192,6 +218,7 @@ enum AnalyticEvent {
     case gratitude_tapped_prompts
 
     case plus_tapped_meditate
+    case seventh_time_coming_back
 }
 
 extension AnalyticEvent {
@@ -267,6 +294,32 @@ extension AnalyticEvent {
         case "finished_anxiety_x_stress": return .finished_anxiety_x_stress
         case "finished_body_scan": return .finished_body_scan
         case "finished_better_faster_sleep": return .finished_better_faster_sleep
+
+        case "finished_good_morning__positive_energy": return .finished_good_morning__positive_energy
+        case "finished_affirmations": return .finished_affirmations
+        case "finished_clearing_fears": return .finished_clearing_fears
+        case "finished_relieve_anxiety": return .finished_relieve_anxiety
+        case "finished_relieve_stress__activate_intuition": return .relieve_stress__activate_intuition
+        case "finished_how_to_meditate": return .finished_how_to_meditate
+        case "finished_it_lies_within_you": return .finished_it_lies_within_you
+        case "finished_basic_confidence_meditation": return .finished_basic_confidence_meditation
+        case "finished_emotional_balance": return .finished_emotional_balance
+        case "finished_deep_sleep": return .finished_deep_sleep
+        case "finished_a_sense_of_gratitude": return .finished_a_sense_of_gratitude
+        case "finished_chronic_pain__safe_place": return .finished_chronic_pain__safe_place
+        case "finished_life_is_beautiful": return .finished_life_is_beautiful
+        case "finished_thankful_meditaiton_for_gratitude": return .thankful_meditaiton_for_gratitude
+        case "finished_sustain_focus_x_increase_motivation": return .sustain_focus_x_increase_motivation
+        case "finished_cultivate_self_love": return .finished_cultivate_self_love
+        case "finished_clearing_the_mind": return .finished_clearing_the_mind
+        case "finished_seven_days_to_happiness": return .finished_seven_days_to_happiness
+        case "finished_creativity_x_inspiration": return .finished_creativity_x_inspiration
+        case "finished_the_basics": return .finished_the_basics
+        case "finished_meditation_for_happiness": return .finished_meditation_for_happiness
+        case "finished_build_confidence": return .finished_build_confidence
+        case "finished_handle_insecurity": return .finished_handle_insecurity
+        case "finished_seize_the_day": return .finished_seize_the_day
+        case "finished_bedtime_meditation": return .finished_bedtime_meditation
         default: return .finished_med_1_minute_meditation
         }
     }
@@ -385,6 +438,31 @@ extension AnalyticEvent {
         case .finished_anxiety_x_stress: return "finished_anxiety_x_stress"
         case .finished_body_scan: return "finished_body_scan"
         case .finished_better_faster_sleep: return "finished_better_faster_sleep"
+        case .finished_good_morning__positive_energy: return "finished_good_morning__positive_energy"
+        case .finished_affirmations: return "finished_affirmations"
+        case .finished_clearing_fears: return "finished_clearing_fears"
+        case .finished_relieve_anxiety: return "finished_relieve_anxiety"
+        case .relieve_stress__activate_intuition: return "relieve_stress__activate_intuition"
+        case .finished_how_to_meditate: return "finished_how_to_meditate"
+        case .finished_it_lies_within_you: return "finished_it_lies_within_you"
+        case .finished_basic_confidence_meditation: return "finished_basic_confidence_meditation"
+        case .finished_emotional_balance: return "finished_emotional_balance"
+        case .finished_deep_sleep: return "finished_deep_sleep"
+        case .finished_a_sense_of_gratitude: return "finished_a_sense_of_gratitude"
+        case .finished_chronic_pain__safe_place: return "finished_chronic_pain__safe_place"
+        case .finished_life_is_beautiful: return "finished_life_is_beautiful"
+        case .thankful_meditaiton_for_gratitude: return "thankful_meditaiton_for_gratitude"
+        case .sustain_focus_x_increase_motivation: return "sustain_focus_x_increase_motivation"
+        case .finished_cultivate_self_love: return "finished_cultivate_self_love"
+        case .finished_clearing_the_mind: return "finished_clearing_the_mind"
+        case .finished_seven_days_to_happiness: return "finished_seven_days_to_happiness"
+        case .finished_creativity_x_inspiration: return "finished_creativity_x_inspiration"
+        case .finished_the_basics: return "finished_the_basics"
+        case .finished_meditation_for_happiness: return "finished_meditation_for_happiness"
+        case .finished_build_confidence: return "finished_build_confidence"
+        case .finished_handle_insecurity: return "finished_handle_insecurity"
+        case .finished_seize_the_day: return "finished_seize_the_day"
+        case .finished_bedtime_meditation: return "finished_bedtime_meditation"
         case .screen_load_profile: return "screen_load_profile"
         case .profile_tapped_journey: return "profile_tapped_journey"
         case .profile_tapped_settings: return "profile_tapped_settings"
@@ -425,6 +503,7 @@ extension AnalyticEvent {
         case .gratitude_tapped_prompts: return "gratitude_tapped_prompts"
         case .plus_tapped_meditate: return "plus_tapped_meditate"
         case .play_tapped_sound_beach: return "play_tapped_sound_beach"
+        case .seventh_time_coming_back: return "seventh_time_coming_back"
         }
     }
 }

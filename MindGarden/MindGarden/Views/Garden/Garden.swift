@@ -58,7 +58,6 @@ struct Garden: View {
                             } label: {
                                 OperatorButton(imgName: "lessthan.square.fill")
                             }
-
                             Button {
                                 Analytics.shared.log(event: .garden_next_month)
                                 if gardenModel.selectedMonth == 12 {
@@ -220,12 +219,12 @@ struct Garden: View {
                             }
                             Rectangle()
                                 .fill(Clr.yellow)
-                                .frame(width: 250, height: 125)
+                                .frame(width: 250, height: 140)
                                 .overlay(
                                     VStack {
-                                        Text(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate"  ? "📅 This is your calendar /garden view of the month" : "📊 These are your monthly statistics")
+                                        Text(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate"  ? "📅 This is your calendar view of the month (color of the tile = your mood)" : "📊 These are your monthly statistics")
                                             .font(Font.mada(.semiBold, size: 18))
-                                            .lineLimit(2)
+                                            .lineLimit(3)
                                             .minimumScaleFactor(0.05)
                                             .multilineTextAlignment(.center)
                                             .padding(.bottom, 5)
