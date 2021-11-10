@@ -25,4 +25,5 @@ enum Page {
     case experience
     case notification
     case name
+    case pricing
 }

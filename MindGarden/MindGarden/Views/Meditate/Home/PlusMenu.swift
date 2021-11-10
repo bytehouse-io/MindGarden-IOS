@@ -20,6 +20,9 @@ struct PlusMenu: View {
         ZStack {
             VStack {
                 Button {
+                    withAnimation {
+                        viewRouter.currentPage = .pricing
+                    }
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     Analytics.shared.log(event: .plus_tapped_mood)
                     withAnimation {

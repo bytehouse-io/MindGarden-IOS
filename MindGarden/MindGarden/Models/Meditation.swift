@@ -25,6 +25,8 @@ struct Meditation: Hashable {
         return lhs.title == rhs.title
     }
 
+    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54]
+
     func returnEventName() -> String {
         return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "x").replacingOccurrences(of: "-", with: "")
             .replacingOccurrences(of: ",", with: "_")

@@ -19,6 +19,7 @@ struct Home: View {
     @State private var showPlantSelect = false
     @State private var showSearch = false
     @State private var showUpdateModal = false
+    @State private var wentPro = false
     var bonusModel: BonusViewModel
 
     init(bonusModel: BonusViewModel) {
@@ -295,21 +296,42 @@ struct Home: View {
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
                 }
-
             }
             .animation(nil)
             .animation(.default)
             .navigationBarItems(
                 leading: Img.topBranch.padding(.leading, -20),
-                trailing: Image(systemName: "magnifyingglass")
+                trailing: HStack {
+                    Button {
+                        Analytics.shared.log(event: .home_tapped_pro)
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        withAnimation {
+                            fromPage = "home"
+                            viewRouter.currentPage = .pricing
+                        }
+                    } label: {
+                        HStack {
+                            Text("💚 Go Pro!")
+                                .font(Font.mada(.semiBold, size: 14))
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.footnote)
+                        }
+                        .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                        .padding(8)
+                        .background(Clr.darkWhite)
+                        .cornerRadius(25)
+                    }
+                    .buttonStyle(NeumorphicPress())
+                    Image(systemName: "magnifyingglass")
                     .foregroundColor(Clr.darkgreen)
                     .font(.system(size: 22))
-                    .padding()
+                    .padding([.top,.bottom, .trailing])
                     .onTapGesture {
                         Analytics.shared.log(event: .home_tapped_search)
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         showSearch = true
                     }
+                }
             )
             .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
@@ -319,8 +341,15 @@ struct Home: View {
                     CategoriesScene(isSearch: true, showSearch: $showSearch)
                 }
             })
+            .alert(isPresented: $wentPro) {
+                Alert(title: Text("🥳 Congrats! You unlcoked MindGarden Plus"), dismissButton: .default(Text("Got it!")))
+            }
         }.transition(.move(edge: .leading))
             .onAppear {
+                if userWentPro {
+                    wentPro = userWentPro
+                    userWentPro = false
+                }
                 numberOfMeds += Int.random(in: -3 ... 3)
                 showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
                 if UserDefaults.standard.integer(forKey: "launchNumber") == 3 || UserDefaults.standard.integer(forKey: "launchNumber") == 7 {
@@ -335,6 +364,7 @@ struct Home: View {
                 }
             }
             .onAppearAnalytics(event: .screen_load_home)
+
     }
 }
 

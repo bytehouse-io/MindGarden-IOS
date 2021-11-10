@@ -114,6 +114,10 @@ struct ContentView: View {
                                         NameScene()
                                             .frame(height: geometry.size.height)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                    case .pricing:
+                                        PricingView()
+                                            .frame(height: geometry.size.height + 80)
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     }
                                 } else {
                                     // Fallback on earlier versions
@@ -121,7 +125,7 @@ struct ContentView: View {
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
                                 && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
-                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name {
+                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  {
                                 if showPopUp || addMood || addGratitude || isOnboarding {
                                     Button {
                                         if !isOnboarding {

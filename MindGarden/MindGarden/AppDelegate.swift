@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import AppsFlyerLib
+import Purchases
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().appleAppID = "1588582890"
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().isDebug = true
+
+        Purchases.logLevel = .debug
+        Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG")
+
         sendLaunch()
         return true
     }

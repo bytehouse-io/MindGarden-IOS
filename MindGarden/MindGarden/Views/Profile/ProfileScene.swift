@@ -107,12 +107,36 @@ struct ProfileScene: View {
                                                 Analytics.shared.log(event: .profile_tapped_restore)
                                             }, showNotif: $showNotif)
                                                 .frame(height: 40)
+                                            Row(title: "Go Pro", img: Image(systemName: "heart.fill"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_goPro)
+                                                withAnimation {
+                                                    fromPage = "profile"
+                                                    viewRouter.currentPage = .pricing
+                                                }
+                                            }, showNotif: $showNotif)
+                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_feedback)
+                                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            }, showNotif: $showNotif)
+                                                .frame(height: 40)
+                                            Row(title: "Our Roadmap", img: Image(systemName: "map.fill"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_roadmap)
+                                                if let url = URL(string: "https://mindgarden.nolt.io/") {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            }, showNotif: $showNotif)
+                                                .frame(height: 40)
+
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_reddit)
                                                 if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif).frame(height: 40)
+                                                .frame(height: 40)
+
                                             Row(title: "Daily Motivation", img: Img.instaIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_instagram)
                                                 if let url = URL(string: "https://www.instagram.com/mindgardn/") {
@@ -120,8 +144,8 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif)
                                                 .frame(height: 40)
-                                        }.frame(maxHeight: g.size.height * 0.6)
-                                            .padding()
+                                        }.frame(maxHeight: g.size.height * 0.8)
+                                            .padding([.horizontal, .bottom])
                                             .neoShadow()
                                     }
                                 } else {
@@ -233,7 +257,8 @@ struct ProfileScene: View {
                 .onAppear {
                     // Set the default to clear
                     UITableView.appearance().backgroundColor = .clear
-//                    UITableView.appearance().isScrollEnabled = false
+                    UITableView.appearance().showsVerticalScrollIndicator = false
+                    UITableView.appearance().isScrollEnabled = false
                     profileModel.update(userModel: userModel, gardenModel: gardenModel)
                 }
                 .sheet(isPresented: $showMailView) {

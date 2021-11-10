@@ -56,7 +56,15 @@ struct HomeSquare: View {
                         .padding(.top, 10)
                 }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
                          , alignment: .topLeading)
+            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id) {
+                Image(systemName: "lock.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                    .position(x:  width * 0.4, y: 30)
+            }
         }
+        
     }
 }
 

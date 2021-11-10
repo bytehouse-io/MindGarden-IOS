@@ -39,9 +39,6 @@ class MeditationViewModel: ObservableObject {
     }
 
     init() {
-        for med in Meditation.allMeditations {
-            print(med.returnEventName())
-        }
         $selectedCategory
             .sink { [unowned self] value in
                 if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }

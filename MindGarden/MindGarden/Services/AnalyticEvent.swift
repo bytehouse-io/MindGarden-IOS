@@ -75,6 +75,7 @@ enum AnalyticEvent {
 
     // bonus modal
     case home_tapped_bonus //
+    case home_tapped_pro
     case home_claim_daily //
     case home_claim_seven //
     case home_claim_thirty //
@@ -180,6 +181,9 @@ enum AnalyticEvent {
     case profile_tapped_notifications //
     case profile_tapped_instagram //
     case profile_tapped_restore //
+    case profile_tapped_feedback //
+    case profile_tapped_roadmap //
+    case profile_tapped_goPro //
     case profile_tapped_toggle_off_notifs //
     case profile_tapped_toggle_on_notifs //
     case profile_tapped_logout //
@@ -195,6 +199,7 @@ enum AnalyticEvent {
     case categories_tapped_meditation //
     case categories_tapped_sleep //
     case categories_tapped_confidence //
+    case categories_tapped_locked_meditation //
 
     //MARK: - tabs + plus
     case tabs_tapped_meditate //
@@ -372,6 +377,7 @@ extension AnalyticEvent {
         case .garden_tapped_single_previous_session: return "garden_tapped_single_previous_session"
         case .screen_load_home: return "screen_load_home"
         case .home_tapped_plant_select: return "home_tapped_plant_select"
+        case .home_tapped_pro: return "home_tapped_pro"
         case .home_selected_plant: return "home_selected_plant"
         case .home_tapped_categories: return "home_tapped_categories"
         case .home_tapped_search: return "home_tapped_search"
@@ -475,6 +481,9 @@ extension AnalyticEvent {
         case .profile_tapped_toggle_off_notifs: return "profile_tapped_toggle_off_notifs"
         case .profile_tapped_toggle_on_notifs: return "profile_tapped_toggle_on_notifs"
         case .profile_tapped_logout: return "profile_tapped_logout"
+        case .profile_tapped_feedback: return "profile_tapped_feedback"
+        case .profile_tapped_roadmap: return "profile_tapped_roadmap"
+        case .profile_tapped_goPro: return "profile_tapped_goPro"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"
@@ -485,6 +494,8 @@ extension AnalyticEvent {
         case .categories_tapped_meditation: return "categories_tapped_meditation"
         case .categories_tapped_sleep: return "categories_tapped_sleep"
         case .categories_tapped_confidence: return "categories_tapped_confidence"
+        case .categories_tapped_locked_meditation: return
+            "categories_tapped_locked_meditation"
         case .tabs_tapped_meditate: return "tabs_tapped_meditate"
         case .tabs_tapped_garden: return "tabs_tapped_garden"
         case .tabs_tapped_store: return "tabs_tapped_store"

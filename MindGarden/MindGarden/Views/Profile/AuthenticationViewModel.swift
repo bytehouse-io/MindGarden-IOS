@@ -352,6 +352,9 @@ extension AuthenticationViewModel {
                     if let joinDate = document[K.defaults.joinDate] {
                         UserDefaults.standard.setValue(joinDate, forKey: K.defaults.joinDate)
                     }
+                    if let isPro = document["isPro"] {
+                        UserDefaults.standard.setValue(isPro, forKey: "isPro")
+                    }
                 }
             }
         }

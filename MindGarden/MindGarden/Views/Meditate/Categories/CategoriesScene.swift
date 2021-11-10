@@ -74,17 +74,25 @@ struct CategoriesScene: View {
                                 }), id: \.self) { item in
                                     HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
                                         .onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .categories_tapped_meditation)
-                                            model.selectedMeditation = item
-                                            if isSearch {
-                                                tappedMed = true
-                                                presentationMode.wrappedValue.dismiss()
-                                            } else {
-                                                if model.selectedMeditation?.type == .course {
-                                                    viewRouter.currentPage = .middle
+                                            withAnimation {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
+                                                    fromPage = "lockedMeditation"
+                                                    Analytics.shared.log(event: .categories_tapped_locked_meditation)
+                                                    viewRouter.currentPage = .pricing
                                                 } else {
-                                                    viewRouter.currentPage = .play
+                                                    Analytics.shared.log(event: .categories_tapped_meditation)
+                                                    model.selectedMeditation = item
+                                                    if isSearch {
+                                                        tappedMed = true
+                                                        presentationMode.wrappedValue.dismiss()
+                                                    } else {
+                                                        if model.selectedMeditation?.type == .course {
+                                                            viewRouter.currentPage = .middle
+                                                        } else {
+                                                            viewRouter.currentPage = .play
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
