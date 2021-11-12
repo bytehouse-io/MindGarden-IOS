@@ -97,6 +97,7 @@ enum AnalyticEvent {
     case middle_tapped_row //
     case middle_tapped_row_favorite //
     case middle_tapped_row_unfavorite
+    case middle_tapped_locked_recommended
 
     //MARK: - Play
     case screen_load_play //
@@ -209,6 +210,7 @@ enum AnalyticEvent {
     case tabs_tapped_plus //
     //plus
     case plus_tapped_mood //
+    case plus_tapped_mood_to_pricing
     //mood
     case mood_tapped_angry //
     case mood_tapped_sad //
@@ -218,11 +220,13 @@ enum AnalyticEvent {
     case mood_tapped_cancel
     //gratitude
     case plus_tapped_gratitude
+    case plus_tapped_gratitude_to_pricing
     case gratitude_tapped_done // 
     case gratitude_tapped_cancel
     case gratitude_tapped_prompts
 
     case plus_tapped_meditate
+    case plus_tapped_meditate_to_pricing
     case seventh_time_coming_back
 }
 
@@ -404,6 +408,7 @@ extension AnalyticEvent {
         case .middle_tapped_row: return "middle_tapped_row"
         case .middle_tapped_row_favorite: return "middle_tapped_row_favorite"
         case .middle_tapped_row_unfavorite: return "middle_tapped_row_unfavorite"
+        case .middle_tapped_locked_recommended: return "middle_tapped_locked_recommended"
         case .screen_load_play: return "screen_load_play"
         case .play_tapped_back: return "play_tapped_back"
         case .play_tapped_favorite: return "play_tapped_favorite"
@@ -494,8 +499,7 @@ extension AnalyticEvent {
         case .categories_tapped_meditation: return "categories_tapped_meditation"
         case .categories_tapped_sleep: return "categories_tapped_sleep"
         case .categories_tapped_confidence: return "categories_tapped_confidence"
-        case .categories_tapped_locked_meditation: return
-            "categories_tapped_locked_meditation"
+        case .categories_tapped_locked_meditation: return "categories_tapped_locked_meditation"
         case .tabs_tapped_meditate: return "tabs_tapped_meditate"
         case .tabs_tapped_garden: return "tabs_tapped_garden"
         case .tabs_tapped_store: return "tabs_tapped_store"
@@ -509,6 +513,9 @@ extension AnalyticEvent {
         case .mood_tapped_done: return "mood_tapped_done"
         case .mood_tapped_cancel: return "mood_tapped_cancel"
         case .plus_tapped_gratitude: return "plus_tapped_gratitude"
+        case .plus_tapped_mood_to_pricing: return "plus_tapped_mood_to_pricing"
+        case .plus_tapped_gratitude_to_pricing: return "plus_tapped_gratitude_to_pricing"
+        case .plus_tapped_meditate_to_pricing: return "plus_tapped_meditate_to_pricing"
         case .gratitude_tapped_done: return "gratitude_tapped_done"
         case .gratitude_tapped_cancel: return "gratitude_tapped_cancel"
         case .gratitude_tapped_prompts: return "gratitude_tapped_prompts"

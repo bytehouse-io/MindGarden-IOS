@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
-        numberOfMeds = Int.random(in: 60..<83)
+        numberOfMeds = Int.random(in: 100..<123)
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in

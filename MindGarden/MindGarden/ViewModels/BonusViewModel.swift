@@ -35,7 +35,8 @@ class BonusViewModel: ObservableObject {
         self.userModel = userModel
     }
 
-    private func createDailyCountdown() {
+    private func createDailyCountdown() { 
+        dailyInterval = ""
         var interval = TimeInterval()
 
         if dailyBonus == "" { // first daily bonus ever

@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseAuth
 import StoreKit
+import Purchases
+import Firebase
 
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -302,26 +304,28 @@ struct Home: View {
             .navigationBarItems(
                 leading: Img.topBranch.padding(.leading, -20),
                 trailing: HStack {
-                    Button {
-                        Analytics.shared.log(event: .home_tapped_pro)
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        withAnimation {
-                            fromPage = "home"
-                            viewRouter.currentPage = .pricing
+                    if !UserDefaults.standard.bool(forKey: "isPro") {
+                        Button {
+                            Analytics.shared.log(event: .home_tapped_pro)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                fromPage = "home"
+                                viewRouter.currentPage = .pricing
+                            }
+                        } label: {
+                            HStack {
+                                Text("💚 Go Pro!")
+                                    .font(Font.mada(.semiBold, size: 14))
+                                    .foregroundColor(Clr.darkgreen)
+                                    .font(.footnote)
+                            }
+                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                            .padding(8)
+                            .background(Clr.darkWhite)
+                            .cornerRadius(25)
                         }
-                    } label: {
-                        HStack {
-                            Text("💚 Go Pro!")
-                                .font(Font.mada(.semiBold, size: 14))
-                                .foregroundColor(Clr.darkgreen)
-                                .font(.footnote)
-                        }
-                        .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
-                        .padding(8)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(25)
+                        .buttonStyle(NeumorphicPress())
                     }
-                    .buttonStyle(NeumorphicPress())
                     Image(systemName: "magnifyingglass")
                     .foregroundColor(Clr.darkgreen)
                     .font(.system(size: 22))
@@ -342,7 +346,7 @@ struct Home: View {
                 }
             })
             .alert(isPresented: $wentPro) {
-                Alert(title: Text("🥳 Congrats! You unlcoked MindGarden Plus"), dismissButton: .default(Text("Got it!")))
+                Alert(title: Text("🥳 Congrats! You unlocked MindGarden Pro"), dismissButton: .default(Text("Got it!")))
             }
         }.transition(.move(edge: .leading))
             .onAppear {
@@ -350,6 +354,7 @@ struct Home: View {
                     wentPro = userWentPro
                     userWentPro = false
                 }
+                checkIfPro()
                 numberOfMeds += Int.random(in: -3 ... 3)
                 showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
                 if UserDefaults.standard.integer(forKey: "launchNumber") == 3 || UserDefaults.standard.integer(forKey: "launchNumber") == 7 {
@@ -365,6 +370,29 @@ struct Home: View {
             }
             .onAppearAnalytics(event: .screen_load_home)
 
+    }
+
+    private func checkIfPro() {
+        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
+            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                UserDefaults.standard.setValue(true, forKey: "isPro")
+            } else {
+                if !UserDefaults.standard.bool(forKey: "trippleTapped") {
+                    UserDefaults.standard.setValue(false, forKey: "isPro")
+                    if let email = Auth.auth().currentUser?.email {
+                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                            "isPro": false,
+                        ]) { (error) in
+                            if let e = error {
+                                print("There was a issue saving data to firestore \(e) ")
+                            } else {
+                                print("Succesfully saved new items")
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -146,7 +146,15 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
     private func goToHome() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        viewRouter.currentPage = .meditate
+        withAnimation {
+            if UserDefaults.standard.bool(forKey: "isPro") {
+                viewRouter.currentPage = .meditate
+            } else {
+                fromPage = "onboarding"
+                viewRouter.currentPage = .pricing
+            }
+        }
+
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }
 
@@ -321,7 +329,7 @@ extension AuthenticationViewModel {
         formatter.dateFormat = "MMM dd,yyyy"
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
-                "name": UserDefaults.standard.string(forKey: "name") ?? "hg",
+                "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 
                 "coins": 100,
                 "joinDate": formatter.string(from: Date()),
                 "totalSessions": 0,

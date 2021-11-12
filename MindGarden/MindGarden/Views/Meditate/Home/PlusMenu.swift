@@ -20,14 +20,19 @@ struct PlusMenu: View {
         ZStack {
             VStack {
                 Button {
-                    withAnimation {
-                        viewRouter.currentPage = .pricing
-                    }
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    Analytics.shared.log(event: .plus_tapped_mood)
-                    withAnimation {
-                        showPopUp = false
-                        addMood = true
+                    if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                        withAnimation {
+                            Analytics.shared.log(event: .plus_tapped_mood_to_pricing)
+                            fromPage = "plusMood"
+                            viewRouter.currentPage = .pricing
+                        }
+                    } else {
+                        Analytics.shared.log(event: .plus_tapped_mood)
+                        withAnimation {
+                            showPopUp = false
+                            addMood = true
+                        }
                     }
                 } label: {
                     MenuChoice(title: "Mood Check", img: Image(systemName: "face.smiling"),  isOnboarding: false, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
@@ -35,13 +40,21 @@ struct PlusMenu: View {
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    Analytics.shared.log(event: .plus_tapped_gratitude)
-                    if isOnboarding {
-                        Analytics.shared.log(event: .onboarding_finished_meditation)
-                    }
-                    withAnimation {
-                        showPopUp = false
-                        addGratitude = true
+                    if UserDefaults.standard.integer(forKey: "numGrads") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                        Analytics.shared.log(event: .plus_tapped_gratitude_to_pricing)
+                        withAnimation {
+                            fromPage = "plusGratitude"
+                            viewRouter.currentPage = .pricing
+                        }
+                    } else {
+                        Analytics.shared.log(event: .plus_tapped_gratitude)
+                        if isOnboarding {
+                            Analytics.shared.log(event: .onboarding_finished_meditation)
+                        }
+                        withAnimation {
+                            showPopUp = false
+                            addGratitude = true
+                        }
                     }
                 } label: {
                     MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"), isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
@@ -49,23 +62,30 @@ struct PlusMenu: View {
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    Analytics.shared.log(event: .plus_tapped_meditate)
-                    withAnimation {
-                        showPopUp = false
-                    }
-                    
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                        Analytics.shared.log(event: .onboarding_finished_gratitude)
-                        meditateModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
-                            med.id == 22
-                        })
-                        viewRouter.currentPage = .play
+                    if UserDefaults.standard.integer(forKey: "numMeds") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                        withAnimation {
+                            fromPage = "plusMeditation"
+                            viewRouter.currentPage = .pricing
+                        }
                     } else {
-                        meditateModel.selectedMeditation = meditateModel.featuredMeditation
-                        if meditateModel.selectedMeditation?.type == .course {
-                            viewRouter.currentPage = .middle
-                        } else {
+                        Analytics.shared.log(event: .plus_tapped_meditate)
+                        withAnimation {
+                            showPopUp = false
+                        }
+
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                            Analytics.shared.log(event: .onboarding_finished_gratitude)
+                            meditateModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
+                                med.id == 22
+                            })
                             viewRouter.currentPage = .play
+                        } else {
+                            meditateModel.selectedMeditation = meditateModel.featuredMeditation
+                            if meditateModel.selectedMeditation?.type == .course {
+                                viewRouter.currentPage = .middle
+                            } else {
+                                viewRouter.currentPage = .play
+                            }
                         }
                     }
                 } label: {

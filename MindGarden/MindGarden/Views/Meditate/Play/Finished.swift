@@ -185,6 +185,10 @@ struct Finished: View {
             model.lastSeconds = false
         }
         .onAppear {
+            var num = UserDefaults.standard.integer(forKey: "numMeds")
+            num += 1
+            UserDefaults.standard.setValue(num, forKey: "numMeds")
+
             showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
             favorited = model.isFavorited
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {

@@ -90,6 +90,9 @@ struct Gratitude: View, KeyboardReadable {
 //                        .minimumScaleFactor(0.5)
                         .padding(.top)
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
+                        var num = UserDefaults.standard.integer(forKey: "numGrads")
+                        num += 1
+                        UserDefaults.standard.setValue(num, forKey: "numGrads")
                         Analytics.shared.log(event: .gratitude_tapped_done)
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
                         text = "Thankful for "

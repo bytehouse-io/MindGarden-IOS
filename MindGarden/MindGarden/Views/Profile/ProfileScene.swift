@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MessageUI
+import Purchases
 
 enum settings {
     case settings
@@ -27,6 +28,7 @@ struct ProfileScene: View {
     @State private var notificationOn = false
     @State private var showNotif = false
     @State private var dateTime = Date()
+    @State private var restorePurchase = false
 
     var body: some View {
         VStack {
@@ -89,11 +91,11 @@ struct ProfileScene: View {
                                                 showNotification = true
                                                 Analytics.shared.log(event: .profile_tapped_notifications)
                                             }, showNotif: $showNotif)
-                                                .frame(height: 40)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_invite)
                                                 actionSheet() }, showNotif: $showNotif)
-                                                .frame(height: 40)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_email)
                                                 if MFMailComposeViewController.canSendMail() {
@@ -102,32 +104,43 @@ struct ProfileScene: View {
                                                     mailNeedsSetup = true
                                                 }
                                             }, showNotif: $showNotif)
-                                                .frame(height: 40)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_restore)
-                                            }, showNotif: $showNotif)
-                                                .frame(height: 40)
-                                            Row(title: "Go Pro", img: Image(systemName: "heart.fill"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_goPro)
-                                                withAnimation {
-                                                    fromPage = "profile"
-                                                    viewRouter.currentPage = .pricing
+                                                Purchases.shared.restoreTransactions { (purchaserInfo, error) in
+                                                    if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                                        restorePurchase = true
+                                                    } else {
+                                                        UserDefaults.standard.setValue(false, forKey: "isPro")
+                                                    }
                                                 }
                                             }, showNotif: $showNotif)
+                                                .frame(height: K.isSmall() ? 30 : 40)
+                                            if !UserDefaults.standard.bool(forKey: "isPro") {
+                                                Row(title: "Go Pro", img: Image(systemName: "heart.fill"), action: {
+                                                    Analytics.shared.log(event: .profile_tapped_goPro)
+                                                    withAnimation {
+                                                        fromPage = "profile"
+                                                        viewRouter.currentPage = .pricing
+                                                    }
+                                                }, showNotif: $showNotif)
+                                                    .frame(height: K.isSmall() ? 30 : 40)
+                                            }
                                             Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_feedback)
                                                 if let url = URL(string: "https://tally.so/r/3EB1Bw") {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif)
-                                                .frame(height: 40)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Our Roadmap", img: Image(systemName: "map.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_roadmap)
                                                 if let url = URL(string: "https://mindgarden.nolt.io/") {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif)
-                                                .frame(height: 40)
+                                                .frame(height: K.isSmall() ? 30 : 40)
 
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_reddit)
@@ -135,7 +148,7 @@ struct ProfileScene: View {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif).frame(height: 40)
-                                                .frame(height: 40)
+                                                .frame(height: K.isSmall() ? 30 : 40)
 
                                             Row(title: "Daily Motivation", img: Img.instaIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_instagram)
@@ -143,9 +156,9 @@ struct ProfileScene: View {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif)
-                                                .frame(height: 40)
-                                        }.frame(maxHeight: g.size.height * 0.8)
-                                            .padding([.horizontal, .bottom])
+                                                .frame(height: K.isSmall() ? 30 : 40)
+                                        }.frame(maxHeight: g.size.height * (K.isSmall() ? 0.725 : 0.8))
+                                            .padding([.horizontal])
                                             .neoShadow()
                                     }
                                 } else {
@@ -189,6 +202,11 @@ struct ProfileScene: View {
                                                     .padding(.top, 3)
                                             }.frame(width: abs(width - 100), alignment: .leading)
                                                 .frame(height: 25)
+                                                .onTapGesture(count: 4) {
+                                                    print("close")
+                                                    UserDefaults.standard.setValue(true, forKey: "trippleTapped")
+                                                    UserDefaults.standard.setValue(true, forKey: "isPro")
+                                                }
                                             HStack {
                                                 Text(profileModel.totalMins/60 == 0 ? "0.5" : "\(profileModel.totalMins/60)")
                                                     .font(Font.mada(.bold, size: 40))
@@ -236,6 +254,7 @@ struct ProfileScene: View {
                                     profileModel.signOut()
                                     UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
                                     UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
+                                    UserDefaults.standard.setValue(false, forKey: "isPro")
                                     withAnimation {
 
                                         viewRouter.currentPage = .authentication
@@ -247,6 +266,7 @@ struct ProfileScene: View {
                                         .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
                                 }
                                 .frame(width: abs(width - 100), height: 50, alignment: .center)
+                                .padding(.top, K.isSmall() ? 5 : 15)
                                 Spacer()
                             }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
                                 .frame(width: width, height: height)
@@ -269,6 +289,9 @@ struct ProfileScene: View {
                 }
                 .alert(isPresented: $mailNeedsSetup) {
                     Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
+                }
+                .alert(isPresented: $restorePurchase) {
+                    Alert(title: Text("Success!"), message: Text("You've restored MindGarden Pro"))
                 }
                 .onAppearAnalytics(event: .screen_load_profile)
             } else {

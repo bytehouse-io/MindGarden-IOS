@@ -79,6 +79,9 @@ struct MoodCheck: View {
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
                         DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
+                            var num = UserDefaults.standard.integer(forKey: "numMoods")
+                            num += 1
+                            UserDefaults.standard.setValue(num, forKey: "numMoods")
                             if moodSelected != .none {
                                 Analytics.shared.log(event: .mood_tapped_done)
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {

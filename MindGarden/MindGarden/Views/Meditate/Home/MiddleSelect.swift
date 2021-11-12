@@ -79,23 +79,42 @@ struct MiddleSelect: View {
                                         Divider().padding()
                                         HStack(spacing: 15) {
                                             Button {
-                                                Analytics.shared.log(event: .middle_tapped_recommended)
-                                                model.selectedMeditation = model.recommendedMeds[0]
-                                                if model.selectedMeditation?.type == .course {
-                                                    viewRouter.currentPage = .middle
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[0].id) {
+                                                    Analytics.shared.log(event: .middle_tapped_locked_recommended)
+                                                    fromPage = "middle"
+                                                    withAnimation {
+                                                        viewRouter.currentPage = .pricing
+                                                    }
                                                 } else {
-                                                    viewRouter.currentPage = .play
+                                                    Analytics.shared.log(event: .middle_tapped_recommended)
+                                                    model.selectedMeditation = model.recommendedMeds[0]
+                                                    if model.selectedMeditation?.type == .course {
+                                                        viewRouter.currentPage = .middle
+                                                    } else {
+                                                        viewRouter.currentPage = .play
+                                                    }
                                                 }
+
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, description: model.recommendedMeds[0].description, duration: model.recommendedMeds[0].duration)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
-                                                Analytics.shared.log(event: .middle_tapped_recommended)
-                                                model.selectedMeditation = model.recommendedMeds[1]
-                                                if model.selectedMeditation?.type == .course {
-                                                    viewRouter.currentPage = .middle
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[1].id) {
+                                                    Analytics.shared.log(event: .middle_tapped_locked_recommended)
+                                                    fromPage = "middle"
+                                                    withAnimation {
+                                                        viewRouter.currentPage = .pricing
+                                                    }
                                                 } else {
-                                                    viewRouter.currentPage = .play
+                                                    Analytics.shared.log(event: .middle_tapped_recommended)
+                                                    model.selectedMeditation = model.recommendedMeds[1]
+                                                    if model.selectedMeditation?.type == .course {
+                                                        viewRouter.currentPage = .middle
+                                                    } else {
+                                                        viewRouter.currentPage = .play
+                                                    }
                                                 }
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, description: model.recommendedMeds[1].description, duration: model.recommendedMeds[1].duration)

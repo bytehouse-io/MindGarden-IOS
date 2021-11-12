@@ -19,9 +19,9 @@ struct PricingView: View {
     @State private var monthlyPrice = 0.0
     @State private var yearlyPrice = 0.0
     @State private var lifePrice = 0.0
-    @State private var selectedBox = "Yearly"
+    @State private var selectedBox = "Lifetime"
 
-    let items = [("Regular vs\n Plus", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "40", "Infinite"), ("Total # of Mood Checks", "45", "Infinite"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on cloud", "🔒", "✅")]
+    let items = [("Regular vs\n Plus", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
             GeometryReader { g in
                 let width = g.size.width
@@ -49,6 +49,7 @@ struct PricingView: View {
                                             case "profile": viewRouter.currentPage = .profile
                                             case "onboarding": viewRouter.currentPage = .meditate
                                             case "lockedMeditation": viewRouter.currentPage = .categories
+                                            case "middle": viewRouter.currentPage = .middle
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
@@ -63,6 +64,7 @@ struct PricingView: View {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Lifetime"
+                                unlockPro()
                             } label: {
                                 PricingBox(title: "Lifetime", price: lifePrice, selected: $selectedBox)
                             }.buttonStyle(NeumorphicPress())
@@ -73,6 +75,7 @@ struct PricingView: View {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Yearly"
+                                unlockPro()
                             } label: {
                                 PricingBox(title: "Yearly", price: yearlyPrice, selected: $selectedBox)
                             }.buttonStyle(NeumorphicPress())
@@ -83,6 +86,8 @@ struct PricingView: View {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Monthly"
+                                unlockPro()
+
                             } label: {
                                 PricingBox(title: "Monthly", price: monthlyPrice, selected: $selectedBox)
                             }.buttonStyle(NeumorphicPress())
@@ -140,73 +145,10 @@ struct PricingView: View {
                                                     .neoShadow())
                                 }.frame(width: width * 0.8, height: height * 0.6)
                         }
-                        Spacer()
+
                         VStack {
                             Button {
-                                var price = 0.0
-                                var package = packagesAvailableForPurchase[0]
-                                var event2 = "_Started_From_All"
-                                var event3 = "cancelled_"
-                                switch selectedBox {
-                                case "Yearly":
-                                    package = packagesAvailableForPurchase.last { (package) -> Bool in
-                                        return package.product.productIdentifier == "io.mindgarden.pro.yearly"
-                                    }!
-                                    price = yearlyPrice
-                                    event2 = "Yearly" + event2
-                                    event3 += "yearly"
-                                case "Lifetime":
-                                    package = packagesAvailableForPurchase.last { (package) -> Bool in
-                                        return package.product.productIdentifier == "io.mindgarden.pro.lifetime"
-                                    }!
-                                    price = lifePrice
-                                    event2 = "Lifetime" + event2
-                                    event3 += "lifetime"
-                                case "Monthly":
-                                    package = packagesAvailableForPurchase.last { (package) -> Bool in
-                                        return package.product.productIdentifier == "io.mindgarden.pro.monthly"
-                                    }!
-                                    price = monthlyPrice
-                                    event2 = "Monthly" + event2
-                                    event3 += "monthly"
-                                default: break
-                                }
-
-                                Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
-                                    if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-                                        let event = logEvent()
-                                        AppsFlyerLib.shared().logEvent(name: event, values:
-                                                                        [
-                                                                            AFEventParamRevenue: price,
-                                                                            AFEventParamCurrency:"\(Locale.current.currencyCode!)"
-                                                                        ])
-                                        AppsFlyerLib.shared().logEvent(name: event2, values:
-                                                                                        [
-                                                                                            AFEventParamContent: "true"
-                                                                                        ])
-                                        userIsPro()
-                                    } else if userCancelled {
-                                        AppsFlyerLib.shared().logEvent(name: event3, values:
-                                                                        [
-                                                                            AFEventParamContent: "true"
-                                                                        ])
-                                        if event2 == "Lifetime_Started_From_All" {
-                                            let center = UNUserNotificationCenter.current()
-                                            let content = UNMutableNotificationContent()
-                                            content.title = "Don't Miss This Opportunity"
-                                            content.body = "🎉 MindGarden Pro For Life is Gone in the Next 24 Hours!!! 🎉"
-                                            // Step 3: Create the notification trigger
-                                            let date = Date().addingTimeInterval(43200)
-                                            let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-                                            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-                                            // Step 4: Create the request
-                                            let uuidString = UUID().uuidString
-                                            let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-                                            // Step 5: Register the request
-                                            center.add(request) { (error) in }
-                                        }
-                                    }
-                                }
+                                unlockPro()
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
                                 Capsule()
@@ -217,10 +159,30 @@ struct PricingView: View {
                                             .font(Font.mada(.bold, size: 18))
                                     )
                             }.frame(width: width * 0.825, height: 50)
-                                .padding()
                                 .buttonStyle(NeumorphicPress())
-                        }
-                    }.padding(.top, 30)
+                            HStack {
+                                Text("Privacy Policy")
+                                    .foregroundColor(.gray)
+                                    .font(Font.mada(.regular, size: 14))
+                                    .onTapGesture {
+                                        if let url = URL(string: "https://www.termsfeed.com/live/5201dab0-a62c-484f-b24f-858f2c69e581") {
+                                            UIApplication.shared.open(url)
+                                        }
+                                    }
+                                Spacer()
+                                Text("Terms of Service")
+                                    .foregroundColor(.gray)
+                                    .font(Font.mada(.regular, size: 14))
+                                    .onTapGesture {
+                                        if let url = URL(string: "https:/mindgarden.io/terms-of-use") {
+                                            UIApplication.shared.open(url)
+                                        }
+                                    }
+                            }.padding(.horizontal)
+                        }.padding(10)
+                            .padding(.bottom, K.isSmall() ? 50 : 0)
+                        Spacer()
+                    }.padding(.top, K.hasNotch() ? 30 : 10)
                 }
             }.onAppear {
                 Purchases.shared.offerings { [self] (offerings, error) in
@@ -250,6 +212,72 @@ struct PricingView: View {
             }
     }
 
+    private func unlockPro() {
+        var price = 0.0
+        var package = packagesAvailableForPurchase[0]
+        var event2 = "_Started_From_All"
+        var event3 = "cancelled_"
+        switch selectedBox {
+        case "Yearly":
+            package = packagesAvailableForPurchase.last { (package) -> Bool in
+                return package.product.productIdentifier == "io.mindgarden.pro.yearly"
+            }!
+            price = yearlyPrice
+            event2 = "Yearly" + event2
+            event3 += "yearly"
+        case "Lifetime":
+            package = packagesAvailableForPurchase.last { (package) -> Bool in
+                return package.product.productIdentifier == "io.mindgarden.pro.lifetime"
+            }!
+            price = lifePrice
+            event2 = "Lifetime" + event2
+            event3 += "lifetime"
+        case "Monthly":
+            package = packagesAvailableForPurchase.last { (package) -> Bool in
+                return package.product.productIdentifier == "io.mindgarden.pro.monthly"
+            }!
+            price = monthlyPrice
+            event2 = "Monthly" + event2
+            event3 += "monthly"
+        default: break
+        }
+
+        Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
+            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                let event = logEvent()
+                AppsFlyerLib.shared().logEvent(name: event, values:
+                                                [
+                                                    AFEventParamRevenue: price,
+                                                    AFEventParamCurrency:"\(Locale.current.currencyCode!)"
+                                                ])
+                AppsFlyerLib.shared().logEvent(name: event2, values:
+                                                                [
+                                                                    AFEventParamContent: "true"
+                                                                ])
+                userIsPro()
+            } else if userCancelled {
+                AppsFlyerLib.shared().logEvent(name: event3, values:
+                                                [
+                                                    AFEventParamContent: "true"
+                                                ])
+                if event2 == "Lifetime_Started_From_All" {
+                    let center = UNUserNotificationCenter.current()
+                    let content = UNMutableNotificationContent()
+                    content.title = "Don't Miss This Opportunity"
+                    content.body = "🎉 MindGarden Pro For Life is Gone in the Next 24 Hours!!! 🎉"
+                    // Step 3: Create the notification trigger
+                    let date = Date().addingTimeInterval(43200)
+                    let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                    // Step 4: Create the request
+                    let uuidString = UUID().uuidString
+                    let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+                    // Step 5: Register the request
+                    center.add(request) { (error) in }
+                }
+            }
+        }
+    }
     private func userIsPro() {
         UserDefaults.standard.setValue(true, forKey: "isPro")
         userWentPro = true
@@ -272,11 +300,11 @@ struct PricingView: View {
 
             switch selectedBox {
             case "Yearly":
-                event = "yearly_started_from"
+                event = "yearly_started_from_"
             case "Lifetime":
-                event = "lifetime_started_from"
+                event = "lifetime_started_from_"
             case "Monthly":
-                event = "monthly_started_from"
+                event = "monthly_started_from_"
             default: break
             }
 
@@ -288,17 +316,19 @@ struct PricingView: View {
             } else if fromPage == "profile" {
                 event = event + "profile"
             } else if fromPage == "home" {
-                event = event + "fromHome"
-            } else if fromPage == "fromPlusMeditations" {
-                event = event + "plusMeditations"
+                event = event + "from_Home"
+            } else if fromPage == "plusMeditation" {
+                event = event + "Plus_Meditations"
             } else if fromPage == "plusMood" {
-                event = event + "fromPlusMood"
-            } else if fromPage == "plusGratitude" {
-                event = event + "fromPlusGratitude"
+                event = event + "Plus_Mood"
+            } else if fromPage == "plus_Gratitude" {
+                event = event + "PlusGratitude"
             } else if fromPage == "lockedMeditation" {
-                event = event + "fromLockedMeditation"
+                event = event + "Locked_Meditation"
+            } else if fromPage == "middle" {
+                event = event + "Middle_Locked"
             }
-                  return event
+            return event
         }
 
 
@@ -313,7 +343,7 @@ struct PricingView: View {
                     .fill(selected == title ? Clr.darkgreen : Clr.darkWhite)
 //                    .border(Clr.yellow, width: selected == title ? 4 : 0)
                 HStack {
-                    Text("\(title) Plus")
+                    Text("\(title) Pro")
                         .foregroundColor(selected == title ? .white : Clr.darkgreen)
                         .font(Font.mada(.semiBold, size: 20))
                         .lineLimit(1)
