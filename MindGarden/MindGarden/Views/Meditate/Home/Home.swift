@@ -10,6 +10,7 @@ import FirebaseAuth
 import StoreKit
 import Purchases
 import Firebase
+import AppsFlyerLib
 
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -369,7 +370,6 @@ struct Home: View {
                 }
             }
             .onAppearAnalytics(event: .screen_load_home)
-
     }
 
     private func checkIfPro() {
