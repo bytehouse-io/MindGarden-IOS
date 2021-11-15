@@ -23,6 +23,9 @@ struct PricingView: View {
     @State private var yearlyPrice = 0.0
     @State private var lifePrice = 0.0
     @State private var selectedBox = "Lifetime"
+    @State private var question1 = false
+    @State private var question2 = false
+    @State private var question3 = false
 
     let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
@@ -160,6 +163,69 @@ struct PricingView: View {
                             SnapCarousel()
                                 .padding(.bottom)
                                 .environmentObject(UIStateModel())
+                            VStack {
+                                Text("🙋‍♂️ Frequent Asked Questions")
+                                    .font(Font.mada(.bold, size: 22))
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                                Text("\(question1 ? "🔽" : "▶️") How does the pro plan help me?")
+                                    .font(Font.mada(.bold, size: 18))
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(width: width * 0.8, alignment: .leading)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            question1.toggle()
+                                        }
+                                    }
+                                if question1 {
+                                    Text("Pro users are 72% more likely to stick with meditation vs non pro users. You have no limits for moods, gratitudes, and meditations. You feel invested, so you make sure to use the app daily.")
+                                        .font(Font.mada(.semiBold, size: 16))
+                                        .foregroundColor(Clr.black1)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(width: width * 0.8, alignment: .leading)
+                                        .padding(.leading, 5)
+                                }
+                                Divider()
+                                Text("\(question2 ? "🔽" : "▶️") How do app subscriptions work?")
+                                    .font(Font.mada(.bold, size: 18))
+                                    .frame(width: width * 0.8, alignment: .leading)
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.leading)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            question2.toggle()
+                                        }
+                                    }
+                                if question2 {
+                                    Text("With a subscription you pay access to pro features that last for either a month or a year. Yearly plans have a 7 day free trial where you won't be billed until the trial is over. Lifetime plans are paid once and last forever.")
+                                        .font(Font.mada(.semiBold, size: 16))
+                                        .foregroundColor(Clr.black1)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(width: width * 0.8, alignment: .leading)
+                                        .padding(.leading, 5)
+                                }
+                                Divider()
+                                Text("\(question3 ? "🔽" : "▶️") How do I cancel my subscription?")
+                                    .font(Font.mada(.bold, size: 18))
+                                    .frame(width: width * 0.8, alignment: .leading)
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.leading)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            question3.toggle()
+                                        }
+                                    }
+                                if question3 {
+                                    Text("You can easily cancel your subscription by going to the Settings App of your iphone and after selecting your apple ID, select subscriptions and simply click on MindGarden.")
+                                        .font(Font.mada(.semiBold, size: 16))
+                                        .foregroundColor(Clr.black1)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(width: width * 0.8, alignment: .leading)
+                                        .padding(.leading, 5)
+                                }
+                            }.padding(.bottom, 25)
                         }
 
                         VStack {
