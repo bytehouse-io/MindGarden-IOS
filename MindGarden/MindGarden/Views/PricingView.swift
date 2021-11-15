@@ -9,11 +9,14 @@ import SwiftUI
 import Purchases
 import AppsFlyerLib
 import Firebase
+import FirebaseFirestore
+
 var fromPage = ""
 var userWentPro = false
 
 struct PricingView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditationModel: MeditationViewModel
     @State private var selectedPrice = ""
     @State private var packagesAvailableForPurchase = [Purchases.Package]()
     @State private var monthlyPrice = 0.0
@@ -21,7 +24,7 @@ struct PricingView: View {
     @State private var lifePrice = 0.0
     @State private var selectedBox = "Lifetime"
 
-    let items = [("Regular vs\n Plus", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
+    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
             GeometryReader { g in
                 let width = g.size.width
@@ -47,7 +50,10 @@ struct PricingView: View {
                                             switch fromPage {
                                             case "home": viewRouter.currentPage = .meditate
                                             case "profile": viewRouter.currentPage = .profile
-                                            case "onboarding": viewRouter.currentPage = .meditate
+                                            case "onboarding": viewRouter.currentPage = .garden
+                                            case "onboarding2":
+                                                meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+                                                viewRouter.currentPage = .middle
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
                                             default: viewRouter.currentPage = .meditate
@@ -55,10 +61,11 @@ struct PricingView: View {
                                         }
                                     }
                             }.frame(width: g.size.width)
-                            Text("Unlock Happiness with MindGarden Pro 🍏")
-                                .font(Font.mada(.bold, size: 24))
+                            Text("Get 1% happier everyday\nby upgrading to\nMindGarden Pro 🍏")
+                                .font(Font.mada(.bold, size: 26))
                                 .foregroundColor(Clr.black2)
-                                .multilineTextAlignment(.center)
+                                .multilineTextAlignment(.leading)
+                                .frame(width: width * 0.80)
                                 .padding()
                             Button {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
@@ -138,12 +145,21 @@ struct PricingView: View {
                                             Divider()
                                         }
                                     }
-                                    .padding()
+
+                                .padding()
                                     .background(RoundedRectangle(cornerRadius: 14)
                                                     .fill(Clr.darkWhite)
                                                     .frame(width: width * 0.8, height: height * 0.55)
                                                     .neoShadow())
                                 }.frame(width: width * 0.8, height: height * 0.6)
+                            Text("Don't just take it from us\n⭐️⭐️⭐️⭐️⭐️")
+                                .font(Font.mada(.bold, size: 22))
+                                .foregroundColor(Clr.black2)
+                                .multilineTextAlignment(.center)
+                                .padding(.top)
+                            SnapCarousel()
+                                .padding(.bottom)
+                                .environmentObject(UIStateModel())
                         }
 
                         VStack {
@@ -154,7 +170,7 @@ struct PricingView: View {
                                 Capsule()
                                     .fill(Clr.yellow)
                                     .overlay(
-                                        Text("Get MindGarden Pro")
+                                        Text(selectedBox == "Yearly" ? "Start your free trial" : "Get MindGarden Pro")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.mada(.bold, size: 18))
                                     )
@@ -313,6 +329,8 @@ struct PricingView: View {
             }
             if fromPage == "onboarding" {
                 event = event + "onboarding"
+            } else if fromPage == "onboarding2" {
+                    event = event + "onboarding2"
             } else if fromPage == "profile" {
                 event = event + "profile"
             } else if fromPage == "home" {
@@ -343,21 +361,21 @@ struct PricingView: View {
                     .fill(selected == title ? Clr.darkgreen : Clr.darkWhite)
 //                    .border(Clr.yellow, width: selected == title ? 4 : 0)
                 HStack {
-                    Text("\(title) Pro")
+                    Text("\(title) Pro\(title == "Yearly" ? "     " : "")")
                         .foregroundColor(selected == title ? .white : Clr.darkgreen)
                         .font(Font.mada(.semiBold, size: 20))
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
                         .padding([.top,.bottom, .leading, .trailing], 15)
-                    if title == "Lifetime" {
+                    if title == "Lifetime" || title == "Yearly" {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text("Limited\nTime!")
+                                Text(title == "Yearly" ? "7 day\nfree trial" : "Limited\nTime!")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.mada(.bold, size: 14))
-                                    .multilineTextAlignment(.leading)
+                                    .multilineTextAlignment(.center)
                             )
                             .frame(width: 65,height: 35, alignment: .leading)
                     }

@@ -81,6 +81,8 @@ struct OnboardingModal: View {
                                             shown = false
                                             Analytics.shared.log(event: .onboarding_finished_single_okay)
                                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                            fromPage = "onboarding"
+                                            viewRouter.currentPage = .pricing
                                         }
                                     } label: {
                                         Capsule()
@@ -100,9 +102,9 @@ struct OnboardingModal: View {
                                             shown = false
                                             Analytics.shared.log(event: .onboarding_finished_single_course)
                                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                            meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                                             shown = false
-                                            viewRouter.currentPage = .middle
+                                            fromPage = "onboarding2"
+                                            viewRouter.currentPage = .pricing
                                         }
                                     } label: {
                                         Capsule()

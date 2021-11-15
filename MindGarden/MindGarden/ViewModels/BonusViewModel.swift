@@ -10,6 +10,7 @@ import Combine
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 class BonusViewModel: ObservableObject {
     @Published var lastLogin: String = ""
@@ -22,6 +23,7 @@ class BonusViewModel: ObservableObject {
     @Published var longestStreak: Int = 0
     @Published var totalBonuses: Int = 0
     @Published var dailyInterval: String = ""
+    @Published var bonusTimer: Timer? = Timer()
     var userModel: UserViewModel
     var streakNumber = 1
     let formatter: DateFormatter = {
@@ -35,7 +37,10 @@ class BonusViewModel: ObservableObject {
         self.userModel = userModel
     }
 
-    private func createDailyCountdown() { 
+    private func createDailyCountdown() {
+        self.bonusTimer?.invalidate()
+        self.bonusTimer = nil
+        print("creating Daily Countdown", dailyInterval)
         dailyInterval = ""
         var interval = TimeInterval()
 
@@ -46,13 +51,11 @@ class BonusViewModel: ObservableObject {
         }
 
         dailyInterval = interval.stringFromTimeInterval()
-        DispatchQueue.main.async {
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
-                interval -= 1
-                dailyInterval = interval.stringFromTimeInterval()
-                if interval <= 0 {
-                    timer.invalidate()
-                }
+        self.bonusTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
+            interval -= 1
+            dailyInterval = interval.stringFromTimeInterval()
+            if interval <= 0 {
+                timer.invalidate()
             }
         }
     }
@@ -197,8 +200,6 @@ class BonusViewModel: ObservableObject {
         if self.dailyBonus != "" {
             if (Date() - formatter.date(from: self.dailyBonus)! >= 0) {
                 self.totalBonuses += 1
-            } else {
-                self.createDailyCountdown()
             }
         } else {
             self.totalBonuses += 1

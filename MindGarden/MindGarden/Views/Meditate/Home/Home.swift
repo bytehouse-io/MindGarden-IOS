@@ -10,6 +10,7 @@ import FirebaseAuth
 import StoreKit
 import Purchases
 import Firebase
+import FirebaseFirestore
 import AppsFlyerLib
 
 struct Home: View {

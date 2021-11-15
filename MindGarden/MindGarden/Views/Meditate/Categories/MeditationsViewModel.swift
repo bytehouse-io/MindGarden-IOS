@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import Firebase
 import AVKit
+import FirebaseFirestore
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []

@@ -34,6 +34,10 @@ public enum Clr {
   public static let lightGray = Color("lightGray")
   /// **Universal - Any**: `#414127` with alpha: `1.000`
   public static let redGradientBottom = Color("redGradientBottom")
+  /// **Universal - Any**: `#F6F2F2` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#000000` with alpha: `1.000`
+  public static let review = Color("review")
   /// **Universal - Any**: `#BFA588` with alpha: `1.000`
   public static let shadow = Color("shadow")
   /// **Universal - Any**: `#F0F0F0` with alpha: `1.000`

@@ -8,6 +8,7 @@
 import GoogleSignIn
 import FirebaseAuth
 import Firebase
+import FirebaseFirestore
 import CryptoKit 
 import SwiftUI
 import AuthenticationServices
@@ -147,12 +148,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     private func goToHome() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
-            if UserDefaults.standard.bool(forKey: "isPro") {
-                viewRouter.currentPage = .meditate
-            } else {
-                fromPage = "onboarding"
-                viewRouter.currentPage = .pricing
-            }
+            viewRouter.currentPage = .meditate
         }
 
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)

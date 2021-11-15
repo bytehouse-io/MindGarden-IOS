@@ -7,6 +7,7 @@
 
 import Combine
 import Firebase
+import FirebaseFirestore
 
 class GardenViewModel: ObservableObject {
     @Published var grid = [String: [String:[String:[String:Any]]]]()

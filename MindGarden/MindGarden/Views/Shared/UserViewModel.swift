@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import Firebase
+import FirebaseFirestore
 
 var userCoins: Int = 0
 class UserViewModel: ObservableObject {

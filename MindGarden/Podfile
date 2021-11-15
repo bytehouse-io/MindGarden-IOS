@@ -6,7 +6,7 @@ target 'MindGarden' do
   use_frameworks!
 
   # Pods for MindGarden
-   pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
+   pod 'FirebaseFirestore'
    pod 'FirebaseAuth', '~> 8.9'
    pod 'Firebase'
    pod 'GoogleSignIn', '~> 5.0'

@@ -7,6 +7,10 @@
 
 import UIKit
 import SwiftUI
+import AppsFlyerLib
+import FirebaseDynamicLinks
+import Firebase
+
 var numberOfMeds = 0
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -80,6 +84,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        DispatchQueue.main.async {
+            SceneDelegate.bonusModel.bonusTimer?.invalidate()
+            SceneDelegate.bonusModel.bonusTimer = nil
+        }
         SceneDelegate.bonusModel.updateBonus()
     }
 
@@ -91,6 +99,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -99,6 +108,51 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        print("beron")
+        if let incomingUrl = userActivity.webpageURL {
+            print("gattling", incomingUrl)
+            let queryItems = URLComponents(url: incomingUrl, resolvingAgainstBaseURL: true)?.queryItems
+            let invitedBy = queryItems?.filter({(item) in item.name == "invitedby"}).first?.value
+            let user = Auth.auth().currentUser
+            print(queryItems, invitedBy, "jermain")
+            if DynamicLinks.dynamicLinks().shouldHandleDynamicLink(fromCustomSchemeURL: incomingUrl) {
+                print("bonner")
+                let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: incomingUrl)
+                print(dynamicLink, incomingUrl, "url")
+                self.handlIncomingDynamicLink(dynamicLink)
+            }
+        }
+    }
 
+    func handlIncomingDynamicLink(_ dynamicLink: DynamicLink?) -> Bool {
+        print("calling here")
+      guard let dynamicLink = dynamicLink else { return false }
+      guard let deepLink = dynamicLink.url else { return false }
+      let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
+      let invitedBy = queryItems?.filter({(item) in item.name == "invitedby"}).first?.value
+      let user = Auth.auth().currentUser
+      print(deepLink, queryItems, invitedBy, "jermain")
+      // If the user isn't signed in and the app was opened via an invitation
+      // link, sign in the user anonymously and record the referrer UID in the
+      // user's RTDB record.
+      if user == nil && invitedBy != nil {
+        Auth.auth().signInAnonymously() { (user, error) in
+//          if let user = user {
+//            let userRecord = Database.database().reference().child("users").child(user.uid)
+//            userRecord.child("referred_by").setValue(invitedBy)
+//            if dynamicLink.matchConfidence == .weak {
+//              // If the Dynamic Link has a weak match confidence, it is possible
+//              // that the current device isn't the same device on which the invitation
+//              // link was originally opened. The way you handle this situation
+//              // depends on your app, but in general, you should avoid exposing
+//              // personal information, such as the referrer's email address, to
+//              // the user.
+//            }
+//          }
+        }
+      }
+      return true
+    }
 }
 

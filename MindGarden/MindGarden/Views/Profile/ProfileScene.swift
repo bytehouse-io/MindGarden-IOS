@@ -8,6 +8,8 @@
 import SwiftUI
 import MessageUI
 import Purchases
+import FirebaseDynamicLinks
+import Firebase
 
 enum settings {
     case settings
@@ -302,7 +304,27 @@ struct ProfileScene: View {
 
     func actionSheet() {
         guard let urlShare = URL(string: "https://mindgarden.io") else { return }
-        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+        guard var urlShare2 = URL(string: "https://mindgarden.io") else { return }
+
+        guard let uid = Auth.auth().currentUser?.email else { return }
+        let link = URL(string: "https://mindgarden.page.link/?invitedby=\(uid)")
+        let referralLink = DynamicLinkComponents(link: link!, domainURIPrefix: "mindgarden.page.link")
+        print(referralLink, "ahy")
+
+        if let myBundleId = Bundle.main.bundleIdentifier {
+            referralLink?.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+            referralLink?.iOSParameters?.minimumAppVersion = "1.14"
+            referralLink?.iOSParameters?.appStoreID = "1588582890"
+        }
+        print(referralLink, "ahy")
+        referralLink?.shorten { (shortURL, warnings, error) in
+          if let error = error {
+            print(error.localizedDescription)
+            return
+          }
+            urlShare2 = shortURL!
+        }
+        let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
         UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
 
