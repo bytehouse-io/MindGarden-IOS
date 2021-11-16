@@ -10,6 +10,7 @@ import SwiftUI
 import AppsFlyerLib
 import FirebaseDynamicLinks
 import Firebase
+import Foundation
 
 var numberOfMeds = 0
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -109,18 +110,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-        print("beron")
+        // use this to add friends
         if let incomingUrl = userActivity.webpageURL {
-            print("gattling", incomingUrl)
-            let queryItems = URLComponents(url: incomingUrl, resolvingAgainstBaseURL: true)?.queryItems
-            let invitedBy = queryItems?.filter({(item) in item.name == "invitedby"}).first?.value
-            let user = Auth.auth().currentUser
-            print(queryItems, invitedBy, "jermain")
-            if DynamicLinks.dynamicLinks().shouldHandleDynamicLink(fromCustomSchemeURL: incomingUrl) {
-                print("bonner")
-                let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: incomingUrl)
-                print(dynamicLink, incomingUrl, "url")
-                self.handlIncomingDynamicLink(dynamicLink)
+            let _ = DynamicLinks.dynamicLinks().handleUniversalLink(incomingUrl) { (dynamicLink, error) in
+                guard error == nil else {
+                    print("Found an error \(error!.localizedDescription)")
+                    return
+                }
+//                if let dynamicLink = dynamicLink {
+//                    print(self.handlIncomingDynamicLink(dynamicLink), "gooat")
+//                }
             }
         }
     }
@@ -132,7 +131,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems
       let invitedBy = queryItems?.filter({(item) in item.name == "invitedby"}).first?.value
       let user = Auth.auth().currentUser
-      print(deepLink, queryItems, invitedBy, "jermain")
       // If the user isn't signed in and the app was opened via an invitation
       // link, sign in the user anonymously and record the referrer UID in the
       // user's RTDB record.
@@ -155,4 +153,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       return true
     }
 }
+
+extension URL {
+ func valueOf(_ queryParamaterName: String) -> String? {
+ guard let url = URLComponents(string: self.absoluteString) else { return nil }
+ return url.queryItems?.first(where: { $0.name == queryParamaterName })?.value?.removingPercentEncoding?.removingPercentEncoding
+ }
+}
+
 

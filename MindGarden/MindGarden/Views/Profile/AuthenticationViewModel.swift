@@ -35,6 +35,12 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         super.init()
         setupGoogleSignIn()
     }
+    var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-YYYY"
+        return dateFormatter
+    }()
+
     var siwa: some View {
         return Group {
             if #available(iOS 14.0, *) {
@@ -263,6 +269,7 @@ extension AuthenticationViewModel {
     }
 
     func signUp() {
+        
         Auth.auth().createUser(withEmail: self.email, password: self.password) { [self] result,error in
             isLoading = false
             if error != nil  {
@@ -279,6 +286,31 @@ extension AuthenticationViewModel {
                 }
                 UserDefaults.standard.setValue("nature", forKey: "sound")
                 goToHome()
+            }
+        }
+        if let referredEmail = UserDefaults.standard.string(forKey: K.defaults.referred) {
+            if referredEmail != "" {
+
+                var refDate = ""
+                var refStack = 0
+                db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+                    if let document = snapshot, document.exists {
+                        if let stack = document["referredStack"] as? String {
+                            refDate = stack.substring(to: 10)
+                            refStack = Int(stack.substring(from: 11)) ?? 0
+                        }
+                    }
+                }
+
+                let dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
+                let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
+                let newDateString = dateFormatter.string(from: newDate ?? Date())
+                refStack += 1
+                let referredStack = newDateString+String(refStack)
+                db.collection(K.userPreferences).document(referredEmail)
+                    .updateData([
+                        "referredStack": referredStack
+                ])
             }
         }
     }
@@ -323,6 +355,9 @@ extension AuthenticationViewModel {
         print("creating user")
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
+        if UserDefaults.standard.string(forKey: K.defaults.referred) != "" && UserDefaults.standard.string(forKey: K.defaults.referred) != nil  {
+            // create user session 
+        }
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 

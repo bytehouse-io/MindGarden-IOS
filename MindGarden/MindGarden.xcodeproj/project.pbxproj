@@ -55,6 +55,7 @@
 		FE9B408026A65A41000DF00C /* fire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE9B407F26A65A40000DF00C /* fire.mp3 */; };
 		FE9B408226A65A72000DF00C /* night.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FE9B408126A65A72000DF00C /* night.mp3 */; };
 		FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9B408326A66D0E000DF00C /* MiddleSelect.swift */; };
+		FE9BE35727434025004FEBF0 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9BE35627434023004FEBF0 /* String+Extensions.swift */; };
 		FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C842687CA1A00321C07 /* BonusModal.swift */; };
 		FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C88268A662500321C07 /* PlusMenu.swift */; };
 		FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA53C8C268BF7AF00321C07 /* MoodCheck.swift */; };
@@ -175,6 +176,7 @@
 		FE9B407F26A65A40000DF00C /* fire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fire.mp3; sourceTree = "<group>"; };
 		FE9B408126A65A72000DF00C /* night.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = night.mp3; sourceTree = "<group>"; };
 		FE9B408326A66D0E000DF00C /* MiddleSelect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleSelect.swift; sourceTree = "<group>"; };
+		FE9BE35627434023004FEBF0 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		FEA53C842687CA1A00321C07 /* BonusModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusModal.swift; sourceTree = "<group>"; };
 		FEA53C88268A662500321C07 /* PlusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenu.swift; sourceTree = "<group>"; };
 		FEA53C8C268BF7AF00321C07 /* MoodCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodCheck.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				FE962F112674651F002365A6 /* Color+Extensions.swift */,
 				FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */,
 				FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */,
+				FE9BE35627434023004FEBF0 /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
 				FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */,
+				FE9BE35727434025004FEBF0 /* String+Extensions.swift in Sources */,
 				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
@@ -1182,7 +1186,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1193,7 +1197,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.16;
+				MARKETING_VERSION = 1.17;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1210,7 +1214,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1221,7 +1225,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.16;
+				MARKETING_VERSION = 1.17;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

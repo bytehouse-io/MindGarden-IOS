@@ -176,6 +176,7 @@ struct PricingView: View {
                                     .frame(width: width * 0.8, alignment: .leading)
                                     .onTapGesture {
                                         withAnimation {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             question1.toggle()
                                         }
                                     }
@@ -195,6 +196,7 @@ struct PricingView: View {
                                     .multilineTextAlignment(.leading)
                                     .onTapGesture {
                                         withAnimation {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             question2.toggle()
                                         }
                                     }
@@ -214,6 +216,7 @@ struct PricingView: View {
                                     .multilineTextAlignment(.leading)
                                     .onTapGesture {
                                         withAnimation {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             question3.toggle()
                                         }
                                     }

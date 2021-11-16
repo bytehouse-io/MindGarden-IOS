@@ -48,6 +48,7 @@ struct K {
         static var meditationReminder = "meditationReminder"
         static var loggedIn = "loggedIn"
         static var onboarding = "onboarding"
+        static var referred = "referred"
     }
     struct ScreenSize
     {
