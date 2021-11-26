@@ -37,9 +37,6 @@ struct ExperienceScene: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 20)
                                 .padding(.horizontal)
-                            if UserDefaults.standard.string(forKey: K.defaults.referred) != "" && UserDefaults.standard.string(forKey: K.defaults.referred) != nil {
-                                Text(UserDefaults.standard.string(forKey: K.defaults.referred) ?? "lets go")
-                            }
                             SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)

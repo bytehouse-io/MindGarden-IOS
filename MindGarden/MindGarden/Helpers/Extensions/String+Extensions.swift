@@ -27,4 +27,8 @@ extension String {
         let endIndex = index(from: r.upperBound)
         return String(self[startIndex..<endIndex])
     }
+
+    func indexInt(of char: Character) -> Int? {
+      return firstIndex(of: char)?.utf16Offset(in: self)
+    }
 }

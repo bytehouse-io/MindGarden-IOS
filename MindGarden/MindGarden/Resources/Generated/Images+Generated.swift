@@ -121,6 +121,7 @@ public enum Img {
   public static let profileIcon = Image("profileIcon")
   public static let redditIcon = Image("reddit-icon")
   public static let shopIcon = Image("shopIcon")
+  public static let investMg = Image("investMg")
   public static let juiceBoxes = Image("juiceBoxes")
   public static let kiwi = Image("kiwi")
   public static let lemon = Image("lemon")

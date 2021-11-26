@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
         numberOfMeds = Int.random(in: 100..<123)
+//        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -125,7 +126,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func handlIncomingDynamicLink(_ dynamicLink: DynamicLink?) -> Bool {
-        print("calling here")
       guard let dynamicLink = dynamicLink else { return false }
       guard let deepLink = dynamicLink.url else { return false }
       let queryItems = URLComponents(url: deepLink, resolvingAgainstBaseURL: true)?.queryItems

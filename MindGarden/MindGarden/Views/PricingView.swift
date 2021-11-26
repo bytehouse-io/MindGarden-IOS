@@ -164,11 +164,32 @@ struct PricingView: View {
                                 .padding(.bottom)
                                 .environmentObject(UIStateModel())
                             VStack {
+                                Text("👨‍🌾 Invest in MindGarden &\nhelp build these features")
+                                    .font(Font.mada(.bold, size: 22))
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: width * 0.8)
+                                    .padding(.top)
+                                ZStack {
+                                    Img.investMg
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * 0.70)
+                                        .padding()
+                                        .background(RoundedRectangle(cornerRadius: 14)
+                                                        .fill(Clr.darkWhite)
+                                                        .frame(width: width * 0.80)
+                                                        .neoShadow())
+                                }
+
+                            }.padding(.top, 30)
+                            VStack {
                                 Text("🙋‍♂️ Frequent Asked Questions")
                                     .font(Font.mada(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
-                                    .padding(.bottom)
+                                    .padding(.vertical)
+                                    .padding(.top, 50)
                                 Text("\(question1 ? "🔽" : "▶️") How does the pro plan help me?")
                                     .font(Font.mada(.bold, size: 18))
                                     .foregroundColor(Clr.black2)

@@ -26,6 +26,7 @@ struct Home: View {
     @State private var wentPro = false
     var bonusModel: BonusViewModel
 
+
     init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -356,7 +357,6 @@ struct Home: View {
                     wentPro = userWentPro
                     userWentPro = false
                 }
-                checkIfPro()
                 numberOfMeds += Int.random(in: -3 ... 3)
                 showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
                 if UserDefaults.standard.integer(forKey: "launchNumber") == 3 || UserDefaults.standard.integer(forKey: "launchNumber") == 7 {
@@ -373,28 +373,6 @@ struct Home: View {
             .onAppearAnalytics(event: .screen_load_home)
     }
 
-    private func checkIfPro() {
-        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
-            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-                UserDefaults.standard.setValue(true, forKey: "isPro")
-            } else {
-                if !UserDefaults.standard.bool(forKey: "trippleTapped") {
-                    UserDefaults.standard.setValue(false, forKey: "isPro")
-                    if let email = Auth.auth().currentUser?.email {
-                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                            "isPro": false,
-                        ]) { (error) in
-                            if let e = error {
-                                print("There was a issue saving data to firestore \(e) ")
-                            } else {
-                                print("Succesfully saved new items")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 struct Home_Previews: PreviewProvider {

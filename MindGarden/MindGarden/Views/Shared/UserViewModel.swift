@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import Firebase
 import FirebaseFirestore
+import Purchases
 
 var userCoins: Int = 0
 class UserViewModel: ObservableObject {
@@ -20,7 +21,13 @@ class UserViewModel: ObservableObject {
     var name: String = ""
     var joinDate: String = ""
     var greeting: String = ""
+    var referredStack: String = ""
     let db = Firestore.firestore()
+    var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        return dateFormatter
+    }()
 
     init() {
         getSelectedPlant()
@@ -60,6 +67,7 @@ class UserViewModel: ObservableObject {
                         UserDefaults.standard.set(self.name, forKey: "name")
                         tappedSignIn = false
                     }
+        
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.plants.filter({ plant in
@@ -77,6 +85,65 @@ class UserViewModel: ObservableObject {
             return plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
         })
     }
+    func updateReffered(refDate: String, numRefs: Int) {
+        UserDefaults.standard.setValue(true, forKey: "isPro")
+        UserDefaults.standard.setValue(true, forKey: "tappedRate")
+        var dte = dateFormatter.date(from: self.referredStack == "" ? dateFormatter.string(from: Date()) : refDate)
+
+        if dte ?? Date() < Date() {
+            dte = Date()
+        }
+
+        let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: dte ?? Date())
+        let newDateString = dateFormatter.string(from: newDate ?? Date())
+        self.referredStack = newDateString+"+"+String(numRefs)
+        if let email = Auth.auth().currentUser?.email {
+            Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                "referredStack": self.referredStack,
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved new items")
+                }
+            }
+        }
+    }
+
+    func checkIfPro() {
+        var isPro = false
+        Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
+            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                UserDefaults.standard.setValue(true, forKey: "isPro")
+            } else {
+                if !UserDefaults.standard.bool(forKey: "trippleTapped") {
+                    UserDefaults.standard.setValue(false, forKey: "isPro")
+                    if referredStack != "" {
+                        let plusIndex = referredStack.indexInt(of: "+") ?? 0
+                        print(dateFormatter.date(from: referredStack.substring(to: plusIndex)), "vivid vice \(referredStack.substring(to: plusIndex))", referredStack.substring(from: plusIndex + 1))
+                        if dateFormatter.date(from: referredStack.substring(to: plusIndex)) ?? Date() > Date() {
+                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                            isPro = true
+                        } else {
+                            UserDefaults.standard.setValue(false, forKey: "isPro")
+                        }
+                    }
+                    if let email = Auth.auth().currentUser?.email {
+                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                            "isPro": isPro,
+                        ]) { (error) in
+                            if let e = error {
+                                print("There was a issue saving data to firestore \(e) ")
+                            } else {
+                                print("Succesfully saved new items")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     func getGreeting() {
         let hour = Calendar.current.component( .hour, from:Date() )

@@ -40,6 +40,7 @@ enum AnalyticEvent {
     case onboarding_finished_single_okay //
     case onboarding_finished_single_course //
     case onboarding_claimed_strawberry //
+    case onboarding_came_from_referral // 
 
     //MARK: - Authentication
     case screen_load_onboarding_signup //
@@ -188,6 +189,9 @@ enum AnalyticEvent {
     case profile_tapped_toggle_off_notifs //
     case profile_tapped_toggle_on_notifs //
     case profile_tapped_logout //
+    case profile_tapped_refer //
+    case profile_tapped_refer_friend //
+    case profile_tapped_rate //
 
     //MARK: - Categories
     case screen_load_categories //
@@ -366,6 +370,7 @@ extension AnalyticEvent {
         case .screen_load_onboarding_signup: return "screen_load_onboarding_signup"
         case .onboarding_claimed_strawberry: return "onboarding_claimed_strawberry"
         case .screen_load_onboarding_signin:  return "screen_load_onboarding_signin:"
+        case .onboarding_came_from_referral: return "onboarding_came_from_referral"
         case .screen_load_signup: return "screen_load_signup"
         case .screen_load_signin: return "screen_load_signin"
         case .authentication_signin_successful: return "authentication_signin_successful"
@@ -489,6 +494,9 @@ extension AnalyticEvent {
         case .profile_tapped_feedback: return "profile_tapped_feedback"
         case .profile_tapped_roadmap: return "profile_tapped_roadmap"
         case .profile_tapped_goPro: return "profile_tapped_goPro"
+        case .profile_tapped_refer_friend: return "profile_tapped_refer_friend"
+        case .profile_tapped_refer: return "profile_tapped_refer_friend"
+        case .profile_tapped_rate: return "profile_tapped_rate"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"

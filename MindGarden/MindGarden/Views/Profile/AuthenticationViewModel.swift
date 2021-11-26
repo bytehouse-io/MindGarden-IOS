@@ -37,7 +37,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-YYYY"
+        dateFormatter.dateFormat = "MMM d, yyyy"
         return dateFormatter
     }()
 
@@ -269,7 +269,6 @@ extension AuthenticationViewModel {
     }
 
     func signUp() {
-        
         Auth.auth().createUser(withEmail: self.email, password: self.password) { [self] result,error in
             isLoading = false
             if error != nil  {
@@ -286,31 +285,6 @@ extension AuthenticationViewModel {
                 }
                 UserDefaults.standard.setValue("nature", forKey: "sound")
                 goToHome()
-            }
-        }
-        if let referredEmail = UserDefaults.standard.string(forKey: K.defaults.referred) {
-            if referredEmail != "" {
-
-                var refDate = ""
-                var refStack = 0
-                db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
-                    if let document = snapshot, document.exists {
-                        if let stack = document["referredStack"] as? String {
-                            refDate = stack.substring(to: 10)
-                            refStack = Int(stack.substring(from: 11)) ?? 0
-                        }
-                    }
-                }
-
-                let dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
-                let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
-                let newDateString = dateFormatter.string(from: newDate ?? Date())
-                refStack += 1
-                let referredStack = newDateString+String(refStack)
-                db.collection(K.userPreferences).document(referredEmail)
-                    .updateData([
-                        "referredStack": referredStack
-                ])
             }
         }
     }
@@ -355,8 +329,40 @@ extension AuthenticationViewModel {
         print("creating user")
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
+        var date = dateFormatter.string(from: Date())
         if UserDefaults.standard.string(forKey: K.defaults.referred) != "" && UserDefaults.standard.string(forKey: K.defaults.referred) != nil  {
-            // create user session 
+            // create user session
+            let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: Date())
+            date = dateFormatter.string(from: newDate ?? Date())
+        }
+        if let referredEmail = UserDefaults.standard.string(forKey: K.defaults.referred) {
+            if referredEmail != "" {
+                var refDate = ""
+                var refStack = 0
+                db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+                    if let document = snapshot, document.exists {
+                        if let stack = document["referredStack"] as? String {
+                            let plusIndex = stack.indexInt(of: "+") ?? 0
+                            refDate = stack.substring(to: plusIndex)
+                            refStack = Int(stack.substring(from: plusIndex)) ?? 0
+                        }
+                    }
+                }
+
+                var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
+                if dte ?? Date() < Date() {
+                    dte = Date()
+                }
+                let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
+                let newDateString = dateFormatter.string(from: newDate ?? Date())
+                refStack += 1
+                let referredStack = newDateString+"+"+String(refStack)
+                db.collection(K.userPreferences).document(referredEmail)
+                    .updateData([
+                        "referredStack": referredStack
+                ])
+                userModel.referredStack = referredStack
+            }
         }
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
@@ -366,6 +372,7 @@ extension AuthenticationViewModel {
                 "totalSessions": 0,
                 "totalMins": 0,
                 K.defaults.plants: "White Daisy",
+                "referredStack": "\(date)+0"
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")

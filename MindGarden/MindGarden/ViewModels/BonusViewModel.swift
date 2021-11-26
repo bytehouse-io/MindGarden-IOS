@@ -139,6 +139,10 @@ class BonusViewModel: ObservableObject {
                     if let dailyBonus = document[K.defaults.dailyBonus] as? String {
                         self.dailyBonus = dailyBonus
                     }
+                    if let referredStack = document["referredStack"] as? String {
+                        self.userModel.referredStack = referredStack
+                        self.userModel.checkIfPro()
+                    }
 
                     if let plus = self.streak?.firstIndex(of: "+") {
                         self.streakNumber = Int(self.streak![..<plus])!

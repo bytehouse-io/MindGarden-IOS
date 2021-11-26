@@ -81,11 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard let urlComponents = URLComponents(string: deepLink), let queryItems = urlComponents.queryItems else { return false }
             for item in queryItems{
                 if item.name == "referral" {
-                    print("lets go")
-                    AppsFlyerLib.shared().logEvent(name: "user_referred", values:
-                                                    [
-                                                        AFEventParamContent: "true"
-                                                    ])
+                    Analytics.shared.log(event: .onboarding_came_from_referral)
                     UserDefaults.standard.setValue(item.value ?? "", forKey: K.defaults.referred)
                 }
             }
