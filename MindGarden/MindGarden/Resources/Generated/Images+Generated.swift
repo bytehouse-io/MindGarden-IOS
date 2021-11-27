@@ -91,6 +91,8 @@ public enum Img {
   public static let review1 = Image("review1")
   public static let review2 = Image("review2")
   public static let review3 = Image("review3")
+  public static let review4 = Image("review4")
+  public static let review5 = Image("review5")
   public static let bee = Image("bee")
   public static let bonfire = Image("bonfire")
   public static let books = Image("books")

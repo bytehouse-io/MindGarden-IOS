@@ -19,6 +19,8 @@ struct SnapCarousel: View {
             Card(id: 0),
             Card(id: 1),
             Card(id: 2),
+            Card(id: 3),
+            Card(id: 4),
         ]
 
         return Canvas {
@@ -40,6 +42,14 @@ struct SnapCarousel: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         } else if item.id == 1 {
+                            Img.review4
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else if item.id == 2 {
+                            Img.review5
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else if item.id == 3 {
                             Img.review1
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -126,7 +136,7 @@ struct Carousel<Items : View> : View {
         }.onEnded { value in
             self.UIState.screenDrag = 0
 
-            if (value.translation.width < -50 && (UIState.activeCard != 2)) {
+            if (value.translation.width < -50 && (UIState.activeCard != 4)) {
                 self.UIState.activeCard = self.UIState.activeCard + 1
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
                 impactMed.impactOccurred()

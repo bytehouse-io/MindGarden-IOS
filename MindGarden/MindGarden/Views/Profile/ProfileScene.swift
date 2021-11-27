@@ -322,7 +322,7 @@ struct ProfileScene: View {
                                                     .frame(width: abs(width - 150), alignment: .leading)
                                             }.padding()
                                         }.frame(width: abs(width - 100), height: height/4)
-                                            .padding()
+                                            .padding(.horizontal)
                                     }
                                     .frame(width: abs(width - 100))
                                     .offset(y: 40)
@@ -455,7 +455,7 @@ struct ProfileScene: View {
         }.onAppear {
             tappedRate = UserDefaults.standard.bool(forKey: "tappedRate")
             if userModel.referredStack == "" {
-                if UserDefaults.standard.bool(forKey: "isPro") {
+                if !UserDefaults.standard.bool(forKey: "isPro") {
                     refDate = "No referrals"
                 } else {
                     refDate = "Pro account is active"
@@ -465,6 +465,11 @@ struct ProfileScene: View {
                 let plusIndex = userModel.referredStack.indexInt(of: "+") ?? 0
                 refDate =  userModel.referredStack.substring(to: plusIndex)
                 numRefs = Int(userModel.referredStack.substring(from: plusIndex + 1)) ?? 0
+            }
+            if UserDefaults.standard.bool(forKey: "isPro") {
+                selection = .settings
+            } else {
+                selection = .referrals
             }
         }
     }
