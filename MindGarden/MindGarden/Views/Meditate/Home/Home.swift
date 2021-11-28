@@ -359,15 +359,18 @@ struct Home: View {
                 }
                 numberOfMeds += Int.random(in: -3 ... 3)
                 showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
-                if UserDefaults.standard.integer(forKey: "launchNumber") == 3 || UserDefaults.standard.integer(forKey: "launchNumber") == 7 {
-                    if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+                if !UserDefaults.standard.bool(forKey: "tappedRate") {
+                    if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
+                        if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+                        }
+                        if UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
+                            UserDefaults.standard.setValue(4, forKey: "launchNumber")
+                        } else {
+                            Analytics.shared.log(event: .seventh_time_coming_back)
+                            UserDefaults.standard.setValue(11, forKey: "launchNumber")
+                        }
                     }
-                    if UserDefaults.standard.integer(forKey: "launchNumber") == 3 {
-                        UserDefaults.standard.setValue(4, forKey: "launchNumber")
-                    } else {
-                        Analytics.shared.log(event: .seventh_time_coming_back)
-                        UserDefaults.standard.setValue(8, forKey: "launchNumber")
-                    }
+
                 }
             }
             .onAppearAnalytics(event: .screen_load_home)

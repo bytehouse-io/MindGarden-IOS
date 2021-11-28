@@ -95,8 +95,10 @@ class MeditationViewModel: ObservableObject {
                 featuredMeditation = filtedMeds[randomInt]
             }
         } else {
-            if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-               featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+            if UserDefaults.standard.integer(forKey: "launchNumber") <= 3 {
+                featuredMeditation = Meditation.allMeditations.first(where: { med in
+                    med.id == 2
+                })
             } else {
                 featuredMeditation = filtedMeds[randomInt]
             }

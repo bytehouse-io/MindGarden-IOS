@@ -339,29 +339,41 @@ extension AuthenticationViewModel {
             if referredEmail != "" {
                 var refDate = ""
                 var refStack = 0
-                db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+                //update referred stack for user that referred
+                db.collection(K.userPreferences).document(referredEmail).getDocument { [self] (snapshot, error) in
                     if let document = snapshot, document.exists {
                         if let stack = document["referredStack"] as? String {
                             let plusIndex = stack.indexInt(of: "+") ?? 0
                             refDate = stack.substring(to: plusIndex)
-                            refStack = Int(stack.substring(from: plusIndex)) ?? 0
+                            refStack = Int(stack.substring(from: plusIndex + 1)) ?? 0
                         }
+                        var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
+                        if dte ?? Date() < Date() {
+                            dte = Date()
+                        }
+                        let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
+                        let newDateString = dateFormatter.string(from: newDate ?? Date())
+                        refStack += 1
+                        let referredStack = newDateString+"+"+String(refStack)
+                        db.collection(K.userPreferences).document(referredEmail)
+                            .updateData([
+                                "referredStack": referredStack
+                        ])
                     }
                 }
 
-                var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
-                if dte ?? Date() < Date() {
-                    dte = Date()
-                }
-                let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
-                let newDateString = dateFormatter.string(from: newDate ?? Date())
-                refStack += 1
-                let referredStack = newDateString+"+"+String(refStack)
-                db.collection(K.userPreferences).document(referredEmail)
-                    .updateData([
-                        "referredStack": referredStack
-                ])
-                userModel.referredStack = referredStack
+//                var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
+//                if dte ?? Date() < Date() {
+//                    dte = Date()
+//                }
+//                let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
+//                let newDateString = dateFormatter.string(from: newDate ?? Date())
+//                refStack += 1
+//                let referredStack = newDateString+"+"+String(refStack)
+//                db.collection(K.userPreferences).document(referredEmail)
+//                    .updateData([
+//                        "referredStack": referredStack
+//                ])
             }
         }
         if let email = Auth.auth().currentUser?.email {
@@ -386,6 +398,8 @@ extension AuthenticationViewModel {
         userCoins = 100
         userModel.name = UserDefaults.standard.string(forKey: "name") ?? "hg"
         userModel.joinDate = formatter.string(from: Date())
+        userModel.referredStack = "\(date)+0"
+        userModel.checkIfPro()
     }
 
     func getData() {

@@ -120,7 +120,6 @@ class UserViewModel: ObservableObject {
                     UserDefaults.standard.setValue(false, forKey: "isPro")
                     if referredStack != "" {
                         let plusIndex = referredStack.indexInt(of: "+") ?? 0
-                        print(dateFormatter.date(from: referredStack.substring(to: plusIndex)), "vivid vice \(referredStack.substring(to: plusIndex))", referredStack.substring(from: plusIndex + 1))
                         if dateFormatter.date(from: referredStack.substring(to: plusIndex)) ?? Date() > Date() {
                             UserDefaults.standard.setValue(true, forKey: "isPro")
                             isPro = true

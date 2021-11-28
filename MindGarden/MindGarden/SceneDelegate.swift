@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
-        numberOfMeds = Int.random(in: 100..<123)
+        numberOfMeds = Int.random(in: 50..<73)
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
@@ -38,9 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 UserDefaults.standard.setValue(true, forKey: "showedNotif")
             }
         }
-        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-        launchNum += 1
-        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
+
 
         let router = ViewRouter()
         let medModel = MeditationViewModel()
@@ -86,6 +84,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        print("geguman", launchNum)
+        launchNum += 1
+        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
         DispatchQueue.main.async {
             SceneDelegate.bonusModel.bonusTimer?.invalidate()
             SceneDelegate.bonusModel.bonusTimer = nil

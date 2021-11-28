@@ -54,6 +54,7 @@ struct Store: View {
                                     PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                 } else {
                                     Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if isShop {
                                             userModel.willBuyPlant = plant
                                             withAnimation {

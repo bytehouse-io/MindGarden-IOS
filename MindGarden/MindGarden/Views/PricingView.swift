@@ -462,12 +462,12 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "7 day\nfree trial" : "Limited\nTime!")
+                                Text(title == "Yearly" ? "30 day\nfree trial" : "Limited\nTime!")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.mada(.bold, size: 14))
                                     .multilineTextAlignment(.center)
                             )
-                            .frame(width: 65,height: 35, alignment: .leading)
+                            .frame(width: 70,height: 35, alignment: .leading)
                     }
                     Spacer()
                     VStack(spacing: -4){

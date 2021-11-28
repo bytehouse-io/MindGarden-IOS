@@ -37,6 +37,8 @@ struct ProfileScene: View {
     @State private var numRefs = 0
     @State private var refDate = ""
     @State private var tappedRate = false
+    @State private var showSpinner = false
+
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
@@ -44,6 +46,7 @@ struct ProfileScene: View {
     }()
 
     var body: some View {
+        LoadingView(isShowing: $showSpinner) {
         VStack {
             if #available(iOS 14.0, *) {
                 NavigationView {
@@ -378,15 +381,12 @@ struct ProfileScene: View {
                                             Analytics.shared.log(event: .profile_tapped_rate)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                                            }
-                                            tappedRate = true
-                                            userModel.updateReffered(refDate: refDate, numRefs: numRefs)
-                                            do {
-                                                sleep(4)
                                                 let plusIndex = userModel.referredStack.indexInt(of: "+") ?? 0
                                                 refDate =  userModel.referredStack.substring(to: plusIndex)
                                                 numRefs = Int(userModel.referredStack.substring(from: plusIndex + 1)) ?? 0
                                             }
+                                            tappedRate = true
+                                            userModel.updateReffered(refDate: refDate, numRefs: numRefs)
                                         } label: {
                                             Capsule()
                                                 .fill(Clr.yellow)
@@ -452,6 +452,7 @@ struct ProfileScene: View {
             } else {
                 // Fallback on earlier versions
             }
+        }
         }.onAppear {
             tappedRate = UserDefaults.standard.bool(forKey: "tappedRate")
             if userModel.referredStack == "" {
@@ -477,6 +478,7 @@ struct ProfileScene: View {
     func actionSheet() {
         guard var urlShare2 = URL(string: "https://mindgarden.io") else { return }
         if selection == .referrals {
+            showSpinner = true
             guard let uid = Auth.auth().currentUser?.email else { return }
             guard let link = URL(string: "https://mindgarden.io?referral=\(uid)") else { return }
             let referralLink = DynamicLinkComponents(link: link, domainURIPrefix: "https://mindgarden.page.link")
@@ -502,7 +504,9 @@ struct ProfileScene: View {
               }
                 urlShare2 = shortURL!
                 let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: {
+                    showSpinner = false
+                })
             }
         } else {
             let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
