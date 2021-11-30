@@ -38,7 +38,7 @@ struct Authentication: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack(spacing: 0)  {
                         Text(isSignUp ?  "Sign Up." : "Sign In.")
-                            .foregroundColor(Color.black)
+                            .foregroundColor(Clr.black2)
                             .font(Font.mada(.bold, size: 32))
                             .padding()
                         ZStack(alignment: .leading) {
@@ -53,7 +53,7 @@ struct Authentication: View {
                                     }
                                 })
                                     .disableAutocorrection(true)
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Clr.black2)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
                                     .padding(.trailing, 60)
@@ -73,7 +73,7 @@ struct Authentication: View {
                                 .padding(.horizontal, 20)
                             HStack {
                                 SecureField("Password (6+ characters)", text: $viewModel.password)
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Clr.black2)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
                                     .padding(.trailing, 60)

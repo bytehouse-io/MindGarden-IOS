@@ -209,9 +209,8 @@ struct ProfileScene: View {
                                                 .font(Font.mada(.bold, size: 34))
                                                 .foregroundColor(Clr.darkgreen)
                                         }.padding(.leading)
-                                    }.frame(width: abs(width - 75), height: height/6)
+                                    }.frame(width: abs(width - 100), height: height/6)
                                         .padding()
-                                        .padding(.leading)
                                     ZStack {
                                         Rectangle()
                                             .fill(Clr.darkWhite)

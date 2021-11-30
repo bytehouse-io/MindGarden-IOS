@@ -111,7 +111,7 @@ struct PricingView: View {
                                             HStack() {
                                                 if item.1 == "😔" {
                                                     Text("\(item.0)")
-                                                        .foregroundColor(.black)
+                                                        .foregroundColor(Clr.black2)
                                                         .font(Font.mada(.bold, size: 16))
                                                         .frame(width: width * 0.3, alignment: .center)
                                                         .lineLimit(2)
@@ -257,15 +257,15 @@ struct PricingView: View {
                                 unlockPro()
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
-                                Capsule()
-                                    .fill(Clr.yellow)
-                                    .overlay(
-                                        Text(selectedBox == "Yearly" ? "Start your free trial" : "Get MindGarden Pro")
-                                            .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 18))
-                                    )
-                            }.frame(width: width * 0.825, height: 50)
-                                .buttonStyle(NeumorphicPress())
+                                HStack {
+                                    Text(selectedBox == "Yearly" ? "Start your free trial" : "Get MindGarden Pro")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.mada(.bold, size: 18))
+                                }.frame(width: g.size.width * 0.825, height: 50)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
+                            }.buttonStyle(NeumorphicPress())
+
                             HStack {
                                 Text("Privacy Policy")
                                     .foregroundColor(.gray)

@@ -98,6 +98,7 @@ struct OnboardingScene: View {
                                     Text("Already have an account")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 20))
+                                        .shadow(radius: 0)
                                 )
                         }.frame(height: 50)
                             .padding([.bottom, .horizontal])
@@ -108,9 +109,6 @@ struct OnboardingScene: View {
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
-        .onAppear(perform: {
-        })
-
     }
 }
 

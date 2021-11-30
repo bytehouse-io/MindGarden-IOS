@@ -229,6 +229,7 @@ struct Garden: View {
                                             .minimumScaleFactor(0.05)
                                             .multilineTextAlignment(.center)
                                             .padding(.bottom, 5)
+                                            .foregroundColor(Color.black)
                                         Text("Got it")
                                             .foregroundColor(Color.white)
                                             .colorMultiply(self.color)

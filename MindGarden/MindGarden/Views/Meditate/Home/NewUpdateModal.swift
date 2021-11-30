@@ -26,11 +26,11 @@ struct NewUpdateModal: View {
                                 .frame(height: g.size.height * 0.12)
                             Text("Welcome to \nMindGarden! \nUpdate 1.0")
                                 .font(Font.mada(.bold, size: 24))
-                                .foregroundColor(Clr.black1)
+                                .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.12)
                             Spacer()
                         }.padding(.horizontal)
-                        Text("📱 In this update we added 24 new meditations!")
+                    Text("🌚 In this update we added dark mode and 2 new meditations for students taking their finals")
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                             .padding(.bottom, 10)
                             .padding(.top)
@@ -42,7 +42,7 @@ struct NewUpdateModal: View {
                             }.multilineTextAlignment(.leading)
 
                         }
-                        .foregroundColor(.black)
+                        .foregroundColor(Clr.black2)
                         .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                         .padding(.bottom, 10)
 
@@ -53,7 +53,7 @@ struct NewUpdateModal: View {
                         } label: {
                             HStack {
                                 Text("👨‍🌾 Join the community to chat, request features, give feedback and stay updated!")
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Clr.black2)
                                 +
                                 Text(" Join Reddit")
                                     .bold()

@@ -173,7 +173,7 @@ struct CategoriesScene: View {
                 HStack {
                     Text(category.value)
                         .font(Font.mada(selected == category ? .bold : .regular, size: 16))
-                        .foregroundColor(Clr.black2)
+                        .foregroundColor(selected == category ? .black : Clr.black2)
                         .font(.footnote)
                         .padding(.horizontal)
                 }

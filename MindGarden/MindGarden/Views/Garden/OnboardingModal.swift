@@ -32,7 +32,7 @@ struct OnboardingModal: View {
                             } else {
                                 Text("1️⃣ This is Your Overview for a Single Day")
                                     .font(Font.mada(.semiBold, size: 24))
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Clr.black2)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)

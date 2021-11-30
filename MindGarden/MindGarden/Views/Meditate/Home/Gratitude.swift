@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Foundation
 import UIKit
 
 struct Gratitude: View, KeyboardReadable {
@@ -16,7 +17,8 @@ struct Gratitude: View, KeyboardReadable {
     @Binding var openPrompts: Bool
     @EnvironmentObject var gardenModel: GardenViewModel
     @Binding var contentKeyVisible: Bool
-    
+
+
     var body: some View {
         GeometryReader { g in
             HStack(alignment: .center) {
@@ -35,7 +37,7 @@ struct Gratitude: View, KeyboardReadable {
                                     Group {
                                         if !openPrompts {
                                             Text("Prompts")
-                                                    .foregroundColor(Clr.black1)
+                                                .foregroundColor(.black)
                                                     .font(Font.mada(.semiBold, size: 16))
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.5)
@@ -111,10 +113,10 @@ struct Gratitude: View, KeyboardReadable {
                         ScrollView(.vertical, showsIndicators: false) {
                             if #available(iOS 14.0, *) {
                                 TextEditor(text: $text)
-                                    .disableAutocorrection(true)
+                                    .disableAutocorrection(false)
+                                    .foregroundColor(Clr.black2)
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: -10, trailing: 10))
                                     .frame(width: g.size.width * 0.85, height: min(150, g.size.height * 0.7), alignment: .topLeading)
-                                    .colorMultiply(Clr.darkWhite)
                                     .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                                         withAnimation {
                                             contentKeyVisible = newIsKeyboardVisible
@@ -129,6 +131,8 @@ struct Gratitude: View, KeyboardReadable {
                 }
                 Spacer()
             }
+        }.onAppear {
+            UITextView.appearance().backgroundColor = UIColor.clear
         }
     }
 }
@@ -161,3 +165,4 @@ extension KeyboardReadable {
         .eraseToAnyPublisher()
     }
 }
+

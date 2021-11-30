@@ -156,7 +156,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         withAnimation {
             viewRouter.currentPage = .meditate
         }
-
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }
 
