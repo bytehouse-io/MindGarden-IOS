@@ -174,7 +174,7 @@ struct Garden: View {
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants:")
-                                .foregroundColor(.black)
+                                .foregroundColor(Clr.black2)
                                 .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
                                 .padding(.leading, 5)
                             ZStack {
@@ -182,7 +182,8 @@ struct Garden: View {
                                     .fill(Clr.darkWhite)
                                     .cornerRadius(15)
                                     .neoShadow()
-                                HStack(spacing: 25){
+                                    .frame(maxWidth: gp.size.width * 0.8)
+                                HStack(spacing: 20){
                                     Spacer()
                                     if topThreePlants.isEmpty {
                                         Text("You have no favorite plants")

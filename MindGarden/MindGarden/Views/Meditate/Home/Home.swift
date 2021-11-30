@@ -140,7 +140,7 @@ struct Home: View {
                                 }
                             } label: {
                                 Rectangle()
-                                    .fill(Clr.darkWhite)
+                                    .fill(Color("darkWhite"))
                                     .border(Clr.darkWhite)
                                     .cornerRadius(25)
                                     .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
@@ -202,7 +202,7 @@ struct Home: View {
                                         }
                                     } label: {
                                         Text("Favorites")
-                                            .foregroundColor(isRecent ? .black : Clr.darkgreen)
+                                            .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
                                             .font(Font.mada(.regular, size: 20))
                                     }
                                 }
@@ -261,13 +261,14 @@ struct Home: View {
                                     withAnimation {
                                         viewRouter.currentPage = .categories
                                     }
-                                } label: { RoundedRectangle(cornerRadius: 25)
-                                        .frame(width: g.size.width * 0.85, height: g.size.height/14)
-                                        .foregroundColor(Clr.yellow)
-                                        .overlay(Text("See All Categories")
-                                                    .foregroundColor(Clr.black2)
-                                                    .font(Font.mada(.semiBold, size: 20))
-                                        )
+                                } label: {
+                                    HStack {
+                                        Text("See All Categories")
+                                            .foregroundColor(.black)
+                                            .font(Font.mada(.semiBold, size: 20))
+                                    }.frame(width: g.size.width * 0.85, height: g.size.height/14)
+                                    .background(Clr.yellow)
+                                    .cornerRadius(25)
                                 }.padding(.top, 10)
                                     .buttonStyle(NeumorphicPress())
                             } else {
@@ -352,7 +353,7 @@ struct Home: View {
                 Alert(title: Text("🥳 Congrats! You unlocked MindGarden Pro"), dismissButton: .default(Text("Got it!")))
             }
         }.transition(.move(edge: .leading))
-            .onAppear {
+         .onAppear {
                 if userWentPro {
                     wentPro = userWentPro
                     userWentPro = false

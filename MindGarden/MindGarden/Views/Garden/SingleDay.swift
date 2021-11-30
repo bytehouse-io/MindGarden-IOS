@@ -105,14 +105,14 @@ struct SingleDay: View {
                                     .offset(y: -35)
                             } else {
                                 Text("No sessions for \nthis day :(")
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Clr.black2)
                                     .font(Font.mada(.bold, size: 30))
                                     .offset(y: -65)
                                     .multilineTextAlignment(.center)
                             }
                         }.padding(.bottom, -95)
                         Text("Stats For the Day: ")
-                            .foregroundColor(.black)
+                            .foregroundColor(Clr.black2)
                             .font(Font.mada(.semiBold, size: 26))
                             .padding(.leading, g.size.width * 0.1)
                         HStack(spacing: 15) {
@@ -126,7 +126,7 @@ struct SingleDay: View {
                                         .neoShadow()
                                     VStack(spacing: -5) {
                                         Text("Moods:")
-                                            .foregroundColor(.black)
+                                            .foregroundColor(Clr.black2)
                                             .font(Font.mada(.regular, size: 16))
                                             .padding(5)
                                         HStack(spacing: 0) {
@@ -151,13 +151,13 @@ struct SingleDay: View {
                                     .neoShadow()
                                 VStack(spacing: 5){
                                     Text("Gratitude: ")
-                                        .foregroundColor(.black)
+                                        .foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 16))
                                     ScrollView(showsIndicators: false) {
                                         ForEach(self.gratitudes ?? ["No gratitude written this day"], id: \.self) { gratitude in
                                             Text(gratitude)
                                                 .fixedSize(horizontal: false, vertical: true)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.regular, size: 14))
                                                 .padding(10)
                                             Divider()

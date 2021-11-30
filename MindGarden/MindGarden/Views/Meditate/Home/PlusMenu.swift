@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlusMenu: View {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditateModel: MeditationViewModel
     @Binding var showPopUp: Bool
@@ -18,7 +19,7 @@ struct PlusMenu: View {
     let width: CGFloat
     var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 14) {
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
@@ -36,7 +37,7 @@ struct PlusMenu: View {
                     }
                 } label: {
                     MenuChoice(title: "Mood Check", img: Image(systemName: "face.smiling"),  isOnboarding: false, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
-                        .frame(width: width/2.25, height: width/10)
+                        .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -58,7 +59,7 @@ struct PlusMenu: View {
                     }
                 } label: {
                     MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"), isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
-                        .frame(width: width/2.25, height: width/10)
+                        .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -90,15 +91,15 @@ struct PlusMenu: View {
                     }
                 } label: {
                     MenuChoice(title: "Meditate", img: Image(systemName: "play"),  isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
-                        .frame(width: width/2.25, height: width/10)
+                        .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
             }
         }
         .frame(width: width/2, height: width/2.25)
         .transition(.scale)
-        .background(Color.white)
+        .background(Clr.superWhite)
         .cornerRadius(15)
-        .shadow(color: Clr.black1.opacity(0.5), radius: 4, x: 0, y: -8)
+        .shadow(color: colorScheme == .dark ? Clr.darkShadow.opacity(0.95) : Clr.black1.opacity(0.5), radius: 4, x: 0, y: -8)
         .zIndex(-10)
     }
 
@@ -111,18 +112,20 @@ struct PlusMenu: View {
         var body: some View {
             ZStack {
                 Capsule()
-                    .fill(Clr.brightGreen)
+                    .fill(Clr.darkWhite)
                 HStack {
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.white)
+                        .foregroundColor(Clr.darkgreen)
                         .padding(3)
                     Text(title)
                         .font(Font.mada(.medium, size: 20))
                         .minimumScaleFactor(0.5)
-                        .foregroundColor(.white)
-                }
+                        .foregroundColor(Clr.darkgreen)
+                        .frame(width: UIScreen.main.bounds.width * 0.3)
+                        .multilineTextAlignment(.trailing)
+                }.frame(width: UIScreen.main.bounds.width * 0.4, alignment: .leading)
                 .padding(5)
             }
             .opacity(disabled ? 0.3 : 1)

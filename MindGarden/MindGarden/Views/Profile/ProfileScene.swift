@@ -199,7 +199,7 @@ struct ProfileScene: View {
                                                 Image(systemName: "calendar")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                Text("MindGarden Journey Began")
+                                                Text("MindGarden journey began")
                                                     .font(Font.mada(.regular, size: 20))
                                                     .foregroundColor(Clr.black1)
                                                     .padding(.top, 3)
@@ -208,7 +208,7 @@ struct ProfileScene: View {
                                             Text("\(profileModel.signUpDate)")
                                                 .font(Font.mada(.bold, size: 34))
                                                 .foregroundColor(Clr.darkgreen)
-                                        }
+                                        }.padding(.leading)
                                     }.frame(width: abs(width - 75), height: height/6)
                                         .padding()
                                         .padding(.leading)

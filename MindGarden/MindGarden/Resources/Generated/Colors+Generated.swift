@@ -5,12 +5,24 @@ import SwiftUI
 /// Cases to reference for safely initializing colors, like so: `Clr.Fill.primary`
 public enum Clr {
   /// **Universal - Any**: `#535353` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#F5F5F5` with alpha: `1.000`
   public static let black1 = Color("black1")
   /// **Universal - Any**: `#444446` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#F5F5F5` with alpha: `1.000`
   public static let black2 = Color("black2")
+  /// **Universal - Any**: `#595959` with alpha: `1.000`
+  public static let blackShadow = Color("blackShadow")
   /// **Universal - Any**: `#80A800` with alpha: `1.000`
   public static let brightGreen = Color("brightGreen")
+  /// **Universal - Any**: `#121212` with alpha: `1.000`
+  public static let darkShadow = Color("darkShadow")
   /// **Universal - Any**: `#F5F5F5` with alpha: `1.000`
+  ///
+  /// **Universal - Light**: `#616161` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#2C2826` with alpha: `1.000`
   public static let darkWhite = Color("darkWhite")
   /// **Universal - Any**: `#5D6F1E` with alpha: `1.000`
   ///
@@ -42,6 +54,10 @@ public enum Clr {
   public static let shadow = Color("shadow")
   /// **Universal - Any**: `#F0F0F0` with alpha: `1.000`
   public static let superLightGray = Color("superLightGray")
+  /// **Universal - Any**: `#FFFFFF` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#000000` with alpha: `1.000`
+  public static let superWhite = Color("superWhite")
   /// **Universal - Any**: `#C3C3C3` with alpha: `1.000`
   public static let unselectedIcon = Color("unselectedIcon")
   /// **Universal - Any**: `#B5F3F8` with alpha: `1.000`

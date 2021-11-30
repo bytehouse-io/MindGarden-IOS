@@ -160,7 +160,7 @@ struct ContentView: View {
                                         ZStack {
                                             Rectangle()
                                                 .cornerRadius(21)
-                                                .foregroundColor(.white)
+                                                .foregroundColor(Clr.superWhite)
                                                 .frame(maxWidth: geometry.size.width/7, maxHeight: geometry.size.width/7)
                                                 .shadow(color: showPopUp ? .black.opacity(0) : .black.opacity(0.25), radius: 4, x: 4, y: 4)
                                                 .zIndex(1)

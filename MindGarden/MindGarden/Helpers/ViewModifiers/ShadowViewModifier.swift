@@ -7,11 +7,12 @@
 
 import SwiftUI
 struct ShadowViewModifier: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     func body(content: Content) -> some View {
         content
-            .shadow(color: Clr.shadow.opacity(0.3), radius: 5 , x: 5, y: 5)
-            .shadow(color: Color.white.opacity(0.95), radius: 5, x: -5, y: -5)
+            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.darkShadow.opacity(0.95), radius: 5 , x: 5, y: 5)
+            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Clr.blackShadow.opacity(0.4), radius: 5, x: -5, y: -5)
     }
 }
 
