@@ -70,7 +70,7 @@ class MeditationViewModel: ObservableObject {
 
     func getFeaturedMeditation()  {
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 22 && med.id != 45 }
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
         if Calendar.current.component( .hour, from:Date() ) < 16 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
             med.id != 27 && med.id != 54 && med.id != 39 }
@@ -85,14 +85,22 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
             }
         }
-        let randomInt = Int.random(in: 0..<filtedMeds.count)
+        print("fetching")
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
+                if UserDefaults.standard.integer(forKey: "shownFive") <= 5 {
+                    featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
+                } else {
+                    setFeaturedReason()
+                }
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+                if UserDefaults.standard.integer(forKey: "shownFive") <= 5 {
+                    featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+                } else {
+                    setFeaturedReason()
+                }
             } else {
-                featuredMeditation = filtedMeds[randomInt]
+                setFeaturedReason()
             }
         } else {
             if UserDefaults.standard.integer(forKey: "launchNumber") <= 3 {
@@ -100,8 +108,41 @@ class MeditationViewModel: ObservableObject {
                     med.id == 2
                 })
             } else {
-                featuredMeditation = filtedMeds[randomInt]
+                setFeaturedReason()
             }
+        }
+    }
+
+    private func setFeaturedReason() {
+        var filtedMeds = Meditation.allMeditations.filter { med in
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
+        if Calendar.current.component( .hour, from:Date() ) < 18 {
+            filtedMeds = filtedMeds.filter { med in // day time meds only
+            med.id != 27 && med.id != 54 && med.id != 39 }
+        }
+        switch UserDefaults.standard.string(forKey: "reason") {
+        case "Sleep better":
+            if Calendar.current.component( .hour, from:Date() ) >= 18 {
+                filtedMeds = filtedMeds.filter { med in // day time meds only
+                    med.id == 27 || med.id == 54 || med.id == 39 }
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        case "Get more focused":
+            filtedMeds = filtedMeds.filter { med in
+                med.category == .focus
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        case "Managing Stress & Anxiety":
+            filtedMeds = filtedMeds.filter { med in
+                med.category == .anxiety
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        default:
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
         }
     }
 
@@ -109,7 +150,7 @@ class MeditationViewModel: ObservableObject {
         var filteredMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 && med.id != 45 }
         if Calendar.current.component( .hour, from:Date() ) < 16 {
             filteredMeds = filteredMeds.filter { med in // day time meds only
-            med.id != 27 && med.id != 54 && med.id != 39 }
+                med.id != 27 && med.id != 54 && med.id != 39 && med.id != 55 && med.id != 56 }
         }
         if Calendar.current.component(.hour, from: Date()) > 11 { // not morning
             filteredMeds = filteredMeds.filter { med in
@@ -139,13 +180,13 @@ class MeditationViewModel: ObservableObject {
 
     func updateSelf() {
         if let defaultFavorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
-            self.favoritedMeditations = Meditation.allMeditations.filter({ med in defaultFavorites.contains(med.id) })
+            self.favoritedMeditations = Meditation.allMeditations.filter({ med in defaultFavorites.contains(med.id) }).reversed()
         }
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
                     if let favorites = document[K.defaults.favorites] as? [Int] {
-                        self.favoritedMeditations = Meditation.allMeditations.filter({ med in favorites.contains(med.id) })
+                        self.favoritedMeditations = Meditation.allMeditations.filter({ med in favorites.contains(med.id) }).reversed()
                     }
                 }
             }
@@ -193,47 +234,81 @@ class MeditationViewModel: ObservableObject {
     //MARK: - timer
     func startCountdown() {
         bellPlayer.prepareToPlay()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
-            self.secondsRemaining -= 1
-            withAnimation {
-                if secondsRemaining - 0.2 <= totalTime * 0.25 { //15 = 0
-                    lastSeconds = true
-                    playImage = selectedPlant?.coverImage ?? Img.redTulips3
-                } else if secondsRemaining - 0.2 <= totalTime * 0.5 { //30 - 15
-                    playImage = selectedPlant?.two ?? Img.redTulips2
-                } else if secondsRemaining - 0.2 <= totalTime * 0.75 { //45-30
-                    playImage = selectedPlant?.one ?? Img.redTulips1
-                } else { //60 - 45
-                    playImage = Img.seed
-                }
-                if secondsRemaining <= 0 {
-                    if let med = self.selectedMeditation {
-                        if med.id != 27 {
-                            bellPlayer.play()
-                        }
-                    }
-
-                    stop()
+        if secondsRemaining == -1 {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
+                self.secondsRemaining += 1
+                if secondsRemaining >= 60 {
                     switch selectedMeditation?.id {
-                    case 11: UserDefaults.standard.setValue(true, forKey: "day5")
-                    case 12: UserDefaults.standard.setValue(true, forKey: "day6")
-                    case 13: UserDefaults.standard.setValue(true, forKey: "day7")
+                    case 58: if secondsRemaining.truncatingRemainder(dividingBy: 60) == 0.0 { bellPlayer.play()}
+                    case 59:  if secondsRemaining.truncatingRemainder(dividingBy: 120) == 0.0 { bellPlayer.play()}
+                    case 60:  if secondsRemaining.truncatingRemainder(dividingBy: 300) == 0.0 { bellPlayer.play()}
+                    case 61: if secondsRemaining.truncatingRemainder(dividingBy: 600) == 0.0 { bellPlayer.play()}
+                    case 62:  if secondsRemaining.truncatingRemainder(dividingBy: 900) == 0.0 { bellPlayer.play()}
+                    case 63:  if secondsRemaining.truncatingRemainder(dividingBy: 1200) == 0.0 { bellPlayer.play()}
+                    case 64: if secondsRemaining.truncatingRemainder(dividingBy: 1500) == 0.0 { bellPlayer.play()}
+                    case 65: if secondsRemaining.truncatingRemainder(dividingBy: 1800) == 0.0 { bellPlayer.play()}
+                    case 66: if secondsRemaining.truncatingRemainder(dividingBy: 3600) == 0.0 { bellPlayer.play()}
                     default: break
                     }
-                    if UserDefaults.standard.bool(forKey: "day5") &&  UserDefaults.standard.bool(forKey: "day6") &&  UserDefaults.standard.bool(forKey: "day7") {
-                        UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
-                        UserDefaults.standard.setValue(true, forKey: "unlockStrawberry")
-                        getFeaturedMeditation()
+                }
+
+                withAnimation {
+                    if secondsRemaining >= 300 { //15 = 0
+                        lastSeconds = true
+                        playImage = selectedPlant?.coverImage ?? Img.redTulips3
+                    } else if secondsRemaining - 0.2 >= 200 { //30 - 15
+                        playImage = selectedPlant?.two ?? Img.redTulips2
+                    } else if secondsRemaining - 0.2 >= 100 { //45-30
+                        playImage = selectedPlant?.one ?? Img.redTulips1
+                    } else { //60 - 45
+                        playImage = Img.seed
                     }
-                    if self.selectedMeditation?.id == 21 {
-                        UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
-                        getFeaturedMeditation()
+                }
+            }
+        } else {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
+                self.secondsRemaining -= 1
+                withAnimation {
+                    if secondsRemaining - 0.2 <= totalTime * 0.25 { //15 = 0
+                        lastSeconds = true
+                        playImage = selectedPlant?.coverImage ?? Img.redTulips3
+                    } else if secondsRemaining - 0.2 <= totalTime * 0.5 { //30 - 15
+                        playImage = selectedPlant?.two ?? Img.redTulips2
+                    } else if secondsRemaining - 0.2 <= totalTime * 0.75 { //45-30
+                        playImage = selectedPlant?.one ?? Img.redTulips1
+                    } else { //60 - 45
+                        playImage = Img.seed
                     }
-                    viewRouter?.currentPage = .finished
-                    return
+                    if secondsRemaining <= 0 {
+                        if let med = self.selectedMeditation {
+                            if med.id != 27 && med.id != 39 && med.id != 54 {
+                                bellPlayer.play()
+                            }
+                        }
+
+                        stop()
+                        switch selectedMeditation?.id {
+                        case 11: UserDefaults.standard.setValue(true, forKey: "day5")
+                        case 12: UserDefaults.standard.setValue(true, forKey: "day6")
+                        case 13: UserDefaults.standard.setValue(true, forKey: "day7")
+                        default: break
+                        }
+                        if UserDefaults.standard.bool(forKey: "day5") &&  UserDefaults.standard.bool(forKey: "day6") &&  UserDefaults.standard.bool(forKey: "day7") {
+                            UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
+                            UserDefaults.standard.setValue(true, forKey: "unlockStrawberry")
+                            getFeaturedMeditation()
+                        }
+                        if self.selectedMeditation?.id == 21 {
+                            UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
+                            getFeaturedMeditation()
+                        }
+                        viewRouter?.currentPage = .finished
+                        return
+                    }
                 }
             }
         }
+
         timer.fire()
     }
 

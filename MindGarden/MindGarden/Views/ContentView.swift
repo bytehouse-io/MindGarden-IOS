@@ -57,6 +57,10 @@ struct ContentView: View {
                                             ExperienceScene()
                                                 .frame(height: geometry.size.height)
                                                 .navigationViewStyle(StackNavigationViewStyle())
+                                    case .reason:
+                                        ReasonScene()
+                                            .frame(height: geometry.size.height)
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
                                         Home(bonusModel: bonusModel)
                                             .frame(height: geometry.size.height + 10)
@@ -125,7 +129,7 @@ struct ContentView: View {
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
                                 && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
-                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  {
+                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason {
                                 if showPopUp || addMood || addGratitude || isOnboarding {
                                     Button {
                                         if !isOnboarding {

@@ -46,6 +46,7 @@ struct Garden: View {
                                 .font(Font.mada(.bold, size: 30))
                             Spacer()
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .garden_previous_month)
                                 if gardenModel.selectedMonth == 1 {
                                     gardenModel.selectedMonth = 12
@@ -59,6 +60,7 @@ struct Garden: View {
                                 OperatorButton(imgName: "lessthan.square.fill")
                             }
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .garden_next_month)
                                 if gardenModel.selectedMonth == 12 {
                                     gardenModel.selectedMonth = 1
@@ -187,7 +189,7 @@ struct Garden: View {
                                     Spacer()
                                     if topThreePlants.isEmpty {
                                         Text("You have no favorite plants")
-                                            .foregroundColor(.black)
+                                            .foregroundColor(Clr.black2)
                                             .font(Font.mada(.semiBold, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)

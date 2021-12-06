@@ -18,6 +18,7 @@
 		FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */; };
 		FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
 		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
+		FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE349D73275ACB2F006B4378 /* ReasonScene.swift */; };
 		FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8A827276948007117F5 /* NotificationHelper.swift */; };
 		FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8AA27288425007117F5 /* PricingView.swift */; };
 		FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4D80EA26ED4B15002FE291 /* LottieView.swift */; };
@@ -149,6 +150,7 @@
 		FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
 		FE17B8AF26C06C20002CF8C2 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		FE349D73275ACB2F006B4378 /* ReasonScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonScene.swift; sourceTree = "<group>"; };
 		FE4CF8A827276948007117F5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		FE4CF8AA27288425007117F5 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		FE4D80EA26ED4B15002FE291 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				FE9815FD26E54DC200A4992D /* ExperienceScene.swift */,
 				FE9815FF26E559E000A4992D /* NotificationScene.swift */,
 				FEA607E226FD69090076A177 /* NameScene.swift */,
+				FE349D73275ACB2F006B4378 /* ReasonScene.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -962,6 +965,7 @@
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
+				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
@@ -1186,7 +1190,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1197,7 +1201,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.18;
+				MARKETING_VERSION = 1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1214,7 +1218,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1225,7 +1229,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.18;
+				MARKETING_VERSION = 1.19;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

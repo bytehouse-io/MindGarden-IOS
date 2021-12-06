@@ -55,7 +55,7 @@ struct ExperienceScene: View {
                                         break
                                     }
                                     withAnimation {
-                                        viewRouter.currentPage = .notification
+                                        viewRouter.currentPage = .reason
                                     }
                                 } //TODO gray out button if not selected
                             } label: {
@@ -90,7 +90,6 @@ struct ExperienceScene: View {
                 withAnimation {
                     selected = title
                     UserDefaults.standard.setValue(title, forKey: "experience")
-                    print("george", title)
                 }
             } label: {
                 ZStack {

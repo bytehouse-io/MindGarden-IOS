@@ -42,7 +42,8 @@ struct NameScene: View {
                                 withAnimation {
                                     if !name.isEmpty {
                                         UserDefaults.standard.set(name, forKey: "name")
-                                        viewRouter.currentPage = .authentication
+                                        fromPage = "onboarding2"
+                                        viewRouter.currentPage = .pricing
                                     }
                                 }
                             } label: {

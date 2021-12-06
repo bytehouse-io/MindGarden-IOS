@@ -19,12 +19,16 @@ struct Finished: View {
     @State private var animateViews = false
     @State private var favorited = false
     @State private var showUnlockedModal = false
-
+    @State private var reward = 0
     var minsMed: Int {
-        if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
-            return 1
+        if model.selectedMeditation?.duration == -1 {
+            return Int(model.secondsRemaining.rounded())
         } else {
-            return Int(model.selectedMeditation?.duration ?? 0)/60
+            if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
+                return 1
+            } else {
+                return Int(model.selectedMeditation?.duration ?? 0)/60
+            }
         }
     }
 
@@ -77,7 +81,7 @@ struct Finished: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(height: 20)
-                                    Text("\(model.selectedMeditation?.reward ?? 0)!")
+                                    Text("\(reward)!")
                                         .font(Font.mada(.bold, size: 24))
                                         .foregroundColor(.white)
                                         .offset(x: -5)
@@ -200,8 +204,21 @@ struct Finished: View {
             var session = [String: String]()
             session[K.defaults.plantSelected] = userModel.selectedPlant?.title
             session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
-            session[K.defaults.duration] = String(model.selectedMeditation?.duration ?? 0)
-            userCoins += model.selectedMeditation?.reward ?? 0
+            session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+            if model.selectedMeditation?.duration == -1 {
+                switch model.secondsRemaining {
+                    case 0...299: reward = 1
+                case 300...599: reward = 5
+                case 600...899: reward = 10
+                case 900...1199: reward = 12
+                case 1200...1499: reward = 15
+                case 1500...1799: reward = 18
+                    default: reward = 20
+                }
+            } else {
+                reward = model.selectedMeditation?.reward ?? 0
+            }
+            userCoins += reward
             gardenModel.save(key: "sessions", saveValue: session)
         }
         .onAppearAnalytics(event: .screen_load_finished)

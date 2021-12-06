@@ -19,7 +19,7 @@ struct OnboardingScene: View {
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
-    let titles = ["Simple meditation that actually sticks", "Visualize Your Progress", "Collect all the flowers, fruits and trees!"]
+    let titles = ["Simple gamified meditation that actually sticks", "Visualize Your Progress", "Collect all the flowers, fruits and trees!"]
     let subtitles = ["Stress less. Get 1% happier everyday by making meditation a lifestyle.", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
     let images = [Img.pottedPlants, Img.gardenCalender, Img.packets]
     var body: some View {
@@ -68,16 +68,22 @@ struct OnboardingScene: View {
                             // Fallback on earlier versions
                         }
                         Button {
-                            Analytics.shared.log(event: .onboarding_tapped_continue)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                viewRouter.currentPage = .experience
+                            if index < 2 {
+                                withAnimation {
+                                    index += 1
+                                }
+                            } else {
+                                Analytics.shared.log(event: .onboarding_tapped_continue)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    viewRouter.currentPage = .experience
+                                }
                             }
                         } label: {
                             Capsule()
                                 .fill(Clr.yellow)
                                 .overlay(
-                                    Text("Continue")
+                                    Text(index != 2 ? "Next" : "Continue")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 20))
                                 )

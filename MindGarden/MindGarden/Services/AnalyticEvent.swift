@@ -20,6 +20,12 @@ enum AnalyticEvent {
     case experience_tapped_some //
     case experience_tapped_alot //
     case experience_tapped_continue //
+    // reason
+    case screen_load_reason
+    case reason_tapped_sleep
+    case reason_tapped_focus
+    case reason_tapped_stress
+    case reason_tapped_continue
     //name
     case screen_load_name //
     case name_tapped_continue //
@@ -232,6 +238,9 @@ enum AnalyticEvent {
     case plus_tapped_meditate
     case plus_tapped_meditate_to_pricing
     case seventh_time_coming_back
+
+    //pricing
+    case screen_load_pricing
 }
 
 extension AnalyticEvent {
@@ -349,6 +358,11 @@ extension AnalyticEvent {
         case .experience_tapped_some: return "experience_tapped_some"
         case .experience_tapped_alot: return "experience_tapped_alot"
         case .experience_tapped_continue: return "experience_tapped_continue"
+        case .screen_load_reason: return "screen_load_reason"
+        case .reason_tapped_sleep: return "reason_tapped_sleep"
+        case .reason_tapped_focus: return "reason_tapped_focus"
+        case .reason_tapped_stress: return "reason_tapped_stress"
+        case .reason_tapped_continue: return "reason_tapped_continue"
         case .screen_load_name: return "screen_load_name"
         case .name_tapped_continue: return "name_tapped_continue"
         case .screen_load_notification: return "screen_load_notification"
@@ -530,6 +544,7 @@ extension AnalyticEvent {
         case .plus_tapped_meditate: return "plus_tapped_meditate"
         case .play_tapped_sound_beach: return "play_tapped_sound_beach"
         case .seventh_time_coming_back: return "seventh_time_coming_back"
+        case .screen_load_pricing: return "screen_load_pricing"
         }
     }
 }

@@ -228,7 +228,6 @@ struct ProfileScene: View {
                                             }.frame(width: abs(width - 100), alignment: .leading)
                                                 .frame(height: 25)
                                                 .onTapGesture(count: 4) {
-                                                    print("close")
                                                     UserDefaults.standard.setValue(true, forKey: "trippleTapped")
                                                     UserDefaults.standard.setValue(true, forKey: "isPro")
                                                 }
@@ -275,13 +274,13 @@ struct ProfileScene: View {
                                 } else {
                                     VStack {
                                         (Text("🎁 Get & give 2 weeks free of MindGarden Pro for every friend that signs up using your link for a ")
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
                                             .foregroundColor(Clr.black2)
                                         + Text("limited time")
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
                                             .foregroundColor(Clr.darkgreen))
                                             .multilineTextAlignment(.leading)
-                                            .offset(y: -20)
+                                            .offset(y: -24)
                                         ZStack {
                                             Rectangle()
                                                 .fill(Clr.darkWhite)

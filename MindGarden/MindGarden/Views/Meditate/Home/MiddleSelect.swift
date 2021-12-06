@@ -51,7 +51,8 @@ struct MiddleSelect: View {
                                         model.selectedMeditation?.img
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(width: g.size.width/3, height: g.size.height/(K.isSmall() ? 5 : 6))
+                                            .frame(width: g.size.width/3.5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                            .padding(.horizontal, 10)
                                         VStack(alignment: .leading) {
                                             Text(model.selectedMeditation?.title ?? "")
                                                 .foregroundColor(Clr.black2)

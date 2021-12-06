@@ -13,6 +13,7 @@ import Firebase
 import FirebaseFirestore
 import AppsFlyerLib
 
+var launchedApp = false
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
@@ -156,14 +157,15 @@ struct Home: View {
                                                     .foregroundColor(Clr.black1)
                                                     .lineLimit(3)
                                                     .minimumScaleFactor(0.05)
+                                                if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
+                                                    Text("7 Day Course")
+                                                        .font(Font.mada(.regular, size: K.isPad() ? 26 : 14))
+                                                        .foregroundColor(Clr.gardenGray)
+                                                }
                                                 Spacer()
                                             }
-                                            .padding(15)
-                                            .padding(.leading, 5)
-                                            .offset(x: 20, y: 30)
-                                            .frame(width: g.size.width * 0.85 * 0.6)
-                                            .padding(K.isPad() ? 20 : 0)
-                                            .padding(.top, -5)
+                                            .frame(width: g.size.width * 0.65 * 0.5)
+                                            .position(x: g.size.width - g.size.width * 0.85 + 25, y: g.size.height * 0.21)
                                             VStack(spacing: 0) {
                                                 ZStack {
                                                     Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
@@ -176,7 +178,7 @@ struct Home: View {
                                                 (model.featuredMeditation?.img ?? Img.daisy3)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: g.size.width * 0.85 * 0.5, height: g.size.height * 0.2)
+                                                    .frame(width: g.size.width * 0.80 * 0.5, height: g.size.height * 0.2)
                                                     .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
                                             }.padding([.top, .bottom, .trailing])
                                         }).padding(.top, K.isSmall() ? 10 : 20)
@@ -232,7 +234,7 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
                                                 Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
-                                                if meditation.type == .course {
+                                                if meditation.type == .course  {
                                                     withAnimation {
                                                         viewRouter.currentPage = .middle
                                                     }
@@ -298,7 +300,7 @@ struct Home: View {
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
-                    NewUpdateModal(shown: $showUpdateModal)
+                        NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
                 }
@@ -354,12 +356,21 @@ struct Home: View {
             }
         }.transition(.move(edge: .leading))
          .onAppear {
+             if launchedApp {
+                 gardenModel.updateSelf()
+                 launchedApp = false
+                 var num = UserDefaults.standard.integer(forKey: "shownFive")
+                 print(num)
+                 num += 1
+                 UserDefaults.standard.setValue(num, forKey: "shownFive")
+                 model.getFeaturedMeditation()
+             }
                 if userWentPro {
                     wentPro = userWentPro
                     userWentPro = false
                 }
                 numberOfMeds += Int.random(in: -3 ... 3)
-                showUpdateModal = !UserDefaults.standard.bool(forKey: "1.0Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
+                showUpdateModal = !UserDefaults.standard.bool(forKey: "1.1Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)

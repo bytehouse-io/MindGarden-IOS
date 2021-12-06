@@ -68,7 +68,7 @@ struct Play: View {
                                         .foregroundColor(Clr.darkWhite)
                                         .shadow(color: .black.opacity(0.35), radius: 20.0, x: 10, y: 5)
                                     //four different plant stages
-                                    if model.secondsRemaining <= model.totalTime * 0.25 { //secoond
+                                    if model.secondsRemaining <= model.totalTime * 0.25 || (model.secondsRemaining >= 300 && model.selectedMeditation?.duration == -1) { //secoond
                                         withAnimation {
                                             model.playImage
                                                 .resizable()
@@ -76,7 +76,7 @@ struct Play: View {
                                                 .frame(width: model.lastSeconds ? width/3 : width/5, height: model.lastSeconds ? height/5 : height/7)
                                                 .animation(.easeIn(duration: 2.0))
                                         }
-                                    } else if model.secondsRemaining <= model.totalTime * 0.5 {
+                                    } else if model.secondsRemaining <= model.totalTime * 0.5 || (model.secondsRemaining >= 200 && model.selectedMeditation?.duration == -1) {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -84,7 +84,7 @@ struct Play: View {
                                             .frame(width: width/4, height: height/6)
                                             .offset(y: 25)
                                         
-                                    } else if model.secondsRemaining <= model.totalTime * 0.75 {
+                                    } else if model.secondsRemaining <= model.totalTime * 0.75 || (model.secondsRemaining >= 100 && model.selectedMeditation?.duration == -1) {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -107,37 +107,39 @@ struct Play: View {
                                 .font(Font.mada(.bold, size: 60))
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: 20) {
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                        goBackward()
-                                    }
-                                    if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
+                                if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                            goBackward()
+                                        }
+                                        if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
 
 
-                                        model.secondsRemaining += model.selectedMeditation?.url != "" ? 14 : 15
-                                    } else {
-                                        model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
-                                    }
-                                } label: {
-                                    ZStack {
-                                        Circle()
-                                            .fill(Clr.darkWhite)
-                                            .frame(width: 70)
-                                            .neoShadow()
-                                        VStack {
-                                            Image(systemName: "backward.fill")
-                                                .foregroundColor(Clr.brightGreen)
-                                                .font(.title)
-                                            Text("15")
-                                                .font(.caption)
-                                                .foregroundColor(Clr.darkgreen)
+                                            model.secondsRemaining += model.selectedMeditation?.url != "" ? 14 : 15
+                                        } else {
+                                            model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
+                                        }
+                                    } label: {
+                                        ZStack {
+                                            Circle()
+                                                .fill(Clr.darkWhite)
+                                                .frame(width: 70)
+                                                .neoShadow()
+                                            VStack {
+                                                Image(systemName: "backward.fill")
+                                                    .foregroundColor(Clr.brightGreen)
+                                                    .font(.title)
+                                                Text("15")
+                                                    .font(.caption)
+                                                    .foregroundColor(Clr.darkgreen)
+                                            }
                                         }
                                     }
                                 }
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
                                         if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
                                             self.mainPlayer.rate = 0
                                         } else {
@@ -172,30 +174,45 @@ struct Play: View {
                                             .padding(.leading, 5)
                                     }
                                 }
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                        goForward()
-                                    }
-                                    if model.secondsRemaining >= 15 {
-                                        model.secondsRemaining -= model.selectedMeditation?.url != "" ? 14 : 15
-                                    } else {
-                                        model.secondsRemaining = 0
-                                    }
-                                } label: {
-                                    ZStack {
-                                        Circle()
-                                            .fill(Clr.darkWhite)
-                                            .frame(width: 70)
-                                            .neoShadow()
-                                        VStack {
-                                            Image(systemName: "forward.fill")
-                                                .foregroundColor(Clr.brightGreen)
-                                                .font(.title)
-                                            Text("15")
-                                                .font(.caption)
-                                                .foregroundColor(Clr.darkgreen)
+                                if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+                                            goForward()
                                         }
+                                        if model.secondsRemaining >= 15 {
+                                            model.secondsRemaining -= model.selectedMeditation?.url != "" ? 14 : 15
+                                        } else {
+                                            model.secondsRemaining = 0
+                                        }
+                                    } label: {
+                                        ZStack {
+                                            Circle()
+                                                .fill(Clr.darkWhite)
+                                                .frame(width: 70)
+                                                .neoShadow()
+                                            VStack {
+                                                Image(systemName: "forward.fill")
+                                                    .foregroundColor(Clr.brightGreen)
+                                                    .font(.title)
+                                                Text("15")
+                                                    .font(.caption)
+                                                    .foregroundColor(Clr.darkgreen)
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        model.stop()
+                                        withAnimation {
+                                            viewRouter.currentPage = .finished
+                                        }
+                                    } label: {
+                                        Image(systemName: "square.fill")
+                                            .foregroundColor(Clr.brightGreen)
+                                            .aspectRatio(contentMode: .fit)
+                                            .font(.system(size: 40))
                                     }
                                 }
                             }
@@ -260,7 +277,7 @@ struct Play: View {
                     mainPlayer.play()
                     model.startCountdown()
                 }
-            } else if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+            } else if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
                 let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3")
                 self.mainPlayer = AVPlayer(url: URL(fileURLWithPath: url!))
                 mainPlayer.play()
@@ -276,7 +293,7 @@ struct Play: View {
             if player.isPlaying {
                 player.stop()
             }
-            if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+            if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
                 if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
                     self.mainPlayer.rate = 0
                 }

@@ -23,6 +23,7 @@ enum Page {
     case finished
     case onboarding
     case experience
+    case reason
     case notification
     case name
     case pricing

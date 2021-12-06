@@ -54,9 +54,8 @@ struct PricingView: View {
                                             case "home": viewRouter.currentPage = .meditate
                                             case "profile": viewRouter.currentPage = .profile
                                             case "onboarding": viewRouter.currentPage = .garden
-                                            case "onboarding2":
-                                                meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                                viewRouter.currentPage = .middle
+                                            case "onboarding2": viewRouter.currentPage = .authentication
+
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
                                             default: viewRouter.currentPage = .meditate
@@ -64,11 +63,12 @@ struct PricingView: View {
                                         }
                                     }
                             }.frame(width: g.size.width)
-                            Text("Get 1% happier everyday\nby upgrading to\nMindGarden Pro 🍏")
-                                .font(Font.mada(.bold, size: 26))
+                            //UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
+                            Text("🎄 Upgrade to MindGarden Pro\nwith a holiday season sale of 50% OFF of Lifetime Pro")
+                                .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
-                                .frame(width: width * 0.80)
+                                .frame(width: width * 0.78, alignment: .leading)
                                 .padding()
                             Button {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
@@ -142,7 +142,6 @@ struct PricingView: View {
                                                         .font(Font.mada(.regular, size: item.2 == "🤩" ? 32 : 32))
                                                         .frame(width: width * 0.175)
                                                 }
-
                                                 // etc
                                             }
                                             Divider()
@@ -164,7 +163,7 @@ struct PricingView: View {
                                 .padding(.bottom)
                                 .environmentObject(UIStateModel())
                             VStack {
-                                Text("👨‍🌾 Invest in MindGarden &\nhelp build these features")
+                                Text("👨‍🌾 Invest in MindGarden,\nhelp build these features & support mental health")
                                     .font(Font.mada(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
@@ -181,15 +180,23 @@ struct PricingView: View {
                                                         .frame(width: width * 0.80)
                                                         .neoShadow())
                                 }
-
-                            }.padding(.top, 30)
+                                Button {
+                                    guard let url = URL(string: "https://tally.so/r/3xRxkn") else { return }
+                                     UIApplication.shared.open(url)
+                                } label: {
+                                    HStack {
+                                        Text("Can't afford pro but really want it?") + Text("\nLet us know").foregroundColor(Clr.brightGreen).bold()
+                                    }.frame(width: width * 0.8)
+                                        .foregroundColor(Clr.black2)
+                                }.padding([.horizontal, .top])
+                            }.padding(.top, 20)
                             VStack {
                                 Text("🙋‍♂️ Frequent Asked Questions")
                                     .font(Font.mada(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
                                     .padding(.vertical)
-                                    .padding(.top, 50)
+                                    .padding(.top, 10)
                                 Text("\(question1 ? "🔽" : "▶️") How does the pro plan help me?")
                                     .font(Font.mada(.bold, size: 18))
                                     .foregroundColor(Clr.black2)
@@ -286,7 +293,7 @@ struct PricingView: View {
                                     }
                             }.padding(.horizontal)
                         }.padding(10)
-                            .padding(.bottom, K.isSmall() ? 50 : 0)
+                            .padding(.bottom, K.isPad() ? 50 : 0)
                         Spacer()
                     }.padding(.top, K.hasNotch() ? 30 : 10)
                 }
@@ -316,6 +323,7 @@ struct PricingView: View {
                     }
                 }
             }
+            .onAppearAnalytics(event: .screen_load_pricing)
     }
 
     private func unlockPro() {
@@ -370,9 +378,9 @@ struct PricingView: View {
                     let center = UNUserNotificationCenter.current()
                     let content = UNMutableNotificationContent()
                     content.title = "Don't Miss This Opportunity"
-                    content.body = "🎉 MindGarden Pro For Life is Gone in the Next 24 Hours!!! 🎉"
+                    content.body = "🎉 MindGarden Pro For Life is Gone in the Next 12 Hours!!! 🎉"
                     // Step 3: Create the notification trigger
-                    let date = Date().addingTimeInterval(43200)
+                    let date = Date().addingTimeInterval(13200)
                     let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
                     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
                     // Step 4: Create the request
@@ -386,19 +394,22 @@ struct PricingView: View {
     }
     private func userIsPro() {
         UserDefaults.standard.setValue(true, forKey: "isPro")
-        userWentPro = true
-        viewRouter.currentPage = .meditate
-        if let _ = Auth.auth().currentUser?.email {
-            let email = Auth.auth().currentUser?.email
-            Firestore.firestore().collection(K.userPreferences).document(email!).updateData([
-                "isPro": true,
-            ]) { (error) in
-                if let e = error {
-                    print("There was a issue saving data to firestore \(e) ")
-                } else {
-                    print("Succesfully saved new items")
+        if fromPage != "onboarding2" {
+            userWentPro = true
+            if let _ = Auth.auth().currentUser?.email {
+                let email = Auth.auth().currentUser?.email
+                Firestore.firestore().collection(K.userPreferences).document(email!).updateData([
+                    "isPro": true,
+                ]) { (error) in
+                    if let e = error {
+                        print("There was a issue saving data to firestore \(e) ")
+                    } else {
+                        print("Succesfully saved new items")
+                    }
                 }
             }
+        } else {
+            viewRouter.currentPage = .authentication
         }
     }
     private func logEvent(cancelled: Bool = false) -> String {
@@ -462,10 +473,13 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "30 day\nfree trial" : "Limited\nTime!")
+                                Text(title == "Yearly" ? "7 day\nfree trial" : "50% OFF \nLimited Time!")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.mada(.bold, size: 14))
                                     .multilineTextAlignment(.center)
+                                    .minimumScaleFactor(0.05)
+                                    .lineLimit(2)
+                                    .padding(.horizontal, 1)
                             )
                             .frame(width: 70,height: 35, alignment: .leading)
                     }
@@ -479,7 +493,7 @@ struct PricingView: View {
 
                         (Text("(" + (Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo)")
                        )
-                            .foregroundColor(selected == title ? .white : Color.black)
+                            .foregroundColor(selected == title ? .white : Clr.black2)
                             .font(Font.mada(.regular, size: 14))
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
