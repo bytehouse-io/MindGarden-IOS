@@ -22,7 +22,7 @@ struct Finished: View {
     @State private var reward = 0
     var minsMed: Int {
         if model.selectedMeditation?.duration == -1 {
-            return Int(model.secondsRemaining.rounded())
+            return Int((model.secondsRemaining/60.0).rounded())
         } else {
             if Int(model.selectedMeditation?.duration ?? 0)/60 == 0 {
                 return 1

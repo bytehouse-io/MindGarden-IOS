@@ -14,12 +14,18 @@ struct PlusMenu: View {
     @Binding var showPopUp: Bool
     @Binding var addMood: Bool
     @Binding var addGratitude: Bool
+
+    ///Ashvin : Binding variable for pass animation flag
+    @Binding var PopUpIn: Bool
+    @Binding var showPopUpOption: Bool
+    @Binding var showItems: Bool
+
     var isOnboarding: Bool
-    
+
     let width: CGFloat
     var body: some View {
         ZStack {
-            VStack(spacing: 14) {
+            VStack(spacing: 12) {
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
@@ -31,14 +37,22 @@ struct PlusMenu: View {
                     } else {
                         Analytics.shared.log(event: .plus_tapped_mood)
                         withAnimation {
-                            showPopUp = false
-                            addMood = true
+
+                            ///Ashvin : Hide popup with animation
+                            hidePopupWithAnimation {
+                                addMood = true
+                            }
                         }
                     }
                 } label: {
                     MenuChoice(title: "Mood Check", img: Image(systemName: "face.smiling"),  isOnboarding: false, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
                         .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")
+
+                    ///Ashvin : Added property for animation
+                    .animation(.easeIn(duration: 0.54))
+                    .opacity(showItems ? 1 : 0)
+
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     if UserDefaults.standard.integer(forKey: "numGrads") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
@@ -53,14 +67,21 @@ struct PlusMenu: View {
                             Analytics.shared.log(event: .onboarding_finished_meditation)
                         }
                         withAnimation {
-                            showPopUp = false
-                            addGratitude = true
+                            ///Ashvin : Hide popup with animation
+                            hidePopupWithAnimation {
+                                addGratitude = true
+                            }
                         }
                     }
                 } label: {
                     MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"), isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
                         .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
+
+                    ///Ashvin : Added property for animation
+                    .animation(.easeIn(duration: 0.5))
+                    .opacity(showItems ? 1 : 0)
+
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     if UserDefaults.standard.integer(forKey: "numMeds") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
@@ -71,7 +92,8 @@ struct PlusMenu: View {
                     } else {
                         Analytics.shared.log(event: .plus_tapped_meditate)
                         withAnimation {
-                            showPopUp = false
+                            ///Ashvin : Hide popup with animation
+                            hidePopupWithAnimation {}
                         }
 
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
@@ -93,14 +115,37 @@ struct PlusMenu: View {
                     MenuChoice(title: "Meditate", img: Image(systemName: "play"),  isOnboarding: isOnboarding, disabled: isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
                         .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")
+                    ///Ashvin : Added property for animation
+                    .animation(.easeIn(duration: 0.5))
+                    .opacity(showItems ? 1 : 0)
             }
         }
-        .frame(width: width/2, height: width/2.25)
+        ///Ashvin : Change the frame while animation
+        .frame(width: PopUpIn ? width/2 : width/7, height: showPopUpOption ? width/2.25 : PopUpIn ? width/3.25: width/5)
         .transition(.scale)
         .background(Clr.superWhite)
-        .cornerRadius(15)
-        .shadow(color: colorScheme == .dark ? Clr.darkShadow.opacity(0.95) : Clr.black1.opacity(0.5), radius: 4, x: 0, y: -8)
+        .cornerRadius(18)
         .zIndex(-10)
+        .padding(.bottom, 10)
+
+    }
+
+    ///Ashvin : Hide popup with animation method
+
+    private func hidePopupWithAnimation(completion: @escaping () -> ()) {
+        withAnimation(.easeOut(duration: 0.2)) {
+            showItems = false
+        }
+        withAnimation(.easeOut(duration: 0.14).delay(0.1)) {
+            showPopUpOption = false
+        }
+        withAnimation(.easeOut(duration: 0.08).delay(0.24)) {
+            PopUpIn = false
+        }
+        withAnimation(.easeOut(duration: 0.14).delay(0.31)){
+            showPopUp = false
+            completion()
+        }
     }
 
     struct MenuChoice: View {

@@ -18,6 +18,10 @@ struct Gratitude: View, KeyboardReadable {
     @EnvironmentObject var gardenModel: GardenViewModel
     @Binding var contentKeyVisible: Bool
 
+    ///Ashvin : Binding variable for pass animation flag
+    @Binding var PopUpIn: Bool
+    @Binding var showPopUpOption: Bool
+    @Binding var showItems: Bool
 
     var body: some View {
         GeometryReader { g in
@@ -100,7 +104,7 @@ struct Gratitude: View, KeyboardReadable {
                         text = "Thankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                            showPopUp = true
+                            showPopupWithAnimation{}
                         }
                     }, moodSelected: .angry)
                         .padding(.bottom, 5)
@@ -135,11 +139,28 @@ struct Gratitude: View, KeyboardReadable {
             UITextView.appearance().backgroundColor = UIColor.clear
         }
     }
+    ///Ashvin : Show popup with animation method
+
+    private func showPopupWithAnimation(completion: @escaping () -> ()) {
+        withAnimation(.easeIn(duration:0.14)){
+            showPopUp = true
+        }
+        withAnimation(.easeIn(duration: 0.08).delay(0.14)) {
+            PopUpIn = true
+        }
+        withAnimation(.easeIn(duration: 0.14).delay(0.22)) {
+            showPopUpOption = true
+        }
+        withAnimation(.easeIn(duration: 0.4).delay(0.36)) {
+            showItems = true
+            completion()
+        }
+    }
 }
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        Gratitude(shown: .constant(true), showPopUp: .constant(false), openPrompts: .constant(true), contentKeyVisible: .constant(false))
+        Gratitude(shown: .constant(true), showPopUp: .constant(false), openPrompts: .constant(true), contentKeyVisible: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 800)
             .background(Clr.darkWhite)
             .cornerRadius(12)

@@ -23,6 +23,12 @@ struct ContentView: View {
     @State private var animateSplash = false
     @State private var showSplash = true
     @State private var animationAmount: CGFloat = 1
+
+    ///Ashvin : State variable for pass animation flag
+    @State private var PopUpIn = false
+    @State private var showPopUpOption = false
+    @State private var showItems = false
+
     var bonusModel: BonusViewModel
     var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
@@ -57,18 +63,16 @@ struct ContentView: View {
                                             ExperienceScene()
                                                 .frame(height: geometry.size.height)
                                                 .navigationViewStyle(StackNavigationViewStyle())
-                                    case .reason:
-                                        ReasonScene()
-                                            .frame(height: geometry.size.height)
-                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
                                         Home(bonusModel: bonusModel)
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                                                    self.isOnboarding = true
-                                                    self.showPopUp = true
+
+                                                    showPopupWithAnimation {
+                                                        self.isOnboarding = true
+                                                    }
                                                 }
                                             }
                                             .disabled(isOnboarding)
@@ -98,8 +102,10 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                                                    self.isOnboarding = false
-                                                    self.showPopUp = false
+
+                                                    showPopupWithAnimation {
+                                                        self.isOnboarding = false
+                                                    }
                                                 }
                                             }
                                     case .finished:
@@ -122,6 +128,10 @@ struct ContentView: View {
                                         PricingView()
                                             .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                    case .reason:
+                                        ReasonScene()
+                                            .frame(height: geometry.size.height)
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     }
                                 } else {
                                     // Fallback on earlier versions
@@ -130,26 +140,30 @@ struct ContentView: View {
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
                                 && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
                                 && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason {
-                                if showPopUp || addMood || addGratitude || isOnboarding {
-                                    Button {
-                                        if !isOnboarding {
-                                            withAnimation {
-                                                showPopUp = false
+                                ///Ashvin : Replace background button to stack with shollw effect with animation
+                                ZStack {
+                                    Rectangle()
+                                        .opacity(showPopUp || addMood || addGratitude || isOnboarding ? 0.3 : 0.0)
+                                        .foregroundColor(Clr.black1)
+                                        .edgesIgnoringSafeArea(.all)
+                                        .frame(height: geometry.size.height + 10)
+                                        .transition(.opacity)
+                                }
+                                .onTapGesture {
+                                    if !isOnboarding {
+                                        withAnimation {
+                                            hidePopupWithAnimation {
                                                 addMood = false
                                                 addGratitude = false
                                             }
                                         }
-                                    } label: {
-                                        Color.black
-                                            .opacity(0.3)
-                                            .edgesIgnoringSafeArea(.all)
-                                            .frame(height: showPopUp || addMood || addGratitude || isOnboarding ? geometry.size.height + 10: 0)
-                                    }.animation(.easeInOut(duration: 0.1))
+                                    }
                                 }
                                 ZStack {
-                                    PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, isOnboarding: isOnboarding, width: geometry.size.width)
-                                        .offset(y: showPopUp ?  geometry.size.height/2 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5) : geometry.size.height/2 + 60)
-                                        .opacity(showPopUp ? 1 : 0)
+                                    ///Ashvin : Pass the required flag and change offset while animation
+                                    PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, isOnboarding: isOnboarding, width: geometry.size.width)
+                                        .offset(y: showPopUp ? (showPopUpOption ? (geometry.size.height/2.01 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (PopUpIn ? (geometry.size.height/1.88 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (geometry.size.height/1.75 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)))) : geometry.size.height/2 + 60)
+
                                     //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                                     //onboarding userdefault should be equal to signedUp because we just completed it.
                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "mood" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude"  {
@@ -163,11 +177,12 @@ struct ContentView: View {
                                         TabBarIcon(viewRouter: viewRouter, assignedPage: .meditate, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Meditate", img: Img.meditateIcon)
                                         ZStack {
                                             Rectangle()
-                                                .cornerRadius(21)
+                                                .cornerRadius(18, corners: showPopUp ? [.bottomLeft, .bottomRight] : [.topRight, .topLeft, .bottomLeft, .bottomRight])
                                                 .foregroundColor(Clr.superWhite)
                                                 .frame(maxWidth: geometry.size.width/7, maxHeight: geometry.size.width/7)
                                                 .shadow(color: showPopUp ? .black.opacity(0) : .black.opacity(0.25), radius: 4, x: 4, y: 4)
                                                 .zIndex(1)
+
                                             Image(systemName: "plus")
                                                 .foregroundColor(Clr.darkgreen)
                                                 .font(Font.title.weight(.semibold))
@@ -179,24 +194,28 @@ struct ContentView: View {
                                         .onTapGesture {
                                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done"  && viewRouter.currentPage == .garden {} else {
                                                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                                withAnimation {
-                                                    showPopUp.toggle()
+                                                ///Ashvin : Hide & Show popup with animation
+                                                if showPopUp == false {
+                                                    showPopupWithAnimation {}
+                                                }
+                                                else {
+                                                    hidePopupWithAnimation {}
                                                 }
                                             }
                                         }
-                                        .offset(y: -geometry.size.height/14/2)
+                                        .offset(y: -geometry.size.height/18/2)
                                         TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
                                         TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
                                     }.frame(width: geometry.size.width, height: 80)
                                         .background(Clr.darkgreen.shadow(radius: 2))
                                         .offset(y: geometry.size.height/2 - (K.isPad() ? 25 : (K.hasNotch() ? 0 : 15)))
                                 }
-                                MoodCheck(shown: $addMood, showPopUp: $showPopUp)
+                                MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(12)
                                     .offset(y: addMood ? geometry.size.height/(K.hasNotch() ? 2.5 : 2.75) : geometry.size.height)
-                                Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts, contentKeyVisible: $isKeyboardVisible)
+                                Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts, contentKeyVisible: $isKeyboardVisible, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: (geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1)) + (isKeyboardVisible ? geometry.size.height * 0.2 : 0))
                                     .background(Clr.darkWhite)
                                     .cornerRadius(12)
@@ -239,6 +258,42 @@ struct ContentView: View {
 
 
     }
+
+    ///Ashvin : Show popup with animation method
+
+    public func showPopupWithAnimation(completion: @escaping () -> ()) {
+        withAnimation(.easeIn(duration:0.14)){
+            showPopUp = true
+        }
+        withAnimation(.easeIn(duration: 0.08).delay(0.14)) {
+            PopUpIn = true
+        }
+        withAnimation(.easeIn(duration: 0.14).delay(0.22)) {
+            showPopUpOption = true
+        }
+        withAnimation(.easeIn(duration: 0.4).delay(0.36)) {
+            showItems = true
+            completion()
+        }
+    }
+
+    ///Ashvin : Hide popup with animation method
+
+    public func hidePopupWithAnimation(completion: @escaping () -> ()) {
+        withAnimation(.easeOut(duration: 0.2)) {
+            showItems = false
+        }
+        withAnimation(.easeOut(duration: 0.14).delay(0.1)) {
+            showPopUpOption = false
+        }
+        withAnimation(.easeOut(duration: 0.08).delay(0.24)) {
+            PopUpIn = false
+        }
+        withAnimation(.easeOut(duration: 0.14).delay(0.31)){
+            showPopUp = false
+            completion()
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -246,3 +301,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel(), authModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
     }
 }
+

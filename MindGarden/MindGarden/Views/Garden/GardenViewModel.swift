@@ -83,17 +83,18 @@ class GardenViewModel: ObservableObject {
                 index += 1
             }
             recentMeditations = []
-            if med1 != nil {
-                recentMeditations.append(med1!)
-                ids.append(med1!.id)
-            }
-
             if med2 != nil {
                 if med1 != med2 {
                     recentMeditations.append(med2!)
                     ids.append(med2!.id)
                 }
             }
+
+            if med1 != nil {
+                recentMeditations.append(med1!)
+                ids.append(med1!.id)
+            }
+
 
             UserDefaults.standard.setValue(ids, forKey: "recent")
         }
@@ -168,7 +169,7 @@ class GardenViewModel: ObservableObject {
 
     func updateSelf() {
         if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
-            self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) })
+            self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()
         }
 
         if let email = Auth.auth().currentUser?.email {

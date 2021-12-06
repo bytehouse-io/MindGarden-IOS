@@ -57,6 +57,11 @@ struct MoodCheck: View {
     @State var moodSelected: Mood = .none
     @EnvironmentObject var gardenModel: GardenViewModel
 
+    ///Ashvin : Binding variable for pass animation flag
+    @Binding var PopUpIn: Bool
+    @Binding var showPopUpOption: Bool
+    @Binding var showItems: Bool
+
     var body: some View {
         GeometryReader { g in
                 HStack(alignment: .center) {
@@ -86,7 +91,8 @@ struct MoodCheck: View {
                                 Analytics.shared.log(event: .mood_tapped_done)
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                     UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
-                                    showPopUp = true
+
+                                    showPopupWithAnimation {}
                                 }
                                 gardenModel.save(key: "moods", saveValue: moodSelected.title)
                             }
@@ -100,11 +106,29 @@ struct MoodCheck: View {
                 }
         }
     }
+
+    ///Ashvin : Show popup with animation method
+
+        private func showPopupWithAnimation(completion: @escaping () -> ()) {
+            withAnimation(.easeIn(duration:0.14)){
+                showPopUp = true
+            }
+            withAnimation(.easeIn(duration: 0.08).delay(0.14)) {
+                PopUpIn = true
+            }
+            withAnimation(.easeIn(duration: 0.14).delay(0.22)) {
+                showPopUpOption = true
+            }
+            withAnimation(.easeIn(duration: 0.4).delay(0.36)) {
+                showItems = true
+                completion()
+            }
+        }
 }
 
 struct MoodCheck_Previews: PreviewProvider {
     static var previews: some View {
-        MoodCheck(shown: .constant(true), showPopUp: .constant(false))
+        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 250)
             .background(Clr.darkWhite)
             .cornerRadius(12)
