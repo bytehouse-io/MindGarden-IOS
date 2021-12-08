@@ -14,8 +14,17 @@ struct NotificationHelper {
         content.title = "Don't Break Your Streak!"
         content.body = "Tend to your garden by meditating."
         content.sound = UNNotificationSound.default
-
-        let modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
+        let hour = Calendar.current.component( .hour, from:Date() )
+        var modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
+        if hour < 11 {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
+        }
+        else if hour < 16 {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: 24, to: Date())
+        }
+        else {
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
+        }
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
         // Create the trigger as a repeating event.

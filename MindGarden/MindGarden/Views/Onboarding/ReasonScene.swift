@@ -76,6 +76,7 @@ struct ReasonScene: View {
         }.onDisappear {
             meditationModel.getFeaturedMeditation()
         }
+        .onAppearAnalytics(event: .screen_load_reason)
     }
 
     struct SelectionRow: View {

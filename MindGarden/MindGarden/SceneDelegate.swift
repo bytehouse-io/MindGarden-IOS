@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         numberOfMeds = Int.random(in: 125..<151)
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
-//        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+//        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                 if success {

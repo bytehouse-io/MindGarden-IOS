@@ -27,4 +27,5 @@ enum Page {
     case notification
     case name
     case pricing
+    case review
 }

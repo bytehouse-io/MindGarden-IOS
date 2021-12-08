@@ -78,7 +78,7 @@ struct PlusMenu: View {
                         .frame(width: width/2.25, height: width/10.5)
                 }.disabled(isOnboarding && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")
 
-                    ///Ashvin : Added property for animation
+                    // Added property for animation
                     .animation(.easeIn(duration: 0.5))
                     .opacity(showItems ? 1 : 0)
 
@@ -92,8 +92,10 @@ struct PlusMenu: View {
                     } else {
                         Analytics.shared.log(event: .plus_tapped_meditate)
                         withAnimation {
-                            ///Ashvin : Hide popup with animation
-                            hidePopupWithAnimation {}
+                            // Hide popup with animation
+                            hidePopupWithAnimation {
+                                showPopUp = false
+                            }
                         }
 
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {

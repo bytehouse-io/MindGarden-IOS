@@ -43,10 +43,15 @@ struct NotificationScene: View {
                                 .padding()
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if fromSettings {
-                                        presentationMode.wrappedValue.dismiss()
-                                    } else {
-                                        viewRouter.currentPage = .experience
+                                    withAnimation {
+                                        if fromSettings {
+                                            presentationMode.wrappedValue.dismiss()
+                                        } else if tappedTurnOn {
+                                            viewRouter.currentPage = .review
+                                            tappedTurnOn = false
+                                        } else {
+                                            viewRouter.currentPage = .reason
+                                        }
                                     }
                                 }
                                 .opacity(fromSettings ? 0 : 1)
@@ -87,12 +92,12 @@ struct NotificationScene: View {
                             Button {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                                 withAnimation {
                                     let current = UNUserNotificationCenter.current()
                                             current.getNotificationSettings(completionHandler: { permission in
                                                 switch permission.authorizationStatus  {
                                                 case .authorized:
+                                                    UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                                                     Analytics.shared.log(event: .notification_success)
                                                     if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                                                         NotificationHelper.addOneDay()
@@ -121,6 +126,7 @@ struct NotificationScene: View {
                                                         } else {
                                                             viewRouter.currentPage = .name
                                                         }
+                                                        
                                                     }
                                                 case .denied:
                                                     Analytics.shared.log(event: .notification_go_to_settings)
@@ -159,7 +165,13 @@ struct NotificationScene: View {
                                     .onTapGesture {
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
-                                            viewRouter.currentPage = .name
+                                            withAnimation {
+                                                if tappedTurnOn {
+                                                    viewRouter.currentPage = .review
+                                                } else {
+                                                    viewRouter.currentPage = .name
+                                                }
+                                            }
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         }
                                     }

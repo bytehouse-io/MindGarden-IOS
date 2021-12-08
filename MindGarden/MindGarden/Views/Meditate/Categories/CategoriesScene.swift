@@ -61,8 +61,9 @@ struct CategoriesScene: View {
                                 CategoryButton(category: .unguided, selected: $model.selectedCategory)
                                 CategoryButton(category: .beginners, selected: $model.selectedCategory)
                                 CategoryButton(category: .anxiety, selected: $model.selectedCategory)
-                                CategoryButton(category: .growth, selected: $model.selectedCategory)
                                 CategoryButton(category: .focus, selected: $model.selectedCategory)
+                                CategoryButton(category: .growth, selected: $model.selectedCategory)
+                                CategoryButton(category: .sleep, selected: $model.selectedCategory)
                                 CategoryButton(category: .courses, selected: $model.selectedCategory)
                             }.padding()
                         }

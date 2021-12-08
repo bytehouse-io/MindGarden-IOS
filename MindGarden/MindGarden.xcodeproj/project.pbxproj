@@ -112,6 +112,7 @@
 		FEDC4310269A553B008E0318 /* Finished.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEDC430F269A553B008E0318 /* Finished.swift */; };
 		FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC6515267817D400ECD32D /* PlantTile.swift */; };
 		FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEC651726781FC800ECD32D /* PurchaseModal.swift */; };
+		FEF976E7275EE36700D1715C /* ReviewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF976E6275EE36700D1715C /* ReviewScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,6 +241,7 @@
 		FEDC430F269A553B008E0318 /* Finished.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finished.swift; sourceTree = "<group>"; };
 		FEEC6515267817D400ECD32D /* PlantTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantTile.swift; sourceTree = "<group>"; };
 		FEEC651726781FC800ECD32D /* PurchaseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseModal.swift; sourceTree = "<group>"; };
+		FEF976E6275EE36700D1715C /* ReviewScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -541,6 +543,7 @@
 				FE9815FF26E559E000A4992D /* NotificationScene.swift */,
 				FEA607E226FD69090076A177 /* NameScene.swift */,
 				FE349D73275ACB2F006B4378 /* ReasonScene.swift */,
+				FEF976E6275EE36700D1715C /* ReviewScene.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -958,6 +961,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */,
+				FEF976E7275EE36700D1715C /* ReviewScene.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,

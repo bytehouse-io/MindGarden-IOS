@@ -20,12 +20,19 @@ enum AnalyticEvent {
     case experience_tapped_some //
     case experience_tapped_alot //
     case experience_tapped_continue //
-    // reason
+
+    //MARK: - Reason
     case screen_load_reason
     case reason_tapped_sleep
     case reason_tapped_focus
     case reason_tapped_stress
     case reason_tapped_continue
+
+    //MARK: - Review
+    case screen_load_review
+    case review_tapped_tutorial
+    case review_tapped_explore
+
     //name
     case screen_load_name //
     case name_tapped_continue //
@@ -545,6 +552,9 @@ extension AnalyticEvent {
         case .play_tapped_sound_beach: return "play_tapped_sound_beach"
         case .seventh_time_coming_back: return "seventh_time_coming_back"
         case .screen_load_pricing: return "screen_load_pricing"
+        case .screen_load_review: return "screen_load_review"
+        case .review_tapped_tutorial: return "review_tapped_tutorial"
+        case .review_tapped_explore: return "review_tapped_explore"
         }
     }
 }

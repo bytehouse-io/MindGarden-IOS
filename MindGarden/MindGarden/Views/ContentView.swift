@@ -75,11 +75,17 @@ struct ContentView: View {
                                                     }
                                                 }
                                             }
+
                                             .disabled(isOnboarding)
                                     case .garden:
                                         Garden()
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .onAppear {
+                                                    showPopUpOption = false
+                                                    showPopUp = false
+                                                    showItems = false
+                                            }
                                     case .shop:
                                         Store(showPlantSelect: .constant(false))
                                             .frame(height: geometry.size.height + 10)
@@ -132,14 +138,19 @@ struct ContentView: View {
                                         ReasonScene()
                                             .frame(height: geometry.size.height)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                    case .review:
+                                        ReviewScene()
+                                            .frame(height: geometry.size.height)
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     }
+
                                 } else {
                                     // Fallback on earlier versions
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
                                 && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
-                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason {
+                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason && viewRouter.currentPage != .review {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
                                     Rectangle()
@@ -166,7 +177,7 @@ struct ContentView: View {
 
                                     //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                                     //onboarding userdefault should be equal to signedUp because we just completed it.
-                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "mood" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude"  {
+                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "mood" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude"   {
                                         LottieView(fileName: "side-arrow")
                                             .frame(width: 75, height: 25)
                                             .padding(.horizontal)

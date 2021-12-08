@@ -43,7 +43,7 @@ struct NameScene: View {
                                     if !name.isEmpty {
                                         UserDefaults.standard.set(name, forKey: "name")
                                         fromPage = "onboarding2"
-                                        viewRouter.currentPage = .pricing
+                                        viewRouter.currentPage = .review
                                     }
                                 }
                             } label: {

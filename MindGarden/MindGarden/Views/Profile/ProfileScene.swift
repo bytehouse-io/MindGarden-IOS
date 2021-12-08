@@ -273,12 +273,10 @@ struct ProfileScene: View {
                                         .padding(.leading)
                                 } else {
                                     VStack {
-                                        (Text("🎁 Get & give 2 weeks free of MindGarden Pro for every friend that signs up using your link for a ")
+                                        Text("🎁 Get & give 2 weeks free of MindGarden Pro for every referral (stackable)")
                                             .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
                                             .foregroundColor(Clr.black2)
-                                        + Text("limited time")
-                                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
-                                            .foregroundColor(Clr.darkgreen))
+                                        
                                             .multilineTextAlignment(.leading)
                                             .offset(y: -24)
                                         ZStack {

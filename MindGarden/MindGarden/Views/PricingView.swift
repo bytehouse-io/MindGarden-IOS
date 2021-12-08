@@ -64,7 +64,7 @@ struct PricingView: View {
                                     }
                             }.frame(width: g.size.width)
                             //UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            Text("🎄 Upgrade to MindGarden Pro\nwith a holiday season sale of 50% OFF of Lifetime Pro")
+                            (Text("🎄 Get MindGarden Pro with our holiday sale") + Text(" (limited time)").foregroundColor(Clr.darkgreen))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
@@ -185,7 +185,7 @@ struct PricingView: View {
                                      UIApplication.shared.open(url)
                                 } label: {
                                     HStack {
-                                        Text("Can't afford pro but really want it?") + Text("\nLet us know").foregroundColor(Clr.brightGreen).bold()
+                                        Text("Are you a student & can't \nafford pro?") + Text("Let us know").foregroundColor(Clr.brightGreen).bold()
                                     }.frame(width: width * 0.8)
                                         .foregroundColor(Clr.black2)
                                 }.padding([.horizontal, .top])
@@ -473,7 +473,7 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "7 day\nfree trial" : "50% OFF \nLimited Time!")
+                                Text(title == "Yearly" ? "7 day\nfree trial" : "50% OFF")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.mada(.bold, size: 14))
                                     .multilineTextAlignment(.center)

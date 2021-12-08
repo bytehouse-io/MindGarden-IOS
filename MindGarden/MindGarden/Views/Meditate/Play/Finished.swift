@@ -178,12 +178,10 @@ struct Finished: View {
                     }
                     OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
                         .offset(y: showUnlockedModal ? 0 : g.size.height)
-                        .animation(.default)
+                        .animation(.default, value: showUnlockedModal)
                 }
             }
         }.transition(.move(edge: .trailing))
-        .animation(.easeIn)
-
         .onDisappear {
             model.playImage = Img.seed
             model.lastSeconds = false

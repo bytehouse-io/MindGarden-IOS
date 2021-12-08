@@ -101,7 +101,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                                                 if isSignUp {
-                                                    UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
+                                                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                                                    }
                                                     UserDefaults.standard.setValue("nature", forKey: "sound")
                                                 }
                                                 goToHome()
@@ -226,7 +228,9 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 } else {
                     if googleIsNew {
                         createUser()
-                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
+                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                        }
                     } else {
                         UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
@@ -280,7 +284,9 @@ extension AuthenticationViewModel {
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 if isSignUp {
-                    UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
+                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                    }
                 }
                 UserDefaults.standard.setValue("nature", forKey: "sound")
                 goToHome()
@@ -301,7 +307,9 @@ extension AuthenticationViewModel {
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 if isSignUp {
-                    UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
+                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                    }
                 } else {
                     UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
@@ -378,7 +386,7 @@ extension AuthenticationViewModel {
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 
-                "coins": 100,
+                "coins": 50,
                 "joinDate": formatter.string(from: Date()),
                 "totalSessions": 0,
                 "totalMins": 0,
@@ -394,7 +402,7 @@ extension AuthenticationViewModel {
                 }
             }
         }
-        userCoins = 100
+        userCoins = 50
         userModel.name = UserDefaults.standard.string(forKey: "name") ?? "hg"
         userModel.joinDate = formatter.string(from: Date())
         userModel.referredStack = "\(date)+0"
