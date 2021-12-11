@@ -14,16 +14,34 @@ struct Store: View {
     @State var showSuccess = false
     var isShop: Bool = true
     @Binding var showPlantSelect: Bool
+    @State var isStore = false
     
     var body: some View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
                 ScrollView(showsIndicators: false) {
+                    HStack(spacing: 25) {
+                        Spacer()
+                        Button {
+                            Analytics.shared.log(event: .store_tapped_store_option)
+                            isStore = true
+                        } label: {
+                            MenuButton(title: "Store", isStore: isStore)
+                        }
+                        Button {
+                            Analytics.shared.log(event: .store_tapped_badges_option)
+                            isStore = false
+                        } label: {
+                            MenuButton(title: "Badges", isStore: !isStore)
+                        }
+                        Spacer()
+                    }.padding([.horizontal, .top])
                     HStack(alignment: .top, spacing: 20) {
                         if K.isPad() {
                             Spacer()
                         }
+
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 if !isShop {
@@ -175,6 +193,23 @@ struct Store: View {
                     }
                     Spacer()
                 }
+            }
+        }
+    }
+
+    struct MenuButton: View {
+        var title: String
+        var isStore: Bool
+
+        var body: some View {
+            ZStack {
+                Capsule()
+                    .fill(isStore ? Clr.gardenGreen : Clr.darkWhite)
+                    .frame(width: 100, height: 35)
+                    .neoShadow()
+                Text(title)
+                    .font(Font.mada(.regular, size: 16))
+                    .foregroundColor(isStore ? .white : Clr.black1)
             }
         }
     }

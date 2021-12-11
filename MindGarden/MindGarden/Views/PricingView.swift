@@ -10,6 +10,7 @@ import Purchases
 import AppsFlyerLib
 import Firebase
 import FirebaseFirestore
+import Amplitude
 
 var fromPage = ""
 var userWentPro = false
@@ -55,7 +56,6 @@ struct PricingView: View {
                                             case "profile": viewRouter.currentPage = .profile
                                             case "onboarding": viewRouter.currentPage = .garden
                                             case "onboarding2": viewRouter.currentPage = .authentication
-
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
                                             default: viewRouter.currentPage = .meditate
@@ -185,7 +185,7 @@ struct PricingView: View {
                                      UIApplication.shared.open(url)
                                 } label: {
                                     HStack {
-                                        Text("Are you a student & can't \nafford pro?") + Text("Let us know").foregroundColor(Clr.brightGreen).bold()
+                                        Text("Are you a student & can't \nafford pro? ") + Text("Let us know").foregroundColor(Clr.brightGreen).bold()
                                     }.frame(width: width * 0.8)
                                         .foregroundColor(Clr.black2)
                                 }.padding([.horizontal, .top])
@@ -364,6 +364,9 @@ struct PricingView: View {
                                                     AFEventParamRevenue: price,
                                                     AFEventParamCurrency:"\(Locale.current.currencyCode!)"
                                                 ])
+                let revenue = AMPRevenue().setProductIdentifier(event)
+                revenue?.setPrice(NSNumber(value: price))
+                Amplitude.instance().logRevenueV2(revenue!)
                 AppsFlyerLib.shared().logEvent(name: event2, values:
                                                                 [
                                                                     AFEventParamContent: "true"

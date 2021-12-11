@@ -11,6 +11,7 @@ import GoogleSignIn
 import AppsFlyerLib
 import Purchases
 import FirebaseDynamicLinks
+import Amplitude
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Purchases.logLevel = .debug
         Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG")
+
+        Amplitude.instance().trackingSessionEvents = true
+        // Initialize SDK
+        Amplitude.instance().initializeApiKey("76399802bdea5c85e4908f0a1b922bda")
+        // Set userId
+        // Log an event
 
         sendLaunch()
         return true

@@ -8,12 +8,16 @@
 import Foundation
 
 enum AnalyticEvent {
+    case sceneDidBecomeActive
+    case launchedApp
+
     //MARK: - Onboarding
     case screen_load_onboarding //
     case onboarding_notification_on
     case onboarding_notification_off
     case onboarding_tapped_continue //
     case onboarding_tapped_sign_in //
+
     //experience
     case screen_load_experience //
     case experience_tapped_none //
@@ -101,6 +105,8 @@ enum AnalyticEvent {
     case store_tapped_confirm_modal_confirm //
     case store_tapped_confirm_modal_cancel //
     case store_tapped_success_modal_okay //
+    case store_tapped_store_option //
+    case store_tapped_badges_option //
 
     //MARK: - Middle
     case screen_load_middle //
@@ -357,6 +363,8 @@ extension AnalyticEvent {
 extension AnalyticEvent {
     var eventName:String {
         switch self {
+        case .sceneDidBecomeActive: return "sceneDidBecomeActive"
+        case .launchedApp: return "launchedApp"
         case .screen_load_onboarding: return "screen_load_onboarding"
         case .onboarding_tapped_continue: return "onboarding_tapped_continue"
         case .onboarding_tapped_sign_in: return "onboarding_tapped_sign_in"
@@ -426,6 +434,8 @@ extension AnalyticEvent {
         case .store_tapped_confirm_modal_confirm: return "store_tapped_confirm_modal_confirm"
         case .store_tapped_confirm_modal_cancel: return "store_tapped_confirm_modal_cancel"
         case .store_tapped_success_modal_okay: return "store_tapped_success_modal_okay"
+        case .store_tapped_store_option: return "store_tapped_store_option"
+        case .store_tapped_badges_option: return "store_tapped_badges_option"
         case .screen_load_middle: return "screen_load_middle"
         case .middle_tapped_favorite: return "middle_tapped_favorite"
         case .middle_tapped_unfavorite: return "middle_tapped_unfavorite"

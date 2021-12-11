@@ -198,7 +198,9 @@ struct NotificationScene: View {
                         .offset(y: -25)
                 }.offset(y: g.size.height * 0.3)
             }
-        }.onAppearAnalytics(event: .screen_load_notification)
+        }
+        .transition(.move(edge: .trailing))
+        .onAppearAnalytics(event: .screen_load_notification)
 //            .alert(isPresented: $showAlert) {
 //                Alert(title: Text("Turn on Notifications"), message: Text("We'll do our best not to annoy you"), dismissButton: .default(Text("Go to Settings"), action: {
 //                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {

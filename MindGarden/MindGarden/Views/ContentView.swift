@@ -75,7 +75,6 @@ struct ContentView: View {
                                                     }
                                                 }
                                             }
-
                                             .disabled(isOnboarding)
                                     case .garden:
                                         Garden()

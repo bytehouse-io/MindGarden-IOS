@@ -8,6 +8,7 @@
 import Combine
 import Firebase
 import FirebaseFirestore
+import Foundation
 
 class GardenViewModel: ObservableObject {
     @Published var grid = [String: [String:[String:[String:Any]]]]()
@@ -246,6 +247,32 @@ class GardenViewModel: ObservableObject {
                         }
                     }
                 }
+            }
+        } else {
+            UserDefaults.standard.setValue(self.allTimeMinutes, forKey: "allTimeMinutes")
+            UserDefaults.standard.setValue(self.allTimeSessions, forKey: "allTimeMinutes")
+            UserDefaults.standard.setValue(userCoins, forKey: "coins")
+            if var gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
+                self.grid = gridd
+            }
+            if let year = self.grid[Date().get(.year)] {
+                if let month = year[Date().get(.month)] {
+                    if let day = month[Date().get(.day)] {
+                        if var values = day[key] as? [Any] {
+                            //["plantSelected" : "coogie", "meditationId":3]
+                            values.append(saveValue)
+                            self.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[key] = values
+                        } else { // first of that type today
+                            self.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[key] = [saveValue]
+                        }
+                    } else { // first save of type that day
+                        self.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)] = [key: [saveValue]]
+                    }
+                } else { //first session of month
+                    self.grid[Date().get(.year)]?[Date().get(.month)] = [Date().get(.day): [key: [saveValue]]]
+                }
+            } else {
+                self.grid[Date().get(.year)] = [Date().get(.month): [Date().get(.day): [key: [saveValue]]]]
             }
         }
     }

@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 UserDefaults.standard.setValue(true, forKey: "showedNotif")
             }
         }
+        Analytics.shared.log(event: .launchedApp)
 
 
         let router = ViewRouter()
@@ -88,6 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         launchNum += 1
         launchedApp = true
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
+        Analytics.shared.log(event: .sceneDidBecomeActive)
         DispatchQueue.main.async {
             SceneDelegate.bonusModel.bonusTimer?.invalidate()
             SceneDelegate.bonusModel.bonusTimer = nil

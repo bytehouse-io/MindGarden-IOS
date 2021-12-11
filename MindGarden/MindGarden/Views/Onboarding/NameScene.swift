@@ -13,12 +13,26 @@ struct NameScene: View {
     @State var isFirstResponder = true
     var body: some View {
         ZStack {
-            NavigationView {
                 GeometryReader { g in
                     let width = g.size.width
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack(spacing: -5) {
+                            HStack {
+                                Img.topBranch.padding(.leading, -20)
+                                Spacer()
+                                Image(systemName: "arrow.backward")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(Clr.darkgreen)
+                                    .padding()
+                                    .onTapGesture {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            viewRouter.currentPage = .notification
+                                        }
+                                    }
+                                
+                            }
                             Spacer()
                             Text("What's your name?")
                                 .font(Font.mada(.bold, size: 30))
@@ -42,7 +56,6 @@ struct NameScene: View {
                                 withAnimation {
                                     if !name.isEmpty {
                                         UserDefaults.standard.set(name, forKey: "name")
-                                        fromPage = "onboarding2"
                                         viewRouter.currentPage = .review
                                     }
                                 }
@@ -60,19 +73,9 @@ struct NameScene: View {
                         }.frame(width: width * 0.9)
                             .padding(.bottom, g.size.height * 0.15)
                     }
-                }.navigationBarTitle("", displayMode: .inline)
-                .navigationBarItems(
-                        leading: Img.topBranch.padding(.leading, -20),
-                        trailing: Image(systemName: "arrow.backward")
-                            .font(.system(size: 22))
-                            .foregroundColor(Clr.darkgreen)
-                            .padding()
-                            .onTapGesture {
-                                viewRouter.currentPage = .notification
-                            })
+                }
                 .onAppearAnalytics(event: .screen_load_name)
-            }
-        }
+        }.transition(.move(edge: .trailing))
     }
 }
 

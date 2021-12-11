@@ -338,6 +338,8 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - Amplitude (8.5.0)
+  - Amplitude-iOS (4.9.3)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -502,6 +504,8 @@ PODS:
   - PurchasesCoreSwift (3.12.8)
 
 DEPENDENCIES:
+  - Amplitude (~> 8.5.0)
+  - Amplitude-iOS (~> 4.9.3)
   - AppsFlyerFramework
   - Firebase
   - Firebase/DynamicLinks
@@ -514,6 +518,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - Amplitude
+    - Amplitude-iOS
     - AppAuth
     - AppsFlyerFramework
     - BoringSSL-GRPC
@@ -542,6 +548,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
+  Amplitude: ef9ed339ddd33c9183edf63fa4bbaa86cf873321
+  Amplitude-iOS: 122e026c44db8460e5efcf84859aa290a0ae9786
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   AppsFlyerFramework: 2303994c0bda3afa48eba93680ab5fe48f46cd94
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
@@ -568,6 +576,6 @@ SPEC CHECKSUMS:
   Purchases: 4e410d75f18b544aba8aa41ddc4bffbf8e787246
   PurchasesCoreSwift: 93fa64c1a70e7f493f54aba64e01ff42d1ed9109
 
-PODFILE CHECKSUM: 144380c4e8c5e04c5d3e4933234bbd2f4fa19ac0
+PODFILE CHECKSUM: 733c358b1c3f2ef144418e5531b84f3a96c32ca1
 
 COCOAPODS: 1.11.2

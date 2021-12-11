@@ -13,6 +13,7 @@ import CryptoKit
 import SwiftUI
 import AuthenticationServices
 import Combine
+import Amplitude
 
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
@@ -157,6 +158,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
             viewRouter.currentPage = .meditate
+        }
+        if isSignUp {
+            Amplitude.instance().setUserId(self.email)
         }
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }

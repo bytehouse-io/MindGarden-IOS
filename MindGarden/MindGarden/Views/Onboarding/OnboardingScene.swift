@@ -68,13 +68,13 @@ struct OnboardingScene: View {
                             // Fallback on earlier versions
                         }
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if index < 2 {
                                 withAnimation {
                                     index += 1
                                 }
                             } else {
                                 Analytics.shared.log(event: .onboarding_tapped_continue)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     viewRouter.currentPage = .experience
                                 }

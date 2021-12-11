@@ -163,7 +163,9 @@ struct ReviewScene: View {
                     }
                 }
             }
-        }.onAppearAnalytics(event: .screen_load_review)
+        }
+        .transition(.move(edge: .trailing))
+        .onAppearAnalytics(event: .screen_load_review)
             .onAppear {
                 if UserDefaults.standard.string(forKey: "reason") != nil {
                     switch UserDefaults.standard.string(forKey: "reason") {

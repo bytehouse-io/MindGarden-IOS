@@ -76,6 +76,7 @@ struct ExperienceScene: View {
         }.onDisappear {
             meditationModel.getFeaturedMeditation()
         }
+        .transition(.move(edge: .trailing))
     }
 
     struct SelectionRow: View {
