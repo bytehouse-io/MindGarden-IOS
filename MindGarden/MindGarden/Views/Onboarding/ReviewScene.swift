@@ -127,6 +127,7 @@ struct ReviewScene: View {
                             Analytics.shared.log(event: .review_tapped_tutorial)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
+                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                             withAnimation {
                                 fromPage = "onboarding2"
                                 viewRouter.currentPage = .pricing

@@ -202,13 +202,10 @@ struct Authentication: View {
                                 tappedSignIn = false
                                 viewRouter.currentPage = .onboarding
                             } else {
-                                viewRouter.currentPage = .notification
+                                viewRouter.currentPage = .profile
                             }
                         }
-                    }
-                                            .opacity(tappedSignOut ? 0 : 1)
-                                            .disabled(tappedSignOut)
-                    )
+                    })
                     .navigationBarBackButtonHidden(true)
                 }
             }.onDisappear {

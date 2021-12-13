@@ -107,6 +107,10 @@ enum AnalyticEvent {
     case store_tapped_success_modal_okay //
     case store_tapped_store_option //
     case store_tapped_badges_option //
+    case store_tapped_rate_app //
+    case store_tapped_refer_friend
+    case store_tapped_go_pro
+    case store_tapped_badge_tile
 
     //MARK: - Middle
     case screen_load_middle //
@@ -211,7 +215,7 @@ enum AnalyticEvent {
     case profile_tapped_refer //
     case profile_tapped_refer_friend //
     case profile_tapped_rate //
-
+    case profile_tapped_create_account
     //MARK: - Categories
     case screen_load_categories //
     case categories_tapped_unguided //
@@ -436,6 +440,10 @@ extension AnalyticEvent {
         case .store_tapped_success_modal_okay: return "store_tapped_success_modal_okay"
         case .store_tapped_store_option: return "store_tapped_store_option"
         case .store_tapped_badges_option: return "store_tapped_badges_option"
+        case .store_tapped_rate_app: return "store_tapped_rate_app"
+        case .store_tapped_refer_friend: return "store_tapped_refer_friend"
+        case .store_tapped_go_pro: return "store_tapped_go_pro"
+        case .store_tapped_badge_tile: return "store_tapped_badge_tile"
         case .screen_load_middle: return "screen_load_middle"
         case .middle_tapped_favorite: return "middle_tapped_favorite"
         case .middle_tapped_unfavorite: return "middle_tapped_unfavorite"
@@ -528,6 +536,7 @@ extension AnalyticEvent {
         case .profile_tapped_refer_friend: return "profile_tapped_refer_friend"
         case .profile_tapped_refer: return "profile_tapped_refer_friend"
         case .profile_tapped_rate: return "profile_tapped_rate"
+        case .profile_tapped_create_account: return "profile_tapped_create_account"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"

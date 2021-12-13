@@ -26,7 +26,7 @@ struct Home: View {
     @State private var showUpdateModal = false
     @State private var wentPro = false
     var bonusModel: BonusViewModel
-
+    @State private var coins = 0
 
     init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -63,7 +63,7 @@ struct Home: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(height: 15)
-                                        Text("\(userCoins)")
+                                        Text("\(coins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                     }.padding(.trailing, 20)
                                         .padding(.top, -10)
@@ -159,8 +159,8 @@ struct Home: View {
                                                     .minimumScaleFactor(0.05)
                                                 if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
                                                     Text("7 Day Course")
-                                                        .font(Font.mada(.regular, size: K.isPad() ? 26 : 14))
-                                                        .foregroundColor(Clr.gardenGray)
+                                                        .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
+                                                        .foregroundColor(Color.gray)
                                                 }
                                                 Spacer()
                                             }
@@ -296,13 +296,13 @@ struct Home: View {
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
-                    BonusModal(bonusModel: bonusModel,shown: $showModal)
-                        .offset(y: showModal ? 0 : g.size.height)
-                        .edgesIgnoringSafeArea(.top)
-                        .animation(.default, value: showModal)
+                        BonusModal(bonusModel: bonusModel, shown: $showModal, coins: $coins)
+                            .offset(y: showModal ? 0 : g.size.height)
+                            .edgesIgnoringSafeArea(.top)
+                            .animation(.default, value: showModal)
                         NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
-                        .offset(y: showUpdateModal ? 0 : g.size.height)
-                        .animation(.default, value: showUpdateModal)
+                            .offset(y: showUpdateModal ? 0 : g.size.height)
+                            .animation(.default, value: showUpdateModal)
                 }
             }
             .animation(nil)
@@ -360,7 +360,6 @@ struct Home: View {
                  gardenModel.updateSelf()
                  launchedApp = false
                  var num = UserDefaults.standard.integer(forKey: "shownFive")
-                 print(num)
                  num += 1
                  UserDefaults.standard.setValue(num, forKey: "shownFive")
                  model.getFeaturedMeditation()
@@ -384,9 +383,21 @@ struct Home: View {
                     }
 
                 }
+             coins = userCoins
+             self.runCounter(counter: $coins, start: 0, end: userCoins, speed: 0.025)
             }
             .onAppearAnalytics(event: .screen_load_home)
     }
+    func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {
+            counter.wrappedValue = start
+
+            Timer.scheduledTimer(withTimeInterval: speed, repeats: true) { timer in
+                counter.wrappedValue += 1
+                if counter.wrappedValue == end {
+                    timer.invalidate()
+                }
+            }
+        }
 
 }
 

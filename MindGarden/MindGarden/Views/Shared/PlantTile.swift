@@ -13,24 +13,35 @@ struct PlantTile: View {
     let plant: Plant
     let isShop: Bool
     var isOwned: Bool = false
+    var isBadge: Bool = false
 
     var body: some View {
             ZStack {
                 Rectangle()
-                    .foregroundColor(isOwned ? .gray.opacity(0.2) : Clr.darkWhite)
+                    .foregroundColor(isBadge ? isOwned ? Clr.darkWhite : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.darkWhite)
                     .frame(width: width * 0.35, height: height * 0.3)
                     .cornerRadius(15)
                     .overlay(RoundedRectangle(cornerRadius: 15)
                     .stroke(Clr.darkgreen, lineWidth: !isShop && plant == userModel.selectedPlant ? 3 : 0))
                     .padding()
                 VStack(alignment: isShop ? .leading : .center, spacing: 0) {
-                    isShop ? plant.packetImage
+                    isShop ?
+                   (!isBadge ?
+                    plant.packetImage
                         .renderingMode(.original)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: width * 0.30, height: height * 0.18)
                         .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
-                        .opacity(isOwned ? 0.4 : 1)
+                        .opacity(isOwned ? 0.4 : 1) :
+                    plant.coverImage
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: width * 0.30, height: height * 0.18)
+                        .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
+                        .opacity(1)
+                   )
                         : plant.coverImage
                         .renderingMode(.original)
                         .resizable()
@@ -42,20 +53,35 @@ struct PlantTile: View {
                         .font(Font.mada(.bold, size: 20))
                         .foregroundColor(Clr.black1)
                         .opacity(isOwned ? 0.4 : 1)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.05)
+                        .frame(width: width * 0.35 * 0.85, alignment: .leading)
+                        .padding(.leading, isBadge ? 3 : 0)
                     if isShop {
-                        if isOwned {
+                        if isOwned && !isBadge{
                             Text("Bought")
                                 .font(Font.mada(.bold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .opacity(0.4)
                         } else {
-                            HStack {
-                                Img.coin
-                                    .renderingMode(.original)
-                                Text(String(plant.price))
-                                    .font(Font.mada(.bold, size: 20))
+                            HStack(spacing: isBadge ? 0 : 5) {
+                                if isBadge {
+                                    if userModel.ownedPlants.contains(plant) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(Clr.brightGreen)
+                                    } else {
+                                        Image(systemName: "lock.fill")
+                                            .renderingMode(.original)
+                                    }
+                                } else {
+                                    Img.coin
+                                        .renderingMode(.original)
+                                }
+
+                                Text(isBadge ? Plant.badgeDict[plant.price] ?? "" : String(plant.price))
+                                    .font(Font.mada(.semiBold, size: isBadge ? 16 : 20))
                                     .foregroundColor(Clr.black2)
-                            }
+                            }.frame(width: width * 0.35 * 0.85, alignment: .leading)
                         }
                     } else {
                         Capsule()

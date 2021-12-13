@@ -51,8 +51,7 @@ struct OnboardingScene: View {
                                                     .minimumScaleFactor(0.05)
                                                     .font(Font.mada(.medium, size: 18))
                                                     .foregroundColor(Clr.black1)
-                                                    .lineSpacing(10)
-                                            }
+                                                    .lineSpacing(10)                                             }
                                             .multilineTextAlignment(.leading)
                                             .offset(y: -20)
                                             .padding(10)

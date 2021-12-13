@@ -189,6 +189,18 @@ class GardenViewModel: ObservableObject {
                     self.getRecentMeditations()
                 }
             }
+        } else {
+            if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
+                self.grid = gridd
+            }
+            if let allTimeMins = UserDefaults.standard.value(forKey: "allTimeMinutes") as? Int {
+                self.allTimeMinutes = allTimeMins
+            }
+            if let allTimeSess = UserDefaults.standard.value(forKey: "allTimeSessions") as? Int {
+                self.allTimeSessions = allTimeSess
+            }
+            self.populateMonth()
+            self.getRecentMeditations()
         }
     }
 
@@ -250,9 +262,9 @@ class GardenViewModel: ObservableObject {
             }
         } else {
             UserDefaults.standard.setValue(self.allTimeMinutes, forKey: "allTimeMinutes")
-            UserDefaults.standard.setValue(self.allTimeSessions, forKey: "allTimeMinutes")
+            UserDefaults.standard.setValue(self.allTimeSessions, forKey: "allTimeSessions")
             UserDefaults.standard.setValue(userCoins, forKey: "coins")
-            if var gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
+            if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
                 self.grid = gridd
             }
             if let year = self.grid[Date().get(.year)] {
@@ -274,6 +286,11 @@ class GardenViewModel: ObservableObject {
             } else {
                 self.grid[Date().get(.year)] = [Date().get(.month): [Date().get(.day): [key: [saveValue]]]]
             }
+        }
+        UserDefaults.standard.setValue(self.grid, forKey: "grid")
+        self.populateMonth()
+        if key == "sessions" {
+            self.getRecentMeditations()
         }
     }
 }

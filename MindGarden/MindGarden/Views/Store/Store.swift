@@ -15,28 +15,37 @@ struct Store: View {
     var isShop: Bool = true
     @Binding var showPlantSelect: Bool
     @State var isStore = false
-    
+    @State private var showTip = false
     var body: some View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
                 ScrollView(showsIndicators: false) {
-                    HStack(spacing: 25) {
-                        Spacer()
-                        Button {
-                            Analytics.shared.log(event: .store_tapped_store_option)
-                            isStore = true
-                        } label: {
-                            MenuButton(title: "Store", isStore: isStore)
-                        }
-                        Button {
-                            Analytics.shared.log(event: .store_tapped_badges_option)
-                            isStore = false
-                        } label: {
-                            MenuButton(title: "Badges", isStore: !isStore)
-                        }
-                        Spacer()
-                    }.padding([.horizontal, .top])
+                    if isShop {
+                        HStack(spacing: 25) {
+                            Spacer()
+                            Button {
+                                Analytics.shared.log(event: .store_tapped_store_option)
+                                withAnimation {
+                                    isStore = true
+                                }
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            } label: {
+                                MenuButton(title: "Store", isStore: isStore)
+                            }
+                            Button {
+                                Analytics.shared.log(event: .store_tapped_badges_option)
+                                withAnimation {
+                                    isStore = false
+                                }
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            } label: {
+                                MenuButton(title: "Badges", isStore: !isStore)
+                            }
+                            Spacer()
+                        }.padding(.top, 50)
+                        .padding(.bottom, 0)
+                    }
                     HStack(alignment: .top, spacing: 20) {
                         if K.isPad() {
                             Spacer()
@@ -58,35 +67,55 @@ struct Store: View {
                                             .padding(.leading)
                                     }
                                 }
-                                Text(isShop ? "🌻 Seed\nShop" : "🌻 Plant Select")
+                                Text(isShop ? !isStore ? "🏆🎖🥇\nBadges" : "🌻 Seed\nShop" : "🌻 Plant Select")
                                     .font(Font.mada(.bold, size: 32))
                                     .minimumScaleFactor(0.005)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Clr.black1)
-                                    .padding(isShop ? 25 : 10)
+                                    .padding(isShop ? 15 : 10)
                             }
-                            ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
-                            { plant in
-                                if userModel.ownedPlants.contains(plant) && isShop {
-                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                } else {
+                            if isShop && !isStore {
+                                ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
                                     Button {
+                                        Analytics.shared.log(event: .store_tapped_badge_tile)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if isShop {
-                                            userModel.willBuyPlant = plant
-                                            withAnimation {
-                                                showModal = true
-                                            }
-                                        } else {
-                                            UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                            userModel.selectedPlant = plant
+                                        userModel.willBuyPlant = plant
+                                        withAnimation {
+                                            showModal = true
                                         }
                                     } label: {
-                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                        if userModel.ownedPlants.contains(plant) {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
+                                        } else {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
+                                        }
                                     }.buttonStyle(NeumorphicPress())
                                 }
+                            } else {
+                                ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
+                                { plant in
+                                    if userModel.ownedPlants.contains(plant) && isShop {
+                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                    } else {
+                                        Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            if isShop {
+                                                userModel.willBuyPlant = plant
+                                                withAnimation {
+                                                    showModal = true
+                                                }
+                                            } else {
+                                                UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                userModel.selectedPlant = plant
+                                            }
+                                        } label: {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                        }.buttonStyle(NeumorphicPress())
+                                    }
+                                }
                             }
+
                         }
                         VStack {
                             HStack {
@@ -99,29 +128,49 @@ struct Store: View {
                                     .font(Font.mada(.semiBold, size: 24))
                                     .foregroundColor(Clr.black1)
                             }.padding(.bottom, -10)
-                            ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
-                                    : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
-                                if userModel.ownedPlants.contains(plant) && isShop {
-                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                } else {
+                            if isShop && !isStore {
+                                ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count/2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
                                     Button {
+                                        Analytics.shared.log(event: .store_tapped_badge_tile)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if isShop {
-                                            Analytics.shared.log(event: .store_tapped_plant_tile)
-                                            userModel.willBuyPlant = plant
-                                            withAnimation {
-                                                showModal = true
-                                            }
-                                        } else {
-                                            UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                            userModel.selectedPlant = plant
-                                            Analytics.shared.log(event: .home_selected_plant)
+                                        userModel.willBuyPlant = plant
+                                        withAnimation {
+                                            showModal = true
                                         }
                                     } label: {
-                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                        if userModel.ownedPlants.contains(plant) {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
+                                        } else {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
+                                        }
                                     }.buttonStyle(NeumorphicPress())
                                 }
+                            } else {
+                                ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
+                                        : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
+                                    if userModel.ownedPlants.contains(plant) && isShop {
+                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                    } else {
+                                        Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            if isShop {
+                                                Analytics.shared.log(event: .store_tapped_plant_tile)
+                                                userModel.willBuyPlant = plant
+                                                withAnimation {
+                                                    showModal = true
+                                                }
+                                            } else {
+                                                UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                userModel.selectedPlant = plant
+                                                Analytics.shared.log(event: .home_selected_plant)
+                                            }
+                                        } label: {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                        }.buttonStyle(NeumorphicPress())
+                                    }
+                                }
                             }
+
                         }
                         if K.isPad() {
                             Spacer()
@@ -140,7 +189,18 @@ struct Store: View {
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
+                .alert(isPresented: $showTip) {
+                    Alert(title: Text("💡 Quick Tip"), message:
+                            Text("You can click on badges and open them up")
+                          , dismissButton: .default(Text("Got it!")))
+                }
         }.onAppearAnalytics(event: .screen_load_store)
+            .onAppear {
+                showTip = !UserDefaults.standard.bool(forKey: "showTip")
+            }
+            .onDisappear {
+                UserDefaults.standard.setValue(true, forKey: "showTip")
+            }
     }
 
     struct SuccessModal: View {

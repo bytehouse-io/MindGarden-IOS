@@ -18,6 +18,7 @@ var userWentPro = false
 struct PricingView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State private var selectedPrice = ""
     @State private var packagesAvailableForPurchase = [Purchases.Package]()
     @State private var monthlyPrice = 0.0
@@ -55,7 +56,8 @@ struct PricingView: View {
                                             case "home": viewRouter.currentPage = .meditate
                                             case "profile": viewRouter.currentPage = .profile
                                             case "onboarding": viewRouter.currentPage = .garden
-                                            case "onboarding2": viewRouter.currentPage = .authentication
+                                            case "store": viewRouter.currentPage = .shop
+                                            case "onboarding2": viewRouter.currentPage = .meditate
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
                                             default: viewRouter.currentPage = .meditate
@@ -396,6 +398,8 @@ struct PricingView: View {
         }
     }
     private func userIsPro() {
+        userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
+        userModel.buyPlant(unlockedStrawberry: true)
         UserDefaults.standard.setValue(true, forKey: "isPro")
         if fromPage != "onboarding2" {
             userWentPro = true
@@ -412,7 +416,7 @@ struct PricingView: View {
                 }
             }
         } else {
-            viewRouter.currentPage = .authentication
+            viewRouter.currentPage = .meditate
         }
     }
     private func logEvent(cancelled: Bool = false) -> String {
@@ -449,6 +453,8 @@ struct PricingView: View {
                 event = event + "Locked_Meditation"
             } else if fromPage == "middle" {
                 event = event + "Middle_Locked"
+            } else if fromPage == "store" {
+                event = event + "fromStore"
             }
             return event
         }

@@ -27,11 +27,24 @@ struct CategoriesScene: View {
     }
 
     var body: some View {
-        NavigationView {
             GeometryReader { g in
                 ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 VStack(alignment: .center) {
+                    if !isSearch {
+                        HStack {
+                            backButton
+                            Spacer()
+                            Text("Categories")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.mada(.bold, size: 20))
+                            Spacer()
+                                backButton
+                                    .opacity(0)
+                                    .disabled(true)
+                        }.padding([.top, .horizontal])
+                    }
+
                     if isSearch {
                         //Search bar
                         HStack {
@@ -52,7 +65,7 @@ struct CategoriesScene: View {
                                 .background(Clr.darkWhite)
                                 .padding(.trailing)
                                 .neoShadow()
-                        }.padding(.top, -(g.size.height * 0.025))
+                        }.padding(.top)
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
                         if !isSearch {
@@ -65,7 +78,7 @@ struct CategoriesScene: View {
                                 CategoryButton(category: .growth, selected: $model.selectedCategory)
                                 CategoryButton(category: .sleep, selected: $model.selectedCategory)
                                 CategoryButton(category: .courses, selected: $model.selectedCategory)
-                            }.padding()
+                            }.padding([.horizontal, .bottom])
                         }
                     }
                     ScrollView(showsIndicators: false) {
@@ -105,10 +118,8 @@ struct CategoriesScene: View {
                     Spacer()
                 }
                 .background(Clr.darkWhite)
-                }.navigationBarTitle(isSearch ? "" : "Categories", displayMode: .inline)
-                .navigationBarItems(leading: isSearch ? AnyView(EmptyView()) : AnyView(backButton))
+                }
             }
-        }
         .transition(.move(edge: .bottom))
         .onAppear {
             model.selectedCategory = .all

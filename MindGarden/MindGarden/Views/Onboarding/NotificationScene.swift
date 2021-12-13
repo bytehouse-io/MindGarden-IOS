@@ -124,7 +124,11 @@ struct NotificationScene: View {
                                                         if fromSettings {
                                                             presentationMode.wrappedValue.dismiss()
                                                         } else {
-                                                            viewRouter.currentPage = .name
+                                                            if tappedTurnOn {
+                                                                viewRouter.currentPage = .review
+                                                            } else {
+                                                                viewRouter.currentPage = .name
+                                                            }
                                                         }
                                                         
                                                     }

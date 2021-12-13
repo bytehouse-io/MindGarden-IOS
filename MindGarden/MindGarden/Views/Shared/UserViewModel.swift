@@ -49,6 +49,7 @@ class UserViewModel: ObservableObject {
         if let coins = UserDefaults.standard.value(forKey: "coins") as? Int {
             userCoins = coins
         }
+
         
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
@@ -78,8 +79,25 @@ class UserViewModel: ObservableObject {
                     }
                 }
             }
+        } else {
+            if let plants = UserDefaults.standard.value(forKey: K.defaults.plants) as? [String] {
+                self.ownedPlants = Plant.plants.filter({ plant in
+                    return plants.contains(where: { str in
+                        plant.title == str
+                    })
+                })
+                let badgePlants = Plant.badgePlants.filter({ plant in
+                    return plants.contains(where: { str in
+                        plant.title == str
+                    })
+                })
+                    self.ownedPlants += badgePlants
+            }
+            if let joinDate = UserDefaults.standard.string(forKey: "joinDate") {
+                self.joinDate = joinDate
+            }
         }
-        
+
         //set selected plant
         selectedPlant = Plant.plants.first(where: { plant in
             return plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
@@ -159,8 +177,10 @@ class UserViewModel: ObservableObject {
     }
 
     func buyPlant(isUnlocked: Bool = false, unlockedStrawberry: Bool = false) {
-        userCoins -= willBuyPlant?.price ?? 0
         if let plant = willBuyPlant {
+            if !unlockedStrawberry {
+                userCoins -= willBuyPlant?.price ?? 0
+            }
             ownedPlants.append(plant)
             if !isUnlocked {
                 if !unlockedStrawberry {
@@ -188,6 +208,13 @@ class UserViewModel: ObservableObject {
                         }
                     }
                 }
+            } else {
+                if let plants = UserDefaults.standard.value(forKey: K.defaults.plants) as? [String] {
+                    var newPlants = plants
+                    newPlants.append(plant.title)
+                    UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
+                }
+                UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
             }
         }
     }

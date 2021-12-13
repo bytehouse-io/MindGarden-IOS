@@ -92,7 +92,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             if (error != nil) {
                                                 alertError = true
                                                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
-                                                print(error?.localizedDescription ?? "high roe")
                                                 isLoading = false
                                                 return
                                             }
@@ -101,12 +100,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                if isSignUp {
-                                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
-                                                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                                                    }
-                                                    UserDefaults.standard.setValue("nature", forKey: "sound")
-                                                }
+                                                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                                 goToHome()
                                             }
                                         })
@@ -131,14 +125,12 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                                UserDefaults.standard.setValue("nature", forKey: "sound")
                                                 goToHome()
                                             }
                                         })
                                     }
                                     return
                                 }
-                                print("\(String(describing: Auth.auth().currentUser?.uid)) bruh")
                             default:
                                 break
 
@@ -155,12 +147,10 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
 
     private func goToHome() {
+        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
             viewRouter.currentPage = .meditate
-        }
-        if isSignUp {
-            Amplitude.instance().setUserId(self.email)
         }
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }
@@ -232,14 +222,9 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 } else {
                     if googleIsNew {
                         createUser()
-                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
-                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                        }
                     } else {
-                        UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                     }
-                    UserDefaults.standard.setValue("nature", forKey: "sound")
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                         goToHome()
@@ -287,12 +272,6 @@ extension AuthenticationViewModel {
             alertError = false
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                if isSignUp {
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
-                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                    }
-                }
-                UserDefaults.standard.setValue("nature", forKey: "sound")
                 goToHome()
             }
         }
@@ -315,7 +294,6 @@ extension AuthenticationViewModel {
                         UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                     }
                 } else {
-                    UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
                 UserDefaults.standard.setValue("nature", forKey: "sound")
@@ -337,7 +315,6 @@ extension AuthenticationViewModel {
     }
 
     func createUser() {
-        print("creating user")
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
         var date = dateFormatter.string(from: Date())
@@ -387,13 +364,24 @@ extension AuthenticationViewModel {
 //                ])
             }
         }
+        var thisGrid = [String: [String:[String:[String:Any]]]]()
+        if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
+            thisGrid = gridd
+        }
+
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 
-                "coins": 50,
-                "joinDate": formatter.string(from: Date()),
-                "totalSessions": 0,
-                "totalMins": 0,
+                "coins": UserDefaults.standard.string(forKey: "coins") ?? 50,
+                "joinDate": UserDefaults.standard.string(forKey: "joinDate") ?? "",
+                "totalSessions": UserDefaults.standard.integer(forKey: "allTimeSessions"),
+                "totalMins": UserDefaults.standard.integer(forKey: "allTimeMinutes"),
+                "gardenGrid": thisGrid,
+                K.defaults.lastStreakDate: UserDefaults.standard.string(forKey: K.defaults.lastStreakDate) ?? "",
+                "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
+                K.defaults.seven: UserDefaults.standard.integer(forKey: K.defaults.seven),
+                K.defaults.thirty: UserDefaults.standard.integer(forKey: K.defaults.thirty),
+                K.defaults.dailyBonus: UserDefaults.standard.string(forKey: K.defaults.dailyBonus) ?? "", 
                 K.defaults.plants: "White Daisy",
                 "referredStack": "\(date)+0"
             ]) { (error) in

@@ -27,6 +27,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
+            UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
+            UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
+            UserDefaults.standard.setValue("nature", forKey: "sound")
+            UserDefaults.standard.setValue(50, forKey: "coins")
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM dd,yyyy"
+            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                 if success {
                     Analytics.shared.log(event: .onboarding_notification_on)

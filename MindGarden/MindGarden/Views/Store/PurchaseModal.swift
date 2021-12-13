@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct PurchaseModal: View {
     @Binding var shown: Bool
     @Binding var showConfirm: Bool
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
 //    var img: Img = Image()
+
 
     var body: some View {
         GeometryReader { g in
@@ -20,7 +23,7 @@ struct PurchaseModal: View {
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center) {
-                        HStack {
+                        HStack(alignment: .top) {
                             Button {
                                 withAnimation {
                                     shown = false
@@ -34,7 +37,7 @@ struct PurchaseModal: View {
                             Spacer()
                             Text(userModel.willBuyPlant?.title ?? "")
                                 .font(Font.mada(.bold, size: 30))
-                                .lineLimit(2)
+                                .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .foregroundColor(Clr.black1)
                                 .padding()
@@ -54,7 +57,7 @@ struct PurchaseModal: View {
                                 .foregroundColor(Clr.black1)
                         }.padding(.horizontal, 40)
                         .minimumScaleFactor(0.05)
-                        .lineLimit(5)
+                        .lineLimit(6)
                         HStack(spacing: 10){
 //                            userModel.willBuyPlant?.title == "Aloe" || userModel.willBuyPlant?.title == "Monstera" ?
 //                            Img.pot
@@ -77,30 +80,66 @@ struct PurchaseModal: View {
                                 .frame(height: g.size.width * 0.2)
                         }.padding(.horizontal, 10)
                         Button {
-                            Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
-                            if userCoins >= userModel.willBuyPlant?.price ?? 0 {
-                                withAnimation {
-                                    showConfirm = true
+                            if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
+                                switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
+                                case "Rate the app":
+                                    if !UserDefaults.standard.bool(forKey: "tappedRate") {
+                                        Analytics.shared.log(event: .store_tapped_rate_app)
+                                        withAnimation {
+                                            if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+                                                UserDefaults.standard.setValue(true, forKey: "tappedRate")
+                                                userModel.buyPlant(unlockedStrawberry: true)
+                                            }
+                                        }
+                                    }
+                                case "Refer a friend":
+                                    Analytics.shared.log(event: .store_tapped_refer_friend)
+                                    withAnimation {
+                                        viewRouter.currentPage = .profile
+                                    }
+                                case "Become a pro user":
+                                    if !UserDefaults.standard.bool(forKey: "isPro") {
+                                        Analytics.shared.log(event: .store_tapped_go_pro)
+                                        withAnimation {
+                                            fromPage = "store"
+                                            viewRouter.currentPage = .pricing
+                                        }
+                                    }
+
+                                default: break
+                                }
+                            } else {
+                                Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
+                                if userCoins >= userModel.willBuyPlant?.price ?? 0 {
+                                    withAnimation {
+                                        showConfirm = true
+                                    }
                                 }
                             }
                         } label: {
                             Capsule()
-                                .fill(Clr.darkWhite)
-                                .frame(width: g.size.width * 0.25, height: g.size.height * 0.045)
+                                .fill(Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? Clr.darkgreen : Clr.darkWhite)
+                                .frame(width: g.size.width * (Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 0.55 : 0.25), height: g.size.height * 0.05)
                                 .neoShadow()
                                 .padding()
                                 .overlay(HStack{
-                                    Img.coin
-                                        .renderingMode(.original)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: g.size.width * 0.05, height: g.size.width * 0.05)
-                                    Text("\(userModel.willBuyPlant?.price ?? 0)")
-                                        .font(Font.mada(.bold, size: 20))
-                                        .foregroundColor(Clr.black1)
+                                    if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
+                                        Text("\(Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] ?? "" )")
+                                            .font(Font.mada(.bold, size: 20))
+                                            .foregroundColor(Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? .white : Clr.black1)
+                                    } else {
+                                        Img.coin
+                                            .renderingMode(.original)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: g.size.width * 0.05, height: g.size.width * 0.05)
+                                        Text("\(userModel.willBuyPlant?.price ?? 0)")
+                                            .font(Font.mada(.bold, size: Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 18 : 20))
+                                            .foregroundColor( Clr.black1)
+                                    }
                                 })
                         }
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.70, alignment: .center)
+                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.70, alignment: .top)
                     .background(Clr.darkWhite)
                     .padding(.bottom)
                     .cornerRadius(12)

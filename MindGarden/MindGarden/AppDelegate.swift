@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialize SDK
         Amplitude.instance().initializeApiKey("76399802bdea5c85e4908f0a1b922bda")
         // Set userId
+        Amplitude.instance().setUserId(UUID().uuidString)
         // Log an event
 
         sendLaunch()

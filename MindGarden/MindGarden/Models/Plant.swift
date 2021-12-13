@@ -41,4 +41,25 @@ struct Plant: Hashable {
         //head
         Plant(title: "Aloe", price: 160, selected: false, description: "Aloe sometimes described as a “wonder plant,” is a short-stemmed shrub. It is grown commercially for the health and moisturizing benefits found inside its leaves. Cleopatra applied aloe gel to her body as part of her beauty regimen!", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.aloeHead, badge: Img.aloeBadge),
     ]
+
+    static var badgePlants: [Plant] = [
+        // 7 day
+        Plant(title: "Red Mushroom", price: 0, selected: false, description: "Also known as the Amanita muscaria, is one of the most recognizable and widely encountered mushroom in popular culture and used in the game Mario.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        // 30 day
+        Plant(title: "Cherry Blossoms", price: 1, selected: false, description: "Cherry Blossoms also known as sakura in Japan, are the small, delicate pink flowers produced by cherry blossom trees. The springtime bloom is a lavish spectacle but remarkably brief; after only two weeks, they drop to the ground and wither, falling like snow with the ebb and flow of the winds.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        // rate the app
+        Plant(title: "Camellia", price: 2, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. In Japan the camellia flower is called “Tsubaki” and symbolizes the divine. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        //pro member
+        Plant(title: "Bonsai Tree", price: 3, selected: false, description: "A bonsai tree is a shrub which has been grown in a way which gives the impression of being a full-sized, mature tree. They originated from China over 1000 years ago and symbolize  harmony, balance, patience, or even luck", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        // refer a friend
+        Plant(title: "Venus Fly Trap", price: 4, selected: false, description: "The Venus flytrap is a carnivorous plant native to subtropical wetlands on the East Coast of the United States in North Carolina and South Carolina. It gets some of its nutrients from the soil, but to supplement its diet, the plant eats insects and arachnids!", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+
+    ]
+    static var badgeDict: [Int: String] = [
+        3: "Become a pro user",
+        4: "Refer a friend",
+        2: "Rate the app",
+        0: "7 Day Streak",
+        1: "30 Day Streak"
+    ]
 }

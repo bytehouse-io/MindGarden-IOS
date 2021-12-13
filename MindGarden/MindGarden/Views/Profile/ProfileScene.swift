@@ -353,8 +353,15 @@ struct ProfileScene: View {
                                 if selection == .referrals {
                                     Button {
                                         Analytics.shared.log(event: .profile_tapped_refer_friend)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        actionSheet()
+                                        if let _ = Auth.auth().currentUser?.email {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            actionSheet()
+                                        } else {
+                                            withAnimation {
+                                                tappedSignIn = false
+                                                viewRouter.currentPage = .authentication
+                                            }
+                                        }
                                     } label: {
                                         Capsule()
                                             .fill(Clr.darkgreen)
@@ -366,23 +373,33 @@ struct ProfileScene: View {
                                     .frame(width: abs(width - 100), height: 50, alignment: .center)
                                     .padding(.top, 80)
                                     if !tappedRate {
-                                            Text("⭐️ Rate the app for an extra free week of Pro")
+                                            Text("⭐️ Rate the app for 100 free coins!")
                                                 .foregroundColor(Clr.darkgreen)
                                                 .font(Font.mada(.bold, size: 20))
                                                 .minimumScaleFactor(0.5)
                                                 .lineLimit(2)
                                                 .padding(.top)
-                                                .frame(width: abs(width - 100))
+                                                .frame(width: abs(width - 100), alignment: .leading)
                                         Button {
                                             Analytics.shared.log(event: .profile_tapped_rate)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                                                let plusIndex = userModel.referredStack.indexInt(of: "+") ?? 0
-                                                refDate =  userModel.referredStack.substring(to: plusIndex)
-                                                numRefs = Int(userModel.referredStack.substring(from: plusIndex + 1)) ?? 0
+                                                userCoins += 100
+                                                UserDefaults.standard.setValue(userCoins, forKey: "coins")
+                                                UserDefaults.standard.setValue(true, forKey: "tappedRate")
+                                                if let email = Auth.auth().currentUser?.email {
+                                                    Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                                                        K.defaults.coins: userCoins
+                                                    ]) { (error) in
+                                                        if let e = error {
+                                                            print("There was a issue saving data to firestore \(e) ")
+                                                        } else {
+                                                            print("Succesfully saved user model")
+                                                        }
+                                                    }
+                                                }
                                             }
                                             tappedRate = true
-                                            userModel.updateReffered(refDate: refDate, numRefs: numRefs)
                                         } label: {
                                             Capsule()
                                                 .fill(Clr.yellow)
@@ -399,24 +416,42 @@ struct ProfileScene: View {
                                         .padding(.top, 10)
                                     }
                                 } else {
+                                    if let _ = Auth.auth().currentUser?.email {} else {
+                                        Text("Save your progress")
+                                            .foregroundColor(Clr.black2).font(Font.mada(.semiBold, size: 20))
+                                            .padding(.top, K.isSmall() ? 5 : 15)
+                                    }
                                     Button {
-                                        Analytics.shared.log(event: .profile_tapped_logout)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        profileModel.signOut()
-                                        UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
-                                        UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
-                                        UserDefaults.standard.setValue(false, forKey: "isPro")
-                                        withAnimation {
-                                            viewRouter.currentPage = .authentication
+                                        if let _ = Auth.auth().currentUser?.email {
+                                            Analytics.shared.log(event: .profile_tapped_logout)
+                                            profileModel.signOut()
+                                            // if user signs out -> send them to meditate page
+                                            withAnimation {
+                                                viewRouter.currentPage = .onboarding
+                                            }
+                                        } else {
+                                            Analytics.shared.log(event: .profile_tapped_create_account)
+                                            withAnimation {
+                                                viewRouter.currentPage = .authentication
+                                            }
                                         }
                                     } label: {
-                                        Capsule()
-                                            .fill(Clr.redGradientBottom)
-                                            .neoShadow()
-                                            .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                        if let _ = Auth.auth().currentUser?.email {
+                                            Capsule()
+                                                .fill(Clr.redGradientBottom)
+                                                .neoShadow()
+                                                .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                        } else {
+                                            Capsule()
+                                                .fill(Clr.darkgreen)
+                                                .neoShadow()
+                                                .overlay(
+                                                    Text("Create an account").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                        }
                                     }
                                     .frame(width: abs(width - 100), height: 50, alignment: .center)
-                                    .padding(.top, K.isSmall() ? 5 : 15)
+                                    .padding(.top, 5)
                                 }
                                 Spacer()
                             }.navigationBarTitle("\(userModel.name)", displayMode: .inline)

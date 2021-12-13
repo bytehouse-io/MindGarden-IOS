@@ -10,6 +10,7 @@ import SwiftUI
 struct BonusModal: View {
     @ObservedObject var bonusModel: BonusViewModel
     @Binding var shown: Bool
+    @Binding var coins: Int
 
     var body: some View {
         GeometryReader { g in
@@ -23,6 +24,7 @@ struct BonusModal: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
+                                    coins += 5
                                 }
                             } label: {
                                 Image(systemName: "xmark")
@@ -77,6 +79,7 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.sevenDayProgress >= 1.0 {
+                                            coins += 30
                                             Analytics.shared.log(event: .home_claim_seven)
                                             bonusModel.saveSeven()
                                         }
@@ -93,6 +96,7 @@ struct BonusModal: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.thirtyDayProgress >= 1.0 {
                                             Analytics.shared.log(event: .home_claim_thirty)
+                                            coins += 100
                                             bonusModel.saveThirty()
                                         }
                                     } label: {
@@ -214,7 +218,7 @@ struct BonusModal: View {
 struct BonusModal_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            BonusModal(bonusModel: BonusViewModel(userModel: UserViewModel()), shown: .constant(true))
+            BonusModal(bonusModel: BonusViewModel(userModel: UserViewModel()), shown: .constant(true), coins: .constant(0))
         }
     }
 }

@@ -40,7 +40,6 @@ class BonusViewModel: ObservableObject {
     private func createDailyCountdown() {
         self.bonusTimer?.invalidate()
         self.bonusTimer = nil
-        print("creating Daily Countdown", dailyInterval)
         dailyInterval = ""
         var interval = TimeInterval()
 
@@ -61,10 +60,12 @@ class BonusViewModel: ObservableObject {
     }
 
     func saveDaily(plusCoins: Int) {
+        userCoins += plusCoins
+        dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
+        createDailyCountdown()
+        UserDefaults.standard.setValue(self.dailyBonus, forKey: K.defaults.dailyBonus)
+        UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
         if let email = Auth.auth().currentUser?.email {
-            userCoins += plusCoins
-            dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
-            createDailyCountdown()
                 self.db.collection(K.userPreferences).document(email).updateData([
                     //TODO turn this into userdefault
                     K.defaults.dailyBonus: self.dailyBonus,
@@ -76,13 +77,15 @@ class BonusViewModel: ObservableObject {
                         print("Succesfully saved daily", self.dailyBonus)
                     }
                 }
-            }
+        }
     }
 
     func saveSeven() {
+        userCoins += 30
+        sevenDay += 1
+        UserDefaults.standard.setValue(sevenDay, forKey: K.defaults.seven)
+        UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
         if let email = Auth.auth().currentUser?.email {
-            userCoins += 30
-            sevenDay += 1
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.seven: sevenDay,
                 K.defaults.coins: userCoins
@@ -94,13 +97,17 @@ class BonusViewModel: ObservableObject {
                     self.calculateProgress()
                 }
             }
+        } else {
+            self.calculateProgress()
         }
     }
 
     func saveThirty() {
+        userCoins += 100
+        thirtyDay += 1
+        UserDefaults.standard.setValue(thirtyDay, forKey: K.defaults.thirty)
+        UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
         if let email = Auth.auth().currentUser?.email {
-            userCoins += 100
-            thirtyDay += 1
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.thirty: thirtyDay,
                 K.defaults.coins: userCoins
@@ -112,6 +119,8 @@ class BonusViewModel: ObservableObject {
                     self.calculateProgress()
                 }
             }
+        } else {
+            self.calculateProgress()
         }
     }
 
@@ -144,45 +153,18 @@ class BonusViewModel: ObservableObject {
                         self.userModel.checkIfPro()
                     }
 
-                    if let plus = self.streak?.firstIndex(of: "+") {
-                        self.streakNumber = Int(self.streak![..<plus])!
-                        let plusOffset = self.streak!.index(plus, offsetBy: 1)
-                        lastStreakDate = String(self.streak![plusOffset...])
-                        if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
-                            if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
-                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
-                                NotificationHelper.addOneDay()
-                            }
-                            if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
-                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
-                                NotificationHelper.addThreeDay()
-                            }
-                            self.streakNumber += 1
-                            lastStreakDate = formatter.string(from: Date())
-                        } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
-                            self.streakNumber = 1
-                            lastStreakDate = formatter.string(from: Date())
-                            self.db.collection(K.userPreferences).document(email).updateData([
-                                "sevenDay": 0,
-                                "thirtyDay": 0
-                            ]) { (error) in
-                                if let e = error {
-                                    print("There was a issue saving data to firestore \(e) ")
-                                } else {
-                                    print("Succesfully saved seven & thirty progress")
-                                }
-                            }
-                        } // else no need to update
-                        self.calculateProgress()
-                    } else {
-                        lastStreakDate  = formatter.string(from: Date())
-                        self.streakNumber = 1
+                    lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
+                    if self.streakNumber == 7 {
+                        if !self.userModel.ownedPlants.contains(where: { p in p.title == "Red Mushroom" }) {
+                            self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Red Mushroom" })
+                            self.userModel.buyPlant(unlockedStrawberry: true)
+                        }
+                    } else if self.streakNumber == 30 {
+                        if !self.userModel.ownedPlants.contains(where: { p in p.title == "Cherry Blossoms" }) {
+                            self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Cherry Blossoms" })
+                            self.userModel.buyPlant(unlockedStrawberry: true)
+                        }
                     }
-
-                    if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
-                        self.createDailyCountdown()
-                    }
-
 
                     self.db.collection(K.userPreferences).document(email).updateData([
                         "streak": String(self.streakNumber) + "+" + lastStreakDate
@@ -196,7 +178,74 @@ class BonusViewModel: ObservableObject {
 
                 }
             }
+        } else {
+            self.totalBonuses = 0
+            if let lSD = UserDefaults.standard.value(forKey: K.defaults.lastStreakDate) as? String {
+                lastStreakDate = lSD
+            }
+            if let streak = UserDefaults.standard.value(forKey: "streak") as? String {
+                self.streak = streak
+            }
+            if let seven = UserDefaults.standard.value(forKey: K.defaults.seven) as? Int {
+                self.sevenDay = seven
+            }
+            if let thirty = UserDefaults.standard.value(forKey: K.defaults.thirty) as? Int {
+                self.thirtyDay = thirty
+            }
+            if let dailyBonus = UserDefaults.standard.value(forKey: K.defaults.dailyBonus) as? String {
+                self.dailyBonus = dailyBonus
+            }
+            lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
+            UserDefaults.standard.setValue((String(self.streakNumber) + "+" + lastStreakDate), forKey: "streak")
         }
+    }
+
+    private func calculateStreak(lastStreakDate: String = "") -> String {
+        var lastStreakDate = lastStreakDate
+        if let plus = self.streak?.firstIndex(of: "+") {
+            self.streakNumber = Int(self.streak![..<plus])!
+            let plusOffset = self.streak!.index(plus, offsetBy: 1)
+            lastStreakDate = String(self.streak![plusOffset...])
+            if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
+                if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+                    NotificationHelper.addOneDay()
+                }
+                if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
+                    NotificationHelper.addThreeDay()
+                }
+                self.streakNumber += 1
+                lastStreakDate = formatter.string(from: Date())
+            } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
+                self.streakNumber = 1
+                lastStreakDate = formatter.string(from: Date())
+                if let email = Auth.auth().currentUser?.email {
+                    self.db.collection(K.userPreferences).document(email).updateData([
+                        "sevenDay": 0,
+                        "thirtyDay": 0
+                    ]) { (error) in
+                        if let e = error {
+                            print("There was a issue saving data to firestore \(e) ")
+                        } else {
+                            print("Succesfully saved seven & thirty progress")
+                        }
+                    }
+                } else {
+                    UserDefaults.standard.setValue(0, forKey: "sevenDay")
+                    UserDefaults.standard.setValue(0, forKey: "thirtyDay")
+                }
+            } // else no need to update
+            self.calculateProgress()
+        } else {
+            lastStreakDate  = formatter.string(from: Date())
+            self.streakNumber = 1
+        }
+
+        if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
+            self.createDailyCountdown()
+        }
+        return lastStreakDate
     }
 
     private func calculateProgress() {
