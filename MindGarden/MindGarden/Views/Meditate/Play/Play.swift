@@ -114,8 +114,6 @@ struct Play: View {
                                             goBackward()
                                         }
                                         if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
-
-
                                             model.secondsRemaining += model.selectedMeditation?.url != "" ? 14 : 15
                                         } else {
                                             model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
@@ -156,7 +154,7 @@ struct Play: View {
                                     if timerStarted {
                                         model.stop()
                                     } else {
-                                        model.isOpenEnded ? model.startTimer() : model.startCountdown()
+                                        model.startCountdown()
                                     }
 
                                     timerStarted.toggle()

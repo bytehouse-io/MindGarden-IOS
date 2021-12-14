@@ -233,7 +233,7 @@ class MeditationViewModel: ObservableObject {
     //MARK: - timer
     func startCountdown() {
         bellPlayer.prepareToPlay()
-        if secondsRemaining == -1 {
+        if selectedMeditation?.reward == -1 {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
                 self.secondsRemaining += 1
                 if secondsRemaining >= 60 {
@@ -278,6 +278,7 @@ class MeditationViewModel: ObservableObject {
                     } else { //60 - 45
                         playImage = Img.seed
                     }
+                    
                     if secondsRemaining <= 0 {
                         if let med = self.selectedMeditation {
                             if med.id != 27 && med.id != 39 && med.id != 54 {
