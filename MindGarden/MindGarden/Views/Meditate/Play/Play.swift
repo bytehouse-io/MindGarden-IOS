@@ -32,6 +32,8 @@ struct Play: View {
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
     @State var sliderData = SliderData()
+    @State var bellSlider = SliderData()
+    @State var showTutorialModal = false
 
     var body: some View {
             ZStack {
@@ -217,12 +219,16 @@ struct Play: View {
                         }
                         Spacer()
                     }.opacity(showNatureModal ? 0.3 : 1)
-                    if showNatureModal {
+                    if showNatureModal || showTutorialModal {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                     }
-                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player, sliderData: $sliderData).offset(y: showNatureModal ? 0 : g.size.height)
+                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: player, sliderData: $sliderData, bellSlider: $bellSlider)
+                        .offset(y: showNatureModal ? 0 : g.size.height)
+                        .animation(.default)
+                    TutorialModal(show: $showTutorialModal)
+                        .offset(y: showTutorialModal ? 0 : g.size.height)
                         .animation(.default)
                 }
             }
@@ -230,6 +236,7 @@ struct Play: View {
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onAppear {
+            showTutorialModal = true
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                try AVAudioSession.sharedInstance().setActive(true)
@@ -263,10 +270,21 @@ struct Play: View {
                 }
             }
 
+
+
             //bell at the end of a session
             let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
             model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
             model.bellPlayer.delegate = self.del
+
+            if let bellVolume = UserDefaults.standard.value(forKey: "bellVolume") as? Float {
+                model.bellPlayer.volume = bellVolume
+                bellSlider.sliderValue = bellVolume
+            } else {
+                model.bellPlayer.volume = 0.5
+                bellSlider.sliderValue = 0.5
+            }
+            bellSlider.setPlayer(player: model.bellPlayer)
 
             if model.selectedMeditation?.url != "" {
                 if  let url = URL(string: model.selectedMeditation?.url ?? "") {
@@ -367,8 +385,67 @@ struct Play: View {
             }
     }
 
+    //MARK: - tutorial modal
+    struct TutorialModal: View {
+        @Binding var show: Bool
 
-    //MARK: - modal
+        var body: some View {
+           GeometryReader { g in
+                VStack(spacing: 10) {
+                    Spacer()
+                    HStack(alignment: .center) {
+                        Spacer()
+                        VStack(alignment: .center, spacing: 0) {
+                            HStack {
+                                Spacer()
+                                Text("🔔 New: increase & decrease bell volume")
+                                    .font(Font.mada(.bold, size: 28))
+                                    .foregroundColor(Clr.black2)
+                                    .frame(height: g.size.height * 0.06)
+                                Spacer()
+                            }.padding([.top, .horizontal], 40)
+                            Img.tutorialImage
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: g.size.width * 0.85 * 0.9, height: g.size.height * 0.55 * 0.65)
+                            Spacer()
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    show = false
+                                    UserDefaults.standard.setValue(true, forKey: "playTutorialModal")
+                                }
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.brightGreen)
+                                    .overlay(
+                                        Text("Got it!")
+                                            .font(Font.mada(.bold, size: 18))
+                                            .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
+                                    )
+                                    .frame(width: g.size.width * 0.7 * 0.5, height: g.size.height * 0.05)
+                            }.buttonStyle(NeumorphicPress())
+                                .padding()
+                            Spacer()
+                        }
+                        .font(Font.mada(.regular, size: 18))
+                        .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.60 : 0.65), alignment: .center)
+                        .minimumScaleFactor(0.05)
+                        .background(Clr.darkWhite)
+                        .neoShadow()
+                        .cornerRadius(12)
+                        .offset(y: -50)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            }
+        }
+    }
+
+    //MARK: - nature modal
     struct NatureModal: View {
         @State private var volume: Double = 0.0
         @Binding var show: Bool
@@ -376,6 +453,7 @@ struct Play: View {
         var change: () -> Void
         var player: AVAudioPlayer?
         @Binding var sliderData: SliderData
+        @Binding var bellSlider: SliderData
 
         var  body: some View {
             GeometryReader { g in
@@ -404,12 +482,26 @@ struct Play: View {
                             }.frame(height: 30)
                                 .padding(.horizontal, 30)
                                 .padding(.top)
+                            Text("Bell Volume")
+                                .foregroundColor(Clr.black1)
+                                .font(Font.mada(.bold, size: 24))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                            GeometryReader { geometry in
+                                Slider(value: self.$bellSlider.sliderValue, in: 0.0...1.0, step: 0.01)
+                                    .accentColor(Clr.darkgreen)
+                            }.frame(height: 30)
+                                .padding(.horizontal, 30)
+                                .padding(.top, 10)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     show = false
                                 }
                                 UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
+                                UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
                             } label: {
                                 Text("Done")
                                     .font(Font.mada(.bold, size: 18))
@@ -421,7 +513,9 @@ struct Play: View {
                             }
                             .neoShadow()
                             .animation(.default)
-                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
+
+                            
+                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.45, alignment: .center)
                         .background(Clr.darkWhite)
                         .cornerRadius(20)
                         Spacer()

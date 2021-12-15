@@ -81,6 +81,8 @@ struct PlantTile: View {
                                 Text(isBadge ? Plant.badgeDict[plant.price] ?? "" : String(plant.price))
                                     .font(Font.mada(.semiBold, size: isBadge ? 16 : 20))
                                     .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.trailing)
+                                    .padding(.leading, 5)
                             }.frame(width: width * 0.35 * 0.85, alignment: .leading)
                         }
                     } else {

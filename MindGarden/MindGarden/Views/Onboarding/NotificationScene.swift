@@ -127,6 +127,7 @@ struct NotificationScene: View {
                                                             if tappedTurnOn {
                                                                 viewRouter.currentPage = .review
                                                             } else {
+                                                                viewRouter.progressValue += 0.1
                                                                 viewRouter.currentPage = .name
                                                             }
                                                         }
@@ -173,6 +174,7 @@ struct NotificationScene: View {
                                                 if tappedTurnOn {
                                                     viewRouter.currentPage = .review
                                                 } else {
+                                                    viewRouter.progressValue += 0.1
                                                     viewRouter.currentPage = .name
                                                 }
                                             }

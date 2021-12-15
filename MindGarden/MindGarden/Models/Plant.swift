@@ -56,10 +56,10 @@ struct Plant: Hashable {
 
     ]
     static var badgeDict: [Int: String] = [
-        3: "Become a pro user",
-        4: "Refer a friend",
-        2: "Rate the app",
-        0: "7 Day Streak",
-        1: "30 Day Streak"
+        3: "👨‍🌾 Become a pro user",
+        4: "💌 Refer a friend",
+        2: "⭐️ Rate the app",
+        0: "7️⃣ Day Streak",
+        1: "📆 30 Day Streak"
     ]
 }

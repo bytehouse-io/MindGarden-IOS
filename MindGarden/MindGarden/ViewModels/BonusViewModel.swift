@@ -128,6 +128,14 @@ class BonusViewModel: ObservableObject {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
         var lastStreakDate = ""
+        if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+            NotificationHelper.addOneDay()
+        }
+        if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
+            NotificationHelper.addThreeDay()
+        }
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             docRef.getDocument { (snapshot, error) in
@@ -207,14 +215,6 @@ class BonusViewModel: ObservableObject {
             let plusOffset = self.streak!.index(plus, offsetBy: 1)
             lastStreakDate = String(self.streak![plusOffset...])
             if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
-                if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
-                    NotificationHelper.addOneDay()
-                }
-                if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
-                    NotificationHelper.addThreeDay()
-                }
                 self.streakNumber += 1
                 lastStreakDate = formatter.string(from: Date())
             } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak

@@ -82,7 +82,7 @@ struct PurchaseModal: View {
                         Button {
                             if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
-                                case "Rate the app":
+                                case "⭐️ Rate the app":
                                     if !UserDefaults.standard.bool(forKey: "tappedRate") {
                                         Analytics.shared.log(event: .store_tapped_rate_app)
                                         withAnimation {
@@ -92,12 +92,12 @@ struct PurchaseModal: View {
                                             }
                                         }
                                     }
-                                case "Refer a friend":
+                                case "💌 Refer a friend":
                                     Analytics.shared.log(event: .store_tapped_refer_friend)
                                     withAnimation {
                                         viewRouter.currentPage = .profile
                                     }
-                                case "Become a pro user":
+                                case "👨‍🌾 Become a pro user":
                                     if !UserDefaults.standard.bool(forKey: "isPro") {
                                         Analytics.shared.log(event: .store_tapped_go_pro)
                                         withAnimation {

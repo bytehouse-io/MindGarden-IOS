@@ -74,6 +74,7 @@ struct Store: View {
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Clr.black1)
                                     .padding(.horizontal, isShop ? 25 : 10)
+                                    .frame(width: g.size.width * 0.4, alignment: .center)
                             }
                             if isShop && !isStore {
                                 ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in

@@ -233,6 +233,7 @@ class MeditationViewModel: ObservableObject {
     //MARK: - timer
     func startCountdown() {
         bellPlayer.prepareToPlay()
+        
         if selectedMeditation?.reward == -1 {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
                 self.secondsRemaining += 1

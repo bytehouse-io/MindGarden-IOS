@@ -51,6 +51,7 @@ struct PricingView: View {
                                     .padding(.bottom, 100)
                                     .opacity(0.5)
                                     .onTapGesture {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             switch fromPage {
                                             case "home": viewRouter.currentPage = .meditate

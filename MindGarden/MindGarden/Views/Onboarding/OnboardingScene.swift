@@ -71,10 +71,12 @@ struct OnboardingScene: View {
                             if index < 2 {
                                 withAnimation {
                                     index += 1
+                                    viewRouter.progressValue += 0.1
                                 }
                             } else {
                                 Analytics.shared.log(event: .onboarding_tapped_continue)
                                 withAnimation {
+                                    viewRouter.progressValue += 0.1
                                     viewRouter.currentPage = .experience
                                 }
                             }

@@ -55,6 +55,7 @@ struct ReasonScene: View {
                                         break
                                     }
                                     withAnimation {
+                                        viewRouter.progressValue += 0.1
                                         viewRouter.currentPage = .notification
                                     }
                                 } //TODO gray out button if not selected

@@ -156,6 +156,7 @@ public enum Img {
   public static let target = Image("target")
   public static let topBranch = Image("topBranch")
   public static let tree = Image("tree")
+  public static let tutorialImage = Image("tutorialImage")
   public static let wateredPot = Image("wateredPot")
   public static let wateringPot = Image("wateringPot")
   public static let watermelon = Image("watermelon")

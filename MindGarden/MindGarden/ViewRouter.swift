@@ -9,6 +9,7 @@ import SwiftUI
 
 class ViewRouter: ObservableObject {
     @Published var currentPage: Page = UserDefaults.standard.bool(forKey: K.defaults.loggedIn) ? .meditate : UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" ? .meditate : .onboarding
+    @Published var progressValue: Float = 0.3
 }
 
 enum Page {

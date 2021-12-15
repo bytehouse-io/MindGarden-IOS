@@ -23,7 +23,6 @@ struct ContentView: View {
     @State private var animateSplash = false
     @State private var showSplash = true
     @State private var animationAmount: CGFloat = 1
-
     ///Ashvin : State variable for pass animation flag
     @State private var PopUpIn = false
     @State private var showPopUpOption = false
@@ -115,7 +114,7 @@ struct ContentView: View {
                                             }
                                     case .finished:
                                         Finished(model: meditationModel, userModel: userModel, gardenModel: gardenModel)
-                                            .frame(height: geometry.size.height + 80)
+                                            .frame(height: geometry.size.height)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .authentication:
                                         Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
@@ -131,7 +130,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .pricing:
                                         PricingView()
-                                            .frame(height: geometry.size.height + 80)
+                                            .frame(height: geometry.size.height )
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .reason:
                                         ReasonScene()
@@ -145,6 +144,20 @@ struct ContentView: View {
 
                                 } else {
                                     // Fallback on earlier versions
+                                }
+                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .onboarding
+                                                || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
+                                    ZStack(alignment: .leading) {
+                                        Rectangle().frame(width: geometry.size.width - 50 , height: 20)
+                                            .opacity(0.3)
+                                            .foregroundColor(Clr.darkWhite)
+                                        Rectangle().frame(width: min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50), height: 20)
+                                            .foregroundColor(Clr.brightGreen)
+                                            .animation(.linear)
+                                            .neoShadow()
+                                    }.cornerRadius(45.0)
+                                        .padding()
+                                        .neoShadow()
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
