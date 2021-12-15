@@ -119,6 +119,16 @@ class MeditationViewModel: ObservableObject {
             filtedMeds = filtedMeds.filter { med in // day time meds only
             med.id != 27 && med.id != 54 && med.id != 39 }
         }
+        if Calendar.current.component(.hour, from: Date()) > 11 { // not morning
+            filtedMeds = filtedMeds.filter { med in
+                med.id != 53 && med.id != 49
+            }
+        }
+        if UserDefaults.standard.bool(forKey: "intermediateCourse") {
+            filtedMeds = filtedMeds.filter { med in
+                med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
+            }
+        }
         switch UserDefaults.standard.string(forKey: "reason") {
         case "Sleep better":
             if Calendar.current.component( .hour, from:Date() ) >= 18 {

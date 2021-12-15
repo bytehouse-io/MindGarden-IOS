@@ -288,7 +288,7 @@ struct Garden: View {
         topThreePlants = [FavoritePlant]()
         let topThreeStrings = gardenModel.favoritePlants.sorted { $0.value > $1.value }.prefix(3)
         for str in topThreeStrings {
-            if let plnt = Plant.plants.first(where: { plt in
+            if let plnt = Plant.allPlants.first(where: { plt in
                 plt.title == str.key
             }) {
                 topThreePlants.append(FavoritePlant(title: str.key, count: str.value,

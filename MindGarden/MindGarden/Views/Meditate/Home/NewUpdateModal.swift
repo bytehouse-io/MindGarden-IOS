@@ -25,7 +25,7 @@ struct NewUpdateModal: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.height * 0.12)
-                            Text("\nMindGarden \nUpdate 1.1\nWhat's New:")
+                            Text("\nMindGarden \nUpdate 1.2\nWhat's New:")
                                 .font(Font.mada(.bold, size: 28))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.12)
@@ -33,15 +33,14 @@ struct NewUpdateModal: View {
                         }.padding([.horizontal, .top])
                         Button {
                             withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.1Update")
-                                UserDefaults.standard.setValue(true, forKey: "tappedStudy")
+                                UserDefaults.standard.setValue(true, forKey: "1.2Update")
                                 shown = false
-                                showSearch = true
+                                viewRouter.currentPage = .shop
                             }
 
                         } label: {
                             HStack {
-                                Text("🌚 We added dark mode and 2 new meditations for students ")
+                                Text("🎖 We added badges to MindGarden! These plants can't be bought, but instead have to be unlocked. ")
                                 + Text("(Take me there)")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
@@ -53,22 +52,22 @@ struct NewUpdateModal: View {
                         .padding(.top)
 
 
-                        Button {
-                            withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.1Update")
-                                viewRouter.currentPage = .profile
-                            }
-                        } label: {
-                            HStack {
-                                Text("💌 ") + Text("Refer a friend ").bold().underline().foregroundColor(.blue) + Text("or rate the app for ") + Text("two free weeks")
-                                    .foregroundColor(Clr.brightGreen)
-                                    .bold()
-                                + Text(" of pro!")
-                            }.multilineTextAlignment(.leading)
-                                .font(Font.mada(.regular, size: 20))
-                        }.padding(.top, 10)
-                        .foregroundColor(Clr.black2)
-                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
+//                        Button {
+//                            withAnimation {
+//                                UserDefaults.standard.setValue(true, forKey: "1.1Update")
+//                                viewRouter.currentPage = .profile
+//                            }
+//                        } label: {
+//                            HStack {
+//                                Text("💌 ") + Text("Refer a friend ").bold().underline().foregroundColor(.blue) + Text("or rate the app for ") + Text("two free weeks")
+//                                    .foregroundColor(Clr.brightGreen)
+//                                    .bold()
+//                                + Text(" of pro!")
+//                            }.multilineTextAlignment(.leading)
+//                                .font(Font.mada(.regular, size: 20))
+//                        }.padding(.top, 10)
+//                        .foregroundColor(Clr.black2)
+//                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
 
 
 //                        Button {
@@ -96,7 +95,7 @@ struct NewUpdateModal: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "1.1Update")
+                                UserDefaults.standard.setValue(true, forKey: "1.2Update")
                             }
                         } label: {
                             Capsule()
@@ -114,7 +113,7 @@ struct NewUpdateModal: View {
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.55 : 0.6), alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.45 : 0.5), alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()

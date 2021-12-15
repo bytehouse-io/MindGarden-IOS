@@ -368,22 +368,28 @@ extension AuthenticationViewModel {
         if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
             thisGrid = gridd
         }
+        var favs = [Int]()
+        if let favorites = UserDefaults.standard.array(forKey: K.defaults.favorites) as? [Int] {
+            favs = favorites
+        }
 
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 
-                "coins": UserDefaults.standard.string(forKey: "coins") ?? 50,
+                "coins": UserDefaults.standard.integer(forKey: "coins"),
                 "joinDate": UserDefaults.standard.string(forKey: "joinDate") ?? "",
                 "totalSessions": UserDefaults.standard.integer(forKey: "allTimeSessions"),
                 "totalMins": UserDefaults.standard.integer(forKey: "allTimeMinutes"),
                 "gardenGrid": thisGrid,
+                "plants": UserDefaults.standard.array(forKey: K.defaults.plants) ?? ["White Daisy"],
                 K.defaults.lastStreakDate: UserDefaults.standard.string(forKey: K.defaults.lastStreakDate) ?? "",
                 "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
                 K.defaults.seven: UserDefaults.standard.integer(forKey: K.defaults.seven),
                 K.defaults.thirty: UserDefaults.standard.integer(forKey: K.defaults.thirty),
                 K.defaults.dailyBonus: UserDefaults.standard.string(forKey: K.defaults.dailyBonus) ?? "", 
-                K.defaults.plants: "White Daisy",
-                "referredStack": "\(date)+0"
+                "referredStack": "\(date)+0",
+                "isPro": UserDefaults.standard.bool(forKey: "isPro"),
+                "favorited": favs
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -394,7 +400,6 @@ extension AuthenticationViewModel {
                 }
             }
         }
-        userCoins = 50
         userModel.name = UserDefaults.standard.string(forKey: "name") ?? "hg"
         userModel.joinDate = formatter.string(from: Date())
         userModel.referredStack = "\(date)+0"

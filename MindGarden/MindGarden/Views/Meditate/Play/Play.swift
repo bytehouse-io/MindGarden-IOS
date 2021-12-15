@@ -236,7 +236,9 @@ struct Play: View {
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onAppear {
-            showTutorialModal = true
+            if model.selectedMeditation?.id != 22 {
+                showTutorialModal = !UserDefaults.standard.bool(forKey: "playTutorialModal")
+            }
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
                try AVAudioSession.sharedInstance().setActive(true)

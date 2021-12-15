@@ -39,6 +39,7 @@ struct OnboardingScene: View {
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: width * 0.6 , height: height * (index == 0 ? 0.2 : 0.38))
                                                 .padding()
+                                                .neoShadow()
                                             Spacer()
                                             VStack(alignment: .leading) {
                                                 Text(titles[index])

@@ -130,7 +130,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .pricing:
                                         PricingView()
-                                            .frame(height: geometry.size.height )
+                                            .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .reason:
                                         ReasonScene()

@@ -261,7 +261,7 @@ struct PricingView: View {
                                 }
                             }.padding(.bottom, 25)
                         }
-
+                        Spacer()
                         VStack {
                             Button {
                                 unlockPro()

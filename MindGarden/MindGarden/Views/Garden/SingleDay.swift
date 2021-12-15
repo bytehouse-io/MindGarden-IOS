@@ -201,7 +201,7 @@ struct SingleDay: View {
                     }
                 }
                 if let selectedPlant = sessions[sessionCounter][K.defaults.plantSelected] {
-                    self.plant = Plant.plants.first(where: {$0.title == selectedPlant})
+                    self.plant = Plant.allPlants.first(where: {$0.title == selectedPlant})
                 }
                 if let duration = sessions[sessionCounter][K.defaults.duration] {
                     self.minutesMeditated = (Double(duration) ?? 0.0).toInt() ?? 0
@@ -239,7 +239,7 @@ struct SingleDay: View {
     }
 
     private func updateSession() {
-        plant = Plant.plants.first(where: { plant in
+        plant = Plant.allPlants.first(where: { plant in
             return plant.title == sessions?[sessionCounter][K.defaults.plantSelected]
         })
         if let duration = sessions?[sessionCounter][K.defaults.duration] {

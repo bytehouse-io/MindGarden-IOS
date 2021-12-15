@@ -47,10 +47,17 @@ struct PurchaseModal: View {
                                 .padding()
                                 .opacity(0)
                         }
-                        userModel.willBuyPlant?.packetImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: g.size.width * 0.325, height: g.size.height * 0.225, alignment: .center)
+                        if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
+                            userModel.willBuyPlant?.coverImage
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: g.size.width * 0.325, height: g.size.height * 0.225, alignment: .center)
+                        } else {
+                            userModel.willBuyPlant?.packetImage
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: g.size.width * 0.325, height: g.size.height * 0.225, alignment: .center)
+                        }
                         HStack(spacing: 5) {
                             Text(" \(userModel.willBuyPlant?.description ?? "")")
                                 .font(Font.mada(.semiBold, size: 20))

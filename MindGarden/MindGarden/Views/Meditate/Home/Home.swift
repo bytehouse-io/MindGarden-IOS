@@ -369,7 +369,7 @@ struct Home: View {
                     userWentPro = false
                 }
                 numberOfMeds += Int.random(in: -3 ... 3)
-                showUpdateModal = !UserDefaults.standard.bool(forKey: "1.1Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
+                showUpdateModal = !UserDefaults.standard.bool(forKey: "1.2Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
@@ -384,7 +384,7 @@ struct Home: View {
 
                 }
              coins = userCoins
-             self.runCounter(counter: $coins, start: 0, end: userCoins, speed: 0.025)
+             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.025)
             }
             .onAppearAnalytics(event: .screen_load_home)
     }

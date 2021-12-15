@@ -67,14 +67,14 @@ struct Store: View {
                                             .padding(.leading)
                                     }
                                 }
-                                Text(isShop ? !isStore ? "🏆🎖🥇\nBadges" : "🌻 Seed\nShop" : "🌻 Plant Select")
+                                Text(isShop ? !isStore ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" : "🌻 Plant Select")
                                     .font(Font.mada(.bold, size: 32))
                                     .minimumScaleFactor(0.005)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Clr.black1)
                                     .padding(.horizontal, isShop ? 25 : 10)
-                                    .frame(width: g.size.width * 0.4, alignment: .center)
+                                    .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                             }
                             if isShop && !isStore {
                                 ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
@@ -197,7 +197,9 @@ struct Store: View {
                 }
         }.onAppearAnalytics(event: .screen_load_store)
             .onAppear {
-                showTip = !UserDefaults.standard.bool(forKey: "showTip")
+                if isShop {
+                    showTip = !UserDefaults.standard.bool(forKey: "showTip")
+                }
             }
             .onDisappear {
                 UserDefaults.standard.setValue(true, forKey: "showTip")

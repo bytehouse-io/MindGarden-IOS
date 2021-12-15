@@ -56,7 +56,7 @@ struct PlantTile: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .frame(width: width * 0.35 * 0.85, alignment: .leading)
-                        .padding(.leading, isBadge ? 3 : 0)
+                        .padding(.leading, isBadge ? 3 : isShop ? 0 : 5)
                     if isShop {
                         if isOwned && !isBadge{
                             Text("Bought")

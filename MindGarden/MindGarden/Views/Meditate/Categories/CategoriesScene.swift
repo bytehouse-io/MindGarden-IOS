@@ -83,7 +83,7 @@ struct CategoriesScene: View {
                     }
                     ScrollView(showsIndicators: false) {
                             LazyVGrid(columns: gridItemLayout, content: {
-                                ForEach(!isSearch ? model.selectedMeditations : UserDefaults.standard.bool(forKey: "tappedStudy") ? model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in return meditation.id == 55 || meditation.id == 56 }): model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
+                                ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
                                     return meditation.title.hasPrefix(searchText) || searchText == ""
                                 }), id: \.self) { item in
                                     HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, description: item.description, duration: item.duration)
@@ -136,11 +136,6 @@ struct CategoriesScene: View {
                     viewRouter.currentPage = .middle
                 } else {
                     viewRouter.currentPage = .play
-                }
-            }
-            if isSearch {
-                if UserDefaults.standard.bool(forKey: "tappedStudy") {
-                    UserDefaults.standard.setValue(false, forKey: "tappedStudy")
                 }
             }
         }

@@ -133,7 +133,7 @@ class GardenViewModel: ObservableObject {
             var mood: Mood? = nil
             if let sessions = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.sessions] as? [[String: String]] {
                 let fbPlant = sessions[sessions.count - 1][K.defaults.plantSelected]
-                plant = Plant.plants.first(where: { $0.title == fbPlant })
+                plant = Plant.allPlants.first(where: { $0.title == fbPlant })
                 for session in sessions {
                     totalMins += (Double(session[K.defaults.duration] ?? "0.0") ?? 0).toInt() ?? 0
                     let plant = session[K.defaults.plantSelected] ?? ""

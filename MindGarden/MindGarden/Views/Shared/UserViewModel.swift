@@ -36,7 +36,7 @@ class UserViewModel: ObservableObject {
 
     func getSelectedPlant() {
         if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
-            self.selectedPlant = Plant.plants.first(where: { plant in
+            self.selectedPlant = Plant.allPlants.first(where: { plant in
                 return plant.title == plantTitle
             })
         }
@@ -71,7 +71,7 @@ class UserViewModel: ObservableObject {
         
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
-                        self.ownedPlants = Plant.plants.filter({ plant in
+                        self.ownedPlants = Plant.allPlants.filter({ plant in
                             return fbPlants.contains(where: { str in
                                 plant.title == str
                             })
@@ -99,7 +99,7 @@ class UserViewModel: ObservableObject {
         }
 
         //set selected plant
-        selectedPlant = Plant.plants.first(where: { plant in
+        selectedPlant = Plant.allPlants.first(where: { plant in
             return plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
         })
     }
@@ -211,6 +211,10 @@ class UserViewModel: ObservableObject {
             } else {
                 if let plants = UserDefaults.standard.value(forKey: K.defaults.plants) as? [String] {
                     var newPlants = plants
+                    newPlants.append(plant.title)
+                    UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
+                } else {
+                    var newPlants = ["White Daisy"]
                     newPlants.append(plant.title)
                     UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
                 }

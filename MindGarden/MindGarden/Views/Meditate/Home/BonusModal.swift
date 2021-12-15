@@ -24,7 +24,6 @@ struct BonusModal: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
-                                    coins += 5
                                 }
                             } label: {
                                 Image(systemName: "xmark")
@@ -45,6 +44,7 @@ struct BonusModal: View {
                             if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
                                 Analytics.shared.log(event: .home_claim_daily)
                                 bonusModel.saveDaily(plusCoins: 5)
+                                coins += 5
                                 bonusModel.totalBonuses -= 1
                             }
                         } label: {

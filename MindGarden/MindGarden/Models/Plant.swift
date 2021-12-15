@@ -44,17 +44,18 @@ struct Plant: Hashable {
 
     static var badgePlants: [Plant] = [
         // 7 day
-        Plant(title: "Red Mushroom", price: 0, selected: false, description: "Also known as the Amanita muscaria, is one of the most recognizable and widely encountered mushroom in popular culture and used in the game Mario.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        Plant(title: "Red Mushroom", price: 0, selected: false, description: "Also known as the Amanita muscaria, is one of the most recognizable and widely encountered mushroom in popular culture and used in the game Mario.", packetImage: Img.daisyPacket, one: Img.redMushroom1, two: Img.redMushroom2, coverImage: Img.redMushroom3, head: Img.redMushroomHead, badge: Img.daisyBadge),
         // 30 day
-        Plant(title: "Cherry Blossoms", price: 1, selected: false, description: "Cherry Blossoms also known as sakura in Japan, are the small, delicate pink flowers produced by cherry blossom trees. The springtime bloom is a lavish spectacle but remarkably brief; after only two weeks, they drop to the ground and wither, falling like snow with the ebb and flow of the winds.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        Plant(title: "Cherry Blossoms", price: 1, selected: false, description: "Cherry Blossoms also known as sakura in Japan, are the small, delicate pink flowers produced by cherry blossom trees. The springtime bloom is a lavish spectacle but remarkably brief; after only two weeks, they drop to the ground and wither, falling like snow with the ebb and flow of the winds.", packetImage: Img.daisyPacket, one: Img.cherryBlossoms1, two: Img.cherryBlossoms2, coverImage: Img.cherryBlossoms3, head: Img.cherryBlossomHead, badge: Img.daisyBadge),
         // rate the app
-        Plant(title: "Camellia", price: 2, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. In Japan the camellia flower is called “Tsubaki” and symbolizes the divine. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        Plant(title: "Camellia", price: 2, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. In Japan the camellia flower is called “Tsubaki” and symbolizes the divine. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.camellia1, two: Img.camellia2, coverImage: Img.camellia3, head: Img.camelliaHead, badge: Img.daisyBadge),
         //pro member
-        Plant(title: "Bonsai Tree", price: 3, selected: false, description: "A bonsai tree is a shrub which has been grown in a way which gives the impression of being a full-sized, mature tree. They originated from China over 1000 years ago and symbolize  harmony, balance, patience, or even luck", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
+        Plant(title: "Bonsai Tree", price: 3, selected: false, description: "A bonsai tree is a shrub which has been grown in a way which gives the impression of being a full-sized, mature tree. They originated from China over 1000 years ago and symbolize  harmony, balance, patience, or even luck", packetImage: Img.daisyPacket, one: Img.bonsai1, two: Img.bonsai2, coverImage: Img.bonsai3, head: Img.bonsaiHead, badge: Img.daisyBadge),
         // refer a friend
         Plant(title: "Venus Fly Trap", price: 4, selected: false, description: "The Venus flytrap is a carnivorous plant native to subtropical wetlands on the East Coast of the United States in North Carolina and South Carolina. It gets some of its nutrients from the soil, but to supplement its diet, the plant eats insects and arachnids!", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
 
     ]
+    static var allPlants = plants + badgePlants
     static var badgeDict: [Int: String] = [
         3: "👨‍🌾 Become a pro user",
         4: "💌 Refer a friend",

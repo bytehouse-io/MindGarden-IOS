@@ -77,6 +77,9 @@ class BonusViewModel: ObservableObject {
                         print("Succesfully saved daily", self.dailyBonus)
                     }
                 }
+        } else {
+            UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
         }
     }
 
@@ -98,6 +101,8 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
+            UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
             self.calculateProgress()
         }
     }
@@ -120,6 +125,8 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
+            UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
             self.calculateProgress()
         }
     }

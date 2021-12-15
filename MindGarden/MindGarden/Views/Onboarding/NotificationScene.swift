@@ -89,6 +89,11 @@ struct NotificationScene: View {
                             }.buttonStyle(NeumorphicPress())
                                 .padding()
                             Spacer()
+                            Img.eggs
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .neoShadow()
+                            Spacer()
                             Button {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()

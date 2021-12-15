@@ -34,21 +34,31 @@ struct NameScene: View {
                                 
                             }
                             Spacer()
-                            Text("What's your name?")
-                                .font(Font.mada(.bold, size: 30))
-                                .foregroundColor(Clr.darkgreen)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                            LegacyTextField(text: $name, isFirstResponder: $isFirstResponder)
-                                .padding()
-                                .background(
-                                    Rectangle()
-                                        .foregroundColor(Clr.darkWhite)
-                                        .cornerRadius(14)
-                                )
-                                .frame(width: width * 0.8, height: 60)
-                                .neoShadow()
-                                .disableAutocorrection(true)
+                            HStack {
+                                Img.sheep
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 80)
+                                    .padding(.trailing, 15)
+                                    .neoShadow()
+                                VStack {
+                                    Text("What's your name?")
+                                        .font(Font.mada(.bold, size: 26))
+                                        .foregroundColor(Clr.darkgreen)
+                                        .multilineTextAlignment(.center)
+                                        .frame(width: width * 0.6, height: 60)
+                                    LegacyTextField(text: $name, isFirstResponder: $isFirstResponder)
+                                        .padding(15)
+                                        .background(
+                                            Rectangle()
+                                                .foregroundColor(Clr.darkWhite)
+                                                .cornerRadius(14)
+                                        )
+                                        .frame(width: width * 0.6, height: 60)
+                                        .neoShadow()
+                                        .disableAutocorrection(true)
+                                }
+                            }.frame(height: 80)
                             Spacer()
                             Button {
                                 Analytics.shared.log(event: .name_tapped_continue)
