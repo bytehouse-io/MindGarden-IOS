@@ -55,7 +55,8 @@ struct Plant: Hashable {
         Plant(title: "Venus Fly Trap", price: 4, selected: false, description: "The Venus flytrap is a carnivorous plant native to subtropical wetlands on the East Coast of the United States in North Carolina and South Carolina. It gets some of its nutrients from the soil, but to supplement its diet, the plant eats insects and arachnids!", packetImage: Img.daisyPacket, one: Img.venus1, two: Img.venus2, coverImage: Img.venus3, head: Img.daisyHead, badge: Img.venusBadge),
         // Meditate on Christmas
         Plant(title: "Christmas Tree", price: 5, selected: false, description: "Evergreen trees are a popular type of Christmas tree because they keep their leaves throughout the year. Germany is credited with starting the Christmas Tree tradition in the 16th century.", packetImage: Img.daisyPacket, one: Img.christmas1, two: Img.christmas2, coverImage: Img.christmas3, head: Img.christmasHead, badge: Img.christmasBadge)
-
+        // 30 Gratitudes
+        Plant(title: "Hydrangea", price: 6, selected: false, description: "There are around 70-75 species of hydrangea and can grow literally anywhere. Never eat them as they are moderately toxic. ", packetImage: Img.daisyPacket, one: Img.christmas1, two: Img.christmas2, coverImage: Img.christmas3, head: Img.christmasHead, badge: Img.christmasBadge)
     ]
     static var allPlants = plants + badgePlants
     static var badgeDict: [Int: String] = [
@@ -64,6 +65,7 @@ struct Plant: Hashable {
         2: "⭐️ Rate the app",
         0: "7️⃣ Day Streak",
         1: "📆 30 Day Streak",
-        5: "🎅 Meditate on Dec 25"
+        5: "🎅 Meditate on Dec 25",
+        6: "🙏 30 Gratitudes"
     ]
 }

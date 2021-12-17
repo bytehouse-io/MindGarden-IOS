@@ -115,6 +115,8 @@ struct PurchaseModal: View {
                                             viewRouter.currentPage = .pricing
                                         }
                                     }
+                                case "🙏 30 Gratitudes":
+                                    break
                                 default:
                                     meditateModel.selectedMeditation = meditateModel.featuredMeditation
                                     withAnimation {

@@ -16,6 +16,7 @@ struct Gratitude: View, KeyboardReadable {
     @State var text: String = "Thankful for "
     @Binding var openPrompts: Bool
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @Binding var contentKeyVisible: Bool
 
     ///Ashvin : Binding variable for pass animation flag
@@ -98,6 +99,10 @@ struct Gratitude: View, KeyboardReadable {
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
                         var num = UserDefaults.standard.integer(forKey: "numGrads")
                         num += 1
+                        if num == 30 {
+                            userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Hydrangea" })
+                            userModel.buyPlant(unlockedStrawberry: true)
+                        }
                         UserDefaults.standard.setValue(num, forKey: "numGrads")
                         Analytics.shared.log(event: .gratitude_tapped_done)
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
