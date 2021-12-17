@@ -319,7 +319,6 @@ class MeditationViewModel: ObservableObject {
                 }
             }
         }
-
         timer.fire()
     }
 

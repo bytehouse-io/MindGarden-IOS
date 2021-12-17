@@ -13,6 +13,7 @@ struct PurchaseModal: View {
     @Binding var showConfirm: Bool
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditateModel: MeditationViewModel
 //    var img: Img = Image()
 
 
@@ -25,6 +26,7 @@ struct PurchaseModal: View {
                     VStack(alignment: .center) {
                         HStack(alignment: .top) {
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
                                 }
@@ -102,6 +104,7 @@ struct PurchaseModal: View {
                                 case "💌 Refer a friend":
                                     Analytics.shared.log(event: .store_tapped_refer_friend)
                                     withAnimation {
+                                        tappedRefer = true
                                         viewRouter.currentPage = .profile
                                     }
                                 case "👨‍🌾 Become a pro user":
@@ -112,8 +115,16 @@ struct PurchaseModal: View {
                                             viewRouter.currentPage = .pricing
                                         }
                                     }
-
-                                default: break
+                                default:
+                                    meditateModel.selectedMeditation = meditateModel.featuredMeditation
+                                    withAnimation {
+                                        
+                                        if meditateModel.featuredMeditation?.type == .course {
+                                            viewRouter.currentPage = .middle
+                                        } else {
+                                            viewRouter.currentPage = .play
+                                        }
+                                    }
                                 }
                             } else {
                                 Analytics.shared.log(event: .store_tapped_purchase_modal_buy)

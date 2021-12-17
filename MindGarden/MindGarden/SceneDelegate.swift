@@ -23,7 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
-        numberOfMeds = Int.random(in: 125..<151)
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
@@ -92,6 +91,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        numberOfMeds = Int.random(in: 185..<211)
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         launchNum += 1
         launchedApp = true
@@ -132,6 +132,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                if let dynamicLink = dynamicLink {
 //                    print(self.handlIncomingDynamicLink(dynamicLink), "gooat")
 //                }
+            }
+        }
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            AppsFlyerLib.shared().handleOpen(url, options: nil)
+        }
+        for context in URLContexts {
+            if context.url.scheme == "christmas" {
+                UserDefaults.standard.setValue(true, forKey: "christmasLink")
+            } else if context.url.scheme == "intro" {
+                print("intro")
+                UserDefaults.standard.setValue(true, forKey: "introLink")
+            } else if context.url.scheme == "happiness" {
+                UserDefaults.standard.setValue(true, forKey: "happinessLink")
             }
         }
     }

@@ -64,6 +64,23 @@ struct PricingView: View {
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
+                                        if fromPage == "onboarding2" {
+                                            if !UserDefaults.standard.bool(forKey: "isPro") {
+                                                let center = UNUserNotificationCenter.current()
+                                                let content = UNMutableNotificationContent()
+                                                content.title = "Don't Miss This Opportunity 127 users went pro this week!"
+                                                content.body = "🎉 MindGarden Pro For Life sale is gone in the Next 12 Hours!!! 🎉"
+                                                // Step 3: Create the notification trigger
+                                                let date = Date().addingTimeInterval(13200)
+                                                let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+                                                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                                                // Step 4: Create the request
+                                                let uuidString = UUID().uuidString
+                                                let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+                                                // Step 5: Register the request
+                                                center.add(request) { (error) in }
+                                            }
+                                        }
                                     }
                             }.frame(width: g.size.width)
                             //UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
@@ -296,7 +313,7 @@ struct PricingView: View {
                                     }
                             }.padding(.horizontal)
                         }.padding(10)
-                            .padding(.bottom, K.isPad() ? 50 : 0)
+                            .padding(.bottom, K.isPad() ? 50 : K.isSmall() ? 45 : 0)
                         Spacer()
                     }.padding(.top, K.hasNotch() ? 30 : 10)
                 }
@@ -380,27 +397,13 @@ struct PricingView: View {
                                                 [
                                                     AFEventParamContent: "true"
                                                 ])
-                if event2 == "Lifetime_Started_From_All" {
-                    let center = UNUserNotificationCenter.current()
-                    let content = UNMutableNotificationContent()
-                    content.title = "Don't Miss This Opportunity"
-                    content.body = "🎉 MindGarden Pro For Life is Gone in the Next 12 Hours!!! 🎉"
-                    // Step 3: Create the notification trigger
-                    let date = Date().addingTimeInterval(13200)
-                    let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-                    // Step 4: Create the request
-                    let uuidString = UUID().uuidString
-                    let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-                    // Step 5: Register the request
-                    center.add(request) { (error) in }
-                }
             }
         }
     }
     private func userIsPro() {
         userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
         userModel.buyPlant(unlockedStrawberry: true)
+        UserDefaults.standard.setValue(true, forKey: "bonsai")
         UserDefaults.standard.setValue(true, forKey: "isPro")
         if fromPage != "onboarding2" {
             userWentPro = true

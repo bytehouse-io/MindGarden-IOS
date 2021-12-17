@@ -58,7 +58,7 @@ class GardenViewModel: ObservableObject {
                 med1 = Meditation.allMeditations.first(where: { medd in
                     String(medd.id) == medIds[0]
                 })
-                if med1?.type == .lesson {
+                if med1?.type == .lesson && med1?.belongsTo != "Open-ended Meditation" && med1?.belongsTo != "Timed Meditation" {
                     let parentCourse = Meditation.allMeditations.first { medd in
                         medd.title == med1?.belongsTo
                     }
@@ -74,7 +74,7 @@ class GardenViewModel: ObservableObject {
                     med2 = Meditation.allMeditations.first(where: { medd in
                         String(medd.id) == medIds[index]
                     })
-                    if med2?.type == .lesson {
+                    if med2?.type == .lesson  && med2?.belongsTo != "Open-ended Meditation" && med2?.belongsTo != "Timed Meditation" {
                         let parentCourse = Meditation.allMeditations.first { medd in
                             medd.title == med2?.belongsTo
                         }

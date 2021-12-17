@@ -123,6 +123,15 @@ extension Date {
         }
     }
 
+    static func isSameDay(date1: Date, date2: Date) -> Bool {
+        let diff = Calendar.current.dateComponents([.day], from: date1, to: date2)
+        if diff.day == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+
     func getMonthNum(month: String) -> Int {
         switch month {
         case "Jan":

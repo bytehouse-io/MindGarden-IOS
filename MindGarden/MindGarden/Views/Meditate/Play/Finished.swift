@@ -187,17 +187,42 @@ struct Finished: View {
             model.lastSeconds = false
         }
         .onAppear {
+            //unlock christmas tree
+            var dateComponents = DateComponents()
+            dateComponents.month = 12
+            dateComponents.day = 25
+            dateComponents.year = 2021
+            let userCalendar = Calendar(identifier: .gregorian)
+            let dec25 = userCalendar.date(from: dateComponents)
+            var dateComponents2 = DateComponents()
+            dateComponents2.month = 12
+            dateComponents2.day = 24
+            dateComponents2.year = 2021
+            let dec24 = userCalendar.date(from: dateComponents)
+            if (Date.isSameDay(date1: Date(), date2: dec25!) || Date.isSameDay(date1: Date(), date2: dec24!)) && !UserDefaults.standard.bool(forKey: "Christmas") {
+                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                    p.title == "Christmas Tree"
+                })
+                userModel.buyPlant(unlockedStrawberry: true)
+                UserDefaults.standard.setValue(true, forKey: "christmas")
+            }
+
+            //num times med
             var num = UserDefaults.standard.integer(forKey: "numMeds")
             num += 1
             UserDefaults.standard.setValue(num, forKey: "numMeds")
 
             showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
+
             favorited = model.isFavorited
+            // onboarding
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 Analytics.shared.log(event: .onboarding_finished_meditation)
                 UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                 isOnboarding = true
             }
+
+
             Analytics.shared.log(event: AnalyticEvent.getMeditation(meditation: "finished_\(model.selectedMeditation?.returnEventName() ?? "")"))
             var session = [String: String]()
             session[K.defaults.plantSelected] = userModel.selectedPlant?.title

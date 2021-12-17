@@ -12,6 +12,7 @@ import FirebaseDynamicLinks
 import Firebase
 import StoreKit
 import GTMAppAuth
+var tappedRefer = false
 
 enum settings {
     case referrals
@@ -185,6 +186,7 @@ struct ProfileScene: View {
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                         }.frame(maxHeight: g.size.height * (K.isSmall() ? 0.725 : 0.8))
                                             .padding([.horizontal])
+                                            .offset(y: -20)
                                             .neoShadow()
                                     }
                                 } else if selection == .journey {
@@ -227,10 +229,7 @@ struct ProfileScene: View {
                                                     .padding(.top, 3)
                                             }.frame(width: abs(width - 100), alignment: .leading)
                                                 .frame(height: 25)
-                                                .onTapGesture(count: 4) {
-                                                    UserDefaults.standard.setValue(true, forKey: "trippleTapped")
-                                                    UserDefaults.standard.setValue(true, forKey: "isPro")
-                                                }
+
                                             HStack {
                                                 Text(profileModel.totalMins/60 == 0 ? "0.5" : "\(profileModel.totalMins/60)")
                                                     .font(Font.mada(.bold, size: 40))
@@ -243,6 +242,10 @@ struct ProfileScene: View {
                                     }.frame(width: abs(width - 75), height: height/6)
                                         .padding()
                                         .padding(.leading)
+                                        .onTapGesture(count: 3) {
+                                            UserDefaults.standard.setValue(true, forKey: "trippleTapped")
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        }
                                     ZStack {
                                         Rectangle()
                                             .fill(Clr.darkWhite)
@@ -373,7 +376,7 @@ struct ProfileScene: View {
                                     .frame(width: abs(width - 100), height: 50, alignment: .center)
                                     .padding(.top, 80)
                                     if !tappedRate {
-                                            Text("⭐️ Rate the app for 100 free coins!")
+                                            Text("⭐️ Rate the app to unlock a new plant")
                                                 .foregroundColor(Clr.darkgreen)
                                                 .font(Font.mada(.bold, size: 20))
                                                 .minimumScaleFactor(0.5)
@@ -384,20 +387,11 @@ struct ProfileScene: View {
                                             Analytics.shared.log(event: .profile_tapped_rate)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                                                userCoins += 100
-                                                UserDefaults.standard.setValue(userCoins, forKey: "coins")
                                                 UserDefaults.standard.setValue(true, forKey: "tappedRate")
-                                                if let email = Auth.auth().currentUser?.email {
-                                                    Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                                                        K.defaults.coins: userCoins
-                                                    ]) { (error) in
-                                                        if let e = error {
-                                                            print("There was a issue saving data to firestore \(e) ")
-                                                        } else {
-                                                            print("Succesfully saved user model")
-                                                        }
-                                                    }
-                                                }
+                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                                                    p.title == "Camellia"
+                                                })
+                                                userModel.buyPlant(unlockedStrawberry: true)
                                             }
                                             tappedRate = true
                                         } label: {
@@ -419,7 +413,7 @@ struct ProfileScene: View {
                                     if let _ = Auth.auth().currentUser?.email {} else {
                                         Text("Save your progress")
                                             .foregroundColor(Clr.black2).font(Font.mada(.semiBold, size: 20))
-                                            .padding(.top, K.isSmall() ? 5 : 15)
+                                            .padding(.top, K.isSmall() ? 0 : 15)
                                     }
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -485,6 +479,13 @@ struct ProfileScene: View {
             }
         }
         }.onAppear {
+            if tappedRefer {
+                selection = .referrals
+                tappedRefer = false
+            } else {
+                selection = .settings
+            }
+
             tappedRate = UserDefaults.standard.bool(forKey: "tappedRate")
             if userModel.referredStack == "" {
                 if !UserDefaults.standard.bool(forKey: "isPro") {

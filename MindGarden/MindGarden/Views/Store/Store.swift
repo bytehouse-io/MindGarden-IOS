@@ -116,8 +116,8 @@ struct Store: View {
                                     }
                                 }
                             }
-
                         }
+
                         VStack {
                             HStack {
                                 Img.coin
@@ -197,6 +197,14 @@ struct Store: View {
                 }
         }.onAppearAnalytics(event: .screen_load_store)
             .onAppear {
+                if UserDefaults.standard.bool(forKey: "christmasLink") {
+                    userModel.willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Christmas Tree"})
+                    withAnimation {
+                        showModal = true
+                    }
+                    UserDefaults.standard.setValue(true, forKey: "showTip")
+                    UserDefaults.standard.setValue(false, forKey: "christmasLink")
+                }
                 if isShop {
                     showTip = !UserDefaults.standard.bool(forKey: "showTip")
                 }

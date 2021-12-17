@@ -32,6 +32,7 @@ struct OnboardingScene: View {
                     VStack(alignment: .center) {
                         if #available(iOS 14.0, *) {
                             TabView(selection: $index) {
+
                                 ForEach((0..<3), id: \.self) { index in
                                     VStack {
                                             images[index]
@@ -62,6 +63,15 @@ struct OnboardingScene: View {
                                         }
                                     }.offset(y: index == 0 ? 0 : -20)
                             }
+                            .onChange(of: index, perform: { _ in
+                                if index == 0 {
+                                    viewRouter.progressValue = 0.3
+                                } else if index == 1{
+                                    viewRouter.progressValue = 0.4
+                                } else {
+                                    viewRouter.progressValue = 0.5
+                                }
+                            })
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                             .frame(width: width * 0.55, height: height * 0.75, alignment: .center)
                         } else {
@@ -69,23 +79,20 @@ struct OnboardingScene: View {
                         }
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            if index < 2 {
-                                withAnimation {
-                                    index += 1
-                                    viewRouter.progressValue += 0.1
-                                }
-                            } else {
+                            if index >= 2 {
                                 Analytics.shared.log(event: .onboarding_tapped_continue)
                                 withAnimation {
-                                    viewRouter.progressValue += 0.1
+                                    viewRouter.progressValue = 0.6
                                     viewRouter.currentPage = .experience
                                 }
+                            } else {
+                                index += 1
                             }
                         } label: {
                             Capsule()
                                 .fill(Clr.yellow)
                                 .overlay(
-                                    Text(index != 2 ? "Next" : "Continue")
+                                    Text(index != 2 ? "Next" : "Get Happier 👉🏻")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 20))
                                 )

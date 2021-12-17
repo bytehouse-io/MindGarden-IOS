@@ -132,6 +132,11 @@ class UserViewModel: ObservableObject {
         var isPro = false
         Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                if !UserDefaults.standard.bool(forKey: "bonsai") {
+                    self.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Bonsai Tree"})
+                    self.buyPlant(unlockedStrawberry: true)
+                    UserDefaults.standard.setValue(true, forKey: "bonsai")
+                }
                 UserDefaults.standard.setValue(true, forKey: "isPro")
             } else {
                 if !UserDefaults.standard.bool(forKey: "trippleTapped") {

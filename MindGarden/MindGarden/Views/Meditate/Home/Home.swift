@@ -70,7 +70,7 @@ struct Home: View {
                                         .padding(.bottom, 10)
                                 }
                             }
-                            .padding(.top, K.isSmall() ? -50 : -30 )
+                            .padding(.top, K.isSmall() ? -50 : -30)
                             HStack {
                                 Button {
                                     Analytics.shared.log(event: .home_tapped_bonus)
@@ -183,37 +183,63 @@ struct Home: View {
                                             }.padding([.top, .bottom, .trailing])
                                         }).padding(.top, K.isSmall() ? 10 : 20)
                             }.buttonStyle(NeumorphicPress())
-                            VStack(spacing: 1) {
-                                HStack {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        Analytics.shared.log(event: .home_tapped_recents)
-                                        withAnimation {
-                                            isRecent = true
+                            HStack {
+                                VStack(spacing: 1) {
+                                    HStack {
+                                        Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            Analytics.shared.log(event: .home_tapped_recents)
+                                            withAnimation {
+                                                isRecent = true
+                                            }
+                                        } label: {
+                                            Text("Recent")
+                                                .foregroundColor(isRecent ? Clr.darkgreen : Clr.black2)
+                                                .font(Font.mada(.regular, size: 20))
                                         }
-                                    } label: {
-                                        Text("Recent")
-                                            .foregroundColor(isRecent ? Clr.darkgreen : .black)
-                                            .font(Font.mada(.regular, size: 20))
-                                    }
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        Analytics.shared.log(event: .home_tapped_favorites)
-                                        withAnimation {
-                                            isRecent = false
+                                        Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            Analytics.shared.log(event: .home_tapped_favorites)
+                                            withAnimation {
+                                                isRecent = false
+                                            }
+                                        } label: {
+                                            Text("Favorites")
+                                                .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
+                                                .font(Font.mada(.regular, size: 20))
                                         }
-                                    } label: {
-                                        Text("Favorites")
-                                            .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
-                                            .font(Font.mada(.regular, size: 20))
                                     }
+                                    Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
+                                        .foregroundColor(Clr.darkgreen)
+                                        .offset(x: isRecent ? -42.0 : 33.0)
+                                        .animation(.default, value: isRecent)
                                 }
-                                Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
-                                    .foregroundColor(Clr.darkgreen)
-                                    .offset(x: isRecent ? -42.0 : 33.0)
-                                    .animation(.default, value: isRecent)
-                            }.frame(width: abs(g.size.width - 75), alignment: .leading)
-                                .padding(.top, 20)
+                                    Spacer()
+                                    if !UserDefaults.standard.bool(forKey: "isPro") {
+                                        Button {
+                                            Analytics.shared.log(event: .home_tapped_pro)
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            withAnimation {
+                                                fromPage = "home"
+                                                viewRouter.currentPage = .pricing
+                                            }
+                                        } label: {
+                                            HStack {
+                                                Text("💚 Go Pro!")
+                                                    .font(Font.mada(.semiBold, size: 14))
+                                                    .foregroundColor(Clr.darkgreen)
+                                                    .font(.footnote)
+                                            }
+                                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                                            .padding(8)
+                                            .background(Clr.darkWhite)
+                                            .cornerRadius(25)
+                                        }
+                                        .buttonStyle(NeumorphicPress())
+                                    }
+                                }.frame(width: abs(g.size.width - 75), alignment: .leading)
+                                    .padding(.top, 20)
+
                             ScrollView(.horizontal, showsIndicators: false, content: {
                                 HStack(spacing: 15) {
                                     if model.favoritedMeditations.isEmpty && !isRecent {
@@ -310,28 +336,6 @@ struct Home: View {
             .navigationBarItems(
                 leading: Img.topBranch.padding(.leading, -20),
                 trailing: HStack {
-                    if !UserDefaults.standard.bool(forKey: "isPro") {
-                        Button {
-                            Analytics.shared.log(event: .home_tapped_pro)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                fromPage = "home"
-                                viewRouter.currentPage = .pricing
-                            }
-                        } label: {
-                            HStack {
-                                Text("💚 Go Pro!")
-                                    .font(Font.mada(.semiBold, size: 14))
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(.footnote)
-                            }
-                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
-                            .padding(8)
-                            .background(Clr.darkWhite)
-                            .cornerRadius(25)
-                        }
-                        .buttonStyle(NeumorphicPress())
-                    }
                     Image(systemName: "magnifyingglass")
                     .foregroundColor(Clr.darkgreen)
                     .font(.system(size: 22))
@@ -366,10 +370,30 @@ struct Home: View {
              }
                 if userWentPro {
                     wentPro = userWentPro
+
                     userWentPro = false
                 }
                 numberOfMeds += Int.random(in: -3 ... 3)
-                showUpdateModal = !UserDefaults.standard.bool(forKey: "1.2Update") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
+
+             //handle update modal or deeplink
+             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                 if UserDefaults.standard.bool(forKey: "introLink") {
+                     model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
+                     viewRouter.currentPage = .middle
+                     UserDefaults.standard.setValue(false, forKey: "introLink")
+                 } else if UserDefaults.standard.bool(forKey: "happinessLink") {
+                     model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 14})
+                     viewRouter.currentPage = .middle
+                     UserDefaults.standard.setValue(false, forKey: "happinessLink")
+                 }
+
+                 if UserDefaults.standard.bool(forKey: "christmasLink") {
+                     viewRouter.currentPage = .shop
+                 } else {
+                     showUpdateModal = !UserDefaults.standard.bool(forKey: "1.2Update")
+                 }
+             }
+
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
@@ -384,7 +408,7 @@ struct Home: View {
 
                 }
              coins = userCoins
-             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.025)
+             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
             .onAppearAnalytics(event: .screen_load_home)
     }

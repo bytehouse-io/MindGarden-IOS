@@ -98,7 +98,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .middle:
                                         MiddleSelect()
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .play:
                                         Play()

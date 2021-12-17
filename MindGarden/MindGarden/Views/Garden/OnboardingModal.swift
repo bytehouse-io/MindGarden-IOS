@@ -99,6 +99,7 @@ struct OnboardingModal: View {
                                         withAnimation {
                                             shown = false
                                             Analytics.shared.log(event: .onboarding_finished_single_course)
+                                            UserDefaults.standard.setValue(false, forKey: "introLink")
                                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                             meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                                             viewRouter.currentPage = .middle
