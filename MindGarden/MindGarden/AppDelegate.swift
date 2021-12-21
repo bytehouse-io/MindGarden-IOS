@@ -12,6 +12,7 @@ import AppsFlyerLib
 import Purchases
 import FirebaseDynamicLinks
 import Amplitude
+import OneSignal
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,17 +30,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().isDebug = true
 
-        Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG")
+
 
         Amplitude.instance().trackingSessionEvents = true
         // Initialize SDK
         Amplitude.instance().initializeApiKey("76399802bdea5c85e4908f0a1b922bda")
         // Set userId
-        Amplitude.instance().setUserId(UUID().uuidString)
         // Log an event
 
         sendLaunch()
+        Purchases.logLevel = .debug
+        Purchases.automaticAppleSearchAdsAttributionCollection = true
+        OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
+         // OneSignal initialization
+         OneSignal.initWithLaunchOptions(launchOptions)
+         OneSignal.setAppId("7f964cf0-550e-426f-831e-468b9a02f012")
+        let userId = UserDefaults.standard.string(forKey: "userId")
+        if userId != nil  && userId != ""  {
+            Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: userId)
+            Purchases.shared.setOnesignalID(userId)
+            Amplitude.instance().setUserId(userId)
+        } else {
+            let id = UUID().uuidString
+            OneSignal.setExternalUserId(id)
+            UserDefaults.standard.setValue(id, forKey: "userId")
+            Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: id)
+            Purchases.shared.setOnesignalID(id)
+            Amplitude.instance().setUserId(id)
+        }
+        Purchases.shared.collectDeviceIdentifiers()
+
+        // Set the Appsflyer Id
+        Purchases.shared.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID())
+         // promptForPushNotifications will show the native iOS notification permission prompt.
+         // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         return true
     }
 
@@ -106,10 +130,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: AppsFlyerLibDelegate{
     // Handle Organic/Non-organic installation
     func onConversionDataSuccess(_ installData: [AnyHashable: Any]) {
-        print("onConversionDataSuccess data:")
-        for (key, value) in installData {
-            print(key, ":", value)
-        }
+//        print("onConversionDataSuccess data:")
+//        for (key, value) in installData {
+//            print(key, ":", value)
+//        }
         if let status = installData["af_status"] as? String {
             if (status == "Non-organic") {
                 if let sourceID = installData["media_source"],
@@ -133,10 +157,10 @@ extension AppDelegate: AppsFlyerLibDelegate{
     //Handle Deep Link
     func onAppOpenAttribution(_ attributionData: [AnyHashable : Any]) {
         //Handle Deep Link Data
-        print("onAppOpenAttribution data:")
-        for (key, value) in attributionData {
-            print(key, ":",value)
-        }
+//        print("onAppOpenAttribution data:")
+//        for (key, value) in attributionData {
+//            print(key, ":",value)
+//        }
     }
     func onAppOpenAttributionFailure(_ error: Error) {
         print(error)

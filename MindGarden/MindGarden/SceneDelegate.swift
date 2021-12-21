@@ -11,6 +11,7 @@ import AppsFlyerLib
 import FirebaseDynamicLinks
 import Firebase
 import Foundation
+import OneSignal
 
 var numberOfMeds = 0
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -26,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
+
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
             UserDefaults.standard.setValue("nature", forKey: "sound")

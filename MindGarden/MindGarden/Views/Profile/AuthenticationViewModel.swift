@@ -14,6 +14,7 @@ import SwiftUI
 import AuthenticationServices
 import Combine
 import Amplitude
+import OneSignal
 
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
@@ -315,6 +316,9 @@ extension AuthenticationViewModel {
     }
 
     func createUser() {
+        if let email = Auth.auth().currentUser?.email {
+            OneSignal.setEmail(email)
+        }
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
         var date = dateFormatter.string(from: Date())
