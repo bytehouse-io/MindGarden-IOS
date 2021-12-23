@@ -44,7 +44,7 @@ struct Plant: Hashable {
 
     static var badgePlants: [Plant] = [
         // rate the app
-        Plant(title: "Camellia", price: 6, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. In Japan the camellia flower is called “Tsubaki” and symbolizes the divine. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.camellia1, two: Img.camellia2, coverImage: Img.camellia3, head: Img.camelliaHead, badge: Img.camelliaBadge),
+        Plant(title: "Camellia", price: 6, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.camellia1, two: Img.camellia2, coverImage: Img.camellia3, head: Img.camelliaHead, badge: Img.camelliaBadge),
         // 30 day
         Plant(title: "Cherry Blossoms", price: 1, selected: false, description: "Cherry Blossoms also known as sakura in Japan, are the small, delicate pink flowers produced by cherry blossom trees. The springtime bloom is a lavish spectacle but remarkably brief; after only two weeks, they drop to the ground and wither, falling like snow with the ebb and flow of the winds.", packetImage: Img.daisyPacket, one: Img.cherryBlossoms1, two: Img.cherryBlossoms2, coverImage: Img.cherryBlossoms3, head: Img.cherryBlossomHead, badge: Img.cherryBlossomBadge),
         // 7 day
@@ -66,6 +66,6 @@ struct Plant: Hashable {
         0: "7️⃣ Day Streak",
         1: "📆 30 Day Streak",
         5: "🎅 Meditate before Jan 3",
-        6: "🙏 30 Gratitudes"
+        6: "🙏 Write 30 Gratitudes"
     ]
 }

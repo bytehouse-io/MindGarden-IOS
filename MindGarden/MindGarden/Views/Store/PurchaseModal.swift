@@ -160,7 +160,7 @@ struct PurchaseModal: View {
                                 .overlay(HStack{
                                     if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                                         Text("\(Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] ?? "" )")
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.mada(.bold, size: 18))
                                             .foregroundColor(Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? .white : Clr.black1)
                                     } else {
                                         Img.coin

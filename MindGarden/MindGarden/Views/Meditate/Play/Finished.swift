@@ -190,16 +190,17 @@ struct Finished: View {
             //unlock christmas tree
             var dateComponents = DateComponents()
             dateComponents.month = 12
-            dateComponents.day = 25
+            dateComponents.day = 20
             dateComponents.year = 2021
             let userCalendar = Calendar(identifier: .gregorian)
-            let dec25 = userCalendar.date(from: dateComponents)
+            let dec20 = userCalendar.date(from: dateComponents)
             var dateComponents2 = DateComponents()
-            dateComponents2.month = 12
-            dateComponents2.day = 24
-            dateComponents2.year = 2021
-            let dec24 = userCalendar.date(from: dateComponents)
-            if (Date.isSameDay(date1: Date(), date2: dec25!) || Date.isSameDay(date1: Date(), date2: dec24!)) && !UserDefaults.standard.bool(forKey: "Christmas") {
+            dateComponents2.month = 1
+            dateComponents2.day = 5
+            dateComponents2.year = 2022
+            let jan5 = userCalendar.date(from: dateComponents2)
+
+            if Date.isBetween(dec20!, and: jan5!) && !UserDefaults.standard.bool(forKey: "christmas") {
                 userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
                     p.title == "Christmas Tree"
                 })

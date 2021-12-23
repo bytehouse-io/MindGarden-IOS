@@ -185,9 +185,12 @@ struct Store: View {
                         .opacity(0.3)
                         .edgesIgnoringSafeArea(.all)
                 }
-                PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
-                    .opacity(confirmModal || showSuccess ? 0.3 : 1)
-                    .environmentObject(bonusModel)
+                if isShop {
+                    PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
+                        .opacity(confirmModal || showSuccess ? 0.3 : 1)
+                        .environmentObject(bonusModel)
+                }
+
                 ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
