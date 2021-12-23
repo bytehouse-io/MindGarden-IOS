@@ -105,11 +105,15 @@ class UserViewModel: ObservableObject {
     }
     func updateReffered(refDate: String, numRefs: Int) {
         UserDefaults.standard.setValue(true, forKey: "isPro")
-        UserDefaults.standard.setValue(true, forKey: "tappedRate")
         var dte = dateFormatter.date(from: self.referredStack == "" ? dateFormatter.string(from: Date()) : refDate)
 
         if dte ?? Date() < Date() {
             dte = Date()
+        }
+        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") {
+            willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Venus Fly Trap"})
+            buyPlant(unlockedStrawberry: true)
+            UserDefaults.standard.setValue(true, forKey: "referPlant")
         }
 
         let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: dte ?? Date())

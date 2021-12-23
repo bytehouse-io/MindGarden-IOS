@@ -13,6 +13,7 @@ struct PurchaseModal: View {
     @Binding var showConfirm: Bool
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var bonusModel: BonusViewModel
     @EnvironmentObject var meditateModel: MeditationViewModel
 //    var img: Img = Image()
 
@@ -84,12 +85,26 @@ struct PurchaseModal: View {
                                 .frame(height: g.size.width * 0.18)
                             Image(systemName: "arrow.right")
                             userModel.willBuyPlant?.coverImage
-                                .resizable()
+                                .resizable() 
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.width * 0.2)
                         }.padding(.horizontal, 10)
+                        if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
+                            HStack {
+                                switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
+                                case "🙏 30 Gratitudes": Text("Total gratitudes: \(UserDefaults.standard.integer(forKey: "numGrads"))")
+                                case "7️⃣ Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
+                                case  "📆 30 Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
+                                default: Text("")
+                                }
+                            }
+                            .font(Font.mada(.semiBold, size: 18))
+                            .foregroundColor(Clr.black2)
+                            .padding(.bottom, -10)
+                        }
                         Button {
                             if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
+
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
                                 case "⭐️ Rate the app":
                                     if !UserDefaults.standard.bool(forKey: "tappedRate") {

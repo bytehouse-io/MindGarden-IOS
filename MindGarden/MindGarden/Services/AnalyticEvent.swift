@@ -211,6 +211,8 @@ enum AnalyticEvent {
     case profile_tapped_goPro //
     case profile_tapped_toggle_off_notifs //
     case profile_tapped_toggle_on_notifs //
+    case profile_tapped_toggle_off_mindful //
+    case profile_tapped_toggle_on_mindful //
     case profile_tapped_logout //
     case profile_tapped_refer //
     case profile_tapped_refer_friend //
@@ -529,6 +531,8 @@ extension AnalyticEvent {
         case .profile_tapped_restore: return "profile_tapped_restore"
         case .profile_tapped_toggle_off_notifs: return "profile_tapped_toggle_off_notifs"
         case .profile_tapped_toggle_on_notifs: return "profile_tapped_toggle_on_notifs"
+        case .profile_tapped_toggle_off_mindful: return "profile_tapped_toggle_on_mindful"
+        case .profile_tapped_toggle_on_mindful: return "profile_tapped_toggle_off_mindful"
         case .profile_tapped_logout: return "profile_tapped_logout"
         case .profile_tapped_feedback: return "profile_tapped_feedback"
         case .profile_tapped_roadmap: return "profile_tapped_roadmap"

@@ -116,6 +116,7 @@ struct NotificationScene: View {
                                 .neoShadow()
                                 .frame(width: g.size.width * 0.35)
                             Spacer()
+                         
                             Button {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -137,16 +138,16 @@ struct NotificationScene: View {
 
                                                     if frequency == "Everyday" {
                                                         for i in 1...7 {
-                                                            let datee = createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
-                                                            scheduleNotification(at: datee,  weekDay: i)
+                                                            let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
+                                                            NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
                                                         }
                                                     } else if frequency == "Weekdays" {
                                                         for i in 2...6 {
-                                                            scheduleNotification(at: createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: i)
+                                                            NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: i)
                                                         }
                                                     } else { // weekend
-                                                        scheduleNotification(at: createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
-                                                        scheduleNotification(at: createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
+                                                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
+                                                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
                                                     }
 
 
@@ -215,6 +216,7 @@ struct NotificationScene: View {
                         }.frame(width: width * 0.9)
                         .padding(.top, 20)
                     }
+
                     if bottomSheetShown  {
                         Color.black
                             .opacity(0.3)
@@ -263,21 +265,6 @@ struct NotificationScene: View {
             }
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_notification)
-        .onAppear {
-//            let center = UNUserNotificationCenter.current()
-//            center.removeAllPendingNotificationRequests() // To remove all pending notifications which are not delivered yet but scheduled.
-//            center.removeAllDeliveredNotifications()
-            UNUserNotificationCenter.current().getPendingNotificationRequests { (notifications) in
-                  print("Count: \(notifications.count)")
-                  for item in notifications {
-                    print(item.content)
-                      if let trigger = item.trigger as? UNCalendarNotificationTrigger,
-                               let triggerDate = trigger.nextTriggerDate(){
-                               print(triggerDate, "box")
-                           }
-                  }
-              }
-        }
 //            .alert(isPresented: $showAlert) {
 //                Alert(title: Text("Turn on Notifications"), message: Text("We'll do our best not to annoy you"), dismissButton: .default(Text("Go to Settings"), action: {
 //                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
@@ -288,42 +275,6 @@ struct NotificationScene: View {
 //            }
 
     }
-    //Create Date from picker selected value.
-       func createDate(weekday: Int, hour: Int, minute: Int)->Date{
-           var components = DateComponents()
-           components.hour = hour
-           components.minute = minute
-           components.year = Int(Date().get(.year))
-//           components.month = Int(Date().get(.month))
-//           components.day = Int(Date().get(.day))
-           components.weekday = weekday // sunday = 1 ... saturday = 7
-           components.weekdayOrdinal = 10
-           components.timeZone = .current
-           let formatter = DateFormatter()
-           formatter.dateFormat = "MM/dd/yyyy hh:mm a"
-           let calendar = Calendar(identifier: .gregorian)
-           print(formatter.string(from: calendar.date(from: components)!), weekday)
-           return calendar.date(from: components)!
-       }
-
-       //Schedule Notification with weekly bases.
-        func scheduleNotification(at date: Date, weekDay: Int) {
-           let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute], from: date)
-
-           let content = UNMutableNotificationContent()
-
-           content.title = "It's time to meditate!"
-           content.subtitle = "Let's tend to our garden & become happier."
-           content.sound = UNNotificationSound.default
-           let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
-
-           // choose a random identifier
-           let request = UNNotificationRequest(identifier: String(weekDay), content: content, trigger: trigger)
-
-           // add our notification request
-           UNUserNotificationCenter.current().add(request)
-
-       }
 }
 
 

@@ -84,7 +84,7 @@ struct PricingView: View {
                                     }
                             }.frame(width: g.size.width)
                             //UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text("🎄 Get MindGarden Pro with our holiday sale") + Text(" (limited time)").foregroundColor(Clr.darkgreen))
+                            (Text("🥳 Get MindGarden Pro with a New Year sale") + Text(" (limited time)").foregroundColor(Clr.darkgreen))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)

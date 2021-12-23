@@ -44,7 +44,7 @@ struct Plant: Hashable {
 
     static var badgePlants: [Plant] = [
         // rate the app
-        Plant(title: "Camellia", price: 2, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. In Japan the camellia flower is called “Tsubaki” and symbolizes the divine. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.camellia1, two: Img.camellia2, coverImage: Img.camellia3, head: Img.camelliaHead, badge: Img.camelliaBadge),
+        Plant(title: "Camellia", price: 6, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. In Japan the camellia flower is called “Tsubaki” and symbolizes the divine. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.camellia1, two: Img.camellia2, coverImage: Img.camellia3, head: Img.camelliaHead, badge: Img.camelliaBadge),
         // 30 day
         Plant(title: "Cherry Blossoms", price: 1, selected: false, description: "Cherry Blossoms also known as sakura in Japan, are the small, delicate pink flowers produced by cherry blossom trees. The springtime bloom is a lavish spectacle but remarkably brief; after only two weeks, they drop to the ground and wither, falling like snow with the ebb and flow of the winds.", packetImage: Img.daisyPacket, one: Img.cherryBlossoms1, two: Img.cherryBlossoms2, coverImage: Img.cherryBlossoms3, head: Img.cherryBlossomHead, badge: Img.cherryBlossomBadge),
         // 7 day
@@ -56,7 +56,7 @@ struct Plant: Hashable {
         // Meditate on Christmas
         Plant(title: "Christmas Tree", price: 5, selected: false, description: "Evergreen trees are a popular type of Christmas tree because they keep their leaves throughout the year. Germany is credited with starting the Christmas Tree tradition in the 16th century.", packetImage: Img.daisyPacket, one: Img.christmas1, two: Img.christmas2, coverImage: Img.christmas3, head: Img.christmasHead, badge: Img.christmasBadge),
         // 30 Gratitudes
-        Plant(title: "Hydrangea", price: 6, selected: false, description: "There are around 70-75 species of hydrangea and can grow literally anywhere. Never eat them as they are moderately toxic. ", packetImage: Img.daisyPacket, one: Img.christmas1, two: Img.christmas2, coverImage: Img.christmas3, head: Img.christmasHead, badge: Img.christmasBadge)
+//        Plant(title: "Hydrangea", price: 6, selected: false, description: "There are around 70-75 species of hydrangea and can grow literally anywhere. Never eat them as they are moderately toxic. ", packetImage: Img.daisyPacket, one: Img.christmas1, two: Img.christmas2, coverImage: Img.christmas3, head: Img.christmasHead, badge: Img.christmasBadge)
     ]
     static var allPlants = plants + badgePlants
     static var badgeDict: [Int: String] = [
@@ -65,7 +65,7 @@ struct Plant: Hashable {
         2: "⭐️ Rate the app",
         0: "7️⃣ Day Streak",
         1: "📆 30 Day Streak",
-        5: "🎅 Meditate on Dec 25",
+        5: "🎅 Meditate before Jan 3",
         6: "🙏 30 Gratitudes"
     ]
 }

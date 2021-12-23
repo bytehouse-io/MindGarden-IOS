@@ -88,6 +88,7 @@ struct ContentView: View {
                                         Store(showPlantSelect: .constant(false))
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .environmentObject(bonusModel)
                                     case .profile:
                                         ProfileScene(profileModel: profileModel )
                                             .frame(height: geometry.size.height + 10)

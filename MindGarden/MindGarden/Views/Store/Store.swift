@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Store: View {
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     @State var showModal = false
     @State var confirmModal = false
     @State var showSuccess = false
@@ -186,6 +187,7 @@ struct Store: View {
                 }
                 PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
                     .opacity(confirmModal || showSuccess ? 0.3 : 1)
+                    .environmentObject(bonusModel)
                 ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
                 SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)

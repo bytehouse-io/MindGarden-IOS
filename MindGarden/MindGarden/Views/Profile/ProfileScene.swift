@@ -39,10 +39,11 @@ struct ProfileScene: View {
     @State private var refDate = ""
     @State private var tappedRate = false
     @State private var showSpinner = false
+    @State private var showMindful = false
 
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, yyyy"
+        dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
         return dateFormatter
     }()
 
@@ -105,7 +106,20 @@ struct ProfileScene: View {
                                 if selection == .settings {
                                     if showNotification {
                                         List {
-                                            Row(title: "Daily Reminder", img: Image(systemName: "bell.fill"), swtch: true, action: {}, showNotif: $showNotif)
+                                            Row(title: "Meditation Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
+                                                withAnimation {
+                                                    showNotification = false
+                                                    UserDefaults.standard.setValue(true, forKey: "notifOn")
+                                                    showNotif = true
+                                                }
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                .frame(height: 40)
+                                            Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
+                                                withAnimation {
+                                                    UserDefaults.standard.setValue(true, forKey: "mindful")
+                                                    showMindful = true
+                                                }
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: 40)
                                         }.frame(maxHeight: g.size.height * 0.60)
                                             .padding()
@@ -117,11 +131,11 @@ struct ProfileScene: View {
                                             Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
                                                 showNotification = true
                                                 Analytics.shared.log(event: .profile_tapped_notifications)
-                                            }, showNotif: $showNotif)
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_invite)
-                                                actionSheet() }, showNotif: $showNotif)
+                                                actionSheet() }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_email)
@@ -130,7 +144,7 @@ struct ProfileScene: View {
                                                 } else {
                                                     mailNeedsSetup = true
                                                 }
-                                            }, showNotif: $showNotif)
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_restore)
@@ -142,7 +156,7 @@ struct ProfileScene: View {
                                                         UserDefaults.standard.setValue(false, forKey: "isPro")
                                                     }
                                                 }
-                                            }, showNotif: $showNotif)
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                             if !UserDefaults.standard.bool(forKey: "isPro") {
                                                 Row(title: "Go Pro", img: Image(systemName: "heart.fill"), action: {
@@ -151,7 +165,7 @@ struct ProfileScene: View {
                                                         fromPage = "profile"
                                                         viewRouter.currentPage = .pricing
                                                     }
-                                                }, showNotif: $showNotif)
+                                                }, showNotif: $showNotif, showMindful: $showMindful)
                                                     .frame(height: K.isSmall() ? 30 : 40)
                                             }
                                             Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
@@ -159,14 +173,14 @@ struct ProfileScene: View {
                                                 if let url = URL(string: "https://tally.so/r/3EB1Bw") {
                                                     UIApplication.shared.open(url)
                                                 }
-                                            }, showNotif: $showNotif)
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Our Roadmap", img: Image(systemName: "map.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_roadmap)
                                                 if let url = URL(string: "https://mindgarden.nolt.io/") {
                                                     UIApplication.shared.open(url)
                                                 }
-                                            }, showNotif: $showNotif)
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
 
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
@@ -174,7 +188,7 @@ struct ProfileScene: View {
                                                 if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                                     UIApplication.shared.open(url)
                                                 }
-                                            }, showNotif: $showNotif).frame(height: 40)
+                                            }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
                                                 .frame(height: K.isSmall() ? 30 : 40)
 
                                             Row(title: "Daily Motivation", img: Img.instaIcon, action: {
@@ -182,7 +196,7 @@ struct ProfileScene: View {
                                                 if let url = URL(string: "https://www.instagram.com/mindgardn/") {
                                                     UIApplication.shared.open(url)
                                                 }
-                                            }, showNotif: $showNotif)
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
                                         }.frame(maxHeight: g.size.height * (K.isSmall() ? 0.725 : 0.8))
                                             .padding([.horizontal])
@@ -467,6 +481,9 @@ struct ProfileScene: View {
                 .fullScreenCover(isPresented: $showNotif) {
                     NotificationScene(fromSettings: true)
                 }
+                .fullScreenCover(isPresented: $showMindful) {
+                    MindfulScene()
+                }
                 .alert(isPresented: $mailNeedsSetup) {
                     Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
                 }
@@ -477,8 +494,9 @@ struct ProfileScene: View {
             } else {
                 // Fallback on earlier versions
             }
-        }
+          }
         }.onAppear {
+//            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
             if tappedRefer {
                 selection = .referrals
                 tappedRefer = false
@@ -552,9 +570,9 @@ struct ProfileScene: View {
         var img: Image
         var swtch: Bool = false
         var action: () -> ()
-        @State var notifOn = false
+        @State var notifOn = true
         @Binding var showNotif: Bool
-
+        @Binding var showMindful: Bool
         var body: some View {
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -569,7 +587,7 @@ struct ProfileScene: View {
                             .offset(x: -10)
                             .foregroundColor(Clr.darkgreen)
                         Text(title)
-                            .font(Font.mada(.medium, size: 20))
+                            .font(Font.mada(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 16 : 20))
                             .foregroundColor(Clr.black1)
                         Spacer()
                         if title == "Notifications" {
@@ -577,26 +595,46 @@ struct ProfileScene: View {
                                 .foregroundColor(.gray)
                         } else if swtch {
                             if #available(iOS 14.0, *) {
-                                Toggle("", isOn: $notifOn)
-                                    .onChange(of: notifOn) { val in
-                                        UserDefaults.standard.setValue(val, forKey: "notifOn")
-                                        if val {
-                                            Analytics.shared.log(event: .profile_tapped_toggle_on_notifs)
-                                            showNotif = true
-                                        } else { //turned off
-                                            Analytics.shared.log(event: .profile_tapped_toggle_off_notifs)
-                                            UserDefaults.standard.setValue(false, forKey: "notifOn")
-                                            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-                                        }
-                                    }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-                                    .frame(width: UIScreen.main.bounds.width * 0.1)
+                                if title == "Meditation Reminders" {
+                                    Toggle("", isOn: $notifOn)
+                                        .onChange(of: notifOn) { val in
+                                            UserDefaults.standard.setValue(val, forKey: "notifOn")
+                                            if val {
+                                                Analytics.shared.log(event: .profile_tapped_toggle_on_notifs)
+                                                showNotif = true
+                                            } else { //turned off
+                                                Analytics.shared.log(event: .profile_tapped_toggle_off_notifs)
+                                                UserDefaults.standard.setValue(false, forKey: "notifOn")
+                                                let center = UNUserNotificationCenter.current()
+                                                center.removePendingNotificationRequests(withIdentifiers: ["1", "2", "3", "4", "5", "6", "7"]) // To remove all pending notifications which are not delivered yet but scheduled.
+                                            }
+                                        }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+                                        .frame(width: UIScreen.main.bounds.width * 0.1)
+                                } else {
+                                    Toggle("", isOn: $notifOn)
+                                        .onChange(of: notifOn) { val in
+                                            UserDefaults.standard.setValue(val, forKey: "mindful")
+                                            if val {
+                                                Analytics.shared.log(event: .profile_tapped_toggle_on_mindful)
+                                                showMindful = true
+                                            } else { //turned off
+                                                NotificationHelper.deleteMindfulNotifs()
+                                                Analytics.shared.log(event: .profile_tapped_toggle_off_mindful)
+                                            }
+                                        }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+                                        .frame(width: UIScreen.main.bounds.width * 0.1)
+                                }
                             }
                         }
                     }.padding()
                 }
                 .listRowBackground(Clr.darkWhite)
             }.onAppear {
-                notifOn = UserDefaults.standard.bool(forKey: "notifOn")
+                if title == "Meditation Reminders" {
+                    notifOn = UserDefaults.standard.bool(forKey: "notifOn")
+                } else {
+                    notifOn = UserDefaults.standard.bool(forKey: "mindful")
+                }
             }
         }
     }

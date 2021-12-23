@@ -69,4 +69,88 @@ struct NotificationHelper {
            }
         }
     }
+
+    //Create Date from picker selected value.
+    static func createDate(weekday: Int, hour: Int, minute: Int)->Date{
+           var components = DateComponents()
+           components.hour = hour
+           components.minute = minute
+           components.year = Int(Date().get(.year))
+//           components.month = Int(Date().get(.month))
+//           components.day = Int(Date().get(.day))
+           components.weekday = weekday // sunday = 1 ... saturday = 7
+           components.weekdayOrdinal = 10
+           components.timeZone = .current
+           let formatter = DateFormatter()
+           formatter.dateFormat = "MM/dd/yyyy hh:mm a"
+           let calendar = Calendar(identifier: .gregorian)
+           print(formatter.string(from: calendar.date(from: components)!), weekday)
+           return calendar.date(from: components)!
+       }
+
+       //Schedule Notification with weekly bases.
+    static func scheduleNotification(at date: Date, weekDay: Int, title: String = "It's time to meditate!", subtitle: String = "Let's tend to our garden & become happier.", isMindful: Bool = false) {
+           let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute], from: date)
+
+           let content = UNMutableNotificationContent()
+
+           content.title = title
+           content.subtitle = subtitle
+           content.sound = UNNotificationSound.default
+           let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
+
+           // choose a random identifier
+            
+            let request = UNNotificationRequest(identifier: isMindful ? "\(weekDay)+\(date.get(.hour))" : String(weekDay), content: content, trigger: trigger)
+
+           // add our notification request
+           UNUserNotificationCenter.current().add(request)
+
+       }
+    static func deleteMindfulNotifs() {
+        var identifiers = [String]()
+        for weekday in 1...7 {
+            for i in 9...22 {
+                identifiers.append("\(weekday)+\(i)")
+
+            }
+        }
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: identifiers)
+    }
+    
+    static func createMindfulNotifs() {
+        // hours between 9 -> 22
+        // 7 days a week
+        // 5 notiftypes
+        //
+        let notifTypes = UserDefaults.standard.array(forKey: "notifTypes") as! [String]
+        let frequency = UserDefaults.standard.integer(forKey: "frequency")
+
+
+        
+        let notifType = Int.random(in: 0..<notifTypes.count)
+        for weekday in 1...7 {
+            let firstThird = Int.random(in: 9...13)
+            let secondThird = Int.random(in: 14...18)
+            let finalThird = Int.random(in: 19...22)
+            let arr = [firstThird, secondThird, finalThird]
+            let randNum = Int.random(in: 0...2)
+            for i in 1...frequency {
+                if notifTypes[notifType] == "gratitude" {
+                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Be thankful for what you have;", subtitle: "you'll end up having more.", isMindful: true)
+                } else if notifTypes[notifType] == "breathing" {
+                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Take a deep breath.", subtitle: "Exhale & let go.", isMindful: true)
+                } else if notifTypes[notifType] == "smiling" {
+                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Life is short.", subtitle: "Smile while you have teeth", isMindful: true)
+                } else if notifTypes[notifType] == "loving" {
+                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Everyone is fighting their own battles.", subtitle: "Do your part & show some love while they're still here.", isMindful: true)
+                } else { // present
+                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Do not ruin today by mourning tomorrow.”", subtitle: "Are you expecting something? Live right now.", isMindful: true)
+                }
+            }
+        }
+    }
+
 }
+

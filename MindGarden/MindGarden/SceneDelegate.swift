@@ -32,6 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
             UserDefaults.standard.setValue("nature", forKey: "sound")
             UserDefaults.standard.setValue(50, forKey: "coins")
+            UserDefaults.standard.setValue(["gratitude", "smiling", "loving", "breathing", "present"], forKey: "notifTypes")
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd,yyyy"
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")

@@ -24,6 +24,7 @@
 		FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = FE39A0B4277116CC007A3E82 /* OneSignal */; };
 		FE39A0B7277116FB007A3E82 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = FE39A0B6277116FB007A3E82 /* OneSignal */; };
 		FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE39A0B9277137D3007A3E82 /* iAd.framework */; };
+		FE39A0BC2772A039007A3E82 /* MindfulScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39A0BB2772A038007A3E82 /* MindfulScene.swift */; };
 		FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8A827276948007117F5 /* NotificationHelper.swift */; };
 		FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8AA27288425007117F5 /* PricingView.swift */; };
 		FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4D80EA26ED4B15002FE291 /* LottieView.swift */; };
@@ -183,6 +184,7 @@
 		FE39A0AB27711644007A3E82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE39A0B8277119EF007A3E82 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		FE39A0B9277137D3007A3E82 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		FE39A0BB2772A038007A3E82 /* MindfulScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindfulScene.swift; sourceTree = "<group>"; };
 		FE4CF8A827276948007117F5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		FE4CF8AA27288425007117F5 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		FE4D80EA26ED4B15002FE291 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				FEAA837C2695447300E4C62F /* ProfileScene.swift */,
 				FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */,
 				FEC3FFCA26F1219F009F58EE /* MailView.swift */,
+				FE39A0BB2772A038007A3E82 /* MindfulScene.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1103,6 +1106,7 @@
 				FE9BE35727434025004FEBF0 /* String+Extensions.swift in Sources */,
 				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
+				FE39A0BC2772A039007A3E82 /* MindfulScene.swift in Sources */,
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
 				FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */,

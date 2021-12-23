@@ -100,7 +100,7 @@ struct Gratitude: View, KeyboardReadable {
                         var num = UserDefaults.standard.integer(forKey: "numGrads")
                         num += 1
                         if num == 30 {
-                            userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Hydrangea" })
+                            userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
                             userModel.buyPlant(unlockedStrawberry: true)
                         }
                         UserDefaults.standard.setValue(num, forKey: "numGrads")
