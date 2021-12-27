@@ -105,7 +105,12 @@ struct PlusMenu: View {
                             })
                             viewRouter.currentPage = .play
                         } else {
-                            meditateModel.selectedMeditation = meditateModel.featuredMeditation
+                            if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
+                                meditateModel.selectedMeditation = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()[0]
+                            } else {
+                                meditateModel.selectedMeditation = meditateModel.featuredMeditation
+                            }
+
                             if meditateModel.selectedMeditation?.type == .course {
                                 viewRouter.currentPage = .middle
                             } else {

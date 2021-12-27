@@ -1,0 +1,6 @@
+framework module Pods_MindGarden_OneSignalNotificationServiceExtension {
+  umbrella header "Pods-MindGarden-OneSignalNotificationServiceExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}

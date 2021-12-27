@@ -379,14 +379,22 @@ struct PricingView: View {
         Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
                 let event = logEvent()
-                AppsFlyerLib.shared().logEvent(name: event, values:
-                                                [
-                                                    AFEventParamRevenue: price,
-                                                    AFEventParamCurrency:"\(Locale.current.currencyCode!)"
-                                                ])
+
                 let revenue = AMPRevenue().setProductIdentifier(event)
                 revenue?.setPrice(NSNumber(value: price))
-                Amplitude.instance().logRevenueV2(revenue!)
+                if !event.contains("yearly") {
+                    AppsFlyerLib.shared().logEvent(name: event, values:
+                                                    [
+                                                        AFEventParamRevenue: price,
+                                                        AFEventParamCurrency:"\(Locale.current.currencyCode!)"
+                                                    ])
+                    Amplitude.instance().logRevenueV2(revenue!)
+                } else {
+                    AppsFlyerLib.shared().logEvent(name: event, values:
+                                                                    [
+                                                                        AFEventParamContent: "true"
+                                                                    ])
+                }
                 AppsFlyerLib.shared().logEvent(name: event2, values:
                                                                 [
                                                                     AFEventParamContent: "true"

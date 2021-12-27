@@ -20,11 +20,17 @@
 		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
 		FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE349D73275ACB2F006B4378 /* ReasonScene.swift */; };
 		FE39A0AA27711644007A3E82 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39A0A927711644007A3E82 /* NotificationService.swift */; };
-		FE39A0AE27711644007A3E82 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = FE39A0B4277116CC007A3E82 /* OneSignal */; };
 		FE39A0B7277116FB007A3E82 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = FE39A0B6277116FB007A3E82 /* OneSignal */; };
 		FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE39A0B9277137D3007A3E82 /* iAd.framework */; };
 		FE39A0BC2772A039007A3E82 /* MindfulScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39A0BB2772A038007A3E82 /* MindfulScene.swift */; };
+		FE48B43A27791B5500CA7B63 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE48B43927791B5500CA7B63 /* WidgetKit.framework */; };
+		FE48B43C27791B5500CA7B63 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE48B43B27791B5500CA7B63 /* SwiftUI.framework */; };
+		FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE48B43E27791B5500CA7B63 /* MindGardenWidget.swift */; };
+		FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE48B44127791B5B00CA7B63 /* Assets.xcassets */; };
+		FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */; };
+		FE48B44527791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */; };
+		FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8A827276948007117F5 /* NotificationHelper.swift */; };
 		FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8AA27288425007117F5 /* PricingView.swift */; };
 		FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4D80EA26ED4B15002FE291 /* LottieView.swift */; };
@@ -122,12 +128,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FE39A0AC27711644007A3E82 /* PBXContainerItemProxy */ = {
+		FE48B44627791B5B00CA7B63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FEB6AF8A265D95F500224BFD /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FE39A0A627711644007A3E82;
-			remoteInfo = OneSignalNotificationServiceExtension;
+			remoteGlobalIDString = FE48B43727791B5500CA7B63;
+			remoteInfo = MindGardenWidgetExtension;
 		};
 		FEB6AFA9265D95F700224BFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -146,13 +152,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FE39A0AF27711644007A3E82 /* Embed App Extensions */ = {
+		FE48B44927791B5B00CA7B63 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				FE39A0AE27711644007A3E82 /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+				FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,6 +191,13 @@
 		FE39A0B8277119EF007A3E82 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		FE39A0B9277137D3007A3E82 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		FE39A0BB2772A038007A3E82 /* MindfulScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindfulScene.swift; sourceTree = "<group>"; };
+		FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MindGardenWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE48B43927791B5500CA7B63 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FE48B43B27791B5500CA7B63 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		FE48B43E27791B5500CA7B63 /* MindGardenWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindGardenWidget.swift; sourceTree = "<group>"; };
+		FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = MindGardenWidget.intentdefinition; sourceTree = "<group>"; };
+		FE48B44127791B5B00CA7B63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FE48B44327791B5B00CA7B63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE4CF8A827276948007117F5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		FE4CF8AA27288425007117F5 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		FE4D80EA26ED4B15002FE291 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -286,6 +299,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FE48B43527791B5500CA7B63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE48B43C27791B5500CA7B63 /* SwiftUI.framework in Frameworks */,
+				FE48B43A27791B5500CA7B63 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FEB6AF8F265D95F500224BFD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -322,6 +344,8 @@
 				1D9EB3B89D5F800959EB618F /* Pods_MindGarden.framework */,
 				B9A99124B65899A6AAD0D8D2 /* Pods_MindGarden_MindGardenUITests.framework */,
 				2992C76EAEE11413C6172CAC /* Pods_MindGardenTests.framework */,
+				FE48B43927791B5500CA7B63 /* WidgetKit.framework */,
+				FE48B43B27791B5500CA7B63 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -360,6 +384,17 @@
 				FE39A0AB27711644007A3E82 /* Info.plist */,
 			);
 			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		FE48B43D27791B5500CA7B63 /* MindGardenWidget */ = {
+			isa = PBXGroup;
+			children = (
+				FE48B43E27791B5500CA7B63 /* MindGardenWidget.swift */,
+				FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */,
+				FE48B44127791B5B00CA7B63 /* Assets.xcassets */,
+				FE48B44327791B5B00CA7B63 /* Info.plist */,
+			);
+			path = MindGardenWidget;
 			sourceTree = "<group>";
 		};
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
@@ -425,6 +460,7 @@
 				FEB6AFAB265D95F700224BFD /* MindGardenTests */,
 				FEB6AFB6265D95F700224BFD /* MindGardenUITests */,
 				FE39A0A827711644007A3E82 /* OneSignalNotificationServiceExtension */,
+				FE48B43D27791B5500CA7B63 /* MindGardenWidget */,
 				FEB6AF93265D95F500224BFD /* Products */,
 				3A7661D503EA9E2EFD32F645 /* Pods */,
 				31146EA5291805B3B30F837A /* Frameworks */,
@@ -438,6 +474,7 @@
 				FEB6AFA8265D95F700224BFD /* MindGardenTests.xctest */,
 				FEB6AFB3265D95F700224BFD /* MindGardenUITests.xctest */,
 				FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */,
+				FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -707,6 +744,23 @@
 			productReference = FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE48B44C27791B5B00CA7B63 /* Build configuration list for PBXNativeTarget "MindGardenWidgetExtension" */;
+			buildPhases = (
+				FE48B43427791B5500CA7B63 /* Sources */,
+				FE48B43527791B5500CA7B63 /* Frameworks */,
+				FE48B43627791B5500CA7B63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MindGardenWidgetExtension;
+			productName = MindGardenWidgetExtension;
+			productReference = FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FEB6AF91265D95F500224BFD /* MindGarden */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FEB6AFBC265D95F700224BFD /* Build configuration list for PBXNativeTarget "MindGarden" */;
@@ -718,12 +772,12 @@
 				FEB85FD3266D4838008CDAA4 /* SwiftGen */,
 				C0F92CF842978BC75620190A /* [CP] Embed Pods Frameworks */,
 				B475323A681C205DF5FEB29E /* [CP] Copy Pods Resources */,
-				FE39A0AF27711644007A3E82 /* Embed App Extensions */,
+				FE48B44927791B5B00CA7B63 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				FE39A0AD27711644007A3E82 /* PBXTargetDependency */,
+				FE48B44727791B5B00CA7B63 /* PBXTargetDependency */,
 			);
 			name = MindGarden;
 			packageProductDependencies = (
@@ -785,6 +839,9 @@
 					FE39A0A627711644007A3E82 = {
 						CreatedOnToolsVersion = 13.1;
 					};
+					FE48B43727791B5500CA7B63 = {
+						CreatedOnToolsVersion = 13.1;
+					};
 					FEB6AF91265D95F500224BFD = {
 						CreatedOnToolsVersion = 12.5;
 					};
@@ -818,6 +875,7 @@
 				FEB6AFA7265D95F700224BFD /* MindGardenTests */,
 				FEB6AFB2265D95F700224BFD /* MindGardenUITests */,
 				FE39A0A627711644007A3E82 /* OneSignalNotificationServiceExtension */,
+				FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -827,6 +885,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FE48B43627791B5500CA7B63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1060,6 +1126,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FE48B43427791B5500CA7B63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
+				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FEB6AF8E265D95F500224BFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1107,6 +1182,7 @@
 				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
 				FE39A0BC2772A039007A3E82 /* MindfulScene.swift in Sources */,
+				FE48B44527791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
 				FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */,
@@ -1150,10 +1226,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		FE39A0AD27711644007A3E82 /* PBXTargetDependency */ = {
+		FE48B44727791B5B00CA7B63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FE39A0A627711644007A3E82 /* OneSignalNotificationServiceExtension */;
-			targetProxy = FE39A0AC27711644007A3E82 /* PBXContainerItemProxy */;
+			target = FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */;
+			targetProxy = FE48B44627791B5B00CA7B63 /* PBXContainerItemProxy */;
 		};
 		FEB6AFAA265D95F700224BFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1185,7 +1261,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1197,13 +1273,13 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension;
+				MARKETING_VERSION = 1.29;
+				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1213,7 +1289,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1225,8 +1301,66 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.29;
+				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		FE48B44A27791B5B00CA7B63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M5757NXZKD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindGardenWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MindGardenWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FE48B44B27791B5B00CA7B63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M5757NXZKD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindGardenWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MindGardenWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1361,7 +1495,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1372,7 +1506,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.24;
+				MARKETING_VERSION = 1.29;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1390,7 +1524,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1401,7 +1535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.24;
+				MARKETING_VERSION = 1.29;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1505,6 +1639,15 @@
 			buildConfigurations = (
 				FE39A0B027711644007A3E82 /* Debug */,
 				FE39A0B127711644007A3E82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE48B44C27791B5B00CA7B63 /* Build configuration list for PBXNativeTarget "MindGardenWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE48B44A27791B5B00CA7B63 /* Debug */,
+				FE48B44B27791B5B00CA7B63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

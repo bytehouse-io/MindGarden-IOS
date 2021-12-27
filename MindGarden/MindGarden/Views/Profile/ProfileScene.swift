@@ -390,22 +390,22 @@ struct ProfileScene: View {
                                     .frame(width: abs(width - 100), height: 50, alignment: .center)
                                     .padding(.top, 80)
                                     if !tappedRate {
-                                            Text("⭐️ Rate the app to unlock a new plant")
+                                            Text("⭐️ Support our 3 person team!")
                                                 .foregroundColor(Clr.darkgreen)
                                                 .font(Font.mada(.bold, size: 20))
                                                 .minimumScaleFactor(0.5)
                                                 .lineLimit(2)
-                                                .padding(.top)
+                                                .padding(.top, 50)
                                                 .frame(width: abs(width - 100), alignment: .leading)
                                         Button {
                                             Analytics.shared.log(event: .profile_tapped_rate)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
                                                 UserDefaults.standard.setValue(true, forKey: "tappedRate")
-                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-                                                    p.title == "Camellia"
-                                                })
-                                                userModel.buyPlant(unlockedStrawberry: true)
+//                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+//                                                    p.title == "Camellia"
+//                                                })
+//                                                userModel.buyPlant(unlockedStrawberry: true)
                                             }
                                             tappedRate = true
                                         } label: {
