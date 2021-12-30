@@ -11,6 +11,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import WidgetKit
 
 class BonusViewModel: ObservableObject {
     @Published var lastLogin: String = ""
@@ -143,6 +144,9 @@ class BonusViewModel: ObservableObject {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
             NotificationHelper.addThreeDay()
         }
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
+        WidgetCenter.shared.reloadAllTimelines()
+
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             docRef.getDocument { (snapshot, error) in

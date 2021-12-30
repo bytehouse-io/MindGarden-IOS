@@ -68,6 +68,36 @@
 				<string>happiness</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.bytehouse.mindgarden</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>gratitude</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.bytehouse.mindgarden</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>meditate</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.bytehouse.mindgarden</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mood</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

@@ -279,10 +279,30 @@ struct ContentView: View {
                 showSplash.toggle()
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.gratitude))
+               { _ in addGratitude = true }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.mood))
+                      { _ in addMood = true }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.meditate))
+        { _ in
+            print("f")
+            if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
+                meditationModel.selectedMeditation = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()[0]
+            } else {
+                meditationModel.selectedMeditation = meditationModel.featuredMeditation
+            }
 
+            if meditationModel.selectedMeditation?.type == .course {
+                viewRouter.currentPage = .middle
+            } else {
+                viewRouter.currentPage = .play
+            }
+        }
 
     }
-
+    func openedGratitude() {
+        addGratitude = true
+    }
     ///Ashvin : Show popup with animation method
 
     public func showPopupWithAnimation(completion: @escaping () -> ()) {
@@ -326,3 +346,8 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+extension NSNotification {
+    static let gratitude = Notification.Name.init("gratitude")
+    static let meditate = Notification.Name.init("meditate")
+    static let mood = Notification.Name.init("mood")
+}

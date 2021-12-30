@@ -1,4 +1,3 @@
-
 import UserNotifications
 
 import OneSignal
@@ -39,5 +38,4 @@ class NotificationService: UNNotificationServiceExtension {
             contentHandler(bestAttemptContent)
         }
     }
-    
 }

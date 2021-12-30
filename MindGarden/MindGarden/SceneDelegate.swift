@@ -148,10 +148,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if context.url.scheme == "christmas" {
                 UserDefaults.standard.setValue(true, forKey: "christmasLink")
             } else if context.url.scheme == "intro" {
-                print("intro")
                 UserDefaults.standard.setValue(true, forKey: "introLink")
             } else if context.url.scheme == "happiness" {
                 UserDefaults.standard.setValue(true, forKey: "happinessLink")
+            } else if context.url.scheme == "gratitude" {
+                NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+            } else if context.url.scheme == "meditate" {
+                NotificationCenter.default.post(name: Notification.Name("meditate"), object: nil)
+            } else if context.url.scheme == "mood" {
+                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
             }
         }
     }

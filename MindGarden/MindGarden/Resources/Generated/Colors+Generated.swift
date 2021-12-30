@@ -58,6 +58,12 @@ public enum Clr {
   public static let review = Color("review")
   /// **Universal - Any**: `#BFA588` with alpha: `1.000`
   public static let shadow = Color("shadow")
+  /// **Universal - Any**: `#FDE292` with alpha: `1.000`
+  public static let skyBlue = Color("skyBlue")
+  /// **Universal - Any**: `#000000` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#000000` with alpha: `1.000`
+  public static let superBlack = Color("superBlack")
   /// **Universal - Any**: `#F0F0F0` with alpha: `1.000`
   public static let superLightGray = Color("superLightGray")
   /// ERROR GETTING DESCRIPTION

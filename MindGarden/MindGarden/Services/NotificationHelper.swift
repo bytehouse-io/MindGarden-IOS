@@ -100,7 +100,6 @@ struct NotificationHelper {
            let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
 
            // choose a random identifier
-            
             let request = UNNotificationRequest(identifier: isMindful ? "\(weekDay)+\(date.get(.hour))" : String(weekDay), content: content, trigger: trigger)
 
            // add our notification request
@@ -112,7 +111,6 @@ struct NotificationHelper {
         for weekday in 1...7 {
             for i in 9...22 {
                 identifiers.append("\(weekday)+\(i)")
-
             }
         }
         let center = UNUserNotificationCenter.current()
@@ -123,6 +121,7 @@ struct NotificationHelper {
         // hours between 9 -> 22
         // 7 days a week
         // 5 notiftypes
+        deleteMindfulNotifs()
         var notifTypes = UserDefaults.standard.array(forKey: "notifTypes") as! [String]
         let frequency = UserDefaults.standard.integer(forKey: "frequency")
 

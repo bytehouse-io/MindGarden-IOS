@@ -9,6 +9,7 @@ import Combine
 import Firebase
 import FirebaseFirestore
 import Foundation
+import WidgetKit
 
 class GardenViewModel: ObservableObject {
     @Published var grid = [String: [String:[String:[String:Any]]]]()
@@ -160,6 +161,7 @@ class GardenViewModel: ObservableObject {
                 }
             }
 
+
             if let _ = monthTiles[weekNumber] {
                 monthTiles[weekNumber]?[day] = (plant, mood)
             } else { // first for this week
@@ -178,6 +180,8 @@ class GardenViewModel: ObservableObject {
                 if let document = snapshot, document.exists {
                     if let gardenGrid = document[K.defaults.gardenGrid] as? [String: [String:[String:[String:Any]]]] {
                         self.grid = gardenGrid
+                        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+                        WidgetCenter.shared.reloadAllTimelines()
                     }
                     if let allTimeMins = document["totalMins"] as? Int {
                         self.allTimeMinutes = allTimeMins
@@ -201,7 +205,11 @@ class GardenViewModel: ObservableObject {
             }
             self.populateMonth()
             self.getRecentMeditations()
+            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+            WidgetCenter.shared.reloadAllTimelines()
+
         }
+
     }
 
     func save(key: String, saveValue: Any) {
@@ -252,7 +260,8 @@ class GardenViewModel: ObservableObject {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
                         print("Succesfully saved garden model")
-
+                        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+                        WidgetCenter.shared.reloadAllTimelines()
                         self.populateMonth()
                         if key == "sessions" {
                             self.getRecentMeditations()
@@ -288,6 +297,8 @@ class GardenViewModel: ObservableObject {
             }
         }
         UserDefaults.standard.setValue(self.grid, forKey: "grid")
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+        WidgetCenter.shared.reloadAllTimelines()
         self.populateMonth()
         if key == "sessions" {
             self.getRecentMeditations()
