@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct BonusModal: View {
+    @ObservedObject var bonusModel: BonusViewModel
     @Binding var shown: Bool
-    @State private var progress: CGFloat = 1.5
-
+    @Binding var coins: Int
 
     var body: some View {
         GeometryReader { g in
@@ -21,13 +21,14 @@ struct BonusModal: View {
                     VStack(alignment: .center, spacing: 0) {
                         ZStack {
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
                                 }
                             } label: {
                                 Image(systemName: "xmark")
                                     .foregroundColor(.gray.opacity(0.5))
-                                    .font(.title)
+                                    .font(.system(size: 22))
                                     .padding()
                             }.position(x: 30, y: 35)
                             HStack(alignment: .center) {
@@ -39,17 +40,17 @@ struct BonusModal: View {
                         }.frame(height: g.size.height * 0.08)
 
                         Button {
-
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                                Analytics.shared.log(event: .home_claim_daily)
+                                bonusModel.saveDaily(plusCoins: 5)
+                                coins += 5
+                                bonusModel.totalBonuses -= 1
+                            }
                         } label: {
-                            BonusBox(width: g.size.width, height: g.size.height, video: false)
+                            BonusBox(bonusModel: bonusModel, width: g.size.width, height: g.size.height, video: false)
                         }.padding(.bottom, 10)
-
-                        Button {
-
-                        } label: {
-                            BonusBox(width: g.size.width, height: g.size.height, video: true)
-                        }
-
+                        .buttonStyle(NeumorphicPress())
                         Spacer()
                         if !K.isIpod() {
                             Text("Streaks")
@@ -64,10 +65,10 @@ struct BonusModal: View {
                                 .neoShadow()
                             HStack(spacing: 0) {
                                 VStack {
-                                    Img.daisy
+                                    Img.newStar
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                    Text("6 ").bold().foregroundColor(Clr.black1) + Text("days").foregroundColor(Clr.black1)
+                                    Text("\(bonusModel.streakNumber) ").bold().foregroundColor(Clr.black1) + Text(bonusModel.streakNumber == 1 ? "day" : "days").foregroundColor(Clr.black1)
                                 }.frame(width: g.size.width * 0.15)
                                 .padding()
                                 VStack(spacing: -5) {
@@ -76,10 +77,15 @@ struct BonusModal: View {
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.center)
                                     Button {
-
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        if bonusModel.sevenDayProgress >= 1.0 {
+                                            coins += 30
+                                            Analytics.shared.log(event: .home_claim_seven)
+                                            bonusModel.saveSeven()
+                                        }
                                     } label: {
-                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: progress)
-                                    }
+                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: bonusModel.sevenDayProgress)
+                                    }.buttonStyle(NeumorphicPress())
 
                                     Text("30 days")
                                         .font(Font.mada(.bold, size: 20))
@@ -87,29 +93,35 @@ struct BonusModal: View {
                                         .multilineTextAlignment(.center)
                                         .padding(.top)
                                     Button {
-
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        if bonusModel.thirtyDayProgress >= 1.0 {
+                                            Analytics.shared.log(event: .home_claim_thirty)
+                                            coins += 100
+                                            bonusModel.saveThirty()
+                                        }
                                     } label: {
-                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: progress)
-                                    }
+                                        ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: bonusModel.thirtyDayProgress)
+                                    }.buttonStyle(NeumorphicPress())
                                 }
                                 .padding()
                             }.padding(.leading)
                         }.frame(width: g.size.width * 0.65, height: g.size.height * 0.25, alignment: .center)
                         Spacer()
                     }
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.65, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.55 : 0.6), alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(12)
                     Spacer()
-                }
+                } 
                 Spacer()
             }
         }
     }
+    
     struct ProgressBar: View {
         let width, height: CGFloat
         let weekly: Bool
-        let progress: CGFloat
+        let progress: Double
 
         var body: some View {
             ZStack(alignment: .leading) {
@@ -133,20 +145,22 @@ struct BonusModal: View {
                     }
                     Img.coin
                         .renderingMode(.original)
-                    Text(weekly ? "80" : "200")
+                    Text(weekly ? "30" : "100")
                         .foregroundColor(Clr.black1)
                         .font(Font.mada(.semiBold, size: 16))
                     Spacer()
                 }.padding()
                 .frame(alignment: .center)
             }
-            .neoShadow()
         }
     }
 
     struct BonusBox: View {
+        @ObservedObject var bonusModel: BonusViewModel
+        @State private var dailyCooldown = ""
         let width, height: CGFloat
         let video: Bool
+
 
         var body: some View {
             ZStack(alignment: .center){
@@ -156,35 +170,45 @@ struct BonusModal: View {
                     .cornerRadius(15)
                     .neoShadow()
                 HStack {
-                    Img.coin
-                        .resizable()
-                        .renderingMode(.original)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: width * 0.07)
-                    Text("30")
-                        .foregroundColor(Clr.black1)
-                        .font(Font.mada(.semiBold, size: 24))
-                        .minimumScaleFactor(0.5)
-                        .padding(.trailing)
-                    Capsule()
-                        .fill(Clr.brightGreen)
-                        .overlay(
-                            Group {
-                                if video {
-                                    Image(systemName: "play.fill")
-                                        .foregroundColor(.white)
-                                } else {
-                                    Text("CLAIM")
-                                        .font(Font.mada(.bold, size: 20))
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.5)
+                    if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                        Img.coin
+                            .resizable()
+                            .renderingMode(.original)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: width * 0.07)
+                        Text("5")
+                            .foregroundColor(Clr.black1)
+                            .font(Font.mada(.semiBold, size: 24))
+                            .minimumScaleFactor(0.5)
+                            .padding(.trailing)
+                        Capsule()
+                            .fill(Clr.brightGreen)
+                            .overlay(
+                                Group {
+                                    if video {
+                                        Image(systemName: "play.fill")
+                                            .foregroundColor(.white)
+                                    } else {
+                                        Text("CLAIM")
+                                            .font(Font.mada(.bold, size: 20))
+                                            .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
+                                    }
                                 }
-                            }
-                        )
-                        .frame(width: width * 0.3, height: height * 0.04)
-                        .padding(.leading)
-                        .neoShadow()
+                            )
+                            .frame(width: width * 0.3, height: height * 0.04)
+                            .padding(.leading)
+                            .neoShadow()
+                    } else {
+                        Text(bonusModel.dailyInterval)
+                            .foregroundColor(Clr.darkgreen)
+                            .font(Font.mada(.bold, size: 30))
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                            .padding(.trailing)
+                    }
+
                 }.padding()
             }
         }
@@ -194,7 +218,7 @@ struct BonusModal: View {
 struct BonusModal_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            BonusModal(shown: .constant(true))
+            BonusModal(bonusModel: BonusViewModel(userModel: UserViewModel()), shown: .constant(true), coins: .constant(0))
         }
     }
 }

@@ -16,13 +16,14 @@ struct TabBarIcon: View {
     let img: Image
 
     var body: some View {
+        let isCategory = viewRouter.currentPage == .categories && tabName == "Meditate"
         VStack {
             img
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: width, height: height)
                 .padding(.top, 10)
-            if viewRouter.currentPage == assignedPage  {
+            if viewRouter.currentPage == assignedPage || isCategory {
                 withAnimation {
                     Rectangle().frame(width: width/2, height: height/8).foregroundColor(.white)
                         .padding(.top, 5)
@@ -31,10 +32,14 @@ struct TabBarIcon: View {
             Spacer()
         }.padding(.horizontal, -5)
         .padding(.top, 10)
-        .foregroundColor(viewRouter.currentPage == assignedPage ? .white : Clr.unselectedIcon)
+        .foregroundColor(viewRouter.currentPage == assignedPage || isCategory ? .white : Clr.unselectedIcon)
         .onTapGesture {
+            Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
             withAnimation {
-                viewRouter.currentPage = assignedPage
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single"  {
+                    viewRouter.currentPage = assignedPage
+                }
             }
         }
     }
