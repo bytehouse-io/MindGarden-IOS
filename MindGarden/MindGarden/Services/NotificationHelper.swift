@@ -109,7 +109,7 @@ struct NotificationHelper {
     static func deleteMindfulNotifs() {
         var identifiers = [String]()
         for weekday in 1...7 {
-            for i in 9...22 {
+            for i in 8...21 {
                 identifiers.append("\(weekday)+\(i)")
             }
         }
@@ -125,39 +125,40 @@ struct NotificationHelper {
         var notifTypes = UserDefaults.standard.array(forKey: "notifTypes") as! [String]
         let frequency = UserDefaults.standard.integer(forKey: "frequency")
 
-        var firstThird = Int.random(in: 9...13)
-        var secondThird = Int.random(in: 14...18)
-        var finalThird = Int.random(in: 19...22)
+        var firstThird = Int.random(in: 8...12)
+        var secondThird = Int.random(in: 14...17)
+        var finalThird = Int.random(in: 19...21)
         for weekday in 1...7 {
             notifTypes = notifTypes.shuffled()
-            for i in 1...frequency {
+            for i in 0...frequency {
                 var randNum = 0
                 if frequency == 1 {
-                    firstThird = Int.random(in: 9...22)
+                    firstThird = Int.random(in: 8...21)
                     randNum = 0
                 } else if frequency == 2 {
-                    firstThird = Int.random(in: 9...15)
-                    secondThird = Int.random(in: 16...22)
+                    firstThird = Int.random(in: 8...14)
+                    secondThird = Int.random(in: 15...21)
                     randNum = i % 2
                 } else {
-                    firstThird = Int.random(in: 9...13)
-                    secondThird = Int.random(in: 14...18)
-                    finalThird = Int.random(in: 19...22)
-                    randNum = i % 3
+                   firstThird = Int.random(in: 8...12)
+                   secondThird = Int.random(in: 14...17)
+                   finalThird = Int.random(in: 19...21)
+                   randNum = i % 3
                 }
 
                 let arr = [firstThird, secondThird, finalThird]
                 let notifType = i % notifTypes.count
+                print(weekday, arr[randNum], randNum)
                 if notifTypes[notifType] == "gratitude" {
-                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Be thankful for what you have;", subtitle: "you'll end up having more.", isMindful: true)
+                    scheduleNotification(at: createDate(weekday: weekday, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Be thankful for what you have;", subtitle: "you'll end up having more.", isMindful: true)
                 } else if notifTypes[notifType] == "breathing" {
-                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Take a deep breath.", subtitle: "Exhale & let go.", isMindful: true)
+                    scheduleNotification(at: createDate(weekday: weekday, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Take a deep breath.", subtitle: "Exhale & let go.", isMindful: true)
                 } else if notifTypes[notifType] == "smiling" {
-                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Life is short.", subtitle: "Smile while you have teeth", isMindful: true)
+                    scheduleNotification(at: createDate(weekday: weekday, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Life is short.", subtitle: "Smile while you have teeth", isMindful: true)
                 } else if notifTypes[notifType] == "loving" {
-                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Everyone is fighting their own battles.", subtitle: "Do your part & show some love while they're still here.", isMindful: true)
+                    scheduleNotification(at: createDate(weekday: weekday, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Everyone is fighting their own battles.", subtitle: "Do your part & show some love", isMindful: true)
                 } else { // present
-                    scheduleNotification(at: createDate(weekday: i, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Do not ruin today by mourning ", subtitle: "tomorrow. Live right now.", isMindful: true)
+                    scheduleNotification(at: createDate(weekday: weekday, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Do not ruin today by mourning ", subtitle: "tomorrow. Live right now.", isMindful: true)
                 }
             }
         }

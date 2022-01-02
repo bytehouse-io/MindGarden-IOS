@@ -11,6 +11,7 @@ import AppsFlyerLib
 import Firebase
 import FirebaseFirestore
 import Amplitude
+import WidgetKit
 
 var fromPage = ""
 var userWentPro = false
@@ -24,12 +25,13 @@ struct PricingView: View {
     @State private var monthlyPrice = 0.0
     @State private var yearlyPrice = 0.0
     @State private var lifePrice = 0.0
-    @State private var selectedBox = "Lifetime"
+    @State private var selectedBox = "Yearly"
     @State private var question1 = false
     @State private var question2 = false
     @State private var question3 = false
+    @State private var trialLength = 3
 
-    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
+    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"),("Access to Widgets", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
             GeometryReader { g in
                 let width = g.size.width
@@ -53,6 +55,9 @@ struct PricingView: View {
                                     .onTapGesture {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                                            WidgetCenter.shared.reloadAllTimelines()
                                             switch fromPage {
                                             case "home": viewRouter.currentPage = .meditate
                                             case "profile": viewRouter.currentPage = .profile
@@ -61,6 +66,7 @@ struct PricingView: View {
                                             case "onboarding2": viewRouter.currentPage = .meditate
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
+                                            case "widget": viewRouter.currentPage = .meditate
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
@@ -89,17 +95,17 @@ struct PricingView: View {
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: width * 0.78, alignment: .leading)
-                                .padding()
-                            Button {
-                                let impact = UIImpactFeedbackGenerator(style: .light)
-                                impact.impactOccurred()
-                                selectedBox = "Lifetime"
-                                unlockPro()
-                            } label: {
-                                PricingBox(title: "Lifetime", price: lifePrice, selected: $selectedBox)
-                            }.buttonStyle(NeumorphicPress())
-                                .frame(width: width * 0.8, height: height * 0.08)
-                                .padding(5)
+                                .padding(15)
+//                            Button {
+//                                let impact = UIImpactFeedbackGenerator(style: .light)
+//                                impact.impactOccurred()
+//                                selectedBox = "Lifetime"
+//                                unlockPro()
+//                            } label: {
+//                                PricingBox(title: "Lifetime", price: lifePrice, selected: $selectedBox)
+//                            }.buttonStyle(NeumorphicPress())
+//                                .frame(width: width * 0.8, height: height * 0.08)
+//                                .padding(5)
 
                             Button {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
@@ -107,7 +113,22 @@ struct PricingView: View {
                                 selectedBox = "Yearly"
                                 unlockPro()
                             } label: {
-                                PricingBox(title: "Yearly", price: yearlyPrice, selected: $selectedBox)
+                                ZStack {
+                                    PricingBox(title: "Yearly", price: yearlyPrice, selected: $selectedBox,trialLength: $trialLength)
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Clr.yellow)
+                                        .overlay(
+                                            Text("Most Popular")
+                                                .foregroundColor(Color.black.opacity(0.8))
+                                                .font(Font.mada(.bold, size: 12))
+                                                .multilineTextAlignment(.center)
+                                                .minimumScaleFactor(0.05)
+                                                .lineLimit(1)
+                                                .padding(.horizontal, 1)
+                                        )
+                                        .frame(width: 90,height: 25, alignment: .leading)
+                                        .position(x: width * 0.65)
+                                }
                             }.buttonStyle(NeumorphicPress())
                                 .frame(width: width * 0.8, height: height * 0.08)
                                 .padding(5)
@@ -119,12 +140,10 @@ struct PricingView: View {
                                 unlockPro()
 
                             } label: {
-                                PricingBox(title: "Monthly", price: monthlyPrice, selected: $selectedBox)
+                                PricingBox(title: "Monthly", price: monthlyPrice, selected: $selectedBox, trialLength: $trialLength)
                             }.buttonStyle(NeumorphicPress())
                                 .frame(width: width * 0.8, height: height * 0.08)
                                 .padding(5)
-
-
                             Section() {
                                 VStack(alignment: .trailing, spacing: 0){
                                         ForEach(items, id: \.0){ item in
@@ -137,6 +156,7 @@ struct PricingView: View {
                                                         .lineLimit(2)
                                                         .minimumScaleFactor(0.05)
                                                         .multilineTextAlignment(.center)
+                                                        .padding(.top)
                                                 } else {
                                                     Text("\(item.0)")
                                                         .foregroundColor(Clr.darkgreen)
@@ -150,8 +170,6 @@ struct PricingView: View {
                                                 Text("\(item.1)")
                                                     .font(Font.mada(.regular, size: item.1 == "😔" || item.1 == "🔒" ? 32 : 18))
                                                     .frame(width: width * 0.175)
-
-
                                                 Divider()
                                                 if item.2 == "Infinite" {
                                                     Text("∞")
@@ -162,7 +180,6 @@ struct PricingView: View {
                                                         .font(Font.mada(.regular, size: item.2 == "🤩" ? 32 : 32))
                                                         .frame(width: width * 0.175)
                                                 }
-                                                // etc
                                             }
                                             Divider()
                                         }
@@ -285,7 +302,7 @@ struct PricingView: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
                                 HStack {
-                                    Text(selectedBox == "Yearly" ? "Start your free trial" : "Get MindGarden Pro")
+                                    Text(selectedBox == "Yearly" ? "👨‍🌾 Start your free trial" : "👨‍🌾 Unlock MindGarden Pro")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 18))
                                 }.frame(width: g.size.width * 0.825, height: 50)
@@ -330,6 +347,9 @@ struct PricingView: View {
                             self.packagesAvailableForPurchase.append(package)
                             let product = package.product
                             let price = product.price
+                            if let period = product.introductoryPrice?.subscriptionPeriod {
+                                 trialLength = period.numberOfUnits
+                              }
                             let name = product.productIdentifier
 
                             if name == "io.mindgarden.pro.monthly" {
@@ -413,6 +433,8 @@ struct PricingView: View {
         userModel.buyPlant(unlockedStrawberry: true)
         UserDefaults.standard.setValue(true, forKey: "bonsai")
         UserDefaults.standard.setValue(true, forKey: "isPro")
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+        WidgetCenter.shared.reloadAllTimelines()
         if fromPage != "onboarding2" {
             userWentPro = true
             if let _ = Auth.auth().currentUser?.email {
@@ -467,6 +489,8 @@ struct PricingView: View {
                 event = event + "Middle_Locked"
             } else if fromPage == "store" {
                 event = event + "fromStore"
+            } else if fromPage == "widget" {
+                event = event + "fromWidget"
             }
             return event
         }
@@ -476,6 +500,7 @@ struct PricingView: View {
         let title: String
         let price: Double
         @Binding var selected: String
+        @Binding var trialLength: Int
 
         var body: some View {
             ZStack {
@@ -483,43 +508,57 @@ struct PricingView: View {
                     .fill(selected == title ? Clr.darkgreen : Clr.darkWhite)
 //                    .border(Clr.yellow, width: selected == title ? 4 : 0)
                 HStack {
-                    Text("\(title) Pro\(title == "Yearly" ? "     " : "")")
+                    VStack(alignment: .leading, spacing: -2){
+                    Text("\(title)")
                         .foregroundColor(selected == title ? .white : Clr.darkgreen)
                         .font(Font.mada(.semiBold, size: 20))
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
-                        .padding([.top,.bottom, .leading, .trailing], 15)
+                        HStack(spacing: 2) {
+                            if title == "Yearly" {
+                                (Text(Locale.current.currencySymbol ?? "$") + Text("\(price * 2 + 0.01, specifier: "%.2f")"))
+                                    .strikethrough(color: Color("lightGray"))
+                                    .foregroundColor(Color("lightGray"))
+                                    .font(Font.mada(.regular, size: 16))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            (Text(Locale.current.currencySymbol ?? "$") + Text("\(price, specifier: "%.2f")"))
+                                .foregroundColor(selected == title ? .white : Clr.darkgreen)
+                                .font(Font.mada(.regular, size: 16))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                                .multilineTextAlignment(.leading)
+                        }.frame(width: 100, alignment: .leading)
+
+
+                    }.padding(.leading, 20)
+                    .frame(width: 110)
                     if title == "Lifetime" || title == "Yearly" {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "7 day\nfree trial" : "50% OFF")
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(Font.mada(.bold, size: 14))
+                                Text(title == "Yearly" ? "\(trialLength == 1 ? "7" : "3") day\nfree trial" : "50% OFF")
+                                    .foregroundColor(Color.black.opacity(0.8))
+                                    .font(Font.mada(.bold, size: 12))
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(2)
                                     .padding(.horizontal, 1)
                             )
-                            .frame(width: 70,height: 35, alignment: .leading)
+                            .frame(width: 60,height: 35, alignment: .leading)
                     }
                     Spacer()
-                    VStack(spacing: -4){
-                        (Text(Locale.current.currencySymbol ?? "$") + Text("\(price, specifier: "%.2f")"))
-                            .foregroundColor(selected == title ? .white : Clr.darkgreen)
-                            .font(Font.mada(.semiBold, size: 24))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.05)
 
-                        (Text("(" + (Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo)")
+                        (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo")
                        )
                             .foregroundColor(selected == title ? .white : Clr.black2)
-                            .font(Font.mada(.regular, size: 14))
+                            .font(Font.mada(.bold, size: 20))
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                     }.padding(.trailing)
-                }
             }
         }
     }

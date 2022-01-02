@@ -13,25 +13,26 @@ import Intents
 struct Provider: IntentTimelineProvider {
     let gridd = [String: [String:[String:[String:Any]]]]()
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, configuration: ConfigurationIntent())
+        SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, isPro: false, configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, configuration: configuration)
+        let entry = SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, isPro: false, configuration: configuration)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+        var entries: [SimpleEntry] = [] 
         let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]]
         let streakNumber = userDefaults?.integer(forKey: "streakNumber")
+        let isPro = userDefaults?.bool(forKey: "isPro")
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,  configuration: configuration)
             entries.append(entry)
         }
 
@@ -44,8 +45,8 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let grid: [String: [String:[String:[String:Any]]]]
     let streakNumber: Int
+    let isPro: Bool
     let configuration: ConfigurationIntent
-
 }
 
 struct MindGardenWidgetEntryView : View {
@@ -68,10 +69,76 @@ struct MindGardenWidgetEntryView : View {
                 case .systemSmall:
                     Text("Small")
                 case .systemMedium:
-                    MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
+                    if entry.isPro {
+                        MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
+                    } else {
+                        HStack {
+                            Spacer()
+                            VStack {
+                                Spacer()
+                                Text("This is pro only feature")
+                                    .font(Font.mada(.bold, size: 18))
+                                    .foregroundColor(Color("superBlack"))
+                                Link(destination: URL(string: "pro://io.bytehouse.mindgarden")!)  {
+                                    Capsule()
+                                        .fill(Color("darkgreen"))
+                                        .overlay(Text("👨‍🌾 Go Pro!")
+                                                    .foregroundColor(.white)
+                                                    .font(Font.mada(.bold, size: 14)))
+                                        .frame(width: 125, height: 35)
+                                        .padding(.top, 5)
+                                        .neoShadow()
+                                }
+                                Spacer()
+                                }
+                                Spacer()
+                            }
+                            Spacer()
+                        }
                 case .systemLarge:
                     VStack(spacing: 5) {
                         MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)
+                        HStack {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color("yellow"))
+                                    .cornerRadius(14)
+                                    .neoShadow()
+                                    HStack {
+                                        Image(systemName: "clock")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(Color("darkgreen"))
+                                            .frame(width: 25)
+                                        Text("Total\nTime")
+                                            .foregroundColor(Color("black2"))
+                                            .font(Font.mada(.regular, size: 12))
+                                        Text("14 mins")
+                                            .foregroundColor(Color("darkgreen"))
+                                            .font(Font.mada(.bold, size: 14))
+                                    }
+                            }.frame(width: width * 0.435, height: height * 0.15)
+                            ZStack {
+                                    Rectangle()
+                                        .fill(Color("yellow"))
+                                        .cornerRadius(14)
+                                        .neoShadow()
+                                    HStack {
+                                        Image(systemName: "number")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 25)
+                                            .foregroundColor(Color("darkgreen"))
+                                        Text("Total\nSess")
+                                            .foregroundColor(Color("black2"))
+                                            .font(Font.mada(.regular, size: 12))
+                                        Text("32 sess")
+                                            .foregroundColor(Color("darkgreen"))
+                                            .font(Font.mada(.bold, size: 14))
+                                    }
+                                }.frame(width: width * 0.435, height: height * 0.15)
+                        }
+
                         ZStack {
                             Rectangle()
                                 .fill(Color("skyBlue"))
@@ -79,34 +146,28 @@ struct MindGardenWidgetEntryView : View {
                                 .frame(width: width * 0.875)
                                 .opacity(0.5)
                                 .neoShadow()
-                            VStack {
-                                if !plants.isEmpty {
-                                    HStack {
-                                        Text(plants[0].title)
-                                            .font(Font.mada(.bold, size: 40))
-                                        ForEach(0..<plants.count/2) { idx in
-                                            let xPos = Double.random(in: (-width * 0.4)...(width*0.4))
-                                            Text(plants[idx].title)
-                                                .font(Font.mada(.bold, size: 5))
-                                                .frame(width: 40, height: 20)
-                                        }
-                                    }.frame(width: width, height: height)
+                            VStack(alignment: .center) {
+                                Spacer()
+                                ZStack {
+                                    if !plants.isEmpty {
+                                        HStack {
+    //                                        Text(plants[0].title)
+    //                                            .font(Font.mada(.bold, size: 40))
+                                            ForEach(0..<6) { idx in
+                                                let xPos = Int.random(in: -25...25)
+                                                let _ = print(xPos, idx, plants[idx])
+                                                Image(plants[idx].title)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 40, height: height * 0.35)
+                                            }
+                                        }.frame(width: width * 0.80, height: height)
+                                        .padding()
+                                    }
                                 }
-//                                Image("sun")
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .position(x: -75, y: 40)
-//                                    .frame(width: width * 0.15)
-//                                if !plants.isEmpty {
-//                                    HStack {
-//                                        Text(String(plants.count))
-//                                            .font(Font.mada(.bold, size: 40))
-//
-//                                    }.frame(width: width, height: height * 0.2)
-//                                }
-                            }.frame(width: width, height: height * 0.4)
-                        }.frame(width: width * 0.85, height: height * 0.45)
-                        .padding(.bottom, 5)
+                            }.frame(width: width, height: height * 0.2)
+                        }.frame(width: width * 0.85, height: height * 0.25)
+                        .padding(.vertical)
                     }
                 default:
                     Text("Some other WidgetFamily in the future.")
@@ -128,6 +189,7 @@ struct MindGardenWidgetEntryView : View {
         @Binding var moods: [Mood: Int]
         @Binding var gratitudes: Int
         @Binding var streak: Int
+
 
         var body: some View {
             HStack(alignment: .center, spacing: 10) {
@@ -167,7 +229,7 @@ struct MindGardenWidgetEntryView : View {
                                 .font(Font.mada(.regular, size: 14))
                                 .foregroundColor(Color("black2"))
                             Spacer()
-                            Text("24")
+                            Text("\(streak)")
                                 .font(Font.mada(.bold, size: 16))
                                 .foregroundColor(Color("darkgreen"))
                         }.frame(width: width * 0.39, alignment: .leading)
@@ -210,13 +272,13 @@ struct MindGardenWidgetEntryView : View {
        var favoritePlants = [String: Int]()
        let numOfDays = Date().getNumberOfDays(month: strMonth, year: Date().get(.year))
        let intWeek = Date().weekDayToInt(weekDay: Date.dayOfWeek(day: "1", month: strMonth, year: Date().get(.year)))
-
+      streak = entry.streakNumber
        if intWeek != 0 {
            placeHolders = intWeek
        } else { //it starts on a sunday
            startsOnSunday = true
        }
-
+       var allPlants = [String]()
        var weekNumber = 0
        for day in 1...numOfDays {
            var plant: String? = nil
@@ -233,13 +295,8 @@ struct MindGardenWidgetEntryView : View {
            if let sessions = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[K.defaults.sessions] as? [[String: String]] {
                for session in sessions {
                    let plant = session[K.defaults.plantSelected] ?? ""
-                   print(plant, "-")
-                   if var count = favoritePlants[plant] {
-                       count += 1
-                       favoritePlants[plant] = count
-                   } else {
-                       favoritePlants[plant] = 1
-                   }
+//                   print(plant, "-")
+                   allPlants.append(plant)
                }
            }
 
@@ -261,14 +318,15 @@ struct MindGardenWidgetEntryView : View {
            }
    }
         var plantz = [Plnt]()
-        for (plant, cnt) in favoritePlants {
-            for _ in 1...cnt {
-                print("\(plant)")
-                let img = K.plantImages[plant]
-                let plnt = Plnt(title: img ?? "White Daisy", id: plant)
-                plantz.append(plnt)
-            }
+        for plant in allPlants {
+//            if  plant != "Bonsai Tree"  {
+                if let img = K.plantImages[plant]{
+                    let plnt = Plnt(title: img, id: plant)
+                    plantz.append(plnt)
+                }
+//            }
         }
+        plantz = plantz.reversed()
         plants = plantz
         moods = totalMoods
     }
@@ -334,13 +392,14 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
+        .supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 
 struct MindGardenWidget_Previews: PreviewProvider {
     static var previews: some View {
         MindGardenWidgetEntryView(entry: SimpleEntry(date: Date(), grid: [String: [String:[String:[String:Any]]]]()
-                                                     , streakNumber: 1, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true)
+                                                     , streakNumber: 1, isPro: false, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

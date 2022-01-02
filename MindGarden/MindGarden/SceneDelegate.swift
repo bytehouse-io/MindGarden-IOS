@@ -95,7 +95,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        numberOfMeds = Int.random(in: 185..<211)
+        numberOfMeds = Int.random(in: 285..<311)
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         launchNum += 1
         launchedApp = true
@@ -157,6 +157,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 NotificationCenter.default.post(name: Notification.Name("meditate"), object: nil)
             } else if context.url.scheme == "mood" {
                 NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+            } else if context.url.scheme == "pro" {
+                NotificationCenter.default.post(name: Notification.Name("pro"), object: nil)
             }
         }
     }

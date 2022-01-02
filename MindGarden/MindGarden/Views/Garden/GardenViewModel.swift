@@ -221,7 +221,7 @@ class GardenViewModel: ObservableObject {
                 }
             }
         }
-        
+
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             docRef.getDocument { (snapshot, error) in

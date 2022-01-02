@@ -25,23 +25,51 @@ struct NewUpdateModal: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.height * 0.12)
-                            Text("\nMindGarden \nUpdate 1.2\nWhat's New:")
+                            Text("\nMindGarden \nUpdate 1.3\nWhat's New:")
                                 .font(Font.mada(.bold, size: 28))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.12)
                             Spacer()
                         }.padding([.horizontal, .top])
+                            HStack {
+                                Text("⚙️ We added our first widget! We hope this will help it make even easier to stick with the habit of meditation and gratitude.")
+                            }.multilineTextAlignment(.leading)
+                            .font(Font.mada(.regular, size: 20))
+                            .foregroundColor(Clr.black2)
+                            .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
+                            .padding(.bottom, 10)
+                            .padding(.top)
                         Button {
                             withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.2Update")
+                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
                                 shown = false
-                                viewRouter.currentPage = .shop
+                                mindfulNotifs = true
+                                viewRouter.currentPage = .profile
                             }
-
                         } label: {
                             HStack {
-                                Text("🎖 We added badges to MindGarden! These plants can't be bought, but instead have to be unlocked. ")
+                                Text("📱 Introducing: Mindfulness Notifications - Stay present in 2022.")
                                 + Text("(Take me there)")
+                                    .bold().underline().foregroundColor(.blue)
+                            }.multilineTextAlignment(.leading)
+                            .font(Font.mada(.regular, size: 20))
+                        }
+                        .foregroundColor(Clr.black2)
+                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
+                        .padding(.bottom, 10)
+                        .padding(.top)
+                        Button {
+                            withAnimation {
+                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
+                                shown = false
+                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
+                                    UIApplication.shared.open(url)
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text("🥳 More widgets are on the way, if you want to see a specific feature or meditation: ")
+                                + Text("Give Feedback")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
@@ -95,7 +123,7 @@ struct NewUpdateModal: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "1.2Update")
+                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
                             }
                         } label: {
                             Capsule()
@@ -113,7 +141,7 @@ struct NewUpdateModal: View {
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.45 : 0.5), alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.65 : 0.7), alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()

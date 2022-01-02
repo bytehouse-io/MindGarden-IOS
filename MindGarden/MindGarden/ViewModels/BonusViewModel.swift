@@ -144,8 +144,7 @@ class BonusViewModel: ObservableObject {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
             NotificationHelper.addThreeDay()
         }
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
-        WidgetCenter.shared.reloadAllTimelines()
+
 
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
@@ -252,7 +251,10 @@ class BonusViewModel: ObservableObject {
             lastStreakDate  = formatter.string(from: Date())
             self.streakNumber = 1
         }
-
+        print(streakNumber, "long run")
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")
+        WidgetCenter.shared.reloadAllTimelines()
         if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
             self.createDailyCountdown()
         }

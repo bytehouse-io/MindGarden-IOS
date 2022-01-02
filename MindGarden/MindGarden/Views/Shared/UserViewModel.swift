@@ -10,6 +10,7 @@ import Combine
 import Firebase
 import FirebaseFirestore
 import Purchases
+import WidgetKit
 
 var userCoins: Int = 0
 class UserViewModel: ObservableObject {
@@ -142,6 +143,8 @@ class UserViewModel: ObservableObject {
                     UserDefaults.standard.setValue(true, forKey: "bonsai")
                 }
                 UserDefaults.standard.setValue(true, forKey: "isPro")
+                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                WidgetCenter.shared.reloadAllTimelines()
             } else {
                 if !UserDefaults.standard.bool(forKey: "trippleTapped") {
                     UserDefaults.standard.setValue(false, forKey: "isPro")
@@ -154,6 +157,8 @@ class UserViewModel: ObservableObject {
                             UserDefaults.standard.setValue(false, forKey: "isPro")
                         }
                     }
+                    UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                    WidgetCenter.shared.reloadAllTimelines()
                     if let email = Auth.auth().currentUser?.email {
                         Firestore.firestore().collection(K.userPreferences).document(email).updateData([
                             "isPro": isPro,

@@ -54,6 +54,7 @@ struct Plant: Hashable {
         Plant(title: "Bonsai Tree", price: 3, selected: false, description: "A bonsai tree is a shrub which has been grown in a way which gives the impression of being a full-sized, mature tree. They originated from China over 1000 years ago and symbolize  harmony, balance, patience, or even luck", packetImage: Img.daisyPacket, one: Img.bonsai1, two: Img.bonsai2, coverImage: Img.bonsai3, head: Img.bonsaiHead, badge: Img.bonsaiBadge),
         // refer a friend
         Plant(title: "Venus Fly Trap", price: 4, selected: false, description: "The Venus flytrap is a carnivorous plant native to subtropical wetlands on the East Coast of the United States in North Carolina and South Carolina. It gets some of its nutrients from the soil, but to supplement its diet, the plant eats insects and arachnids!", packetImage: Img.daisyPacket, one: Img.venus1, two: Img.venus2, coverImage: Img.venus3, head: Img.daisyHead, badge: Img.venusBadge),
+        Plant(title: "Avocado", price: 7, selected: false, description: "The Venus flytrap is a carnivorous plant native to subtropical wetlands on the East Coast of the United States in North Carolina and South Carolina. It gets some of its nutrients from the soil, but to supplement its diet, the plant eats insects and arachnids!", packetImage: Img.daisyPacket, one: Img.venus1, two: Img.venus2, coverImage: Img.venus3, head: Img.daisyHead, badge: Img.venusBadge),
         // Meditate on Christmas
         Plant(title: "Christmas Tree", price: 5, selected: false, description: "Evergreen trees are a popular type of Christmas tree because they keep their leaves throughout the year. Germany is credited with starting the Christmas Tree tradition in the 16th century.", packetImage: Img.daisyPacket, one: Img.christmas1, two: Img.christmas2, coverImage: Img.christmas3, head: Img.christmasHead, badge: Img.christmasBadge),
         // 30 Gratitudes
@@ -67,6 +68,7 @@ struct Plant: Hashable {
         0: "7️⃣ Day Streak",
         1: "📆 30 Day Streak",
         5: "🎅 Meditate before Jan 3",
-        6: "🙏 Write 30 Gratitudes"
+        6: "🙏 Write 30 Gratitudes",
+        7: "👨‍👩‍👦‍👦 Join our Reddit"
     ]
 }

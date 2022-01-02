@@ -283,6 +283,10 @@ struct ContentView: View {
                { _ in addGratitude = true }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.mood))
                       { _ in addMood = true }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.pro))
+        { _ in
+            fromPage = "widget"
+            viewRouter.currentPage = .pricing}
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.meditate))
         { _ in
             print("f")
@@ -350,4 +354,5 @@ extension NSNotification {
     static let gratitude = Notification.Name.init("gratitude")
     static let meditate = Notification.Name.init("meditate")
     static let mood = Notification.Name.init("mood")
+    static let pro = Notification.Name.init("pro")
 }

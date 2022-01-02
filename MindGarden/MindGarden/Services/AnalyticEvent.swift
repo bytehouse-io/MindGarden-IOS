@@ -108,7 +108,8 @@ enum AnalyticEvent {
     case store_tapped_store_option //
     case store_tapped_badges_option //
     case store_tapped_rate_app //
-    case store_tapped_refer_friend
+    case store_tapped_refer_friend //
+    case store_tapped_reddit //
     case store_tapped_go_pro
     case store_tapped_badge_tile
 
@@ -445,6 +446,7 @@ extension AnalyticEvent {
         case .store_tapped_rate_app: return "store_tapped_rate_app"
         case .store_tapped_refer_friend: return "store_tapped_refer_friend"
         case .store_tapped_go_pro: return "store_tapped_go_pro"
+        case .store_tapped_reddit: return "store_tapped_reddit"
         case .store_tapped_badge_tile: return "store_tapped_badge_tile"
         case .screen_load_middle: return "screen_load_middle"
         case .middle_tapped_favorite: return "middle_tapped_favorite"

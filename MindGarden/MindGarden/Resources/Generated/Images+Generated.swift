@@ -144,6 +144,7 @@ public enum Img {
   public static let eggs = Image("eggs")
   public static let gardenCalender = Image("gardenCalender")
   public static let gnome = Image("gnome")
+  public static let grass = Image("grass")
   public static let greenBlob = Image("greenBlob")
   public static let hand = Image("hand")
   public static let hands = Image("hands")

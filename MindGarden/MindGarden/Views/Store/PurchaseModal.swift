@@ -92,7 +92,7 @@ struct PurchaseModal: View {
                         if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                             HStack {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
-                                case "🙏 30 Gratitudes": Text("Total gratitudes: \(UserDefaults.standard.integer(forKey: "numGrads"))")
+                                case "🙏 Write 30 Gratitudes": Text("Total gratitudes: \(UserDefaults.standard.integer(forKey: "numGrads"))")
                                 case "7️⃣ Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
                                 case  "📆 30 Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
                                 default: Text("")
@@ -104,7 +104,6 @@ struct PurchaseModal: View {
                         }
                         Button {
                             if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
-
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
                                 case "⭐️ Rate the app":
                                     if !UserDefaults.standard.bool(forKey: "tappedRate") {
@@ -129,6 +128,15 @@ struct PurchaseModal: View {
                                             fromPage = "store"
                                             viewRouter.currentPage = .pricing
                                         }
+                                    }
+                                case "👨‍👩‍👦‍👦 Join our Reddit":
+                                    if !UserDefaults.standard.bool(forKey: "reddit") {
+                                        Analytics.shared.log(event: .store_tapped_reddit)
+                                        if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
+                                            UIApplication.shared.open(url)
+                                            userModel.buyPlant(unlockedStrawberry: true)
+                                        }
+                                        UserDefaults.standard.setValue(true, forKey: "reddit")
                                     }
                                 case "🙏 30 Gratitudes":
                                     break

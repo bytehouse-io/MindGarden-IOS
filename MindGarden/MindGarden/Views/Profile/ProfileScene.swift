@@ -12,8 +12,9 @@ import FirebaseDynamicLinks
 import Firebase
 import StoreKit
 import GTMAppAuth
-var tappedRefer = false
 
+var tappedRefer = false
+var mindfulNotifs = false
 enum settings {
     case referrals
     case settings
@@ -128,6 +129,16 @@ struct ProfileScene: View {
                                             .animation(.default)
                                     } else {
                                         List {
+                                            if !UserDefaults.standard.bool(forKey: "isPro") {
+                                                Row(title: "Unlock Pro", img: Image(systemName: "heart.fill"), action: {
+                                                    Analytics.shared.log(event: .profile_tapped_goPro)
+                                                    withAnimation {
+                                                        fromPage = "profile"
+                                                        viewRouter.currentPage = .pricing
+                                                    }
+                                                }, showNotif: $showNotif, showMindful: $showMindful)
+                                                    .frame(height: K.isSmall() ? 30 : 40)
+                                            }
                                             Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
                                                 showNotification = true
                                                 Analytics.shared.log(event: .profile_tapped_notifications)
@@ -158,16 +169,13 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
-                                            if !UserDefaults.standard.bool(forKey: "isPro") {
-                                                Row(title: "Go Pro", img: Image(systemName: "heart.fill"), action: {
-                                                    Analytics.shared.log(event: .profile_tapped_goPro)
-                                                    withAnimation {
-                                                        fromPage = "profile"
-                                                        viewRouter.currentPage = .pricing
-                                                    }
-                                                }, showNotif: $showNotif, showMindful: $showMindful)
-                                                    .frame(height: K.isSmall() ? 30 : 40)
-                                            }
+                                            Row(title: "Request Feature/Meditation", img: Image(systemName: "hand.raised.fill"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_roadmap)
+                                                if let url = URL(string: "https://mindgarden.upvoty.com/") {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_feedback)
                                                 if let url = URL(string: "https://tally.so/r/3EB1Bw") {
@@ -175,18 +183,17 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Our Roadmap", img: Image(systemName: "map.fill"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_roadmap)
-                                                if let url = URL(string: "https://mindgarden.nolt.io/") {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_reddit)
                                                 if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                                     UIApplication.shared.open(url)
+                                                    if !UserDefaults.standard.bool(forKey: "reddit") {
+                                                        userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                                                            p.title == "Lemon"
+                                                        })
+                                                        userModel.buyPlant(unlockedStrawberry: true)
+                                                        UserDefaults.standard.setValue(true, forKey: "reddit")
+                                                    }
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
                                                 .frame(height: K.isSmall() ? 30 : 40)
@@ -502,6 +509,10 @@ struct ProfileScene: View {
                 tappedRefer = false
             } else {
                 selection = .settings
+                if mindfulNotifs {
+                    showNotification = true
+                    mindfulNotifs = false
+                }
             }
 
             tappedRate = UserDefaults.standard.bool(forKey: "tappedRate")
@@ -588,7 +599,7 @@ struct ProfileScene: View {
                             .foregroundColor(Clr.darkgreen)
                         Text(title)
                             .font(Font.mada(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 16 : 20))
-                            .foregroundColor(Clr.black1)
+                            .foregroundColor(title == "Unlock Pro" ? Clr.brightGreen : Clr.black1)
                         Spacer()
                         if title == "Notifications" {
                             Image(systemName: "chevron.right")
@@ -628,7 +639,7 @@ struct ProfileScene: View {
                         }
                     }.padding()
                 }
-                .listRowBackground(Clr.darkWhite)
+                .listRowBackground(title == "Unlock Pro" ? Clr.yellow : Clr.darkWhite)
             }.onAppear {
                 if title == "Meditation Reminders" {
                     notifOn = UserDefaults.standard.bool(forKey: "notifOn")

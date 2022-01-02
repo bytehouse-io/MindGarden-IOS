@@ -392,7 +392,7 @@ struct Home: View {
                  if UserDefaults.standard.bool(forKey: "christmasLink") {
                      viewRouter.currentPage = .shop
                  } else {
-                     showUpdateModal = !UserDefaults.standard.bool(forKey: "1.2Update")
+                     showUpdateModal = !UserDefaults.standard.bool(forKey: "1.3Update")
                  }
              }
 
@@ -407,7 +407,6 @@ struct Home: View {
                             UserDefaults.standard.setValue(11, forKey: "launchNumber")
                         }
                     }
-
                 }
              coins = userCoins
              self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
