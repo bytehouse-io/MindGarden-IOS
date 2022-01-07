@@ -55,9 +55,6 @@ struct PricingView: View {
                                     .onTapGesture {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
-                                            WidgetCenter.shared.reloadAllTimelines()
                                             switch fromPage {
                                             case "home": viewRouter.currentPage = .meditate
                                             case "profile": viewRouter.currentPage = .profile
@@ -74,8 +71,8 @@ struct PricingView: View {
                                             if !UserDefaults.standard.bool(forKey: "isPro") {
                                                 let center = UNUserNotificationCenter.current()
                                                 let content = UNMutableNotificationContent()
-                                                content.title = "Don't Miss This Opportunity 127 users went pro this week!"
-                                                content.body = "🎉 MindGarden Pro For Life sale is gone in the Next 12 Hours!!! 🎉"
+                                                content.title = "Don't Miss This Opportunity 427 users went pro this week!"
+                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉"
                                                 // Step 3: Create the notification trigger
                                                 let date = Date().addingTimeInterval(13200)
                                                 let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
@@ -330,7 +327,8 @@ struct PricingView: View {
                                     }
                             }.padding(.horizontal)
                         }.padding(10)
-                            .padding(.bottom, K.isPad() ? 50 : K.isSmall() ? 45 : 0)
+                            .padding(.bottom, K.isPad() ? 50 : !K.hasNotch() ? 45 : 0)
+//                            .offset(y: K.hasNotch() ? -30 : 0)
                         Spacer()
                     }.padding(.top, K.hasNotch() ? 30 : 10)
                 }

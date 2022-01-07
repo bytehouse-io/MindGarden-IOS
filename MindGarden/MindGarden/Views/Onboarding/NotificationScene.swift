@@ -64,11 +64,13 @@ struct NotificationScene: View {
                                 .font(Font.mada(.semiBold, size: 28))
                                 .foregroundColor(Clr.black1)
                                 .multilineTextAlignment(.center)
-                            Text("You're 74% more likely to stick with meditation if you set a reminder. ")
-                                .font(Font.mada(.bold, size: 22))
+                                .offset(y: -20)
+                            Text("You're 3x more likely to stick with \nmeditation if you set a reminder.")
+                                .font(Font.mada(.bold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .multilineTextAlignment(.center)
-                                .padding()
+                                .frame(height: 50)
+                                .offset(y: -20)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
@@ -106,7 +108,7 @@ struct NotificationScene: View {
                                             Spacer()
                                             Image(systemName: "chevron.down")
                                                 .font(Font.title)
-                                        }.padding(.horizontal)
+                                        }.padding([.horizontal])
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
@@ -192,7 +194,7 @@ struct NotificationScene: View {
                                             .font(Font.mada(.bold, size: 20))
                                     )
                             }.frame(height: 50)
-                                .padding()
+                                .padding(5)
                                 .buttonStyle(NeumorphicPress())
                             if !fromSettings {
                                 Text("Skip")
@@ -214,7 +216,7 @@ struct NotificationScene: View {
                                     }
                             }
                         }.frame(width: width * 0.9)
-                        .padding(.top, 20)
+                        .padding(.top, 5)
                     }
 
                     if bottomSheetShown  {

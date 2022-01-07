@@ -149,6 +149,12 @@ class MeditationViewModel: ObservableObject {
             }
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
+        case "Just trying it out":
+            filtedMeds = filtedMeds.filter { med in
+                med.category == .beginners
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
         default:
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]

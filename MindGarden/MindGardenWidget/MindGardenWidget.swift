@@ -57,6 +57,8 @@ struct MindGardenWidgetEntryView : View {
     @State var streak: Int
     @State var plants: [Plnt]
     @State var dayTime: Bool
+    @State var totalTime: Int
+    @State var totalSess: Int
 
     @ViewBuilder
     var body: some View {
@@ -96,79 +98,91 @@ struct MindGardenWidgetEntryView : View {
                             Spacer()
                         }
                 case .systemLarge:
-                    VStack(spacing: 5) {
-                        MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)
-                        HStack {
+                    ZStack {
+                        if entry.isPro {
+                        VStack(spacing: 5) {
+                            MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)
+                            HStack {
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Color("darkWhite"))
+                                        .cornerRadius(14)
+                                        .neoShadow()
+                                        HStack {
+                                            Image(systemName: "clock")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .foregroundColor(Color("darkgreen"))
+                                                .frame(width: 25)
+                                            Text("Total\nTime")
+                                                .foregroundColor(Color("black2"))
+                                                .font(Font.mada(.regular, size: 12))
+                                            Text("\(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)") mins")
+                                                .foregroundColor(Color("darkgreen"))
+                                                .font(Font.mada(.bold, size: 14))
+                                        }
+                                }.frame(width: width * 0.435, height: height * 0.15)
+                                ZStack {
+                                        Rectangle()
+                                            .fill(Color("darkWhite"))
+                                            .cornerRadius(14)
+                                            .neoShadow()
+                                        HStack {
+                                            Image(systemName: "number")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 25)
+                                                .foregroundColor(Color("darkgreen"))
+                                            Text("Total\nSess")
+                                                .foregroundColor(Color("black2"))
+                                                .font(Font.mada(.regular, size: 12))
+                                            Text("\(totalSess) sess")
+                                                .foregroundColor(Color("darkgreen"))
+                                                .font(Font.mada(.bold, size: 14))
+                                        }
+                                    }.frame(width: width * 0.435, height: height * 0.15)
+                            }
+
                             ZStack {
-                                Rectangle()
-                                    .fill(Color("yellow"))
-                                    .cornerRadius(14)
-                                    .neoShadow()
-                                    HStack {
-                                        Image(systemName: "clock")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .foregroundColor(Color("darkgreen"))
-                                            .frame(width: 25)
-                                        Text("Total\nTime")
-                                            .foregroundColor(Color("black2"))
-                                            .font(Font.mada(.regular, size: 12))
-                                        Text("14 mins")
-                                            .foregroundColor(Color("darkgreen"))
-                                            .font(Font.mada(.bold, size: 14))
-                                    }
-                            }.frame(width: width * 0.435, height: height * 0.15)
-                            ZStack {
+                                Link(destination: URL(string: "garden://io.bytehouse.mindgarden")!)  {
                                     Rectangle()
                                         .fill(Color("yellow"))
                                         .cornerRadius(14)
+                                        .frame(width: width * 0.875)
+                                        .opacity(0.8)
                                         .neoShadow()
-                                    HStack {
-                                        Image(systemName: "number")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 25)
-                                            .foregroundColor(Color("darkgreen"))
-                                        Text("Total\nSess")
-                                            .foregroundColor(Color("black2"))
-                                            .font(Font.mada(.regular, size: 12))
-                                        Text("32 sess")
-                                            .foregroundColor(Color("darkgreen"))
-                                            .font(Font.mada(.bold, size: 14))
-                                    }
-                                }.frame(width: width * 0.435, height: height * 0.15)
-                        }
-
-                        ZStack {
-                            Rectangle()
-                                .fill(Color("skyBlue"))
-                                .cornerRadius(14)
-                                .frame(width: width * 0.875)
-                                .opacity(0.5)
-                                .neoShadow()
-                            VStack(alignment: .center) {
-                                Spacer()
-                                ZStack {
-                                    if !plants.isEmpty {
-                                        HStack {
-    //                                        Text(plants[0].title)
-    //                                            .font(Font.mada(.bold, size: 40))
-                                            ForEach(0..<6) { idx in
-                                                let xPos = Int.random(in: -25...25)
-                                                let _ = print(xPos, idx, plants[idx])
-                                                Image(plants[idx].title)
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 40, height: height * 0.35)
+                                    VStack(alignment: .center) {
+                                        Spacer()
+                                        ZStack {
+                                            if !plants.isEmpty {
+                                                HStack {
+                                                    //                                        Text(plants[0].title)
+                                                    //                                            .font(Font.mada(.bold, size: 40))
+                                                    ForEach(0..<6) { idx in
+                                                        let xPos = Int.random(in: -25...25)
+                                                        let _ = print(xPos, idx, plants[idx])
+                                                        Image(plants[idx].title)
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: 40, height: height * 0.35)
+                                                    }
+                                                }.frame(width: width * 0.80, height: height)
+                                                    .padding()
                                             }
-                                        }.frame(width: width * 0.80, height: height)
-                                        .padding()
-                                    }
-                                }
-                            }.frame(width: width, height: height * 0.2)
-                        }.frame(width: width * 0.85, height: height * 0.25)
-                        .padding(.vertical)
+                                        }
+                                    }.frame(width: width, height: height * 0.2)
+
+                                }.frame(width: width * 0.85, height: height * 0.25)
+                                    .padding(.vertical)
+                            }
+                            Text("🧘 Your last 6 sessions")
+                                .foregroundColor(Color("black2"))
+                                .font(Font.mada(.regular, size: 10))
+                                .offset(x: 90, y: -15)
+                        }
+                        }
                     }
+
                 default:
                     Text("Some other WidgetFamily in the future.")
                 }
@@ -192,7 +206,7 @@ struct MindGardenWidgetEntryView : View {
 
 
         var body: some View {
-            HStack(alignment: .center, spacing: 10) {
+            HStack(alignment: .center, spacing: 15 ) {
                 VStack(spacing: 15) {
                     Link(destination: URL(string: "mood://io.bytehouse.mindgarden")!)  {
                         MenuChoice(title: "Mood", img: Image(systemName: "face.smiling"), width: width)
@@ -213,12 +227,13 @@ struct MindGardenWidgetEntryView : View {
                     .frame(width: width * 0.4, height: height, alignment: .center)
                 ZStack {
                     Rectangle()
-                        .fill(Color("darkWhite"))
+                        .fill(Color("brightGreen"))
                         .cornerRadius(14)
+                        .shadow(radius: 5)
                     VStack {
                         Text("\(Date().getMonthName(month: Date().get(.month)))")
-                            .font(Font.mada(.bold, size: 12))
-                            .foregroundColor(Color("superBlack"))
+                            .font(Font.mada(.bold, size: 14))
+                            .foregroundColor(Color.white)
                             .offset(y: 5)
                         HStack(spacing: 5) {
                              Image("newStar")
@@ -227,11 +242,11 @@ struct MindGardenWidgetEntryView : View {
                                 .frame(width: width * 0.05)
                             Text("Streak:")
                                 .font(Font.mada(.regular, size: 14))
-                                .foregroundColor(Color("black2"))
+                                .foregroundColor(Color.white)
                             Spacer()
                             Text("\(streak)")
                                 .font(Font.mada(.bold, size: 16))
-                                .foregroundColor(Color("darkgreen"))
+                                .foregroundColor(Color.white)
                         }.frame(width: width * 0.39, alignment: .leading)
                         HStack(spacing: 5) {
                             Image("hands")
@@ -240,11 +255,11 @@ struct MindGardenWidgetEntryView : View {
                                 .frame(width: width * 0.05)
                             Text("Gratitudes:")
                                 .font(Font.mada(.regular, size: 14))
-                                .foregroundColor(Color("black2"))
+                                .foregroundColor(Color.white)
                             Spacer()
                             Text("\(gratitudes)")
                                 .font(Font.mada(.bold, size: 16))
-                                .foregroundColor(Color("darkgreen"))
+                                .foregroundColor(Color.white)
                         }.frame(width: width * 0.39, alignment: .leading)
                         HStack(spacing: 10) {
                             SingleMood(mood: .happy, count: moods[.happy] ?? 0)
@@ -253,9 +268,9 @@ struct MindGardenWidgetEntryView : View {
                             SingleMood(mood: .angry, count: moods[.angry] ?? 0)
                         }.frame(height: height * 0.25)
                         .padding(.horizontal, 8)
+                        .offset(y: -2)
                     }
                 }.frame(width: width * 0.45, height: height * 0.8, alignment: .center)
-                    .neoShadow()
                     .padding([.vertical])
             }
         }
@@ -294,8 +309,9 @@ struct MindGardenWidgetEntryView : View {
 
            if let sessions = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[K.defaults.sessions] as? [[String: String]] {
                for session in sessions {
+                   self.totalSess += 1
+                   self.totalTime += Int(Double(session[K.defaults.duration] ?? "0.0") ?? 0.0)
                    let plant = session[K.defaults.plantSelected] ?? ""
-//                   print(plant, "-")
                    allPlants.append(plant)
                }
            }
@@ -343,7 +359,7 @@ struct MindGardenWidgetEntryView : View {
                     .aspectRatio(contentMode: .fit)
                 Text("\(count)")
                     .font(Font.mada(.bold, size: 12))
-                    .foregroundColor(Color("darkgreen"))
+                    .foregroundColor(Color.white)
             }
 
         }
@@ -388,7 +404,7 @@ struct MindGardenWidget: Widget {
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            MindGardenWidgetEntryView(entry: entry, moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true)
+            MindGardenWidgetEntryView(entry: entry, moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
@@ -399,7 +415,7 @@ struct MindGardenWidget: Widget {
 struct MindGardenWidget_Previews: PreviewProvider {
     static var previews: some View {
         MindGardenWidgetEntryView(entry: SimpleEntry(date: Date(), grid: [String: [String:[String:[String:Any]]]]()
-                                                     , streakNumber: 1, isPro: false, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true)
+                                                     , streakNumber: 1, isPro: false, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

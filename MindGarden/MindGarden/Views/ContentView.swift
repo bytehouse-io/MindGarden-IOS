@@ -51,16 +51,17 @@ struct ContentView: View {
                     GeometryReader { geometry in
                         ZStack {
                             Clr.darkWhite.edgesIgnoringSafeArea(.all)
+//
                             VStack {
                                 if #available(iOS 14.0, *) {
                                     switch viewRouter.currentPage {
                                     case .onboarding:
                                             OnboardingScene()
-                                                .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .experience:
                                             ExperienceScene()
-                                                .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
                                         Home(bonusModel: bonusModel)
@@ -107,7 +108,6 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-
                                                     showPopupWithAnimation {
                                                         self.isOnboarding = false
                                                     }
@@ -123,11 +123,11 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .notification:
                                         NotificationScene()
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 50 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .name:
                                         NameScene()
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .pricing:
                                         PricingView()
@@ -135,30 +135,74 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .reason:
                                         ReasonScene()
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .review:
                                         ReviewScene()
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     }
 
                                 } else {
                                     // Fallback on earlier versions
                                 }
+//                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .onboarding
+//                                                        || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
+//                                            VStack {
+//                                                Img.lily3
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fit)
+//                                                    .frame(width: 100)
+//                                                    .rotationEffect(Angle(degrees: 20))
+//                                                    .position(x: 30, y: 0)
+//                                                Img.redMushroom3
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fit)
+//                                                    .frame(width: 100)
+//                                                    .rotationEffect(Angle(degrees: 20))
+//                                                    .position(x: width/4, y: 0)
+//                                                Img.redTulips3
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fit)
+//                                                    .frame(width: 200)
+//                                                    .rotationEffect(Angle(degrees: 20))
+//                                                    .position(x: UIScreen.main.bounds.width, y: 0)
+//                                            }.frame(height: 100)
+//                                    }
                                 if viewRouter.currentPage == .notification || viewRouter.currentPage == .onboarding
                                                 || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
-                                    ZStack(alignment: .leading) {
-                                        Rectangle().frame(width: geometry.size.width - 50 , height: 20)
-                                            .opacity(0.3)
-                                            .foregroundColor(Clr.darkWhite)
-                                        Rectangle().frame(width: min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50), height: 20)
-                                            .foregroundColor(Clr.brightGreen)
-                                            .animation(.linear)
+                                        ZStack(alignment: .leading) {
+                                            Rectangle().frame(width: geometry.size.width - 50 , height: 20)
+                                                .opacity(0.3)
+                                                .foregroundColor(Clr.darkWhite)
+                                            Rectangle().frame(width: min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50), height: 20)
+                                                .foregroundColor(Clr.brightGreen)
+                                                .animation(.linear)
+                                                .neoShadow()
+                                        }.cornerRadius(45.0)
+                                            .padding()
                                             .neoShadow()
-                                    }.cornerRadius(45.0)
-                                        .padding()
-                                        .neoShadow()
+                                    ZStack {
+                                        Img.lilyValley3
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100)
+                                            .rotationEffect(Angle(degrees: 20))
+                                            .position(x: 20, y: -15)
+                                        Img.redMushroom3
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100)
+                                            .rotationEffect(Angle(degrees: 20))
+                                            .position(x: UIScreen.main.bounds.width/2, y: 20)
+                                        Img.redTulips3
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 200)
+                                            .rotationEffect(Angle(degrees: 20))
+                                            .position(x: UIScreen.main.bounds.width - 15, y: 0)
+                                    }.frame(height: 100)
+                                        .zIndex(-100)
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
@@ -302,6 +346,9 @@ struct ContentView: View {
                 viewRouter.currentPage = .play
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.garden)) { _ in
+            viewRouter.currentPage = .garden
+        }
 
     }
     func openedGratitude() {
@@ -355,4 +402,5 @@ extension NSNotification {
     static let meditate = Notification.Name.init("meditate")
     static let mood = Notification.Name.init("mood")
     static let pro = Notification.Name.init("pro")
+    static let garden = Notification.Name.init("garden")
 }

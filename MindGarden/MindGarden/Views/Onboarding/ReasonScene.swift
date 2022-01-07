@@ -39,25 +39,28 @@ struct ReasonScene: View {
                                 .padding(.horizontal)
                             SelectionRow(width: width, height: height, title: "Sleep better", img: Img.moon, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Get more focused", img: Img.target, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Managing Stress & Anxiety", img: Img.heart, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Managing Stress& Anxiety", img: Img.heart, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Just trying it out", img: Img.magnifyingGlass, selected: $selected)
                             Button {
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
                                     switch selected {
-                                    case "Sleep better":
-                                        Analytics.shared.log(event: .reason_tapped_sleep)
-                                    case "Get more focused":
-                                        Analytics.shared.log(event: .reason_tapped_focus)
-                                    case "Managing Stress & Anxiety":
-                                        Analytics.shared.log(event: .reason_tapped_stress)
-                                    default:
-                                        break
-                                    }
-                                    withAnimation {
-                                        viewRouter.progressValue += 0.1
-                                        viewRouter.currentPage = .notification
-                                    }
+                                        case "Sleep better":
+                                            Analytics.shared.log(event: .reason_tapped_sleep)
+                                        case "Get more focused":
+                                            Analytics.shared.log(event: .reason_tapped_focus)
+                                        case "Managing Stress & Anxiety":
+                                            Analytics.shared.log(event: .reason_tapped_stress)
+                                        case "Just trying it out":
+                                            Analytics.shared.log(event: .reason_tapped_trying)
+                                        default:
+                                            break
+                                        }
+                                        withAnimation {
+                                            viewRouter.progressValue += 0.1
+                                            viewRouter.currentPage = .notification
+                                        }
                                 } //TODO gray out button if not selected
                             } label: {
                                 Capsule()
@@ -99,18 +102,17 @@ struct ReasonScene: View {
                     Rectangle()
                         .fill(selected == title ? Clr.yellow : Clr.darkWhite)
                         .cornerRadius(15)
-                        .frame(height: height * 0.15)
+                        .frame(height: height * (K.isSmall() ? 0.11 : 0.125))
                         .overlay(RoundedRectangle(cornerRadius: 15)
                                     .stroke(Clr.darkgreen, lineWidth: selected == title ? 3 : 0))
                         .padding(.horizontal)
                         .padding(.vertical, 8)
-
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.mada(.bold, size: 24))
+                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 22))
                             .foregroundColor(Clr.black1)
                             .padding()
-                            .frame(width: width * 0.5, alignment: .leading)
+                            .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)

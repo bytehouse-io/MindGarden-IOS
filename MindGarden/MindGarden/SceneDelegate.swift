@@ -159,6 +159,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
             } else if context.url.scheme == "pro" {
                 NotificationCenter.default.post(name: Notification.Name("pro"), object: nil)
+            } else if context.url.scheme == "garden" {
+                NotificationCenter.default.post(name: Notification.Name("garden"), object: nil)
             }
         }
     }

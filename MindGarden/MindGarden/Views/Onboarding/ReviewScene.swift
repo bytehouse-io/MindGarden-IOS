@@ -178,6 +178,8 @@ struct ReviewScene: View {
                             aim = (Img.target, "Increase focus")
                         case "Managing Stress & Anxiety":
                             aim = (Img.moon, "Control anxiety")
+                        case "Just trying it out":
+                            aim = (Img.magnifyingGlass, "Try it out")
                             default: break
                     }
                 }

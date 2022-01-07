@@ -30,6 +30,7 @@ enum AnalyticEvent {
     case reason_tapped_sleep
     case reason_tapped_focus
     case reason_tapped_stress
+    case reason_tapped_trying
     case reason_tapped_continue
 
     //MARK: - Review
@@ -218,7 +219,8 @@ enum AnalyticEvent {
     case profile_tapped_refer //
     case profile_tapped_refer_friend //
     case profile_tapped_rate //
-    case profile_tapped_create_account
+    case profile_tapped_create_account //
+    case profile_tapped_add_widget //
     //MARK: - Categories
     case screen_load_categories //
     case categories_tapped_unguided //
@@ -384,6 +386,7 @@ extension AnalyticEvent {
         case .reason_tapped_sleep: return "reason_tapped_sleep"
         case .reason_tapped_focus: return "reason_tapped_focus"
         case .reason_tapped_stress: return "reason_tapped_stress"
+        case .reason_tapped_trying: return "reason_tapped_trying"
         case .reason_tapped_continue: return "reason_tapped_continue"
         case .screen_load_name: return "screen_load_name"
         case .name_tapped_continue: return "name_tapped_continue"
@@ -543,6 +546,7 @@ extension AnalyticEvent {
         case .profile_tapped_refer: return "profile_tapped_refer_friend"
         case .profile_tapped_rate: return "profile_tapped_rate"
         case .profile_tapped_create_account: return "profile_tapped_create_account"
+        case .profile_tapped_add_widget: return "profile_tapped_add_widget"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"

@@ -41,6 +41,7 @@ struct ProfileScene: View {
     @State private var tappedRate = false
     @State private var showSpinner = false
     @State private var showMindful = false
+    @State private var showWidget = false
 
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -148,6 +149,10 @@ struct ProfileScene: View {
                                                 Analytics.shared.log(event: .profile_tapped_invite)
                                                 actionSheet() }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
+                                            Row(title: "Rate the app", img: Image(systemName: "star.fill"), action: {
+                                                rateFunc()
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_email)
                                                 if MFMailComposeViewController.canSendMail() {
@@ -169,20 +174,19 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Request Feature/Meditation", img: Image(systemName: "hand.raised.fill"), action: {
+                                            Row(title: "Request Feature/Med", img: Image(systemName: "hand.raised.fill"), action: {
                                                 Analytics.shared.log(event: .profile_tapped_roadmap)
                                                 if let url = URL(string: "https://mindgarden.upvoty.com/") {
                                                     UIApplication.shared.open(url)
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_feedback)
-                                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
-                                                    UIApplication.shared.open(url)
-                                                }
+                                            Row(title: "Add Widget", img: Image(systemName: "gear"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_add_widget)
+                                                showWidget = true
                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
+
                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_reddit)
                                                 if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
@@ -197,7 +201,14 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
                                                 .frame(height: K.isSmall() ? 30 : 40)
-
+                                            VStack {
+                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
+                                                Analytics.shared.log(event: .profile_tapped_feedback)
+                                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                .frame(height: K.isSmall() ? 30 : 40)
                                             Row(title: "Daily Motivation", img: Img.instaIcon, action: {
                                                 Analytics.shared.log(event: .profile_tapped_instagram)
                                                 if let url = URL(string: "https://www.instagram.com/mindgardn/") {
@@ -205,6 +216,7 @@ struct ProfileScene: View {
                                                 }
                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                 .frame(height: K.isSmall() ? 30 : 40)
+                                            }
                                         }.frame(maxHeight: g.size.height * (K.isSmall() ? 0.725 : 0.8))
                                             .padding([.horizontal])
                                             .offset(y: -20)
@@ -405,16 +417,7 @@ struct ProfileScene: View {
                                                 .padding(.top, 50)
                                                 .frame(width: abs(width - 100), alignment: .leading)
                                         Button {
-                                            Analytics.shared.log(event: .profile_tapped_rate)
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                                                UserDefaults.standard.setValue(true, forKey: "tappedRate")
-//                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-//                                                    p.title == "Camellia"
-//                                                })
-//                                                userModel.buyPlant(unlockedStrawberry: true)
-                                            }
-                                            tappedRate = true
+                                            rateFunc()
                                         } label: {
                                             Capsule()
                                                 .fill(Clr.yellow)
@@ -469,9 +472,21 @@ struct ProfileScene: View {
                                     .padding(.top, 5)
                                 }
                                 Spacer()
+                                Spacer()
+                                Spacer()
+                                Spacer()
                             }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
                                 .frame(width: width, height: height)
                                 .background(Clr.darkWhite)
+                            if showWidget {
+                                Color.black
+                                    .opacity(0.3)
+                                    .edgesIgnoringSafeArea(.all)
+                                Spacer()
+                            }
+                                WidgetModal(shown: $showWidget)
+                                    .offset(y: showWidget ? 0 : g.size.height)
+                                    .animation(.default, value: showWidget)
                         }
                     }
                 }
@@ -528,12 +543,19 @@ struct ProfileScene: View {
                 refDate =  userModel.referredStack.substring(to: plusIndex)
                 numRefs = Int(userModel.referredStack.substring(from: plusIndex + 1)) ?? 0
             }
-            if UserDefaults.standard.bool(forKey: "isPro") {
-                selection = .settings
-            } else {
-                selection = .referrals
-            }
         }
+    }
+    private func rateFunc() {
+        Analytics.shared.log(event: .profile_tapped_rate)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+            UserDefaults.standard.setValue(true, forKey: "tappedRate")
+//                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+//                                                    p.title == "Camellia"
+//                                                })
+//                                                userModel.buyPlant(unlockedStrawberry: true)
+        }
+        tappedRate = true
     }
 
     func actionSheet() {

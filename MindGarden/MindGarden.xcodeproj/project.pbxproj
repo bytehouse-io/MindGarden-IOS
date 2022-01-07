@@ -67,6 +67,7 @@
 		FE683F3E26A0CAE1009A66DF /* MeditationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */; };
 		FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5160270A36FB000118E8 /* AnalyticServices.swift */; };
 		FE6B5163270B9E05000118E8 /* NewUpdateModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */; };
+		FE7938592787691E00773B23 /* WidgetModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7938582787691D00773B23 /* WidgetModal.swift */; };
 		FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE962F112674651F002365A6 /* Color+Extensions.swift */; };
 		FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9815FD26E54DC200A4992D /* ExperienceScene.swift */; };
 		FE98160026E559E000A4992D /* NotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9815FF26E559E000A4992D /* NotificationScene.swift */; };
@@ -228,6 +229,7 @@
 		FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationsViewModel.swift; sourceTree = "<group>"; };
 		FE6B5160270A36FB000118E8 /* AnalyticServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticServices.swift; sourceTree = "<group>"; };
 		FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUpdateModal.swift; sourceTree = "<group>"; };
+		FE7938582787691D00773B23 /* WidgetModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModal.swift; sourceTree = "<group>"; };
 		FE962F112674651F002365A6 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FE9815FD26E54DC200A4992D /* ExperienceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceScene.swift; sourceTree = "<group>"; };
 		FE9815FF26E559E000A4992D /* NotificationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScene.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */,
 				FEC3FFCA26F1219F009F58EE /* MailView.swift */,
 				FE39A0BB2772A038007A3E82 /* MindfulScene.swift */,
+				FE7938582787691D00773B23 /* WidgetModal.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1178,6 +1181,7 @@
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
+				FE7938592787691E00773B23 /* WidgetModal.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
@@ -1285,7 +1289,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1297,7 +1301,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.30;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1313,7 +1317,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1325,7 +1329,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.30;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1343,7 +1347,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1355,7 +1359,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.30;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1373,7 +1377,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1385,7 +1389,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.30;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1521,7 +1525,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1532,7 +1536,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.30;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1550,7 +1554,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 31;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1561,7 +1565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.30;
+				MARKETING_VERSION = 1.31;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

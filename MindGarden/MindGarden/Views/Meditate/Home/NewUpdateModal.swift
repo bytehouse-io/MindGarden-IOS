@@ -32,7 +32,7 @@ struct NewUpdateModal: View {
                             Spacer()
                         }.padding([.horizontal, .top])
                             HStack {
-                                Text("⚙️ We added our first widget! We hope this will help it make even easier to stick with the habit of meditation and gratitude.")
+                                Text("⚙️ We added our first widget! Make meditation even easier this year.")
                             }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
                             .foregroundColor(Clr.black2)
@@ -48,7 +48,7 @@ struct NewUpdateModal: View {
                             }
                         } label: {
                             HStack {
-                                Text("📱 Introducing: Mindfulness Notifications - Stay present in 2022.")
+                                Text("📱 Introducing: Mindfulness Notifications - Stay present in 2022. ")
                                 + Text("(Take me there)")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
@@ -62,14 +62,14 @@ struct NewUpdateModal: View {
                             withAnimation {
                                 UserDefaults.standard.setValue(true, forKey: "1.3Update")
                                 shown = false
-                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
+                                if let url = URL(string: "https://mindgarden.upvoty.com/") {
                                     UIApplication.shared.open(url)
                                 }
                             }
                         } label: {
                             HStack {
-                                Text("🥳 More widgets are on the way, if you want to see a specific feature or meditation: ")
-                                + Text("Give Feedback")
+                                Text("🥳 Have a meditation or feature request? ")
+                                + Text("Post Request")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
