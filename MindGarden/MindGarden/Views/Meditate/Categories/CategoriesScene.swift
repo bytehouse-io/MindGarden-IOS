@@ -17,7 +17,8 @@ struct CategoriesScene: View {
     @State var searchText: String = ""
     var isSearch: Bool = false
     @Binding var showSearch: Bool
-    @State var tappedMed = false
+    @State private var tappedMed = false
+    @State private var showModal = false
 
     init(isSearch: Bool = false, showSearch: Binding<Bool>) {
         self.isSearch = isSearch
@@ -104,7 +105,7 @@ struct CategoriesScene: View {
                                                         if model.selectedMeditation?.type == .course {
                                                             viewRouter.currentPage = .middle
                                                         } else {
-                                                            viewRouter.currentPage = .play
+                                                            showModal = true
                                                         }
                                                     }
                                                 }
@@ -114,11 +115,49 @@ struct CategoriesScene: View {
                                         .padding(.vertical, 8)
                                 }
                             })
+                        VStack {
+                            Text("Want a specific meditation?")
+                                .font(Font.mada(.semiBold, size: 18))
+                                .foregroundColor(Clr.black2)
+                            Button {
+                                Analytics.shared.log(event: .categories_tapped_request)
+                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                impact.impactOccurred()
+                                withAnimation {
+                                    if let url = URL(string: "https://mindgarden.upvoty.com/b/feature-requests/") {
+                                        UIApplication.shared.open(url)
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Text("Post a Request")
+                                        .foregroundColor(.black)
+                                        .font(Font.mada(.semiBold, size: 20))
+                                }.frame(width: g.size.width * 0.65, height: 50)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
+                            }.buttonStyle(NeumorphicPress())
+                        }.frame(height: 140)
+                        .padding(.bottom)
+                        .animation(nil)
                     }
                     Spacer()
                 }
                 .background(Clr.darkWhite)
                 }
+                if showModal {
+                    Color.black
+                        .opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            showModal.toggle()
+                        }
+                    Spacer()
+                }
+                    MiddleModal(shown: $showModal)
+                        .offset(y: showModal ? 0 : g.size.height)
+                        .edgesIgnoringSafeArea(.top)
+                        .animation(.default, value: showModal)
             }
         .transition(.move(edge: .bottom))
         .onAppear {

@@ -15,6 +15,7 @@ import AuthenticationServices
 import Combine
 import Amplitude
 import OneSignal
+import Purchases
 
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
@@ -148,6 +149,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
 
     private func goToHome() {
+        if !isSignUp {
+            
+        }
         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
@@ -318,7 +322,14 @@ extension AuthenticationViewModel {
     func createUser() {
         if let email = Auth.auth().currentUser?.email {
             OneSignal.setEmail(email)
+            OneSignal.setExternalUserId(email)
+            Purchases.shared.setOnesignalID(email)
+            Amplitude.instance().setUserId(email)
+            Purchases.shared.logIn(email) { info, bool, error in
+                print(info?.copy())
+            }
         }
+
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
         var date = dateFormatter.string(from: Date())

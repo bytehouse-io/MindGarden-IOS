@@ -361,7 +361,6 @@ struct Home: View {
             }
         }.transition(.move(edge: .leading))
          .onAppear {
-             print("zombie")
              if launchedApp {
                  gardenModel.updateSelf()
                  launchedApp = false

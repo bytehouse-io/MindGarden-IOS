@@ -45,19 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          // OneSignal initialization
          OneSignal.initWithLaunchOptions(launchOptions)
          OneSignal.setAppId("7f964cf0-550e-426f-831e-468b9a02f012")
-        let userId = UserDefaults.standard.string(forKey: "userId")
-        if userId != nil  && userId != ""  {
-            Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: userId)
-            Purchases.shared.setOnesignalID(userId)
-            Amplitude.instance().setUserId(userId)
-        } else {
-            let id = UUID().uuidString
-            OneSignal.setExternalUserId(id)
-            UserDefaults.standard.setValue(id, forKey: "userId")
-            Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: id)
-            Purchases.shared.setOnesignalID(id)
-            Amplitude.instance().setUserId(id)
-        }
+        Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG")
         Purchases.shared.collectDeviceIdentifiers()
 
         // Set the Appsflyer Id

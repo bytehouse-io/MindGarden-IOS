@@ -232,6 +232,7 @@ enum AnalyticEvent {
     case categories_tapped_meditation //
     case categories_tapped_sleep //
     case categories_tapped_confidence //
+    case categories_tapped_request //
     case categories_tapped_locked_meditation //
 
     //MARK: - tabs + plus
@@ -558,6 +559,7 @@ extension AnalyticEvent {
         case .categories_tapped_sleep: return "categories_tapped_sleep"
         case .categories_tapped_confidence: return "categories_tapped_confidence"
         case .categories_tapped_locked_meditation: return "categories_tapped_locked_meditation"
+        case .categories_tapped_request: return "categories_tapped_request"
         case .tabs_tapped_meditate: return "tabs_tapped_meditate"
         case .tabs_tapped_garden: return "tabs_tapped_garden"
         case .tabs_tapped_store: return "tabs_tapped_store"

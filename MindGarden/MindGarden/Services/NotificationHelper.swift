@@ -11,8 +11,24 @@ import SwiftUI
 struct NotificationHelper {
     static func addOneDay() {
         let content = UNMutableNotificationContent()
-        content.title = "Don't Break Your Streak!"
-        content.body = "Tend to your garden by meditating."
+        switch UserDefaults.standard.string(forKey: "reason") {
+        case "Sleep better":
+            content.title = "Don't Break Your Streak!"
+            content.body = "Sleeping better starts tonight"
+        case "Get more focused":
+            content.title = "Don't Break Your Streak!"
+            content.body = "Let's train and increase focus"
+        case "Managing Stress & Anxiety":
+            content.title = "Don't Break Your Streak!"
+            content.body = "Let's train and prevent anxiety"
+        case "Just trying it out":
+            content.title = "Don't Break Your Streak!"
+            content.body = "Tend to your garden by meditating."
+        default:
+            content.title = "Don't Break Your Streak!"
+            content.body = "Tend to your garden by meditating."
+        }
+
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
