@@ -22,6 +22,7 @@ class GardenViewModel: ObservableObject {
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
     @Published var recentMeditations: [Meditation] = []
+    @Published var gratitudes = 0
     var medIds: [String] = [] //TODO turn this into a set
 
     var allTimeMinutes = 0
@@ -106,6 +107,7 @@ class GardenViewModel: ObservableObject {
         totalMins = 0
         totalSessions = 0
         placeHolders = 0
+        gratitudes = 0
         monthTiles = [Int: [Int: (Plant?, Mood?)]]()
         totalMoods = [Mood:Int]()
         favoritePlants = [String: Int]()
@@ -159,6 +161,9 @@ class GardenViewModel: ObservableObject {
                         totalMoods[singleMood] = 1
                     }
                 }
+            }
+            if let gratitudez = grid[Date().get(.year)]?[strMonth]?[String(day)]?[K.defaults.gratitudes] as? [String] {
+                gratitudes += gratitudez.count
             }
 
 

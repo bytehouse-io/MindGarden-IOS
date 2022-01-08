@@ -152,8 +152,9 @@ struct Garden: View {
                         .zIndex(-1000)
                         HStack(spacing: 5) {
                             VStack(spacing: 15) {
-                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: gardenModel.totalMins/60 == 0 && gardenModel.totalMins != 0 ? "0.5" : "\(gardenModel.totalMins/60)")
-                                StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
+                                StatBox(label: "Minutes", img: Img.iconTotalTime, value: gardenModel.totalMins/60 == 0 && gardenModel.totalMins != 0 ? "0.5" : "\(gardenModel.totalMins/60)")
+                                StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
+                                StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
                             }
                             .frame(maxWidth: gp.size.width * 0.33)
                             ZStack {
@@ -170,21 +171,29 @@ struct Garden: View {
                                         MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
                                         MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
                                     }.padding(.horizontal, 10)
+                                    HStack {
+                                        MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
+                                            .frame(maxWidth: gp.size.width * 0.5 * 0.44)
+                                        Spacer()
+                                    }
+                                    .frame(maxWidth: gp.size.width * 0.5)
+                                    .padding(.horizontal, 10)
+
                                 }
-                            }.frame(maxWidth: gp.size.width * 0.47)
-                        }.frame(maxHeight: gp.size.height * 0.16)
+                            }.frame(maxWidth: gp.size.width * 0.5)
+                        }.frame(maxHeight: gp.size.height * 0.225)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants:")
                                 .foregroundColor(Clr.black2)
                                 .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
-                                .padding(.leading, 5)
+                                .padding(.leading, gp.size.width * 0.075 - 25)
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
                                     .cornerRadius(15)
                                     .neoShadow()
-                                    .frame(maxWidth: gp.size.width * 0.8)
+                                    .frame(maxWidth: gp.size.width * 0.85)
                                 HStack(spacing: 20){
                                     Spacer()
                                     if topThreePlants.isEmpty {
@@ -207,7 +216,7 @@ struct Garden: View {
                                     }
                                     Spacer()
                                 }
-                            }.frame(maxWidth: gp.size.width * 0.8, maxHeight: gp.size.height * 0.4)
+                            }.frame(maxWidth: gp.size.width * 0.85, maxHeight: gp.size.height * 0.4)
                         }.padding(.vertical, 15)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                     }.padding(.horizontal, 25)
@@ -390,9 +399,9 @@ struct FavoritePlant: View {
                             .stroke(Clr.darkgreen))
             HStack {
                 Text("\(title)")
-                    .font(Font.mada(.regular, size: 16))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
+                    .font(Font.mada(.regular, size: 12))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.05)
                 Text("\(count)").bold()
                     .font(Font.mada(.bold, size: 16))
             }.padding(.top, 8)

@@ -12,6 +12,7 @@ enum Mood: String {
     case okay
     case sad
     case angry
+    case stressed
     case none
 
     var title: String {
@@ -20,6 +21,7 @@ enum Mood: String {
         case .okay: return "okay"
         case .sad: return "sad"
         case .angry: return "angry"
+        case .stressed: return "stressed"
         case .none: return "none"
         }
     }
@@ -34,6 +36,8 @@ enum Mood: String {
             return .sad
         case "angry":
             return .angry
+        case "stressed":
+            return .stressed
         case "none":
             return .none
         default:
@@ -47,6 +51,7 @@ enum Mood: String {
         case .okay: return Clr.gardenGray
         case .sad: return Clr.gardenBlue
         case .angry: return Clr.gardenRed
+        case .stressed: return Clr.gardenRed
         case .none: return Clr.dirtBrown
         }
     }
@@ -80,6 +85,7 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .happy)
                             SingleMood(moodSelected: $moodSelected, mood: .okay)
                             SingleMood(moodSelected: $moodSelected, mood: .sad)
+                            SingleMood(moodSelected: $moodSelected, mood: .angry)
                             SingleMood(moodSelected: $moodSelected, mood: .angry)
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
@@ -150,6 +156,7 @@ struct SingleMood: View {
                     switch mood {
                     case .angry: Analytics.shared.log(event: .mood_tapped_angry)
                     case .sad: Analytics.shared.log(event: .mood_tapped_sad)
+                    case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
                     case .okay: Analytics.shared.log(event: .mood_tapped_okay)
                     case .happy: Analytics.shared.log(event: .mood_tapped_happy)
                     case .none: Analytics.shared.log(event: .mood_tapped_cancel)

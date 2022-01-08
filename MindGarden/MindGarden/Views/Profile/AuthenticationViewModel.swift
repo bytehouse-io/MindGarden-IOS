@@ -325,9 +325,7 @@ extension AuthenticationViewModel {
             OneSignal.setExternalUserId(email)
             Purchases.shared.setOnesignalID(email)
             Amplitude.instance().setUserId(email)
-            Purchases.shared.logIn(email) { info, bool, error in
-                print(info?.copy())
-            }
+            Purchases.shared.logIn(email) { info, bool, error in }
         }
 
         let formatter = DateFormatter()
