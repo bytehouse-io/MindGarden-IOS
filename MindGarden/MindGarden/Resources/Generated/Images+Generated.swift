@@ -9,6 +9,7 @@ public enum Img {
   public static let happy = Image("happy")
   public static let okay = Image("okay")
   public static let sad = Image("sad")
+  public static let stressed = Image("stressed")
   public static let aloe1 = Image("aloe1")
   public static let aloe2 = Image("aloe2")
   public static let aloe3 = Image("aloe3")

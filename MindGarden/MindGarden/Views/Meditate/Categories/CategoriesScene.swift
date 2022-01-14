@@ -139,7 +139,6 @@ struct CategoriesScene: View {
                             }.buttonStyle(NeumorphicPress())
                         }.frame(height: 140)
                         .padding(.bottom)
-                        .animation(nil)
                     }
                     Spacer()
                 }
@@ -253,23 +252,23 @@ enum Category {
     var value: String {
         switch self {
         case .all:
-            return "All"
+            return "👨‍🌾 All"
         case .unguided:
-            return "Unguided"
+            return "⏳ Unguided"
         case .beginners:
-            return "Beginners"
+            return "😁 Beginners"
         case .courses:
-            return "Courses"
+            return "👨‍🏫 Courses"
         case .anxiety:
-            return "Anxiety"
+            return "😖 Anxiety"
         case .focus:
-            return "Focus"
+            return "🎧 Focus"
         case .sleep:
-            return "Sleep"
+            return "😴 Sleep"
         case .confidence:
-            return "Confidence"
+            return "💪 Confidence"
         case .growth:
-            return "Growth"
+            return "🌱 Growth"
         }
     }
 }

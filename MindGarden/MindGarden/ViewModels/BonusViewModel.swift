@@ -226,14 +226,24 @@ class BonusViewModel: ObservableObject {
             lastStreakDate = String(self.streak![plusOffset...])
             if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
                 self.streakNumber += 1
+                if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
+                    if longestStreak < streakNumber {
+                        UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
+                    }
+                } else {
+                    UserDefaults.standard.setValue(1, forKey: "longestStreak")
+                }
+
                 lastStreakDate = formatter.string(from: Date())
-            } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
+            } else if Date() - formatter.date(from: lastStreakDate)! < 172800 { //broke streak
                 self.streakNumber = 1
                 lastStreakDate = formatter.string(from: Date())
                 if let email = Auth.auth().currentUser?.email {
                     self.db.collection(K.userPreferences).document(email).updateData([
                         "sevenDay": 0,
-                        "thirtyDay": 0
+                        "thirtyDay": 0,
+                        "seven": 0,
+                        "thirty": 0,
                     ]) { (error) in
                         if let e = error {
                             print("There was a issue saving data to firestore \(e) ")
@@ -246,6 +256,7 @@ class BonusViewModel: ObservableObject {
                     UserDefaults.standard.setValue(0, forKey: "thirtyDay")
                 }
             } // else no need to update
+
             self.calculateProgress()
         } else {
             lastStreakDate  = formatter.string(from: Date())

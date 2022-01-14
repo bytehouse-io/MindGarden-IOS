@@ -47,7 +47,7 @@ struct WidgetModal: View {
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                             .padding(.bottom, 10)
                         HStack {
-                            Text("4. Tap the 'Add Widget' button search for Opal on your homescreen.")
+                            Text("4. Tap the 'Add Widget' button search for MindGarden on your homescreen.")
                         }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
                             .foregroundColor(Clr.black2)

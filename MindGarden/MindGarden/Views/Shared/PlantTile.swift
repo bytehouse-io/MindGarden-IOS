@@ -90,7 +90,7 @@ struct PlantTile: View {
                             .fill(plant == userModel.selectedPlant  ? Clr.yellow : Clr.darkgreen)
                             .overlay(Text(plant == userModel.selectedPlant ? "Selected" : "Select")
                                         .font(Font.mada(.semiBold, size: 18))
-                                        .foregroundColor(plant == userModel.selectedPlant ? Clr.black1 : .white)
+                                        .foregroundColor(plant == userModel.selectedPlant ? .black : .white)
                                         .padding()
                             )
                             .frame(width: width * 0.30, height: height * 0.04)

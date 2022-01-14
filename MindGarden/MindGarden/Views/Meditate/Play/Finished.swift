@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Photos
+import StoreKit
 
 struct Finished: View {
     var model: MeditationViewModel
@@ -187,6 +188,18 @@ struct Finished: View {
             model.lastSeconds = false
         }
         .onAppear {
+            if !UserDefaults.standard.bool(forKey: "tappedRate") {
+                if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
+                    if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+                    }
+                    if UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
+                        UserDefaults.standard.setValue(4, forKey: "launchNumber")
+                    } else {
+                        Analytics.shared.log(event: .seventh_time_coming_back)
+                        UserDefaults.standard.setValue(11, forKey: "launchNumber")
+                    }
+                }
+            }
             //unlock christmas tree
             var dateComponents = DateComponents()
             dateComponents.month = 12

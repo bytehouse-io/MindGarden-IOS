@@ -127,7 +127,6 @@ struct Home: View {
                                 }
                                 .buttonStyle(NeumorphicPress())
                             }
-
                             Button {
                                 Analytics.shared.log(event: .home_tapped_featured)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -308,44 +307,43 @@ struct Home: View {
                         NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                             .offset(y: showUpdateModal ? 0 : g.size.height)
                             .animation(.default, value: showUpdateModal)
+                    }
                 }
-            }
-            .animation(nil)
-            .animation(.default)
-            .navigationBarItems(
-                leading: Img.topBranch.padding(.leading, -20),
-                trailing: HStack {
-                    if !UserDefaults.standard.bool(forKey: "isPro") {
-                        Button {
-                            Analytics.shared.log(event: .home_tapped_pro)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                fromPage = "home"
-                                viewRouter.currentPage = .pricing
+                .transition(.opacity)
+                .navigationBarItems(
+                    leading: Img.topBranch.padding(.leading, -20),
+                    trailing: HStack {
+                        if !UserDefaults.standard.bool(forKey: "isPro") {
+                            Button {
+                                Analytics.shared.log(event: .home_tapped_pro)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    fromPage = "home"
+                                    viewRouter.currentPage = .pricing
+                                }
+                            } label: {
+                                HStack {
+                                    Text("💚 Go Pro!")
+                                        .font(Font.mada(.semiBold, size: 14))
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(.footnote)
+                                }
+                                .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                                .padding(8)
+                                .background(Clr.darkWhite)
+                                .cornerRadius(25)
                             }
-                        } label: {
-                            HStack {
-                                Text("💚 Go Pro!")
-                                    .font(Font.mada(.semiBold, size: 14))
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(.footnote)
-                            }
-                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
-                            .padding(8)
-                            .background(Clr.darkWhite)
-                            .cornerRadius(25)
+                            .buttonStyle(NeumorphicPress())
                         }
-                        .buttonStyle(NeumorphicPress())
-                    }
-                    Image(systemName: "magnifyingglass")
-                    .foregroundColor(Clr.darkgreen)
-                    .font(.system(size: 22))
-                    .padding([.top,.bottom, .trailing])
-                    .onTapGesture {
-                        Analytics.shared.log(event: .home_tapped_search)
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        showSearch = true
-                    }
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(Clr.darkgreen)
+                            .font(.system(size: 22))
+                            .padding([.top,.bottom, .trailing])
+                            .onTapGesture {
+                                Analytics.shared.log(event: .home_tapped_search)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                showSearch = true
+                            }
                 }
             )
             .sheet(isPresented: $showPlantSelect, content: {
@@ -359,7 +357,8 @@ struct Home: View {
             .alert(isPresented: $wentPro) {
                 Alert(title: Text("🥳 Congrats! You unlocked MindGarden Pro"), dismissButton: .default(Text("Got it!")))
             }
-        }.transition(.move(edge: .leading))
+        }
+        .animation(.easeOut(duration: 0.1))
          .onAppear {
              if launchedApp {
                  gardenModel.updateSelf()
@@ -391,24 +390,13 @@ struct Home: View {
                  if UserDefaults.standard.bool(forKey: "christmasLink") {
                      viewRouter.currentPage = .shop
                  } else {
-                     showUpdateModal = !UserDefaults.standard.bool(forKey: "1.3Update")
+                     showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
                  }
              }
 
-                if !UserDefaults.standard.bool(forKey: "tappedRate") {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
-                        if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                        }
-                        if UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
-                            UserDefaults.standard.setValue(4, forKey: "launchNumber")
-                        } else {
-                            Analytics.shared.log(event: .seventh_time_coming_back)
-                            UserDefaults.standard.setValue(11, forKey: "launchNumber")
-                        }
-                    }
-                }
+        
              coins = userCoins
-             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
+//             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
             .onAppearAnalytics(event: .screen_load_home)
     }

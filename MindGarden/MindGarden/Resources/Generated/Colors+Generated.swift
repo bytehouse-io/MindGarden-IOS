@@ -48,6 +48,8 @@ public enum Clr {
   public static let gardenRed = Color("gardenRed")
   /// **Universal - Any**: `#B7B7B7` with alpha: `1.000`
   public static let lightGray = Color("lightGray")
+  /// **Universal - Any**: `#E170A2` with alpha: `1.000`
+  public static let purple = Color("purple")
   /// **Universal - Any**: `#414127` with alpha: `1.000`
   public static let redGradientBottom = Color("redGradientBottom")
   /// ERROR GETTING DESCRIPTION

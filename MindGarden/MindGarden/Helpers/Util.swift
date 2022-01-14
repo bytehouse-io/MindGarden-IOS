@@ -11,20 +11,6 @@ import Foundation
 
 struct K {
     static var userPreferences = "userPreferences"
-    static func getMoodImage(mood: Mood) -> Image {
-        switch mood {
-        case .happy:
-            return Img.happy
-        case .sad:
-            return Img.sad
-        case .angry:
-            return Img.angry
-        case .okay:
-            return Img.okay
-        default:
-            return Img.okay
-        }
-    }
 
     struct defaults {
         static var favorites = "favorited"

@@ -39,7 +39,7 @@ struct ReasonScene: View {
                                 .padding(.horizontal)
                             SelectionRow(width: width, height: height, title: "Sleep better", img: Img.moon, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Get more focused", img: Img.target, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Managing Stress& Anxiety", img: Img.heart, selected: $selected)
+                            SelectionRow(width: width, height: height, title: "Managing Stress & Anxiety", img: Img.heart, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Just trying it out", img: Img.magnifyingGlass, selected: $selected)
                             Button {
                                 Analytics.shared.log(event: .experience_tapped_continue)

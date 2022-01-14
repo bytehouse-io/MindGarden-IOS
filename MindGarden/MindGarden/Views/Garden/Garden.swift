@@ -172,7 +172,7 @@ struct Garden: View {
                                         MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
                                     }.padding(.horizontal, 10)
                                     HStack {
-                                        MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
+                                        MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
                                             .frame(maxWidth: gp.size.width * 0.5 * 0.44)
                                         Spacer()
                                     }
@@ -335,7 +335,7 @@ struct MoodImage: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            K.getMoodImage(mood: mood)
+            Mood.getMoodImage(mood: mood)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             VStack(alignment: .center) {

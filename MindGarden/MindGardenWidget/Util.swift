@@ -18,6 +18,8 @@ struct K {
             return Image("angry")
         case .okay:
             return Image("okay")
+        case .stressed:
+            return Image("stressed")
         default:
             return Image("okay")
         }
@@ -58,6 +60,7 @@ struct K {
         case okay
         case sad
         case angry
+        case stressed
         case none
 
         var title: String {
@@ -66,6 +69,7 @@ struct K {
             case .okay: return "okay"
             case .sad: return "sad"
             case .angry: return "angry"
+            case .stressed: return "stressed"
             case .none: return "none"
             }
         }
@@ -80,6 +84,8 @@ struct K {
                 return .sad
             case "angry":
                 return .angry
+            case "stressed":
+                return .stressed
             case "none":
                 return .none
             default:
@@ -93,6 +99,7 @@ struct K {
             case .okay: return Color("gardenGray")
             case .sad: return Color("gardenBlue")
             case .angry: return Color("gardenRed")
+            case .stressed: return Color("purple")
             case .none: return Color("dirtBrown")
             }
         }

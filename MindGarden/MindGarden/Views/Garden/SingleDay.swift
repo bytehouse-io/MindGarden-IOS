@@ -132,7 +132,7 @@ struct SingleDay: View {
                                         HStack(spacing: 0) {
                                             ForEach(self.moods ?? ["none"], id: \.self) { mood in
                                                 if mood != "none" {
-                                                    K.getMoodImage(mood: Mood.getMood(str: mood))
+                                                    Mood.getMoodImage(mood: Mood.getMood(str: mood))
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .padding(5)

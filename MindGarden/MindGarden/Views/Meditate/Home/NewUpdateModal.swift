@@ -25,14 +25,14 @@ struct NewUpdateModal: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.height * 0.12)
-                            Text("\nMindGarden \nUpdate 1.3\nWhat's New:")
+                            Text("\nMindGarden \nUpdate 1.4\nWhat's New:")
                                 .font(Font.mada(.bold, size: 28))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.12)
                             Spacer()
                         }.padding([.horizontal, .top])
                             HStack {
-                                Text("⚙️ We added our first widget! Make meditation even easier this year.")
+                                Text("😩 Based on many user requests, we have added a stressed mood!")
                             }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
                             .foregroundColor(Clr.black2)
@@ -41,15 +41,14 @@ struct NewUpdateModal: View {
                             .padding(.top)
                         Button {
                             withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
+                                UserDefaults.standard.setValue(true, forKey: "1.4Update")
                                 shown = false
-                                mindfulNotifs = true
                                 viewRouter.currentPage = .profile
                             }
                         } label: {
                             HStack {
-                                Text("📱 Introducing: Mindfulness Notifications - Stay present in 2022. ")
-                                + Text("(Take me there)")
+                                Text("🥳 We fixed our widget! ")
+                                + Text("Add my widget")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
@@ -60,7 +59,7 @@ struct NewUpdateModal: View {
                         .padding(.top)
                         Button {
                             withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
+                                UserDefaults.standard.setValue(true, forKey: "1.4Update")
                                 shown = false
                                 if let url = URL(string: "https://mindgarden.upvoty.com/") {
                                     UIApplication.shared.open(url)
@@ -68,7 +67,7 @@ struct NewUpdateModal: View {
                             }
                         } label: {
                             HStack {
-                                Text("🥳 Have a meditation or feature request? ")
+                                Text("👋🏻 Have a meditation or feature request? ")
                                 + Text("Post Request")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
@@ -123,7 +122,7 @@ struct NewUpdateModal: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
+                                UserDefaults.standard.setValue(true, forKey: "1.4Update")
                             }
                         } label: {
                             Capsule()

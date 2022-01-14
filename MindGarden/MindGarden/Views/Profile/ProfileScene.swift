@@ -51,364 +51,317 @@ struct ProfileScene: View {
 
     var body: some View {
         LoadingView(isShowing: $showSpinner) {
-        VStack {
-            if #available(iOS 14.0, *) {
-                NavigationView {
-                    GeometryReader { g in
-                        let width = g.size.width
-                        let height = g.size.height
-                        ZStack {
-                            Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                            VStack(alignment: .center, spacing: 0) {
-                                HStack(alignment: .bottom, spacing: 0) {
-                                    SelectionButton(selection: $selection, type: .referrals)
-                                        .frame(width: abs(g.size.width/4 - 1))
-                                    VStack {
-                                        Rectangle().fill(Color.gray.opacity(0.3))
-                                            .frame(width: 2, height: 35)
-                                            .padding(.top, 10)
-                                        Rectangle()
-                                            .fill(Color.gray.opacity(0.3))
-                                            .frame(height: 5)
-                                    }.frame(width: 5)
-                                    SelectionButton(selection: $selection, type: .settings)
-                                        .frame(width: abs(g.size.width/4 - 1))
-                                    VStack {
-                                        Rectangle().fill(Color.gray.opacity(0.3))
-                                            .frame(width: 2, height: 35)
-                                            .padding(.top, 10)
-                                        Rectangle()
-                                            .fill(Color.gray.opacity(0.3))
-                                            .frame(height: 5)
-                                    }.frame(width: 5)
-                                    SelectionButton(selection: $selection, type: .journey)
-                                        .frame(width: abs(g.size.width/4 - 1))
-                                }.background(Clr.darkWhite).frame(height: 50)
-                                    .cornerRadius(12)
-                                    .neoShadow()
-                                if showNotification && selection == .settings {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        showNotification = false
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.darkWhite)
-                                            .padding(.horizontal)
-                                            .overlay(
-                                                Text("Go Back")
-                                                    .font(Font.mada(.semiBold, size: 20))
-                                                    .foregroundColor(Clr.darkgreen)
-                                            )
-                                            .frame(width: width * 0.35, height: 30)
-                                    }
-                                    .buttonStyle(NeumorphicPress())
-                                    .padding(.top)
-                                }
-
-                                if selection == .settings {
-                                    if showNotification {
-                                        List {
-                                            Row(title: "Meditation Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
-                                                withAnimation {
-                                                    showNotification = false
-                                                    UserDefaults.standard.setValue(true, forKey: "notifOn")
-                                                    showNotif = true
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: 40)
-                                            Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
-                                                withAnimation {
-                                                    UserDefaults.standard.setValue(true, forKey: "mindful")
-                                                    showMindful = true
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: 40)
-                                        }.frame(maxHeight: g.size.height * 0.60)
-                                            .padding()
-                                            .neoShadow()
-                                            .transition(.slide)
-                                            .animation(.default)
-                                    } else {
-                                        List {
-                                            if !UserDefaults.standard.bool(forKey: "isPro") {
-                                                Row(title: "Unlock Pro", img: Image(systemName: "heart.fill"), action: {
-                                                    Analytics.shared.log(event: .profile_tapped_goPro)
-                                                    withAnimation {
-                                                        fromPage = "profile"
-                                                        viewRouter.currentPage = .pricing
-                                                    }
-                                                }, showNotif: $showNotif, showMindful: $showMindful)
-                                                    .frame(height: K.isSmall() ? 30 : 40)
-                                            }
-                                            Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
-                                                showNotification = true
-                                                Analytics.shared.log(event: .profile_tapped_notifications)
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_invite)
-                                                actionSheet() }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Rate the app", img: Image(systemName: "star.fill"), action: {
-                                                rateFunc()
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_email)
-                                                if MFMailComposeViewController.canSendMail() {
-                                                    showMailView = true
-                                                } else {
-                                                    mailNeedsSetup = true
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_restore)
-                                                Purchases.shared.restoreTransactions { (purchaserInfo, error) in
-                                                    if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-                                                        UserDefaults.standard.setValue(true, forKey: "isPro")
-                                                        restorePurchase = true
-                                                    } else {
-                                                        UserDefaults.standard.setValue(false, forKey: "isPro")
-                                                    }
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Request Feature/Med", img: Image(systemName: "hand.raised.fill"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_roadmap)
-                                                if let url = URL(string: "https://mindgarden.upvoty.com/") {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Add Widget", img: Image(systemName: "gear"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_add_widget)
-                                                showWidget = true
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-
-                                            Row(title: "Join the Community", img: Img.redditIcon, action: {
-                                                Analytics.shared.log(event: .profile_tapped_reddit)
-                                                if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
-                                                    UIApplication.shared.open(url)
-                                                    if !UserDefaults.standard.bool(forKey: "reddit") {
-                                                        userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-                                                            p.title == "Lemon"
-                                                        })
-                                                        userModel.buyPlant(unlockedStrawberry: true)
-                                                        UserDefaults.standard.setValue(true, forKey: "reddit")
-                                                    }
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            VStack {
-                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
-                                                Analytics.shared.log(event: .profile_tapped_feedback)
-                                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            Row(title: "Daily Motivation", img: Img.instaIcon, action: {
-                                                Analytics.shared.log(event: .profile_tapped_instagram)
-                                                if let url = URL(string: "https://www.instagram.com/mindgardn/") {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                .frame(height: K.isSmall() ? 30 : 40)
-                                            }
-                                        }.frame(maxHeight: g.size.height * (K.isSmall() ? 0.725 : 0.8))
-                                            .padding([.horizontal])
-                                            .offset(y: -20)
-                                            .neoShadow()
-                                    }
-                                } else if selection == .journey {
-                                    // Journey
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(Clr.darkWhite)
-                                            .cornerRadius(12)
-                                            .neoShadow()
-                                        VStack(alignment: .leading) {
-                                            HStack(alignment: .center, spacing: 10) {
-                                                Image(systemName: "calendar")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                Text("MindGarden journey began")
-                                                    .font(Font.mada(.regular, size: 20))
-                                                    .foregroundColor(Clr.black1)
-                                                    .padding(.top, 3)
-                                            }.frame(width: abs(width - 75), alignment: .leading)
-                                                .frame(height: 25)
-                                            Text("\(profileModel.signUpDate)")
-                                                .font(Font.mada(.bold, size: 34))
-                                                .foregroundColor(Clr.darkgreen)
-                                        }.padding(.leading)
-                                    }.frame(width: abs(width - 100), height: height/6)
-                                        .padding()
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(Clr.darkWhite)
-                                            .cornerRadius(12)
-                                            .neoShadow()
-                                        VStack(alignment: .leading) {
-                                            HStack(alignment: .center, spacing: 10) {
-                                                Image(systemName: "clock")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                Text("Total Time Meditated")
-                                                    .font(Font.mada(.regular, size: 20))
-                                                    .foregroundColor(Clr.black1)
-                                                    .padding(.top, 3)
-                                            }.frame(width: abs(width - 100), alignment: .leading)
-                                                .frame(height: 25)
-
-                                            HStack {
-                                                Text(profileModel.totalMins/60 == 0 ? "0.5" : "\(profileModel.totalMins/60)")
-                                                    .font(Font.mada(.bold, size: 40))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                Text("minutes")
-                                                    .font(Font.mada(.regular, size: 28))
-                                                    .foregroundColor(Clr.black1)
-                                            }
-                                        }
-                                    }.frame(width: abs(width - 75), height: height/6)
-                                        .padding()
-                                        .padding(.leading)
-                                        .onTapGesture(count: 3) {
-                                            UserDefaults.standard.setValue(true, forKey: "trippleTapped")
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                        }
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(Clr.darkWhite)
-                                            .cornerRadius(12)
-                                            .neoShadow()
-                                        VStack(alignment: .leading) {
-                                            HStack(alignment: .center, spacing: 10) {
-                                                Image(systemName: "star.fill")
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                Text("Total Meditation Sessions")
-                                                    .font(Font.mada(.regular, size: 20))
-                                                    .foregroundColor(Clr.black1)
-                                                    .padding(.top, 3)
-                                            }.frame(width: abs(width - 100), alignment: .leading)
-                                                .frame(height: 25)
-                                            HStack {
-                                                Text("\(profileModel.totalSessions)")
-                                                    .font(Font.mada(.bold, size: 40))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                Text("Sessions")
-                                                    .font(Font.mada(.semiBold, size: 28))
-                                                    .foregroundColor(Clr.black1)
-                                            }
-                                        }
-                                    }.frame(width: abs(width - 75), height: height/6)
-                                        .padding()
-                                        .padding(.leading)
-                                } else {
-                                    VStack {
-                                        Text("🎁 Get & give 2 weeks free of MindGarden Pro for every referral (stackable)")
-                                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
-                                            .foregroundColor(Clr.black2)
-                                        
-                                            .multilineTextAlignment(.leading)
-                                            .offset(y: -24)
-                                        ZStack {
+            VStack {
+                if #available(iOS 14.0, *) {
+                    NavigationView {
+                        GeometryReader { g in
+                            let width = g.size.width
+                            let height = g.size.height
+                            ZStack {
+                                Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+                                VStack(alignment: .center, spacing: 0) {
+                                    HStack(alignment: .bottom, spacing: 0) {
+                                        SelectionButton(selection: $selection, type: .referrals)
+                                            .frame(width: abs(g.size.width/4 - 1))
+                                        VStack {
+                                            Rectangle().fill(Color.gray.opacity(0.3))
+                                                .frame(width: 2, height: 35)
+                                                .padding(.top, 10)
                                             Rectangle()
-                                                .fill(Clr.darkWhite)
-                                                .cornerRadius(12)
-                                                .frame(width: abs(width - 100))
-                                                .neoShadow()
-                                            VStack(alignment: .leading) {
-                                                HStack(alignment: .center, spacing: 10) {
-                                                    Image(systemName: "number")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .foregroundColor(Clr.darkgreen)
-                                                    Text("Total Referrals")
-                                                        .font(Font.mada(.regular, size: 20))
-                                                        .foregroundColor(Clr.black1)
-                                                        .padding(.top, 3)
-                                                }.frame(width: abs(width - 150), alignment: .leading)
-                                                    .frame(height: 25)
-                                                HStack {
-                                                    Text("\(numRefs)")
-                                                        .font(Font.mada(.bold, size: 40))
-                                                        .foregroundColor(Clr.darkgreen)
-                                                    Text("Referrals")
-                                                        .font(Font.mada(.semiBold, size: 28))
-                                                        .foregroundColor(Clr.black1)
-                                                }.frame(width: abs(width - 150), alignment: .leading)
-                                                HStack(alignment: .center, spacing: 10) {
-                                                    Image(systemName: "calendar")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                    Text("Pro Expires On:")
-                                                        .font(Font.mada(.regular, size: 20))
-                                                        .foregroundColor(Clr.black1)
-                                                        .padding(.top, 3)
-                                                }.frame(width: abs(width - 150), alignment: .leading)
-                                                    .frame(height: 25)
-                                                Text("\(refDate)")
-                                                    .font(Font.mada(.bold, size: 24))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                    .frame(width: abs(width - 150), alignment: .leading)
-                                            }.padding()
-                                        }.frame(width: abs(width - 100), height: height/4)
-                                            .padding(.horizontal)
-                                    }
-                                    .frame(width: abs(width - 100))
-                                    .offset(y: 40)
-//                                    ZStack {
-//                                        Rectangle()
-//                                            .fill(Clr.darkWhite)
-//                                            .cornerRadius(12)
-//                                            .neoShadow()
-//                                        VStack(alignment: .leading) {
-//                                            HStack(alignment: .center, spacing: 10) {
-//                                                Image(systemName: "number")
-//                                                    .resizable()
-//                                                    .aspectRatio(contentMode: .fit)
-//                                                Text("Total Referrals")
-//                                                    .font(Font.mada(.regular, size: 20))
-//                                                    .foregroundColor(Clr.black1)
-//                                                    .padding(.top, 3)
-//                                            }.frame(width: abs(width - 100), alignment: .leading)
-//                                                .frame(height: 25)
-//                                            HStack {
-//
-//                                            }
-//                                        }
-//                                    }.frame(width: abs(width - 75), height: height/6)
-//                                        .padding()
-//                                        .padding(.leading)
-
-                                }
-                                if selection == .referrals {
-                                    Button {
-                                        Analytics.shared.log(event: .profile_tapped_refer_friend)
-                                        if let _ = Auth.auth().currentUser?.email {
+                                                .fill(Color.gray.opacity(0.3))
+                                                .frame(height: 5)
+                                        }.frame(width: 5)
+                                        SelectionButton(selection: $selection, type: .settings)
+                                            .frame(width: abs(g.size.width/4 - 1))
+                                        VStack {
+                                            Rectangle().fill(Color.gray.opacity(0.3))
+                                                .frame(width: 2, height: 35)
+                                                .padding(.top, 10)
+                                            Rectangle()
+                                                .fill(Color.gray.opacity(0.3))
+                                                .frame(height: 5)
+                                        }.frame(width: 5)
+                                        SelectionButton(selection: $selection, type: .journey)
+                                            .frame(width: abs(g.size.width/4 - 1))
+                                    }.background(Clr.darkWhite).frame(height: 50)
+                                        .cornerRadius(12)
+                                        .neoShadow()
+                                    if showNotification && selection == .settings {
+                                        Button {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            actionSheet()
-                                        } else {
-                                            withAnimation {
-                                                tappedSignIn = false
-                                                viewRouter.currentPage = .authentication
-                                            }
+                                            showNotification = false
+                                        } label: {
+                                            Capsule()
+                                                .fill(Clr.darkWhite)
+                                                .padding(.horizontal)
+                                                .overlay(
+                                                    Text("Go Back")
+                                                        .font(Font.mada(.semiBold, size: 20))
+                                                        .foregroundColor(Clr.darkgreen)
+                                                )
+                                                .frame(width: width * 0.35, height: 30)
                                         }
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.darkgreen)
-                                            .neoShadow()
-                                            .overlay(Text("Refer a friend")
-                                                        .foregroundColor(.white)
-                                                        .font(Font.mada(.bold, size: 24)))
+                                        .buttonStyle(NeumorphicPress())
+                                        .padding(.top)
                                     }
-                                    .frame(width: abs(width - 100), height: 50, alignment: .center)
-                                    .padding(.top, 80)
-                                    if !tappedRate {
+
+                                    if selection == .settings {
+                                        if showNotification {
+                                            Text("Notifications")
+                                                .font(Font.mada(.regular, size: 20))
+                                                .foregroundColor(Color.gray)
+                                                .frame(width: width * 0.7, height: 20, alignment: .leading)
+                                                .padding(.bottom, 30)
+                                                .padding(.top, 20)
+                                            ZStack {
+                                                Rectangle()
+                                                    .fill(Clr.darkWhite)
+                                                    .cornerRadius(12)
+                                                    .neoShadow()
+                                                VStack {
+                                                    Row(title: "Meditation Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
+                                                        withAnimation {
+                                                            showNotification = false
+                                                            UserDefaults.standard.setValue(true, forKey: "notifOn")
+                                                            showNotif = true
+                                                        }
+                                                    }, showNotif: $showNotif, showMindful: $showMindful)
+                                                        .frame(height: 40)
+                                                    Divider()
+                                                    Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
+                                                        withAnimation {
+                                                            UserDefaults.standard.setValue(true, forKey: "mindful")
+                                                            showMindful = true
+                                                        }
+                                                    }, showNotif: $showNotif, showMindful: $showMindful)
+                                                        .frame(height: 40)
+                                                }.padding()
+                                            }.frame(width: width * 0.75, height: 80)
+                                                .transition(.slide)
+                                                .animation(.default)
+                                        } else {
+                                            ScrollView(.vertical, showsIndicators: false) {
+                                                VStack {
+                                                    Text("Settings")
+                                                        .font(Font.mada(.regular, size: 20))
+                                                        .foregroundColor(Color.gray)
+                                                        .frame(width: width * 0.7, height: 20, alignment: .leading)
+                                                        .padding(.bottom, 30)
+                                                    ZStack {
+                                                        Rectangle()
+                                                            .fill(Clr.darkWhite)
+                                                            .cornerRadius(12)
+                                                            .neoShadow()
+                                                        VStack {
+                                                            if !UserDefaults.standard.bool(forKey: "isPro") {
+                                                                Row(title: "Unlock Pro", img: Image(systemName: "heart.fill"), action: {
+                                                                    Analytics.shared.log(event: .profile_tapped_goPro)
+                                                                    withAnimation {
+                                                                        fromPage = "profile"
+                                                                        viewRouter.currentPage = .pricing
+                                                                    }
+                                                                }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                    .frame(height: 40)
+                                                                Divider()
+                                                            }
+                                                            Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
+                                                                showNotification = true
+                                                                Analytics.shared.log(event: .profile_tapped_notifications)
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_email)
+                                                                if MFMailComposeViewController.canSendMail() {
+                                                                    showMailView = true
+                                                                } else {
+                                                                    mailNeedsSetup = true
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_restore)
+                                                                Purchases.shared.restoreTransactions { (purchaserInfo, error) in
+                                                                    if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                                                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                                                        restorePurchase = true
+                                                                    } else {
+                                                                        UserDefaults.standard.setValue(false, forKey: "isPro")
+                                                                    }
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Add Widget", img: Image(systemName: "gear"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_add_widget)
+                                                                showWidget = true
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                        }.padding()
+                                                    }.frame(width: width * 0.75, height: UserDefaults.standard.bool(forKey: "isPro") ? 200 : 240)
+
+                                                    Text("I want to help")
+                                                        .font(Font.mada(.regular, size: 20))
+                                                        .foregroundColor(Color.gray)
+                                                        .frame(width: width * 0.7, height: 20, alignment: .leading)
+                                                        .padding(.bottom, 30)
+                                                        .padding(.top, 50)
+                                                    ZStack {
+                                                        Rectangle()
+                                                            .fill(Clr.darkWhite)
+                                                            .cornerRadius(12)
+                                                            .neoShadow()
+                                                        VStack {
+                                                            Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_invite)
+                                                                actionSheet() }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height:40)
+                                                            Divider()
+                                                            Row(title: "Rate the app", img: Image(systemName: "star.fill"), action: {
+                                                                rateFunc()
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height:  40)
+                                                            Divider()
+                                                            Row(title: "Request Feature/Med", img: Image(systemName: "hand.raised.fill"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_roadmap)
+                                                                if let url = URL(string: "https://mindgarden.upvoty.com/") {
+                                                                    UIApplication.shared.open(url)
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_feedback)
+                                                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
+                                                                    UIApplication.shared.open(url)
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                        }.padding()
+                                                    }.frame(width: width * 0.75, height: 190)
+                                                    Text("Stay up to date")
+                                                        .font(Font.mada(.regular, size: 20))
+                                                        .foregroundColor(Color.gray)
+                                                        .frame(width: width * 0.7, height: 20, alignment: .leading)
+                                                        .padding(.bottom, 30)
+                                                        .padding(.top, 50)
+                                                    ZStack {
+                                                        Rectangle()
+                                                            .fill(Clr.darkWhite)
+                                                            .cornerRadius(12)
+                                                            .neoShadow()
+                                                        VStack {
+                                                            Row(title: "Join the Community", img: Img.redditIcon, action: {
+                                                                Analytics.shared.log(event: .profile_tapped_reddit)
+                                                                if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
+                                                                    UIApplication.shared.open(url)
+                                                                    if !UserDefaults.standard.bool(forKey: "reddit") {
+                                                                        userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                                                                            p.title == "Lemon"
+                                                                        })
+                                                                        userModel.buyPlant(unlockedStrawberry: true)
+                                                                        UserDefaults.standard.setValue(true, forKey: "reddit")
+                                                                    }
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
+                                                                .frame(height: K.isSmall() ? 30 : 40)
+                                                            Divider()
+                                                            Row(title: "Daily Motivation", img: Img.instaIcon, action: {
+                                                                Analytics.shared.log(event: .profile_tapped_instagram)
+                                                                if let url = URL(string: "https://www.instagram.com/mindgardn/") {
+                                                                    UIApplication.shared.open(url)
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: K.isSmall() ? 30 : 40)
+                                                        }.padding()
+                                                    }.frame(width: width * 0.75, height: 70)
+                                                } .frame(width: width * 0.75)
+                                            }
+                                            .frame(width: width * 0.75, height: height * 0.775)
+                                            .padding(.top, 25)
+                                        }
+                                    } else if selection == .journey {
+                                        // Journey
+                                        JourneyPage(profileModel: profileModel, width: width, height: height, totalSessions: gardenModel.totalSessions, totalMins: gardenModel.totalMins)
+                                    } else {
+                                        VStack {
+                                            Text("🎁 Get & give 2 weeks free of MindGarden Pro for every referral (stackable)")
+                                                .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
+                                                .foregroundColor(Clr.black2)
+
+                                                .multilineTextAlignment(.leading)
+                                                .offset(y: -24)
+                                            ZStack {
+                                                Rectangle()
+                                                    .fill(Clr.darkWhite)
+                                                    .cornerRadius(12)
+                                                    .frame(width: abs(width - 100))
+                                                    .neoShadow()
+                                                VStack(alignment: .leading) {
+                                                    HStack(alignment: .center, spacing: 10) {
+                                                        Image(systemName: "number")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .foregroundColor(Clr.darkgreen)
+                                                        Text("Total Referrals")
+                                                            .font(Font.mada(.regular, size: 20))
+                                                            .foregroundColor(Clr.black1)
+                                                            .padding(.top, 3)
+                                                    }.frame(width: abs(width - 150), alignment: .leading)
+                                                        .frame(height: 25)
+                                                    HStack {
+                                                        Text("\(numRefs)")
+                                                            .font(Font.mada(.bold, size: 40))
+                                                            .foregroundColor(Clr.darkgreen)
+                                                        Text("Referrals")
+                                                            .font(Font.mada(.semiBold, size: 28))
+                                                            .foregroundColor(Clr.black1)
+                                                    }.frame(width: abs(width - 150), alignment: .leading)
+                                                    HStack(alignment: .center, spacing: 10) {
+                                                        Image(systemName: "calendar")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                        Text("Pro Expires On:")
+                                                            .font(Font.mada(.regular, size: 20))
+                                                            .foregroundColor(Clr.black1)
+                                                            .padding(.top, 3)
+                                                    }.frame(width: abs(width - 150), alignment: .leading)
+                                                        .frame(height: 25)
+                                                    Text("\(refDate)")
+                                                        .font(Font.mada(.bold, size: 24))
+                                                        .foregroundColor(Clr.darkgreen)
+                                                        .frame(width: abs(width - 150), alignment: .leading)
+                                                }.padding()
+                                            }.frame(width: abs(width - 100), height: height/4)
+                                                .padding(.horizontal)
+                                        }
+                                        .frame(width: abs(width - 100))
+                                        .offset(y: 40)
+                                    }
+                                    if selection == .referrals {
+                                        Button {
+                                            Analytics.shared.log(event: .profile_tapped_refer_friend)
+                                            if let _ = Auth.auth().currentUser?.email {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                actionSheet()
+                                            } else {
+                                                withAnimation {
+                                                    tappedSignIn = false
+                                                    viewRouter.currentPage = .authentication
+                                                }
+                                            }
+                                        } label: {
+                                            Capsule()
+                                                .fill(Clr.darkgreen)
+                                                .neoShadow()
+                                                .overlay(Text("Refer a friend")
+                                                            .foregroundColor(.white)
+                                                            .font(Font.mada(.bold, size: 24)))
+                                        }
+                                        .frame(width: abs(width - 100), height: 50, alignment: .center)
+                                        .padding(.top, 80)
+                                        if !tappedRate {
                                             Text("⭐️ Support our 3 person team!")
                                                 .foregroundColor(Clr.darkgreen)
                                                 .font(Font.mada(.bold, size: 20))
@@ -416,109 +369,109 @@ struct ProfileScene: View {
                                                 .lineLimit(2)
                                                 .padding(.top, 50)
                                                 .frame(width: abs(width - 100), alignment: .leading)
-                                        Button {
-                                            rateFunc()
-                                        } label: {
-                                            Capsule()
-                                                .fill(Clr.yellow)
-                                                .neoShadow()
-                                                .overlay(
-                                                    Text("Rate MindGarden")
-                                                        .foregroundColor(Clr.darkgreen)
-                                                        .font(Font.mada(.bold, size: 20))
-                                                        .minimumScaleFactor(0.5)
-                                                        .lineLimit(2)
-                                                        .padding(9))
-                                        }
-                                        .frame(width: abs(width - 100), height: 50, alignment: .center)
-                                        .padding(.top, 10)
-                                    }
-                                } else {
-                                    if let _ = Auth.auth().currentUser?.email {} else {
-                                        Text("Save your progress")
-                                            .foregroundColor(Clr.black2).font(Font.mada(.semiBold, size: 20))
-                                            .padding(.top, K.isSmall() ? 0 : 15)
-                                    }
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if let _ = Auth.auth().currentUser?.email {
-                                            Analytics.shared.log(event: .profile_tapped_logout)
-                                            profileModel.signOut()
-                                            // if user signs out -> send them to meditate page
-                                            withAnimation {
-                                                viewRouter.currentPage = .onboarding
+                                            Button {
+                                                rateFunc()
+                                            } label: {
+                                                Capsule()
+                                                    .fill(Clr.yellow)
+                                                    .neoShadow()
+                                                    .overlay(
+                                                        Text("Rate MindGarden")
+                                                            .foregroundColor(Clr.darkgreen)
+                                                            .font(Font.mada(.bold, size: 20))
+                                                            .minimumScaleFactor(0.5)
+                                                            .lineLimit(2)
+                                                            .padding(9))
                                             }
-                                        } else {
-                                            Analytics.shared.log(event: .profile_tapped_create_account)
-                                            withAnimation {
-                                                viewRouter.currentPage = .authentication
-                                            }
+                                            .frame(width: abs(width - 100), height: 50, alignment: .center)
+                                            .padding(.top, 10)
                                         }
-                                    } label: {
-                                        if let _ = Auth.auth().currentUser?.email {
-                                            Capsule()
-                                                .fill(Clr.redGradientBottom)
-                                                .neoShadow()
-                                                .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
-                                        } else {
-                                            Capsule()
-                                                .fill(Clr.darkgreen)
-                                                .neoShadow()
-                                                .overlay(
-                                                    Text("Create an account").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                    } else {
+                                        if selection == .settings && !showNotification {
+                                            if let _ = Auth.auth().currentUser?.email {} else {
+                                                Text("Save your progress")
+                                                    .foregroundColor(Clr.black2).font(Font.mada(.semiBold, size: 20))
+                                                    .padding(.top, K.isSmall() ? 0 : 15)
+                                                    .padding(.bottom, -10)
+                                            }
+                                            Button {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                if let _ = Auth.auth().currentUser?.email {
+                                                    Analytics.shared.log(event: .profile_tapped_logout)
+                                                    profileModel.signOut()
+                                                    // if user signs out -> send them to meditate page
+                                                    withAnimation {
+                                                        viewRouter.currentPage = .onboarding
+                                                    }
+                                                } else {
+                                                    Analytics.shared.log(event: .profile_tapped_create_account)
+                                                    withAnimation {
+                                                        viewRouter.currentPage = .authentication
+                                                    }
+                                                }
+                                            } label: {
+                                                if let _ = Auth.auth().currentUser?.email {
+                                                    Capsule()
+                                                        .fill(Clr.redGradientBottom)
+                                                        .neoShadow()
+                                                        .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                                } else {
+                                                    Capsule()
+                                                        .fill(Clr.darkgreen)
+                                                        .neoShadow()
+                                                        .overlay(
+                                                            Text("Create an account").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                                }
+                                            }
+                                            .frame(width: abs(width - 100), height: 50, alignment: .center)
+                                            .padding()
                                         }
                                     }
-                                    .frame(width: abs(width - 100), height: 50, alignment: .center)
-                                    .padding(.top, 5)
+                                    Spacer()
+                                }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
+                                    .frame(width: width, height: height)
+                                    .background(Clr.darkWhite)
+                                if showWidget {
+                                    Color.black
+                                        .opacity(0.3)
+                                        .edgesIgnoringSafeArea(.all)
+                                    Spacer()
                                 }
-                                Spacer()
-                                Spacer()
-                                Spacer()
-                                Spacer()
-                            }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
-                                .frame(width: width, height: height)
-                                .background(Clr.darkWhite)
-                            if showWidget {
-                                Color.black
-                                    .opacity(0.3)
-                                    .edgesIgnoringSafeArea(.all)
-                                Spacer()
-                            }
                                 WidgetModal(shown: $showWidget)
                                     .offset(y: showWidget ? 0 : g.size.height)
                                     .animation(.default, value: showWidget)
+                            }
                         }
                     }
+                    .onAppear {
+                        // Set the default to clear
+                        UITableView.appearance().backgroundColor = .clear
+                        UITableView.appearance().showsVerticalScrollIndicator = false
+                        //                    UITableView.appearance().isScrollEnabled = false
+                        profileModel.update(userModel: userModel, gardenModel: gardenModel)
+                    }
+                    .sheet(isPresented: $showMailView) {
+                        MailView()
+                    }
+                    .fullScreenCover(isPresented: $showNotif) {
+                        NotificationScene(fromSettings: true)
+                    }
+                    .fullScreenCover(isPresented: $showMindful) {
+                        MindfulScene()
+                    }
+                    .alert(isPresented: $mailNeedsSetup) {
+                        Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
+                    }
+                    .alert(isPresented: $restorePurchase) {
+                        Alert(title: Text("Success!"), message: Text("You've restored MindGarden Pro"))
+                    }
+                    .onAppearAnalytics(event: .screen_load_profile)
+                } else {
+                    // Fallback on earlier versions
                 }
-                .onAppear {
-                    // Set the default to clear
-                    UITableView.appearance().backgroundColor = .clear
-                    UITableView.appearance().showsVerticalScrollIndicator = false
-//                    UITableView.appearance().isScrollEnabled = false
-                    profileModel.update(userModel: userModel, gardenModel: gardenModel)
-                }
-                .sheet(isPresented: $showMailView) {
-                    MailView()
-                }
-                .fullScreenCover(isPresented: $showNotif) {
-                    NotificationScene(fromSettings: true)
-                }
-                .fullScreenCover(isPresented: $showMindful) {
-                    MindfulScene()
-                }
-                .alert(isPresented: $mailNeedsSetup) {
-                    Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
-                }
-                .alert(isPresented: $restorePurchase) {
-                    Alert(title: Text("Success!"), message: Text("You've restored MindGarden Pro"))
-                }
-                .onAppearAnalytics(event: .screen_load_profile)
-            } else {
-                // Fallback on earlier versions
             }
-          }
         }.onAppear {
-//            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
+            //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
             if tappedRefer {
                 selection = .referrals
                 tappedRefer = false
@@ -545,15 +498,61 @@ struct ProfileScene: View {
             }
         }
     }
+    struct JourneyPage: View {
+        var profileModel: ProfileViewModel
+        var width: CGFloat
+        var height: CGFloat
+        var totalSessions: Int
+        var totalMins: Int
+
+        var body: some View {
+            VStack(alignment: .center, spacing: 20) {
+                    HStack(alignment: .center, spacing: 15) {
+                        StatBox(label: "All Mins", img: Img.iconTotalTime, value: "\(totalMins/60 == 0 && totalMins != 0 ? "0.5" : "\(totalMins/60)")")
+                        StatBox(label: "All Sess", img: Img.iconSessions, value: "\(totalSessions)")
+                    }.padding(.horizontal, 5)
+                    HStack(alignment: .center, spacing: 15) {
+                        StatBox(label: "All Gratitudes", img: Img.hands, value: "\(UserDefaults.standard.integer(forKey: "numGrads"))")
+                        StatBox(label: "Longest Streak", img: Img.newStar, value: "\(UserDefaults.standard.integer(forKey: "longestStreak"))")
+                    }.padding(.horizontal, 5)
+                }.frame(width: width * 0.8, height: 160)
+                .padding()
+            ZStack {
+                Rectangle()
+                    .fill(Clr.yellow)
+                    .cornerRadius(12)
+                    .frame(width: width * 0.75, height: 120)
+                    .neoShadow()
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center, spacing: 10) {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.black)
+                        Text("Your journey began")
+                            .font(Font.mada(.regular, size: 18))
+                            .foregroundColor(.black)
+                            .padding(.top, 3)
+                    }.frame(width: width * 0.75, height: 25, alignment: .leading)
+                    Text("\(profileModel.signUpDate)")
+                        .font(Font.mada(.bold, size: 34))
+                        .foregroundColor(Clr.darkgreen)
+                }
+                .frame(width: width * 0.65, height: 120, alignment: .leading)
+                .padding()
+            }.frame(width: width * 0.75, height: 120)
+                .padding()
+        }
+    }
     private func rateFunc() {
         Analytics.shared.log(event: .profile_tapped_rate)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
             UserDefaults.standard.setValue(true, forKey: "tappedRate")
-//                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-//                                                    p.title == "Camellia"
-//                                                })
-//                                                userModel.buyPlant(unlockedStrawberry: true)
+            //                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+            //                                                    p.title == "Camellia"
+            //                                                })
+            //                                                userModel.buyPlant(unlockedStrawberry: true)
         }
         tappedRate = true
     }
@@ -581,10 +580,10 @@ struct ProfileScene: View {
             guard let imgUrl = URL(string: "https://i.ibb.co/1GW6YxY/MINDGARDEN.png") else { return }
             referralLink?.socialMetaTagParameters?.imageURL = imgUrl
             referralLink?.shorten { (shortURL, warnings, error) in
-              if let error = error {
-                print(error.localizedDescription)
-                return
-              }
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
                 urlShare2 = shortURL!
                 let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
                 UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: {
@@ -620,7 +619,7 @@ struct ProfileScene: View {
                             .offset(x: -10)
                             .foregroundColor(Clr.darkgreen)
                         Text(title)
-                            .font(Font.mada(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 16 : 20))
+                            .font(Font.mada(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 14 : 20))
                             .foregroundColor(title == "Unlock Pro" ? Clr.brightGreen : Clr.black1)
                         Spacer()
                         if title == "Notifications" {

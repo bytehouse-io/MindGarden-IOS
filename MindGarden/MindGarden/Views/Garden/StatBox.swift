@@ -27,7 +27,7 @@ struct StatBox: View {
                     Text(label)
                         .font(Font.mada(.regular, size: 12))
                         .minimumScaleFactor(0.05)
-                        .lineLimit(1)
+                        .lineLimit(2)
                         .multilineTextAlignment(.center)
                     Text(value)
                         .font(Font.mada(.bold, size: 26))

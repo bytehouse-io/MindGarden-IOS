@@ -74,29 +74,8 @@ struct MindGardenWidgetEntryView : View {
                     if entry.isPro {
                         MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
                     } else {
-                        HStack {
-                            Spacer()
-                            VStack {
-                                Spacer()
-                                Text("This is pro only feature")
-                                    .font(Font.mada(.bold, size: 18))
-                                    .foregroundColor(Color("superBlack"))
-                                Link(destination: URL(string: "pro://io.bytehouse.mindgarden")!)  {
-                                    Capsule()
-                                        .fill(Color("darkgreen"))
-                                        .overlay(Text("👨‍🌾 Go Pro!")
-                                                    .foregroundColor(.white)
-                                                    .font(Font.mada(.bold, size: 14)))
-                                        .frame(width: 125, height: 35)
-                                        .padding(.top, 5)
-                                        .neoShadow()
-                                }
-                                Spacer()
-                                }
-                                Spacer()
-                            }
-                            Spacer()
-                        }
+                        GoProPage
+                    }
                 case .systemLarge:
                     ZStack {
                         if entry.isPro {
@@ -158,9 +137,8 @@ struct MindGardenWidgetEntryView : View {
                                                 HStack {
                                                     //                                        Text(plants[0].title)
                                                     //                                            .font(Font.mada(.bold, size: 40))
-                                                    ForEach(0..<6) { idx in
-                                                        let xPos = Int.random(in: -25...25)
-                                                        let _ = print(xPos, idx, plants[idx])
+                                                    ForEach(0..<min(plants.count, 6)) { idx in
+//                                                        let xPos = Int.random(in: -25...25)
                                                         Image(plants[idx].title)
                                                             .resizable()
                                                             .aspectRatio(contentMode: .fit)
@@ -180,6 +158,8 @@ struct MindGardenWidgetEntryView : View {
                                 .font(Font.mada(.regular, size: 10))
                                 .offset(x: 90, y: -15)
                         }
+                        } else {
+                            GoProPage
                         }
                     }
 
@@ -197,6 +177,31 @@ struct MindGardenWidgetEntryView : View {
             extractData()
         }
     }
+
+    var GoProPage: some View {
+        HStack {
+            Spacer()
+            VStack {
+                Spacer()
+                Text("This is a pro only feature")
+                    .font(Font.mada(.bold, size: 18))
+                    .foregroundColor(Color("superBlack"))
+                Link(destination: URL(string: "pro://io.bytehouse.mindgarden")!)  {
+                    Capsule()
+                        .fill(Color("darkgreen"))
+                        .overlay(Text("👨‍🌾 Go Pro!")
+                                    .foregroundColor(.white)
+                                    .font(Font.mada(.bold, size: 14)))
+                        .frame(width: 125, height: 35)
+                        .padding(.top, 5)
+                        .neoShadow()
+                }
+                Spacer()
+                }
+                Spacer()
+            }
+    }
+
     struct MediumWidget: View {
         let width: CGFloat
         let height: CGFloat
@@ -264,8 +269,9 @@ struct MindGardenWidgetEntryView : View {
                         HStack(spacing: 10) {
                             SingleMood(mood: .happy, count: moods[.happy] ?? 0)
                             SingleMood(mood: .okay, count: moods[.okay] ?? 0)
-                            SingleMood(mood: .sad, count: moods[.sad] ?? 0)
+                            SingleMood(mood: .stressed, count: moods[.stressed] ?? 0)
                             SingleMood(mood: .angry, count: moods[.angry] ?? 0)
+                            SingleMood(mood: .sad, count: moods[.sad] ?? 0)
                         }.frame(height: height * 0.25)
                         .padding(.horizontal, 8)
                         .offset(y: -2)

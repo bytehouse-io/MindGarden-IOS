@@ -51,8 +51,24 @@ enum Mood: String {
         case .okay: return Clr.gardenGray
         case .sad: return Clr.gardenBlue
         case .angry: return Clr.gardenRed
-        case .stressed: return Clr.gardenRed
+        case .stressed: return Clr.purple
         case .none: return Clr.dirtBrown
+        }
+    }
+    static func getMoodImage(mood: Mood) -> Image {
+        switch mood {
+        case .happy:
+            return Image("happy")
+        case .sad:
+            return Image("sad")
+        case .angry:
+            return Image("angry")
+        case .okay:
+            return Image("okay")
+        case .stressed:
+            return Image("stressed")
+        default:
+            return Image("okay")
         }
     }
 }
@@ -84,9 +100,9 @@ struct MoodCheck: View {
                         HStack {
                             SingleMood(moodSelected: $moodSelected, mood: .happy)
                             SingleMood(moodSelected: $moodSelected, mood: .okay)
+                            SingleMood(moodSelected: $moodSelected, mood: .angry)
+                            SingleMood(moodSelected: $moodSelected, mood: .stressed)
                             SingleMood(moodSelected: $moodSelected, mood: .sad)
-                            SingleMood(moodSelected: $moodSelected, mood: .angry)
-                            SingleMood(moodSelected: $moodSelected, mood: .angry)
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
                         DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
@@ -147,7 +163,7 @@ struct SingleMood: View {
 
     var body: some View {
         ZStack {
-            K.getMoodImage(mood: mood)
+            Mood.getMoodImage(mood: mood)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(5)

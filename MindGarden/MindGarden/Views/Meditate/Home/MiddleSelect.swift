@@ -135,7 +135,7 @@ struct MiddleSelect: View {
                 }.offset(x: -10)
             )
             .edgesIgnoringSafeArea(.bottom)
-        .transition(.move(edge: .trailing))
+            .transition(.scale)
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
             model.checkIfFavorited()
