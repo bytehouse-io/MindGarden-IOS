@@ -119,7 +119,6 @@ struct ReviewScene: View {
                                             }
                                         }
                                     }
-
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
                         }

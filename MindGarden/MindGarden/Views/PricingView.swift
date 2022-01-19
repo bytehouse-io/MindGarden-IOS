@@ -86,13 +86,17 @@ struct PricingView: View {
                                         }
                                     }
                             }.frame(width: g.size.width)
-                            //UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text("🥳 Get MindGarden Pro with a New Year sale") + Text(" (limited time)").foregroundColor(Clr.darkgreen))
+//                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
+                            (Text("🍏 Unlock ") + Text("MindGarden Pro").foregroundColor(Clr.brightGreen)
+                             +
+                                  Text(" & get 1% happier everyday"))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: width * 0.78, alignment: .leading)
                                 .padding(15)
+//                            + Text(" (limited time)").foregroundColor(Clr.darkgreen))
+
 //                            Button {
 //                                let impact = UIImpactFeedbackGenerator(style: .light)
 //                                impact.impactOccurred()

@@ -182,27 +182,27 @@ struct ContentView: View {
                                         }.cornerRadius(45.0)
                                             .padding()
                                             .neoShadow()
-                                    ZStack {
-                                        Img.lilyValley3
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 100)
-                                            .rotationEffect(Angle(degrees: 20))
-                                            .position(x: 20, y: -15)
-                                        Img.redMushroom3
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 100)
-                                            .rotationEffect(Angle(degrees: 20))
-                                            .position(x: UIScreen.main.bounds.width/2, y: 20)
-                                        Img.redTulips3
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 200)
-                                            .rotationEffect(Angle(degrees: 20))
-                                            .position(x: UIScreen.main.bounds.width - 15, y: 0)
-                                    }.frame(height: 100)
-                                        .zIndex(-100)
+//                                    ZStack {
+//                                        Img.lilyValley3
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .frame(width: 100)
+//                                            .rotationEffect(Angle(degrees: 20))
+//                                            .position(x: 20, y: -15)
+//                                        Img.redMushroom3
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .frame(width: 100)
+//                                            .rotationEffect(Angle(degrees: 20))
+//                                            .position(x: UIScreen.main.bounds.width/2, y: 20)
+//                                        Img.redTulips3
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .frame(width: 200)
+//                                            .rotationEffect(Angle(degrees: 20))
+//                                            .position(x: UIScreen.main.bounds.width - 15, y: 0)
+//                                    }.frame(height: 100)
+//                                        .zIndex(-100)
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication

@@ -72,11 +72,12 @@ extension UIDevice {
         case iPhone_XS_11Pro_Max
         case iPhone_12_Pro
         case iPhone_12_Pro_Max
+        case iPhone_13_Mini
     }
 
     var hasHomeButton: Bool {
         switch type {
-        case . iPhone_X_XS_12mini, . iPhone_XR_11, .iPhone_XS_11Pro_Max, .iPhone_12_Pro, .iPhone_12_Pro_Max:
+        case . iPhone_X_XS_12mini, .iPhone_XR_11, .iPhone_XS_11Pro_Max, .iPhone_12_Pro, .iPhone_12_Pro_Max, .iPhone_13_Mini:
             return false
         default:
             return true
@@ -100,6 +101,8 @@ extension UIDevice {
             return .iPhone_XS_11Pro_Max
         case 2778:
             return .iPhone_12_Pro_Max
+        case 2340:
+            return .iPhone_13_Mini
         case 1792:
             return .iPhone_XR_11
         default:
