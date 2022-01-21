@@ -324,7 +324,6 @@ extension AuthenticationViewModel {
 
     func createUser() {
         if let email = Auth.auth().currentUser?.email {
-            print("setting external", email)
             OneSignal.setEmail(email)
             OneSignal.setExternalUserId(email)
             Purchases.shared.setOnesignalID(email)
