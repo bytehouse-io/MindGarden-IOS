@@ -121,18 +121,30 @@ struct Authentication: View {
                                 }
                                 self.signUpDisabled = false
                             }
-                        if !isSignUp {
-                            Text("Forgot Password?")
-                                .font(Font.mada(.medium, size: 18))
-                                .foregroundColor(.blue)
-                                .underline()
-                                .padding(5)
-                                .onTapGesture {
-                                    Analytics.shared.log(event: .authentication_tapped_forgot_password)
-                                    showForgotAlert = true
-                                }
+                        VStack {
+                            if isSignUp {
+                                HStack {
+                                    CheckBoxView(checked: $viewModel.checked)
+                                        .frame(height: 45)
+                                    Text("Sign me up for the MindGarden Newsletter 🗞")
+                                        .font(Font.mada(.medium, size: 18))
+                                        .foregroundColor(Clr.black2)
+                                }.frame(height: 60)
+                                    .padding(.horizontal, 20)
+                            }
+                            if !isSignUp {
+                                Text("Forgot Password?")
+                                    .font(Font.mada(.medium, size: 18))
+                                    .foregroundColor(.blue)
+                                    .underline()
+                                    .padding(5)
+                                    .onTapGesture {
+                                        Analytics.shared.log(event: .authentication_tapped_forgot_password)
+                                        showForgotAlert = true
+                                    }
+                            }
+                            Divider().padding(.bottom, 15)
                         }
-                        Divider().padding(20)
                         viewModel
                             .siwa
                             .padding(20)

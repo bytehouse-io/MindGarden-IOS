@@ -28,6 +28,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var isLoading: Bool = false
     @Published var isSignUp: Bool = false
     @Published var falseAppleId: Bool = false
+    @Published var checked = true
+
     var currentNonce: String?
     var googleIsNew: Bool = true
     let db = Firestore.firestore()
@@ -149,8 +151,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
 
     private func goToHome() {
-        if !isSignUp {
-            
+        OneSignal.sendTag("first_name", value: UserDefaults.standard.string(forKey: "name") ?? "")
+        if isSignUp && checked {
+            Analytics.shared.log(event: .authentication_signuped_newsletter)
         }
         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -321,6 +324,7 @@ extension AuthenticationViewModel {
 
     func createUser() {
         if let email = Auth.auth().currentUser?.email {
+            print("setting external", email)
             OneSignal.setEmail(email)
             OneSignal.setExternalUserId(email)
             Purchases.shared.setOnesignalID(email)

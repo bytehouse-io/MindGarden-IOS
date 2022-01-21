@@ -70,6 +70,7 @@ enum AnalyticEvent {
     case authentication_tapped_google //
     case authentication_tapped_apple //
     case authentication_tapped_forgot_password //
+    case authentication_signuped_newsletter //
 
     //MARK: - Garden
     case screen_load_garden //
@@ -419,6 +420,7 @@ extension AnalyticEvent {
         case .authentication_tapped_google: return "authentication_tapped_google"
         case .authentication_tapped_apple:  return "authentication_tapped_apple"
         case .authentication_tapped_forgot_password: return "authentication_tapped_forgot_password"
+        case .authentication_signuped_newsletter: return "authentication_signuped_newsletter"
         case .screen_load_garden: return "screen_load_garden"
         case .garden_next_month: return "garden_next_month"
         case .garden_previous_month: return "garden_previous_month"

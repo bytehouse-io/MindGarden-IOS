@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import OneSignal
+
 
 struct NameScene: View {
     @EnvironmentObject var viewRouter: ViewRouter

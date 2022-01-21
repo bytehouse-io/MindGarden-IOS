@@ -119,7 +119,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .authentication:
                                         Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height + 160)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .notification:
                                         NotificationScene()
