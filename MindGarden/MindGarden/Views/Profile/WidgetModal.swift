@@ -58,7 +58,6 @@ struct WidgetModal: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "1.3Update")
                             }
                         } label: {
                             Capsule()

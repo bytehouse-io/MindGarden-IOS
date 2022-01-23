@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import GoogleSignIn
 
+var fromOnboarding = false
 struct Authentication: View {
     @State var isSignUp: Bool = false
     @EnvironmentObject var viewRouter: ViewRouter
@@ -214,7 +215,11 @@ struct Authentication: View {
                                 tappedSignIn = false
                                 viewRouter.currentPage = .onboarding
                             } else {
-                                viewRouter.currentPage = .profile
+                                if fromOnboarding {
+                                    viewRouter.currentPage = .finished
+                                } else {
+                                    viewRouter.currentPage = .profile
+                                }
                             }
                         }
                     })

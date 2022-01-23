@@ -158,7 +158,12 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
-            viewRouter.currentPage = .meditate
+            if fromOnboarding {
+                fromOnboarding = false
+                viewRouter.currentPage = .garden
+            } else {
+                viewRouter.currentPage = .meditate
+            }
         }
         Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }

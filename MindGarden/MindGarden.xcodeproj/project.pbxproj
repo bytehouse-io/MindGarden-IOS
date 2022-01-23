@@ -11,6 +11,7 @@
 		59716A2BBE0F2A80B6CF2567 /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0F0C28746ED72909DC2E14 /* Pods_MindGardenTests.framework */; };
 		88BE62B0E6A0FCA51DD8B060 /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570AE9685CA16AB288CEC850 /* Pods_MindGarden.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
+		FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A804279CD77400799A07 /* SaveProgressModal.swift */; };
 		FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE09DA2026F52DCD0018099F /* OnboardingModal.swift */; };
 		FE09DA2326F53BD00018099F /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = FE09DA2226F53BD00018099F /* confetti.json */; };
 		FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B2268FAABE00E1E71A /* Gratitude.swift */; };
@@ -187,6 +188,7 @@
 		9A95A2749CA6D26DB1DA97C9 /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
 		C020CA685460BA5ACD09BA7A /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
 		FE04A802279A3CA900799A07 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		FE04A804279CD77400799A07 /* SaveProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveProgressModal.swift; sourceTree = "<group>"; };
 		FE09DA2026F52DCD0018099F /* OnboardingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModal.swift; sourceTree = "<group>"; };
 		FE09DA2226F53BD00018099F /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		FE11F0B2268FAABE00E1E71A /* Gratitude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gratitude.swift; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 			children = (
 				FEC5B009267D2ACF00BC8D8C /* Play.swift */,
 				FEDC430F269A553B008E0318 /* Finished.swift */,
+				FE04A804279CD77400799A07 /* SaveProgressModal.swift */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -1175,6 +1178,7 @@
 				FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */,
 				FEF976E7275EE36700D1715C /* ReviewScene.swift in Sources */,
 				FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */,
+				FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,

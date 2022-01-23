@@ -21,6 +21,7 @@ struct Finished: View {
     @State private var favorited = false
     @State private var showUnlockedModal = false
     @State private var reward = 0
+    @State private var saveProgress = false
     var minsMed: Int {
         if model.selectedMeditation?.duration == -1 {
             return Int((model.secondsRemaining/60.0).rounded())
@@ -142,7 +143,13 @@ struct Finished: View {
                                             Analytics.shared.log(event: .finished_tapped_finished)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
-                                                viewRouter.currentPage = .garden
+                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                                                    if !UserDefaults.standard.bool(forKey: "saveProgress") {
+                                                        saveProgress = true
+                                                    }else {
+                                                        viewRouter.currentPage = .garden
+                                                    }
+                                                 }
                                             }
                                         } label: {
                                             Capsule()
@@ -171,7 +178,7 @@ struct Finished: View {
                         Spacer()
                     }.frame(width: g.size.width, height: g.size.height)
                     .offset(y: -60)
-                    if showUnlockedModal {
+                    if showUnlockedModal || saveProgress {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
@@ -180,6 +187,10 @@ struct Finished: View {
                     OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
                         .offset(y: showUnlockedModal ? 0 : g.size.height)
                         .animation(.default, value: showUnlockedModal)
+                    SaveProgressModal(shown: $saveProgress)
+                        .offset(y: saveProgress ? 0 : g.size.height)
+                        .animation(.default, value: saveProgress)
+                        .environmentObject(viewRouter)
                 }
             }
         }.transition(.move(edge: .trailing))

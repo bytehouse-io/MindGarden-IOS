@@ -279,7 +279,7 @@ struct ProfileScene: View {
                                                 } .frame(width: width * 0.75)
                                                 .padding(.bottom)
                                             }
-                                            .frame(width: width * 0.75, height: height * 0.7)
+                                            .frame(width: width * 0.75, height: height * 0.75)
                                             .padding(.top, 25)
                                         }
                                     } else if selection == .journey {
@@ -388,6 +388,7 @@ struct ProfileScene: View {
                                             .padding(.top, 10)
                                         }
                                     } else {
+                                        Spacer()
                                         if selection == .settings && !showNotification {
                                             if let _ = Auth.auth().currentUser?.email {} else {
                                                 Text("Save your progress")
@@ -445,6 +446,7 @@ struct ProfileScene: View {
                         }
                     }
                     .onAppear {
+                        fromOnboarding = false
                         // Set the default to clear
                         UITableView.appearance().backgroundColor = .clear
                         UITableView.appearance().showsVerticalScrollIndicator = false

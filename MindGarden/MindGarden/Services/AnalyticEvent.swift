@@ -123,8 +123,8 @@ enum AnalyticEvent {
     case middle_tapped_recommended //
     case middle_tapped_row //
     case middle_tapped_row_favorite //
-    case middle_tapped_row_unfavorite
-    case middle_tapped_locked_recommended
+    case middle_tapped_row_unfavorite //
+    case middle_tapped_locked_recommended //
 
     //MARK: - Play
     case screen_load_play //
