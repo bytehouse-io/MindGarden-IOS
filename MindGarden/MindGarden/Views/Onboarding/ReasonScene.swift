@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OneSignal
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ReasonScene: View {
     @State var selected: String = ""
@@ -47,12 +48,16 @@ struct ReasonScene: View {
                                 if selected != "" {
                                     switch selected {
                                         case "Sleep better":
+                                            OneSignal.sendTag("sleepBetter", value: "true")
                                             Analytics.shared.log(event: .reason_tapped_sleep)
                                         case "Get more focused":
+                                            OneSignal.sendTag("focused", value: "true")
                                             Analytics.shared.log(event: .reason_tapped_focus)
                                         case "Managing Stress & Anxiety":
+                                            OneSignal.sendTag("anxiety", value: "true")
                                             Analytics.shared.log(event: .reason_tapped_stress)
                                         case "Just trying it out":
+                                            OneSignal.sendTag("trying", value: "true")
                                             Analytics.shared.log(event: .reason_tapped_trying)
                                         default:
                                             break

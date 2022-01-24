@@ -247,7 +247,7 @@ struct Home: View {
                                                 }
 
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, description: meditation.description, duration: meditation.duration)
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration)
                                             }.buttonStyle(NeumorphicPress())
                                         }
                                     }

@@ -12,6 +12,7 @@ import Firebase
 import FirebaseFirestore
 import Amplitude
 import WidgetKit
+import OneSignal
 
 var fromPage = ""
 var userWentPro = false
@@ -410,7 +411,8 @@ struct PricingView: View {
                                                         AFEventParamRevenue: price,
                                                         AFEventParamCurrency:"\(Locale.current.currencyCode!)"
                                                     ])
-                    Amplitude.instance().logRevenueV2(revenue!)
+                    Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
+                    Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
                 } else {
                     AppsFlyerLib.shared().logEvent(name: event, values:
                                                                     [
@@ -427,10 +429,12 @@ struct PricingView: View {
                                                 [
                                                     AFEventParamContent: "true"
                                                 ])
+                Amplitude.instance().logEvent(event3)
             }
         }
     }
     private func userIsPro() {
+        OneSignal.sendTag("userIsPro", value: "true")
         userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
         userModel.buyPlant(unlockedStrawberry: true)
         UserDefaults.standard.setValue(true, forKey: "bonsai")

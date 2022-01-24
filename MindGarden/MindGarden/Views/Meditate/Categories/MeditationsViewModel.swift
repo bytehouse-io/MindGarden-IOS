@@ -10,12 +10,13 @@ import Combine
 import Firebase
 import AVKit
 import FirebaseFirestore
+import OneSignal
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
     @Published var featuredMeditation: Meditation?
-    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 0, duration: 0, reward: 0, url: "")
+    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 0, duration: 0, reward: 0, url: "", instructor: "None")
     @Published var selectedCategory: Category? = .all
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
@@ -305,9 +306,19 @@ class MeditationViewModel: ObservableObject {
 
                         stop()
                         switch selectedMeditation?.id {
-                        case 11: UserDefaults.standard.setValue(true, forKey: "day5")
-                        case 12: UserDefaults.standard.setValue(true, forKey: "day6")
-                        case 13: UserDefaults.standard.setValue(true, forKey: "day7")
+                        case 7:  OneSignal.sendTag("day1", value: "true")
+                        case 8:  OneSignal.sendTag("day2", value: "true")
+                        case 9:  OneSignal.sendTag("day3", value: "true")
+                        case 10: OneSignal.sendTag("day4", value: "true")
+                        case 11:
+                            UserDefaults.standard.setValue(true, forKey: "day5")
+                            OneSignal.sendTag("day5", value: "true")
+                        case 12:
+                            UserDefaults.standard.setValue(true, forKey: "day6")
+                            OneSignal.sendTag("day6", value: "true")
+                        case 13:
+                            UserDefaults.standard.setValue(true, forKey: "day7")
+                            OneSignal.sendTag("day7", value: "true")
                         default: break
                         }
                         if UserDefaults.standard.bool(forKey: "day5") &&  UserDefaults.standard.bool(forKey: "day6") &&  UserDefaults.standard.bool(forKey: "day7") {

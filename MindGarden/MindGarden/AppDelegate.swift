@@ -30,8 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().isDebug = true
 
-
-
         Amplitude.instance().trackingSessionEvents = true
         // Initialize SDK
         Amplitude.instance().initializeApiKey("76399802bdea5c85e4908f0a1b922bda")

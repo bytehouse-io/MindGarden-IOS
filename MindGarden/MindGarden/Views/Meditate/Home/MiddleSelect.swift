@@ -98,7 +98,7 @@ struct MiddleSelect: View {
                                                 }
 
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, description: model.recommendedMeds[0].description, duration: model.recommendedMeds[0].duration)
+                                                HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, instructor: model.recommendedMeds[0].instructor, duration: model.recommendedMeds[0].duration)
                                             }.buttonStyle(NeumorphicPress())
                                             Button {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -118,7 +118,7 @@ struct MiddleSelect: View {
                                                     }
                                                 }
                                             } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, description: model.recommendedMeds[1].description, duration: model.recommendedMeds[1].duration)
+                                                HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, instructor: model.recommendedMeds[1].instructor, duration: model.recommendedMeds[1].duration)
                                             }.buttonStyle(NeumorphicPress())
                                         }.padding(.vertical)
                                         .padding(.bottom, g.size.height * 0.2)

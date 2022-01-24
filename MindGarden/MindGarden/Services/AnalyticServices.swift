@@ -37,7 +37,6 @@ final class Analytics: ObservableObject {
          Firebase.Analytics.logEvent(event.eventName, parameters: [:])
          AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
          Amplitude.instance().logEvent(event.eventName)
-         OneSignal.sendTag(event.eventName, value: "true")
         #endif
          print("logging, \(event.eventName)")
      }

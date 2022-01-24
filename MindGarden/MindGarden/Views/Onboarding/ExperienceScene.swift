@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OneSignal
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
     @State var selected: String = ""
@@ -46,10 +47,13 @@ struct ExperienceScene: View {
                                 if selected != "" {
                                     switch selected {
                                     case "Meditate often":
+                                        OneSignal.sendTag("often", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_alot)
                                     case "Have tried to meditate":
+                                        OneSignal.sendTag("tried", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_some)
                                     case "Have never meditated":
+                                        OneSignal.sendTag("never", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_none)
                                     default:
                                         break

@@ -154,7 +154,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         OneSignal.sendTag("first_name", value: UserDefaults.standard.string(forKey: "name") ?? "")
         if isSignUp && checked {
             Analytics.shared.log(event: .authentication_signuped_newsletter)
+            OneSignal.sendTag("newsletter", value: "true")
         }
+        OneSignal.sendTag("signedUp", value: "true")
         UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {

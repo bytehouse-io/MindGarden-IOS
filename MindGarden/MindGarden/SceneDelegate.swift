@@ -36,8 +36,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd,yyyy"
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                if success {
+            OneSignal.promptForPushNotifications(userResponse: { accepted in
+                if accepted {
                     Analytics.shared.log(event: .onboarding_notification_on)
                     NotificationHelper.addOneDay()
                     NotificationHelper.addThreeDay()
@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     Analytics.shared.log(event: .onboarding_notification_off)
                 }
                 UserDefaults.standard.setValue(true, forKey: "showedNotif")
-            }
+            })
         }
         Analytics.shared.log(event: .launchedApp)
 
