@@ -279,7 +279,7 @@ struct ProfileScene: View {
                                                 } .frame(width: width * 0.75)
                                                 .padding(.bottom)
                                             }
-                                            .frame(width: width * 0.75, height: height * 0.75)
+                                            .frame(width: width * 0.75, height: height * 0.7)
                                             .padding(.top, 25)
                                         }
                                     } else if selection == .journey {

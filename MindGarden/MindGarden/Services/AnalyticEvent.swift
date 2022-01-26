@@ -141,6 +141,8 @@ enum AnalyticEvent {
 
     //MARK: - Finished
     case screen_load_finished //
+    case finished_save_progress //
+    case finished_not_now //
     case finished_tapped_share //
     case finished_tapped_favorite //
     case finished_tapped_unfavorite
@@ -475,6 +477,8 @@ extension AnalyticEvent {
         case .play_tapped_sound_fire: return "play_tapped_sound_fire"
         case .play_tapped_sound_noSound: return "play_tapped_sound_noSound"
         case .screen_load_finished: return "screen_load_finished"
+        case .finished_save_progress: return "finished_save_progress"
+        case .finished_not_now: return "finished_not_now"
         case .finished_tapped_share: return "finished_tapped_share"
         case .finished_tapped_favorite: return "finished_tapped_favorite"
         case .finished_tapped_unfavorite: return "finished_tapped_unfavorite"

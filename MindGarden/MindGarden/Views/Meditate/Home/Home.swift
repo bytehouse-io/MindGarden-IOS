@@ -214,7 +214,28 @@ struct Home: View {
                                         .animation(.default, value: isRecent)
                                 }
                                     Spacer()
-
+                                if !UserDefaults.standard.bool(forKey: "isPro") {
+                                    Button {
+                                        Analytics.shared.log(event: .home_tapped_pro)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            fromPage = "home"
+                                            viewRouter.currentPage = .pricing
+                                        }
+                                    } label: {
+                                        HStack {
+                                            Text("💚 Go Pro!")
+                                                .font(Font.mada(.semiBold, size: 14))
+                                                .foregroundColor(Clr.darkgreen)
+                                                .font(.footnote)
+                                        }
+                                        .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                                        .padding(8)
+                                        .background(Clr.darkWhite)
+                                        .cornerRadius(25)
+                                    }
+                                    .buttonStyle(NeumorphicPress())
+                                }
                                 }.frame(width: abs(g.size.width - 75), alignment: .leading)
                                     .padding(.top, 20)
 
@@ -313,28 +334,6 @@ struct Home: View {
                 .navigationBarItems(
                     leading: Img.topBranch.padding(.leading, -20),
                     trailing: HStack {
-                        if !UserDefaults.standard.bool(forKey: "isPro") {
-                            Button {
-                                Analytics.shared.log(event: .home_tapped_pro)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    fromPage = "home"
-                                    viewRouter.currentPage = .pricing
-                                }
-                            } label: {
-                                HStack {
-                                    Text("💚 Go Pro!")
-                                        .font(Font.mada(.semiBold, size: 14))
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(.footnote)
-                                }
-                                .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
-                                .padding(8)
-                                .background(Clr.darkWhite)
-                                .cornerRadius(25)
-                            }
-                            .buttonStyle(NeumorphicPress())
-                        }
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
@@ -355,7 +354,7 @@ struct Home: View {
                 }
             })
             .alert(isPresented: $wentPro) {
-                Alert(title: Text("🥳 Congrats! You unlocked MindGarden Pro"), dismissButton: .default(Text("Got it!")))
+                Alert(title: Text("😎 Welcome to the club.\nYour now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
         .animation(.easeOut(duration: 0.1))

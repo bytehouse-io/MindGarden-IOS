@@ -60,6 +60,7 @@ struct Finished: View {
                         Spacer()
                         VStack(alignment: .center, spacing: 20) {
                             VStack {
+
                                 Text("Minutes Meditated")
                                     .font(Font.mada(.semiBold, size: 28))
                                     .foregroundColor(.white)
@@ -105,6 +106,14 @@ struct Finished: View {
                                     .padding(10)
                                     .animation(.easeInOut(duration: 2.0))
                                     .offset(y: 0)
+                                Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
+                                    .font(Font.mada(.regular, size: 20))
+                                    .foregroundColor(.white)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            viewRouter.currentPage  = .garden
+                                        }
+                                    }
                                 Spacer()
                                 ZStack {
                                     LottieView(fileName: "confetti")
@@ -143,13 +152,11 @@ struct Finished: View {
                                             Analytics.shared.log(event: .finished_tapped_finished)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
-                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                                                    if !UserDefaults.standard.bool(forKey: "saveProgress") {
-                                                        saveProgress = true
-                                                    }else {
-                                                        viewRouter.currentPage = .garden
-                                                    }
-                                                 }
+                                                if !UserDefaults.standard.bool(forKey: "saveProgress") {
+                                                    saveProgress = true
+                                                }else {
+                                                    viewRouter.currentPage = .garden
+                                                }
                                             }
                                         } label: {
                                             Capsule()
@@ -282,3 +289,24 @@ struct Finished_Previews: PreviewProvider {
     }
 }
 
+extension Int {
+
+    var ordinal: String {
+        var suffix: String
+        let ones: Int = self % 10
+        let tens: Int = (self/10) % 10
+        if tens == 1 {
+            suffix = "th"
+        } else if ones == 1 {
+            suffix = "st"
+        } else if ones == 2 {
+            suffix = "nd"
+        } else if ones == 3 {
+            suffix = "rd"
+        } else {
+            suffix = "th"
+        }
+        return "\(self)\(suffix)"
+    }
+
+}

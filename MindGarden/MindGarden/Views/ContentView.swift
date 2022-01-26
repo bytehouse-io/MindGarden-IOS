@@ -27,7 +27,7 @@ struct ContentView: View {
     @State private var PopUpIn = false
     @State private var showPopUpOption = false
     @State private var showItems = false
-
+    @State private var showRecs = false
     var bonusModel: BonusViewModel
     var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
@@ -278,7 +278,7 @@ struct ContentView: View {
                                         .background(Clr.darkgreen.shadow(radius: 2))
                                         .offset(y: geometry.size.height/2 - (K.isPad() ? 25 : (K.hasNotch() ? 0 : 15)))
                                 }
-                                MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
+                                MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(12)
@@ -317,7 +317,12 @@ struct ContentView: View {
                     .animation(.default, value: showSplash)
                     .opacity(showSplash ? 1 : 0)
             }
-        }.onAppear {
+        }
+        .sheet(isPresented: $showRecs) {
+            let meditations = Meditation.getRecsFromMood()
+            ShowRecsScene(mood: selectedMood, meditations: meditations)
+        }
+        .onAppear {
             animationAmount = 2
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 showSplash.toggle()

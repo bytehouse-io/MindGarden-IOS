@@ -72,8 +72,8 @@ struct PricingView: View {
                                             if !UserDefaults.standard.bool(forKey: "isPro") {
                                                 let center = UNUserNotificationCenter.current()
                                                 let content = UNMutableNotificationContent()
-                                                content.title = "Don't Miss This Opportunity 427 users went pro this week!"
-                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉"
+                                                content.title = "Don't Miss This Opportunity"
+                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2374 other pro users"
                                                 // Step 3: Create the notification trigger
                                                 let date = Date().addingTimeInterval(13200)
                                                 let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
@@ -441,8 +441,9 @@ struct PricingView: View {
         UserDefaults.standard.setValue(true, forKey: "isPro")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
+        print("wentPro")
+        userWentPro = true
         if fromPage != "onboarding2" {
-            userWentPro = true
             if let _ = Auth.auth().currentUser?.email {
                 let email = Auth.auth().currentUser?.email
                 Firestore.firestore().collection(K.userPreferences).document(email!).updateData([

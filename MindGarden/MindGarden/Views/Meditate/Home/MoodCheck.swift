@@ -82,6 +82,7 @@ struct MoodCheck: View {
     @Binding var PopUpIn: Bool
     @Binding var showPopUpOption: Bool
     @Binding var showItems: Bool
+    @Binding var showRecs: Bool
 
     var body: some View {
         GeometryReader { g in
@@ -110,15 +111,15 @@ struct MoodCheck: View {
                             num += 1
                             UserDefaults.standard.setValue(num, forKey: "numMoods")
                             if moodSelected != .none {
+                                showRecs = true
                                 Analytics.shared.log(event: .mood_tapped_done)
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                     UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
-
                                     showPopupWithAnimation {}
                                 }
                                 gardenModel.save(key: "moods", saveValue: moodSelected.title)
                             }
-                        }, moodSelected: moodSelected).padding(.bottom)
+                        }, moodSelected: moodSelected,showRecs: $showRecs).padding(.bottom)
                         Spacer()
                         if K.isPad() {
                             Spacer()
@@ -150,7 +151,7 @@ struct MoodCheck: View {
 
 struct MoodCheck_Previews: PreviewProvider {
     static var previews: some View {
-        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false))
+        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false), showRecs: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 250)
             .background(Clr.darkWhite)
             .cornerRadius(12)
@@ -192,6 +193,7 @@ struct SingleMood: View {
     }
 }
 
+var selectedMood = Mood.none
 struct DoneCancel: View {
     @Binding var showPrompt: Bool
     @Binding var shown: Bool
@@ -199,6 +201,7 @@ struct DoneCancel: View {
     var mood: Bool
     var save: () -> ()
     var moodSelected: Mood?
+    @Binding var showRecs: Bool
 
     var body: some View {
         HStack {
@@ -207,9 +210,11 @@ struct DoneCancel: View {
                 if moodSelected != Mood.none {
                     save()
                     withAnimation {
+                        selectedMood = moodSelected ?? Mood.none
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         showPrompt = false
                         shown = false
+                        showRecs = true
                     }
                 }
             } label: {

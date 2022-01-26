@@ -181,7 +181,7 @@ struct Garden: View {
 
                                 }
                             }.frame(maxWidth: gp.size.width * 0.5)
-                        }.frame(maxHeight: gp.size.height * 0.225)
+                        }.frame(maxHeight: gp.size.height * 0.235)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants:")

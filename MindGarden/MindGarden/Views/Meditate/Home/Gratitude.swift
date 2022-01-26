@@ -111,7 +111,7 @@ struct Gratitude: View, KeyboardReadable {
                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                             showPopupWithAnimation{}
                         }
-                    }, moodSelected: .angry)
+                    }, moodSelected: .angry,  showRecs: .constant(false))
                         .padding(.bottom, 5)
                     ZStack {
                         Rectangle()

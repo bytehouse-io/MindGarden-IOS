@@ -29,6 +29,7 @@ struct SaveProgressModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
+                                Analytics.shared.log(event: .finished_save_progress)
                                 fromOnboarding = true
                                 shown = false
                                 viewRouter.currentPage = .authentication
@@ -50,7 +51,9 @@ struct SaveProgressModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
+                                Analytics.shared.log(event: .finished_not_now)
                                 shown = false
+                                UserDefaults.standard.setValue(true, forKey: "saveProgress")
                                 viewRouter.currentPage = .garden
                             }
                         } label: {
@@ -65,7 +68,7 @@ struct SaveProgressModal: View {
                                 )
                                 .frame(width: g.size.width * 0.7 * 0.6, height: g.size.height * 0.06)
                         }.buttonStyle(NeumorphicPress())
-                            .padding([.horizontal, .bottom])
+                        .padding([.horizontal, .bottom])
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.35, alignment: .center)

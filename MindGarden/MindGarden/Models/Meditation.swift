@@ -36,6 +36,54 @@ struct Meditation: Hashable {
             .lowercased()
     }
 
+    static func getRecsFromMood() -> [Meditation] {
+        var retMeds: [Meditation] = []
+        var filtedMeds = Meditation.allMeditations.filter { med in
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
+        if Calendar.current.component(.hour, from: Date()) > 11 { // night time
+            filtedMeds = filtedMeds.filter { med in
+                med.id != 53 && med.id != 49
+            }
+        }
+        if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
+            if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
+                retMeds.append(allMeditations.first(where: { $0.id == 6 })!)
+            } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
+                retMeds.append(allMeditations.first(where: { $0.id == 14 })!)
+            }
+        } else {
+            retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
+        }
+        switch selectedMood {
+        case .stressed:
+            retMeds += allMeditations.filter { med in
+                med.id == 46 || med.id == 38 || med.id == 51 || med.id == 25  || med.id == 36 || med.id == 24
+            }
+        case .angry:
+            retMeds += allMeditations.filter { med in
+                med.id == 24 || med.id == 42 || med.id == 25 || med.id == 15 || med.id == 50
+            }
+        case .okay, .happy:
+            if Calendar.current.component( .hour, from:Date() ) < 18 { // daytime meds only
+                retMeds += allMeditations.filter { med in med.id == 53  || med.id == 49}
+            } else {
+                retMeds += allMeditations.filter { med in  med.id == 27 || med.id == 39 }
+            }
+            retMeds += allMeditations.filter { med in med.id == 25  || med.id == 50 // affirmations
+            || med.id == 20 || med.id == 21 || med.id == 16 || med.id == 40 || med.id == 17
+            }
+        case .sad:
+            retMeds += allMeditations.filter { med in
+                med.id == 52 || med.id == 40 || med.id == 42 || med.id == 21 || med.id == 50 // affirmations
+                || med.id == 51 || med.id == 21 || med.id == 15  || med.id == 36
+            }
+        case .none: break
+        }
+        retMeds.shuffle()
+            let finalMeds = Array(retMeds[0..<retMeds.count])
+        return finalMeds
+    }
+
     static var allMeditations = [
 //        Meditation(title: "Open-Ended Meditation", description: "Unguided meditation with no time limit, with the option to add a gong sounds every couple of minutes.", belongsTo: "none", category: .unguided, img: Img.starfish, type: .course, id: 1, duration: 0, reward: 0),
 
@@ -95,7 +143,7 @@ struct Meditation: Hashable {
         Meditation(title: "Affirmations", description: "Affirmations for health, wealth, love and happiness.", belongsTo: "none", category: .growth, img: Img.bee, type: .single, id: 50, duration: 632, reward: 10, url: "https://mcdn.podbean.com/mf/web/y39bbt/1432_Guided_Meditation_for_Anxiety_10_min_VOCALSajbr7.mp3", instructor: "Lisa"),
         Meditation(title: "Clearing Fears", description: "Learn to focus on what you can control & to quiet your fears", belongsTo: "none", category: .anxiety, img: Img.hand, type: .single, id: 51, duration: 547, reward: 10, url: "https://mcdn.podbean.com/mf/web/rtmi4k/1540_Clearing_Fears_Held_in_the_Body_Scan_9_min_VOCALS8kge3.mp3", instructor: "Lisa"),
         Meditation(title: "Handle Insecurity", description: "Learn to quiet your insecurities and replace it with inspiration.", belongsTo: "none", category: .anxiety, img: Img.wave, type: .single, id: 52, duration: 1185, reward: 20, url: "https://mcdn.podbean.com/mf/web/xm4jyj/390_Handle_Insecurity_VOCALS92hmv.mp3", instructor: "Lisa"),
-        Meditation(title: "Seize the Day", description: "Prepare yourself to crush the day ahead.", belongsTo: "none", category: .anxiety, img: Img.sun, type: .single, id: 53, duration: 626, reward: 10, url: "https://mcdn.podbean.com/mf/web/rucidp/1398_Seize_the_Day_Morning_Meditation_VOCALSb63wx.mp3", instructor: "Lisa"),
+        Meditation(title: "Seize the Day", description: "Prepare yourself to crush the day ahead with a smile.", belongsTo: "none", category: .anxiety, img: Img.sun, type: .single, id: 53, duration: 626, reward: 10, url: "https://mcdn.podbean.com/mf/web/rucidp/1398_Seize_the_Day_Morning_Meditation_VOCALSb63wx.mp3", instructor: "Lisa"),
         Meditation(title: "Bedtime Meditation", description: "Relax & fall asleep to this peaceful meditation", belongsTo: "none", category: .sleep, img: Img.sheep, type: .single, id: 54, duration: 600, reward: 10, url: "https://mcdn.podbean.com/mf/web/5cefi8/429_Bedtime_VOCALS7ekok.mp3", instructor: "Lisa"),
         Meditation(title: "Studying Meditation", description: "Want an edge over your classmates? Use this meditation before very study session to enter a laser focused state.", belongsTo: "none", category: .focus, img: Img.kidStudying, type: .single, id: 55, duration: 486, reward: 12, url: "https://mcdn.podbean.com/mf/web/293n4c/meditation-for-studying.mp3", instructor: "Lisa"),
         Meditation(title: "Exam Anxiety Meditation", description: "Feeling test jitters? Can't focus? Overthinking? Use this meditation to enter a calm zen state.", belongsTo: "none", category: .anxiety, img: Img.cando, type: .single, id: 56, duration: 672, reward: 10, url: "https://mcdn.podbean.com/mf/web/4ywe6m/exam-anxiety-meditation.mp3", instructor: "Lisa"),
