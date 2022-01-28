@@ -83,6 +83,7 @@ struct MoodCheck: View {
     @Binding var showPopUpOption: Bool
     @Binding var showItems: Bool
     @Binding var showRecs: Bool
+    @State private var notifOn: Bool = false
 
     var body: some View {
         GeometryReader { g in
@@ -93,6 +94,22 @@ struct MoodCheck: View {
                     Text("How are we feeling today?")
                             .font(Font.mada(.bold, size: K.isPad() ? 40 : 24))
                         .foregroundColor(Clr.black1)
+                        .frame(width: g.size.width * 0.8, alignment: .center)
+                        HStack {
+                            Text("Recoommendations ")
+                                    .font(Font.mada(.semiBold, size: K.isPad() ? 36 : 20))
+                                    .foregroundColor(Clr.black1)
+                            Toggle("", isOn: $notifOn)
+                                .onChange(of: notifOn) { val in
+                                    UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
+                                    if val {
+                                        Analytics.shared.log(event: .mood_toggle_recs_on)
+                                    } else { //turned off
+                                        Analytics.shared.log(event: .mood_toggle_recs_off)
+                                    }
+                                }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+                                .frame(width: g.size.width * 0.08, height: 10)
+                        } .frame(width: g.size.width * 0.8, alignment: .center)
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(Clr.darkWhite)
@@ -104,14 +121,18 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .angry)
                             SingleMood(moodSelected: $moodSelected, mood: .stressed)
                             SingleMood(moodSelected: $moodSelected, mood: .sad)
-                        }
-                    }.frame(width: g.size.width * 0.85, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
+                        }.padding(.horizontal, 10)
+                    }.frame(width: g.size.width * 0.9, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
                         DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
                             var num = UserDefaults.standard.integer(forKey: "numMoods")
                             num += 1
                             UserDefaults.standard.setValue(num, forKey: "numMoods")
                             if moodSelected != .none {
-                                showRecs = true
+                                if notifOn {
+                                    showRecs = true
+                                } else {
+                                    showRecs = false
+                                }
                                 Analytics.shared.log(event: .mood_tapped_done)
                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                     UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
@@ -127,6 +148,8 @@ struct MoodCheck: View {
                     }
                     Spacer()
                 }
+        }.onAppear {
+            notifOn = UserDefaults.standard.bool(forKey: "moodRecsToggle")
         }
     }
 
@@ -214,7 +237,6 @@ struct DoneCancel: View {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         showPrompt = false
                         shown = false
-                        showRecs = true
                     }
                 }
             } label: {

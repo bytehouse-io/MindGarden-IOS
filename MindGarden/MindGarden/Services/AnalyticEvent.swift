@@ -253,6 +253,8 @@ enum AnalyticEvent {
     case mood_tapped_okay //
     case mood_tapped_happy //
     case mood_tapped_stress //
+    case mood_toggle_recs_off
+    case mood_toggle_recs_on
     case mood_tapped_done //
     case mood_tapped_cancel
     //gratitude
@@ -573,6 +575,8 @@ extension AnalyticEvent {
         case .tabs_tapped_profile: return "tabs_tapped_profile"
         case .tabs_tapped_plus: return "tabs_tapped_plus"
         case .plus_tapped_mood: return "plus_tapped_mood"
+        case .mood_toggle_recs_on: return "mood_toggle_recs_on"
+        case .mood_toggle_recs_off: return "mood_toggle_recs_off"
         case .mood_tapped_angry: return "mood_tapped_angry"
         case .mood_tapped_sad: return "mood_tapped_sad"
         case .mood_tapped_okay: return "mood_tapped_okay"

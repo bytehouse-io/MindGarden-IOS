@@ -66,13 +66,15 @@ struct ShowRecsScene: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(meditation.title)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.05)
                                 .foregroundColor(Clr.darkgreen)
                                 .font(Font.mada(.bold, size: 18))
                             HStack(spacing: 3) {
                                 Image(systemName: "speaker.wave.2.fill")
                                     .foregroundColor(Clr.black2)
                                     .font(.system(size: 12))
-                                Text("Mini Course")
+                                Text("\(meditation.type)")
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
                                 Circle()
@@ -82,7 +84,7 @@ struct ShowRecsScene: View {
                                 Image(systemName: "clock")
                                     .foregroundColor(Clr.black2)
                                     .font(.system(size: 12))
-                                Text("12 Mins")
+                                Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
                             }
@@ -94,14 +96,14 @@ struct ShowRecsScene: View {
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.regular, size: 12))
                                     .padding(.leading, 4)
-                                Text("Bijan")
+                                Text("\(meditation.instructor)")
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
                             }
                         }.frame(width: width * 0.4, alignment: .leading)
                         .padding()
                         .padding(.leading, 10)
-                        Img.bee
+                        meditation.img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.2, height: 90)
