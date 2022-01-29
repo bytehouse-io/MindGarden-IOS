@@ -172,6 +172,7 @@ class BonusViewModel: ObservableObject {
                     }
 
                     lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
+                    print(lastStreakDate, "goph")
                     if self.streakNumber == 7 {
                         if !self.userModel.ownedPlants.contains(where: { p in p.title == "Red Mushroom" }) {
                             self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Red Mushroom" })
@@ -235,7 +236,7 @@ class BonusViewModel: ObservableObject {
                 }
 
                 lastStreakDate = formatter.string(from: Date())
-            } else if Date() - formatter.date(from: lastStreakDate)! < 172800 { //broke streak
+            } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
                 self.streakNumber = 1
                 lastStreakDate = formatter.string(from: Date())
                 if let email = Auth.auth().currentUser?.email {
@@ -262,7 +263,6 @@ class BonusViewModel: ObservableObject {
             lastStreakDate  = formatter.string(from: Date())
             self.streakNumber = 1
         }
-        print(streakNumber, "long run")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()

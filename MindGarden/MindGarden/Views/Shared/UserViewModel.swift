@@ -138,8 +138,10 @@ class UserViewModel: ObservableObject {
         Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
                 if !UserDefaults.standard.bool(forKey: "bonsai") {
-                    self.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Bonsai Tree"})
-                    self.buyPlant(unlockedStrawberry: true)
+                    if !ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
+                        willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
+                        buyPlant(unlockedStrawberry: true)
+                    }
                     UserDefaults.standard.setValue(true, forKey: "bonsai")
                 }
                 UserDefaults.standard.setValue(true, forKey: "isPro")

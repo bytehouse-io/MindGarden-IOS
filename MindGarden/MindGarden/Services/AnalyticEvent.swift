@@ -255,6 +255,7 @@ enum AnalyticEvent {
     case mood_tapped_stress //
     case mood_toggle_recs_off
     case mood_toggle_recs_on
+    case mood_recs_not_now
     case mood_tapped_done //
     case mood_tapped_cancel
     //gratitude
@@ -584,6 +585,7 @@ extension AnalyticEvent {
         case .mood_tapped_stress: return "mood_tapped_stress"
         case .mood_tapped_done: return "mood_tapped_done"
         case .mood_tapped_cancel: return "mood_tapped_cancel"
+        case  .mood_recs_not_now: return "mood_recs_not_now"
         case .plus_tapped_gratitude: return "plus_tapped_gratitude"
         case .plus_tapped_mood_to_pricing: return "plus_tapped_mood_to_pricing"
         case .plus_tapped_gratitude_to_pricing: return "plus_tapped_gratitude_to_pricing"

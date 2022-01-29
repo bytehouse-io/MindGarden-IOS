@@ -206,4 +206,5 @@ public enum Img {
   public static let wateringPot = Image("wateringPot")
   public static let watermelon = Image("watermelon")
   public static let wave = Image("wave")
+  public static let widgetExample = Image("widgetExample")
 }

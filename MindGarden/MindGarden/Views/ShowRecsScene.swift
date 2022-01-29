@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ShowRecsScene: View {
     let mood: Mood
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditationModel: MeditationViewModel
     @State private var animateRow = false
     var meditations: [Meditation]
     var body: some View {
@@ -33,7 +36,7 @@ struct ShowRecsScene: View {
                             .font(Font.mada(.regular, size: 22))
                     }.padding(.horizontal, width * 0.1)
                     ForEach(0...3, id: \.self) { index in
-                        RecRow(width: width, meditation: meditations[index])
+                        RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter)
                             .padding(.top, 10)
                             .animation(Animation.easeInOut(duration: 1.5).delay(3))
                             .opacity(animateRow ? 1 : 0)
@@ -43,8 +46,24 @@ struct ShowRecsScene: View {
                                 }
                             }
                     }
+                    HStack {
+                        Button {
+                            Analytics.shared.log(event: .mood_recs_not_now)
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation {  presentationMode.wrappedValue.dismiss()  }
+                        } label: {
+                            HStack {
+                                Text("Not Now")
+                                    .foregroundColor(.black)
+                                    .font(Font.mada(.semiBold, size: 20))
+                            }.frame(width: g.size.width * 0.40, height: 40, alignment: .center)
+                            .background(Clr.yellow)
+                            .cornerRadius(25)
+                        }.padding(.top)
+                        .buttonStyle(NeumorphicPress())
+                    }.frame(width: g.size.width, alignment: .center)
                 }
-
             }
         }
     }
@@ -52,10 +71,21 @@ struct ShowRecsScene: View {
     struct RecRow: View {
         let width: CGFloat
         let meditation: Meditation
+        var meditationModel: MeditationViewModel
+        var viewRouter: ViewRouter
+        @Environment(\.presentationMode) var presentationMode
 
         var body: some View {
             Button {
-
+                presentationMode.wrappedValue.dismiss()
+                meditationModel.selectedMeditation = meditation
+                withAnimation {
+                    if meditation.type == .course {
+                        viewRouter.currentPage = .middle
+                    } else {
+                        viewRouter.currentPage = .play
+                    }
+                }
             } label: {
                 ZStack {
                     Rectangle()
@@ -74,7 +104,7 @@ struct ShowRecsScene: View {
                                 Image(systemName: "speaker.wave.2.fill")
                                     .foregroundColor(Clr.black2)
                                     .font(.system(size: 12))
-                                Text("\(meditation.type)")
+                                Text(meditation.type.toString())
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
                                 Circle()

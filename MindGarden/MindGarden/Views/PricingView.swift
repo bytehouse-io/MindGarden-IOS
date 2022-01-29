@@ -435,8 +435,10 @@ struct PricingView: View {
     }
     private func userIsPro() {
         OneSignal.sendTag("userIsPro", value: "true")
-        userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
-        userModel.buyPlant(unlockedStrawberry: true)
+        if !userModel.ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
+            userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
+            userModel.buyPlant(unlockedStrawberry: true)
+        }
         UserDefaults.standard.setValue(true, forKey: "bonsai")
         UserDefaults.standard.setValue(true, forKey: "isPro")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")

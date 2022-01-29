@@ -167,4 +167,13 @@ enum MeditationType {
     case lesson
     case course
     case single_and_lesson
+
+    func toString() -> String {
+        switch self {
+            case .single: return "Single"
+            case .lesson: return "Lesson"
+            case .single_and_lesson: return "Single"
+            case .course: return "Course"
+        }
+    }
 }
