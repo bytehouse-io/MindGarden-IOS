@@ -172,7 +172,6 @@ class BonusViewModel: ObservableObject {
                     }
 
                     lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
-                    print(lastStreakDate, "goph")
                     if self.streakNumber == 7 {
                         if !self.userModel.ownedPlants.contains(where: { p in p.title == "Red Mushroom" }) {
                             self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Red Mushroom" })

@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 extension Date {
     static func dayOfWeek(day: String, month: String, year: String)-> String{
         // Specify date components
@@ -207,6 +208,25 @@ extension Date {
            return (min(date1, date2) ... max(date1, date2)).contains(Date())
        }
 
+    static func needsExtraRow(month: Int, year: Int) -> Bool {
+        let month = Date().intToMonth(num: month)
+        let monthNum = String(Date().getMonthNum(month: month))
+        let weekDay = self.dayOfWeek(day: "1", month: monthNum, year: String(year))
+        print("weekDay", weekDay, month, year)
+        switch weekDay {
+        case "Fri":
+            if Date().getNumberOfDays(month: monthNum, year: String(year)) == 31 {
+                return true
+            }
+        case "Sat":
+            if Date().getNumberOfDays(month: monthNum, year: String(year)) == 31 || Date().getNumberOfDays(month: monthNum, year: String(year)) == 30 {
+                return true
+            }
+        default:
+            return false
+        }
+        return false
+    }
 }
 
 extension TimeInterval{

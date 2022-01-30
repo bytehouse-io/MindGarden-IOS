@@ -77,7 +77,7 @@ struct Garden: View {
                         .padding(.horizontal, 10)
                         .padding(.top, -15)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? 1 : 0.1 : 1)
-                        GridStack(rows: 5, columns: 7) { row, col in
+                        GridStack(rows: Date.needsExtraRow(month: gardenModel.selectedMonth, year: gardenModel.selectedYear) ? 6 : 5, columns: 7) { row, col in
                             ZStack {
                                 let c = gardenModel.placeHolders
                                 if col < c && row == 0 {

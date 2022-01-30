@@ -16,18 +16,19 @@ struct GridStack<Content: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             ForEach(0 ..< rows, id: \.self) { row in
+                let extraRow = rows == 6
                 HStack(spacing: 0){
                     ForEach(0 ..< columns, id: \.self) { column in
                         if row == 0 && column == 0 {
                             content(row, column)
                                 .cornerRadius(15, corners: [.topLeft])
-                        } else if row == 4 && column == 0 {
+                        } else if row == (extraRow ? 5 : 4) && column == 0 {
                             content(row, column)
                                 .cornerRadius(15, corners: [.bottomLeft])
                         } else if row == 0 && column == 6 {
                             content(row, column)
                                 .cornerRadius(15, corners: [.topRight])
-                        } else if row == 4 && column == 6 {
+                        } else if row == (extraRow ? 5 : 4) && column == 6 {
                             content(row, column)
                                 .cornerRadius(15, corners: [.bottomRight])
                         } else {

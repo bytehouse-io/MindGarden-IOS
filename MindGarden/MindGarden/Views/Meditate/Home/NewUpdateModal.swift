@@ -25,20 +25,26 @@ struct NewUpdateModal: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.height * 0.12)
-                            Text("\nMindGarden \nUpdate 1.4\nWhat's New:")
-                                .font(Font.mada(.bold, size: 28))
+                            Text("\nMindGarden \nWhat's New:")
+                                .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(Clr.black2)
-                                .frame(height: g.size.height * 0.12)
+                                .frame(height: g.size.height * 0.1)
                             Spacer()
                         }.padding([.horizontal, .top])
-                            HStack {
-                                Text("😩 Based on many user requests, we have added a stressed mood!")
-                            }.multilineTextAlignment(.leading)
-                            .font(Font.mada(.regular, size: 20))
-                            .foregroundColor(Clr.black2)
-                            .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
-                            .padding(.bottom, 10)
-                            .padding(.top)
+//                            HStack {
+//                                Text("😩 Based on many user requests, we have added a stressed mood!")
+//                            }.multilineTextAlignment(.leading)
+//                            .font(Font.mada(.regular, size: 20))
+//                            .foregroundColor(Clr.black2)
+//                            .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
+//                            .padding(.bottom, 10)
+//                            .padding(.top)
+                        Img.widgetExample
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(26)
+                            .frame(width:  g.size.width * 0.85 * 0.8)
+                            .padding()
                         Button {
                             withAnimation {
                                 UserDefaults.standard.setValue(true, forKey: "1.4Update")
@@ -47,37 +53,16 @@ struct NewUpdateModal: View {
                             }
                         } label: {
                             HStack {
-                                Text("🥳 We fixed our widget! ")
+                                Text("🧘 Make meditation even \neasier. ")
                                 + Text("Add my widget")
                                     .bold().underline().foregroundColor(.blue)
                             }.multilineTextAlignment(.leading)
                             .font(Font.mada(.regular, size: 20))
                         }
                         .foregroundColor(Clr.black2)
-                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
+                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .center)
                         .padding(.bottom, 10)
                         .padding(.top)
-                        Button {
-                            withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.4Update")
-                                shown = false
-                                if let url = URL(string: "https://mindgarden.upvoty.com/") {
-                                    UIApplication.shared.open(url)
-                                }
-                            }
-                        } label: {
-                            HStack {
-                                Text("👋🏻 Have a meditation or feature request? ")
-                                + Text("Post Request")
-                                    .bold().underline().foregroundColor(.blue)
-                            }.multilineTextAlignment(.leading)
-                            .font(Font.mada(.regular, size: 20))
-                        }
-                        .foregroundColor(Clr.black2)
-                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
-                        .padding(.bottom, 10)
-                        .padding(.top)
-
 
 //                        Button {
 //                            withAnimation {
@@ -140,7 +125,7 @@ struct NewUpdateModal: View {
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.65 : 0.7), alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.75 : 0.8), alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()
