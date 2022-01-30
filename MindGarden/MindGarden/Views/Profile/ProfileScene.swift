@@ -275,11 +275,11 @@ struct ProfileScene: View {
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: K.isSmall() ? 30 : 40)
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: 70)
-                                                } .frame(width: width * 0.75)
+                                                    }.frame(width: width * 0.8, height: 70)
+                                                } .frame(width: width * 0.8)
                                                 .padding(.bottom)
                                             }
-                                            .frame(width: width * 0.75, height: height * 0.7)
+                                            .frame(width: width * 0.8, height: height * 0.7)
                                             .padding(.top, 25)
                                         }
                                     } else if selection == .journey {
