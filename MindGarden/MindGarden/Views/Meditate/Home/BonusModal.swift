@@ -37,6 +37,7 @@ struct BonusModal: View {
                                     .foregroundColor(Clr.black1)
                                     .padding()
                             }.padding(.bottom, -5)
+
                         }.frame(height: g.size.height * 0.08)
 
                         Button {
@@ -85,7 +86,7 @@ struct BonusModal: View {
                                         }
                                     } label: {
                                         ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: bonusModel.sevenDayProgress)
-                                    }.buttonStyle(NeumorphicPress())
+                                    }.buttonStyle(BonusPress())
 
                                     Text("30 days")
                                         .font(Font.mada(.bold, size: 20))
@@ -101,7 +102,7 @@ struct BonusModal: View {
                                         }
                                     } label: {
                                         ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: bonusModel.thirtyDayProgress)
-                                    }.buttonStyle(NeumorphicPress())
+                                    }.buttonStyle(BonusPress())
                                 }
                                 .padding()
                             }.padding(.leading)
@@ -222,3 +223,5 @@ struct BonusModal_Previews: PreviewProvider {
         }
     }
 }
+
+

@@ -27,7 +27,7 @@ struct Home: View {
     @State private var wentPro = false
     var bonusModel: BonusViewModel
     @State private var coins = 0
-
+    @State private var attempts = 0
     init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -104,6 +104,8 @@ struct Home: View {
                                     .padding(8)
                                     .background(Clr.yellow)
                                     .cornerRadius(25)
+                                    .modifier(Shake(animatableData: CGFloat(attempts)))
+
                                 }
                                 .buttonStyle(NeumorphicPress())
                                 Button {
@@ -357,6 +359,10 @@ struct Home: View {
                 Alert(title: Text("😎 Welcome to the club.\nYour now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
+               { _ in
+                   runCounter(counter: $attempts, start: 0, end: 8, speed: 1)
+               }
         .animation(.easeOut(duration: 0.1))
          .onAppear {
              if launchedApp {
@@ -373,7 +379,6 @@ struct Home: View {
                     userWentPro = false
                 }
                 numberOfMeds += Int.random(in: -3 ... 3)
-
              //handle update modal or deeplink
              if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                  if UserDefaults.standard.bool(forKey: "introLink") {
@@ -420,3 +425,14 @@ struct Home_Previews: PreviewProvider {
     }
 }
 
+struct Shake: GeometryEffect {
+    var amount: CGFloat = 10
+    var shakesPerUnit = 3
+    var animatableData: CGFloat
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX:
+            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
+            y: 0))
+    }
+}

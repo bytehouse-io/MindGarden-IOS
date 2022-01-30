@@ -231,7 +231,6 @@ extension Date {
 
 extension TimeInterval{
         func stringFromTimeInterval() -> String {
-
             let time = NSInteger(self)
 
             let seconds = time % 60

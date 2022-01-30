@@ -19,8 +19,8 @@ class BonusViewModel: ObservableObject {
     @Published var streak: String? //Optional("1+08-25-2021 22:16:18") loco
     @Published var sevenDay: Int = 0
     @Published var thirtyDay: Int = 0
-    @Published var sevenDayProgress: Double = 0.0
-    @Published var thirtyDayProgress: Double = 0.0
+    @Published var sevenDayProgress: Double = 0.1
+    @Published var thirtyDayProgress: Double = 0.08
     @Published var longestStreak: Int = 0
     @Published var totalBonuses: Int = 0
     @Published var dailyInterval: String = ""
@@ -235,7 +235,7 @@ class BonusViewModel: ObservableObject {
                 }
 
                 lastStreakDate = formatter.string(from: Date())
-            } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
+            } else if Date() - formatter.date(from: lastStreakDate)! < 172800 { //broke streak
                 self.streakNumber = 1
                 lastStreakDate = formatter.string(from: Date())
                 if let email = Auth.auth().currentUser?.email {
@@ -276,9 +276,11 @@ class BonusViewModel: ObservableObject {
         if self.dailyBonus != "" {
             if (Date() - formatter.date(from: self.dailyBonus)! >= 0) {
                 self.totalBonuses += 1
+                NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
             }
         } else {
             self.totalBonuses += 1
+            NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
         }
 
 
@@ -303,7 +305,12 @@ class BonusViewModel: ObservableObject {
         }
 
         if self.sevenDayProgress >= 1.0 {
-            self.totalBonuses += 1}
-        if self.thirtyDayProgress >= 1.0 {self.totalBonuses += 1}
+            self.totalBonuses += 1
+            NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
+        }
+        if self.thirtyDayProgress >= 1.0 {
+            self.totalBonuses += 1
+            NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
+        }
     }
 }

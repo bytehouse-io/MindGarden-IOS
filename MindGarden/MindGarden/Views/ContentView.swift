@@ -408,4 +408,5 @@ extension NSNotification {
     static let mood = Notification.Name.init("mood")
     static let pro = Notification.Name.init("pro")
     static let garden = Notification.Name.init("garden")
+    static let runCounter = Notification.Name.init("runCounter")
 }
