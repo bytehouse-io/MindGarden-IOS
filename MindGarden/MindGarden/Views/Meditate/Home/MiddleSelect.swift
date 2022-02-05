@@ -47,6 +47,7 @@ struct MiddleSelect: View {
                                         }.foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 16))
                                         .padding(.top)
+                                        .padding(.bottom, -20)
                                     HStack(spacing: 0) {
                                         model.selectedMeditation?.img
                                             .resizable()
@@ -62,16 +63,16 @@ struct MiddleSelect: View {
                                             Text(model.selectedMeditation?.description ?? "")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.mada(.regular, size: 16))
-                                                .lineLimit(4)
+                                                .lineLimit(5)
                                                 .minimumScaleFactor(0.05)
                                         }.frame(width: g.size.width/1.7)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
-                                        .offset(x: -10)
+                                        .offset(x: -15)
                                     }
-                                    .padding()
+                                    .padding(15)
                                     .frame(width: g.size.width)
-                                        Divider().padding()
+                                        Divider().padding(.bottom)
                                         VStack {
                                             ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
                                                 MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx)

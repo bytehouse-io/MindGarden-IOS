@@ -118,6 +118,8 @@ struct ReasonScene: View {
                             .foregroundColor(Clr.black1)
                             .padding()
                             .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.05)
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)

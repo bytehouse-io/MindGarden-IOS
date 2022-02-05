@@ -27,7 +27,6 @@ struct OnboardingScene: View {
             GeometryReader { g in
                 let height = g.size.height
                 let width = g.size.height
-                let screenWidth = UIScreen.main.bounds.width
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     ZStack {
@@ -148,7 +147,7 @@ struct OnboardingScene: View {
                                 )
                         }.frame(height: 50)
                             .padding([.horizontal, .bottom])
-                        .buttonStyle(NeumorphicPress())
+                        .buttonStyle(BonusPress())
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_sign_in)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -167,7 +166,7 @@ struct OnboardingScene: View {
                                 )
                         }.frame(height: 50)
                             .padding([.bottom, .horizontal])
-                        .buttonStyle(NeumorphicPress())
+                        .buttonStyle(BonusPress())
                         Spacer()
                     }
 //                    .offset(y: K.isPad() ? 0 : g.size.height * -0.45)

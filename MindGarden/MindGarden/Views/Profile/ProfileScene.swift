@@ -12,6 +12,7 @@ import FirebaseDynamicLinks
 import Firebase
 import StoreKit
 import GTMAppAuth
+import WidgetKit
 
 var tappedRefer = false
 var mindfulNotifs = false
@@ -507,9 +508,11 @@ struct ProfileScene: View {
         var height: CGFloat
         var totalSessions: Int
         var totalMins: Int
-
+        @State private var text = ""
+        @State private var response = ""
         var body: some View {
-            VStack(alignment: .center, spacing: 20) {
+            VStack {
+                VStack(alignment: .center, spacing: 20) {
                     HStack(alignment: .center, spacing: 15) {
                         StatBox(label: "All Mins", img: Img.iconTotalTime, value: "\(totalMins/60 == 0 && totalMins != 0 ? "0.5" : "\(totalMins/60)")")
                         StatBox(label: "All Sess", img: Img.iconSessions, value: "\(totalSessions)")
@@ -519,32 +522,77 @@ struct ProfileScene: View {
                         StatBox(label: "Longest Streak", img: Img.newStar, value: "\(UserDefaults.standard.integer(forKey: "longestStreak") == 0 ? 1 : UserDefaults.standard.integer(forKey: "longestStreak")  )")
                     }.padding(.horizontal, 5)
                 }.frame(width: width * 0.8, height: 160)
-                .padding()
-            ZStack {
-                Rectangle()
-                    .fill(Clr.yellow)
-                    .cornerRadius(12)
-                    .frame(width: width * 0.75, height: 120)
-                    .neoShadow()
-                VStack(alignment: .leading) {
-                    HStack(alignment: .center, spacing: 10) {
-                        Image(systemName: "calendar")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.black)
-                        Text("Your journey began")
-                            .font(Font.mada(.regular, size: 18))
-                            .foregroundColor(.black)
-                            .padding(.top, 3)
-                    }.frame(width: width * 0.75, height: 25, alignment: .leading)
-                    Text("\(profileModel.signUpDate)")
-                        .font(Font.mada(.bold, size: 34))
-                        .foregroundColor(Clr.darkgreen)
-                }
-                .frame(width: width * 0.65, height: 120, alignment: .leading)
-                .padding()
-            }.frame(width: width * 0.75, height: 120)
-                .padding()
+                    .padding()
+                ZStack {
+                    Rectangle()
+                        .fill(Clr.yellow)
+                        .cornerRadius(12)
+                        .frame(width: width * 0.75, height: 120)
+                        .neoShadow()
+                    VStack(alignment: .leading) {
+                        HStack(alignment: .center, spacing: 10) {
+                            Image(systemName: "calendar")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.black)
+                            Text("Your journey began")
+                                .font(Font.mada(.regular, size: 18))
+                                .foregroundColor(.black)
+                                .padding(.top, 3)
+                        }.frame(width: width * 0.75, height: 25, alignment: .leading)
+                        Text("\(profileModel.signUpDate)")
+                            .font(Font.mada(.bold, size: 34))
+                            .foregroundColor(Clr.darkgreen)
+                    }
+                    .frame(width: width * 0.65, height: 120, alignment: .leading)
+                    .padding()
+                }.frame(width: width * 0.75, height: 120)
+                    .padding()
+                Text(response)
+                    .foregroundColor(Clr.darkgreen)
+                    .font(Font.mada(.semiBold, size: 16))
+                    .frame(width: width * 0.75, alignment: .center)
+                HStack {
+                    TextField("Enter promo code", text: $text)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .background(Clr.darkWhite)
+                        .frame(width: width * 0.5, height: 40)
+                        .oldShadow()
+                    Button {
+                        if text == "FTXTNL7E3AA6" {
+                            UserDefaults.standard.setValue(true, forKey: "promoCode")
+                            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                            WidgetCenter.shared.reloadAllTimelines()
+                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                            UserDefaults.standard.setValue(true, forKey: "bonsai")
+                            if let email = Auth.auth().currentUser?.email {
+                                Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                                    "isPro": true,
+                                ]) { (error) in
+                                    if let e = error {
+                                        print("There was a issue saving data to firestore \(e) ")
+                                    } else {
+                                        print("Succesfully saved new items")
+                                    }
+                                }
+                            }
+                            response = "✅ Success your a pro user now!"
+                        } else {
+                            response = "Invalid code"
+                        }
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.yellow)
+                                .cornerRadius(12)
+                            Text("Submiit")
+                                .font(Font.mada(.semiBold, size: 16))
+                                .foregroundColor(.black)
+                        }
+                    }.buttonStyle(NeumorphicPress())
+                }.frame(width: width * 0.75,height: 35)
+                    .keyboardResponsive()
+            }
         }
     }
     private func rateFunc() {
@@ -714,3 +762,4 @@ struct SelectionButton: View {
 
     }
 }
+

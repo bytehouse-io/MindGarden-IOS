@@ -96,7 +96,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .categories:
                                         CategoriesScene(showSearch: .constant(false))
-                                            .frame(height: geometry.size.height)
+                                            .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .middle:
                                         MiddleSelect()
@@ -181,7 +181,7 @@ struct ContentView: View {
                                                 .neoShadow()
                                         }.cornerRadius(45.0)
                                             .padding()
-                                            .neoShadow()
+                                            .oldShadow()
 //                                    ZStack {
 //                                        Img.lilyValley3
 //                                            .resizable()
@@ -207,14 +207,14 @@ struct ContentView: View {
                             }.edgesIgnoringSafeArea(.all)
                             if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
                                 && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
-                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .finished && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason && viewRouter.currentPage != .review {
+                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason && viewRouter.currentPage != .review {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
                                     Rectangle()
                                         .opacity(showPopUp || addMood || addGratitude || isOnboarding ? 0.3 : 0.0)
                                         .foregroundColor(Clr.black1)
                                         .edgesIgnoringSafeArea(.all)
-                                        .frame(height: geometry.size.height + 10)
+                                        .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
                                         .transition(.opacity)
                                 }
                                 .onTapGesture {
@@ -287,10 +287,10 @@ struct ContentView: View {
                                     .frame(width: geometry.size.width, height: (geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1)) + (isKeyboardVisible ? geometry.size.height * 0.2 : 0))
                                     .background(Clr.darkWhite)
                                     .cornerRadius(12)
-                                    .offset(y: (addGratitude ? geometry.size.height/(K.hasNotch()
+                                    .offset(y: (addGratitude ? (geometry.size.height/((K.hasNotch()
                                                                                      ? 3.25 * (openPrompts ? 2 : 1)
                                                                                      : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
-                                                                                     : 4.5 * (openPrompts ? 3.5 : 1) )
+                                                                                       : 4.5 * (openPrompts ? 3.5 : 1) ) ) + (viewRouter.currentPage == .finished ? -50 : 0)) 
                                                 : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.12 : 0))
                             }
                         }
@@ -355,9 +355,7 @@ struct ContentView: View {
             viewRouter.currentPage = .garden
         }
 
-    }
-    func openedGratitude() {
-        addGratitude = true
+
     }
     ///Ashvin : Show popup with animation method
 

@@ -133,22 +133,27 @@ class UserViewModel: ObservableObject {
         }
     }
 
+    private func buyBonsai() {
+        if !UserDefaults.standard.bool(forKey: "bonsai") {
+            if !ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
+                willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
+                buyPlant(unlockedStrawberry: true)
+            }
+            UserDefaults.standard.setValue(true, forKey: "bonsai")
+        }
+
+    }
+
     func checkIfPro() {
         var isPro = false
         Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-                if !UserDefaults.standard.bool(forKey: "bonsai") {
-                    if !ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
-                        willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
-                        buyPlant(unlockedStrawberry: true)
-                    }
-                    UserDefaults.standard.setValue(true, forKey: "bonsai")
-                }
+                buyBonsai()
                 UserDefaults.standard.setValue(true, forKey: "isPro")
                 UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
                 WidgetCenter.shared.reloadAllTimelines()
             } else {
-                if !UserDefaults.standard.bool(forKey: "trippleTapped") {
+                if !UserDefaults.standard.bool(forKey: "promoCode") {
                     UserDefaults.standard.setValue(false, forKey: "isPro")
                     if referredStack != "" {
                         let plusIndex = referredStack.indexInt(of: "+") ?? 0
@@ -172,6 +177,8 @@ class UserViewModel: ObservableObject {
                             }
                         }
                     }
+                } else {
+                    buyBonsai()
                 }
             }
         }

@@ -96,7 +96,7 @@ struct MoodCheck: View {
                         .foregroundColor(Clr.black1)
                         .frame(width: g.size.width * 0.8, alignment: .center)
                         HStack {
-                            Text("Recoommendations ")
+                            Text("Recommendations ")
                                     .font(Font.mada(.semiBold, size: K.isPad() ? 36 : 20))
                                     .foregroundColor(Clr.black1)
                             Toggle("", isOn: $notifOn)

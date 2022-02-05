@@ -11,7 +11,8 @@ struct BonusModal: View {
     @ObservedObject var bonusModel: BonusViewModel
     @Binding var shown: Bool
     @Binding var coins: Int
-
+    @State private var showCoins: Bool = false
+    @State private var streakCoins: Bool = false
     var body: some View {
         GeometryReader { g in
             VStack(spacing: 10) {
@@ -39,19 +40,29 @@ struct BonusModal: View {
                             }.padding(.bottom, -5)
 
                         }.frame(height: g.size.height * 0.08)
+                        ZStack {
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                                    showCoins = true
+                                    Analytics.shared.log(event: .home_claim_daily)
+                                    bonusModel.saveDaily(plusCoins: 5)
+                                    coins += 5
+                                    bonusModel.totalBonuses -= 1
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        self.showCoins.toggle()
+                                    }
+                                }
 
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
-                                Analytics.shared.log(event: .home_claim_daily)
-                                bonusModel.saveDaily(plusCoins: 5)
-                                coins += 5
-                                bonusModel.totalBonuses -= 1
-                            }
-                        } label: {
-                            BonusBox(bonusModel: bonusModel, width: g.size.width, height: g.size.height, video: false)
-                        }.padding(.bottom, 10)
-                        .buttonStyle(NeumorphicPress())
+                            } label: {
+                                BonusBox(bonusModel: bonusModel, width: g.size.width, height: g.size.height, video: false)
+                            }.padding(.bottom, 10)
+                                .buttonStyle(NeumorphicPress())
+                            LottieView(fileName: "coins")
+                                .frame(width: g.size.width/2, height: 50)
+                                .offset(x: -g.size.width/3, y: streakCoins ? 0 : -g.size.height/4)
+                                .opacity(showCoins ? 1 : streakCoins ? 1 : 0)
+                        }
                         Spacer()
                         if !K.isIpod() {
                             Text("Streaks")
@@ -80,9 +91,13 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.sevenDayProgress >= 1.0 {
+                                            streakCoins = true
                                             coins += 30
                                             Analytics.shared.log(event: .home_claim_seven)
                                             bonusModel.saveSeven()
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                self.streakCoins.toggle()
+                                            }
                                         }
                                     } label: {
                                         ProgressBar(width: g.size.width, height: g.size.height, weekly: true, progress: bonusModel.sevenDayProgress)
@@ -96,10 +111,15 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.thirtyDayProgress >= 1.0 {
+                                            self.streakCoins = true
                                             Analytics.shared.log(event: .home_claim_thirty)
                                             coins += 100
                                             bonusModel.saveThirty()
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                self.streakCoins.toggle()
+                                            }
                                         }
+
                                     } label: {
                                         ProgressBar(width: g.size.width, height: g.size.height, weekly: false, progress: bonusModel.thirtyDayProgress)
                                     }.buttonStyle(BonusPress())

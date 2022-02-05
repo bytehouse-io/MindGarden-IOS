@@ -57,7 +57,7 @@ struct NameScene: View {
                                                 .cornerRadius(14)
                                         )
                                         .frame(width: width * 0.6, height: 60)
-                                        .neoShadow()
+                                        .oldShadow()
                                         .disableAutocorrection(true)
                                 }
                             }.frame(height: 80)

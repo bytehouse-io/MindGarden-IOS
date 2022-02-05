@@ -17,35 +17,61 @@ struct MiddleModal: View {
         GeometryReader { g in
             VStack(spacing: 10) {
                 Spacer()
+                Spacer()
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center, spacing: 0) {
                         Spacer()
+                        Spacer()
                         VStack(spacing: 0) {
+                            HStack {
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        shown = false
+                                    }
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.gray.opacity(0.5))
+                                        .font(.title)
+                                        .padding(15)
+                                }
+                                .padding()
+                                Spacer()
+                                Text(model.selectedMeditation?.title ?? "")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.semiBold, size: 24))
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.center)
+//                                    .minimumScaleFactor(0.05)
+                                Spacer()
+                                Image(systemName: "xmark")
+                                    .font(.title)
+                                    .padding()
+                                    .opacity(0)
+                            }.frame(width: g.size.width - 50, height: 45)
+                                .padding(.top, 20)
+                                .padding(.bottom, -15)
                             Spacer()
                             HStack {
                                 HStack(spacing: 0) {
                                     model.selectedMeditation?.img
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: g.size.width/4.5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                        .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
                                         .padding(.horizontal, 5)
                                     VStack(alignment: .leading) {
-                                        Text(model.selectedMeditation?.title ?? "")
-                                            .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.semiBold, size: 28))
-                                            .lineLimit(2)
-                                            .minimumScaleFactor(0.05)
+
                                         Text(model.selectedMeditation?.description ?? "")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.regular, size: 16))
-                                            .lineLimit(4)
+                                            .font(Font.mada(.regular, size: 18))
+                                            .lineLimit(6)
                                             .minimumScaleFactor(0.05)
                                     }.frame(width: g.size.width/2, height: g.size.height/(K.isSmall() ? 4 : 5))
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                 }
-                            }.padding(.horizontal, 10)
+                            }.padding(.horizontal, 20)
                             HStack {
                                 Text("Selected Plant:")
                                 userModel.selectedPlant?.head
@@ -54,7 +80,7 @@ struct MiddleModal: View {
                                     .frame(width: 20)
                                 Text("\(userModel.selectedPlant?.title ?? "none")")
                             }.foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: 16))
+                                .font(Font.mada(.semiBold, size: 18))
                                 .padding(.top)
                                 .padding(.horizontal)
                                 .frame(width: g.size.width - 80, alignment: .leading)
@@ -66,7 +92,7 @@ struct MiddleModal: View {
                                     .frame(width: 20)
                                 Text("\(model.selectedMeditation?.reward ?? 0)")
                             }.foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: 16))
+                                .font(Font.mada(.semiBold, size: 18))
                                 .padding(.top, 10)
                                 .padding(.horizontal)
                                 .frame(width: g.size.width - 80, alignment: .leading)
@@ -81,7 +107,7 @@ struct MiddleModal: View {
                             Capsule()
                                 .fill(Clr.brightGreen)
                                 .overlay(
-                                    Text("Start Session")
+                                    Text("▶️ Start Session")
                                         .font(Font.mada(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .lineLimit(1)

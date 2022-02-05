@@ -151,7 +151,7 @@ struct Authentication: View {
                             .padding(20)
                             .padding(.horizontal, 20)
                             .frame(height: 100)
-                            .neoShadow()
+                            .oldShadow()
                             .disabled(viewModel.falseAppleId)
                         Img.siwg
                             .resizable()

@@ -131,7 +131,7 @@ struct PricingView: View {
                                         .frame(width: 90,height: 25, alignment: .leading)
                                         .position(x: width * 0.65)
                                 }
-                            }.buttonStyle(NeumorphicPress())
+                            }.buttonStyle(BonusPress())
                                 .frame(width: width * 0.8, height: height * 0.08)
                                 .padding(5)
 
@@ -443,7 +443,6 @@ struct PricingView: View {
         UserDefaults.standard.setValue(true, forKey: "isPro")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
-        print("wentPro")
         userWentPro = true
         if fromPage != "onboarding2" {
             if let _ = Auth.auth().currentUser?.email {

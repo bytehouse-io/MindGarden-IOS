@@ -108,7 +108,7 @@ struct Finished: View {
                                     .offset(y: 0)
                                 Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
                                     .font(Font.mada(.regular, size: 20))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Clr.black2)
                                     .onTapGesture {
                                         withAnimation {
                                             viewRouter.currentPage  = .garden
@@ -149,15 +149,6 @@ struct Finished: View {
                                             }
                                         Spacer()
                                         Button {
-                                            Analytics.shared.log(event: .finished_tapped_finished)
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            withAnimation {
-                                                if !UserDefaults.standard.bool(forKey: "saveProgress") {
-                                                    saveProgress = true
-                                                }else {
-                                                    viewRouter.currentPage = .garden
-                                                }
-                                            }
                                         } label: {
                                             Capsule()
                                                 .fill(Clr.yellow)
@@ -165,16 +156,28 @@ struct Finished: View {
                                                 .overlay(
                                                     HStack {
                                                         Text("Finished")
-                                                            .foregroundColor(Clr.black1)
+                                                            .foregroundColor(Color.black)
                                                             .font(Font.mada(.bold, size: 22))
                                                         Image(systemName: "arrow.right")
-                                                            .foregroundColor(Clr.black1)
+                                                            .foregroundColor(Color.black)
                                                             .font(.system(size: 22, weight: .bold))
                                                     }
                                                 )
+                                                .onTapGesture {
+                                                    Analytics.shared.log(event: .finished_tapped_finished)
+                                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                    withAnimation {
+                                                        if !UserDefaults.standard.bool(forKey: "saveProgress") {
+                                                            saveProgress = true
+                                                        }else {
+                                                            viewRouter.currentPage = .garden
+                                                        }
+                                                    }
+                                                }
                                         }.buttonStyle(NeumorphicPress())
                                         .zIndex(100)
                                         .frame(width: g.size.width * 0.6, height: g.size.height/12)
+
                                     }
 
                                 }.frame(width: g.size.width, height: g.size.height/12)
@@ -215,6 +218,10 @@ struct Finished: View {
                     } else {
                         Analytics.shared.log(event: .seventh_time_coming_back)
                         UserDefaults.standard.setValue(11, forKey: "launchNumber")
+                    }
+                } else {
+                    if gardenModel.allTimeSessions >= 2 {
+                        NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
                     }
                 }
             }

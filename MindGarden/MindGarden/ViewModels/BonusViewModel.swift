@@ -235,7 +235,7 @@ class BonusViewModel: ObservableObject {
                 }
 
                 lastStreakDate = formatter.string(from: Date())
-            } else if Date() - formatter.date(from: lastStreakDate)! < 172800 { //broke streak
+            } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
                 self.streakNumber = 1
                 lastStreakDate = formatter.string(from: Date())
                 if let email = Auth.auth().currentUser?.email {

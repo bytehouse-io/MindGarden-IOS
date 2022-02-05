@@ -43,7 +43,8 @@ struct CategoriesScene: View {
                                 backButton
                                     .opacity(0)
                                     .disabled(true)
-                        }.padding([.top, .horizontal])
+                        }.padding([.horizontal])
+                            .padding(.top, 50)
                     }
 
                     if isSearch {
@@ -65,7 +66,7 @@ struct CategoriesScene: View {
                                 .cornerRadius(13)
                                 .background(Clr.darkWhite)
                                 .padding(.trailing)
-                                .neoShadow()
+                                .oldShadow()
                         }.padding(.top)
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -143,16 +144,17 @@ struct CategoriesScene: View {
                     Spacer()
                 }
                 .background(Clr.darkWhite)
+                    if showModal {
+                        Color.black
+                            .opacity(0.3)
+                            .edgesIgnoringSafeArea(.all)
+                            .onTapGesture {
+                                showModal.toggle()
+                            }
+                        Spacer()
+                    }
                 }
-                if showModal {
-                    Color.black
-                        .opacity(0.3)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            showModal.toggle()
-                        }
-                    Spacer()
-                }
+
                     MiddleModal(shown: $showModal)
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)

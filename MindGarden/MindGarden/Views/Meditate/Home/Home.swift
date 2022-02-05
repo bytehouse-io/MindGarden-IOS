@@ -25,6 +25,7 @@ struct Home: View {
     @State private var showSearch = false
     @State private var showUpdateModal = false
     @State private var wentPro = false
+    @State private var ios14 = true
     var bonusModel: BonusViewModel
     @State private var coins = 0
     @State private var attempts = 0
@@ -39,7 +40,7 @@ struct Home: View {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     GeometryReader { g in
-                    ScrollView(showsIndicators: false) {
+                        ScrollView(.vertical, showsIndicators: false) {
                         VStack {
                             HStack {
                                 Spacer()
@@ -54,6 +55,7 @@ struct Home: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(height: 15)
+                                            .oldShadow()
                                         Text("Streak: ")
                                             .foregroundColor(Clr.black2)
                                         + Text("\(bonusModel.streakNumber)")
@@ -63,6 +65,7 @@ struct Home: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(height: 15)
+                                            .oldShadow()
                                         Text("\(coins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                     }.padding(.trailing, 20)
@@ -105,7 +108,6 @@ struct Home: View {
                                     .background(Clr.yellow)
                                     .cornerRadius(25)
                                     .modifier(Shake(animatableData: CGFloat(attempts)))
-
                                 }
                                 .buttonStyle(NeumorphicPress())
                                 Button {
@@ -218,12 +220,7 @@ struct Home: View {
                                     Spacer()
                                 if !UserDefaults.standard.bool(forKey: "isPro") {
                                     Button {
-                                        Analytics.shared.log(event: .home_tapped_pro)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            fromPage = "home"
-                                            viewRouter.currentPage = .pricing
-                                        }
+
                                     } label: {
                                         HStack {
                                             Text("💚 Go Pro!")
@@ -235,8 +232,17 @@ struct Home: View {
                                         .padding(8)
                                         .background(Clr.darkWhite)
                                         .cornerRadius(25)
+                                        .onTapGesture {
+                                            Analytics.shared.log(event: .home_tapped_pro)
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            withAnimation {
+                                                fromPage = "home"
+                                                viewRouter.currentPage = .pricing
+                                            }
+                                        }
                                     }
                                     .buttonStyle(NeumorphicPress())
+
                                 }
                                 }.frame(width: abs(g.size.width - 75), alignment: .leading)
                                     .padding(.top, 20)
@@ -258,19 +264,23 @@ struct Home: View {
                                     } else {
                                         ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                             Button {
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                model.selectedMeditation = meditation
-                                                Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
-                                                if meditation.type == .course  {
-                                                    withAnimation {
-                                                        viewRouter.currentPage = .middle
-                                                    }
-                                                } else {
-                                                    viewRouter.currentPage = .play
-                                                }
 
                                             } label: {
                                                 HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration)
+                                                    .onTapGesture {
+                                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                        model.selectedMeditation = meditation
+                                                        Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
+                                                        if meditation.type == .course  {
+                                                            withAnimation {
+                                                                viewRouter.currentPage = .middle
+                                                            }
+                                                        } else {
+                                                            viewRouter.currentPage = .play
+                                                        }
+
+                                                    }
+
                                             }.buttonStyle(NeumorphicPress())
                                         }
                                     }
@@ -284,12 +294,7 @@ struct Home: View {
                             }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
                             if #available(iOS 14.0, *) {
                                 Button {
-                                    Analytics.shared.log(event: .home_tapped_categories)
-                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                    impact.impactOccurred()
-                                    withAnimation {
-                                        viewRouter.currentPage = .categories
-                                    }
+
                                 } label: {
                                     HStack {
                                         Text("See All Meditations")
@@ -298,6 +303,14 @@ struct Home: View {
                                     }.frame(width: g.size.width * 0.85, height: g.size.height/14)
                                     .background(Clr.yellow)
                                     .cornerRadius(25)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            Analytics.shared.log(event: .home_tapped_categories)
+                                            let impact = UIImpactFeedbackGenerator(style: .light)
+                                            impact.impactOccurred()
+                                            viewRouter.currentPage = .categories
+                                        }
+                                    }
                                 }.padding(.top, 10)
                                     .buttonStyle(NeumorphicPress())
                             } else {
@@ -316,7 +329,7 @@ struct Home: View {
                                 .foregroundColor(.gray)
                         }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
                         .padding(30)
-                    }.frame(width: UIScreen.main.bounds.size.width)
+                    }.frame(width: UIScreen.main.bounds.size.width, height: g.size.height)
                     if showModal || showUpdateModal {
                         Color.black
                             .opacity(0.3)
@@ -347,6 +360,7 @@ struct Home: View {
                             }
                 }
             )
+                .navigationBarTitle("", displayMode: ios14 ? .inline : .automatic)
             .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
@@ -361,10 +375,13 @@ struct Home: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
                { _ in
-                   runCounter(counter: $attempts, start: 0, end: 8, speed: 1)
+                   runCounter(counter: $attempts, start: 0, end: 5, speed: 1)
                }
         .animation(.easeOut(duration: 0.1))
          .onAppear {
+             if #available(iOS 15.0, *) {
+                 ios14 = false
+             }
              if launchedApp {
                  gardenModel.updateSelf()
                  launchedApp = false
@@ -375,7 +392,6 @@ struct Home: View {
              }
                 if userWentPro {
                     wentPro = userWentPro
-
                     userWentPro = false
                 }
                 numberOfMeds += Int.random(in: -3 ... 3)
@@ -410,6 +426,7 @@ struct Home: View {
             Timer.scheduledTimer(withTimeInterval: speed, repeats: true) { timer in
                 counter.wrappedValue += 1
                 if counter.wrappedValue == end {
+                    counter.wrappedValue = 0
                     timer.invalidate()
                 }
             }
