@@ -22,6 +22,8 @@
 		FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */; };
 		FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
 		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
+		FE1CA3CA27B218DD0074C497 /* PlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */; };
+		FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1CA3CB27B219590074C497 /* FirebaseAPI.swift */; };
 		FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE349D73275ACB2F006B4378 /* ReasonScene.swift */; };
 		FE39A0AA27711644007A3E82 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39A0A927711644007A3E82 /* NotificationService.swift */; };
 		FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = FE39A0B4277116CC007A3E82 /* OneSignal */; };
@@ -202,6 +204,8 @@
 		FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
 		FE17B8AF26C06C20002CF8C2 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewModel.swift; sourceTree = "<group>"; };
+		FE1CA3CB27B219590074C497 /* FirebaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPI.swift; sourceTree = "<group>"; };
 		FE349D73275ACB2F006B4378 /* ReasonScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonScene.swift; sourceTree = "<group>"; };
 		FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE39A0A927711644007A3E82 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -466,7 +470,6 @@
 			isa = PBXGroup;
 			children = (
 				FE683F3B269FC54D009A66DF /* CategoriesScene.swift */,
-				FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */,
 				FEB580CE278A236F0022B5E9 /* MiddleModal.swift */,
 			);
 			path = Categories;
@@ -625,6 +628,7 @@
 				FE6B5160270A36FB000118E8 /* AnalyticServices.swift */,
 				FEB2E3C7270F9AC700F5C23C /* AnalyticEvent.swift */,
 				FE4CF8A827276948007117F5 /* NotificationHelper.swift */,
+				FE1CA3CB27B219590074C497 /* FirebaseAPI.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -704,6 +708,7 @@
 		FEB85FF326744070008CDAA4 /* Meditate */ = {
 			isa = PBXGroup;
 			children = (
+				FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */,
 				FE683F3A269FC531009A66DF /* Categories */,
 				FEC5B008267D2ABE00BC8D8C /* Play */,
 				FE4E9E622676AE39002BC758 /* Home */,
@@ -754,6 +759,7 @@
 				FEC5B009267D2ACF00BC8D8C /* Play.swift */,
 				FEDC430F269A553B008E0318 /* Finished.swift */,
 				FE04A804279CD77400799A07 /* SaveProgressModal.swift */,
+				FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -1207,8 +1213,10 @@
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
+				FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
 				FEAA837D2695447300E4C62F /* ProfileScene.swift in Sources */,
+				FE1CA3CA27B218DD0074C497 /* PlayViewModel.swift in Sources */,
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
 				FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */,
 				FEA607E326FD69090076A177 /* NameScene.swift in Sources */,

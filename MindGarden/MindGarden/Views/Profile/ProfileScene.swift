@@ -585,7 +585,7 @@ struct ProfileScene: View {
                             Rectangle()
                                 .fill(Clr.yellow)
                                 .cornerRadius(12)
-                            Text("Submiit")
+                            Text("Submit")
                                 .font(Font.mada(.semiBold, size: 16))
                                 .foregroundColor(.black)
                         }

@@ -147,6 +147,10 @@ enum AnalyticEvent {
     case finished_tapped_favorite //
     case finished_tapped_unfavorite
     case finished_tapped_finished //
+    case finished_tapped_gratitude //
+    case finished_tapped_mood //
+
+    //MARK: - meds
     case finished_med_1_minute_meditation
     case finished_med_2_minute_meditation
     case finished_med_5_minute_meditation
@@ -486,6 +490,8 @@ extension AnalyticEvent {
         case .finished_tapped_favorite: return "finished_tapped_favorite"
         case .finished_tapped_unfavorite: return "finished_tapped_unfavorite"
         case .finished_tapped_finished: return "finished_tapped_finished"
+        case .finished_tapped_mood: return "finished_tapped_mood"
+        case .finished_tapped_gratitude: return "finished_tapped_gratitude"
         case .finished_med_1_minute_meditation:  return "finished_med_1_minute_meditation"
         case .finished_med_2_minute_meditation: return "finished_med_2_minute_meditation"
         case .finished_med_5_minute_meditation: return "finished_med_5_minute_meditation"

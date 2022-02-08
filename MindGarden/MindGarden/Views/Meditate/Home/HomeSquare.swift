@@ -20,14 +20,14 @@ struct HomeSquare: View {
                 .fill(Clr.darkWhite)
                 .border(Clr.darkWhite)
                 .cornerRadius(25)
-                .frame(width: width * 0.41, height: height * 0.225, alignment: .center)
+                .frame(width: width * 0.41, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .center)
                 .overlay(
                     HStack(alignment: .center) {
                         VStack(alignment: .leading, spacing: -2) {
                             Spacer()
                             Text(title)
                                 .frame(width: width * 0.225, alignment: .leading)
-                                .font(Font.mada(.semiBold, size: K.isPad() ? 28 : K.isSmall() ? 12 : 16))
+                                .font(Font.mada(.semiBold, size: K.isPad() ? 28 : K.isSmall() ? 16 : 16))
                                 .foregroundColor(Clr.black2)
                                 .minimumScaleFactor(0.05)
                                 .lineLimit(3)
@@ -58,14 +58,14 @@ struct HomeSquare: View {
                             .padding(.top, 5)
                             Spacer()
                     }.padding(.leading, 25)
-                        .frame(width: width * 0.25, height: height * 0.18, alignment: .top)
+                            .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
                         .padding(.leading, -17)
                         .padding(.top, 10)
-                }.frame(width: width * 0.40, height: height * 0.225, alignment: .leading)
+                }.frame(width: width * 0.40, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .leading)
                          , alignment: .topLeading)
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id) {
                 Image(systemName: "lock.fill")

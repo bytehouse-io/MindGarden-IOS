@@ -282,7 +282,7 @@ struct ContentView: View {
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(12)
-                                    .offset(y: addMood ? geometry.size.height/(K.hasNotch() ? 2.75 : 3) : geometry.size.height)
+                                    .offset(y: addMood ?( geometry.size.height/(K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)
                                 Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts, contentKeyVisible: $isKeyboardVisible, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: (geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1)) + (isKeyboardVisible ? geometry.size.height * 0.2 : 0))
                                     .background(Clr.darkWhite)
@@ -290,7 +290,7 @@ struct ContentView: View {
                                     .offset(y: (addGratitude ? (geometry.size.height/((K.hasNotch()
                                                                                      ? 3.25 * (openPrompts ? 2 : 1)
                                                                                      : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
-                                                                                       : 4.5 * (openPrompts ? 3.5 : 1) ) ) + (viewRouter.currentPage == .finished ? -50 : 0)) 
+                                                                                       : 4.5 * (openPrompts ? 3.5 : 1) ) ) + (viewRouter.currentPage == .finished ? -60 : 0))
                                                 : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.12 : 0))
                             }
                         }

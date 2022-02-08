@@ -106,7 +106,7 @@ struct Home: View {
                                     .frame(width: g.size.width * 0.3, height: 20)
                                     .padding(8)
                                     .background(Clr.yellow)
-                                    .cornerRadius(25)
+                                    .cornerRadius(20)
                                     .modifier(Shake(animatableData: CGFloat(attempts)))
                                 }
                                 .buttonStyle(NeumorphicPress())
@@ -127,7 +127,7 @@ struct Home: View {
                                     .frame(width: g.size.width * 0.3, height: 20)
                                     .padding(8)
                                     .background(Clr.yellow)
-                                    .cornerRadius(25)
+                                    .cornerRadius(20)
                                 }
                                 .buttonStyle(NeumorphicPress())
                             }
