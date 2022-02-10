@@ -14,6 +14,8 @@ struct HomeSquare: View {
     let id: Int
     let instructor: String
     let duration: Float
+    let imgURL: String
+    let isNew: Bool
     var body: some View {
         ZStack() {
             Rectangle()
@@ -58,13 +60,24 @@ struct HomeSquare: View {
                             .padding(.top, 5)
                             Spacer()
                     }.padding(.leading, 25)
-                            .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
-                    img
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
-                        .padding(.leading, -17)
-                        .padding(.top, 10)
+                    .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
+                        if imgURL != "" {
+                            AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/Panda%204.png?alt=media&token=b7a1be36-3c81-46e2-9125-104e104765c4")!,
+                                          placeholder: { Text("Loading ...") },
+                                       image: {
+                                Image(uiImage: $0)
+                               })
+                                .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
+                                .padding(.leading, -17)
+                                .padding(.top, 10)
+                        } else {
+                            img
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
+                                .padding(.leading, -17)
+                                .padding(.top, 10)
+                        }
                 }.frame(width: width * 0.40, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .leading)
                          , alignment: .topLeading)
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id) {
@@ -74,6 +87,18 @@ struct HomeSquare: View {
                     .frame(width: 20, height: 20)
                     .position(x:  width * 0.4, y: 30)
             }
+            if isNew {
+                Capsule()
+                    .fill(Clr.redGradientBottom)
+                    .frame(width: 45, height: 20)
+                    .overlay(
+                        Text("New")
+                            .font(Font.mada(.semiBold, size: 14))
+                            .foregroundColor(.white)
+                    )
+                    .position(x:  width * 0.325, y: height * 0.05)
+                    .opacity(0.8)
+            }
         }
         
     }
@@ -81,6 +106,6 @@ struct HomeSquare: View {
 
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
-        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0, instructor: "None", duration: 15)
+        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0, instructor: "None", duration: 15, imgURL: "", isNew: false)
     }
 }

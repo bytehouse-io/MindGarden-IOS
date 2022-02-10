@@ -20,6 +20,10 @@ extension Date {
         let weekDay = dateFormatter.string(from: someDateTime ?? Date())
         return weekDay
      }
+    static func weekOfMonth() -> Int {
+        let calendar = Calendar(identifier: .gregorian)
+        return calendar.component(.weekOfMonth, from: Date())
+    }
 
     func get(_ type: Calendar.Component)-> String {
         let calendar = Calendar.current
@@ -35,6 +39,11 @@ extension Date {
     }
     static func - (lhs: Date, rhs: Date) -> TimeInterval {
         return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
+    }
+    static func fullMonthName() -> String {
+        let calendar = Calendar(identifier: .gregorian)
+        let monthName = Date().getMonthName(month: String(calendar.component(.month, from: Date())))
+        return monthName
     }
 
     func weekDayToInt(weekDay: String) -> Int {

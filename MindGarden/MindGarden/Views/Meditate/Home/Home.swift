@@ -12,6 +12,7 @@ import Purchases
 import Firebase
 import FirebaseFirestore
 import AppsFlyerLib
+import URLImage
 
 var launchedApp = false
 struct Home: View {
@@ -34,7 +35,7 @@ struct Home: View {
         UINavigationBar.appearance().shadowImage = UIImage()
         self.bonusModel = bonusModel
     }
-    
+
     var body: some View {
         NavigationView {
                 ZStack {
@@ -219,9 +220,7 @@ struct Home: View {
                                 }
                                     Spacer()
                                 if !UserDefaults.standard.bool(forKey: "isPro") {
-                                    Button {
-
-                                    } label: {
+                                    Button { } label: {
                                         HStack {
                                             Text("💚 Go Pro!")
                                                 .font(Font.mada(.semiBold, size: 14))
@@ -242,9 +241,8 @@ struct Home: View {
                                         }
                                     }
                                     .buttonStyle(NeumorphicPress())
-
                                 }
-                                }.frame(width: abs(g.size.width - 75), alignment: .leading)
+                            }.frame(width: abs(g.size.width * 0.825), alignment: .leading)
                                     .padding(.top, 20)
 
                             ScrollView(.horizontal, showsIndicators: false, content: {
@@ -263,10 +261,8 @@ struct Home: View {
                                         Spacer()
                                     } else {
                                         ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
-                                            Button {
-
-                                            } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration)
+                                            Button { } label: {
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                                     .onTapGesture {
                                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                         model.selectedMeditation = meditation
@@ -278,9 +274,7 @@ struct Home: View {
                                                         } else {
                                                             viewRouter.currentPage = .play
                                                         }
-
                                                     }
-
                                             }.buttonStyle(NeumorphicPress())
                                         }
                                     }
@@ -289,13 +283,49 @@ struct Home: View {
                                     } else if isRecent && gardenModel.recentMeditations.count == 1 {
                                         Spacer()
                                     }
-                                }.frame(height: g.size.height * 0.25)
-                                    .padding([.leading, .trailing], 25)
+                                }.frame(height: g.size.height * 0.25 + 15)
+                                    .padding([.leading, .trailing], g.size.width * 0.07)
                             }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
-                            if #available(iOS 14.0, *) {
-                                Button {
 
-                                } label: {
+                            //MARK: - New Meds
+                                Text("☀️ New Meditations")
+                                    .font(Font.mada(.semiBold, size: 28))
+                                    .foregroundColor(Clr.black2)
+                                    .padding(.top)
+                                    .frame(width: abs(g.size.width * 0.825), alignment: .leading)
+                            VStack {
+                           
+                                RecRow(width: UIScreen.main.bounds.width, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, isWeekly: true)
+                                    .padding(.bottom)
+                                    .offset(y: -10)
+                                ScrollView(.horizontal) {
+                                    HStack {
+                                        ForEach(model.newMeditations, id: \.self) { meditation in
+                                            Button {
+
+                                            } label: {
+                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                                    .onTapGesture {
+                                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                        model.selectedMeditation = meditation
+                                                        Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
+                                                        if meditation.type == .course  {
+                                                            withAnimation {
+                                                                viewRouter.currentPage = .middle
+                                                            }
+                                                        } else {
+                                                            viewRouter.currentPage = .play
+                                                        }
+                                                    }
+                                            }.buttonStyle(NeumorphicPress())
+                                        }
+                                    }.frame(height: g.size.height * 0.25 + 15)
+                                        .padding([.leading, .trailing], g.size.width * 0.07)
+                                }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
+                                .offset(y: -15)
+                            }
+                            if #available(iOS 14.0, *) {
+                                Button { } label: {
                                     HStack {
                                         Text("See All Meditations")
                                             .foregroundColor(.black)
@@ -315,21 +345,22 @@ struct Home: View {
                                     .buttonStyle(NeumorphicPress())
                             } else {
                                 // Fallback on earlier versions
+
                             }
                             Spacer()
-                        }
-                        HStack(spacing: 15) {
-                            Text("\(numberOfMeds)")
-                                .font(Font.mada(.bold, size: 36))
-                                .foregroundColor(Clr.black1)
-                            Text("people are meditating \nright now")
-                                .font(Font.mada(.regular, size: 22))
-                                .minimumScaleFactor(0.05)
-                                .lineLimit(2)
-                                .foregroundColor(.gray)
-                        }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
-                        .padding(30)
-                    }.frame(width: UIScreen.main.bounds.size.width, height: g.size.height)
+                            HStack(spacing: 15) {
+                                Text("\(numberOfMeds)")
+                                    .font(Font.mada(.bold, size: 36))
+                                    .foregroundColor(Clr.black1)
+                                Text("people are meditating \nright now")
+                                    .font(Font.mada(.regular, size: 22))
+                                    .minimumScaleFactor(0.05)
+                                    .lineLimit(2)
+                                    .foregroundColor(.gray)
+                            }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
+                            .padding(30)
+                        }.padding(.top, 30)
+                    }.padding(.top, 1)
                     if showModal || showUpdateModal {
                         Color.black
                             .opacity(0.3)
@@ -375,7 +406,7 @@ struct Home: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
                { _ in
-                   runCounter(counter: $attempts, start: 0, end: 5, speed: 1)
+                   runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
                }
         .animation(.easeOut(duration: 0.1))
          .onAppear {
@@ -414,7 +445,7 @@ struct Home: View {
                  }
              }
 
-        
+
              coins = userCoins
 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }

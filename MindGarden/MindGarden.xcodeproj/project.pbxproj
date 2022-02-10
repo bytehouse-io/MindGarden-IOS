@@ -24,6 +24,8 @@
 		FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
 		FE1CA3CA27B218DD0074C497 /* PlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */; };
 		FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1CA3CB27B219590074C497 /* FirebaseAPI.swift */; };
+		FE1CA3CE27B3712A0074C497 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1CA3CD27B371290074C497 /* AsyncImage.swift */; };
+		FE1CA3D527B4556C0074C497 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1CA3D427B4556C0074C497 /* Array+Extensions.swift */; };
 		FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE349D73275ACB2F006B4378 /* ReasonScene.swift */; };
 		FE39A0AA27711644007A3E82 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39A0A927711644007A3E82 /* NotificationService.swift */; };
 		FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = FE39A0B4277116CC007A3E82 /* OneSignal */; };
@@ -206,6 +208,8 @@
 		FE17B8AF26C06C20002CF8C2 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewModel.swift; sourceTree = "<group>"; };
 		FE1CA3CB27B219590074C497 /* FirebaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPI.swift; sourceTree = "<group>"; };
+		FE1CA3CD27B371290074C497 /* AsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
+		FE1CA3D427B4556C0074C497 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		FE349D73275ACB2F006B4378 /* ReasonScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonScene.swift; sourceTree = "<group>"; };
 		FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE39A0A927711644007A3E82 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -593,6 +597,7 @@
 				FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */,
 				FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */,
 				FE9BE35627434023004FEBF0 /* String+Extensions.swift */,
+				FE1CA3D427B4556C0074C497 /* Array+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -693,6 +698,7 @@
 				FEBD4C6026F9794F0050A701 /* OverflowScrollView.swift */,
 				FED212552741C554006E478E /* SnapCarousel.swift */,
 				FE04A802279A3CA900799A07 /* CheckBox.swift */,
+				FE1CA3CD27B371290074C497 /* AsyncImage.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1222,6 +1228,7 @@
 				FEA607E326FD69090076A177 /* NameScene.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
 				FEBD4C6126F979500050A701 /* OverflowScrollView.swift in Sources */,
+				FE1CA3D527B4556C0074C497 /* Array+Extensions.swift in Sources */,
 				FEB580CF278A236F0022B5E9 /* MiddleModal.swift in Sources */,
 				FE683F39269F74F6009A66DF /* TextFieldAlert.swift in Sources */,
 				FED4636C279F87E7008C8E2E /* ShowRecsScene.swift in Sources */,
@@ -1233,6 +1240,7 @@
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
 				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
 				FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */,
+				FE1CA3CE27B3712A0074C497 /* AsyncImage.swift in Sources */,
 				FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
 				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,

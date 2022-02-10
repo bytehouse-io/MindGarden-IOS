@@ -15,8 +15,10 @@ import OneSignal
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
+    @Published var newMeditations:  [Meditation] = []
+    @Published var weeklyMeditation: Meditation?
     @Published var featuredMeditation: Meditation?
-    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 0, duration: 0, reward: 0, url: "", instructor: "None")
+    @Published var selectedMeditation: Meditation? = Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.daisy3, type: .course, id: 0, duration: 0, reward: 0, url: "", instructor: "None",  imgURL: "", isNew: false)
     @Published var selectedCategory: Category? = .all
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
@@ -206,7 +208,7 @@ class MeditationViewModel: ObservableObject {
                     }
                 }
             }
-        }        
+        }
     }
 
     func favorite(selectMeditation: Meditation) {

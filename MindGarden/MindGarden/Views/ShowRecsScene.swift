@@ -36,7 +36,7 @@ struct ShowRecsScene: View {
                             .font(Font.mada(.regular, size: 22))
                     }.padding(.horizontal, width * 0.1)
                     ForEach(0...3, id: \.self) { index in
-                        RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter)
+                        RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter, isWeekly: false)
                             .padding(.top, 10)
                             .animation(Animation.easeInOut(duration: 1.5).delay(3))
                             .opacity(animateRow ? 1 : 0)
@@ -67,32 +67,37 @@ struct ShowRecsScene: View {
             }
         }
     }
+}
+struct RecRow: View {
+    let width: CGFloat
+    let meditation: Meditation
+    var meditationModel: MeditationViewModel
+    var viewRouter: ViewRouter
+    @Environment(\.presentationMode) var presentationMode
+    let isWeekly: Bool
 
-    struct RecRow: View {
-        let width: CGFloat
-        let meditation: Meditation
-        var meditationModel: MeditationViewModel
-        var viewRouter: ViewRouter
-        @Environment(\.presentationMode) var presentationMode
-
-        var body: some View {
-            Button {
-                presentationMode.wrappedValue.dismiss()
-                meditationModel.selectedMeditation = meditation
-                withAnimation {
-                    if meditation.type == .course {
-                        viewRouter.currentPage = .middle
-                    } else {
-                        viewRouter.currentPage = .play
-                    }
+    var body: some View {
+        Button {
+            presentationMode.wrappedValue.dismiss()
+            meditationModel.selectedMeditation = meditation
+            withAnimation {
+                if meditation.type == .course {
+                    viewRouter.currentPage = .middle
+                } else {
+                    viewRouter.currentPage = .play
                 }
-            } label: {
-                ZStack {
-                    Rectangle()
-                        .fill(Clr.darkWhite)
-                        .cornerRadius(16)
-                        .frame(height: 120)
-                        .padding(.horizontal, width * 0.1)
+            }
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(Clr.darkWhite)
+                    .cornerRadius(16)
+                    .frame(width: width * 0.85, height: isWeekly ? 140 : 120)
+                Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
+                    .foregroundColor(Color.gray)
+                    .font(Font.mada(.semiBold, size: 16))
+                    .position(x: width * 0.32, y: 40)
+                    .frame(width: abs(width * 0.85), alignment: .leading)
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(meditation.title)
@@ -131,19 +136,30 @@ struct ShowRecsScene: View {
                                     .font(Font.mada(.semiBold, size: 12))
                             }
                         }.frame(width: width * 0.4, alignment: .leading)
-                        .padding()
-                        .padding(.leading, 10)
-                        meditation.img
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: width * 0.2, height: 90)
                             .padding()
-                            .offset(x: -10)
-                    }.frame(width: width * 0.8, alignment: .leading)
-                }
+                            .padding(.leading, 10)
+                        if meditation.imgURL != "" {
+                            AsyncImage(url: URL(string: meditation.imgURL)!,
+                                          placeholder: { Text("Loading ...") },
+                                       image: {
+                                Image(uiImage: $0)
+                               })
+                                .frame(width: width * 0.2, height: 90)
+                                .padding()
+                                .offset(x: -10)
+                        } else {
+                            meditation.img
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: width * 0.2, height: 90)
+                                .padding()
+                                .offset(x: -10)
+                        }
 
-            }.buttonStyle(NeumorphicPress())
-        }
+                    }.frame(width: width * 0.85, alignment: .leading)
+                    .padding(.top, 25)
+            }
+        }.buttonStyle(BonusPress())
     }
 }
 

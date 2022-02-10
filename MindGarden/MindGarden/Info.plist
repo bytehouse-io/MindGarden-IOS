@@ -125,6 +125,8 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
+	<key>Allow Arbitrary Loads</key>
+	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Share Your Progress</string>
 	<key>UIAppFonts</key>
