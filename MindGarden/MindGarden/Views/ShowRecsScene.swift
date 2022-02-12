@@ -21,24 +21,37 @@ struct ShowRecsScene: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
                 VStack(alignment: .center) {
-                    VStack(alignment: .center, spacing: 0)  {
-                        HStack {
-                            Text("Based on your mood")
+                    HStack(spacing: 0) {
+                        VStack(alignment: .center, spacing: 0)  {
+                            HStack {
+                                Text("Based on your mood")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.bold, size: 26))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                                Mood.getMoodImage(mood: mood)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 25)
+                            }.frame(width: abs(width * 0.8), alignment: .leading)
+                            Text("We recommend these: ")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.mada(.bold, size: 26))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.05)
-                            Mood.getMoodImage(mood: mood)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 25)
+                                .font(Font.mada(.regular, size: 22))
+                                .frame(width: abs(width * 0.79), alignment: .leading)
                         }
-                        Text("We recommend these: ")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.mada(.regular, size: 22))
-                    }.frame(width: abs(width * 0.8), alignment: .leading)
-                        .padding(.top)
-                        .padding(.bottom, -15)
+                        if K.isSmall() {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 22))
+                                .foregroundColor(Clr.black1)
+                                .onTapGesture {
+                                    Analytics.shared.log(event: .mood_recs_not_now)
+                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                    impact.impactOccurred()
+                                    withAnimation {  presentationMode.wrappedValue.dismiss() }
+                                }
+                        }
+                    }.padding(.top)
+                    .frame(width: abs(width * 0.79), alignment: .leading)
                     ForEach(0...3, id: \.self) { index in
                         RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter, isWeekly: false)
                             .padding(.top, 10)
@@ -101,7 +114,7 @@ struct RecRow: View {
                     Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
                         .foregroundColor(Color.gray)
                         .font(Font.mada(.semiBold, size: 16))
-                        .position(x: width * 0.32, y: 40)
+                        .position(x: width * 0.325, y: 30)
                         .frame(width: abs(width * 0.85), alignment: .leading)
                 }
                 HStack {

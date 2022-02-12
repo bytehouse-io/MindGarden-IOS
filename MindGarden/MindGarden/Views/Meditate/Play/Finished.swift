@@ -271,10 +271,6 @@ struct Finished: View {
                             Analytics.shared.log(event: .seventh_time_coming_back)
                             UserDefaults.standard.setValue(11, forKey: "launchNumber")
                         }
-                    } else {
-                        if gardenModel.allTimeSessions >= 2 {
-                            NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
-                        }
                     }
                 }
                 //unlock christmas tree

@@ -122,7 +122,7 @@ struct MiddleSelect: View {
                                                 HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, instructor: model.recommendedMeds[1].instructor, duration: model.recommendedMeds[1].duration, imgURL: model.recommendedMeds[1].imgURL, isNew: model.recommendedMeds[1].isNew)
                                             }.buttonStyle(NeumorphicPress())
                                         }.padding(.vertical)
-                                        .padding(.bottom, g.size.height * 0.2)
+                                            .padding(.bottom, g.size.height * (K.hasNotch() ? 0.2 : 0.35))
                                     }
                                 }
                         }

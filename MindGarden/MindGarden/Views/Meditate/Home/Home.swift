@@ -29,6 +29,8 @@ struct Home: View {
     var bonusModel: BonusViewModel
     @State private var coins = 0
     @State private var attempts = 0
+    @Environment(\.colorScheme) var colorScheme
+
     init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -49,7 +51,7 @@ struct Home: View {
                             .frame(width: width, height: height * 0.4)
                             .neoShadow()
                             HStack {
-                                Img.topBranch.padding(.leading, 20).offset( y: height * -0.1)
+                                Img.topBranch.offset(x: 40,  y: height * -0.1)
                                 Spacer()
                                 VStack {
                                     Image(systemName: "magnifyingglass")
@@ -65,7 +67,7 @@ struct Home: View {
                                         VStack(alignment: .trailing) {
                                             Text("\(userModel.greeting), \(userModel.name)")
                                                 .font(Font.mada(.bold, size: 25))
-                                                .foregroundColor(Clr.black1)
+                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                                 .fontWeight(.bold)
                                                 .padding(.trailing, 20)
                                             HStack {
@@ -75,7 +77,7 @@ struct Home: View {
                                                     .frame(height: 15)
                                                     .oldShadow()
                                                 Text("Streak: ")
-                                                    .foregroundColor(Clr.black2)
+                                                    .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                                 + Text("\(bonusModel.streakNumber)")
                                                     .font(Font.mada(.semiBold, size: 20))
                                                     .foregroundColor(Clr.darkgreen)
@@ -86,12 +88,13 @@ struct Home: View {
                                                     .oldShadow()
                                                 Text("\(coins)")
                                                     .font(Font.mada(.semiBold, size: 20))
+                                                    .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                             }.padding(.trailing, 20)
                                                 .padding(.top, -10)
                                                 .padding(.bottom, 10)
                                         }
-                                    }.offset(x: -width * 0.17, y: -10)
-                                }.frame(width: width * 0.6)
+                                    }.offset(x: -width * 0.25, y: -10)
+                                }.frame(width: width * 0.8)
                                 
                             }
                         }.frame(width: width)

@@ -57,11 +57,11 @@ struct ContentView: View {
                                     switch viewRouter.currentPage {
                                     case .onboarding:
                                             OnboardingScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .experience:
                                             ExperienceScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
                                         Home(bonusModel: bonusModel)
@@ -123,11 +123,11 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .notification:
                                         NotificationScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 50 : 0))
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .name:
                                         NameScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .pricing:
                                         PricingView()
@@ -135,11 +135,11 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .reason:
                                         ReasonScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .review:
                                         ReviewScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 60 : 0))
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     }
 
@@ -319,8 +319,10 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showRecs) {
-            let meditations = Meditation.getRecsFromMood()
-            ShowRecsScene(mood: selectedMood, meditations: meditations)
+            if !isOnboarding {
+                let meditations = Meditation.getRecsFromMood()
+                ShowRecsScene(mood: selectedMood, meditations: meditations)
+            }
         }
         .onAppear {
             animationAmount = 2

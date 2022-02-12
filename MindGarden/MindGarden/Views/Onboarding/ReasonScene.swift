@@ -94,6 +94,7 @@ struct ReasonScene: View {
         var title: String
         var img: Image
         @Binding var selected: String
+        @Environment(\.colorScheme) var colorScheme
 
         var body: some View {
             Button {
@@ -115,7 +116,7 @@ struct ReasonScene: View {
                     HStack(spacing: 50) {
                         Text(title)
                             .font(Font.mada(.bold, size: K.isSmall() ? 18 : 22))
-                            .foregroundColor(Clr.black1)
+                            .foregroundColor(selected == title ? (colorScheme == .dark ? Color.black : Clr.black1 ): Clr.black1)
                             .padding()
                             .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
                             .lineLimit(2)

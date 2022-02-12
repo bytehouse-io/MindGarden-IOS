@@ -21,7 +21,7 @@ struct Store: View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
-                ScrollView(showsIndicators: false) {
+                VStack {
                     if isShop {
                         HStack(spacing: 25) {
                             Spacer()
@@ -44,14 +44,11 @@ struct Store: View {
                                 MenuButton(title: "Badges", isStore: !isStore)
                             }
                             Spacer()
-                        }.padding(.top, 50)
-                        .padding(.bottom, 0)
-                    }
-                    HStack(alignment: .top, spacing: 20) {
-                        if K.isPad() {
-                            Spacer()
                         }
-
+                        .padding(.top, 35)
+                    }
+                ScrollView(showsIndicators: false) {
+                    HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 if !isShop {
@@ -178,8 +175,9 @@ struct Store: View {
                             Spacer()
                         }
                     }.padding()
-                }.padding(.top)
+                }
                     .opacity(confirmModal ? 0.3 : 1)
+                }
                 if showModal || confirmModal {
                     Color.black
                         .opacity(0.3)

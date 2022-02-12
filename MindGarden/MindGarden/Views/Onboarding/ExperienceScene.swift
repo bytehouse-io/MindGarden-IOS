@@ -89,6 +89,7 @@ struct ExperienceScene: View {
         var title: String
         var img: Image
         @Binding var selected: String
+        @Environment(\.colorScheme) var colorScheme
 
         var body: some View {
             Button {
@@ -111,7 +112,7 @@ struct ExperienceScene: View {
                     HStack(spacing: 50) {
                         Text(title)
                             .font(Font.mada(.bold, size: 24))
-                            .foregroundColor(Clr.black1)
+                            .foregroundColor(selected == title ? colorScheme == .dark ? Color.black : Clr.black1 : Clr.black1)
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)
                         img

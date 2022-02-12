@@ -11,6 +11,7 @@ import OneSignal
 
 struct NameScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var userModel: UserViewModel
     @State private var name: String = ""
     @State var isFirstResponder = true
     var body: some View {
@@ -70,6 +71,7 @@ struct NameScene: View {
                                         UserDefaults.standard.set(name, forKey: "name")
                                         viewRouter.progressValue += 0.1
                                         viewRouter.currentPage = .review
+                                        userModel.name = name
                                     }
                                 }
                             } label: {

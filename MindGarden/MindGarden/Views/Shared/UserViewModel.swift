@@ -95,7 +95,7 @@ class UserViewModel: ObservableObject {
                     self.ownedPlants += badgePlants
             }
             
-            if let name = UserDefaults.standard.string(forKey: "name") {
+            if let name = UserDefaults.standard.string(forKey: K.defaults.name) {
                 self.name = name
             }
             

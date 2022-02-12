@@ -96,7 +96,7 @@ struct HomeSquare: View {
                             .font(Font.mada(.semiBold, size: 14))
                             .foregroundColor(.white)
                     )
-                    .position(x:  width * 0.325, y: height * 0.05)
+                    .position(x:  width * 0.34, y: height * 0.03)
                     .opacity(0.8)
             }
         }

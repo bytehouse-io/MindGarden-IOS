@@ -261,7 +261,7 @@ enum AnalyticEvent {
     case mood_toggle_recs_on
     case mood_recs_not_now
     case mood_tapped_done //
-    case mood_tapped_cancel
+    case mood_tapped_cancel //
     //gratitude
     case plus_tapped_gratitude
     case plus_tapped_gratitude_to_pricing
