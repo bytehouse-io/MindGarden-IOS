@@ -12,14 +12,10 @@ public enum Clr {
   ///
   /// **Universal - Dark**: `#F5F5F5` with alpha: `1.000`
   public static let black2 = Color("black2")
-  /// ERROR GETTING DESCRIPTION
-  public static let blackShadow2 = Color("blackShadow 2")
   /// **Universal - Any**: `#595959` with alpha: `1.000`
   public static let blackShadow = Color("blackShadow")
   /// **Universal - Any**: `#80A800` with alpha: `1.000`
   public static let brightGreen = Color("brightGreen")
-  /// ERROR GETTING DESCRIPTION
-  public static let darkShadow2 = Color("darkShadow 2")
   /// **Universal - Any**: `#121212` with alpha: `1.000`
   public static let darkShadow = Color("darkShadow")
   /// **Universal - Any**: `#F5F5F5` with alpha: `1.000`
@@ -52,8 +48,6 @@ public enum Clr {
   public static let purple = Color("purple")
   /// **Universal - Any**: `#414127` with alpha: `1.000`
   public static let redGradientBottom = Color("redGradientBottom")
-  /// ERROR GETTING DESCRIPTION
-  public static let review2 = Color("review 2")
   /// **Universal - Any**: `#F6F2F2` with alpha: `1.000`
   ///
   /// **Universal - Dark**: `#000000` with alpha: `1.000`
@@ -68,8 +62,6 @@ public enum Clr {
   public static let superBlack = Color("superBlack")
   /// **Universal - Any**: `#F0F0F0` with alpha: `1.000`
   public static let superLightGray = Color("superLightGray")
-  /// ERROR GETTING DESCRIPTION
-  public static let superWhite2 = Color("superWhite 2")
   /// **Universal - Any**: `#FFFFFF` with alpha: `1.000`
   ///
   /// **Universal - Dark**: `#000000` with alpha: `1.000`

@@ -280,7 +280,7 @@ struct ProfileScene: View {
                                                 } .frame(width: width * 0.8)
                                                 .padding(.bottom)
                                             }
-                                            .frame(width: width * 0.8, height: height * 0.7)
+                                            .frame(width: width * 0.8, height: height * 0.65)
                                             .padding(.top, 25)
                                         }
                                     } else if selection == .journey {
@@ -428,6 +428,7 @@ struct ProfileScene: View {
                                             }
                                             .frame(width: abs(width - 100), height: 50, alignment: .center)
                                             .padding()
+                                            .padding(.bottom, 20)
                                         }
                                     }
                                     Spacer()

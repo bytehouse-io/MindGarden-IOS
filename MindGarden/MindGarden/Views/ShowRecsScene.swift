@@ -20,12 +20,14 @@ struct ShowRecsScene: View {
 
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading, spacing: 0)  {
+                VStack(alignment: .center) {
+                    VStack(alignment: .center, spacing: 0)  {
                         HStack {
                             Text("Based on your mood")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.mada(.bold, size: 30))
+                                .font(Font.mada(.bold, size: 26))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
                             Mood.getMoodImage(mood: mood)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -34,7 +36,9 @@ struct ShowRecsScene: View {
                         Text("We recommend these: ")
                             .foregroundColor(Clr.black2)
                             .font(Font.mada(.regular, size: 22))
-                    }.padding(.horizontal, width * 0.1)
+                    }.frame(width: abs(width * 0.8), alignment: .leading)
+                        .padding(.top)
+                        .padding(.bottom, -15)
                     ForEach(0...3, id: \.self) { index in
                         RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter, isWeekly: false)
                             .padding(.top, 10)
@@ -93,13 +97,15 @@ struct RecRow: View {
                     .fill(Clr.darkWhite)
                     .cornerRadius(16)
                     .frame(width: width * 0.85, height: isWeekly ? 140 : 120)
-                Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
-                    .foregroundColor(Color.gray)
-                    .font(Font.mada(.semiBold, size: 16))
-                    .position(x: width * 0.32, y: 40)
-                    .frame(width: abs(width * 0.85), alignment: .leading)
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
+                if isWeekly {
+                    Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
+                        .foregroundColor(Color.gray)
+                        .font(Font.mada(.semiBold, size: 16))
+                        .position(x: width * 0.32, y: 40)
+                        .frame(width: abs(width * 0.85), alignment: .leading)
+                }
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
                             Text(meditation.title)
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
@@ -157,7 +163,6 @@ struct RecRow: View {
                         }
 
                     }.frame(width: width * 0.85, alignment: .leading)
-                    .padding(.top, 25)
             }
         }.buttonStyle(BonusPress())
     }

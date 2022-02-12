@@ -12,7 +12,6 @@ import Purchases
 import Firebase
 import FirebaseFirestore
 import AppsFlyerLib
-import URLImage
 
 var launchedApp = false
 struct Home: View {
@@ -35,363 +34,375 @@ struct Home: View {
         UINavigationBar.appearance().shadowImage = UIImage()
         self.bonusModel = bonusModel
     }
-
+    
     var body: some View {
         NavigationView {
-                ZStack {
-                    Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    GeometryReader { g in
-                        ScrollView(.vertical, showsIndicators: false) {
-                        VStack {
+            ZStack {
+                Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+                GeometryReader { g in
+                    let width = g.size.width
+                    let height = g.size.height
+                    VStack {
+                    ZStack {
+                        Img.yellowBubble
+                            .resizable()
+                            .frame(width: width, height: height * 0.4)
+                            .neoShadow()
                             HStack {
+                                Img.topBranch.padding(.leading, 20).offset( y: height * -0.1)
                                 Spacer()
-                                VStack(alignment: .trailing) {
-                                    Text("\(userModel.greeting), \(userModel.name)")
-                                        .font(Font.mada(.bold, size: 25))
-                                        .foregroundColor(Clr.black1)
-                                        .fontWeight(.bold)
-                                        .padding(.trailing, 20)
+                                VStack {
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(.system(size: 22))
+                                        .onTapGesture {
+                                            Analytics.shared.log(event: .home_tapped_search)
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            showSearch = true
+                                        }.offset(x: 15, y: -25)
                                     HStack {
-                                        Img.newStar
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 15)
-                                            .oldShadow()
-                                        Text("Streak: ")
-                                            .foregroundColor(Clr.black2)
-                                        + Text("\(bonusModel.streakNumber)")
-                                            .font(Font.mada(.semiBold, size: 20))
-                                            .foregroundColor(Clr.darkgreen)
-                                        Img.coin
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 15)
-                                            .oldShadow()
-                                        Text("\(coins)")
-                                            .font(Font.mada(.semiBold, size: 20))
-                                    }.padding(.trailing, 20)
-                                        .padding(.top, -10)
-                                        .padding(.bottom, 10)
-                                }
-                            }
-                            .padding(.top, K.isSmall() ? -50 : -30)
-                            HStack {
-                                Button {
-                                    Analytics.shared.log(event: .home_tapped_bonus)
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        showModal = true
-                                    }
-                                } label: {
-                                    HStack {
-                                        if bonusModel.totalBonuses == 0 {
-                                            Img.coin
-                                                .font(.system(size: 22))
-                                        } else {
-                                            ZStack {
-                                                Circle().frame(height: 16)
-                                                    .foregroundColor(Clr.redGradientBottom)
-                                                Text("\(bonusModel.totalBonuses)")
-                                                    .font(Font.mada(.bold, size: 12))
-                                                    .foregroundColor(.white)
-                                                    .lineLimit(1)
-                                                    .minimumScaleFactor(0.005)
-                                                    .frame(width: 10)
-                                            }.frame(width: 15)
-                                        }
-                                        Text("Daily Bonus")
-                                            .font(Font.mada(.regular, size: 14))
-                                            .foregroundColor(.black)
-                                            .font(.footnote)
-                                    }
-                                    .frame(width: g.size.width * 0.3, height: 20)
-                                    .padding(8)
-                                    .background(Clr.yellow)
-                                    .cornerRadius(20)
-                                    .modifier(Shake(animatableData: CGFloat(attempts)))
-                                }
-                                .buttonStyle(NeumorphicPress())
-                                Button {
-                                    Analytics.shared.log(event: .home_tapped_plant_select)
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    showPlantSelect = true
-                                } label: {
-                                    HStack {
-                                        userModel.selectedPlant?.head
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                        Text("Plant Select")
-                                            .font(Font.mada(.regular, size: 14))
-                                            .foregroundColor(.black)
-                                            .font(.footnote)
-                                    }
-                                    .frame(width: g.size.width * 0.3, height: 20)
-                                    .padding(8)
-                                    .background(Clr.yellow)
-                                    .cornerRadius(20)
-                                }
-                                .buttonStyle(NeumorphicPress())
-                            }
-                            Button {
-                                Analytics.shared.log(event: .home_tapped_featured)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    model.selectedMeditation = model.featuredMeditation
-                                    if model.featuredMeditation?.type == .course {
-                                        viewRouter.currentPage = .middle
-                                    } else {
-                                        viewRouter.currentPage = .play
-                                    }
-                                }
-                            } label: {
-                                Rectangle()
-                                    .fill(Color("darkWhite"))
-                                    .border(Clr.darkWhite)
-                                    .cornerRadius(25)
-                                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
-                                    .neoShadow()
-                                    .overlay(
-                                        HStack(alignment: .top) {
-                                            VStack(alignment: .leading) {
-                                                Text("Featured")
-                                                    .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
-                                                    .foregroundColor(Clr.black1)
-                                                Text("\(model.featuredMeditation?.title ?? "")")
-                                                    .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
-                                                    .foregroundColor(Clr.black1)
-                                                    .lineLimit(3)
-                                                    .minimumScaleFactor(0.05)
-                                                if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
-                                                    Text("7 Day Course")
-                                                        .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
-                                                        .foregroundColor(Color.gray)
-                                                }
-                                                Spacer()
-                                            }
-                                            .frame(width: g.size.width * 0.65 * 0.5)
-                                            .position(x: g.size.width - g.size.width * 0.85 + 25, y: g.size.height * 0.21)
-                                            VStack(spacing: 0) {
-                                                ZStack {
-                                                    Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
-                                                        .foregroundColor(Clr.brightGreen)
-                                                    Image(systemName: "play.fill")
-                                                        .foregroundColor(.white)
-                                                        .font(.system(size: K.isPad() ? 50 : 26))
-                                                }.offset(x: 20, y: K.isPad() ? 30 : 10)
-                                                    .padding([.top, .leading])
-                                                (model.featuredMeditation?.img ?? Img.daisy3)
+                                        Spacer()
+                                        VStack(alignment: .trailing) {
+                                            Text("\(userModel.greeting), \(userModel.name)")
+                                                .font(Font.mada(.bold, size: 25))
+                                                .foregroundColor(Clr.black1)
+                                                .fontWeight(.bold)
+                                                .padding(.trailing, 20)
+                                            HStack {
+                                                Img.newStar
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: g.size.width * 0.80 * 0.5, height: g.size.height * 0.2)
-                                                    .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
-                                            }.padding([.top, .bottom, .trailing])
-                                        }).padding(.top, K.isSmall() ? 10 : 20)
-                            }.buttonStyle(NeumorphicPress())
-                            HStack {
-                                VStack(spacing: 1) {
-                                    HStack {
-                                        Button {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .home_tapped_recents)
-                                            withAnimation {
-                                                isRecent = true
-                                            }
-                                        } label: {
-                                            Text("Recent")
-                                                .foregroundColor(isRecent ? Clr.darkgreen : Clr.black2)
-                                                .font(Font.mada(.regular, size: 20))
+                                                    .frame(height: 15)
+                                                    .oldShadow()
+                                                Text("Streak: ")
+                                                    .foregroundColor(Clr.black2)
+                                                + Text("\(bonusModel.streakNumber)")
+                                                    .font(Font.mada(.semiBold, size: 20))
+                                                    .foregroundColor(Clr.darkgreen)
+                                                Img.coin
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(height: 15)
+                                                    .oldShadow()
+                                                Text("\(coins)")
+                                                    .font(Font.mada(.semiBold, size: 20))
+                                            }.padding(.trailing, 20)
+                                                .padding(.top, -10)
+                                                .padding(.bottom, 10)
                                         }
-                                        Button {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .home_tapped_favorites)
-                                            withAnimation {
-                                                isRecent = false
-                                            }
-                                        } label: {
-                                            Text("Favorites")
-                                                .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
-                                                .font(Font.mada(.regular, size: 20))
+                                    }.offset(x: -width * 0.17, y: -10)
+                                }.frame(width: width * 0.6)
+                                
+                            }
+                        }.frame(width: width)
+                        .offset(y: -height * 0.225)
+
+
+                        //MARK: - scroll view
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack {
+                                HStack {
+                                    Button {
+                                        Analytics.shared.log(event: .home_tapped_bonus)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            showModal = true
                                         }
-                                    }
-                                    Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
-                                        .foregroundColor(Clr.darkgreen)
-                                        .offset(x: isRecent ? -42.0 : 33.0)
-                                        .animation(.default, value: isRecent)
-                                }
-                                    Spacer()
-                                if !UserDefaults.standard.bool(forKey: "isPro") {
-                                    Button { } label: {
+                                    } label: {
                                         HStack {
-                                            Text("💚 Go Pro!")
-                                                .font(Font.mada(.semiBold, size: 14))
-                                                .foregroundColor(Clr.darkgreen)
+                                            if bonusModel.totalBonuses == 0 {
+                                                Img.coin
+                                                    .font(.system(size: 22))
+                                            } else {
+                                                ZStack {
+                                                    Circle().frame(height: 16)
+                                                        .foregroundColor(Clr.redGradientBottom)
+                                                    Text("\(bonusModel.totalBonuses)")
+                                                        .font(Font.mada(.bold, size: 12))
+                                                        .foregroundColor(.white)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.005)
+                                                        .frame(width: 10)
+                                                }.frame(width: 15)
+                                            }
+                                            Text("Daily Bonus")
+                                                .font(Font.mada(.regular, size: 14))
+                                                .foregroundColor(.black)
                                                 .font(.footnote)
                                         }
-                                        .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                                        .frame(width: g.size.width * 0.3, height: 20)
                                         .padding(8)
-                                        .background(Clr.darkWhite)
-                                        .cornerRadius(25)
-                                        .onTapGesture {
-                                            Analytics.shared.log(event: .home_tapped_pro)
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            withAnimation {
-                                                fromPage = "home"
-                                                viewRouter.currentPage = .pricing
-                                            }
+                                        .background(Clr.yellow)
+                                        .cornerRadius(20)
+                                        .modifier(Shake(animatableData: CGFloat(attempts)))
+                                    }
+                                    .buttonStyle(NeumorphicPress())
+                                    Button {
+                                        Analytics.shared.log(event: .home_tapped_plant_select)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        showPlantSelect = true
+                                    } label: {
+                                        HStack {
+                                            userModel.selectedPlant?.head
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                            Text("Plant Select")
+                                                .font(Font.mada(.regular, size: 14))
+                                                .foregroundColor(.black)
+                                                .font(.footnote)
                                         }
+                                        .frame(width: g.size.width * 0.3, height: 20)
+                                        .padding(8)
+                                        .background(Clr.yellow)
+                                        .cornerRadius(20)
                                     }
                                     .buttonStyle(NeumorphicPress())
                                 }
-                            }.frame(width: abs(g.size.width * 0.825), alignment: .leading)
-                                    .padding(.top, 20)
-
-                            ScrollView(.horizontal, showsIndicators: false, content: {
-                                HStack(spacing: 15) {
-                                    if model.favoritedMeditations.isEmpty && !isRecent {
-                                        Spacer()
-                                        Text("No Favorited Meditations")
-                                            .font(Font.mada(.semiBold, size: 20))
-                                            .foregroundColor(Color.gray)
-                                        Spacer()
-                                    } else if gardenModel.recentMeditations.isEmpty && isRecent {
-                                        Spacer()
-                                        Text("No Recent Meditations")
-                                            .font(Font.mada(.semiBold, size: 20))
-                                            .foregroundColor(Color.gray)
-                                        Spacer()
-                                    } else {
-                                        ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
-                                            Button { } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
-                                                    .onTapGesture {
-                                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                        model.selectedMeditation = meditation
-                                                        Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
-                                                        if meditation.type == .course  {
-                                                            withAnimation {
-                                                                viewRouter.currentPage = .middle
-                                                            }
-                                                        } else {
-                                                            viewRouter.currentPage = .play
-                                                        }
-                                                    }
-                                            }.buttonStyle(NeumorphicPress())
+                                Button {
+                                    Analytics.shared.log(event: .home_tapped_featured)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        model.selectedMeditation = model.featuredMeditation
+                                        if model.featuredMeditation?.type == .course {
+                                            viewRouter.currentPage = .middle
+                                        } else {
+                                            viewRouter.currentPage = .play
                                         }
                                     }
-                                    if !isRecent && model.favoritedMeditations.count == 1 {
-                                        Spacer()
-                                    } else if isRecent && gardenModel.recentMeditations.count == 1 {
-                                        Spacer()
+                                } label: {
+                                    Rectangle()
+                                        .fill(Color("darkWhite"))
+                                        .border(Clr.darkWhite)
+                                        .cornerRadius(25)
+                                        .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
+                                        .neoShadow()
+                                        .overlay(
+                                            HStack(alignment: .top) {
+                                                VStack(alignment: .leading) {
+                                                    Text("Featured")
+                                                        .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
+                                                        .foregroundColor(Clr.black1)
+                                                    Text("\(model.featuredMeditation?.title ?? "")")
+                                                        .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
+                                                        .foregroundColor(Clr.black1)
+                                                        .lineLimit(3)
+                                                        .minimumScaleFactor(0.05)
+                                                    if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
+                                                        Text("7 Day Course")
+                                                            .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
+                                                            .foregroundColor(Color.gray)
+                                                    }
+                                                    Spacer()
+                                                }
+                                                .frame(width: g.size.width * 0.65 * 0.5)
+                                                .position(x: g.size.width - g.size.width * 0.85 + 25, y: g.size.height * 0.21)
+                                                VStack(spacing: 0) {
+                                                    ZStack {
+                                                        Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
+                                                            .foregroundColor(Clr.brightGreen)
+                                                        Image(systemName: "play.fill")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: K.isPad() ? 50 : 26))
+                                                    }.offset(x: 20, y: K.isPad() ? 30 : 10)
+                                                        .padding([.top, .leading])
+                                                    (model.featuredMeditation?.img ?? Img.daisy3)
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: g.size.width * 0.80 * 0.5, height: g.size.height * 0.2)
+                                                        .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
+                                                }.padding([.top, .bottom, .trailing])
+                                            }).padding(.top, K.isSmall() ? 10 : 20)
+                                }.buttonStyle(NeumorphicPress())
+                                HStack {
+                                    VStack(spacing: 1) {
+                                        HStack {
+                                            Button {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                Analytics.shared.log(event: .home_tapped_recents)
+                                                withAnimation {
+                                                    isRecent = true
+                                                }
+                                            } label: {
+                                                Text("Recent")
+                                                    .foregroundColor(isRecent ? Clr.darkgreen : Clr.black2)
+                                                    .font(Font.mada(.regular, size: 20))
+                                            }
+                                            Button {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                Analytics.shared.log(event: .home_tapped_favorites)
+                                                withAnimation {
+                                                    isRecent = false
+                                                }
+                                            } label: {
+                                                Text("Favorites")
+                                                    .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
+                                                    .font(Font.mada(.regular, size: 20))
+                                            }
+                                        }
+                                        Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
+                                            .foregroundColor(Clr.darkgreen)
+                                            .offset(x: isRecent ? -42.0 : 33.0)
+                                            .animation(.default, value: isRecent)
                                     }
-                                }.frame(height: g.size.height * 0.25 + 15)
-                                    .padding([.leading, .trailing], g.size.width * 0.07)
-                            }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
-
-                            //MARK: - New Meds
+                                    Spacer()
+                                    if !UserDefaults.standard.bool(forKey: "isPro") {
+                                        Button { } label: {
+                                            HStack {
+                                                Text("💚 Go Pro!")
+                                                    .font(Font.mada(.semiBold, size: 14))
+                                                    .foregroundColor(Clr.darkgreen)
+                                                    .font(.footnote)
+                                            }
+                                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+                                            .padding(8)
+                                            .background(Clr.darkWhite)
+                                            .cornerRadius(25)
+                                            .onTapGesture {
+                                                Analytics.shared.log(event: .home_tapped_pro)
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                withAnimation {
+                                                    fromPage = "home"
+                                                    viewRouter.currentPage = .pricing
+                                                }
+                                            }
+                                        }
+                                        .buttonStyle(NeumorphicPress())
+                                    }
+                                }.frame(width: abs(g.size.width * 0.825), alignment: .leading)
+                                    .padding(.top, 20)
+                                
+                                ScrollView(.horizontal, showsIndicators: false, content: {
+                                    HStack(spacing: 15) {
+                                        if model.favoritedMeditations.isEmpty && !isRecent {
+                                            Spacer()
+                                            Text("No Favorited Meditations")
+                                                .font(Font.mada(.semiBold, size: 20))
+                                                .foregroundColor(Color.gray)
+                                            Spacer()
+                                        } else if gardenModel.recentMeditations.isEmpty && isRecent {
+                                            Spacer()
+                                            Text("No Recent Meditations")
+                                                .font(Font.mada(.semiBold, size: 20))
+                                                .foregroundColor(Color.gray)
+                                            Spacer()
+                                        } else {
+                                            ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
+                                                Button { } label: {
+                                                    HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                                        .onTapGesture {
+                                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                            model.selectedMeditation = meditation
+                                                            Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
+                                                            if meditation.type == .course  {
+                                                                withAnimation {
+                                                                    viewRouter.currentPage = .middle
+                                                                }
+                                                            } else {
+                                                                viewRouter.currentPage = .play
+                                                            }
+                                                        }
+                                                }.buttonStyle(NeumorphicPress())
+                                            }
+                                        }
+                                        if !isRecent && model.favoritedMeditations.count == 1 {
+                                            Spacer()
+                                        } else if isRecent && gardenModel.recentMeditations.count == 1 {
+                                            Spacer()
+                                        }
+                                    }.frame(height: g.size.height * 0.25 + 15)
+                                        .padding([.leading, .trailing], g.size.width * 0.07)
+                                }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
+                                
+                                //MARK: - New Meds
                                 Text("☀️ New Meditations")
                                     .font(Font.mada(.semiBold, size: 28))
                                     .foregroundColor(Clr.black2)
                                     .padding(.top)
                                     .frame(width: abs(g.size.width * 0.825), alignment: .leading)
-                            VStack {
-                           
-                                RecRow(width: UIScreen.main.bounds.width, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, isWeekly: true)
-                                    .padding(.bottom)
-                                    .offset(y: -10)
-                                ScrollView(.horizontal) {
-                                    HStack {
-                                        ForEach(model.newMeditations, id: \.self) { meditation in
-                                            Button {
-
-                                            } label: {
-                                                HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
-                                                    .onTapGesture {
-                                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                        model.selectedMeditation = meditation
-                                                        Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
-                                                        if meditation.type == .course  {
-                                                            withAnimation {
-                                                                viewRouter.currentPage = .middle
+                                VStack {
+                                    RecRow(width: UIScreen.main.bounds.width, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, isWeekly: true)
+                                        .padding(.bottom)
+                                        .offset(y: -10)
+                                    ScrollView(.horizontal) {
+                                        HStack {
+                                            ForEach(model.newMeditations, id: \.self) { meditation in
+                                                Button {} label: {
+                                                    HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                                        .onTapGesture {
+                                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                            model.selectedMeditation = meditation
+                                                            Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
+                                                            if meditation.type == .course  {
+                                                                withAnimation {
+                                                                    viewRouter.currentPage = .middle
+                                                                }
+                                                            } else {
+                                                                viewRouter.currentPage = .play
                                                             }
-                                                        } else {
-                                                            viewRouter.currentPage = .play
                                                         }
-                                                    }
-                                            }.buttonStyle(NeumorphicPress())
-                                        }
-                                    }.frame(height: g.size.height * 0.25 + 15)
-                                        .padding([.leading, .trailing], g.size.width * 0.07)
-                                }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
-                                .offset(y: -15)
-                            }
-                            if #available(iOS 14.0, *) {
-                                Button { } label: {
-                                    HStack {
-                                        Text("See All Meditations")
-                                            .foregroundColor(.black)
-                                            .font(Font.mada(.semiBold, size: 20))
-                                    }.frame(width: g.size.width * 0.85, height: g.size.height/14)
-                                    .background(Clr.yellow)
-                                    .cornerRadius(25)
-                                    .onTapGesture {
-                                        withAnimation {
-                                            Analytics.shared.log(event: .home_tapped_categories)
-                                            let impact = UIImpactFeedbackGenerator(style: .light)
-                                            impact.impactOccurred()
-                                            viewRouter.currentPage = .categories
-                                        }
-                                    }
-                                }.padding(.top, 10)
-                                    .buttonStyle(NeumorphicPress())
-                            } else {
-                                // Fallback on earlier versions
-
-                            }
-                            Spacer()
-                            HStack(spacing: 15) {
-                                Text("\(numberOfMeds)")
-                                    .font(Font.mada(.bold, size: 36))
-                                    .foregroundColor(Clr.black1)
-                                Text("people are meditating \nright now")
-                                    .font(Font.mada(.regular, size: 22))
-                                    .minimumScaleFactor(0.05)
-                                    .lineLimit(2)
-                                    .foregroundColor(.gray)
-                            }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
-                            .padding(30)
-                        }.padding(.top, 30)
-                    }.padding(.top, 1)
+                                                }.buttonStyle(NeumorphicPress())
+                                            }
+                                        }.frame(height: g.size.height * 0.25 + 15)
+                                            .padding([.leading, .trailing], g.size.width * 0.07)
+                                    }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
+                                        .offset(y: -15)
+                                }
+                                if #available(iOS 14.0, *) {
+                                    Button { } label: {
+                                        HStack {
+                                            Text("See All Meditations")
+                                                .foregroundColor(.black)
+                                                .font(Font.mada(.semiBold, size: 20))
+                                        }.frame(width: g.size.width * 0.85, height: g.size.height/14)
+                                            .background(Clr.yellow)
+                                            .cornerRadius(25)
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    Analytics.shared.log(event: .home_tapped_categories)
+                                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                                    impact.impactOccurred()
+                                                    viewRouter.currentPage = .categories
+                                                }
+                                            }
+                                    }.padding(.top, 10)
+                                        .buttonStyle(NeumorphicPress())
+                                } else {
+                                    // Fallback on earlier versions
+                                    
+                                }
+                                Spacer()
+                                HStack(spacing: 15) {
+                                    Text("\(numberOfMeds)")
+                                        .font(Font.mada(.bold, size: 36))
+                                        .foregroundColor(Clr.black1)
+                                    Text("people are meditating \nright now")
+                                        .font(Font.mada(.regular, size: 22))
+                                        .minimumScaleFactor(0.05)
+                                        .lineLimit(2)
+                                        .foregroundColor(.gray)
+                                }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
+                                    .padding(30)
+                            }.padding(.bottom, height * 0.15)
+                        }.frame(height: height)
+                        .offset(y: -height * 0.33)
+                    }
                     if showModal || showUpdateModal {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
-                        BonusModal(bonusModel: bonusModel, shown: $showModal, coins: $coins)
-                            .offset(y: showModal ? 0 : g.size.height)
-                            .edgesIgnoringSafeArea(.top)
-                            .animation(.default, value: showModal)
-                        NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
-                            .offset(y: showUpdateModal ? 0 : g.size.height)
-                            .animation(.default, value: showUpdateModal)
-                    }
+                    BonusModal(bonusModel: bonusModel, shown: $showModal, coins: $coins)
+                        .offset(y: showModal ? 0 : g.size.height)
+                        .edgesIgnoringSafeArea(.top)
+                        .animation(.default, value: showModal)
+                    NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
+                        .offset(y: showUpdateModal ? 0 : g.size.height)
+                        .animation(.default, value: showUpdateModal)
                 }
-                .transition(.opacity)
-                .navigationBarItems(
-                    leading: Img.topBranch.padding(.leading, -20),
-                    trailing: HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 22))
-                            .padding([.top,.bottom, .trailing])
-                            .onTapGesture {
-                                Analytics.shared.log(event: .home_tapped_search)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                showSearch = true
-                            }
-                }
-            )
-                .navigationBarTitle("", displayMode: ios14 ? .inline : .automatic)
+            }
+            .transition(.opacity)
+            .navigationBarTitle("", displayMode: ios14 ? .inline : .automatic)
             .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })
@@ -405,64 +416,64 @@ struct Home: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
-               { _ in
-                   runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
-               }
+        { _ in
+            runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
+        }
         .animation(.easeOut(duration: 0.1))
-         .onAppear {
-             if #available(iOS 15.0, *) {
-                 ios14 = false
-             }
-             if launchedApp {
-                 gardenModel.updateSelf()
-                 launchedApp = false
-                 var num = UserDefaults.standard.integer(forKey: "shownFive")
-                 num += 1
-                 UserDefaults.standard.setValue(num, forKey: "shownFive")
-                 model.getFeaturedMeditation()
-             }
-                if userWentPro {
-                    wentPro = userWentPro
-                    userWentPro = false
-                }
-                numberOfMeds += Int.random(in: -3 ... 3)
-             //handle update modal or deeplink
-             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                 if UserDefaults.standard.bool(forKey: "introLink") {
-                     model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
-                     viewRouter.currentPage = .middle
-                     UserDefaults.standard.setValue(false, forKey: "introLink")
-                 } else if UserDefaults.standard.bool(forKey: "happinessLink") {
-                     model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 14})
-                     viewRouter.currentPage = .middle
-                     UserDefaults.standard.setValue(false, forKey: "happinessLink")
-                 }
-
-                 if UserDefaults.standard.bool(forKey: "christmasLink") {
-                     viewRouter.currentPage = .shop
-                 } else {
-                     showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
-                 }
-             }
-
-
-             coins = userCoins
-//             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
+        .onAppear {
+            if #available(iOS 15.0, *) {
+                ios14 = false
             }
-            .onAppearAnalytics(event: .screen_load_home)
+            if launchedApp {
+                gardenModel.updateSelf()
+                launchedApp = false
+                var num = UserDefaults.standard.integer(forKey: "shownFive")
+                num += 1
+                UserDefaults.standard.setValue(num, forKey: "shownFive")
+                model.getFeaturedMeditation()
+            }
+            if userWentPro {
+                wentPro = userWentPro
+                userWentPro = false
+            }
+            numberOfMeds += Int.random(in: -3 ... 3)
+            //handle update modal or deeplink
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                if UserDefaults.standard.bool(forKey: "introLink") {
+                    model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
+                    viewRouter.currentPage = .middle
+                    UserDefaults.standard.setValue(false, forKey: "introLink")
+                } else if UserDefaults.standard.bool(forKey: "happinessLink") {
+                    model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 14})
+                    viewRouter.currentPage = .middle
+                    UserDefaults.standard.setValue(false, forKey: "happinessLink")
+                }
+                
+                if UserDefaults.standard.bool(forKey: "christmasLink") {
+                    viewRouter.currentPage = .shop
+                } else {
+                    showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
+                }
+            }
+            
+            
+            coins = userCoins
+            //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
+        }
+        .onAppearAnalytics(event: .screen_load_home)
     }
     func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {
-            counter.wrappedValue = start
-
-            Timer.scheduledTimer(withTimeInterval: speed, repeats: true) { timer in
-                counter.wrappedValue += 1
-                if counter.wrappedValue == end {
-                    counter.wrappedValue = 0
-                    timer.invalidate()
-                }
+        counter.wrappedValue = start
+        
+        Timer.scheduledTimer(withTimeInterval: speed, repeats: true) { timer in
+            counter.wrappedValue += 1
+            if counter.wrappedValue == end {
+                counter.wrappedValue = 0
+                timer.invalidate()
             }
         }
-
+    }
+    
 }
 
 struct Home_Previews: PreviewProvider {
@@ -477,10 +488,10 @@ struct Shake: GeometryEffect {
     var amount: CGFloat = 10
     var shakesPerUnit = 3
     var animatableData: CGFloat
-
+    
     func effectValue(size: CGSize) -> ProjectionTransform {
         ProjectionTransform(CGAffineTransform(translationX:
-            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
-            y: 0))
+                                                amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
+                                              y: 0))
     }
 }

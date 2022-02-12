@@ -94,6 +94,11 @@ class UserViewModel: ObservableObject {
                 })
                     self.ownedPlants += badgePlants
             }
+            
+            if let name = UserDefaults.standard.string(forKey: "name") {
+                self.name = name
+            }
+            
             if let joinDate = UserDefaults.standard.string(forKey: "joinDate") {
                 self.joinDate = joinDate
             }
