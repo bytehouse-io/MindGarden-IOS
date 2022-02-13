@@ -54,19 +54,20 @@ struct ContentView: View {
                     GeometryReader { geometry in
                         ZStack {
                             Clr.darkWhite.edgesIgnoringSafeArea(.all)
-//                            Rectangle()
-//                                .fill(Color.gray)
-//                                .zIndex(100)
-//                                .frame(width: geometry.size.width, height: (hasConnection ? 0 : 60))
-//                                .overlay(
-//                                    VStack {
-//                                        Spacer()
-//                                        Text("You're offline. Data will not be saved.")
-//                                            .font(Font.mada(.medium, size: 14))
-//                                            .foregroundColor(.white)
-//                                    }.frame(height: (hasConnection ? 0 : 50))
-//                                ).offset(y: -15)
-//                                .position(x: geometry.size.width/2, y: 0)
+                            Rectangle()
+                                .fill(Color.gray)
+                                .zIndex(100)
+                                .frame(width: geometry.size.width, height: (hasConnection ? 0 : 60))
+                                .overlay(
+                                    VStack {
+                                        Spacer()
+                                        Text("You're offline. Data will not be saved.")
+                                            .font(Font.mada(.medium, size: 14))
+                                            .foregroundColor(.white)
+                                            .opacity(hasConnection ? 0 : 1)
+                                    }.frame(height: (hasConnection ? 0 : 50))
+                                ).offset(y: -15)
+                                .position(x: geometry.size.width/2, y: 0)
                             VStack {
                                 if #available(iOS 14.0, *) {
                                     switch viewRouter.currentPage {
@@ -197,6 +198,7 @@ struct ContentView: View {
                                         }.cornerRadius(45.0)
                                             .padding()
                                             .oldShadow()
+    
 //                                    ZStack {
 //                                        Img.lilyValley3
 //                                            .resizable()
@@ -220,9 +222,9 @@ struct ContentView: View {
 //                                        .zIndex(-100)
                                 }
                             }.edgesIgnoringSafeArea(.all)
-                            if viewRouter.currentPage != .play && viewRouter.currentPage != .authentication
-                                && viewRouter.currentPage != .notification && viewRouter.currentPage != .onboarding
-                                && viewRouter.currentPage != .experience && viewRouter.currentPage != .name  && viewRouter.currentPage != .pricing  && viewRouter.currentPage != .reason && viewRouter.currentPage != .review {
+                            
+                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .profile || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
+                            ) {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
                                     Rectangle()
@@ -244,8 +246,9 @@ struct ContentView: View {
                                 }
                                 ZStack {
                                     ///Ashvin : Pass the required flag and change offset while animation
-                                    PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, isOnboarding: isOnboarding, width: geometry.size.width)
-                                        .offset(y: showPopUp ? (showPopUpOption ? (geometry.size.height/2.01 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (PopUpIn ? (geometry.size.height/1.88 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (geometry.size.height/1.75 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)))) : geometry.size.height/2 + 60)
+                                        PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, isOnboarding: isOnboarding, width: geometry.size.width)
+                                            .offset(y: showPopUp ? (showPopUpOption ? (geometry.size.height/2.01 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (PopUpIn ? (geometry.size.height/1.88 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (geometry.size.height/1.75 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)))) : geometry.size.height/2 + 60)
+                                    
 
                                     //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                                     //onboarding userdefault should be equal to signedUp because we just completed it.
@@ -365,7 +368,6 @@ struct ContentView: View {
             viewRouter.currentPage = .pricing}
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.meditate))
         { _ in
-            print("f")
             if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
                 meditationModel.selectedMeditation = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()[0]
             } else {

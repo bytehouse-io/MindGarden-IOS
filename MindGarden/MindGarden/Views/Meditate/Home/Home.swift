@@ -194,7 +194,7 @@ struct Home: View {
                                                     }
                                                     Spacer()
                                                 }
-                                                .frame(width: g.size.width * 0.65 * 0.5)
+                                                .frame(width: g.size.width * 0.65 * 0.525)
                                                 .position(x: g.size.width - g.size.width * 0.85 + 25, y: g.size.height * 0.21)
                                                 VStack(spacing: 0) {
                                                     ZStack {

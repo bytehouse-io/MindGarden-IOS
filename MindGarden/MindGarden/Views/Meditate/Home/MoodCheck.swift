@@ -95,10 +95,14 @@ struct MoodCheck: View {
                             .font(Font.mada(.bold, size: K.isPad() ? 40 : 24))
                         .foregroundColor(Clr.black1)
                         .frame(width: g.size.width * 0.8, alignment: .center)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                         HStack {
                             Text("Recommendations ")
                                     .font(Font.mada(.semiBold, size: K.isPad() ? 36 : 20))
                                     .foregroundColor(Clr.black1)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
                             Toggle("", isOn: $notifOn)
                                 .onChange(of: notifOn) { val in
                                     UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
@@ -129,7 +133,7 @@ struct MoodCheck: View {
                             UserDefaults.standard.setValue(num, forKey: "numMoods")
                             if moodSelected != .none {
                                 if notifOn {
-                                    showRecs = true
+                                    showRecs = UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? false : true
                                 } else {
                                     showRecs = false
                                 }
@@ -141,6 +145,7 @@ struct MoodCheck: View {
                                 gardenModel.save(key: "moods", saveValue: moodSelected.title)
                             }
                         }, moodSelected: moodSelected,showRecs: $showRecs).padding(.bottom)
+    
                         Spacer()
                         if K.isPad() {
                             Spacer()
@@ -262,6 +267,8 @@ struct DoneCancel: View {
                 Text("Cancel")
                     .foregroundColor(.white)
                     .font(Font.mada(.semiBold, size: 22))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
             }
             .frame(width: width * 0.3, height: min(height/6, 40))
             .background(Color.gray)

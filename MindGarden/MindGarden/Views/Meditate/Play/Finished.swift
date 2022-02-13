@@ -283,25 +283,25 @@ struct Finished: View {
                     }
                 }
                 //unlock christmas tree
-                var dateComponents = DateComponents()
-                dateComponents.month = 12
-                dateComponents.day = 20
-                dateComponents.year = 2021
-                let userCalendar = Calendar(identifier: .gregorian)
-                let dec20 = userCalendar.date(from: dateComponents)
-                var dateComponents2 = DateComponents()
-                dateComponents2.month = 1
-                dateComponents2.day = 5
-                dateComponents2.year = 2022
-                let jan5 = userCalendar.date(from: dateComponents2)
-
-                if Date.isBetween(dec20!, and: jan5!) && !UserDefaults.standard.bool(forKey: "christmas") {
-                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-                        p.title == "Christmas Tree"
-                    })
-                    userModel.buyPlant(unlockedStrawberry: true)
-                    UserDefaults.standard.setValue(true, forKey: "christmas")
-                }
+//                var dateComponents = DateComponents()
+//                dateComponents.month = 12
+//                dateComponents.day = 20
+//                dateComponents.year = 2021
+//                let userCalendar = Calendar(identifier: .gregorian)
+//                let dec20 = userCalendar.date(from: dateComponents)
+//                var dateComponents2 = DateComponents()
+//                dateComponents2.month = 1
+//                dateComponents2.day = 5
+//                dateComponents2.year = 2022
+//                let jan5 = userCalendar.date(from: dateComponents2)
+//
+//                if Date.isBetween(dec20!, and: jan5!) && !UserDefaults.standard.bool(forKey: "christmas") {
+//                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+//                        p.title == "Christmas Tree"
+//                    })
+//                    userModel.buyPlant(unlockedStrawberry: true)
+//                    UserDefaults.standard.setValue(true, forKey: "christmas")
+//                }
 
                 //num times med
                 var num = UserDefaults.standard.integer(forKey: "numMeds")

@@ -93,8 +93,6 @@ struct Gratitude: View, KeyboardReadable {
                         .frame(width: g.size.width * 0.85)
                         .foregroundColor(Clr.black1)
                         .offset(y: -10)
-                        .lineLimit(1)
-//                        .minimumScaleFactor(0.5)
                         .padding(.top)
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
                         var num = UserDefaults.standard.integer(forKey: "numGrads")

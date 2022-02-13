@@ -294,7 +294,7 @@ struct ProfileScene: View {
                                                 .foregroundColor(Clr.black2)
                                                 .multilineTextAlignment(.leading)
                                                 .offset(y: -24)
-                                                .lineLimit(1)
+                                                .lineLimit(3)
                                                 .minimumScaleFactor(0.5)
                                             ZStack {
                                                 Rectangle()

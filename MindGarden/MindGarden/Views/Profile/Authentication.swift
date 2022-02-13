@@ -130,6 +130,8 @@ struct Authentication: View {
                                     Text("Sign me up for the MindGarden Newsletter 🗞")
                                         .font(Font.mada(.medium, size: 18))
                                         .foregroundColor(Clr.black2)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.5)
                                 }.frame(height: 60)
                                     .padding(.horizontal, 20)
                             }

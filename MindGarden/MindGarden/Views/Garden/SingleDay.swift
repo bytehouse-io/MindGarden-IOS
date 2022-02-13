@@ -115,6 +115,8 @@ struct SingleDay: View {
                             .foregroundColor(Clr.black2)
                             .font(Font.mada(.semiBold, size: 26))
                             .padding(.leading, g.size.width * 0.1)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                         HStack(spacing: 15) {
                             VStack(spacing: 25) {
                                 StatBox(label: "Total Mins", img: Img.iconTotalTime, value: totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)")
@@ -233,6 +235,8 @@ struct SingleDay: View {
                     .minimumScaleFactor(0.5)
                 Text("Minutes Meditated: \(minutesMeditated/60 == 0 && minutesMeditated != 0 ? "0.5" : "\(minutesMeditated/60)")")
                     .font(Font.mada(.semiBold, size: 18))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
             }.padding(.top, 60)
             .foregroundColor(.white)
         }
