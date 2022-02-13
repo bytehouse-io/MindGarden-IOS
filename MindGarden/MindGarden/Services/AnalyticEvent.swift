@@ -228,6 +228,7 @@ enum AnalyticEvent {
     case profile_tapped_rate //
     case profile_tapped_create_account //
     case profile_tapped_add_widget //
+    case profile_tapped_delete_account // 
     //MARK: - Categories
     case screen_load_categories //
     case categories_tapped_unguided //
@@ -564,6 +565,7 @@ extension AnalyticEvent {
         case .profile_tapped_rate: return "profile_tapped_rate"
         case .profile_tapped_create_account: return "profile_tapped_create_account"
         case .profile_tapped_add_widget: return "profile_tapped_add_widget"
+        case .profile_tapped_delete_account: return "profile_tapped_delete_account"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"

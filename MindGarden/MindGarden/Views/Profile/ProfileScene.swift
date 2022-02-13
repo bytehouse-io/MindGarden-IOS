@@ -43,6 +43,7 @@ struct ProfileScene: View {
     @State private var showSpinner = false
     @State private var showMindful = false
     @State private var showWidget = false
+    @State private var deleteAccount = false
     @Environment(\.sizeCategory) var sizeCategory
 
     var dateFormatter: DateFormatter = {
@@ -195,13 +196,20 @@ struct ProfileScene: View {
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             Divider()
-                                                            Row(title: "Add Widget", img: Image(systemName: "gear"), action: {
+                                                            Row(title: "Add Widget", img: Image(systemName: "gearshape.fill"), action: {
                                                                 Analytics.shared.log(event: .profile_tapped_add_widget)
                                                                 showWidget = true
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
+                                                            if let _ = Auth.auth().currentUser?.email {
+                                                                Divider()
+                                                                Row(title: "Delete Account", img: Image(systemName: "trash"), action: {
+                                                                    deleteAccount = true
+                                                                }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                    .frame(height: 40)
+                                                            }
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: UserDefaults.standard.bool(forKey: "isPro") ? 200 : 240)
+                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 200 : 240) + (Auth.auth().currentUser?.email != nil ? 65 : 0))
 
                                                     Text("I want to help")
                                                         .font(Font.mada(.regular, size: 20))
@@ -483,6 +491,21 @@ struct ProfileScene: View {
                     }
                     .alert(isPresented: $restorePurchase) {
                         Alert(title: Text("Success!"), message: Text("You've restored MindGarden Pro"))
+                    }
+                    .alert(isPresented: $deleteAccount) {
+                        Alert(
+                            title: Text("Are you sure?"),
+                            message: Text("All data will be deleted"),
+                            primaryButton: .destructive(Text("Destructive"), action: {
+                                Analytics.shared.log(event: .profile_tapped_delete_account)
+                                profileModel.signOut()
+                                // if user signs out -> send them to meditate page
+                                withAnimation {
+                                    viewRouter.currentPage = .onboarding
+                                }
+                            }),
+                            secondaryButton: .default(Text("Cancel"))
+                        )
                     }
                     .onAppearAnalytics(event: .screen_load_profile)
                 } else {
