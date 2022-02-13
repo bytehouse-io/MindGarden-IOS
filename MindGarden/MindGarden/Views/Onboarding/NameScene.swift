@@ -50,6 +50,8 @@ struct NameScene: View {
                                         .foregroundColor(Clr.darkgreen)
                                         .multilineTextAlignment(.center)
                                         .frame(width: width * 0.6, height: 60)
+                                        .minimumScaleFactor(0.05)
+                                        .lineLimit(1)
                                     LegacyTextField(text: $name, isFirstResponder: $isFirstResponder)
                                         .padding(15)
                                         .background(

@@ -73,7 +73,7 @@ class MeditationViewModel: ObservableObject {
 
     func getFeaturedMeditation()  {
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
         if Calendar.current.component( .hour, from:Date() ) < 16 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
             med.id != 27 && med.id != 54 && med.id != 39 }
@@ -117,7 +117,7 @@ class MeditationViewModel: ObservableObject {
 
     private func setFeaturedReason() {
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56 && med.type != .weekly }
         if Calendar.current.component( .hour, from:Date() ) < 18 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
             med.id != 27 && med.id != 54 && med.id != 39 }
@@ -165,7 +165,7 @@ class MeditationViewModel: ObservableObject {
     }
 
     private func getRecommendedMeds() {
-        var filteredMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 && med.id != 45 }
+        var filteredMeds = Meditation.allMeditations.filter { med in med.type != .lesson && med.id != 6 && med.id != 14 && med.id != 22 && med.id != 45 && med.type != .weekly }
         if Calendar.current.component( .hour, from:Date() ) < 16 {
             filteredMeds = filteredMeds.filter { med in // day time meds only
                 med.id != 27 && med.id != 54 && med.id != 39 && med.id != 55 && med.id != 56 }
@@ -182,9 +182,9 @@ class MeditationViewModel: ObservableObject {
         }
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 22 }
+                filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 22 && med.type != .weekly}
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 14 && med.id != 22 }
+                filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 14 && med.id != 22 && med.type != .weekly }
             }
         }
         let randomInt = Int.random(in: 0..<filteredMeds.count)

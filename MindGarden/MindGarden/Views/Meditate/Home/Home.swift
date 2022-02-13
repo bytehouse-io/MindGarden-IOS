@@ -30,6 +30,7 @@ struct Home: View {
     @State private var coins = 0
     @State private var attempts = 0
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
 
     init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -48,8 +49,9 @@ struct Home: View {
                     ZStack {
                         Img.yellowBubble
                             .resizable()
-                            .frame(width: width, height: height * 0.4)
+                            .frame(width: width + 25, height: height * 0.4)
                             .neoShadow()
+                            .offset(x: -10)
                             HStack {
                                 Img.topBranch.offset(x: 40,  y: height * -0.1)
                                 Spacer()
@@ -58,10 +60,11 @@ struct Home: View {
                                         .foregroundColor(Clr.darkgreen)
                                         .font(.system(size: 22))
                                         .onTapGesture {
+                                            print("test")
                                             Analytics.shared.log(event: .home_tapped_search)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             showSearch = true
-                                        }.offset(x: 15, y: -25)
+                                        }.offset(x: 30, y: -25)
                                     HStack {
                                         Spacer()
                                         VStack(alignment: .trailing) {
@@ -70,6 +73,8 @@ struct Home: View {
                                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                                 .fontWeight(.bold)
                                                 .padding(.trailing, 20)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
                                             HStack {
                                                 Img.newStar
                                                     .resizable()
@@ -95,12 +100,9 @@ struct Home: View {
                                         }
                                     }.offset(x: -width * 0.25, y: -10)
                                 }.frame(width: width * 0.8)
-                                
                             }
                         }.frame(width: width)
-                        .offset(y: -height * 0.225)
-
-
+                        .offset(y: -height * 0.1)
                         //MARK: - scroll view
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack {
@@ -132,6 +134,8 @@ struct Home: View {
                                                 .font(Font.mada(.regular, size: 14))
                                                 .foregroundColor(.black)
                                                 .font(.footnote)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
                                         }
                                         .frame(width: g.size.width * 0.3, height: 20)
                                         .padding(8)
@@ -153,6 +157,8 @@ struct Home: View {
                                                 .font(Font.mada(.regular, size: 14))
                                                 .foregroundColor(.black)
                                                 .font(.footnote)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
                                         }
                                         .frame(width: g.size.width * 0.3, height: 20)
                                         .padding(8)
@@ -160,24 +166,13 @@ struct Home: View {
                                         .cornerRadius(20)
                                     }
                                     .buttonStyle(NeumorphicPress())
-                                }
-                                Button {
-                                    Analytics.shared.log(event: .home_tapped_featured)
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        model.selectedMeditation = model.featuredMeditation
-                                        if model.featuredMeditation?.type == .course {
-                                            viewRouter.currentPage = .middle
-                                        } else {
-                                            viewRouter.currentPage = .play
-                                        }
-                                    }
-                                } label: {
+                                }.padding(.top, 15)
+                                Button {} label: {
                                     Rectangle()
                                         .fill(Color("darkWhite"))
                                         .border(Clr.darkWhite)
                                         .cornerRadius(25)
-                                        .frame(width: g.size.width * 0.85, height: g.size.height * 0.3, alignment: .center)
+                                        .frame(width: g.size.width * 0.85, height: g.size.height * 0.275, alignment: .center)
                                         .neoShadow()
                                         .overlay(
                                             HStack(alignment: .top) {
@@ -185,6 +180,8 @@ struct Home: View {
                                                     Text("Featured")
                                                         .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
                                                         .foregroundColor(Clr.black1)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.05)
                                                     Text("\(model.featuredMeditation?.title ?? "")")
                                                         .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
                                                         .foregroundColor(Clr.black1)
@@ -206,15 +203,27 @@ struct Home: View {
                                                         Image(systemName: "play.fill")
                                                             .foregroundColor(.white)
                                                             .font(.system(size: K.isPad() ? 50 : 26))
-                                                    }.offset(x: 20, y: K.isPad() ? 30 : 10)
+                                                    }.offset(x: 35, y: K.isPad() ? 45 : 25)
                                                         .padding([.top, .leading])
                                                     (model.featuredMeditation?.img ?? Img.daisy3)
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .frame(width: g.size.width * 0.80 * 0.5, height: g.size.height * 0.2)
-                                                        .offset(x: K.isPad() ? -150 : -45, y: K.isPad() ? -40 : -25)
+                                                        .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
                                                 }.padding([.top, .bottom, .trailing])
-                                            }).padding(.top, K.isSmall() ? 10 : 20)
+                                            }.onTapGesture {
+                                                Analytics.shared.log(event: .home_tapped_featured)
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                withAnimation {
+                                                    model.selectedMeditation = model.featuredMeditation
+                                                    if model.featuredMeditation?.type == .course {
+                                                        viewRouter.currentPage = .middle
+                                                    } else {
+                                                        viewRouter.currentPage = .play
+                                                    }
+                                                }
+                                            }
+                                        ).padding(.top, K.isSmall() ? 10 : 20)
                                 }.buttonStyle(NeumorphicPress())
                                 HStack {
                                     VStack(spacing: 1) {
@@ -228,7 +237,7 @@ struct Home: View {
                                             } label: {
                                                 Text("Recent")
                                                     .foregroundColor(isRecent ? Clr.darkgreen : Clr.black2)
-                                                    .font(Font.mada(.regular, size: 20))
+                                                    .font(Font.mada(.regular, size:  sizeCategory > .large ? 14 : 20))
                                             }
                                             Button {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -239,7 +248,7 @@ struct Home: View {
                                             } label: {
                                                 Text("Favorites")
                                                     .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
-                                                    .font(Font.mada(.regular, size: 20))
+                                                    .font(Font.mada(.regular, size: sizeCategory > .large ? 14 : 20))
                                             }
                                         }
                                         Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
@@ -255,6 +264,8 @@ struct Home: View {
                                                     .font(Font.mada(.semiBold, size: 14))
                                                     .foregroundColor(Clr.darkgreen)
                                                     .font(.footnote)
+                                                    .lineLimit(1)
+                                                    .minimumScaleFactor(0.05)
                                             }
                                             .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
                                             .padding(8)
@@ -291,7 +302,7 @@ struct Home: View {
                                         } else {
                                             ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                                 Button { } label: {
-                                                    HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                                    HomeSquare(width: g.size.width, height: g.size.height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                                         .onTapGesture {
                                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                             model.selectedMeditation = meditation
@@ -312,9 +323,10 @@ struct Home: View {
                                         } else if isRecent && gardenModel.recentMeditations.count == 1 {
                                             Spacer()
                                         }
-                                    }.frame(height: g.size.height * 0.25 + 15)
+                                    }.frame(height: g.size.height * 0.2 + 15)
                                         .padding([.leading, .trailing], g.size.width * 0.07)
-                                }).frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
+                                }).frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
+                                .padding(.top, 5)
                                 
                                 //MARK: - New Meds
                                 Text("☀️ New Meditations")
@@ -330,7 +342,7 @@ struct Home: View {
                                         HStack {
                                             ForEach(model.newMeditations, id: \.self) { meditation in
                                                 Button {} label: {
-                                                    HomeSquare(width: g.size.width, height: g.size.height, img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                                    HomeSquare(width: g.size.width, height: g.size.height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                                         .onTapGesture {
                                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                             model.selectedMeditation = meditation
@@ -345,9 +357,9 @@ struct Home: View {
                                                         }
                                                 }.buttonStyle(NeumorphicPress())
                                             }
-                                        }.frame(height: g.size.height * 0.25 + 15)
+                                        }.frame(height: g.size.height * 0.2 + 15)
                                             .padding([.leading, .trailing], g.size.width * 0.07)
-                                    }.frame(width: g.size.width, height: g.size.height * 0.25, alignment: .center)
+                                    }.frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
                                         .offset(y: -15)
                                 }
                                 if #available(iOS 14.0, *) {
@@ -385,9 +397,9 @@ struct Home: View {
                                         .foregroundColor(.gray)
                                 }.frame(width: g.size.width * 0.8, height: g.size.height * 0.06)
                                     .padding(30)
-                            }.padding(.bottom, height * 0.15)
+                            }.padding(.bottom, height * 0.23)
                         }.frame(height: height)
-                        .offset(y: -height * 0.33)
+                        .offset(y: -height * 0.23)
                     }
                     if showModal || showUpdateModal {
                         Color.black
@@ -405,7 +417,7 @@ struct Home: View {
                 }
             }
             .transition(.opacity)
-            .navigationBarTitle("", displayMode: ios14 ? .inline : .automatic)
+            .navigationBarHidden(true)
             .sheet(isPresented: $showPlantSelect, content: {
                 Store(isShop: false, showPlantSelect: $showPlantSelect)
             })

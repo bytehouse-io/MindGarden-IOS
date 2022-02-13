@@ -43,6 +43,7 @@ struct ProfileScene: View {
     @State private var showSpinner = false
     @State private var showMindful = false
     @State private var showWidget = false
+    @Environment(\.sizeCategory) var sizeCategory
 
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -291,9 +292,10 @@ struct ProfileScene: View {
                                             Text("🎁 Get & give 2 weeks free of MindGarden Pro for every referral (stackable)")
                                                 .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
                                                 .foregroundColor(Clr.black2)
-
                                                 .multilineTextAlignment(.leading)
                                                 .offset(y: -24)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.5)
                                             ZStack {
                                                 Rectangle()
                                                     .fill(Clr.darkWhite)
@@ -310,15 +312,21 @@ struct ProfileScene: View {
                                                             .font(Font.mada(.regular, size: 20))
                                                             .foregroundColor(Clr.black1)
                                                             .padding(.top, 3)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.5)
                                                     }.frame(width: abs(width - 150), alignment: .leading)
                                                         .frame(height: 25)
                                                     HStack {
                                                         Text("\(numRefs)")
                                                             .font(Font.mada(.bold, size: 40))
                                                             .foregroundColor(Clr.darkgreen)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.5)
                                                         Text("Referrals")
                                                             .font(Font.mada(.semiBold, size: 28))
                                                             .foregroundColor(Clr.black1)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.5)
                                                     }.frame(width: abs(width - 150), alignment: .leading)
                                                     HStack(alignment: .center, spacing: 10) {
                                                         Image(systemName: "calendar")
@@ -328,12 +336,16 @@ struct ProfileScene: View {
                                                             .font(Font.mada(.regular, size: 20))
                                                             .foregroundColor(Clr.black1)
                                                             .padding(.top, 3)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.5)
                                                     }.frame(width: abs(width - 150), alignment: .leading)
                                                         .frame(height: 25)
                                                     Text("\(refDate)")
                                                         .font(Font.mada(.bold, size: 24))
                                                         .foregroundColor(Clr.darkgreen)
                                                         .frame(width: abs(width - 150), alignment: .leading)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.5)
                                                 }.padding()
                                             }.frame(width: abs(width - 100), height: height/4)
                                                 .padding(.horizontal)
@@ -424,6 +436,8 @@ struct ProfileScene: View {
                                                         .neoShadow()
                                                         .overlay(
                                                             Text("Create an account").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.05)
                                                 }
                                             }
                                             .frame(width: abs(width - 100), height: 50, alignment: .center)
@@ -540,10 +554,14 @@ struct ProfileScene: View {
                                 .font(Font.mada(.regular, size: 18))
                                 .foregroundColor(.black)
                                 .padding(.top, 3)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
                         }.frame(width: width * 0.75, height: 25, alignment: .leading)
                         Text("\(profileModel.signUpDate)")
                             .font(Font.mada(.bold, size: 34))
                             .foregroundColor(Clr.darkgreen)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.05)
                     }
                     .frame(width: width * 0.65, height: 120, alignment: .leading)
                     .padding()
@@ -589,6 +607,8 @@ struct ProfileScene: View {
                             Text("Submit")
                                 .font(Font.mada(.semiBold, size: 16))
                                 .foregroundColor(.black)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
                         }
                     }.buttonStyle(NeumorphicPress())
                 }.frame(width: width * 0.75,height: 35)
@@ -673,6 +693,7 @@ struct ProfileScene: View {
                         Text(title)
                             .font(Font.mada(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 14 : 20))
                             .foregroundColor(title == "Unlock Pro" ? Clr.brightGreen : Clr.black1)
+                    
                         Spacer()
                         if title == "Notifications" {
                             Image(systemName: "chevron.right")
@@ -753,6 +774,8 @@ struct SelectionButton: View {
                         .font(Font.mada(.bold, size: 18))
                         .foregroundColor(selection == type ? Clr.brightGreen : Clr.black1)
                         .padding(.top, 10)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
             }.frame(height: 25, alignment: .center)
             Spacer()

@@ -38,6 +38,8 @@ struct ExperienceScene: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 20)
                                 .padding(.horizontal)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.05)
                             SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
@@ -111,10 +113,12 @@ struct ExperienceScene: View {
 
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.mada(.bold, size: 24))
+                            .font(Font.mada(.bold, size: 24, relativeTo: .subheadline))
                             .foregroundColor(selected == title ? colorScheme == .dark ? Color.black : Clr.black1 : Clr.black1)
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.05)
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)

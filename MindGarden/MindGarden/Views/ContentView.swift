@@ -8,6 +8,8 @@
 import SwiftUI
 import Combine
 import Lottie
+import Network
+
 
 struct ContentView: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -31,6 +33,7 @@ struct ContentView: View {
     var bonusModel: BonusViewModel
     var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
+    @State var hasConnection = false
 
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -51,7 +54,19 @@ struct ContentView: View {
                     GeometryReader { geometry in
                         ZStack {
                             Clr.darkWhite.edgesIgnoringSafeArea(.all)
-//
+//                            Rectangle()
+//                                .fill(Color.gray)
+//                                .zIndex(100)
+//                                .frame(width: geometry.size.width, height: (hasConnection ? 0 : 60))
+//                                .overlay(
+//                                    VStack {
+//                                        Spacer()
+//                                        Text("You're offline. Data will not be saved.")
+//                                            .font(Font.mada(.medium, size: 14))
+//                                            .foregroundColor(.white)
+//                                    }.frame(height: (hasConnection ? 0 : 50))
+//                                ).offset(y: -15)
+//                                .position(x: geometry.size.width/2, y: 0)
                             VStack {
                                 if #available(iOS 14.0, *) {
                                     switch viewRouter.currentPage {
@@ -325,6 +340,16 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            let monitor = NWPathMonitor()
+            monitor.pathUpdateHandler = { path in
+                if path.status == .satisfied {
+                    hasConnection  = true
+                } else {
+                    hasConnection = false
+                }
+            }
+            let queue = DispatchQueue(label: "Monitor")
+            monitor.start(queue: queue)
             animationAmount = 2
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 showSplash.toggle()

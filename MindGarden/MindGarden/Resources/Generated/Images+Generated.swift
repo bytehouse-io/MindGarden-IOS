@@ -178,6 +178,7 @@ public enum Img {
   public static let kidStudying = Image("kidStudying")
   public static let kiwi = Image("kiwi")
   public static let lemon = Image("lemon")
+  public static let lockIcon = Image("lockIcon")
   public static let magnifyingGlass = Image("magnifyingGlass")
   public static let mainIcon = Image("mainIcon")
   public static let moonFull = Image("moonFull")

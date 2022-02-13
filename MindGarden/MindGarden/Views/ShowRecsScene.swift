@@ -92,6 +92,7 @@ struct RecRow: View {
     var viewRouter: ViewRouter
     @Environment(\.presentationMode) var presentationMode
     let isWeekly: Bool
+    @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         Button {
@@ -114,8 +115,11 @@ struct RecRow: View {
                     Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
                         .foregroundColor(Color.gray)
                         .font(Font.mada(.semiBold, size: 16))
-                        .position(x: width * 0.325, y: 30)
+                        .position(x: sizeCategory > .large ? 150 : 125, y: sizeCategory > .large ? -10 : 30)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.05)
                         .frame(width: abs(width * 0.85), alignment: .leading)
+                
                 }
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
@@ -131,6 +135,8 @@ struct RecRow: View {
                                 Text(meditation.type.toString())
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                                 Circle()
                                     .fill(Clr.black2)
                                     .frame(width: 4, height: 4)
@@ -141,6 +147,8 @@ struct RecRow: View {
                                 Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                             }
                             HStack(spacing: 3) {
                                 Image(systemName: "person.fill")
@@ -150,6 +158,8 @@ struct RecRow: View {
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.regular, size: 12))
                                     .padding(.leading, 4)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                                 Text("\(meditation.instructor)")
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.semiBold, size: 12))
@@ -165,7 +175,7 @@ struct RecRow: View {
                                })
                                 .frame(width: width * 0.2, height: 90)
                                 .padding()
-                                .offset(x: -10)
+                                .offset(x: -10, y: isWeekly ? -10 : 0)
                         } else {
                             meditation.img
                                 .resizable()
@@ -176,6 +186,7 @@ struct RecRow: View {
                         }
 
                     }.frame(width: width * 0.85, alignment: .leading)
+                    .offset(y: isWeekly ? 10 : 0)
             }
         }.buttonStyle(BonusPress())
     }

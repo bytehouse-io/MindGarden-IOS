@@ -64,6 +64,8 @@ struct NotificationScene: View {
                                 .font(Font.mada(.semiBold, size: 28))
                                 .foregroundColor(Clr.black1)
                                 .multilineTextAlignment(.center)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
                                 .offset(y: -20)
                             Text("You're 3x more likely to stick with \nmeditation if you set a reminder.")
                                 .font(Font.mada(.bold, size: 20))
@@ -71,6 +73,8 @@ struct NotificationScene: View {
                                 .multilineTextAlignment(.center)
                                 .frame(height: 50)
                                 .offset(y: -20)
+                                .lineLimit(3)
+                                .minimumScaleFactor(0.05)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
@@ -86,6 +90,8 @@ struct NotificationScene: View {
                                             Text("\(displayedTime)")
                                                 .font(Font.mada(.bold, size: 40))
                                                 .foregroundColor(.black)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
                                             Image(systemName: "chevron.down")
                                                 .font(Font.title)
                                         }
@@ -105,6 +111,8 @@ struct NotificationScene: View {
                                             Text("\(frequency)")
                                                 .font(Font.mada(.bold, size: 26))
                                                 .foregroundColor(.black)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
                                             Spacer()
                                             Image(systemName: "chevron.down")
                                                 .font(Font.title)

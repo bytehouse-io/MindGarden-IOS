@@ -30,11 +30,14 @@ struct ReviewScene: View {
                         HStack {
                             Img.topBranch.padding(.leading, -20)
                             Spacer()
-                        }
+                        }.edgesIgnoringSafeArea(.all)
+                        Spacer()
                         Text("So, to recap \(UserDefaults.standard.string( forKey: "name") ?? "")")
                             .font(Font.mada(.bold, size: 30))
                             .foregroundColor(Clr.black2)
                             .padding()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.05)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -51,9 +54,13 @@ struct ReviewScene: View {
                                     Text("Your aim is to")
                                         .foregroundColor(.gray)
                                         .font(Font.mada(.regular, size: 20))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
                                     Text("\(aim.1)")
                                         .foregroundColor(Clr.black1)
                                         .font(Font.mada(.semiBold, size: 22))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
                         }
@@ -73,9 +80,13 @@ struct ReviewScene: View {
                                     Text("Your experience level")
                                         .foregroundColor(.gray)
                                         .font(Font.mada(.regular, size: 20))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
                                     Text("\(experience.1)")
                                         .foregroundColor(Clr.black1)
                                         .font(Font.mada(.semiBold, size: 22))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
                         }
@@ -96,6 +107,8 @@ struct ReviewScene: View {
                                     Text("Your notifcations are")
                                         .foregroundColor(.gray)
                                         .font(Font.mada(.regular, size: 20))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
                                     HStack {
                                         Text("\(notifications)")
                                             .foregroundColor(Clr.black1)
@@ -115,6 +128,8 @@ struct ReviewScene: View {
                                                         Text("Turn On")
                                                             .foregroundColor(.black)
                                                             .font(.caption)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.05)
                                                     )
                                             }
                                         }
@@ -122,6 +137,7 @@ struct ReviewScene: View {
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
                         }
+                        Spacer()
                         Button {
                             Analytics.shared.log(event: .review_tapped_tutorial)
                             let impact = UIImpactFeedbackGenerator(style: .light)
@@ -137,6 +153,8 @@ struct ReviewScene: View {
                                 Text("MindGarden tutorial  👉🏻")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.mada(.semiBold, size: 18))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                             }.frame(width: g.size.width * 0.75, height: g.size.height/16)
                             .background(Clr.yellow)
                             .cornerRadius(25)

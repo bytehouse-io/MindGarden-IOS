@@ -83,6 +83,8 @@ struct PlantTile: View {
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.trailing)
                                     .padding(.leading, 5)
+                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.05)
                             }.frame(width: width * 0.35 * 0.85, alignment: .leading)
                         }
                     } else {

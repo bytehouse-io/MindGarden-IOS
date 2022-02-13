@@ -23,6 +23,8 @@ struct Finished: View {
     @State private var reward = 0
     @State private var saveProgress = false
     @State private var hideConfetti = false
+    @Environment(\.sizeCategory) var sizeCategory
+
     var minsMed: Int {
         if model.selectedMeditation?.duration == -1 {
             return Int((model.secondsRemaining/60.0).rounded())
@@ -92,7 +94,7 @@ struct Finished: View {
                                                     .font(Font.mada(.bold, size: 24))
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)
-                                            }.offset(y: -15)
+                                            }.offset(y: sizeCategory > .large ? -60 : -15)
                                             HStack {
                                                 Button {
                                                 } label: {
@@ -102,6 +104,8 @@ struct Finished: View {
                                                             .foregroundColor(.black)
                                                             .font(Font.mada(.semiBold, size: 16))
                                                             .padding(.trailing)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.05)
                                                     }.frame(width: g.size.width * 0.4, height: 45)
                                                         .background(Clr.yellow)
                                                         .cornerRadius(25)
@@ -127,6 +131,8 @@ struct Finished: View {
                                                             .foregroundColor(.black)
                                                             .font(Font.mada(.semiBold, size: 16))
                                                             .padding(.trailing)
+                                                            .lineLimit(1)
+                                                            .minimumScaleFactor(0.05)
                                                     }.frame(width: g.size.width * 0.4, height: 45)
                                                         .background(Clr.yellow)
                                                         .cornerRadius(25)
@@ -144,6 +150,7 @@ struct Finished: View {
                                             }.frame(width: g.size.width, height: 45)
                                             .padding(.top, 10)
                                             .zIndex(100)
+                                            .offset(y: sizeCategory > .large ? -60 : 0)
                                         }.offset(y:  -10)
                                     }
                                 }
@@ -156,6 +163,8 @@ struct Finished: View {
                                             .font(Font.mada(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.05)
                                         Text("With patience and mindfulness you were able to grow a \(userModel.selectedPlant?.title ?? "")!")
                                             .font(Font.mada(.bold, size: 22))
                                             .lineLimit(2)

@@ -38,7 +38,8 @@ struct ReasonScene: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 20)
                                 .padding(.horizontal)
-                            SelectionRow(width: width, height: height, title: "Sleep better", img: Img.moon, selected: $selected)
+                                .frame(height: 50)
+                            SelectionRow(width: width, height: height, title: "Sleep better", img: Img.moon, selected: $selected).padding(.top, 30)
                             SelectionRow(width: width, height: height, title: "Get more focused", img: Img.target, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Managing Stress & Anxiety", img: Img.heart, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Just trying it out", img: Img.magnifyingGlass, selected: $selected)
@@ -115,7 +116,7 @@ struct ReasonScene: View {
                         .padding(.vertical, 8)
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 22))
+                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
                             .foregroundColor(selected == title ? (colorScheme == .dark ? Color.black : Clr.black1 ): Clr.black1)
                             .padding()
                             .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)

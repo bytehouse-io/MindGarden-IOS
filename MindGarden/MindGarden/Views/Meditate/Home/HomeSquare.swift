@@ -35,27 +35,39 @@ struct HomeSquare: View {
                                 .lineLimit(3)
                             HStack(spacing: 3) {
                                 Image(systemName: "speaker.wave.2.fill")
-                                    .font(.caption)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 15)
                                 Text("Meditation")
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                                     .font(Font.mada(.regular, size: 12))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                             }
                             .padding(.top, 10)
                             HStack(spacing: 3) {
                                 Image(systemName: "timer")
-                                    .font(.caption)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 15)
                                 Text(Int(duration) == 0 ? "Course" : (Int(duration/60) == 0 ? "1/2" : "\(Int(duration/60))") + " mins")
                                     .padding(.leading, 2)
                                     .font(.caption)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                             }
                             .padding(.top, 5)
                             HStack(spacing: 3) {
                                 Image(systemName: "person.fill")
-                                    .font(.caption)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 15)
                                 Text("\(instructor)")
                                     .padding(.leading, 2)
                                     .font(.caption)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                             }
                             .padding(.top, 5)
                             Spacer()
@@ -81,7 +93,7 @@ struct HomeSquare: View {
                 }.frame(width: width * 0.40, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .leading)
                          , alignment: .topLeading)
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id) {
-                Image(systemName: "lock.fill")
+                Img.lockIcon
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
@@ -95,8 +107,10 @@ struct HomeSquare: View {
                         Text("New")
                             .font(Font.mada(.semiBold, size: 14))
                             .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.05)
                     )
-                    .position(x:  width * 0.34, y: height * 0.03)
+                    .position(x: 125, y: 17)
                     .opacity(0.8)
             }
         }

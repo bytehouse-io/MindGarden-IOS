@@ -106,7 +106,7 @@ struct OnboardingScene: View {
                                             .multilineTextAlignment(.leading)
                                             .offset(y: -20)
                                             .padding(10)
-                                            .frame(width: width * 0.6)
+                                            .frame(width: width * (K.isSmall() ? 0.6 : 0.5))
                                             Spacer()
                                             Spacer()
                                         }
@@ -122,7 +122,7 @@ struct OnboardingScene: View {
                                 }
                             })
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .frame(width: width * 0.6, height: height * (0.75), alignment: .center)
+                            .frame(width: width * (K.isSmall() ? 0.65 : 0.55), height: height * (0.75), alignment: .center)
                         } else {
                             // Fallback on earlier versions
                         }

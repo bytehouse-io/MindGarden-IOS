@@ -18,6 +18,7 @@ struct Garden: View {
     @State private var gotItOpacity = 1.0
     @State private var forceRefresh = false
     @State private var color = Clr.yellow
+    @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         GeometryReader { gp in
@@ -41,6 +42,8 @@ struct Garden: View {
                             .font(Font.mada(.semiBold, size: 22))
                             .foregroundColor(Clr.darkgreen)
                             .padding()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.05)
                         HStack {
                             Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear))")
                                 .font(Font.mada(.bold, size: 30))
@@ -166,21 +169,21 @@ struct Garden: View {
                                     HStack(alignment: .bottom) {
                                         MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
                                         MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
-                                    }.padding(.horizontal, 10)
+                                    }.padding(.horizontal, sizeCategory > .large ? 0 : 10)
                                     HStack(alignment: .bottom) {
                                         MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
                                         MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
-                                    }.padding(.horizontal, 10)
+                                    }.padding(.horizontal, sizeCategory > .large ? 0 : 10)
                                     HStack {
                                         MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
-                                            .frame(maxWidth: gp.size.width * 0.5 * 0.44)
+                                            .frame(maxWidth: gp.size.width * 0.5 * (sizeCategory > .large ? 1 : 0.44))
                                         Spacer()
                                     }
-                                    .frame(maxWidth: gp.size.width * 0.5)
+                                    .frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1.5 : 0.5))
                                     .padding(.horizontal, 10)
 
                                 }
-                            }.frame(maxWidth: gp.size.width * 0.5)
+                            }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 0.75 : 0.5))
                         }.frame(maxHeight: gp.size.height * 0.235)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
@@ -216,7 +219,7 @@ struct Garden: View {
                                     }
                                     Spacer()
                                 }
-                            }.frame(maxWidth: gp.size.width * 0.85, maxHeight: gp.size.height * 0.4)
+                            }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: gp.size.height * 0.4)
                         }.padding(.vertical, 15)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                     }.padding(.horizontal, 25)
@@ -332,6 +335,7 @@ struct Garden_Previews: PreviewProvider {
 struct MoodImage: View {
     let mood: Mood
     let value: Int
+    @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         HStack(spacing: 0) {
@@ -346,8 +350,10 @@ struct MoodImage: View {
                 Text(String(value))
                     .font(.headline)
                     .bold()
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
             }.padding(.leading, 3)
-            .frame(maxWidth: 40)
+            .frame(maxWidth: sizeCategory > .large ? 60 : 40)
         }.padding(3)
     }
 }
