@@ -37,7 +37,7 @@ struct HomeSquare: View {
                                 Image(systemName: "speaker.wave.2.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15)
+                                    .frame(width: 10)
                                 Text("Meditation")
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
@@ -50,7 +50,7 @@ struct HomeSquare: View {
                                 Image(systemName: "timer")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15)
+                                    .frame(width: 10)
                                 Text(Int(duration) == 0 ? "Course" : (Int(duration/60) == 0 ? "1/2" : "\(Int(duration/60))") + " mins")
                                     .padding(.leading, 2)
                                     .font(.caption)
@@ -62,7 +62,7 @@ struct HomeSquare: View {
                                 Image(systemName: "person.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 15)
+                                    .frame(width: 10)
                                 Text("\(instructor)")
                                     .padding(.leading, 2)
                                     .font(.caption)
@@ -74,7 +74,7 @@ struct HomeSquare: View {
                     }.padding(.leading, 25)
                     .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
                         if imgURL != "" {
-                            AsyncImage(url: URL(string: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/Panda%204.png?alt=media&token=b7a1be36-3c81-46e2-9125-104e104765c4")!,
+                            AsyncImage(url: URL(string: imgURL)!,
                                           placeholder: { Text("Loading ...") },
                                        image: {
                                 Image(uiImage: $0)
@@ -113,7 +113,7 @@ struct HomeSquare: View {
                     .position(x: 125, y: 17)
                     .opacity(0.8)
             }
-        }
+        }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id)) ? 0.45 : 1)
         
     }
 }

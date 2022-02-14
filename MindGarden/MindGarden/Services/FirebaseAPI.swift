@@ -28,7 +28,7 @@ struct FirebaseAPI {
                     var medType: MeditationType = .single
                     var medCateogry: Category = .all
                     var medDescription = ""
-                    var medBelongsTo = ""
+                    var medBelongsTo = "none"
                     var medId = 0
                     var medNew = false
                     if let duration = document["duration"] as? Int {
@@ -85,7 +85,7 @@ struct FirebaseAPI {
                     let newMed = Meditation(title: document.documentID, description: medDescription, belongsTo: medBelongsTo, category: medCateogry, img: Img.bee, type: medType, id: medId, duration: Float(medDuration), reward: medReward, url: medAudio, instructor: medAuthor,  imgURL: medImage, isNew: medNew)
                     if !firebaseMeds.contains(where: { med in med.title != document.documentID }) {
                         if medNew && medType != .weekly {
-                            meditationModel.newMeditations.append(newMed)
+                            meditationModel.newMeditations.insert(newMed, at: 0)
                         }
                         if medType == .weekly && medNew {
                             meditationModel.weeklyMeditation = newMed

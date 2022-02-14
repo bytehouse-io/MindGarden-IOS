@@ -49,17 +49,26 @@ struct MiddleModal: View {
                                     .font(.title)
                                     .padding()
                                     .opacity(0)
-                            }.frame(width: g.size.width - 50, height: 45)
+                            }.frame(width: abs(g.size.width - 50), height: 35)
                                 .padding(.top, 20)
-                                .padding(.bottom, -15)
-                            Spacer()
                             HStack {
                                 HStack(spacing: 0) {
-                                    model.selectedMeditation?.img
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
-                                        .padding(.horizontal, 5)
+                                    if model.selectedMeditation?.imgURL != "" {
+                                        AsyncImage(url: URL(string: model.selectedMeditation?.imgURL ?? "")!,
+                                                      placeholder: { Text("Loading ...") },
+                                                   image: {
+                                            Image(uiImage: $0)
+                                           })
+                                            .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                            .padding(.horizontal, 5)
+                                    } else {
+                                        model.selectedMeditation?.img
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                            .padding(.horizontal, 5)
+                                    }
+                               
                                     VStack(alignment: .leading) {
 
                                         Text(model.selectedMeditation?.description ?? "")
@@ -73,7 +82,19 @@ struct MiddleModal: View {
                                 }
                             }.padding(.horizontal, 20)
                             HStack {
-                                Text("Selected Plant:")
+                                Text("Instructor:")
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20)
+                                Text("\(model.selectedMeditation?.instructor ?? "Bijan")")
+                            }.foregroundColor(Clr.black2)
+                                .font(Font.mada(.semiBold, size: 18))
+                                .padding(.top)
+                                .padding(.horizontal)
+                                .frame(width: abs(g.size.width - 80), alignment: .leading)
+                            HStack {
+                                Text("Your Plant:")
                                 userModel.selectedPlant?.head
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -81,9 +102,9 @@ struct MiddleModal: View {
                                 Text("\(userModel.selectedPlant?.title ?? "none")")
                             }.foregroundColor(Clr.black2)
                                 .font(Font.mada(.semiBold, size: 18))
-                                .padding(.top)
+                                .padding(.top, 10)
                                 .padding(.horizontal)
-                                .frame(width: g.size.width - 80, alignment: .leading)
+                                .frame(width: abs(g.size.width - 80), alignment: .leading)
                             HStack {
                                 Text("Coins Given:")
                                 Img.coin
@@ -95,7 +116,7 @@ struct MiddleModal: View {
                                 .font(Font.mada(.semiBold, size: 18))
                                 .padding(.top, 10)
                                 .padding(.horizontal)
-                                .frame(width: g.size.width - 80, alignment: .leading)
+                                .frame(width: abs(g.size.width - 80), alignment: .leading)
                         Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -119,7 +140,7 @@ struct MiddleModal: View {
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.5, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.55, alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()

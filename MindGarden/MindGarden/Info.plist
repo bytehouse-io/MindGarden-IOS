@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Allow Arbitrary Loads</key>
+	<true/>
 	<key>Allows Arbitrary Loads In Web Content</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -125,8 +127,6 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
-	<key>Allow Arbitrary Loads</key>
-	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Share Your Progress</string>
 	<key>UIAppFonts</key>

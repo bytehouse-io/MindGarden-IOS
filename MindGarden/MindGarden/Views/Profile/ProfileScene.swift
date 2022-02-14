@@ -13,6 +13,7 @@ import Firebase
 import StoreKit
 import GTMAppAuth
 import WidgetKit
+import OneSignal
 
 var tappedRefer = false
 var mindfulNotifs = false
@@ -320,21 +321,15 @@ struct ProfileScene: View {
                                                             .font(Font.mada(.regular, size: 20))
                                                             .foregroundColor(Clr.black1)
                                                             .padding(.top, 3)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.5)
                                                     }.frame(width: abs(width - 150), alignment: .leading)
                                                         .frame(height: 25)
                                                     HStack {
                                                         Text("\(numRefs)")
                                                             .font(Font.mada(.bold, size: 40))
                                                             .foregroundColor(Clr.darkgreen)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.5)
                                                         Text("Referrals")
                                                             .font(Font.mada(.semiBold, size: 28))
                                                             .foregroundColor(Clr.black1)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.5)
                                                     }.frame(width: abs(width - 150), alignment: .leading)
                                                     HStack(alignment: .center, spacing: 10) {
                                                         Image(systemName: "calendar")
@@ -344,8 +339,6 @@ struct ProfileScene: View {
                                                             .font(Font.mada(.regular, size: 20))
                                                             .foregroundColor(Clr.black1)
                                                             .padding(.top, 3)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.5)
                                                     }.frame(width: abs(width - 150), alignment: .leading)
                                                         .frame(height: 25)
                                                     Text("\(refDate)")
@@ -499,6 +492,7 @@ struct ProfileScene: View {
                             primaryButton: .destructive(Text("Destructive"), action: {
                                 Analytics.shared.log(event: .profile_tapped_delete_account)
                                 profileModel.signOut()
+                                OneSignal.sendTag("deleted", value: "true")
                                 // if user signs out -> send them to meditate page
                                 withAnimation {
                                     viewRouter.currentPage = .onboarding
@@ -797,8 +791,6 @@ struct SelectionButton: View {
                         .font(Font.mada(.bold, size: 18))
                         .foregroundColor(selection == type ? Clr.brightGreen : Clr.black1)
                         .padding(.top, 10)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
                 }
             }.frame(height: 25, alignment: .center)
             Spacer()

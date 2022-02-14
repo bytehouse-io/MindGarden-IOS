@@ -104,7 +104,7 @@ struct Gratitude: View, KeyboardReadable {
                         UserDefaults.standard.setValue(num, forKey: "numGrads")
                         Analytics.shared.log(event: .gratitude_tapped_done)
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
-                        text = "Thankful for "
+                        text = "I'm t2hankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                             showPopupWithAnimation{}

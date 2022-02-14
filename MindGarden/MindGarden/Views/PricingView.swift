@@ -31,6 +31,7 @@ struct PricingView: View {
     @State private var question2 = false
     @State private var question3 = false
     @State private var trialLength = 3
+    @State private var ios14 = true
 
     let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"),("Access to Widgets", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
@@ -193,21 +194,24 @@ struct PricingView: View {
                                                     .frame(width: width * 0.8, height: height * 0.55)
                                                     .neoShadow())
                                 }.frame(width: width * 0.8, height: height * 0.6)
-                            Text("Don't just take it from us\n⭐️⭐️⭐️⭐️⭐️")
-                                .font(Font.mada(.bold, size: 22))
-                                .foregroundColor(Clr.black2)
-                                .multilineTextAlignment(.center)
-                                .padding(.top)
-                            SnapCarousel()
-                                .padding(.bottom)
-                                .environmentObject(UIStateModel())
+             
+                            if !ios14 {
+                                Text("Don't just take it from us\n⭐️⭐️⭐️⭐️⭐️")
+                                    .font(Font.mada(.bold, size: 22))
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top)
+                                SnapCarousel()
+                                    .padding(.bottom)
+                                    .environmentObject(UIStateModel())
+                            }
                             VStack {
                                 Text("👨‍🌾 Invest in MindGarden,\nhelp build these features & support mental health")
                                     .font(Font.mada(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
                                     .frame(width: width * 0.8)
-                                    .padding(.top)
+                                    .padding(.top, ios14 ? 0 : 30)
                                 ZStack {
                                     Img.investMg
                                         .resizable()
@@ -338,6 +342,9 @@ struct PricingView: View {
                     }.padding(.top, K.hasNotch() ? 30 : 10)
                 }
             }.onAppear {
+                if #available(iOS 15.0, *) {
+                    ios14 = false
+                }
                 Purchases.shared.offerings { [self] (offerings, error) in
                     if let offerings = offerings {
                         let offer = offerings.current

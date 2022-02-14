@@ -63,7 +63,7 @@ struct Finished: View {
                                             .width/1, height: g.size.height/2)
                                     .offset(x: g.size.width/6, y: -g.size.height/6)
                                 LottieView(fileName: "confetti")
-                                    .frame(width: UIScreen.main.bounds.width, height: g.size.height/2)
+                                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/2)
                                     .opacity(hideConfetti ? 0 : 1)
                                 HStack(alignment: .center) {
                                     VStack {
@@ -151,7 +151,7 @@ struct Finished: View {
                                             .padding(.top, 10)
                                             .zIndex(100)
                                             .offset(y: sizeCategory > .large ? -60 : 0)
-                                        }.offset(y:  -10)
+                                        }.offset(y:  0)
                                     }
                                 }
                             }
@@ -163,8 +163,6 @@ struct Finished: View {
                                             .font(Font.mada(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.05)
                                         Text("With patience and mindfulness you were able to grow a \(userModel.selectedPlant?.title ?? "")!")
                                             .font(Font.mada(.bold, size: 22))
                                             .lineLimit(2)

@@ -5,7 +5,6 @@ import SwiftUI
 /// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
 public enum Img {
   public static let moon = Image(" moon")
-  public static let frame = Image("Frame")
   public static let angry = Image("angry")
   public static let happy = Image("happy")
   public static let okay = Image("okay")
@@ -136,6 +135,7 @@ public enum Img {
   public static let review3 = Image("review3")
   public static let review4 = Image("review4")
   public static let review5 = Image("review5")
+  public static let star = Image("Star")
   public static let vector = Image("Vector")
   public static let angryFire = Image("angryFire")
   public static let bee = Image("bee")

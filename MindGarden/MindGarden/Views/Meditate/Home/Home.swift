@@ -24,6 +24,7 @@ struct Home: View {
     @State private var showPlantSelect = false
     @State private var showSearch = false
     @State private var showUpdateModal = false
+    @State private var showMiddleModal = false
     @State private var wentPro = false
     @State private var ios14 = true
     var bonusModel: BonusViewModel
@@ -76,7 +77,7 @@ struct Home: View {
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                             HStack {
-                                                Img.newStar
+                                                Img.star
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(height: 15)
@@ -338,8 +339,8 @@ struct Home: View {
                                     RecRow(width: UIScreen.main.bounds.width, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, isWeekly: true)
                                         .padding(.bottom)
                                         .offset(y: -10)
-                                    ScrollView(.horizontal) {
-                                        HStack {
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack(spacing: 15) {
                                             ForEach(model.newMeditations, id: \.self) { meditation in
                                                 Button {} label: {
                                                     HomeSquare(width: g.size.width, height: g.size.height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
@@ -347,12 +348,15 @@ struct Home: View {
                                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                             model.selectedMeditation = meditation
                                                             Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
+                                                            model.selectedMeditation = meditation
                                                             if meditation.type == .course  {
                                                                 withAnimation {
                                                                     viewRouter.currentPage = .middle
                                                                 }
                                                             } else {
-                                                                viewRouter.currentPage = .play
+                                                                withAnimation {
+                                                                    showMiddleModal = true
+                                                                }
                                                             }
                                                         }
                                                 }.buttonStyle(NeumorphicPress())
@@ -401,12 +405,16 @@ struct Home: View {
                         }.frame(height: height)
                         .offset(y: -height * 0.23)
                     }
-                    if showModal || showUpdateModal {
+                    if showModal || showUpdateModal || showMiddleModal {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
+                    MiddleModal(shown: $showMiddleModal)
+                        .offset(y: showMiddleModal ? 0 : g.size.height)
+                        .edgesIgnoringSafeArea(.top)
+                        .animation(.default, value: showMiddleModal)
                     BonusModal(bonusModel: bonusModel, shown: $showModal, coins: $coins)
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
@@ -427,7 +435,7 @@ struct Home: View {
                 }
             })
             .alert(isPresented: $wentPro) {
-                Alert(title: Text("😎 Welcome to the club.\nYour now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
+                Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
