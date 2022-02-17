@@ -92,6 +92,7 @@ struct ContentView: View {
                                                 }
                                             }
                                             .disabled(isOnboarding)
+                                            .environmentObject(profileModel)
                                     case .garden:
                                         Garden()
                                             .frame(height: geometry.size.height + 10)
@@ -290,8 +291,8 @@ struct ContentView: View {
                                             }
                                         }
                                         .offset(y: -geometry.size.height/18/2)
+                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.pencilIcon)
                                         TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
-                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.profileIcon)
                                     }.frame(width: geometry.size.width, height: 80)
                                         .background(Clr.darkgreen.shadow(radius: 2))
                                         .offset(y: geometry.size.height/2 - (K.isPad() ? 25 : (K.hasNotch() ? 0 : 15)))

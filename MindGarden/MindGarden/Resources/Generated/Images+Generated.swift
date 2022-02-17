@@ -188,6 +188,7 @@ public enum Img {
   public static let newStar = Image("newStar")
   public static let packets = Image("packets")
   public static let pencil = Image("pencil")
+  public static let pencilIcon = Image("pencilIcon")
   public static let pot = Image("pot")
   public static let pottedPlants = Image("pottedPlants")
   public static let seed = Image("seed")

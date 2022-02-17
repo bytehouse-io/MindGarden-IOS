@@ -46,6 +46,7 @@ struct ProfileScene: View {
     @State private var showWidget = false
     @State private var deleteAccount = false
     @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.presentationMode) var presentationMode
 
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -290,7 +291,7 @@ struct ProfileScene: View {
                                                 } .frame(width: width * 0.8)
                                                 .padding(.bottom)
                                             }
-                                            .frame(width: width * 0.8, height: height * 0.67)
+                                            .frame(width: width * 0.8, height: height * 0.75)
                                             .padding(.top, 25)
                                         }
                                     } else if selection == .journey {
@@ -448,6 +449,14 @@ struct ProfileScene: View {
                                     }
                                     Spacer()
                                 }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
+                                    .navigationBarItems(leading:
+                                                            Image(systemName: "xmark")
+                                                            .font(.system(size: 22))
+                                                            .foregroundColor(Color.gray)
+                                                            .onTapGesture {
+                                                                presentationMode.wrappedValue.dismiss()
+                                                            }
+                                    )
                                     .frame(width: width, height: height)
                                     .background(Clr.darkWhite)
                                 if showWidget {

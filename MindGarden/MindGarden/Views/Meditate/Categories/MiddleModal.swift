@@ -53,11 +53,12 @@ struct MiddleModal: View {
                                 .padding(.top, 20)
                             HStack {
                                 HStack(spacing: 0) {
+                                    let _ = print(model.selectedMeditation?.imgURL ?? "", "doncic")
                                     if model.selectedMeditation?.imgURL != "" {
                                         AsyncImage(url: URL(string: model.selectedMeditation?.imgURL ?? "")!,
                                                       placeholder: { Text("Loading ...") },
                                                    image: {
-                                            Image(uiImage: $0)
+                                                $0.resizable().aspectRatio(contentMode: .fit)
                                            })
                                             .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
                                             .padding(.horizontal, 5)

@@ -92,6 +92,8 @@ enum AnalyticEvent {
     case home_tapped_featured //
     case home_tapped_recent_meditation //
     case home_tapped_favorite_meditation //
+    case home_tapped_new_meditation //
+    case home_tapped_weekly_meditation //
 
     // bonus modal
     case home_tapped_bonus //
@@ -263,6 +265,7 @@ enum AnalyticEvent {
     case mood_recs_not_now
     case mood_tapped_done //
     case mood_tapped_cancel //
+    case mood_tapped_meditation_rec //
     //gratitude
     case plus_tapped_gratitude
     case plus_tapped_gratitude_to_pricing
@@ -452,6 +455,8 @@ extension AnalyticEvent {
         case .home_claim_daily: return "home_claim_daily:"
         case .home_claim_seven: return "home_claim_seven"
         case .home_claim_thirty: return "home_claim_thirty"
+        case .home_tapped_new_meditation: return "home_tapped_new_meditation"
+        case .home_tapped_weekly_meditation: return "home_tapped_weekly_meditation"
         case .screen_load_store: return "screen_load_store"
         case .store_tapped_plant_tile: return "store_tapped_plant_tile"
         case .store_tapped_purchase_modal_buy: return "store_tapped_purchase_modal_buy"
@@ -594,6 +599,7 @@ extension AnalyticEvent {
         case .mood_tapped_done: return "mood_tapped_done"
         case .mood_tapped_cancel: return "mood_tapped_cancel"
         case  .mood_recs_not_now: return "mood_recs_not_now"
+        case .mood_tapped_meditation_rec: return "mood_tapped_meditation_rec"
         case .plus_tapped_gratitude: return "plus_tapped_gratitude"
         case .plus_tapped_mood_to_pricing: return "plus_tapped_mood_to_pricing"
         case .plus_tapped_gratitude_to_pricing: return "plus_tapped_gratitude_to_pricing"

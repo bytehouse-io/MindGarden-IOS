@@ -19,12 +19,14 @@ struct Home: View {
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var profileModel: ProfileViewModel
     @State private var isRecent = true
     @State private var showModal = false
     @State private var showPlantSelect = false
     @State private var showSearch = false
     @State private var showUpdateModal = false
     @State private var showMiddleModal = false
+    @State private var showProfile = false
     @State private var wentPro = false
     @State private var ios14 = true
     var bonusModel: BonusViewModel
@@ -57,16 +59,25 @@ struct Home: View {
                                 Img.topBranch.offset(x: 40,  y: height * -0.1)
                                 Spacer()
                                 VStack {
-                                    Image(systemName: "magnifyingglass")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(.system(size: 22))
-                                        .onTapGesture {
-                                            print("test")
-                                            Analytics.shared.log(event: .home_tapped_search)
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            showSearch = true
-                                        }.offset(x: 30, y: -25)
                                     HStack {
+                                        Image(systemName: "magnifyingglass")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(.system(size: 22))
+                                            .onTapGesture {
+                                                Analytics.shared.log(event: .home_tapped_search)
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                showSearch = true
+                                            }
+                                        Image(systemName: "person.fill")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(.system(size: 22))
+                                            .onTapGesture {
+                                                Analytics.shared.log(event: .home_tapped_search)
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                showProfile = true
+                                            }
+                                    }.offset(x: 13, y: -25)
+                                    HStack{
                                         Spacer()
                                         VStack(alignment: .trailing) {
                                             Text("\(userModel.greeting), \(userModel.name)")
@@ -107,7 +118,7 @@ struct Home: View {
                         //MARK: - scroll view
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack {
-                                HStack {
+                                HStack(spacing: width * 0.04) {
                                     Button {
                                         Analytics.shared.log(event: .home_tapped_bonus)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -132,13 +143,13 @@ struct Home: View {
                                                 }.frame(width: 15)
                                             }
                                             Text("Daily Bonus")
-                                                .font(Font.mada(.regular, size: 14))
+                                                .font(Font.mada(.regular, size: 16))
                                                 .foregroundColor(.black)
                                                 .font(.footnote)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                         }
-                                        .frame(width: g.size.width * 0.3, height: 20)
+                                        .frame(width: g.size.width * 0.35, height: 20)
                                         .padding(8)
                                         .background(Clr.yellow)
                                         .cornerRadius(20)
@@ -155,13 +166,13 @@ struct Home: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                             Text("Plant Select")
-                                                .font(Font.mada(.regular, size: 14))
+                                                .font(Font.mada(.regular, size: 16))
                                                 .foregroundColor(.black)
                                                 .font(.footnote)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                         }
-                                        .frame(width: g.size.width * 0.3, height: 20)
+                                        .frame(width: g.size.width * 0.35, height: 20)
                                         .padding(8)
                                         .background(Clr.yellow)
                                         .cornerRadius(20)
@@ -333,7 +344,7 @@ struct Home: View {
                                 Text("☀️ New Meditations")
                                     .font(Font.mada(.semiBold, size: 28))
                                     .foregroundColor(Clr.black2)
-                                    .padding(.top)
+                                    .padding(.top, 56)
                                     .frame(width: abs(g.size.width * 0.825), alignment: .leading)
                                 VStack {
                                     RecRow(width: UIScreen.main.bounds.width, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, isWeekly: true)
@@ -347,7 +358,7 @@ struct Home: View {
                                                         .onTapGesture {
                                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                             model.selectedMeditation = meditation
-                                                            Analytics.shared.log(event: isRecent ? .home_tapped_recent_meditation : .home_tapped_favorite_meditation)
+                                                            Analytics.shared.log(event: .home_tapped_new_meditation)
                                                             model.selectedMeditation = meditation
                                                             if meditation.type == .course  {
                                                                 withAnimation {
@@ -365,6 +376,7 @@ struct Home: View {
                                             .padding([.leading, .trailing], g.size.width * 0.07)
                                     }.frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
                                         .offset(y: -15)
+                                        .padding(.top, 16)
                                 }
                                 if #available(iOS 14.0, *) {
                                     Button { } label: {
@@ -383,7 +395,7 @@ struct Home: View {
                                                     viewRouter.currentPage = .categories
                                                 }
                                             }
-                                    }.padding(.top, 10)
+                                    }.padding(.top, 24)
                                         .buttonStyle(NeumorphicPress())
                                 } else {
                                     // Fallback on earlier versions
@@ -423,6 +435,12 @@ struct Home: View {
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
                 }
+            }
+            .fullScreenCover(isPresented: $showProfile) {
+                ProfileScene(profileModel: profileModel)
+                    .environmentObject(userModel)
+                    .environmentObject(gardenModel)
+                    .environmentObject(viewRouter)
             }
             .transition(.opacity)
             .navigationBarHidden(true)

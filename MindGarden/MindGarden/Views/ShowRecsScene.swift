@@ -96,6 +96,12 @@ struct RecRow: View {
 
     var body: some View {
         Button {
+            if isWeekly {
+                Analytics.shared.log(event: .home_tapped_weekly_meditation)
+            } else {
+                Analytics.shared.log(event: .mood_tapped_meditation_rec)
+            }
+
             presentationMode.wrappedValue.dismiss()
             meditationModel.selectedMeditation = meditation
             withAnimation {
@@ -169,9 +175,9 @@ struct RecRow: View {
                             .padding(.leading, 10)
                         if meditation.imgURL != "" {
                             AsyncImage(url: URL(string: meditation.imgURL)!,
-                                          placeholder: { Text("Loading ...") },
+                                          placeholder: { ProgressView() },
                                        image: {
-                                Image(uiImage: $0)
+                                $0.resizable().aspectRatio(contentMode: .fit)
                                })
                                 .frame(width: width * 0.2, height: 90)
                                 .padding()
