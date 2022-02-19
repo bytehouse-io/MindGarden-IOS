@@ -6,49 +6,102 @@
 //
 
 import SwiftUI
+import MindGardenWidgetExtension
 
 struct CourseScene: View {
     @State var viewState = CGSize.zero
+    @Environment(\.presentationMode) var presentationMode
+    @State private var index = 0
 
     var body: some View {
-        TabView {
-            ForEach(LearnCourse.courses, id: \.self) { course in
-                GeometryReader { proxy in
-                    FeaturedItem(course: course)
-                        .cornerRadius(30)
-                        .modifier(OutlineModifier(cornerRadius: 30))
-                        .rotation3DEffect(
-                            .degrees(proxy.frame(in: .global).minX / -10),
-                            axis: (x: 0, y: 1, z: 0), perspective: 1
-                        )
-                        .shadow(color: Color("Shadow").opacity(0.3),
-                                radius: 30, x: 0, y: 30)
-                        .blur(radius: abs(proxy.frame(in: .global).minX) / 40)
-                        .overlay(
-                            Img.bee
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .offset(x: 32, y: -80)
-                                .frame(height: 230)
-                                .offset(x: proxy.frame(in: .global).minX / 2)
-                        )
-                        .padding(20)
-                        .onTapGesture {
-//                            showCourse = true
-//                            selectedCourse = course
+        ZStack {
+            Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+            GeometryReader { g in
+                let width = g.size.width
+                let height = g.size.height
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button {
+                            
+                        } label: {
+                            ZStack {
+                                Circle()
+                                    .fill(Clr.darkWhite)
+                                    .neoShadow()
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.gray)
+                                    .frame(width: 50, height: 50)
+                                    .padding()
+                                    .onTapGesture {
+                                        presentationMode.wrappedValue.dismiss()
+                                    }
+                            }.frame(width: 40, height: 40)
+                        }.buttonStyle(NeumorphicPress())
+                    }.frame(width: g.size.width - 50, height: 50)
+                    TabView(selection: $index) {
+                        ForEach(LearnCourse.courses.indices, id: \.self) { idx in
+                            GeometryReader { proxy in
+                                FeaturedItem(course: LearnCourse.courses[idx])
+                                    .cornerRadius(30)
+                                    .modifier(OutlineModifier(cornerRadius: 30))
+                                    .rotation3DEffect(
+                                        .degrees(proxy.frame(in: .global).minX / -10),
+                                        axis: (x: 0, y: 1, z: 0), perspective: 1
+                                    )
+                                    .shadow(color: Clr.black2.opacity(0.3),
+                                            radius: 30, x: 0, y: 30)
+                                    .blur(radius: abs(proxy.frame(in: .global).minX) / 40)
+                                    .overlay(
+                                        Img.bee
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .offset(x: 32, y: -80)
+                                            .frame(height: 230)
+                                            .offset(x: proxy.frame(in: .global).minX / 2)
+                                    )
+                                    .padding(20)
+                                    .accessibilityElement(children: .combine)
+                            }
                         }
-                        .accessibilityElement(children: .combine)
-                        .accessibilityAddTraits(.isButton)
-                }
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .frame(height: 460)
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50)
+                            .foregroundColor(Clr.black2)
+                            .padding()
+                            .onTapGesture {
+                                withAnimation {
+                                    index -= 1
+                                }
+                            }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50)
+                            .foregroundColor(Clr.black2)
+                            .padding()
+                            .onTapGesture {
+                                withAnimation {
+                                    index += 1
+                                }
+                            }
+                    }.frame(width: width, height: 50)
+                     
+                }.frame(width: g.size.width, height: g.size.height)
             }
         }
-        .tabViewStyle(.page(indexDisplayMode: .never))
-        .frame(height: 460)
-        .background(
-            Image("Blob 1")
-                .offset(x: 250, y: -100)
-                .accessibility(hidden: true)
-        )
+       
+//        .background(
+//            Img.bee
+//                .offset(x: 250, y: -100)
+//                .accessibility(hidden: true)
+//        )
 //        .sheet(isPresented: $showCourse) {
 //            CourseView(namespace: namespace, course: $selectedCourse, isAnimated: false)
 //        }

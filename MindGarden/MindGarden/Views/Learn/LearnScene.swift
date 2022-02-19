@@ -44,7 +44,6 @@ struct LearnScene: View {
                             }
                         }.padding(10)
                     }.frame(width: width * 0.85, height: height * 0.15, alignment: .center)
-
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
@@ -68,7 +67,7 @@ struct LearnScene: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
                                     ForEach(meditationCourses, id: \.self) { course in
-                                        LearnCard(width: width, height: height, readTime: course.duration, description: course.description, img: course.img)
+                                        LearnCard(width: width, height: height, readTime: course.duration, description: course.description, img: course.img, showCourse: $showCourse)
                                     }
                                 }.frame(height: height * 0.3 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
@@ -99,7 +98,7 @@ struct LearnScene: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
                                     ForEach(["1", "2"], id: \.self) { meditation in
-                                        LearnCard(width: width, height: height, readTime: "3-5", description: "", img: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/powerofgratitude.png?alt=media&token=bdfc4943-dbe2-4d18-a123-b260a9801b54")
+                                        LearnCard(width: width, height: height, readTime: "3-5", description: "", img: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/powerofgratitude.png?alt=media&token=bdfc4943-dbe2-4d18-a123-b260a9801b54", showCourse: $showCourse)
                                     }
                                 }.frame(height: height * 0.3 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
@@ -108,14 +107,13 @@ struct LearnScene: View {
                     }.frame(width: width * 0.85, height: height * 0.3, alignment: .center)
                     .padding(.top, 40)
                 }.frame(width: width, alignment: .center)
-                .padding(.top, 75)
+                .padding(.top, K.hasNotch() ? 75 : 25)
             }
         }
         .fullScreenCover(isPresented: $showCourse) {
             CourseScene()
         }
         .onAppear {
-            
              for course in LearnCourse.courses {
                 if course.category == "meditation" {
                     meditationCourses.append(course)
@@ -131,9 +129,12 @@ struct LearnScene: View {
         let readTime: String
         let description: String
         let img: String
+        @Binding var showCourse: Bool
         
         var body: some View {
-            Button {} label: {
+            Button {
+                showCourse = true
+            } label: {
                Rectangle()
                     .fill(Clr.darkWhite)
                     .cornerRadius(20)
