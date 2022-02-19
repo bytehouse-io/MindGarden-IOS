@@ -191,6 +191,7 @@ public enum Img {
   public static let pencilIcon = Image("pencilIcon")
   public static let pot = Image("pot")
   public static let pottedPlants = Image("pottedPlants")
+  public static let powerofgratitude = Image("powerofgratitude")
   public static let seed = Image("seed")
   public static let sheep = Image("sheep")
   public static let siwg = Image("siwg")

@@ -14,8 +14,11 @@ struct PurchaseModal: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var bonusModel: BonusViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var profileModel: ProfileViewModel
     @EnvironmentObject var meditateModel: MeditationViewModel
 //    var img: Img = Image()
+    @State private var showProfile: Bool = false
 
 
     var body: some View {
@@ -119,7 +122,7 @@ struct PurchaseModal: View {
                                     Analytics.shared.log(event: .store_tapped_refer_friend)
                                     withAnimation {
                                         tappedRefer = true
-                                        viewRouter.currentPage = .profile
+                                        showProfile = true
                                     }
                                 case "👨‍🌾 Become a pro user":
                                     if !UserDefaults.standard.bool(forKey: "isPro") {
@@ -190,6 +193,11 @@ struct PurchaseModal: View {
                 }
                 Spacer()
             }
+        }.fullScreenCover(isPresented: $showProfile) {
+            ProfileScene(profileModel: profileModel)
+                .environmentObject(userModel)
+                .environmentObject(gardenModel)
+                .environmentObject(viewRouter)
         }
     }
 }

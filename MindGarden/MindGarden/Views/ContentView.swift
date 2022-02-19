@@ -107,8 +107,9 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
-                                    case .profile:
-                                        ProfileScene(profileModel: profileModel )
+                                            .environmentObject(profileModel)
+                                    case .learn:
+                                        LearnScene()
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .categories:
@@ -224,7 +225,7 @@ struct ContentView: View {
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             
-                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .profile || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
+                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
                             ) {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
@@ -291,7 +292,7 @@ struct ContentView: View {
                                             }
                                         }
                                         .offset(y: -geometry.size.height/18/2)
-                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .profile, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Profile", img: Img.pencilIcon)
+                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .learn, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Learn", img: Img.pencilIcon)
                                         TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
                                     }.frame(width: geometry.size.width, height: 80)
                                         .background(Clr.darkgreen.shadow(radius: 2))

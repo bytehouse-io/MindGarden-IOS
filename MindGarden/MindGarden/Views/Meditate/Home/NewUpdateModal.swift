@@ -49,7 +49,6 @@ struct NewUpdateModal: View {
                             withAnimation {
                                 UserDefaults.standard.setValue(true, forKey: "1.4Update")
                                 shown = false
-                                viewRouter.currentPage = .profile
                             }
                         } label: {
                             HStack {

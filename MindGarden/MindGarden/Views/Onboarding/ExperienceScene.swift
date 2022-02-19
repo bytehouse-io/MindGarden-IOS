@@ -13,6 +13,7 @@ struct ExperienceScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
+    
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -84,6 +85,9 @@ struct ExperienceScene: View {
             meditationModel.getFeaturedMeditation()
         }
         .transition(.move(edge: .trailing))
+        .onAppear {
+            Analytics.shared.log(event: .screen_load_experience)
+        }
     }
 
     struct SelectionRow: View {

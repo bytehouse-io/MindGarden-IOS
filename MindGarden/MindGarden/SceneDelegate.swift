@@ -61,6 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         gardenModel.updateSelf()
         SceneDelegate.bonusModel.updateBonus()
         FirebaseAPI.fetchMeditations(meditationModel: medModel)
+        FirebaseAPI.fetchCourses()
 
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
             SceneDelegate.bonusModel.totalBonuses = 1

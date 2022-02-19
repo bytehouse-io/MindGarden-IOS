@@ -220,7 +220,7 @@ struct Authentication: View {
                                 if fromOnboarding {
                                     viewRouter.currentPage = .finished
                                 } else {
-                                    viewRouter.currentPage = .profile
+                                    viewRouter.currentPage = .meditate
                                 }
                             }
                         }

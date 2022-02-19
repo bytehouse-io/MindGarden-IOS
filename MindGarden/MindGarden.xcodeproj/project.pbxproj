@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */; };
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
+		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
+		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
+		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
+		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
 		FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A804279CD77400799A07 /* SaveProgressModal.swift */; };
@@ -189,6 +193,10 @@
 		1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
 		21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
+		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
+		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,6 +405,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8876A60427C03C2A00A9622F /* Learn */ = {
+			isa = PBXGroup;
+			children = (
+				8876A60527C03C3B00A9622F /* LearnScene.swift */,
+				88A7D91927C0989A001A53DE /* CourseScene.swift */,
+			);
+			path = Learn;
+			sourceTree = "<group>";
+		};
 		FE11F0B42691071500E1E71A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -466,6 +483,7 @@
 				FE6289B326754A1200007889 /* ShadowViewModifier.swift */,
 				FE683F34269CCF6E009A66DF /* ButtonModifier.swift */,
 				FE6FBFA727ADC00400F05A66 /* KeyboardModifier.swift */,
+				88A7D91B27C0A522001A53DE /* OutlineModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -641,6 +659,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8876A60427C03C2A00A9622F /* Learn */,
 				FE11F0B42691071500E1E71A /* Profile */,
 				FEA592C9267E6077006558A2 /* Garden */,
 				FEBA7E702677D65000758E58 /* Store */,
@@ -669,6 +688,7 @@
 				FEA7FBE326B0DF5A0073C62D /* Plant.swift */,
 				FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */,
 				FE17B8AF26C06C20002CF8C2 /* Sound.swift */,
+				88A7D91727C0897C001A53DE /* Course.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1198,6 +1218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */,
+				88A7D91827C0897C001A53DE /* Course.swift in Sources */,
 				FEF976E7275EE36700D1715C /* ReviewScene.swift in Sources */,
 				FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */,
 				FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */,
@@ -1232,6 +1253,7 @@
 				FEB580CF278A236F0022B5E9 /* MiddleModal.swift in Sources */,
 				FE683F39269F74F6009A66DF /* TextFieldAlert.swift in Sources */,
 				FED4636C279F87E7008C8E2E /* ShowRecsScene.swift in Sources */,
+				8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */,
 				FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */,
 				FEBF22CE26E16B68002572E2 /* BonusViewModel.swift in Sources */,
 				FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */,
@@ -1244,6 +1266,7 @@
 				FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
 				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,
+				88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
 				FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */,
 				FE9BE35727434025004FEBF0 /* String+Extensions.swift in Sources */,
@@ -1264,6 +1287,7 @@
 				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
 				FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */,
+				88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */,
 				FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */,
 				FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */,
 				FE98160026E559E000A4992D /* NotificationScene.swift in Sources */,

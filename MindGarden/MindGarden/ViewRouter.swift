@@ -16,7 +16,6 @@ enum Page {
     case meditate
     case garden
     case shop
-    case profile
     case play
     case categories
     case middle
@@ -29,4 +28,5 @@ enum Page {
     case name
     case pricing
     case review
+    case learn
 }

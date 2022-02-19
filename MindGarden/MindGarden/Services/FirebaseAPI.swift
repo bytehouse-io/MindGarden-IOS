@@ -13,13 +13,48 @@ import FirebaseFirestore
 struct FirebaseAPI {
     static let db = Firestore.firestore()
     static var firebaseMeds: [Meditation] = []
+    static func fetchCourses() {
+        db.collection("Learn Page").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    var courseImg = ""
+                    var courseDesc = ""
+                    var courseDuration = ""
+                    var courseCategory = ""
+                    
+                    if let image = document["image"] as? String {
+                        courseImg = image
+                    }
+                    
+                    if let desc = document["description"] as? String {
+                        courseDesc = desc
+                    }
+                    
+                    if let duration = document["duration"] as? String {
+                        courseDuration = duration
+                    }
+                    if let category = document["category"] as? String {
+                        courseCategory = category
+                    }
+                    
+                    let newCourse = LearnCourse(title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory)
+                    
+                    if !LearnCourse.courses.contains(where: { $0.title == document.documentID }) {
+                        LearnCourse.courses.append(newCourse)
+                    }
+                }
+            }
+        }
+    }
+    
     static func fetchMeditations(meditationModel: MeditationViewModel) {
         db.collection("Meditations").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
                     var medDuration = 0
                     var medAuthor = ""
                     var medImage = ""

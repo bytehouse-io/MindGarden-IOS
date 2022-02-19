@@ -32,6 +32,7 @@ struct PricingView: View {
     @State private var question3 = false
     @State private var trialLength = 3
     @State private var ios14 = true
+    @State private var showProfile: Bool = false
 
     let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"),("Access to Widgets", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
@@ -59,7 +60,7 @@ struct PricingView: View {
                                         withAnimation {
                                             switch fromPage {
                                             case "home": viewRouter.currentPage = .meditate
-                                            case "profile": viewRouter.currentPage = .profile
+                                            case "profile": viewRouter.currentPage = .meditate
                                             case "onboarding": viewRouter.currentPage = .garden
                                             case "store": viewRouter.currentPage = .shop
                                             case "onboarding2": viewRouter.currentPage = .meditate
