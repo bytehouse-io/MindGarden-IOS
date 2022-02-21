@@ -10,6 +10,9 @@ import SwiftUI
 struct LearnScene: View {
     @State private var meditationCourses: [LearnCourse] = []
     @State private var showCourse: Bool = false
+    @State private var selectedSlides: [Slide] = []
+    @State private var courseTitle: String = ""
+    
     var body: some View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
@@ -67,7 +70,7 @@ struct LearnScene: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
                                     ForEach(meditationCourses, id: \.self) { course in
-                                        LearnCard(width: width, height: height, readTime: course.duration, description: course.description, img: course.img, showCourse: $showCourse)
+                                        LearnCard(width: width, height: height, course: course, showCourse: $showCourse, selectedSlides: $selectedSlides, courseTitle: $courseTitle)
                                     }
                                 }.frame(height: height * 0.3 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
@@ -97,8 +100,8 @@ struct LearnScene: View {
                         HStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
-                                    ForEach(["1", "2"], id: \.self) { meditation in
-                                        LearnCard(width: width, height: height, readTime: "3-5", description: "", img: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/powerofgratitude.png?alt=media&token=bdfc4943-dbe2-4d18-a123-b260a9801b54", showCourse: $showCourse)
+                                    ForEach(meditationCourses, id: \.self) { course in
+                                        LearnCard(width: width, height: height, course: course, showCourse: $showCourse, selectedSlides: $selectedSlides, courseTitle: $courseTitle)
                                     }
                                 }.frame(height: height * 0.3 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
@@ -111,7 +114,7 @@ struct LearnScene: View {
             }
         }
         .fullScreenCover(isPresented: $showCourse) {
-            CourseScene()
+            CourseScene(title: $courseTitle, selectedSlides: $selectedSlides)
         }
         .onAppear {
              for course in LearnCourse.courses {
@@ -126,13 +129,16 @@ struct LearnScene: View {
     
     struct LearnCard: View {
         let width, height: CGFloat
-        let readTime: String
-        let description: String
-        let img: String
+        let course: LearnCourse
         @Binding var showCourse: Bool
+        @Binding var selectedSlides: [Slide]
+        @Binding var courseTitle: String
         
         var body: some View {
             Button {
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                courseTitle = course.title
+                selectedSlides = course.slides
                 showCourse = true
             } label: {
                Rectangle()
@@ -140,7 +146,7 @@ struct LearnScene: View {
                     .cornerRadius(20)
                     .overlay(
                         VStack(alignment: .leading, spacing: 0) {
-                            AsyncImage(url: URL(string: img)!,
+                            AsyncImage(url: URL(string: course.img)!,
                                           placeholder: { ProgressView() },
                                        image: {
                                 $0.resizable()

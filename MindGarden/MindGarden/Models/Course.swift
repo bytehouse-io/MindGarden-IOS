@@ -11,6 +11,7 @@ struct LearnCourse: Hashable {
     let description: String
     let duration: String
     let category: String
+    let slides: [Slide]
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
@@ -20,4 +21,10 @@ struct LearnCourse: Hashable {
     }
     // ADD TO WIDGET
     static var courses: [LearnCourse] = []
+    
+}
+struct Slide {
+    let topText: String
+    let img: String
+    let bottomText: String
 }

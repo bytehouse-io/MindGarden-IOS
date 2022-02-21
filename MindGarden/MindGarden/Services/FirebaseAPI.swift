@@ -13,6 +13,8 @@ import FirebaseFirestore
 struct FirebaseAPI {
     static let db = Firestore.firestore()
     static var firebaseMeds: [Meditation] = []
+    
+    // For the Learn Page
     static func fetchCourses() {
         db.collection("Learn Page").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -23,6 +25,7 @@ struct FirebaseAPI {
                     var courseDesc = ""
                     var courseDuration = ""
                     var courseCategory = ""
+                    var courseSlides = [Slide]()
                     
                     if let image = document["image"] as? String {
                         courseImg = image
@@ -38,8 +41,13 @@ struct FirebaseAPI {
                     if let category = document["category"] as? String {
                         courseCategory = category
                     }
+                    if let slides = document["slides"] as? [[String: String]] {
+                        for slide in slides {
+                            courseSlides.append(Slide(topText: slide["topText"] ?? "", img: slide["img"] ?? "", bottomText: slide["bottomText"] ?? ""))
+                        }
+                    }
                     
-                    let newCourse = LearnCourse(title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory)
+                    let newCourse = LearnCourse(title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory, slides: courseSlides)
                     
                     if !LearnCourse.courses.contains(where: { $0.title == document.documentID }) {
                         LearnCourse.courses.append(newCourse)
@@ -49,6 +57,7 @@ struct FirebaseAPI {
         }
     }
     
+    // For Meditation Page
     static func fetchMeditations(meditationModel: MeditationViewModel) {
         db.collection("Meditations").getDocuments() { (querySnapshot, err) in
             if let err = err {

@@ -13,6 +13,8 @@
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
+		88B88F6927C3276F00CFE4CC /* check.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B88F6827C3276E00CFE4CC /* check.json */; };
+		88B88F6B27C3387800CFE4CC /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B88F6A27C3387800CFE4CC /* check2.json */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
 		FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A804279CD77400799A07 /* SaveProgressModal.swift */; };
@@ -197,6 +199,8 @@
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
+		88B88F6827C3276E00CFE4CC /* check.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = check.json; path = ../../../../../../Downloads/check.json; sourceTree = "<group>"; };
+		88B88F6A27C3387800CFE4CC /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = check2.json; path = ../../../../../../Downloads/check2.json; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -455,6 +459,8 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				88B88F6A27C3387800CFE4CC /* check2.json */,
+				88B88F6827C3276E00CFE4CC /* check.json */,
 				FED7437327A734E700435D0A /* coins.json */,
 				FE09DA2226F53BD00018099F /* confetti.json */,
 				FE4D80EC26ED4E36002FE291 /* side-arrow.json */,
@@ -989,9 +995,11 @@
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
+				88B88F6927C3276F00CFE4CC /* check.json in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
 				FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */,
+				88B88F6B27C3387800CFE4CC /* check2.json in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
 				FEBF1ACB271511CA000BF1BD /* 30 Second Meditation.mp3 in Resources */,
