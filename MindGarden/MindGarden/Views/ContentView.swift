@@ -35,6 +35,7 @@ struct ContentView: View {
     var authModel: AuthenticationViewModel
     @State var hasConnection = false
 
+    @State var selectedPopupOption: PlusMenuType = .none
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -246,7 +247,10 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                HomeTabView(viewRouter:viewRouter)
+                                HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter)
+                                    .onChange(of: selectedPopupOption) { value in
+                                        setSelectedPopupOption(selectedOption:value)
+                                    }
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
                                     .background(Clr.darkWhite)
@@ -370,6 +374,96 @@ struct ContentView: View {
         withAnimation(.easeOut(duration: 0.14).delay(0.31)){
             showPopUp = false
             completion()
+        }
+    }
+    
+    private func setSelectedPopupOption(selectedOption:PlusMenuType){
+        switch selectedOption {
+        case .moodCheck:
+            selectedPopupOption = .none
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                withAnimation {
+                    Analytics.shared.log(event: .plus_tapped_mood_to_pricing)
+                    fromPage = "plusMood"
+                    viewRouter.currentPage = .pricing
+                }
+            } else {
+                Analytics.shared.log(event: .plus_tapped_mood)
+                if isOnboarding {
+                    Analytics.shared.log(event: .onboarding_finished_mood)
+                }
+                withAnimation {
+
+                    ///Ashvin : Hide popup with animation
+                    hidePopupWithAnimation {
+                        addMood = true
+                    }
+                }
+            }
+        case .gratitude:
+            selectedPopupOption = .none
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            if UserDefaults.standard.integer(forKey: "numGrads") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                Analytics.shared.log(event: .plus_tapped_gratitude_to_pricing)
+                withAnimation {
+                    fromPage = "plusGratitude"
+                    viewRouter.currentPage = .pricing
+                }
+            } else {
+                Analytics.shared.log(event: .plus_tapped_gratitude)
+                if isOnboarding {
+                    Analytics.shared.log(event: .onboarding_finished_gratitude)
+                }
+                withAnimation {
+                    ///Ashvin : Hide popup with animation
+                    hidePopupWithAnimation {
+                        addGratitude = true
+                    }
+                }
+            }
+        case .meditate:
+            selectedPopupOption = .none
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            if UserDefaults.standard.integer(forKey: "numMeds") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                withAnimation {
+                    fromPage = "plusMeditation"
+                    viewRouter.currentPage = .pricing
+                }
+            } else {
+                Analytics.shared.log(event: .plus_tapped_meditate)
+                if isOnboarding {
+                    Analytics.shared.log(event: .onboarding_finished_meditation)
+                }
+                withAnimation {
+                    // Hide popup with animation
+                    hidePopupWithAnimation {
+                        showPopUp = false
+                    }
+                }
+
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                    Analytics.shared.log(event: .onboarding_finished_gratitude)
+                    meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
+                        med.id == 22
+                    })
+                    viewRouter.currentPage = .play
+                } else {
+                    if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
+                        meditationModel.selectedMeditation = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()[0]
+                    } else {
+                        meditationModel.selectedMeditation = meditationModel.featuredMeditation
+                    }
+
+                    if meditationModel.selectedMeditation?.type == .course {
+                        viewRouter.currentPage = .middle
+                    } else {
+                        viewRouter.currentPage = .play
+                    }
+                }
+            }
+        case .none:
+            break
         }
     }
 }

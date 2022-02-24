@@ -10,6 +10,7 @@ import SwiftUI
 struct PlusButtonPopup: View {
     @Binding var showPopup: Bool
     @Binding var scale : CGFloat
+    @Binding var selectedOption : PlusMenuType
     
     private let buttonRadius : CGFloat = 15.0
     private let popupRadius : CGFloat = 20.0
@@ -28,7 +29,7 @@ struct PlusButtonPopup: View {
                             .fill(Color.white)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                             
-                            PlusMenuView(showPopup:$showPopup ).cornerRadius(popupRadius)
+                            PlusMenuView(showPopup:$showPopup, selectedOption: $selectedOption).cornerRadius(popupRadius)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                         }.zIndex(1)
                         PlusButtonShape(cornerRadius: buttonRadius)
