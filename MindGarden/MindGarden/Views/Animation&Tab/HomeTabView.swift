@@ -22,7 +22,6 @@ struct HomeTabView: View {
                     DispatchQueue.main.async {
                         withAnimation(.spring()) {
                             showPopup.toggle()
-                            scale = scale < 1.0 ? 1.0 : 0.01
                         }
                     }
                 }
