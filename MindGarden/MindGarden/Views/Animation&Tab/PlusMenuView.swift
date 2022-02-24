@@ -9,12 +9,14 @@ import SwiftUI
 
 struct PlusMenuView: View {
     @Binding var showPopup: Bool
-    @State var opac: CGFloat = 0
+    @Binding var selectedOption: PlusMenuType
+    @State var opac: CGFloat = 0.01
     var body: some View {
         ZStack {
             VStack(spacing: 12) {
                 ForEach(plusMenuList) { item in
                     Button {
+                        selectedOption = item.tabName
                         showPopup = false
                     } label: {
                         MenuChoice(title: item.title, img: Image(systemName: item.image),  isOnboarding: false, disabled: false)
@@ -25,8 +27,8 @@ struct PlusMenuView: View {
             .opacity(opac)
             .padding()
         }.onChange(of: showPopup) { value in
-            withAnimation(.easeInOut(duration: 0.1)) {
-                opac =  value ? 1.0 : 0.0
+            withAnimation(.easeInOut(duration: 0.3)) {
+                opac =  value ? 1.0 : 0.01
             }
         }
     }
@@ -67,6 +69,7 @@ enum PlusMenuType: String {
     case moodCheck
     case gratitude
     case meditate
+    case none
 }
 
 var plusMenuList = [

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeTabView: View {
+    @Binding var selectedOption: PlusMenuType
+    
     @ObservedObject var viewRouter: ViewRouter
     @State var selectedTab: TabType = .meditate
     @State var showPopup = false
@@ -26,8 +28,9 @@ struct HomeTabView: View {
                     }
                 }
             TabButtonView(selectedTab:$selectedTab)
-            PlusButtonPopup(showPopup: $showPopup, scale: $scale)
+            PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption)
         }.onChange(of: selectedTab) { value in
+            showPopup = false
             setSelectedTab(selectedTab: value)
         }
     }
@@ -55,6 +58,6 @@ struct HomeTabView: View {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        HomeTabView(viewRouter: ViewRouter())
+        HomeTabView(selectedOption: .constant(.meditate), viewRouter: ViewRouter())
     }
 }
