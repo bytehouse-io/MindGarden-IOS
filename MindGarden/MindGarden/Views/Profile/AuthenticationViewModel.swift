@@ -336,7 +336,6 @@ extension AuthenticationViewModel {
         if let email = Auth.auth().currentUser?.email {
             OneSignal.setEmail(email)
             OneSignal.setExternalUserId(email)
-            Purchases.shared.setOnesignalID(email)
             Amplitude.instance().setUserId(email)
             Purchases.shared.logIn(email) { info, bool, error in }
         }

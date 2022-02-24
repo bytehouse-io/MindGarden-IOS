@@ -46,7 +46,7 @@ struct SaveProgressModal: View {
                                         .minimumScaleFactor(0.5)
                                 )
                                 .frame(width: g.size.width * 0.7 * 0.6, height: g.size.height * 0.06)
-                        }.buttonStyle(NeumorphicPress())
+                        }.neoShadow()
                             .padding([.horizontal, .bottom])
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -67,7 +67,7 @@ struct SaveProgressModal: View {
                                         .minimumScaleFactor(0.5)
                                 )
                                 .frame(width: g.size.width * 0.7 * 0.6, height: g.size.height * 0.06)
-                        }.buttonStyle(NeumorphicPress())
+                        }.neoShadow()
                         .padding([.horizontal, .bottom])
                         Spacer()
                     }

@@ -36,6 +36,9 @@ struct PlusMenu: View {
                         }
                     } else {
                         Analytics.shared.log(event: .plus_tapped_mood)
+                        if isOnboarding {
+                            Analytics.shared.log(event: .onboarding_finished_mood)
+                        }
                         withAnimation {
 
                             ///Ashvin : Hide popup with animation
@@ -64,7 +67,7 @@ struct PlusMenu: View {
                     } else {
                         Analytics.shared.log(event: .plus_tapped_gratitude)
                         if isOnboarding {
-                            Analytics.shared.log(event: .onboarding_finished_meditation)
+                            Analytics.shared.log(event: .onboarding_finished_gratitude)
                         }
                         withAnimation {
                             ///Ashvin : Hide popup with animation
@@ -91,6 +94,9 @@ struct PlusMenu: View {
                         }
                     } else {
                         Analytics.shared.log(event: .plus_tapped_meditate)
+                        if isOnboarding {
+                            Analytics.shared.log(event: .onboarding_finished_meditation)
+                        }
                         withAnimation {
                             // Hide popup with animation
                             hidePopupWithAnimation {

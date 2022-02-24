@@ -217,6 +217,7 @@ struct Home: View {
                                                             .font(.system(size: K.isPad() ? 50 : 26))
                                                     }.offset(x: 35, y: K.isPad() ? 45 : 25)
                                                         .padding([.top, .leading])
+                                                        .zIndex(100)
                                                     (model.featuredMeditation?.img ?? Img.daisy3)
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)

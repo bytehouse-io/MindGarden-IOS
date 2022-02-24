@@ -157,6 +157,7 @@ struct LearnScene: View {
 //                                                            .font(Font.mada(.semiBold, size: 16))
 //                                                            .foregroundColor(Clr.black2)
 //                                                            .padding(.leading, 10)
+                            Spacer()
                             Text("3-5 min read")
                                 .font(Font.mada(.medium, size: 14))
                                 .foregroundColor(.gray)
@@ -167,6 +168,7 @@ struct LearnScene: View {
                                 .padding(.horizontal, 10)
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
+                            Spacer()
                         }
                     )
             }.buttonStyle(NeumorphicPress())

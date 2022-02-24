@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          OneSignal.setAppId("7f964cf0-550e-426f-831e-468b9a02f012")
         Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG")
         Purchases.shared.collectDeviceIdentifiers()
+        if let onesignalId = OneSignal.getDeviceState().userId {
+               Purchases.shared.setOnesignalID(onesignalId)
+           }
 
         // Set the Appsflyer Id
         Purchases.shared.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID())
@@ -52,6 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
         return true
     }
+    
+
 
     // MARK: UISceneSession Lifecycle
 
