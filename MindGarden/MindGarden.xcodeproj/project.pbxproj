@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		27150E62514A97893616F10C /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED11BF6B276838C8DC09B5B /* Pods_MindGarden_MindGardenUITests.framework */; };
+		5898014127C5062E00B3FE63 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898013E27C5062E00B3FE63 /* PlusButtonShape.swift */; };
+		5898014227C5062E00B3FE63 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898013F27C5062E00B3FE63 /* PlusButtonPopup.swift */; };
+		5898014327C5062E00B3FE63 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898014027C5062E00B3FE63 /* common.swift */; };
+		5898014527C53EF400B3FE63 /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898014427C53EF400B3FE63 /* TabModel.swift */; };
+		5898014727C5549800B3FE63 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898014627C5549800B3FE63 /* HomeTabView.swift */; };
+		5898014927C60A8900B3FE63 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898014827C60A8900B3FE63 /* TabButtonView.swift */; };
 		59716A2BBE0F2A80B6CF2567 /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0F0C28746ED72909DC2E14 /* Pods_MindGardenTests.framework */; };
 		88BE62B0E6A0FCA51DD8B060 /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570AE9685CA16AB288CEC850 /* Pods_MindGarden.framework */; };
 		FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE09DA2026F52DCD0018099F /* OnboardingModal.swift */; };
@@ -178,6 +184,12 @@
 		38E3759008B674AB9F0E8A14 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		558BC00AF4C0941FD15E5FF3 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		570AE9685CA16AB288CEC850 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5898013E27C5062E00B3FE63 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
+		5898013F27C5062E00B3FE63 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
+		5898014027C5062E00B3FE63 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
+		5898014427C53EF400B3FE63 /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
+		5898014627C5549800B3FE63 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		5898014827C60A8900B3FE63 /* TabButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		7ED11BF6B276838C8DC09B5B /* Pods_MindGarden_MindGardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C28C326CE464F099C26356D /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8E0F0C28746ED72909DC2E14 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -373,6 +385,19 @@
 				249D0CC04571EF4140D1BD3A /* Pods-MindGardenTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		58C0DCFF27C21FFD00FA9747 /* Animation&Tab */ = {
+			isa = PBXGroup;
+			children = (
+				5898014027C5062E00B3FE63 /* common.swift */,
+				5898013F27C5062E00B3FE63 /* PlusButtonPopup.swift */,
+				5898013E27C5062E00B3FE63 /* PlusButtonShape.swift */,
+				5898014427C53EF400B3FE63 /* TabModel.swift */,
+				5898014627C5549800B3FE63 /* HomeTabView.swift */,
+				5898014827C60A8900B3FE63 /* TabButtonView.swift */,
+			);
+			path = "Animation&Tab";
 			sourceTree = "<group>";
 		};
 		FE11F0B42691071500E1E71A /* Profile */ = {
@@ -614,6 +639,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58C0DCFF27C21FFD00FA9747 /* Animation&Tab */,
 				FE11F0B42691071500E1E71A /* Profile */,
 				FEA592C9267E6077006558A2 /* Garden */,
 				FEBA7E702677D65000758E58 /* Store */,
@@ -1179,6 +1205,7 @@
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
+				5898014227C5062E00B3FE63 /* PlusButtonPopup.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
@@ -1194,6 +1221,8 @@
 				FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */,
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
+				5898014327C5062E00B3FE63 /* common.swift in Sources */,
+				5898014527C53EF400B3FE63 /* TabModel.swift in Sources */,
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
 				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
 				FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */,
@@ -1212,11 +1241,13 @@
 				FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */,
 				FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */,
 				FE6B5163270B9E05000118E8 /* NewUpdateModal.swift in Sources */,
+				5898014127C5062E00B3FE63 /* PlusButtonShape.swift in Sources */,
 				FE683F3C269FC550009A66DF /* CategoriesScene.swift in Sources */,
 				FEB2E3C8270F9AC700F5C23C /* AnalyticEvent.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
 				FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */,
+				5898014927C60A8900B3FE63 /* TabButtonView.swift in Sources */,
 				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
 				FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */,
@@ -1226,6 +1257,7 @@
 				FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */,
 				FE683F37269E47D1009A66DF /* LoadingView.swift in Sources */,
 				FEA7FBE426B0DF5A0073C62D /* Plant.swift in Sources */,
+				5898014727C5549800B3FE63 /* HomeTabView.swift in Sources */,
 				FE683F3E26A0CAE1009A66DF /* MeditationsViewModel.swift in Sources */,
 				FEB85FD7266D4E5B008CDAA4 /* Colors+Generated.swift in Sources */,
 			);
