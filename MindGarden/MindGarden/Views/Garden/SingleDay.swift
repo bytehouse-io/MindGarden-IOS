@@ -9,6 +9,8 @@ import SwiftUI
 //TODO - fix iphone 8 bug, selectedplant bug.
 struct SingleDay: View {
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var meditationModel: MeditationViewModel
     @Binding var showSingleModal: Bool
     @Binding var day: Int
     var month: Int
@@ -22,7 +24,7 @@ struct SingleDay: View {
     @State var plant: Plant?
     @State var sessionCounter: Int = 0
     @State var isOnboarding = false
-    @State var showOnboardingModal = false
+    @State var showOnboardingModal = true
     
     init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
         self._showSingleModal = showSingleModal
@@ -179,9 +181,62 @@ struct SingleDay: View {
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
                 }
-                OnboardingModal(shown: $showOnboardingModal)
-                    .offset(y: showOnboardingModal ? 0 : g.size.height)
-                    .animation(.default, value: showOnboardingModal)
+//                OnboardingModal(shown: $showOnboardingModal)
+//                    .offset(y: showOnboardingModal ? 0 : g.size.height)
+//                    .animation(.default, value: showOnboardingModal)
+                BottomSheet(
+                    isOpen: self.$showOnboardingModal,
+                    maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
+                    minHeight: 0.1
+                ) {
+                    VStack {
+                        Text("🥳")
+                            .font(Font.mada(.bold, size: K.isSmall() ? 64 : 80))
+                        Text("Tutorial Complete!")
+                            .font(Font.mada(.bold, size: 32))
+                            .foregroundColor(Clr.darkgreen)
+                            .padding(.bottom, -5)
+                        Text("Kick start your journey by taking our intro to meditation course")
+                            .font(Font.mada(.medium, size: 20))
+                            .foregroundColor(Clr.black2)
+                            .multilineTextAlignment(.center)
+                            .frame(height: 50)
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                showOnboardingModal = false
+                                Analytics.shared.log(event: .onboarding_finished_single_course)
+                                UserDefaults.standard.setValue(false, forKey: "introLink")
+                                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+                                viewRouter.currentPage = .middle
+                            }
+                        } label: {
+                            Capsule()
+                                .fill(Clr.darkgreen)
+                                .overlay(
+                                    Text("Start Day 1 of Course")
+                                        .font(Font.mada(.bold, size: 18))
+                                         .foregroundColor(.white)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.5)
+                                )
+                                
+                        }.buttonStyle(NeumorphicPress())
+                         .frame(height: 45)
+                         .padding(.top, 35)
+                        Text("Not Now")
+                            .font(Font.mada(.semiBold, size: 22))
+                            .foregroundColor(Color.gray)
+                            .underline()
+                            .padding(.top, 5)
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                showOnboardingModal = false
+                            }
+                    }.frame(width: g.size.width * 0.85, alignment: .center)
+                    .padding()
+                }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
@@ -237,8 +292,10 @@ struct SingleDay: View {
                     .font(Font.mada(.semiBold, size: 18))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-            }.padding(.top, 60)
+            }
             .foregroundColor(.white)
+            .frame(height: 80)
+            .padding(.top, 60)
         }
     }
 

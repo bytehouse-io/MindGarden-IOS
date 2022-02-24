@@ -70,7 +70,8 @@ struct PurchaseModal: View {
                                 .foregroundColor(Clr.black1)
                         }.padding(.horizontal, 40)
                         .minimumScaleFactor(0.05)
-                        .lineLimit(6)
+                        .lineLimit(8)
+                        .padding(.vertical, 10)
                         HStack(spacing: 10){
 //                            userModel.willBuyPlant?.title == "Aloe" || userModel.willBuyPlant?.title == "Monstera" ?
 //                            Img.pot
@@ -185,12 +186,12 @@ struct PurchaseModal: View {
                                     }
                                 })
                         }
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.70, alignment: .top)
+                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.80, alignment: .top)
                     .background(Clr.darkWhite)
+                    .cornerRadius(20)
                     .padding(.bottom)
-                    .cornerRadius(12)
                     Spacer()
-                }
+                }.cornerRadius(20)
                 Spacer()
             }
         }.fullScreenCover(isPresented: $showProfile) {

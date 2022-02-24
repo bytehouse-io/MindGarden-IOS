@@ -76,7 +76,7 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 showProfile = true
                                             }
-                                    }.offset(x: 13, y: -25)
+                                    }.offset(x: 15, y: -25)
                                     HStack{
                                         Spacer()
                                         VStack(alignment: .trailing) {

@@ -43,7 +43,7 @@ struct MiddleModal: View {
                                     .font(Font.mada(.semiBold, size: 24))
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
-//                                    .minimumScaleFactor(0.05)
+                                    .frame(height: 50)
                                 Spacer()
                                 Image(systemName: "xmark")
                                     .font(.title)
@@ -53,34 +53,31 @@ struct MiddleModal: View {
                                 .padding(.top, 20)
                             HStack {
                                 HStack(spacing: 0) {
-                                    let _ = print(model.selectedMeditation?.imgURL ?? "", "doncic")
                                     if model.selectedMeditation?.imgURL != "" {
                                         AsyncImage(url: URL(string: model.selectedMeditation?.imgURL ?? "")!,
                                                       placeholder: { Text("Loading ...") },
                                                    image: {
                                                 $0.resizable().aspectRatio(contentMode: .fit)
                                            })
-                                            .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                            .frame(width: g.size.width/5)
                                             .padding(.horizontal, 5)
                                     } else {
                                         model.selectedMeditation?.img
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(width: g.size.width/5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                            .frame(width: g.size.width/5)
                                             .padding(.horizontal, 5)
                                     }
-                               
                                     VStack(alignment: .leading) {
-
                                         Text(model.selectedMeditation?.description ?? "")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.regular, size: 18))
-                                            .lineLimit(6)
+                                            .lineLimit(7)
                                             .minimumScaleFactor(0.05)
-                                    }.frame(width: g.size.width/2, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                    }.frame(width: g.size.width/2)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
-                                }
+                                }.frame(height: g.size.height/(K.isSmall() ? 4 : 4.5))
                             }.padding(.horizontal, 20)
                             HStack {
                                 Text("Instructor:")

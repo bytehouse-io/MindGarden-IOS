@@ -15,6 +15,7 @@
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
 		88B88F6927C3276F00CFE4CC /* check.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B88F6827C3276E00CFE4CC /* check.json */; };
+		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
 		FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A804279CD77400799A07 /* SaveProgressModal.swift */; };
@@ -201,6 +202,7 @@
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
 		88B88F6827C3276E00CFE4CC /* check.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = check.json; path = ../../../../../../Downloads/check.json; sourceTree = "<group>"; };
+		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -725,6 +727,7 @@
 				FED212552741C554006E478E /* SnapCarousel.swift */,
 				FE04A802279A3CA900799A07 /* CheckBox.swift */,
 				FE1CA3CD27B371290074C497 /* AsyncImage.swift */,
+				88DE15FE27C71546005BB894 /* BottomSheet.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1251,6 +1254,7 @@
 				FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
 				FEAA837D2695447300E4C62F /* ProfileScene.swift in Sources */,
+				88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */,
 				FE1CA3CA27B218DD0074C497 /* PlayViewModel.swift in Sources */,
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
 				FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */,

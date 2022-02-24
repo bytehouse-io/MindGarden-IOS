@@ -295,8 +295,8 @@ struct NotificationScene_Previews: PreviewProvider {
     }
 }
 
-fileprivate enum Constants {
-    static let radius: CGFloat = 16
+enum Constants {
+    static let radius: CGFloat = 24
     static let indicatorHeight: CGFloat = 6
     static let indicatorWidth: CGFloat = 60
     static let snapRatio: CGFloat = 0.25
