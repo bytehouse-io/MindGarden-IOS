@@ -9,12 +9,17 @@
 /* Begin PBXBuildFile section */
 		1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */; };
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
+		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
+		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
+		58A9EE7D27C749C500254AC2 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7727C749C500254AC2 /* common.swift */; };
+		58A9EE7E27C749C500254AC2 /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7827C749C500254AC2 /* TabModel.swift */; };
+		58A9EE7F27C749C500254AC2 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7927C749C500254AC2 /* HomeTabView.swift */; };
+		58A9EE8027C749C500254AC2 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7A27C749C500254AC2 /* TabButtonView.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
-		88B88F6927C3276F00CFE4CC /* check.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B88F6827C3276E00CFE4CC /* check.json */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
@@ -196,12 +201,17 @@
 		1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
 		21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
+		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
+		58A9EE7727C749C500254AC2 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
+		58A9EE7827C749C500254AC2 /* TabModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
+		58A9EE7927C749C500254AC2 /* HomeTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		58A9EE7A27C749C500254AC2 /* TabButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
-		88B88F6827C3276E00CFE4CC /* check.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = check.json; path = ../../../../../../Downloads/check.json; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -411,6 +421,19 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
+			isa = PBXGroup;
+			children = (
+				58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */,
+				58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */,
+				58A9EE7727C749C500254AC2 /* common.swift */,
+				58A9EE7827C749C500254AC2 /* TabModel.swift */,
+				58A9EE7927C749C500254AC2 /* HomeTabView.swift */,
+				58A9EE7A27C749C500254AC2 /* TabButtonView.swift */,
+			);
+			path = "Animation&Tab";
+			sourceTree = "<group>";
+		};
 		8876A60427C03C2A00A9622F /* Learn */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,7 +485,6 @@
 			isa = PBXGroup;
 			children = (
 				8862586A27C4369D0093D18C /* check2.json */,
-				88B88F6827C3276E00CFE4CC /* check.json */,
 				FED7437327A734E700435D0A /* coins.json */,
 				FE09DA2226F53BD00018099F /* confetti.json */,
 				FE4D80EC26ED4E36002FE291 /* side-arrow.json */,
@@ -667,6 +689,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58A9EE7427C749C500254AC2 /* Animation&Tab */,
 				8876A60427C03C2A00A9622F /* Learn */,
 				FE11F0B42691071500E1E71A /* Profile */,
 				FEA592C9267E6077006558A2 /* Garden */,
@@ -998,7 +1021,6 @@
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
-				88B88F6927C3276F00CFE4CC /* check.json in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
 				FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */,
@@ -1248,6 +1270,7 @@
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
 				FE7938592787691E00773B23 /* WidgetModal.swift in Sources */,
+				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
@@ -1260,8 +1283,11 @@
 				FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */,
 				FEA607E326FD69090076A177 /* NameScene.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
+				58A9EE7E27C749C500254AC2 /* TabModel.swift in Sources */,
+				58A9EE8027C749C500254AC2 /* TabButtonView.swift in Sources */,
 				FEBD4C6126F979500050A701 /* OverflowScrollView.swift in Sources */,
 				FE1CA3D527B4556C0074C497 /* Array+Extensions.swift in Sources */,
+				58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */,
 				FEB580CF278A236F0022B5E9 /* MiddleModal.swift in Sources */,
 				FE683F39269F74F6009A66DF /* TextFieldAlert.swift in Sources */,
 				FED4636C279F87E7008C8E2E /* ShowRecsScene.swift in Sources */,
@@ -1280,12 +1306,14 @@
 				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,
 				88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
+				58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */,
 				FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */,
 				FE9BE35727434025004FEBF0 /* String+Extensions.swift in Sources */,
 				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
 				FE39A0BC2772A039007A3E82 /* MindfulScene.swift in Sources */,
 				FE48B44527791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
+				58A9EE7F27C749C500254AC2 /* HomeTabView.swift in Sources */,
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
 				FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */,

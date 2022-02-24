@@ -246,58 +246,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                ZStack {
-                                    ///Ashvin : Pass the required flag and change offset while animation
-                                        PlusMenu(showPopUp: $showPopUp, addMood: $addMood, addGratitude: $addGratitude, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, isOnboarding: isOnboarding, width: geometry.size.width)
-                                            .offset(y: showPopUp ? (showPopUpOption ? (geometry.size.height/2.01 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (PopUpIn ? (geometry.size.height/1.88 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)) : (geometry.size.height/1.75 - (K.hasNotch() ? 125 : K.isPad() ? geometry.size.height : geometry.size.height/5)))) : geometry.size.height/2 + 60)
-                                    
-
-                                    //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
-                                    //onboarding userdefault should be equal to signedUp because we just completed it.
-                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "mood" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude"   {
-                                        LottieView(fileName: "side-arrow")
-                                            .frame(width: 75, height: 25)
-                                            .padding(.horizontal)
-                                            .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? geometry.size.height * (K.hasNotch()  ? -0.025 : -0.125) : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? geometry.size.height * (K.hasNotch()  ? 0.1 : 0.025) : geometry.size.height * (K.hasNotch()  ? 0.03 : -0.045))
-                                    }
-                                    HStack {
-                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .garden, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Garden", img: Img.plantIcon)
-                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .meditate, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Meditate", img: Img.meditateIcon)
-                                        ZStack {
-                                            Rectangle()
-                                                .cornerRadius(18, corners: showPopUp ? [.bottomLeft, .bottomRight] : [.topRight, .topLeft, .bottomLeft, .bottomRight])
-                                                .foregroundColor(Clr.superWhite)
-                                                .frame(maxWidth: geometry.size.width/7, maxHeight: geometry.size.width/7)
-                                                .shadow(color: showPopUp ? .black.opacity(0) : .black.opacity(0.25), radius: 4, x: 4, y: 4)
-                                                .zIndex(1)
-
-                                            Image(systemName: "plus")
-                                                .foregroundColor(Clr.darkgreen)
-                                                .font(Font.title.weight(.semibold))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(maxWidth: geometry.size.width/5.5-6 , maxHeight: geometry.size.width/5.5-6)
-                                                .zIndex(2)
-                                                .rotationEffect(showPopUp ? .degrees(45) : .degrees(0))
-                                        }
-                                        .onTapGesture {
-                                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done"  && viewRouter.currentPage == .garden {} else {
-                                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                                ///Ashvin : Hide & Show popup with animation
-                                                if showPopUp == false {
-                                                    showPopupWithAnimation {}
-                                                }
-                                                else {
-                                                    hidePopupWithAnimation {}
-                                                }
-                                            }
-                                        }
-                                        .offset(y: -geometry.size.height/18/2)
-                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .learn, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Learn", img: Img.pencilIcon)
-                                        TabBarIcon(viewRouter: viewRouter, assignedPage: .shop, width: geometry.size.width/5, height: geometry.size.height/40, tabName: "Shop", img: Img.shopIcon)
-                                    }.frame(width: geometry.size.width, height: 80)
-                                        .background(Clr.darkgreen.shadow(radius: 2))
-                                        .offset(y: geometry.size.height/2 - (K.isPad() ? 25 : (K.hasNotch() ? 0 : 15)))
-                                }
+                                HomeTabView(viewRouter:viewRouter)
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
                                     .background(Clr.darkWhite)
