@@ -231,7 +231,7 @@ struct ContentView: View {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
                                     Rectangle()
-                                        .opacity(showPopUp || addMood || addGratitude || isOnboarding ? 0.3 : 0.0)
+                                        .opacity(addMood || addGratitude || isOnboarding ? 0.3 : 0.0)
                                         .foregroundColor(Clr.black1)
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))

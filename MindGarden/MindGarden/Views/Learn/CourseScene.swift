@@ -16,7 +16,9 @@ struct CourseScene: View {
     @Binding var title: String
     @Binding var selectedSlides: [Slide]
     @State private var completed: Bool = false
-    let lottieView = LottieView(fileName: "check", loopMode: .playOnce)
+    
+    @State var isPlaying = false
+//    let lottieView = LottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying:isPlaying)
 
     var body: some View {
         ZStack {
@@ -40,15 +42,16 @@ struct CourseScene: View {
             GeometryReader { g in
                 let width = g.size.width
                 VStack {
-                    HStack {
-                        lottieView
-                            .frame(width: 75, height: 50)
-                        Spacer()
-                    }.frame(width: width, height: 50)
                     Text("💯 Great Job!")
                         .font(Font.mada(.bold, size: 40))
                         .foregroundColor(Clr.darkgreen)
                         .offset(x: 65, y: UIScreen.main.bounds.height * 0.55)
+                    HStack {
+                        LottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying:$isPlaying)
+                    }
+                    .offset(x: width/6)
+                    .frame(width: width, height: 400)
+                    
                 } .offset(x: -width/6, y: completed ? 0 : UIScreen.main.bounds.height)
               
           
@@ -148,6 +151,7 @@ struct CourseScene: View {
                                         .foregroundColor(Clr.black2)
                                         .padding()
                                         .onTapGesture {
+                                            isPlaying = false
                                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                             withAnimation {
                                                 index += 1
@@ -155,7 +159,7 @@ struct CourseScene: View {
                                                 if progressValue > 1.0 {
                                                     completed = true
                                                 }
-                                                lottieView.playAnimation()
+                                                isPlaying = true
                                             }
                                         }
                                 }.frame(width: 60, height: 60)

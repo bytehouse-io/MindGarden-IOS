@@ -16,6 +16,7 @@
 		58A9EE7F27C749C500254AC2 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7927C749C500254AC2 /* HomeTabView.swift */; };
 		58A9EE8027C749C500254AC2 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7A27C749C500254AC2 /* TabButtonView.swift */; };
 		58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE8127C779E200254AC2 /* PlusMenuView.swift */; };
+		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
@@ -209,6 +210,7 @@
 		58A9EE7927C749C500254AC2 /* HomeTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		58A9EE7A27C749C500254AC2 /* TabButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		58A9EE8127C779E200254AC2 /* PlusMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenuView.swift; sourceTree = "<group>"; };
+		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				58A9EE7827C749C500254AC2 /* TabModel.swift */,
 				58A9EE7927C749C500254AC2 /* HomeTabView.swift */,
 				58A9EE7A27C749C500254AC2 /* TabButtonView.swift */,
+				58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */,
 			);
 			path = "Animation&Tab";
 			sourceTree = "<group>";
@@ -1301,6 +1304,7 @@
 				FEA53C89268A662500321C07 /* PlusMenu.swift in Sources */,
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
+				58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */,
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
 				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
 				FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */,
