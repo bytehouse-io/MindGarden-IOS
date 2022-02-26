@@ -12,8 +12,9 @@ struct HomeTabView: View {
     
     @ObservedObject var viewRouter: ViewRouter
     @State var selectedTab: TabType = .meditate
-    @State var showPopup = false
+    @Binding var showPopup : Bool
     @State var scale : CGFloat = 0.01
+    @Binding var isOnboarding: Bool
     var body: some View {
         ZStack(alignment: .bottom) {
             
@@ -21,14 +22,16 @@ struct HomeTabView: View {
                 .ignoresSafeArea()
                 .opacity(showPopup ? 0.5 : 0)
                 .onTapGesture {
-                    DispatchQueue.main.async {
-                        withAnimation(.spring()) {
-                            showPopup.toggle()
+                    if !isOnboarding {
+                        DispatchQueue.main.async {
+                            withAnimation(.spring()) {
+                                showPopup.toggle()
+                            }
                         }
                     }
                 }
-            TabButtonView(selectedTab:$selectedTab)
-            PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption)
+            TabButtonView(selectedTab:$selectedTab, isOnboarding:$isOnboarding)
+            PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption, isOnboarding: $isOnboarding)
         }.onChange(of: selectedTab) { value in
             showPopup = false
             setSelectedTab(selectedTab: value)
@@ -58,6 +61,6 @@ struct HomeTabView: View {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        HomeTabView(selectedOption: .constant(.meditate), viewRouter: ViewRouter())
+        HomeTabView(selectedOption: .constant(.meditate), viewRouter: ViewRouter(), showPopup: .constant(false), isOnboarding: .constant(false))
     }
 }
