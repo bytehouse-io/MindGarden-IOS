@@ -11,6 +11,7 @@ struct PlusMenuView: View {
     @Binding var showPopup: Bool
     @Binding var selectedOption: PlusMenuType
     @State var opac: CGFloat = 0.01
+    @Binding var isOnboarding: Bool
     var body: some View {
         ZStack {
             VStack(spacing: 12) {
@@ -19,8 +20,8 @@ struct PlusMenuView: View {
                         selectedOption = item.tabName
                         showPopup = false
                     } label: {
-                        MenuChoice(title: item.title, img: Image(systemName: item.image),  isOnboarding: false, disabled: false)
-                    }
+                        MenuChoice(title: item.title, img: Image(systemName: item.image), disabled: false)
+                    }.disabled((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"))).opacity((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")) ? 0.5 : 1.0)
                 }
             }
             .scaleEffect(opac)
@@ -36,7 +37,6 @@ struct PlusMenuView: View {
     struct MenuChoice: View {
         let title: String
         let img: Image
-        let isOnboarding: Bool
         let disabled: Bool
 
         var body: some View {

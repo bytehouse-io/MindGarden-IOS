@@ -100,7 +100,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                     showPopUpOption = false
-                                                    showPopUp = false
+//                                                    showPopUp = false
                                                     showItems = false
                                             }
                                     case .shop:
@@ -127,9 +127,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                                                    showPopupWithAnimation {
-                                                        self.isOnboarding = false
-                                                    }
+                                                    self.isOnboarding = false
                                                 }
                                             }
                                     case .finished:
@@ -247,10 +245,20 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter)
-                                    .onChange(of: selectedPopupOption) { value in
-                                        setSelectedPopupOption(selectedOption:value)
+                                ZStack {
+                                    HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter, showPopup: $showPopUp, isOnboarding:$isOnboarding)
+                                        .onChange(of: selectedPopupOption) { value in
+                                            setSelectedPopupOption(selectedOption:value)
+                                        }
+                                    //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
+                                    //onboarding userdefault should be equal to signedUp because we just completed it.
+                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "mood" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude"   {
+                                        LottieView(fileName: "side-arrow")
+                                            .frame(width: 75, height: 25)
+                                            .padding(.horizontal)
+                                            .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? geometry.size.height * (K.hasNotch()  ? -0.050 : 0.125) : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? geometry.size.height * (K.hasNotch()  ? 0.1 : 0.025) : geometry.size.height * (K.hasNotch()  ? 0.03 : -0.045))
                                     }
+                                }
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
                                     .background(Clr.darkWhite)

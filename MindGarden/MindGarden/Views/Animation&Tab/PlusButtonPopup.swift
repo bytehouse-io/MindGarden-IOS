@@ -11,6 +11,7 @@ struct PlusButtonPopup: View {
     @Binding var showPopup: Bool
     @Binding var scale : CGFloat
     @Binding var selectedOption : PlusMenuType
+    @Binding var isOnboarding: Bool
     
     private let buttonRadius : CGFloat = 15.0
     private let popupRadius : CGFloat = 20.0
@@ -29,7 +30,7 @@ struct PlusButtonPopup: View {
                             .fill(Color.white)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                             
-                            PlusMenuView(showPopup:$showPopup, selectedOption: $selectedOption).cornerRadius(popupRadius)
+                            PlusMenuView(showPopup:$showPopup, selectedOption: $selectedOption, isOnboarding: $isOnboarding).cornerRadius(popupRadius)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                         }.zIndex(1)
                         PlusButtonShape(cornerRadius: buttonRadius)
@@ -37,12 +38,14 @@ struct PlusButtonPopup: View {
                             .shadow(color:.black.opacity(0.25), radius: 4, x: 4, y: 4)
                             .plusButtonStyle(scale: scale)
                             .onTapGesture {
-                                DispatchQueue.main.async {
-                                withAnimation(.spring()) {
-                                        DispatchQueue.main.async {
-                                        showPopup.toggle()
+                                if !isOnboarding {
+                                    DispatchQueue.main.async {
+                                        withAnimation(.spring()) {
+                                            DispatchQueue.main.async {
+                                                showPopup.toggle()
+                                            }
+                                        }
                                     }
-                                }
                                 }
                             }
                     }

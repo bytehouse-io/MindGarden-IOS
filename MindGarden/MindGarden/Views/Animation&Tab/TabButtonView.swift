@@ -10,15 +10,18 @@ import SwiftUI
 struct TabButtonView: View {
     @Binding var selectedTab: TabType
     @State var color: Color = .white
+    @Binding var isOnboarding: Bool
     
     var body: some View {
         HStack {
             ForEach(tabList) { item in
                 Button {
-                    DispatchQueue.main.async {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                            selectedTab = item.tabName
-                            color = item.color
+                    if !isOnboarding {
+                        DispatchQueue.main.async {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                selectedTab = item.tabName
+                                color = item.color
+                            }
                         }
                     }
                 } label: {
