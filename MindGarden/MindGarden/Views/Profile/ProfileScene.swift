@@ -14,6 +14,7 @@ import StoreKit
 import GTMAppAuth
 import WidgetKit
 import OneSignal
+import Paywall
 
 var tappedRefer = false
 var mindfulNotifs = false
@@ -426,6 +427,7 @@ struct ProfileScene: View {
                                                         viewRouter.currentPage = .authentication
                                                     }
                                                 }
+                                                PaywallManager.shared.reset()
                                             } label: {
                                                 if let _ = Auth.auth().currentUser?.email {
                                                     Capsule()

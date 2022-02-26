@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Paywall
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -128,20 +129,16 @@ struct OnboardingScene: View {
                         }
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            if index >= 2 {
-                                Analytics.shared.log(event: .onboarding_tapped_continue)
-                                withAnimation {
-                                    viewRouter.progressValue = 0.6
-                                    viewRouter.currentPage = .experience
-                                }
-                            } else {
-                                index += 1
+                            Analytics.shared.log(event: .onboarding_tapped_continue)
+                            withAnimation {
+                                viewRouter.progressValue = 0.6
+                                viewRouter.currentPage = .experience
                             }
                         } label: {
                             Capsule()
                                 .fill(Clr.yellow)
                                 .overlay(
-                                    Text(index != 2 ? "Next" : "Get Happier 👉🏻")
+                                    Text("Get Happier 👉🏻")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 20))
                                 )

@@ -13,6 +13,7 @@ import Purchases
 import FirebaseDynamicLinks
 import Amplitude
 import OneSignal
+import Paywall
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -53,6 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Purchases.shared.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID())
          // promptForPushNotifications will show the native iOS notification permission prompt.
          // We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step 8)
+        
+        // enables debug logs
+       Paywall.debugMode = true
+       // configures the SDK
+       Paywall.configure(apiKey: "pk_2b80d8c8e83cefc53bea6b7a998504fde03f88a8da975b87")
+       // sets the delegate (see https://docs.superwall.me/docs/configuring-the-sdk-1)
+       Paywall.delegate = PaywallManager.shared // or any object that conforms to `PaywallDelegate
+        
         return true
     }
     

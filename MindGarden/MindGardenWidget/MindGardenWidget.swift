@@ -421,7 +421,7 @@ struct MindGardenWidget: Widget {
 struct MindGardenWidget_Previews: PreviewProvider {
     static var previews: some View {
         MindGardenWidgetEntryView(entry: SimpleEntry(date: Date(), grid: [String: [String:[String:[String:Any]]]]()
-                                                     , streakNumber: 1, isPro: false, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
+                                                     , streakNumber: 1, isPro: true, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }
