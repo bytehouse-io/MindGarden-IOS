@@ -16,6 +16,8 @@ import Combine
 import Amplitude
 import OneSignal
 import Purchases
+import Paywall
+import CryptoKit
 
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
@@ -338,6 +340,7 @@ extension AuthenticationViewModel {
             OneSignal.setExternalUserId(email)
             Amplitude.instance().setUserId(email)
             Purchases.shared.logIn(email) { info, bool, error in }
+            Paywall.identify(userId: MD5(string: email))
         }
 
         let formatter = DateFormatter()
@@ -460,6 +463,13 @@ extension AuthenticationViewModel {
         }.joined()
 
         return hashString
+    }
+    func MD5(string: String) -> String {
+        let digest = Insecure.MD5.hash(data: string.data(using: .utf8) ?? Data())
+
+        return digest.map {
+            String(format: "%02hhx", $0)
+        }.joined()
     }
 
     private func randomNonceString(length: Int = 32) -> String {

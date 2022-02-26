@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import GoogleSignIn
+import Paywall
 
 var fromOnboarding = false
 struct Authentication: View {

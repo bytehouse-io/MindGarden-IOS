@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Paywall
 
 var tappedTurnOn = false
 struct ReviewScene: View {
@@ -168,7 +169,7 @@ struct ReviewScene: View {
                             withAnimation {
                                 viewRouter.progressValue += 0.1
                                 fromPage = "onboarding2"
-                                viewRouter.currentPage = .pricing
+//                                viewRouter.currentPage = .pricing
                             }
                         } label: {
                             HStack {

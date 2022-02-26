@@ -260,8 +260,8 @@ struct Play: View {
                         player.volume = vol
                         sliderData.sliderValue = vol
                     } else {
-                        player.volume = 0.5
-                        sliderData.sliderValue = 0.5
+                        player.volume = 0.3
+                        sliderData.sliderValue = 0.3
                     }
                     sliderData.setPlayer(player: self.player!)
                     player.numberOfLoops = -1
@@ -569,7 +569,6 @@ struct Play: View {
                         .rotationEffect(.degrees(-45))
                 }.frame(width: 50, height: 50)
             }.buttonStyle(NeumorphicPress())
-
         }
     }
 

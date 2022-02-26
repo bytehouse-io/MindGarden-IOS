@@ -23,6 +23,8 @@
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
+		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
+		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
 		FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A804279CD77400799A07 /* SaveProgressModal.swift */; };
@@ -217,6 +219,7 @@
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
+		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -375,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */,
+				88F7528727CABBB2004E86D4 /* Paywall in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
 				558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */,
 			);
@@ -726,6 +730,7 @@
 				FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */,
 				FE17B8AF26C06C20002CF8C2 /* Sound.swift */,
 				88A7D91727C0897C001A53DE /* Course.swift */,
+				88F7528827CABD50004E86D4 /* PaywallManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -889,6 +894,7 @@
 			name = MindGarden;
 			packageProductDependencies = (
 				FE39A0B4277116CC007A3E82 /* OneSignal */,
+				88F7528627CABBB2004E86D4 /* Paywall */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -973,6 +979,7 @@
 			mainGroup = FEB6AF89265D95F500224BFD;
 			packageReferences = (
 				FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
+				88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */,
 			);
 			productRefGroup = FEB6AF93265D95F500224BFD /* Products */;
 			projectDirPath = "";
@@ -1264,6 +1271,7 @@
 				FE6FBFA827ADC00400F05A66 /* KeyboardModifier.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
+				88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */,
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,
 				FEB85FE3266D9224008CDAA4 /* TabBarIcon.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
@@ -1407,7 +1415,7 @@
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1435,7 +1443,7 @@
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OneSignalNotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1833,6 +1841,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/superwall-me/paywall-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/OneSignal/OneSignal-XCFramework";
@@ -1845,6 +1861,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		88F7528627CABBB2004E86D4 /* Paywall */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */;
+			productName = Paywall;
+		};
 		FE39A0B4277116CC007A3E82 /* OneSignal */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
