@@ -71,7 +71,7 @@ struct NameScene: View {
                                 withAnimation {
                                     if !name.isEmpty {
                                         UserDefaults.standard.set(name, forKey: "name")
-                                        viewRouter.progressValue += 0.1
+                                        viewRouter.progressValue += 0.15
                                         viewRouter.currentPage = .review
                                         userModel.name = name
                                     }

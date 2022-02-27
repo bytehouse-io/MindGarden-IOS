@@ -289,6 +289,7 @@ struct Garden: View {
             }
             .onAppear {
                 getFavoritePlants()
+                print(UserDefaults.standard.string(forKey: K.defaults.onboarding), "wtf")
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                     isOnboarding = true
                 }

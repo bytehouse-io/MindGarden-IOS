@@ -112,7 +112,22 @@ struct LearnScene: View {
                 }.frame(width: width, alignment: .center)
                 .padding(.top, K.hasNotch() ? 75 : 25)
             }
+            if !UserDefaults.standard.bool(forKey: "day2") {
+                Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+                ZStack {
+                    Rectangle()
+                        .fill(Clr.darkWhite)
+                        .cornerRadius(20)
+                    (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
+                     + Text("Day \(UserDefaults.standard.integer(forKey: "day") )").foregroundColor(Clr.darkgreen))
+                        .font(Font.mada(.bold, size: 24))
+                        .multilineTextAlignment(.center)
+                }.frame(width: UIScreen.main.bounds.width/1.5, height: UIScreen.main.bounds.height/2)
+                .position(x: UIScreen.main.bounds.width/2, y: 300)
+            }
+            
         }
+        .disabled(!UserDefaults.standard.bool(forKey: "day2"))
         .fullScreenCover(isPresented: $showCourse) {
             CourseScene(title: $courseTitle, selectedSlides: $selectedSlides)
         }
@@ -173,6 +188,7 @@ struct LearnScene: View {
                     )
             }.buttonStyle(NeumorphicPress())
             .frame(width: width * 0.5, height: height * 0.225)
+            
         }
     }
 }

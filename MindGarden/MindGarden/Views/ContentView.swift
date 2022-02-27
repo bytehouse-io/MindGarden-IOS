@@ -86,7 +86,6 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-
                                                     showPopupWithAnimation {
                                                         self.isOnboarding = true
                                                     }

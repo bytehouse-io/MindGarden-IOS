@@ -256,7 +256,7 @@ struct DoneCancel: View {
             .padding()
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                     withAnimation {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         showPrompt = false

@@ -224,6 +224,16 @@ class BonusViewModel: ObservableObject {
             self.streakNumber = Int(self.streak![..<plus])!
             let plusOffset = self.streak!.index(plus, offsetBy: 1)
             lastStreakDate = String(self.streak![plusOffset...])
+            
+            // for new users only 
+            if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
+                progressiveDisclosure(lastStreakDate: lastTutorialDate)
+            } else {
+                UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "ltd")
+                progressiveDisclosure(lastStreakDate: formatter.string(from: Date()))
+            }
+            // Progressive Disclosure
+            
             if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
                 self.streakNumber += 1
                 if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
@@ -269,6 +279,29 @@ class BonusViewModel: ObservableObject {
             self.createDailyCountdown()
         }
         return lastStreakDate
+    }
+    
+    private func progressiveDisclosure(lastStreakDate: String) {
+        if Date() - formatter.date(from: lastStreakDate)! >= 43200 {
+            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "ltd")
+            if UserDefaults.standard.bool(forKey: "day1") {
+                if UserDefaults.standard.bool(forKey: "day2") {
+                    if UserDefaults.standard.bool(forKey: "day3") {
+                        if UserDefaults.standard.bool(forKey: "day4") {
+                            
+                        } else { //fourth day back
+                            UserDefaults.standard.setValue(4, forKey: "day")
+                        }
+                    } else { // third day back
+                        UserDefaults.standard.setValue(3, forKey: "day")
+                    }
+                } else { // second day back
+                    UserDefaults.standard.setValue(2, forKey: "day")
+                }
+            } else { // first day back
+                UserDefaults.standard.setValue(1, forKey: "day")
+            }
+        }
     }
 
     private func calculateProgress() {

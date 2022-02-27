@@ -95,64 +95,66 @@ struct Finished: View {
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)
                                             }.offset(y: sizeCategory > .large ? -60 : -15)
-                                            HStack {
-                                                Button {
-                                                } label: {
-                                                    HStack {
-                                                        Img.happy.padding([.top, .leading, .bottom])
-                                                        Text("Log Mood")
-                                                            .foregroundColor(.black)
-                                                            .font(Font.mada(.semiBold, size: 16))
-                                                            .padding(.trailing)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.05)
-                                                    }.frame(width: g.size.width * 0.4, height: 45)
-                                                        .background(Clr.yellow)
-                                                        .cornerRadius(25)
-                                                        .onTapGesture {
-                                                            withAnimation {
-                                                                hideConfetti = true
-                                                                Analytics.shared.log(event: .home_tapped_categories)
-                                                                let impact = UIImpactFeedbackGenerator(style: .light)
-                                                                impact.impactOccurred()
-                                                                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+                                            if !isOnboarding {
+                                                HStack {
+                                                    Button {
+                                                    } label: {
+                                                        HStack {
+                                                            Img.happy.padding([.top, .leading, .bottom])
+                                                            Text("Log Mood")
+                                                                .foregroundColor(.black)
+                                                                .font(Font.mada(.semiBold, size: 16))
+                                                                .padding(.trailing)
+                                                                .lineLimit(1)
+                                                                .minimumScaleFactor(0.05)
+                                                        }.frame(width: g.size.width * 0.4, height: 45)
+                                                            .background(Clr.yellow)
+                                                            .cornerRadius(25)
+                                                            .onTapGesture {
+                                                                withAnimation {
+                                                                    hideConfetti = true
+                                                                    Analytics.shared.log(event: .home_tapped_categories)
+                                                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                                                    impact.impactOccurred()
+                                                                    NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+                                                                }
                                                             }
-                                                        }
-                                                }
-                                                .buttonStyle(NeumorphicPress())
-                                                Button { } label: {
-                                                    HStack {
-                                                        Img.hands
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .padding([.leading])
-                                                            .padding(.vertical, 5)
-                                                        Text("Gratitude")
-                                                            .foregroundColor(.black)
-                                                            .font(Font.mada(.semiBold, size: 16))
-                                                            .padding(.trailing)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.05)
-                                                    }.frame(width: g.size.width * 0.4, height: 45)
-                                                        .background(Clr.yellow)
-                                                        .cornerRadius(25)
-                                                        .onTapGesture {
-                                                            withAnimation {
-                                                                hideConfetti = true
-                                                                Analytics.shared.log(event: .home_tapped_categories)
-                                                                let impact = UIImpactFeedbackGenerator(style: .light)
-                                                                impact.impactOccurred()
-                                                                NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+                                                    }
+                                                    .buttonStyle(NeumorphicPress())
+                                                    Button { } label: {
+                                                        HStack {
+                                                            Img.hands
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fit)
+                                                                .padding([.leading])
+                                                                .padding(.vertical, 5)
+                                                            Text("Gratitude")
+                                                                .foregroundColor(.black)
+                                                                .font(Font.mada(.semiBold, size: 16))
+                                                                .padding(.trailing)
+                                                                .lineLimit(1)
+                                                                .minimumScaleFactor(0.05)
+                                                        }.frame(width: g.size.width * 0.4, height: 45)
+                                                            .background(Clr.yellow)
+                                                            .cornerRadius(25)
+                                                            .onTapGesture {
+                                                                withAnimation {
+                                                                    hideConfetti = true
+                                                                    Analytics.shared.log(event: .home_tapped_categories)
+                                                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                                                    impact.impactOccurred()
+                                                                    NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+                                                                }
                                                             }
-                                                        }
-                                                }
-                                                .buttonStyle(NeumorphicPress())
-                                            }.frame(width: g.size.width, height: 45)
-                                            .padding(.top, 10)
-                                            .zIndex(100)
-                                            .offset(y: sizeCategory > .large ? -60 : 0)
-                                        }.offset(y:  0)
-                                    }
+                                                    }
+                                                    .buttonStyle(NeumorphicPress())
+                                                }.frame(width: g.size.width, height: 45)
+                                                .padding(.top, 10)
+                                                .zIndex(100)
+                                                .offset(y: sizeCategory > .large ? -60 : 0)
+                                            }
+                                        }.offset(y: !isOnboarding ? 0 : -25)
+                                    }.offset(y: !isOnboarding ? 0 : -50)
                                 }
                             }
                             HStack(alignment: .center) {
@@ -181,7 +183,7 @@ struct Finished: View {
                                     .frame(height: g.size.height/2.5)
                                 }
                                 Spacer()
-                            }
+                            }.offset(y: !isOnboarding ? 0 : -50)
                             Spacer()
                                 HStack {
                                     Image(systemName: favorited ? "heart.fill" : "heart")

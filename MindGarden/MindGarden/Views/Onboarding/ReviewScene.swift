@@ -145,9 +145,8 @@ struct ReviewScene: View {
                             impact.impactOccurred()
                             UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                             withAnimation {
-                                fromPage = "onboarding2"
                                 viewRouter.progressValue += 0.1
-                                viewRouter.currentPage = .pricing
+                                viewRouter.currentPage = .meditate
                             }
                         } label: {
                             HStack {
@@ -167,9 +166,8 @@ struct ReviewScene: View {
                             impact.impactOccurred()
                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                             withAnimation {
-                                viewRouter.progressValue += 0.1
-                                fromPage = "onboarding2"
-//                                viewRouter.currentPage = .pricing
+                                viewRouter.progressValue += 0.15
+                                viewRouter.currentPage = .meditate
                             }
                         } label: {
                             HStack {

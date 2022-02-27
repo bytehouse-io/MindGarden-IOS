@@ -305,9 +305,6 @@ struct Play: View {
             }
         }
         .onDisappear {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
-            }
             if player.isPlaying {
                 player.stop()
             }

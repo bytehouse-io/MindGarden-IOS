@@ -106,7 +106,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                if !fromOnboarding {
+                                                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                }
                                                 goToHome()
                                             }
                                         })
@@ -130,7 +132,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                if !fromOnboarding {
+                                                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                                }
                                                 goToHome()
                                             }
                                         })
@@ -162,7 +166,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         if isSignUp {
             OneSignal.sendTag("signedUp", value: "true")
         }
-        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+        if !fromOnboarding {
+            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+        }
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
             if fromOnboarding {
@@ -243,8 +249,9 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                     if googleIsNew {
                         createUser()
                     } else {
-                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                    }
+                        if !fromOnboarding {
+                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                        }                    }
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                         goToHome()
@@ -310,9 +317,7 @@ extension AuthenticationViewModel {
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 if isSignUp {
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == nil  {
-                        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                    }
+    
                 } else {
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }

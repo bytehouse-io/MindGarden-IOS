@@ -87,7 +87,7 @@ struct PlusMenu: View {
 
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    if UserDefaults.standard.integer(forKey: "numMeds") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+                    if UserDefaults.standard.integer(forKey: "numMeds") >= 50 && !UserDefaults.standard.bool(forKey: "isPro") {
                         withAnimation {
                             fromPage = "plusMeditation"
                             viewRouter.currentPage = .pricing
@@ -95,6 +95,7 @@ struct PlusMenu: View {
                     } else {
                         Analytics.shared.log(event: .plus_tapped_meditate)
                         if isOnboarding {
+                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                             Analytics.shared.log(event: .onboarding_finished_meditation)
                         }
                         withAnimation {
