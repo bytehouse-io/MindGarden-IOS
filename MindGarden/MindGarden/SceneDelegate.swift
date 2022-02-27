@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
-//        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+//        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         if !UserDefaults.standard.bool(forKey: "showedNotif") {
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -107,6 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SceneDelegate.bonusModel.bonusTimer = nil
         }
         SceneDelegate.bonusModel.updateBonus()
+        
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

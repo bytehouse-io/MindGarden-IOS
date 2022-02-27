@@ -11,13 +11,15 @@ struct Store: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
-    @State var showModal = false
-    @State var confirmModal = false
-    @State var showSuccess = false
+    @State private var showModal = false
+    @State private var confirmModal = false
+    @State private var showSuccess = false
     var isShop: Bool = true
     @Binding var showPlantSelect: Bool
-    @State var isStore = false
+    @State private var isStore = false
     @State private var showTip = false
+    @State private var currentHightlight: Int = 1
+
     var body: some View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
@@ -47,6 +49,7 @@ struct Store: View {
                             Spacer()
                         }
                         .padding(.top, 35)
+                        .spotlight(enabled: currentHightlight == 1, title: "Login into Account")
                     }
                 ScrollView(showsIndicators: false) {
                     HStack(alignment: .top, spacing: 20) {
@@ -216,6 +219,9 @@ struct Store: View {
             }
             .onDisappear {
                 UserDefaults.standard.setValue(true, forKey: "showTip")
+            }
+            .onTapGesture {
+                currentHightlight += 1
             }
     }
 

@@ -61,9 +61,9 @@ struct PricingView: View {
                                             switch fromPage {
                                             case "home": viewRouter.currentPage = .meditate
                                             case "profile": viewRouter.currentPage = .meditate
-                                            case "onboarding": viewRouter.currentPage = .garden
+                                            case "onboarding": viewRouter.currentPage = .middle
                                             case "store": viewRouter.currentPage = .shop
-                                            case "onboarding2": viewRouter.currentPage = .meditate
+                                            case "onboarding2": viewRouter.currentPage = .garden
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
                                             case "widget": viewRouter.currentPage = .meditate

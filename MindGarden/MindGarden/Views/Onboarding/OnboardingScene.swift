@@ -131,7 +131,7 @@ struct OnboardingScene: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             Analytics.shared.log(event: .onboarding_tapped_continue)
                             withAnimation {
-                                viewRouter.progressValue = 0.6
+                                viewRouter.progressValue = 0.4
                                 viewRouter.currentPage = .experience
                             }
                         } label: {

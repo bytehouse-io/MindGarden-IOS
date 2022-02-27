@@ -62,7 +62,7 @@ struct ExperienceScene: View {
                                         break
                                     }
                                     withAnimation {
-                                        viewRouter.progressValue += 0.1
+                                        viewRouter.progressValue += 0.15
                                         viewRouter.currentPage = .reason
                                     }
                                 } //TODO gray out button if not selected

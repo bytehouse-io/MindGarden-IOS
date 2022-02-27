@@ -13,7 +13,7 @@ import UIKit
 struct Gratitude: View, KeyboardReadable {
     @Binding var shown: Bool
     @Binding var showPopUp: Bool
-    @State var text: String = "Thankful for "
+    @State var text: String = "I'm thankful for "
     @Binding var openPrompts: Bool
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -104,7 +104,7 @@ struct Gratitude: View, KeyboardReadable {
                         UserDefaults.standard.setValue(num, forKey: "numGrads")
                         Analytics.shared.log(event: .gratitude_tapped_done)
                         gardenModel.save(key: K.defaults.gratitudes, saveValue: text)
-                        text = "I'm t2hankful for "
+                        text = "I'm thankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                             showPopupWithAnimation{}

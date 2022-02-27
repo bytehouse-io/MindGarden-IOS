@@ -209,7 +209,8 @@ struct SingleDay: View {
                                 UserDefaults.standard.setValue(false, forKey: "introLink")
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                viewRouter.currentPage = .middle
+                                fromPage = "onboarding"
+                                viewRouter.currentPage = .pricing
                             }
                         } label: {
                             Capsule()
@@ -233,6 +234,8 @@ struct SingleDay: View {
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 showOnboardingModal = false
+                                fromPage = "profile"
+                                viewRouter.currentPage = .pricing
                             }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
                     .padding()
