@@ -154,7 +154,7 @@ struct Finished: View {
                                                 .offset(y: sizeCategory > .large ? -60 : 0)
                                             }
                                         }.offset(y: !isOnboarding ? 0 : -25)
-                                    }.offset(y: !isOnboarding ? 0 : -50)
+                                    }.offset(y: !isOnboarding ? 15 : -50)
                                 }
                             }
                             HStack(alignment: .center) {

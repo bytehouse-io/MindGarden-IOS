@@ -49,7 +49,7 @@ struct CourseScene: View {
                     HStack {
                         LottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying: $isPlaying)
                     }
-                    .offset(x: width/6)
+                    .offset(x: width/6, y: K.isSmall() ? -50 : -25)
                     .frame(width: width, height: 400)
                     
                 } .offset(x: -width/6, y: completed ? 0 : UIScreen.main.bounds.height)
@@ -241,7 +241,6 @@ struct FeaturedItem: View {
                 .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .top)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
-                .background(Color.red)
                 .padding()
         }
             RoundedRectangle(cornerRadius: 30)
