@@ -225,11 +225,8 @@ struct LearnScene: View {
                     .cornerRadius(20)
                     .overlay(
                         VStack(alignment: .leading, spacing: 0) {
-                            AsyncImage(url: URL(string: course.img)!,
-                                          placeholder: { ProgressView() },
-                                       image: {
-                                $0.resizable()
-                               })
+                            UrlImageView(urlString: course.img)
+                                .scaledToFill()
                                 .cornerRadius(20, corners: [.topRight, .topLeft])
                                 .frame(width: width * 0.5, height: height * 0.13)
 //                                  Text("The Power of Gratitude")
