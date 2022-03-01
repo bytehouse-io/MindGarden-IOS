@@ -134,27 +134,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url {
-            AppsFlyerLib.shared().handleOpen(url, options: nil)
-        }
         for context in URLContexts {
             if context.url.scheme == "christmas" {
                 UserDefaults.standard.setValue(true, forKey: "christmasLink")
-            } else if context.url.scheme == "intro" {
+            } else if context.url.scheme == "intro" || context.url.host == "intro"  {
                 UserDefaults.standard.setValue(true, forKey: "introLink")
-            } else if context.url.scheme == "happiness" {
+            } else if context.url.scheme == "happiness" || context.url.host == "happiness" {
                 UserDefaults.standard.setValue(true, forKey: "happinessLink")
-            } else if context.url.scheme == "gratitude" {
+            } else if context.url.scheme == "gratitude" || context.url.host == "gratitude" {
                 NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
-            } else if context.url.scheme == "meditate" {
+            } else if context.url.scheme == "meditate" || context.url.host == "meditate" {
                 NotificationCenter.default.post(name: Notification.Name("meditate"), object: nil)
-            } else if context.url.scheme == "mood" {
+            } else if context.url.scheme == "mood" || context.url.host == "mood" {
                 NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
-            } else if context.url.scheme == "pro" {
+            } else if context.url.scheme == "pro" || context.url.host == "pro" {
                 NotificationCenter.default.post(name: Notification.Name("pro"), object: nil)
-            } else if context.url.scheme == "garden" {
+            } else if context.url.scheme == "garden" || context.url.host == "garden" {
                 NotificationCenter.default.post(name: Notification.Name("garden"), object: nil)
             }
+        }
+        if let url = URLContexts.first?.url {
+            AppsFlyerLib.shared().handleOpen(url, options: nil)
         }
     }
 

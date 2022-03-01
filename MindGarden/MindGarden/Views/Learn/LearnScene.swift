@@ -210,15 +210,7 @@ struct LearnScene: View {
         @Binding var completedCourses: [Int]
         var body: some View {
             Button {
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                if course.category == "life" {
-                    Analytics.shared.log(event: .learn_tapped_life_course)
-                } else if course.category == "meditation" {
-                    Analytics.shared.log(event: .learn_tapped_meditation_course)
-                }
-                learnCourse = course
-                showCourse = true
-                print(completedCourses, course.id, "bongo")
+
             } label: {
                Rectangle()
                     .fill(Clr.darkWhite)
@@ -271,6 +263,15 @@ struct LearnScene: View {
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
                             Spacer()
+                        }.onTapGesture {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            if course.category == "life" {
+                                Analytics.shared.log(event: .learn_tapped_life_course)
+                            } else if course.category == "meditation" {
+                                Analytics.shared.log(event: .learn_tapped_meditation_course)
+                            }
+                            learnCourse = course
+                            showCourse = true
                         }
                     )
             }.buttonStyle(NeumorphicPress())
