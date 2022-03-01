@@ -174,11 +174,8 @@ struct RecRow: View {
                             .padding()
                             .padding(.leading, 10)
                         if meditation.imgURL != "" {
-                            AsyncImage(url: URL(string: meditation.imgURL)!,
-                                          placeholder: { ProgressView() },
-                                       image: {
-                                $0.resizable().aspectRatio(contentMode: .fit)
-                               })
+                            UrlImageView(urlString: meditation.imgURL)
+                                .aspectRatio(contentMode: .fit)
                                 .frame(width: width * 0.2, height: 90)
                                 .padding()
                                 .offset(x: -10, y: isWeekly ? -10 : 0)

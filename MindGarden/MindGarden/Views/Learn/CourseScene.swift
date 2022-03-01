@@ -225,16 +225,14 @@ struct FeaturedItem: View {
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
                 .padding()
-            AsyncImage(url: URL(string: slide.img)!,
-                       placeholder: { ProgressView() },
-                       image: {
-                $0.resizable()
-            })
+            Spacer()
+            UrlImageView(urlString: slide.img)
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(20)
                 .frame(width:  UIScreen.main.bounds.width * 0.8)
                 .padding(.horizontal, 10)
                 .neoShadow()
+            Spacer()
             Text(slide.bottomText)
                 .font(Font.mada(.semiBold, size: 18))
                 .lineLimit(sizeCategory > .large ? 4 : 7)

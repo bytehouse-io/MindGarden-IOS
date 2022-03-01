@@ -54,11 +54,8 @@ struct MiddleModal: View {
                             HStack {
                                 HStack(spacing: 0) {
                                     if model.selectedMeditation?.imgURL != "" {
-                                        AsyncImage(url: URL(string: model.selectedMeditation?.imgURL ?? "")!,
-                                                      placeholder: { Text("Loading ...") },
-                                                   image: {
-                                                $0.resizable().aspectRatio(contentMode: .fit)
-                                           })
+                                        UrlImageView(urlString: model.selectedMeditation?.imgURL ?? "")
+                                            .aspectRatio(contentMode: .fit)
                                             .frame(width: g.size.width/5)
                                             .padding(.horizontal, 5)
                                     } else {
