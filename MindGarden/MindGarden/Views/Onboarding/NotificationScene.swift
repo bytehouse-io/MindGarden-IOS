@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OneSignal
 
 struct NotificationScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -133,67 +134,22 @@ struct NotificationScene: View {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                    let current = UNUserNotificationCenter.current()
-                                            current.getNotificationSettings(completionHandler: { permission in
-                                                switch permission.authorizationStatus  {
-                                                case .authorized:
-                                                    UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
-                                                    Analytics.shared.log(event: .notification_success)
-                                                    if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
-                                                        NotificationHelper.addOneDay()
-                                                    }
-                                                    if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
-                                                        NotificationHelper.addThreeDay()
-                                                    }
-                                                    UserDefaults.standard.setValue(dateTime, forKey: "notif")
-                                                    UserDefaults.standard.setValue(true, forKey: "notifOn")
-
-                                                    if frequency == "Everyday" {
-                                                        for i in 1...7 {
-                                                            let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
-                                                            NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
-                                                        }
-                                                    } else if frequency == "Weekdays" {
-                                                        for i in 2...6 {
-                                                            NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: i)
-                                                        }
-                                                    } else { // weekend
-                                                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
-                                                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
-                                                    }
-
-
-                                                    DispatchQueue.main.async {
-                                                        if fromSettings {
-                                                            presentationMode.wrappedValue.dismiss()
-                                                        } else {
-                                                            if tappedTurnOn {
-                                                                viewRouter.currentPage = .review
-                                                            } else {
-                                                                viewRouter.progressValue += 0.15
-                                                                viewRouter.currentPage = .name
-                                                            }
-                                                        }
-                                                        
-                                                    }
-                                                case .denied:
-                                                    Analytics.shared.log(event: .notification_go_to_settings)
-                                                    DispatchQueue.main.async {
-                                                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
-                                                            UIApplication.shared.open(appSettings)
-                                                        }
-                                                    }
-                                                case .notDetermined:
-                                                    Analytics.shared.log(event: .notification_go_to_settings)
-                                                    DispatchQueue.main.async {
-                                                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
-                                                            UIApplication.shared.open(appSettings)
-                                                        }
-                                                    }
-                                                default:
-                                                    print("Unknow Status")
-                                                }
-                                            })
+                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
+                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                            if accepted {
+                                                Analytics.shared.log(event: .onboarding_notification_on)
+                                                NotificationHelper.addOneDay()
+                                                NotificationHelper.addThreeDay()
+                                                promptNotification()
+                                            } else {
+                                                Analytics.shared.log(event: .onboarding_notification_off)
+                                                promptNotification()
+                                            }
+                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
+                                        })
+                                    } else {
+                                        promptNotification()
+                                    }
                                 }
                             } label: {
                                 Capsule()
@@ -211,6 +167,7 @@ struct NotificationScene: View {
                                     .foregroundColor(.gray)
                                     .padding()
                                     .onTapGesture {
+                                        UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
                                             withAnimation {
@@ -286,6 +243,76 @@ struct NotificationScene: View {
 //                }))
 //            }
 
+    }
+    
+    private func promptNotification() {
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { permission in
+            switch permission.authorizationStatus  {
+            case .authorized:
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
+                Analytics.shared.log(event: .notification_success)
+                if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                    NotificationHelper.addOneDay()
+                }
+                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                    NotificationHelper.addThreeDay()
+                }
+                UserDefaults.standard.setValue(dateTime, forKey: "notif")
+                UserDefaults.standard.setValue(true, forKey: "notifOn")
+
+                if frequency == "Everyday" {
+                    for i in 1...7 {
+                        let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
+                        NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
+                    }
+                } else if frequency == "Weekdays" {
+                    for i in 2...6 {
+                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: i)
+                    }
+                } else { // weekend
+                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
+                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
+                }
+
+                DispatchQueue.main.async {
+                    if fromSettings {
+                        presentationMode.wrappedValue.dismiss()
+                    } else {
+                        if tappedTurnOn {
+                            viewRouter.currentPage = .review
+                        } else {
+                            viewRouter.progressValue += 0.15
+                            viewRouter.currentPage = .name
+                        }
+                    }
+                    
+                }
+            case .denied:
+                if fromSettings || tappedTurnOn {
+                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                    Analytics.shared.log(event: .notification_go_to_settings)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+                }
+            case .notDetermined:
+                if fromSettings || tappedTurnOn {
+                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                    Analytics.shared.log(event: .notification_go_to_settings)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+                }
+            default:
+                print("Unknow Status")
+            }
+        })
     }
 }
 

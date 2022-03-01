@@ -197,6 +197,7 @@ public enum Img {
   public static let siwg = Image("siwg")
   public static let starfish = Image("starfish")
   public static let strawberryMilk = Image("strawberryMilk")
+  public static let streak = Image("streak")
   public static let streakStar = Image("streakStar")
   public static let sun = Image("sun")
   public static let sunglasses = Image("sunglasses")

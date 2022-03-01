@@ -345,7 +345,7 @@ extension AuthenticationViewModel {
             OneSignal.setExternalUserId(email)
             Amplitude.instance().setUserId(email)
             Purchases.shared.logIn(email) { info, bool, error in }
-            Paywall.identify(userId: MD5(string: email))
+            Paywall.identify(userId: email)
         }
 
         let formatter = DateFormatter()

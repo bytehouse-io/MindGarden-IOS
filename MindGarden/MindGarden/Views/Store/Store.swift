@@ -18,7 +18,8 @@ struct Store: View {
     @Binding var showPlantSelect: Bool
     @State private var isStore = false
     @State private var showTip = false
-    @State private var currentHightlight: Int = 1
+    @State private var currentHightlight: Int = -1
+    @State private var isNotifOn = false
 
     var body: some View {
         ZStack {
@@ -49,7 +50,7 @@ struct Store: View {
                             Spacer()
                         }
                         .padding(.top, 35)
-                        .spotlight(enabled: currentHightlight == 1, title: "Login into Account")
+                        .zIndex(currentHightlight == 0 ? 50 : -4)
                     }
                 ScrollView(showsIndicators: false) {
                     HStack(alignment: .top, spacing: 20) {
@@ -180,8 +181,70 @@ struct Store: View {
                         }
                     }.padding()
                 }
-                    .opacity(confirmModal ? 0.3 : 1)
+                .opacity(confirmModal ? 0.3 : 1)
                 }
+//                if currentHightlight == 0 {
+//                    VStack (spacing: 0) {
+//                        Triangle()
+//                            .fill(Clr.yellow)
+//                            .frame(width: 40, height: 20)
+//                        Rectangle()
+//                            .fill(Clr.yellow)
+//                            .frame(width: 300, height: 200)
+//                            .overlay(
+//                                VStack {
+//                                    Text("🎖 Badges are plants that must be earned.\n🪴 Store plants can be bought with coins.")
+//                                        .font(Font.mada(.medium, size: 20))
+//                                        .lineLimit(4)
+//                                        .minimumScaleFactor(0.05)
+//                                        .multilineTextAlignment(.center)
+//                                        .padding(.bottom, 5)
+//                                        .foregroundColor(Color.black)
+//                                    Text("Got it")
+//                                        .foregroundColor(Clr.darkgreen)
+//                                        .font(Font.mada(.bold, size: 22))
+//                                        .onTapGesture {
+//                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                            withAnimation {
+//                                                UserDefaults.standard.setValue(true, forKey: "storeTutorial")
+//                                                currentHightlight = 1
+//                                                showTip = true
+//                                            }
+//                                        }
+//                                }.padding()
+//                            ).cornerRadius(12)
+//                    }.position(x: g.size.width/2, y: 180)
+//                    .opacity(currentHightlight == 0 ? 1 : 0)
+//                }
+//                if !UserDefaults.standard.bool(forKey: "day3") {
+//                    Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+//                    ZStack {
+//                        Rectangle()
+//                            .fill(Clr.darkWhite)
+//                            .cornerRadius(20)
+//                        VStack {
+//                        (Text("🔐 This page will\nunlock on Day 3\nYou're on ").foregroundColor(Clr.black2)
+//                         + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
+//                            .font(Font.mada(.semiBold, size: 22))
+//                            .multilineTextAlignment(.center)
+//                        if !isNotifOn {
+//                            Button {
+//                                promptNotif()
+//                            } label: {
+//                                Capsule()
+//                                    .fill(Clr.yellow)
+//                                    .frame(width: UIScreen.main.bounds.width/2, height: 40)
+//                                    .overlay(Text("Be Notified").font(Font.mada(.bold, size: 22))
+//                                                .multilineTextAlignment(.center)
+//                                                .foregroundColor(.black)
+//                                    )
+//                            }.buttonStyle(NeumorphicPress())
+//                        }
+//                        }
+//                    }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
+//                      .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+//                }
+
                 if showModal || confirmModal {
                     Color.black
                         .opacity(0.3)
@@ -203,28 +266,60 @@ struct Store: View {
                             Text("You can click on badges and open them up")
                           , dismissButton: .default(Text("Got it!")))
                 }
-        }.onAppearAnalytics(event: .screen_load_store)
-            .onAppear {
+            }.onAppear {
+                isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
+                if UserDefaults.standard.bool(forKey: "day3") {
+                    if !UserDefaults.standard.bool(forKey: "storeTutorial") {
+                        currentHightlight = 0
+                    }
+                }
                 if UserDefaults.standard.bool(forKey: "christmasLink") {
                     userModel.willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Christmas Tree"})
                     withAnimation {
                         showModal = true
                     }
-                    UserDefaults.standard.setValue(true, forKey: "showTip")
                     UserDefaults.standard.setValue(false, forKey: "christmasLink")
-                }
-                if isShop {
-                    showTip = !UserDefaults.standard.bool(forKey: "showTip")
                 }
             }
             .onDisappear {
                 UserDefaults.standard.setValue(true, forKey: "showTip")
-            }
-            .onTapGesture {
-                currentHightlight += 1
-            }
+            }.onAppearAnalytics(event: .screen_load_store)
     }
-
+    private func promptNotif() {
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { permission in
+            switch permission.authorizationStatus  {
+            case .authorized:
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                Analytics.shared.log(event: .notification_success_learn)
+                if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                    NotificationHelper.addOneDay()
+                }
+                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                    NotificationHelper.addThreeDay()
+                }
+                UserDefaults.standard.setValue(true, forKey: "notifOn")
+            case .denied:
+                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                Analytics.shared.log(event: .notification_settings_learn)
+                DispatchQueue.main.async {
+                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                        UIApplication.shared.open(appSettings)
+                    }
+                }
+            case .notDetermined:
+                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                    Analytics.shared.log(event: .notification_settings_learn)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+            default:
+                print("Unknow Status")
+            }
+        })
+    }
     struct SuccessModal: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var showSuccess: Bool
