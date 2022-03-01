@@ -74,11 +74,8 @@ struct HomeSquare: View {
                     }.padding(.leading, 25)
                     .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
                         if imgURL != "" {
-                            AsyncImage(url: URL(string: imgURL)!,
-                                          placeholder: { ProgressView() },
-                                       image: {
-                                $0.resizable().aspectRatio(contentMode: .fit)
-                               })
+                            UrlImageView(urlString: imgURL)
+                                .aspectRatio(contentMode: .fit)
                                 .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
                                 .padding(.leading, -17)
                                 .padding(.top, 10)

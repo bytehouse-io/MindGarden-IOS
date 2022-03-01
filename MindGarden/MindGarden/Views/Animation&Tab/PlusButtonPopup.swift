@@ -15,9 +15,7 @@ struct PlusButtonPopup: View {
     
     private let buttonRadius : CGFloat = 15.0
     private let popupRadius : CGFloat = 20.0
-    
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-        
+            
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -27,14 +25,14 @@ struct PlusButtonPopup: View {
                     VStack(spacing:-10) {
                         ZStack {
                         PlusButtonShape(cornerRadius: popupRadius)
-                            .fill(Color.white)
+                                .fill(Clr.superWhite)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                             
                             PlusMenuView(showPopup:$showPopup, selectedOption: $selectedOption, isOnboarding: $isOnboarding).cornerRadius(popupRadius)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                         }.zIndex(1)
                         PlusButtonShape(cornerRadius: buttonRadius)
-                            .fill(Color.white)
+                            .fill(Clr.superWhite)
                             .shadow(color:.black.opacity(0.25), radius: 4, x: 4, y: 4)
                             .plusButtonStyle(scale: scale)
                             .onTapGesture {
@@ -50,7 +48,7 @@ struct PlusButtonPopup: View {
                             }
                     }
                     Spacer()
-                        .frame(height:safeAreaInsets.bottom + 8)
+                        .frame(height:42)
                 }
             }
             .ignoresSafeArea()
