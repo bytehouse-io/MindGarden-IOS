@@ -116,6 +116,8 @@ enum AnalyticEvent {
     case store_tapped_reddit //
     case store_tapped_go_pro
     case store_tapped_badge_tile
+    case notification_success_store //
+    case notification_settings_store //
 
     //MARK: - Middle
     case screen_load_middle //
@@ -151,6 +153,15 @@ enum AnalyticEvent {
     case finished_tapped_finished //
     case finished_tapped_gratitude //
     case finished_tapped_mood //
+    
+    //MARK: - Learn
+    case screen_load_learn //
+    case notification_success_learn //
+    case notification_settings_learn //
+    case learn_tapped_meditation_course //
+    case learn_finished_meditation_course //
+    case learn_tapped_life_course //
+    case learn_finished_life_course //
 
     //MARK: - meds
     case finished_med_1_minute_meditation
@@ -470,6 +481,8 @@ extension AnalyticEvent {
         case .store_tapped_go_pro: return "store_tapped_go_pro"
         case .store_tapped_reddit: return "store_tapped_reddit"
         case .store_tapped_badge_tile: return "store_tapped_badge_tile"
+        case .notification_success_store: return "notification_success_store"
+        case .notification_settings_store: return "notification_settings_store"
         case .screen_load_middle: return "screen_load_middle"
         case .middle_tapped_favorite: return "middle_tapped_favorite"
         case .middle_tapped_unfavorite: return "middle_tapped_unfavorite"
@@ -614,6 +627,13 @@ extension AnalyticEvent {
         case .screen_load_review: return "screen_load_review"
         case .review_tapped_tutorial: return "review_tapped_tutorial"
         case .review_tapped_explore: return "review_tapped_explore"
+        case .screen_load_learn: return "screen_load_learn"
+        case .notification_success_learn: return "notification_success_learn"
+        case .notification_settings_learn: return "notification_settings_learn"
+        case .learn_tapped_meditation_course: return "learn_tapped_meditation_course"
+        case .learn_finished_meditation_course: return "learn_finished_meditation_course"
+        case .learn_tapped_life_course: return "learn_tapped_life_course"
+        case .learn_finished_life_course: return "learn_finished_life_course"
         }
     }
 }

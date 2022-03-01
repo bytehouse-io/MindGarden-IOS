@@ -6,6 +6,7 @@
 //
 
 struct LearnCourse: Hashable {
+    let id: Int
     let title: String
     let img: String
     let description: String

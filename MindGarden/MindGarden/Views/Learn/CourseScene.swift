@@ -13,8 +13,8 @@ struct CourseScene: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var index = 0
     @State private var progressValue = 0.3
-    @Binding var title: String
-    @Binding var selectedSlides: [Slide]
+    @Binding var course: LearnCourse
+    @Binding var completedCourses: [Int]
     @State private var completed: Bool = false
     
     @State var isPlaying = false
@@ -47,7 +47,7 @@ struct CourseScene: View {
                         .foregroundColor(Clr.darkgreen)
                         .offset(x: 65, y: UIScreen.main.bounds.height * 0.55)
                     HStack {
-                        LottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying:$isPlaying)
+                        LottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying: $isPlaying)
                     }
                     .offset(x: width/6)
                     .frame(width: width, height: 400)
@@ -62,11 +62,11 @@ struct CourseScene: View {
                         .cornerRadius(25)
                         .opacity(0)
                         Spacer()
-                        Text("\(title)")
+                        Text("\(course.title)")
                             .foregroundColor(Clr.black2)
                             .lineLimit(2)
-                            .font(Font.mada(.bold, size: 24))
-                            .frame(width: width - 125, alignment: .center)
+                            .font(Font.mada(.bold, size: 20))
+                            .frame(width: width - 125, height: 50, alignment: .center)
                         Spacer()
                         Button {} label: {
                             ZStack {
@@ -88,9 +88,9 @@ struct CourseScene: View {
                             .padding(.trailing)
                     }.frame(width: g.size.width - 75, height: 50)
                     TabView(selection: $index) {
-                        ForEach(selectedSlides.indices, id: \.self) { idx in
+                        ForEach(course.slides.indices, id: \.self) { idx in
                             GeometryReader { proxy in
-                                FeaturedItem(slide: selectedSlides[idx])
+                                FeaturedItem(slide: course.slides[idx])
                                     .modifier(OutlineModifier(cornerRadius: 30))
                                     .rotation3DEffect(
                                         .degrees(proxy.frame(in: .global).minX / -10),
@@ -103,10 +103,8 @@ struct CourseScene: View {
                         }
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
-                    .frame(width: width, height: UIScreen.main.bounds.height * (K.isSmall() ? 0.65 : 0.55) + 50, alignment: .center)
-                    .background(Color.clear)
-                    .offset(y: !completed ? -25 : UIScreen.main.bounds.height)
-        
+                    .frame(width: width, height: UIScreen.main.bounds.height * (K.isSmall() ? 0.7 : 0.6), alignment: .center)
+                    .offset(y: !completed ? 0 : UIScreen.main.bounds.height)
                     Spacer()
                         ZStack(alignment: .leading) {
                             Rectangle()
@@ -131,7 +129,7 @@ struct CourseScene: View {
                                             withAnimation {
                                                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                                 index -= 1
-                                                progressValue -= 1.0/Double(selectedSlides.count)
+                                                progressValue -= 1.0/Double(course.slides.count)
                                             }
                                         }
                                 }.frame(width: 60, height: 60)
@@ -155,8 +153,25 @@ struct CourseScene: View {
                                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                             withAnimation {
                                                 index += 1
-                                                progressValue += 1.0/Double(selectedSlides.count)
+                                                progressValue += 1.0/Double(course.slides.count)
                                                 if progressValue > 1.0 {
+                                                    // update what courses user has finished
+                                                    if let ids = UserDefaults.standard.array(forKey: "completedCourses") as? [Int] {
+                                                        var courseIds = ids
+                                                        if !courseIds.contains(where: {$0 == course.id }) {
+                                                            courseIds.append(course.id)
+                                                            completedCourses = courseIds
+                                                            UserDefaults.standard.setValue(courseIds, forKey: "completedCourses")
+                                                        }
+                                                    } else {
+                                                        completedCourses = [course.id]
+                                                        UserDefaults.standard.setValue([course.id], forKey: "completedCourses")
+                                                    }
+                                                    if course.category == "life" {
+                                                        Analytics.shared.log(event: .learn_finished_life_course)
+                                                    } else if course.category == "meditation" {
+                                                        Analytics.shared.log(event: .learn_finished_meditation_course)
+                                                    }
                                                     completed = true
                                                 }
                                                 isPlaying = true
@@ -175,7 +190,7 @@ struct CourseScene: View {
                 }.frame(width: g.size.width, height: g.size.height, alignment: .center)
             }
         }.onAppear {
-            progressValue = 1.0/Double(selectedSlides.count)
+            progressValue = 1.0/Double(course.slides.count)
         }
        
 //        .background(
@@ -191,7 +206,7 @@ struct CourseScene: View {
 
 struct CourseScene_Previews: PreviewProvider {
     static var previews: some View {
-        CourseScene(title: .constant(""), selectedSlides: .constant([Slide]()))
+        CourseScene(course: .constant(LearnCourse(id: 0, title: "", img: "", description: "", duration: "", category: "", slides: [Slide(topText: "", img: "", bottomText: "")])), completedCourses: .constant([0]))
     }
 }
 
@@ -204,12 +219,12 @@ struct FeaturedItem: View {
         VStack(alignment: .center, spacing: 8) {
             Text(slide.topText)
                 .font(Font.mada(.semiBold, size: 18))
-                .lineLimit(sizeCategory > .large ? 3 : 4)
-                .frame(maxWidth:  UIScreen.main.bounds.width * 0.75, alignment: .leading)
+                .lineLimit(sizeCategory > .large ? 4 : 7)
+                .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.15, alignment: .bottom)
                 .padding(.horizontal)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
-                .padding(.top)
+                .padding()
             AsyncImage(url: URL(string: slide.img)!,
                        placeholder: { ProgressView() },
                        image: {
@@ -217,24 +232,24 @@ struct FeaturedItem: View {
             })
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(20)
-                .frame(width:  UIScreen.main.bounds.width * 0.8, height: 200)
-                .padding(10)
+                .frame(width:  UIScreen.main.bounds.width * 0.8)
+                .padding(.horizontal, 10)
                 .neoShadow()
             Text(slide.bottomText)
                 .font(Font.mada(.semiBold, size: 18))
-                .lineLimit(sizeCategory > .large ? 3 : 4)
-                .frame(maxWidth:  UIScreen.main.bounds.width * 0.75, alignment: .leading)
-                .padding(.bottom)
+                .lineLimit(sizeCategory > .large ? 4 : 7)
+                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .top)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
+                .background(Color.red)
+                .padding()
         }
             RoundedRectangle(cornerRadius: 30)
                 .stroke(Clr.brightGreen, lineWidth: 4)
-        }.frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * (K.isSmall() ? 0.65 : 0.55) , alignment: .center)
+        }.frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * (K.isSmall() ? 0.7 : 0.6) , alignment: .center)
             .background(Clr.darkWhite)
             .cornerRadius(30)
             .padding(.horizontal, 20)
-            .padding(.vertical, 40)
     }
 }
 

@@ -77,7 +77,7 @@ struct BonusModal: View {
                                 .neoShadow()
                             HStack(spacing: 0) {
                                 VStack {
-                                    Img.star
+                                    Img.streak
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .neoShadow()

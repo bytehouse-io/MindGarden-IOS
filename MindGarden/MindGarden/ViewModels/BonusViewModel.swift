@@ -282,6 +282,7 @@ class BonusViewModel: ObservableObject {
     }
     
     private func progressiveDisclosure(lastStreakDate: String) {
+        UserDefaults.standard.setValue(true, forKey: "day3") 
         if Date() - formatter.date(from: lastStreakDate)! >= 43200 {
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "ltd")
             if UserDefaults.standard.bool(forKey: "day1") {
@@ -290,15 +291,19 @@ class BonusViewModel: ObservableObject {
                         if UserDefaults.standard.bool(forKey: "day4") {
                             
                         } else { //fourth day back
+                            UserDefaults.standard.setValue(true, forKey: "day4")
                             UserDefaults.standard.setValue(4, forKey: "day")
                         }
                     } else { // third day back
+                        UserDefaults.standard.setValue(true, forKey: "day3")
                         UserDefaults.standard.setValue(3, forKey: "day")
                     }
                 } else { // second day back
+                    UserDefaults.standard.setValue(true, forKey: "day2")
                     UserDefaults.standard.setValue(2, forKey: "day")
                 }
             } else { // first day back
+                UserDefaults.standard.setValue(true, forKey: "day1")
                 UserDefaults.standard.setValue(1, forKey: "day")
             }
         }

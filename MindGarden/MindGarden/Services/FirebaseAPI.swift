@@ -26,7 +26,11 @@ struct FirebaseAPI {
                     var courseDuration = ""
                     var courseCategory = ""
                     var courseSlides = [Slide]()
+                    var courseId = 0
                     
+                    if let id = document["id"] as? Int {
+                        courseId = id
+                    }
                     if let image = document["image"] as? String {
                         courseImg = image
                     }
@@ -47,7 +51,7 @@ struct FirebaseAPI {
                         }
                     }
                     
-                    let newCourse = LearnCourse(title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory, slides: courseSlides)
+                    let newCourse = LearnCourse(id: courseId, title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory, slides: courseSlides)
                     
                     if !LearnCourse.courses.contains(where: { $0.title == document.documentID }) {
                         LearnCourse.courses.append(newCourse)

@@ -71,11 +71,12 @@ struct MindGardenWidgetEntryView : View {
                 case .systemSmall:
                     Text("Small")
                 case .systemMedium:
-                    if entry.isPro {
+                    if  entry.isPro {
                         MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
                     } else {
                         GoProPage
                     }
+                 
                 case .systemLarge:
                     ZStack {
                         if entry.isPro {
@@ -137,7 +138,7 @@ struct MindGardenWidgetEntryView : View {
                                                 HStack {
                                                     //                                        Text(plants[0].title)
                                                     //                                            .font(Font.mada(.bold, size: 40))
-                                                    ForEach(0..<min(plants.count, 6)) { idx in
+                                                    ForEach(0..<min(plants.count, 5)) { idx in
 //                                                        let xPos = Int.random(in: -25...25)
                                                         Image(plants[idx].title)
                                                             .resizable()
@@ -153,7 +154,7 @@ struct MindGardenWidgetEntryView : View {
                                 }.frame(width: width * 0.85, height: height * 0.25)
                                     .padding(.vertical)
                             }
-                            Text("🧘 Your last 6 sessions")
+                            Text("🧘 Your last 5 sessions")
                                 .foregroundColor(Color("black2"))
                                 .font(Font.mada(.regular, size: 10))
                                 .offset(x: 90, y: -15)
