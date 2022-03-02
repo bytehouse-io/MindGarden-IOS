@@ -20,9 +20,8 @@ struct UrlImageView: View {
                 Image(uiImage: urlImageModel.image!)
                     .resizable()
             } else {
-                ActivityIndicator()
-                .scaledToFit()
-                .frame(width: 50)
+                ActivityIndicator.CircleLoadingView()
+                .frame(width: 50,height: 50)
             }
     }
 }

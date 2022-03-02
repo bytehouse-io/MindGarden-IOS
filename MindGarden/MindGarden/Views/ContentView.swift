@@ -103,15 +103,19 @@ struct ContentView: View {
                                                     showItems = false
                                             }
                                     case .shop:
-                                        Store(showPlantSelect: .constant(false))
+                                        Store()
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
                                             .environmentObject(profileModel)
                                     case .learn:
+                                        NavigationView {
                                         LearnScene()
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .navigationBarHidden(true)
+                                            .ignoresSafeArea()
+                                        }
                                     case .categories:
                                         CategoriesScene(showSearch: .constant(false))
                                             .frame(height: geometry.size.height + 10)
