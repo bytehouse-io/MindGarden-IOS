@@ -48,7 +48,7 @@ struct PlusMenuView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(Clr.darkgreen)
-                        .padding(3)
+                        .padding(title == "Meditate" ? 5 : 3)
                     Text(title)
                         .font(Font.mada(.medium, size: 20))
                         .minimumScaleFactor(0.5)

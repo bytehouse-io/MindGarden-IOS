@@ -28,17 +28,17 @@ struct CourseScene: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 75)
                 .rotationEffect(.degrees(270))
-                .position(x: 20, y: 35)
+                .position(x: 20, y: 70)
             Img.brain
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100)
-                .position(x: 30, y: UIScreen.main.bounds.height * (K.isSmall() ? 0.75 : 0.7))
+                .position(x: 30, y: UIScreen.main.bounds.height * (K.isSmall() ? 0.79 : 0.72))
             Img.books
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100)
-                .position(x: UIScreen.main.bounds.width - 30, y: UIScreen.main.bounds.height * (K.isSmall() ? 0.75 : 0.7))
+                .position(x: UIScreen.main.bounds.width - 30, y: UIScreen.main.bounds.height * (K.isSmall() ? 0.79 : 0.75))
             GeometryReader { g in
                 let width = g.size.width
                 VStack {
@@ -53,8 +53,7 @@ struct CourseScene: View {
                     .frame(width: width, height: 400)
                     
                 } .offset(x: -width/6, y: completed ? 0 : UIScreen.main.bounds.height)
-              
-          
+                Spacer()
                 VStack(){
                     Spacer()
                     HStack {
@@ -86,7 +85,8 @@ struct CourseScene: View {
                             }
                         }.buttonStyle(NeumorphicPress())
                             .padding(.trailing)
-                    }.frame(width: g.size.width - 75, height: 50)
+                    }.frame(width: g.size.width - 75, height: 50, alignment: .top)
+                    Spacer()
                     TabView(selection: $index) {
                         ForEach(course.slides.indices, id: \.self) { idx in
                             GeometryReader { proxy in
@@ -137,6 +137,7 @@ struct CourseScene: View {
                             }.buttonStyle(NeumorphicPress())
                             .padding()
                             Spacer()
+                            Spacer()
                             Button {} label: {
                                 ZStack {
                                     Circle()
@@ -186,7 +187,6 @@ struct CourseScene: View {
                     .background(Clr.darkWhite)
                     .cornerRadius(35)
                     .neoShadow()
-                    Spacer()
                 }.frame(width: g.size.width, height: g.size.height, alignment: .center)
             }
         }.onAppear {
@@ -219,34 +219,36 @@ struct FeaturedItem: View {
         VStack(alignment: .center, spacing: 8) {
             Text(slide.topText)
                 .font(Font.mada(.semiBold, size: 18))
-                .lineLimit(sizeCategory > .large ? 4 : 7)
-                .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.15, alignment: .bottom)
+                .lineLimit(sizeCategory > .large ? 4 : 8)
+                .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .bottom)
                 .padding(.horizontal)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
-                .padding()
+                .padding([.horizontal])
+                .offset(y: 25)
             Spacer()
             UrlImageView(urlString: slide.img)
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(20)
-                .frame(width:  UIScreen.main.bounds.width * 0.8)
+                .frame(width:  UIScreen.main.bounds.width * 0.85, height: 150)
                 .padding(.horizontal, 10)
                 .neoShadow()
             Spacer()
             Text(slide.bottomText)
                 .font(Font.mada(.semiBold, size: 18))
-                .lineLimit(sizeCategory > .large ? 4 : 7)
-                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .top)
+                .lineLimit(sizeCategory > .large ? 4 : 8)
+                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.185, alignment: .top)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
-                .padding()
+                .padding(.horizontal)
+                .offset(y: -25)
         }
             RoundedRectangle(cornerRadius: 30)
                 .stroke(Clr.brightGreen, lineWidth: 4)
         }.frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * (K.isSmall() ? 0.7 : 0.6) , alignment: .center)
             .background(Clr.darkWhite)
             .cornerRadius(30)
-            .padding(.horizontal, 20)
+            .padding((.horizontal), 20)
     }
 }
 

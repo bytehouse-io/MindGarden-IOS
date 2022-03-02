@@ -226,12 +226,17 @@ struct LearnScene: View {
 //                                                            .foregroundColor(Clr.black2)
 //                                                            .padding(.leading, 10)
                             Spacer()
-                            HStack {
-                                Text("3-5 min read")
+                            HStack(spacing: 5) {
+                                Image(systemName: "clock")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color.gray)
+                                    .frame(width: 12)
+                                    .padding([.leading, .top], 10)
+                                Text("\(course.duration) mins")
                                     .font(Font.mada(.medium, size: 14))
                                     .foregroundColor(.gray)
-                                    .padding([.leading, .top], 10)
-                                Spacer()
+                                    .padding([.top, .trailing], 10)
                                 if completedCourses.contains(where: {$0 == course.id}) {
                                     Capsule()
                                         .fill(Clr.yellow)
@@ -253,7 +258,7 @@ struct LearnScene: View {
                             }.frame(height: 25)
                             .offset(y: -4)
                   
-                            Text("🙏 Learn why gratitude is the most powerful human emotion")
+                            Text("\(course.description)")
                                 .font(Font.mada(.medium, size: 12))
                                 .foregroundColor(Clr.black1)
                                 .padding(.horizontal, 10)
