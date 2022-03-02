@@ -22,11 +22,9 @@ struct Home: View {
     @EnvironmentObject var profileModel: ProfileViewModel
     @State private var isRecent = true
     @State private var showModal = false
-    @State private var showPlantSelect = false
     @State private var showSearch = false
     @State private var showUpdateModal = false
     @State private var showMiddleModal = false
-    @State private var showProfile = false
     @State private var wentPro = false
     @State private var ios14 = true
     var bonusModel: BonusViewModel
@@ -34,6 +32,14 @@ struct Home: View {
     @State private var attempts = 0
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
+    
+    enum Sheet: Identifiable {
+        case profile, plant, search
+        var id: Int {
+            hashValue
+        }
+    }
+    @State var activeSheet: Sheet?
 
     init(bonusModel: BonusViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -67,6 +73,7 @@ struct Home: View {
                                                 Analytics.shared.log(event: .home_tapped_search)
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 showSearch = true
+                                                activeSheet = .search
                                             }
                                         Image(systemName: "person.fill")
                                             .foregroundColor(Clr.darkgreen)
@@ -74,7 +81,7 @@ struct Home: View {
                                             .onTapGesture {
                                                 Analytics.shared.log(event: .home_tapped_search)
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                showProfile = true
+                                                activeSheet = .profile
                                             }
                                     }.offset(x: 15, y: -25)
                                     HStack{
@@ -160,7 +167,7 @@ struct Home: View {
                                     Button {
                                         Analytics.shared.log(event: .home_tapped_plant_select)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        showPlantSelect = true
+                                        activeSheet = .plant
                                     } label: {
                                         HStack {
                                             userModel.selectedPlant?.head
@@ -438,22 +445,21 @@ struct Home: View {
                         .animation(.default, value: showUpdateModal)
                 }
             }
-            .fullScreenCover(isPresented: $showProfile) {
-                ProfileScene(profileModel: profileModel)
-                    .environmentObject(userModel)
-                    .environmentObject(gardenModel)
-                    .environmentObject(viewRouter)
+            .fullScreenCover(item: $activeSheet) { item in
+                switch item {
+                case .profile:
+                    ProfileScene(profileModel: profileModel)
+                                        .environmentObject(userModel)
+                                        .environmentObject(gardenModel)
+                                        .environmentObject(viewRouter)
+                case .plant:
+                    Store(isShop: false)
+                case .search:
+                    CategoriesScene(isSearch: true, showSearch: $showSearch)
+                }
             }
             .transition(.opacity)
             .navigationBarHidden(true)
-            .sheet(isPresented: $showPlantSelect, content: {
-                Store(isShop: false, showPlantSelect: $showPlantSelect)
-            })
-            .popover(isPresented: $showSearch, content: {
-                if #available(iOS 14.0, *) {
-                    CategoriesScene(isSearch: true, showSearch: $showSearch)
-                }
-            })
             .alert(isPresented: $wentPro) {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }

@@ -15,11 +15,12 @@ struct Store: View {
     @State private var confirmModal = false
     @State private var showSuccess = false
     var isShop: Bool = true
-    @Binding var showPlantSelect: Bool
     @State private var isStore = false
     @State private var showTip = false
     @State private var currentHightlight: Int = -1
     @State private var isNotifOn = false
+    
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ZStack {
@@ -59,7 +60,7 @@ struct Store: View {
                                 if !isShop {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        showPlantSelect = false
+                                        presentationMode.wrappedValue.dismiss()
                                     } label: {
                                         Image(systemName: "xmark")
                                             .resizable()
@@ -464,6 +465,6 @@ struct Store: View {
 
 struct Store_Previews: PreviewProvider {
     static var previews: some View {
-        Store(showPlantSelect: .constant(false))
+        Store()
     }
 }

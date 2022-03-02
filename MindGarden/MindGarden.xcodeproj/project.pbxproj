@@ -17,6 +17,7 @@
 		58A9EE8027C749C500254AC2 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7A27C749C500254AC2 /* TabButtonView.swift */; };
 		58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE8127C779E200254AC2 /* PlusMenuView.swift */; };
 		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
+		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
@@ -211,6 +212,7 @@
 		58A9EE7A27C749C500254AC2 /* TabButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		58A9EE8127C779E200254AC2 /* PlusMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenuView.swift; sourceTree = "<group>"; };
 		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
 			isa = PBXGroup;
 			children = (
+				58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */,
 				58C4A51F27CE764700856913 /* UrlImageView.swift */,
 				58A9EE8127C779E200254AC2 /* PlusMenuView.swift */,
 				58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */,
@@ -1283,6 +1286,7 @@
 				58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
 				FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */,
+				58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
 				FEAA837D2695447300E4C62F /* ProfileScene.swift in Sources */,
 				88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */,
