@@ -152,15 +152,17 @@ struct LearnScene: View {
             CourseScene(course: $learnCourse, completedCourses: $completedCourses)
         }
         .onAppear {
-            if let comCourses = UserDefaults.standard.array(forKey: "completedCourses") as? [Int] {
-                completedCourses = comCourses
-            }
-            isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
-             for course in LearnCourse.courses {
-                if course.category == "meditation" {
-                    meditationCourses.append(course)
-                } else {
-                    meditationCourses.append(course)
+            DispatchQueue.main.async {
+                if let comCourses = UserDefaults.standard.array(forKey: "completedCourses") as? [Int] {
+                    completedCourses = comCourses
+                }
+                isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
+                for course in LearnCourse.courses {
+                    if course.category == "meditation" {
+                        meditationCourses.append(course)
+                    } else {
+                        meditationCourses.append(course)
+                    }
                 }
             }
         }

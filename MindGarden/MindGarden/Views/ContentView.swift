@@ -34,6 +34,8 @@ struct ContentView: View {
     var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
     @State var hasConnection = false
+    
+    @State var selectedTab: TabType = .meditate
 
     @State var selectedPopupOption: PlusMenuType = .none
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
@@ -249,7 +251,7 @@ struct ContentView: View {
                                     }
                                 }
                                 ZStack {
-                                    HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter, showPopup: $showPopUp, isOnboarding:$isOnboarding)
+                                    HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter, selectedTab: $selectedTab, showPopup: $showPopUp, isOnboarding:$isOnboarding)
                                         .onChange(of: selectedPopupOption) { value in
                                             setSelectedPopupOption(selectedOption:value)
                                         }
@@ -322,6 +324,11 @@ struct ContentView: View {
             animationAmount = 2
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 showSplash.toggle()
+            }
+        }.onChange(of: viewRouter.currentPage) { value in
+            debugPrint(viewRouter.currentPage)
+            if viewRouter.currentPage == .garden && selectedTab != .garden {
+                selectedTab = .garden
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.gratitude))
