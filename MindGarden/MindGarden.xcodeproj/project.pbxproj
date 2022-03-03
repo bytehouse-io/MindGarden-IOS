@@ -24,6 +24,9 @@
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
+		88C28A0227D15FAB00FCF11D /* 11hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C289FF27D15FAA00FCF11D /* 11hz.mp3 */; };
+		88C28A0327D15FAB00FCF11D /* 432hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0027D15FAB00FCF11D /* 432hz.mp3 */; };
+		88C28A0427D15FAB00FCF11D /* 14hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0127D15FAB00FCF11D /* 14hz.mp3 */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
@@ -219,6 +222,9 @@
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
+		88C289FF27D15FAA00FCF11D /* 11hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 11hz.mp3; path = "../../../../../../Downloads/drive-download-20220303T204100Z-001/11hz.mp3"; sourceTree = "<group>"; };
+		88C28A0027D15FAB00FCF11D /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 432hz.mp3; path = "../../../../../../Downloads/drive-download-20220303T204100Z-001/432hz.mp3"; sourceTree = "<group>"; };
+		88C28A0127D15FAB00FCF11D /* 14hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 14hz.mp3; path = "../../../../../../Downloads/drive-download-20220303T204100Z-001/14hz.mp3"; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -794,6 +800,9 @@
 		FEBF1AB2271385A1000BF1BD /* BackgroundSounds */ = {
 			isa = PBXGroup;
 			children = (
+				88C289FF27D15FAA00FCF11D /* 11hz.mp3 */,
+				88C28A0127D15FAB00FCF11D /* 14hz.mp3 */,
+				88C28A0027D15FAB00FCF11D /* 432hz.mp3 */,
 				FEBF22C926DC3860002572E2 /* bell.mp3 */,
 				FE9B407F26A65A40000DF00C /* fire.mp3 */,
 				FE9B407D26A65820000DF00C /* nature.mp3 */,
@@ -1018,6 +1027,7 @@
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
+				88C28A0327D15FAB00FCF11D /* 432hz.mp3 in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
@@ -1030,6 +1040,7 @@
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
+				88C28A0427D15FAB00FCF11D /* 14hz.mp3 in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
@@ -1043,6 +1054,7 @@
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
+				88C28A0227D15FAB00FCF11D /* 11hz.mp3 in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
 				FEBF1ABC27138635000BF1BD /* Tuning Into Your Body.mp3 in Resources */,
 			);

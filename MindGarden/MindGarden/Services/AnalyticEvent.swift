@@ -142,6 +142,8 @@ enum AnalyticEvent {
     case play_tapped_sound_nature //
     case play_tapped_sound_fire //
     case play_tapped_sound_noSound //
+    case play_tapped_hz //
+    case play_tapped_instrument //
 
     //MARK: - Finished
     case screen_load_finished //
@@ -307,6 +309,24 @@ extension AnalyticEvent {
             return .play_tapped_sound_noSound
         case .nature:
             return .play_tapped_sound_nature
+        case .fourThirtyTwo:
+            return .play_tapped_hz
+        case .fourteen:
+            return .play_tapped_hz
+        case .eleven:
+            return .play_tapped_hz
+        case .six:
+            return .play_tapped_hz
+        case .flute:
+            return .play_tapped_instrument
+        case .guitar:
+            return .play_tapped_instrument
+        case .music:
+            return .play_tapped_instrument
+        case .piano1:
+            return .play_tapped_instrument
+        case .piano2:
+            return .play_tapped_instrument
         }
     }
     static func getTab(tabName: String) -> AnalyticEvent {
@@ -502,6 +522,8 @@ extension AnalyticEvent {
         case .play_tapped_sound_nature: return "play_tapped_sound_nature"
         case .play_tapped_sound_fire: return "play_tapped_sound_fire"
         case .play_tapped_sound_noSound: return "play_tapped_sound_noSound"
+        case .play_tapped_hz: return "play_tapped_hz"
+        case .play_tapped_instrument: return "play_tapped_instrument"
         case .screen_load_finished: return "screen_load_finished"
         case .finished_save_progress: return "finished_save_progress"
         case .finished_not_now: return "finished_not_now"

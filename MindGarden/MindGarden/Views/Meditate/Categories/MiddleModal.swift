@@ -75,7 +75,7 @@ struct MiddleModal: View {
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                 }.frame(height: g.size.height/(K.isSmall() ? 4.5 : 5))
-                            }.padding([.horizontal, .top], 20)
+                            }.padding([.horizontal], 20)
                             HStack {
                                 Text("Instructor:")
                                 Image(systemName: "person.fill")

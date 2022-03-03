@@ -292,12 +292,14 @@ struct Play: View {
                 if  let url = URL(string: model.selectedMeditation?.url ?? "") {
                     let playerItem = AVPlayerItem(url: url)
                     self.mainPlayer = AVPlayer(playerItem: playerItem)
+                    mainPlayer.volume = 5
                     mainPlayer.play()
                     model.startCountdown()
                 }
             } else if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
                 let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3")
                 self.mainPlayer = AVPlayer(url: URL(fileURLWithPath: url!))
+                mainPlayer.volume = 5
                 mainPlayer.play()
                 model.startCountdown()
             } else {
@@ -460,7 +462,7 @@ struct Play: View {
                     Spacer()
                     HStack(alignment: .center) {
                         Spacer()
-                        VStack(alignment: .center, spacing: 0) {
+                        VStack(alignment: .center, spacing: 15) {
                             Text("Background Noise")
                                 .foregroundColor(Clr.black1)
                                 .font(Font.mada(.bold, size: 24))
@@ -474,6 +476,19 @@ struct Play: View {
                                 SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
                                 SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
                                 SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            }
+                            HStack {
+                                SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            }
+                            HStack {
+                                SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .fourteen, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .eleven, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .six, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
                             }
                             GeometryReader { geometry in
                                 Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
@@ -514,7 +529,7 @@ struct Play: View {
                             .animation(.default)
 
                             
-                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.45, alignment: .center)
+                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.65, alignment: .center)
                         .background(Clr.darkWhite)
                         .cornerRadius(20)
                         Spacer()
@@ -556,7 +571,7 @@ struct Play: View {
                     type?.img
                         .resizable()
                         .renderingMode(.template)
-                        .padding(10)
+                        .padding(type == .fourThirtyTwo || type == .fourteen || type == .eleven || type == .six ? 0 :  type == .flute ? 5 : 10)
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(.white)
                     Rectangle()
