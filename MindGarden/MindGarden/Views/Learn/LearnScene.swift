@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OneSignal
 
 struct LearnScene: View {
     @State private var meditationCourses: [LearnCourse] = []
@@ -14,6 +15,7 @@ struct LearnScene: View {
     @State private var learnCourse: LearnCourse = LearnCourse(id: 0, title: "", img: "", description: "", duration: "", category: "", slides: [Slide(topText: "", img: "", bottomText: "")])
     @State private var isNotifOn = false
     @State private var completedCourses = [Int]()
+    @EnvironmentObject var bonusModel: BonusViewModel
     
     var body: some View {
         ZStack {
@@ -117,36 +119,54 @@ struct LearnScene: View {
                 .padding(.bottom, g.size.height * (K.hasNotch() ? 0.1 : 0.25))
                 }.frame(height: height)
             }
-//            .disabled(!UserDefaults.standard.bool(forKey: "day2"))
-//            if !UserDefaults.standard.bool(forKey: "day2") {
-//                Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
-//                ZStack {
-//                    Rectangle()
-//                        .fill(Clr.darkWhite)
-//                        .cornerRadius(20)
-//                    VStack {
-//                        (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
-//                         + Text("Day \(UserDefaults.standard.integer(forKey: "day") )").foregroundColor(Clr.darkgreen))
-//                            .font(Font.mada(.semiBold, size: 22))
-//                            .multilineTextAlignment(.center)
-//                        if !isNotifOn {
-//                            Button {
-//                                promptNotif()
-//                            } label: {
-//                                Capsule()
-//                                    .fill(Clr.yellow)
-//                                    .frame(width: UIScreen.main.bounds.width/2, height: 40)
-//                                    .overlay(Text("Be Notified").font(Font.mada(.bold, size: 22))
-//                                                .multilineTextAlignment(.center)
-//                                                .foregroundColor(.black)
-//                                    )
-//                            }.buttonStyle(NeumorphicPress())
-//                        }
-//                    }
-//
-//                }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
-//                    .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
-//            }
+            .disabled(!UserDefaults.standard.bool(forKey: "day1"))
+            if !UserDefaults.standard.bool(forKey: "day1") {
+                Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+                ZStack {
+                    Rectangle()
+                        .fill(Clr.darkWhite)
+                        .cornerRadius(20)
+                    VStack {
+                        (Text("🔐 This page will\nunlock in ")
+                            .foregroundColor(Clr.black2) +
+                         Text(bonusModel.progressiveInterval)
+                            .foregroundColor(Clr.darkgreen) +
+                         Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
+                            .foregroundColor(Clr.black2))
+                            .font(Font.mada(.semiBold, size: 22))
+                            .multilineTextAlignment(.center)
+                        if !isNotifOn {
+                            Button {
+                                if !UserDefaults.standard.bool(forKey: "showedNotif") {
+                                    OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                        if accepted {
+                                            Analytics.shared.log(event: .notification_success_learn)
+                                            NotificationHelper.addOneDay()
+                                            NotificationHelper.addThreeDay()
+                                            UserDefaults.standard.setValue(true, forKey: "mindful")
+                                            NotificationHelper.createMindfulNotifs()
+                                            isNotifOn = true
+                                        }
+                                        UserDefaults.standard.setValue(true, forKey: "showedNotif")
+                                    })
+                                } else {
+                                    promptNotif()
+                                }
+                                
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.yellow)
+                                    .frame(width: UIScreen.main.bounds.width/2, height: 40)
+                                    .overlay(Text("Be Notified").font(Font.mada(.bold, size: 22))
+                                                .multilineTextAlignment(.center)
+                                                .foregroundColor(.black)
+                                    )
+                            }.buttonStyle(NeumorphicPress())
+                        }
+                    }
+                }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
+                    .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+            }
         }
         .fullScreenCover(isPresented: $showCourse) {
             CourseScene(course: $learnCourse, completedCourses: $completedCourses)

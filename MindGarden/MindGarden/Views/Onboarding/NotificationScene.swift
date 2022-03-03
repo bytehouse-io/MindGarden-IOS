@@ -140,6 +140,8 @@ struct NotificationScene: View {
                                                 Analytics.shared.log(event: .onboarding_notification_on)
                                                 NotificationHelper.addOneDay()
                                                 NotificationHelper.addThreeDay()
+                                                UserDefaults.standard.setValue(true, forKey: "mindful")
+                                                NotificationHelper.createMindfulNotifs()
                                                 promptNotification()
                                             } else {
                                                 Analytics.shared.log(event: .onboarding_notification_off)

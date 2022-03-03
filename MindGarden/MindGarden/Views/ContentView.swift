@@ -115,6 +115,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .navigationBarHidden(true)
                                             .ignoresSafeArea()
+                                            .environmentObject(bonusModel)
                                         }
                                     case .categories:
                                         CategoriesScene(showSearch: .constant(false))

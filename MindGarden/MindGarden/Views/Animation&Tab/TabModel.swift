@@ -26,6 +26,15 @@ struct TabMenuItem: Identifiable {
     var image: Image
     var tabName: TabType
     var color: Color
+    
+    func name() -> String {
+        switch self.tabName {
+        case .garden: return "Garden"
+        case .meditate: return "Meditate"
+        case .shop: return "Shop"
+        case .learn: return "Learn"
+        }
+    }
 }
 
 

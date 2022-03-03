@@ -121,10 +121,10 @@ struct RecRow: View {
                     Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
                         .foregroundColor(Color.gray)
                         .font(Font.mada(.semiBold, size: 16))
-                        .position(x: sizeCategory > .large ? 150 : 125, y: sizeCategory > .large ? -10 : 30)
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
-                        .frame(width: abs(width * 0.85), alignment: .leading)
+                        .frame(width: abs(UIScreen.main.bounds.width * 0.85), alignment: .leading)
+                        .position(x: sizeCategory > .large ? 250 : 225, y: sizeCategory > .large ? -10 : 30)
                 
                 }
                 HStack {

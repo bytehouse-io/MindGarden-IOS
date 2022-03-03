@@ -39,11 +39,9 @@ struct NotificationHelper {
         var modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
         if hour < 11 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
-        }
-        else if hour < 16 {
+        } else if hour < 16 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 24, to: Date())
-        }
-        else {
+        } else {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
         }
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())

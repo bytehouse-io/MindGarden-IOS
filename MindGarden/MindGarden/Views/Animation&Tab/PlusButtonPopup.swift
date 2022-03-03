@@ -36,6 +36,7 @@ struct PlusButtonPopup: View {
                             .shadow(color:.black.opacity(0.25), radius: 4, x: 4, y: 4)
                             .plusButtonStyle(scale: scale)
                             .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                 if !isOnboarding {
                                     DispatchQueue.main.async {
                                         withAnimation(.spring()) {

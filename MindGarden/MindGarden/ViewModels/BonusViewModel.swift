@@ -25,6 +25,8 @@ class BonusViewModel: ObservableObject {
     @Published var totalBonuses: Int = 0
     @Published var dailyInterval: String = ""
     @Published var bonusTimer: Timer? = Timer()
+    @Published var progressiveTimer: Timer? = Timer()
+    @Published var progressiveInterval: String = ""
     var userModel: UserViewModel
     var streakNumber = 1
     let formatter: DateFormatter = {
@@ -54,6 +56,29 @@ class BonusViewModel: ObservableObject {
         self.bonusTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
             interval -= 1
             dailyInterval = interval.stringFromTimeInterval()
+            if interval <= 0 {
+                timer.invalidate()
+            }
+        }
+    }
+    
+    private func createProgressiveCountdown() {
+        self.progressiveTimer?.invalidate()
+        self.progressiveTimer = nil
+        progressiveInterval = ""
+        var interval = TimeInterval()
+
+        if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
+            interval = formatter.date(from: lastTutorialDate)! - Date()
+        } else {
+            interval = 43200
+        }
+        
+
+        progressiveInterval = interval.stringFromTimeInterval()
+        self.progressiveTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
+            interval -= 1
+            progressiveInterval = interval.stringFromTimeInterval()
             if interval <= 0 {
                 timer.invalidate()
             }
@@ -228,12 +253,15 @@ class BonusViewModel: ObservableObject {
             // for new users only 
             if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
+                createProgressiveCountdown()
             } else {
-                UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "ltd")
-                progressiveDisclosure(lastStreakDate: formatter.string(from: Date()))
+                createProgressiveCountdown()
+                let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
+                UserDefaults.standard.setValue(dte, forKey: "ltd")
+                progressiveDisclosure(lastStreakDate: dte)
             }
-            // Progressive Disclosure
             
+            // Progressive Disclosure
             if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
                 self.streakNumber += 1
                 if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
@@ -282,8 +310,9 @@ class BonusViewModel: ObservableObject {
     }
     
     private func progressiveDisclosure(lastStreakDate: String) {
-        if Date() - formatter.date(from: lastStreakDate)! >= 43200 {
-            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "ltd")
+        if formatter.date(from: lastStreakDate)! - Date() <= 0 {
+            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
+            UserDefaults.standard.setValue(formatter.string(for: dte),forKey: "ltd")
             if UserDefaults.standard.bool(forKey: "day1") {
                 if UserDefaults.standard.bool(forKey: "day2") {
                     if UserDefaults.standard.bool(forKey: "day3") {

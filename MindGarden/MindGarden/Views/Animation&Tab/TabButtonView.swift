@@ -30,6 +30,10 @@ struct TabButtonView: View {
                             .renderingMode(.template)
                             .font(.body.bold())
                             .frame(width: 44, height: 29)
+                        Text(item.name())
+                            .font(Font.mada(.semiBold, size: 12))
+                            .foregroundColor(.white)
+                            .padding(.top, 8)
                     }
                     .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
                     .frame(maxWidth: .infinity)
@@ -42,8 +46,8 @@ struct TabButtonView: View {
         
         .padding(.horizontal, 8)
         .padding(.top, 14)
-        .frame(height: 88, alignment: .top)
-        .background( Clr.darkgreen.cornerRadius(40, corners: [.topLeft, .topRight]))
+        .frame(height: 80, alignment: .top)
+        .background( Clr.darkgreen.cornerRadius(15, corners: [.topLeft, .topRight]))
         .overlay(
             HStack {
                 if selectedTab == .shop { Spacer() }

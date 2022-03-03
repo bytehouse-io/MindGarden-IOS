@@ -74,8 +74,8 @@ struct MiddleModal: View {
                                     }.frame(width: g.size.width/2)
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
-                                }.frame(height: g.size.height/(K.isSmall() ? 4 : 4.5))
-                            }.padding(.horizontal, 20)
+                                }.frame(height: g.size.height/(K.isSmall() ? 4.5 : 5))
+                            }.padding([.horizontal, .top], 20)
                             HStack {
                                 Text("Instructor:")
                                 Image(systemName: "person.fill")
@@ -135,7 +135,7 @@ struct MiddleModal: View {
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.55, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.65 : 0.55), alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()
