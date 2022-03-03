@@ -11,7 +11,7 @@ struct HomeTabView: View {
     @Binding var selectedOption: PlusMenuType
     
     @ObservedObject var viewRouter: ViewRouter
-    @State var selectedTab: TabType = .meditate
+    @Binding var selectedTab: TabType
     @Binding var showPopup : Bool
     @State var scale : CGFloat = 0.01
     @Binding var isOnboarding: Bool
@@ -41,8 +41,8 @@ struct HomeTabView: View {
     private func setSelectedTab(selectedTab:TabType){
         let tabName = selectedTab.rawValue.capitalized
         Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
-        withAnimation {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        withAnimation(.linear(duration: 0.8)) {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single"  {
                 switch selectedTab {
                 case .garden:
@@ -61,6 +61,6 @@ struct HomeTabView: View {
 
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
-        HomeTabView(selectedOption: .constant(.meditate), viewRouter: ViewRouter(), showPopup: .constant(false), isOnboarding: .constant(false))
+        HomeTabView(selectedOption: .constant(.meditate), viewRouter: ViewRouter(), selectedTab: .constant(.meditate), showPopup: .constant(false), isOnboarding: .constant(false))
     }
 }
