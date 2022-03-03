@@ -18,7 +18,7 @@ struct TabButtonView: View {
                 Button {
                     if !isOnboarding {
                         DispatchQueue.main.async {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            withAnimation(.easeIn(duration: 0.2)) {
                                 selectedTab = item.tabName
                                 color = item.color
                             }
