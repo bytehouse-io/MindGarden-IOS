@@ -468,46 +468,48 @@ struct Home: View {
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
-        .animation(.easeOut(duration: 0.1))
+        .transition(.opacity)
         .onAppear {
-            if #available(iOS 15.0, *) {
-                ios14 = false
-            }
-            if launchedApp {
-                gardenModel.updateSelf()
-                launchedApp = false
-                var num = UserDefaults.standard.integer(forKey: "shownFive")
-                num += 1
-                UserDefaults.standard.setValue(num, forKey: "shownFive")
-                model.getFeaturedMeditation()
-            }
-            if userWentPro {
-                wentPro = userWentPro
-                userWentPro = false
-            }
-            numberOfMeds += Int.random(in: -3 ... 3)
-            //handle update modal or deeplink
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                if UserDefaults.standard.bool(forKey: "introLink") {
-                    model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
-                    viewRouter.currentPage = .middle
-                    UserDefaults.standard.setValue(false, forKey: "introLink")
-                } else if UserDefaults.standard.bool(forKey: "happinessLink") {
-                    model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 14})
-                    viewRouter.currentPage = .middle
-                    UserDefaults.standard.setValue(false, forKey: "happinessLink")
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    ios14 = false
+                }
+                if launchedApp {
+                    gardenModel.updateSelf()
+                    launchedApp = false
+                    var num = UserDefaults.standard.integer(forKey: "shownFive")
+                    num += 1
+                    UserDefaults.standard.setValue(num, forKey: "shownFive")
+                    model.getFeaturedMeditation()
+                }
+                if userWentPro {
+                    wentPro = userWentPro
+                    userWentPro = false
+                }
+                numberOfMeds += Int.random(in: -3 ... 3)
+                //handle update modal or deeplink
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                    if UserDefaults.standard.bool(forKey: "introLink") {
+                        model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
+                        viewRouter.currentPage = .middle
+                        UserDefaults.standard.setValue(false, forKey: "introLink")
+                    } else if UserDefaults.standard.bool(forKey: "happinessLink") {
+                        model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 14})
+                        viewRouter.currentPage = .middle
+                        UserDefaults.standard.setValue(false, forKey: "happinessLink")
+                    }
+                    
+                    if UserDefaults.standard.bool(forKey: "christmasLink") {
+                        viewRouter.currentPage = .shop
+                    } else {
+                        showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
+                    }
                 }
                 
-                if UserDefaults.standard.bool(forKey: "christmasLink") {
-                    viewRouter.currentPage = .shop
-                } else {
-                    showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
-                }
+                
+                coins = userCoins
+                //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
-            
-            
-            coins = userCoins
-            //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
         }
         .onAppearAnalytics(event: .screen_load_home)
     }

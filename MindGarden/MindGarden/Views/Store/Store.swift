@@ -267,7 +267,8 @@ struct Store: View {
                             Text("You can click on badges and open them up")
                           , dismissButton: .default(Text("Got it!")))
                 }
-            }.onAppear {
+        }.onAppear {
+            DispatchQueue.main.async {
                 isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
                 if UserDefaults.standard.bool(forKey: "day3") {
                     if !UserDefaults.standard.bool(forKey: "storeTutorial") {
@@ -282,6 +283,7 @@ struct Store: View {
                     UserDefaults.standard.setValue(false, forKey: "christmasLink")
                 }
             }
+        }
             .onDisappear {
                 UserDefaults.standard.setValue(true, forKey: "showTip")
             }.onAppearAnalytics(event: .screen_load_store)

@@ -288,10 +288,12 @@ struct Garden: View {
                     .navigationViewStyle(StackNavigationViewStyle())
             }
             .onAppear {
-                getFavoritePlants()
-                print(UserDefaults.standard.string(forKey: K.defaults.onboarding), "wtf")
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                    isOnboarding = true
+                DispatchQueue.main.async {
+                    getFavoritePlants()
+                    print(UserDefaults.standard.string(forKey: K.defaults.onboarding), "wtf")
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                        isOnboarding = true
+                    }
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)
