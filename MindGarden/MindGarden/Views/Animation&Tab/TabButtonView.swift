@@ -46,8 +46,8 @@ struct TabButtonView: View {
         
         .padding(.horizontal, 8)
         .padding(.top, 14)
-        .frame(height: 80, alignment: .top)
-        .background( Clr.darkgreen.cornerRadius(12, corners: [.topLeft, .topRight]))
+        .frame(height: 88, alignment: .top)
+        .background( Clr.darkgreen.cornerRadius(40, corners: [.topLeft, .topRight]))
         .overlay(
             HStack {
                 if selectedTab == .shop { Spacer() }

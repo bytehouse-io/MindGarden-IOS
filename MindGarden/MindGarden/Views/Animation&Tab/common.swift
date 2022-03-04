@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+class Helper: NSObject {
+    class func minuteandhours (min : Double, isNewLine : Bool = false) -> String {
+        let hour = Int(min / 60)
+        let minute = Int(min) % 60
+        if hour > 0 && minute > 0 {
+            return "\(hour) hr\(isNewLine ? "\n" : "") \(minute) min"
+        }
+        else if(hour > 0){
+            return "\(hour) hr"
+        }
+        else if(minute > 0){
+            return "\(minute) min"
+        }
+        return "0 min"
+    }
+
+}
+
 extension View {
 
     func plusPopupStyle(size:CGSize, scale:CGFloat) -> some View {

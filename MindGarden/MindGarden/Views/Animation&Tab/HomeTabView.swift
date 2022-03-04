@@ -42,7 +42,7 @@ struct HomeTabView: View {
         let tabName = selectedTab.rawValue.capitalized
         Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        withAnimation(.linear(duration: 0.8)) {
+        withAnimation(.linear(duration: 0.5)) {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single"  {
                 switch selectedTab {
                 case .garden:
