@@ -412,10 +412,12 @@ struct ProfileScene: View {
                                                     .padding(.top, K.isSmall() ? 0 : 15)
                                                     .padding(.bottom, -10)
                                             }
+                                            
                                             Button {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 if let _ = Auth.auth().currentUser?.email {
                                                     Analytics.shared.log(event: .profile_tapped_logout)
+                                                    presentationMode.wrappedValue.dismiss()
                                                     profileModel.signOut()
                                                     // if user signs out -> send them to meditate page
                                                     withAnimation {

@@ -88,6 +88,32 @@ struct NotificationHelper {
            }
         }
     }
+    
+    static func addUnlockedLearn() {
+        let content = UNMutableNotificationContent()
+        content.title = "🤓 Your Learn Page has been unlocked!"
+        content.body = "We recommend starting with Understanding mindfulness"
+        content.sound = UNNotificationSound.default
+
+        let modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
+
+        // Create the trigger as a repeating event.
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents, repeats: true)
+        // Create the request
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString,
+                    content: content, trigger: trigger)
+        UserDefaults.standard.setValue(uuidString, forKey: "threeDayNotif")
+        // Schedule the request with the system.
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+           if error != nil {
+              // Handle any errors.
+           }
+        }
+    }
 
     //Create Date from picker selected value.
     static func createDate(weekday: Int, hour: Int, minute: Int)->Date{
