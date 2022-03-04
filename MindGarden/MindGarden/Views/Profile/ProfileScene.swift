@@ -559,7 +559,7 @@ struct ProfileScene: View {
             VStack {
                 VStack(alignment: .center, spacing: 20) {
                     HStack(alignment: .center, spacing: 15) {
-                        StatBox(label: "All Mins", img: Img.iconTotalTime, value: "\(totalMins/60 == 0 && totalMins != 0 ? "0.5" : "\(totalMins/60)")")
+                        StatBox(label: "All Mins", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(totalMins),isNewLine: true))")
                         StatBox(label: "All Sess", img: Img.iconSessions, value: "\(totalSessions)")
                     }.padding(.horizontal, 5)
                     HStack(alignment: .center, spacing: 15) {

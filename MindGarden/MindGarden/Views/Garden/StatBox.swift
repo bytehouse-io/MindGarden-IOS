@@ -21,8 +21,9 @@ struct StatBox: View {
             HStack(spacing: 0){
                 img
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .aspectRatio(contentMode: .fill)
                     .padding(8)
+                    .frame(maxWidth: 50, maxHeight: 50)
                 VStack(alignment: .center, spacing: 0) {
                     Text(label)
                         .font(Font.mada(.regular, size: 12))
@@ -33,7 +34,7 @@ struct StatBox: View {
                         .font(Font.mada(.bold, size: 26))
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.center)
-                }.frame(maxWidth: 50, maxHeight: 100)
+                }.frame(maxWidth: 75, maxHeight: 150)
                 .padding(5)
             }
         } 

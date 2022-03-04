@@ -155,7 +155,7 @@ struct Garden: View {
                         .zIndex(-1000)
                         HStack(spacing: 5) {
                             VStack(spacing: 15) {
-                                StatBox(label: "Minutes", img: Img.iconTotalTime, value: gardenModel.totalMins/60 == 0 && gardenModel.totalMins != 0 ? "0.5" : "\(gardenModel.totalMins/60)")
+                                StatBox(label: "Total mins", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins)))")
                                 StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
                                 StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
                             }
@@ -166,6 +166,7 @@ struct Garden: View {
                                     .cornerRadius(15)
                                     .neoShadow()
                                 VStack(spacing: 10) {
+                                    Spacer()
                                     HStack(alignment: .bottom) {
                                         MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
                                         MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
@@ -181,6 +182,7 @@ struct Garden: View {
                                     }
                                     .frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1.5 : 0.5))
                                     .padding(.horizontal, 10)
+                                    Spacer()
 
                                 }
                             }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 0.75 : 0.5))
