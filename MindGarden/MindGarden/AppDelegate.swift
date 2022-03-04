@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //          if let user = user {
 //            let userRecord = Database.database().reference().child("users").child(user.uid)
 //            userRecord.child("referred_by").setValue(invitedBy)
-//            if dynamicLink.matchConfidence == .weak {
+//            if dynamicLink.matchConfidence == .weak {e
 //              // If the Dynamic Link has a weak match confidence, it is possible
 //              // that the current device isn't the same device on which the invitation
 //              // link was originally opened. The way you handle this situation
