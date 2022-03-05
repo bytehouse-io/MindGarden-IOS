@@ -23,7 +23,6 @@ struct StatBox: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .padding(8)
-                    .frame(maxWidth: 50, maxHeight: 50)
                 VStack(alignment: .center, spacing: 0) {
                     Text(label)
                         .font(Font.mada(.regular, size: 12))

@@ -155,7 +155,7 @@ struct Garden: View {
                         .zIndex(-1000)
                         HStack(spacing: 5) {
                             VStack(spacing: 15) {
-                                StatBox(label: "Total mins", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins)))")
+                                StatBox(label: "Total mins", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
                                 StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
                                 StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
                             }
@@ -175,13 +175,12 @@ struct Garden: View {
                                         MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
                                         MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
                                     }.padding(.horizontal, sizeCategory > .large ? 0 : 10)
-                                    HStack {
+                                    HStack(alignment: .bottom) {
+                                        
                                         MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
-                                            .frame(maxWidth: gp.size.width * 0.5 * (sizeCategory > .large ? 1 : 0.44))
+                                            .frame(maxWidth:120)
                                         Spacer()
-                                    }
-                                    .frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1.5 : 0.5))
-                                    .padding(.horizontal, 10)
+                                    }.padding(.horizontal, 5)
                                     Spacer()
 
                                 }
@@ -346,6 +345,7 @@ struct MoodImage: View {
             Mood.getMoodImage(mood: mood)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: .infinity)
             VStack(alignment: .center) {
                 Text(mood.title)
                     .font(.subheadline)
@@ -357,7 +357,7 @@ struct MoodImage: View {
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
             }.padding(.leading, 3)
-            .frame(maxWidth: sizeCategory > .large ? 60 : 40)
+            .frame(maxWidth: .infinity)
         }.padding(3)
     }
 }
