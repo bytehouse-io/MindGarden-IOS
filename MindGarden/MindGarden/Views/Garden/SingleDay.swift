@@ -187,7 +187,11 @@ struct SingleDay: View {
                 BottomSheet(
                     isOpen: self.$showOnboardingModal,
                     maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
-                    minHeight: 0.1
+                    minHeight: 0.1,
+                    trigger: {
+                        fromPage = "onboarding2"
+                        viewRouter.currentPage = .pricing
+                    }
                 ) {
                     VStack {
                         Text("🥳")
@@ -232,10 +236,12 @@ struct SingleDay: View {
                             .underline()
                             .padding(.top, 5)
                             .onTapGesture {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                showOnboardingModal = false
-                                fromPage = "profile"
-                                viewRouter.currentPage = .pricing
+                                withAnimation {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    showOnboardingModal = false
+                                    fromPage = "profile"
+                                    viewRouter.currentPage = .pricing
+                                }
                             }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
                     .padding()

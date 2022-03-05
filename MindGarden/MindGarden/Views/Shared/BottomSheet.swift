@@ -17,6 +17,7 @@ struct BottomSheet<Content: View>: View {
     private var indicator: some View {
         HStack {
             Text("Done").padding().foregroundColor(Clr.darkWhite)
+                .opacity(0)
             Spacer()
             RoundedRectangle(cornerRadius: Constants.radius)
                 .fill(Color.secondary)
@@ -27,20 +28,23 @@ struct BottomSheet<Content: View>: View {
             Spacer()
             Text("Done")
                 .font(Font.mada(.bold, size: 18))
-                .foregroundColor(Clr.darkWhite)
                 .padding(.horizontal)
+                .opacity(0)
         }
     }
 
     let maxHeight: CGFloat
     let minHeight: CGFloat
     let content: Content
+    let trigger: () -> Void
 
-    init(isOpen: Binding<Bool>, maxHeight: CGFloat, minHeight: CGFloat, @ViewBuilder content: () -> Content) {
+    init(isOpen: Binding<Bool>, maxHeight: CGFloat, minHeight: CGFloat, trigger: @escaping () -> Void, @ViewBuilder content: () -> Content) {
         self.minHeight = maxHeight * minHeight
         self.maxHeight = maxHeight
         self.content = content()
         self._isOpen = isOpen
+        self.trigger = trigger
+        
     }
 
     var body: some View {
@@ -64,6 +68,7 @@ struct BottomSheet<Content: View>: View {
                     let snapDistance = self.maxHeight * Constants.snapRatio
                     guard abs(value.translation.height) > snapDistance else { return }
                     self.isOpen = value.translation.height < 0
+                    self.trigger()
                 }
             )
         }
@@ -72,7 +77,9 @@ struct BottomSheet<Content: View>: View {
 
 struct BottomSheet_Previews: PreviewProvider {
     static var previews: some View {
-        BottomSheet(isOpen: .constant(true), maxHeight: 100, minHeight: 0.2) {
+        BottomSheet(isOpen: .constant(true), maxHeight: 100, minHeight: 0.2, trigger: {
+            print("bingo")
+        }) {
             VStack {
                 Text("preview")
             }

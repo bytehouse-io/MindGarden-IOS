@@ -251,7 +251,7 @@ struct Finished: View {
 
                     if showUnlockedModal || saveProgress {
                         Color.black
-                            .opacity(0.3)
+                            .opacity(0.55)
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
@@ -259,10 +259,68 @@ struct Finished: View {
                     OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
                         .offset(y: showUnlockedModal ? 0 : g.size.height)
                         .animation(.default, value: showUnlockedModal)
-                    SaveProgressModal(shown: $saveProgress)
-                        .offset(y: saveProgress ? 0 : g.size.height)
-                        .animation(.default, value: saveProgress)
-                        .environmentObject(viewRouter)
+                    BottomSheet(
+                        isOpen: self.$saveProgress,
+                        maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
+                        minHeight: 0.1,
+                        trigger: {
+                            fromPage = "onboarding2"
+                            viewRouter.currentPage = .pricing
+                        }
+                    ) {
+                        VStack {
+                            Text("Save Your Progress?")
+                                .font(Font.mada(.bold, size: 32))
+                                .foregroundColor(Clr.darkgreen)
+                            Text("📝")
+                                .font(Font.mada(.bold, size: K.isSmall() ? 64 : 80))
+                                .padding(.bottom, -10)
+                                .padding(.top, 5)
+//                            Text("")
+//                                .font(Font.mada(.medium, size: 20))
+//                                .foregroundColor(Clr.black2)
+//                                .multilineTextAlignment(.center)
+//                                .frame(height: 50)
+                            Button {
+                                saveProgress.toggle()
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .finished_save_progress)
+                                    fromOnboarding = true
+                                    viewRouter.currentPage = .authentication
+                                    UserDefaults.standard.setValue(true, forKey: "saveProgress")
+                                }
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.darkgreen)
+                                    .overlay(
+                                        Text("Yes, save my progress")
+                                            .font(Font.mada(.bold, size: 20))
+                                             .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
+                                    )
+                                    
+                            }.buttonStyle(NeumorphicPress())
+                             .frame(height: 45)
+                             .padding(.top, 35)
+                            Text("Not Now")
+                                .font(Font.mada(.semiBold, size: 20))
+                                .foregroundColor(Color.gray)
+                                .underline()
+                                .padding(.top, 25)
+                                .onTapGesture {
+                                    withAnimation {
+                                        saveProgress.toggle()
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        fromPage = "profile"
+                                        viewRouter.currentPage = .pricing
+                                    }
+                                }
+                        }.frame(width: g.size.width * 0.8, alignment: .center)
+                        .padding()
+                    }.offset(y: g.size.height * 0.1)
                 }
             }
         }.transition(.move(edge: .trailing))

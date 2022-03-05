@@ -47,7 +47,7 @@ struct PricingView: View {
                                 Img.morningSun
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                Image(systemName: "xmark")
+                                Image(systemName: "sk")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20)
