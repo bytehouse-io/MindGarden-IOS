@@ -219,7 +219,7 @@ struct Authentication: View {
                                 viewRouter.currentPage = .onboarding
                             } else {
                                 if fromOnboarding {
-                                    viewRouter.currentPage = .finished
+                                    viewRouter.currentPage = .garden
                                 } else {
                                     viewRouter.currentPage = .meditate
                                 }

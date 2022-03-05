@@ -284,7 +284,7 @@ struct Garden: View {
 
                 }
             }
-            .sheet(isPresented: $showSingleModal) {
+            .popover(isPresented: $showSingleModal) {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
@@ -292,7 +292,6 @@ struct Garden: View {
             .onAppear {
                 DispatchQueue.main.async {
                     getFavoritePlants()
-                    print(UserDefaults.standard.string(forKey: K.defaults.onboarding), "wtf")
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                         isOnboarding = true
                     }

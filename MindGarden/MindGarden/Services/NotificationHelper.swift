@@ -89,10 +89,10 @@ struct NotificationHelper {
         }
     }
     
-    static func addUnlockedLearn() {
+    static func addUnlockedFeature(title: String, body: String) {
         let content = UNMutableNotificationContent()
-        content.title = "🤓 Your Learn Page has been unlocked!"
-        content.body = "We recommend starting with Understanding mindfulness"
+        content.title = title
+        content.body = body
         content.sound = UNNotificationSound.default
 
         let modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
@@ -105,7 +105,6 @@ struct NotificationHelper {
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString,
                     content: content, trigger: trigger)
-        UserDefaults.standard.setValue(uuidString, forKey: "threeDayNotif")
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in
@@ -134,7 +133,7 @@ struct NotificationHelper {
        }
 
        //Schedule Notification with weekly bases.
-    static func scheduleNotification(at date: Date, weekDay: Int, title: String = "It's time to meditate!", subtitle: String = "Let's tend to our garden & become happier.", isMindful: Bool = false) {
+    static func scheduleNotification(at date: Date, weekDay: Int, title: String = "🧘‍♀️ LET'S GOOOOOOOO", subtitle: String = "Practice makes perfect, tend to your garden today.", isMindful: Bool = false) {
            let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute], from: date)
 
            let content = UNMutableNotificationContent()

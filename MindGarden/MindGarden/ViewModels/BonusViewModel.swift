@@ -255,6 +255,7 @@ class BonusViewModel: ObservableObject {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
                 createProgressiveCountdown()
             } else {
+                NotificationHelper.addUnlockedFeature(title: "🤓 Your Learn Page has been unlocked!", body: "We recommend starting with Understanding Mindfulness")
                 createProgressiveCountdown()
                 let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
                 UserDefaults.standard.setValue(dte, forKey: "ltd")
@@ -317,7 +318,7 @@ class BonusViewModel: ObservableObject {
                 if UserDefaults.standard.bool(forKey: "day2") {
                     if UserDefaults.standard.bool(forKey: "day3") {
                         if UserDefaults.standard.bool(forKey: "day4") {
-                            
+                                
                         } else { //fourth day back
                             UserDefaults.standard.setValue(true, forKey: "day4")
                             UserDefaults.standard.setValue(4, forKey: "day")
@@ -331,6 +332,7 @@ class BonusViewModel: ObservableObject {
                     UserDefaults.standard.setValue(2, forKey: "day")
                 }
             } else { // first day back
+                NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
                 UserDefaults.standard.setValue(true, forKey: "day1")
                 UserDefaults.standard.setValue(1, forKey: "day")
             }

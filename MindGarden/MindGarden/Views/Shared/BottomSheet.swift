@@ -27,12 +27,7 @@ struct BottomSheet<Content: View>: View {
             Spacer()
             Text("Done")
                 .font(Font.mada(.bold, size: 18))
-                .foregroundColor(Clr.darkgreen)
-                .onTapGesture {
-                    Analytics.shared.log(event: .notification_tapped_done)
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    self.isOpen.toggle()
-                }
+                .foregroundColor(Clr.darkWhite)
                 .padding(.horizontal)
         }
     }

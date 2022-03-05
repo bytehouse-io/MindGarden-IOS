@@ -94,7 +94,7 @@ struct Finished: View {
                                                     .font(Font.mada(.bold, size: 24))
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)
-                                            }.offset(y: sizeCategory > .large ? -60 : -15)
+                                            }.offset(y: sizeCategory > .large ? -60 : -25)
                                             if !isOnboarding {
                                                 HStack {
                                                     Button {
@@ -255,6 +255,7 @@ struct Finished: View {
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
+                    
                     OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
                         .offset(y: showUnlockedModal ? 0 : g.size.height)
                         .animation(.default, value: showUnlockedModal)

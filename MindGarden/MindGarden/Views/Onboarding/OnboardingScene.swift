@@ -114,13 +114,13 @@ struct OnboardingScene: View {
                                     }.offset(y: index == 0 ? 0 : -20)
                             }
                             .onChange(of: index, perform: { _ in
-                                if index == 0 {
-                                    viewRouter.progressValue = 0.3
-                                } else if index == 1{
-                                    viewRouter.progressValue = 0.4
-                                } else {
-                                    viewRouter.progressValue = 0.5
-                                }
+//                                if index == 0 {
+//                                    viewRouter.progressValue = 0.3
+//                                } else if index == 1{
+//                                    viewRouter.progressValue = 0.4
+//                                } else {
+//                                    viewRouter.progressValue = 0.5
+//                                }
                             })
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                             .frame(width: width * (K.isSmall() ? 0.65 : 0.55), height: height * (0.75), alignment: .center)

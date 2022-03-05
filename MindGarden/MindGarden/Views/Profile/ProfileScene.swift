@@ -425,6 +425,7 @@ struct ProfileScene: View {
                                                     }
                                                 } else {
                                                     Analytics.shared.log(event: .profile_tapped_create_account)
+                                                    presentationMode.wrappedValue.dismiss()
                                                     withAnimation {
                                                         viewRouter.currentPage = .authentication
                                                     }

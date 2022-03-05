@@ -94,7 +94,7 @@ struct HomeSquare: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .position(x:  width * 0.4, y: 30)
+                    .position(x: UIScreen.main.bounds.width * 0.385, y: 30)
             }
             if isNew {
                 Capsule()
@@ -107,7 +107,7 @@ struct HomeSquare: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                     )
-                    .position(x: 125, y: 17)
+                    .position(x: width * 0.35, y: 17)
                     .opacity(0.8)
             }
         }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id)) ? 0.45 : 1)

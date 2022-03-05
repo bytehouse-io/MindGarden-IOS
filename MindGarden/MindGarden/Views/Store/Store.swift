@@ -224,12 +224,24 @@ struct Store: View {
                             .fill(Clr.darkWhite)
                             .cornerRadius(20)
                         VStack {
-                        (Text("🔐 This page will\nunlock on Day 3\nYou're on ").foregroundColor(Clr.black2)
-                         + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
-                            .font(Font.mada(.semiBold, size: 22))
-                            .multilineTextAlignment(.center)
+                            if UserDefaults.standard.bool(forKey: "day1") {
+                                (Text("🔐 This page will\nunlock in ")
+                                    .foregroundColor(Clr.black2) +
+                                 Text(bonusModel.progressiveInterval)
+                                    .foregroundColor(Clr.darkgreen) +
+                                 Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
+                                    .foregroundColor(Clr.black2))
+                                    .font(Font.mada(.semiBold, size: 22))
+                                    .multilineTextAlignment(.center)
+                            } else {
+                                (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
+                                 + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
+                                    .font(Font.mada(.semiBold, size: 22))
+                                    .multilineTextAlignment(.center)
+                            }
                         if !isNotifOn {
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 promptNotif()
                             } label: {
                                 Capsule()
@@ -240,8 +252,8 @@ struct Store: View {
                                                 .foregroundColor(.black)
                                     )
                             }.buttonStyle(NeumorphicPress())
-                        }
-                        }
+                         }
+                      }
                     }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
                       .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
                 }

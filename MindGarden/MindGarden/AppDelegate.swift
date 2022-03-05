@@ -108,10 +108,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return true
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-       print("excalibur")
-    }
-    
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//       print("excalibur")
+//    }
+//
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         let deepLink = url.valueOf("deep_link_id") ?? ""
         if deepLink != "" {

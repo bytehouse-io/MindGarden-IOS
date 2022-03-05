@@ -170,15 +170,12 @@ struct ReviewScene: View {
                                 viewRouter.currentPage = .meditate
                             }
                         } label: {
-                            HStack {
-                                Text("Explore the app")
-                                    .foregroundColor(Clr.black2)
+                                Text("Not Now")
+                                    .underline()
                                     .font(Font.mada(.regular, size: 18))
-                            }.frame(width: g.size.width * 0.75, height: g.size.height/16)
-                            .background(Clr.darkWhite)
-                            .cornerRadius(25)
-                        }.padding(.top, 35)
-                        .buttonStyle(NeumorphicPress())
+                                    .foregroundColor(.gray)
+                                    .padding(.top, 35)
+                        }
                     }
                 }
             }
