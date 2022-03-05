@@ -146,11 +146,13 @@ struct LearnScene: View {
                                             UserDefaults.standard.setValue(true, forKey: "mindful")
                                             NotificationHelper.createMindfulNotifs()
                                             isNotifOn = true
+                                            NotificationHelper.addUnlockedFeature(title: "🤓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
                                         }
                                         UserDefaults.standard.setValue(true, forKey: "showedNotif")
                                     })
                                 } else {
                                     promptNotif()
+                                    NotificationHelper.addUnlockedFeature(title: "🤓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
                                 }
                                 
                             } label: {
