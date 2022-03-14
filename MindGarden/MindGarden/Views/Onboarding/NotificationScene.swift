@@ -176,12 +176,14 @@ struct NotificationScene: View {
                                         UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
-                                            withAnimation {
-                                                if tappedTurnOn {
-                                                    viewRouter.currentPage = .review
-                                                } else {
-                                                    viewRouter.progressValue += 0.1
-                                                    viewRouter.currentPage = .name
+                                            withAnimation(.easeOut(duration: 0.5)) {
+                                                DispatchQueue.main.async {
+                                                    if tappedTurnOn {
+                                                        viewRouter.currentPage = .review
+                                                    } else {
+                                                        viewRouter.progressValue += 0.1
+                                                        viewRouter.currentPage = .name
+                                                    }
                                                 }
                                             }
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -266,7 +268,6 @@ struct NotificationScene: View {
                 }
                 UserDefaults.standard.setValue(dateTime, forKey: "notif")
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
-
                 if frequency == "Everyday" {
                     for i in 1...7 {
                         let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)

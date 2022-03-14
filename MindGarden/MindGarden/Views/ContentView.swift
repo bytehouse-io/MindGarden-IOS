@@ -22,9 +22,6 @@ struct ContentView: View {
     @State private var addGratitude = false
     @State private var isOnboarding = false
     @State private var isKeyboardVisible = false
-    @State private var animateSplash = false
-    @State private var showSplash = true
-    @State private var animationAmount: CGFloat = 1
     ///Ashvin : State variable for pass animation flag
     @State private var PopUpIn = false
     @State private var showPopUpOption = false
@@ -285,24 +282,6 @@ struct ContentView: View {
                         .navigationBarHidden(true)
                     }.navigationViewStyle(StackNavigationViewStyle())
                 }
-
-                // Splash
-                ZStack {
-                    Clr.darkWhite
-                    VStack {
-                        Img.coloredPots
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200)
-                            .scaleEffect(animationAmount)
-                            .opacity(Double(2 - animationAmount))
-                            .animation(
-                                Animation.easeOut(duration: 2.0)
-                            )
-                    }
-                }.edgesIgnoringSafeArea(.all)
-                    .animation(.default, value: showSplash)
-                    .opacity(showSplash ? 1 : 0)
             }
         }
         .sheet(isPresented: $showRecs) {
@@ -322,10 +301,6 @@ struct ContentView: View {
             }
             let queue = DispatchQueue(label: "Monitor")
             monitor.start(queue: queue)
-            animationAmount = 2
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                showSplash.toggle()
-            }
         }.onChange(of: viewRouter.currentPage) { value in
             debugPrint(viewRouter.currentPage)
             if viewRouter.currentPage == .garden && selectedTab != .garden {
