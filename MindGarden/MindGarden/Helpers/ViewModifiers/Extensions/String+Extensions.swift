@@ -32,3 +32,8 @@ extension String {
       return firstIndex(of: char)?.utf16Offset(in: self)
     }
 }
+extension StringProtocol {
+    subscript(offset: Int) -> Character {
+        self[index(startIndex, offsetBy: offset)]
+    }
+}

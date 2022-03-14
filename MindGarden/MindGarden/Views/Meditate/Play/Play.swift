@@ -34,6 +34,8 @@ struct Play: View {
     @State var sliderData = SliderData()
     @State var bellSlider = SliderData()
     @State var showTutorialModal = false
+    @State var isTraceTimeMannual = false
+    @State var timerSeconds = 0.0
 
     var body: some View {
             ZStack {
@@ -64,7 +66,7 @@ struct Play: View {
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
                                         .foregroundColor(Clr.brightGreen)
                                         .rotationEffect(Angle(degrees: 270.0))
-                                        .animation(.linear(duration: 2), value: model.secondsRemaining)
+                                        .animation(.linear(duration: 3), value: model.secondsRemaining)
                                     Circle()
                                         .frame(width: K.isPad() ? 480 : 230)
                                         .foregroundColor(Clr.darkWhite)
@@ -104,7 +106,7 @@ struct Play: View {
                                 }
                                 .frame(width: K.isPad() ? 500 : 250)
                             }
-                            Text(model.secondsToMinutesSeconds(totalSeconds: model.isOpenEnded ? model.secondsCounted : model.secondsRemaining))
+                            Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
                                 .foregroundColor(Clr.black1)
                                 .font(Font.mada(.bold, size: 60))
                                 .padding(.horizontal)
@@ -116,7 +118,7 @@ struct Play: View {
                                             goBackward()
                                         }
                                         if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
-                                            model.secondsRemaining += model.selectedMeditation?.url != "" ? 14 : 15
+                                            model.secondsRemaining += model.selectedMeditation?.url != "" ? 15 : 15
                                         } else {
                                             model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
                                         }
@@ -232,9 +234,25 @@ struct Play: View {
                         .animation(.default)
                 }
             }
+//            .onChange(of: model.secondsRemaining) { value in
+//                guard isTraceTimeMannual else { return }
+//
+//                self.timerSeconds = Double(model.isOpenEnded ? model.secondsCounted : model.secondsRemaining)
+//                if model.isOpenEnded {
+//                    self.progressValue  = 1.0
+//                } else {
+//                    self.progressValue = Double(1 - (model.secondsRemaining/model.totalTime))
+//                }
+//            }
         .transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
+        .onChange(of: viewRouter.currentPage) { value in
+            if viewRouter.currentPage == .finished {
+                StopPlaying()
+            }
+        }
+        
         .onAppear {
             if model.selectedMeditation?.id != 22 {
                 showTutorialModal = !UserDefaults.standard.bool(forKey: "playTutorialModal")
@@ -303,32 +321,50 @@ struct Play: View {
                 mainPlayer.play()
                 model.startCountdown()
             } else {
+                isTraceTimeMannual = true
                 model.startCountdown()
+                
+            }
+            timerSeconds = Double(model.totalTime)
+            let timeScale = CMTimeScale(NSEC_PER_SEC)
+            let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+            mainPlayer?.addPeriodicTimeObserver(forInterval: time, queue: .main) { time in
+                guard let item = self.mainPlayer?.currentItem, !item.duration.seconds.isNaN else {
+                    return
+                }
+                
+                let timer = time.seconds / item.duration.seconds
+                self.timerSeconds = item.duration.seconds - time.seconds
+                if self.timerSeconds < 1 {
+                    model.secondsRemaining = -1
+                }
+//                withAnimation(.linear) {
+//                    self.progressValue = timer < 0.001 ? 0.001 : timer
+//                }
             }
         }
         .onDisappear {
-            if player.isPlaying {
-                player.stop()
-            }
-            if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
-                if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
-                    self.mainPlayer.rate = 0
-                }
+            StopPlaying()
+        }
+    }
+    private func StopPlaying(){
+//        self.progressValue = 1.0
+        if player.isPlaying {
+            player.stop()
+        }
+        if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
+            if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
+                self.mainPlayer.rate = 0
             }
         }
     }
+    
     func goForward() {
-        guard let duration  = mainPlayer?.currentItem?.duration else {
-            return
-        }
         let playerCurrentTime = CMTimeGetSeconds(mainPlayer!.currentTime())
         let newTime = playerCurrentTime + 15
-
-        if newTime < (CMTimeGetSeconds(duration) - 15) {
-
-            let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
-            self.mainPlayer!.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
-        }
+        
+        let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
+        self.mainPlayer!.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
 
     func goBackward() {
@@ -463,7 +499,7 @@ struct Play: View {
                     HStack(alignment: .center) {
                         Spacer()
                         VStack(alignment: .center, spacing: 15) {
-                            Text("Background Noise")
+                            Text("Ambient Sounds")
                                 .foregroundColor(Clr.black1)
                                 .font(Font.mada(.bold, size: 24))
                                 .lineLimit(1)
@@ -486,9 +522,9 @@ struct Play: View {
                             }
                             HStack {
                                 SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .fourteen, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .eleven, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .six, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
                             }
                             GeometryReader { geometry in
                                 Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
@@ -519,7 +555,7 @@ struct Play: View {
                             } label: {
                                 Text("Done")
                                     .font(Font.mada(.bold, size: 18))
-                                    .foregroundColor(Clr.black2)
+                                    .foregroundColor(Color.black)
                                     .frame(width: g.size.width/3, height: 35)
                                     .background(Clr.yellow)
                                     .clipShape(Capsule())
@@ -571,14 +607,14 @@ struct Play: View {
                     type?.img
                         .resizable()
                         .renderingMode(.template)
-                        .padding(type == .fourThirtyTwo || type == .fourteen || type == .eleven || type == .six ? 0 :  type == .flute ? 5 : 10)
+                        .padding(type == .fourThirtyTwo ? 0 :  type == .flute ? 5 : 10)
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(.white)
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(width: type != selectedType ? 40 : 0, height: 3)
-                        .opacity(0.9)
-                        .rotationEffect(.degrees(-45))
+//                    Rectangle()
+//                        .fill(Color.white)
+//                        .frame(width: type != selectedType ? 40 : 0, height: 3)
+//                        .opacity(0.9)
+//                        .rotationEffect(.degrees(-45))
                 }.frame(width: 50, height: 50)
             }.buttonStyle(NeumorphicPress())
         }

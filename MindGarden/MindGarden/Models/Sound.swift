@@ -14,9 +14,9 @@ enum Sound {
     case fire
     case beach
     case fourThirtyTwo
-    case fourteen
-    case eleven
-    case six
+    case beta
+    case alpha
+    case theta
     case flute
     case guitar
     case music
@@ -38,12 +38,12 @@ enum Sound {
             return Image(systemName: "flame")
         case .fourThirtyTwo:
             return Img.fourThirtyTwo
-        case .fourteen:
-            return Img.fourteen
-        case .eleven:
-            return Img.eleven
-        case .six:
-            return Img.six
+        case .beta:
+            return Img.beta
+        case .alpha:
+            return Img.alpha
+        case .theta:
+            return Img.theta
         case .flute:
             return Img.fluteNotes
         case .guitar:
@@ -73,12 +73,12 @@ enum Sound {
             return "fire"
         case .fourThirtyTwo:
             return "432hz"
-        case .fourteen:
-            return "14hz"
-        case .eleven:
-            return "11hz"
-        case .six:
-            return "6hz"
+        case .beta:
+            return "beta"
+        case .alpha:
+            return "alpha"
+        case .theta:
+            return "theta"
         case .piano1:
             return "piano1"
         case .piano2:
@@ -109,12 +109,12 @@ enum Sound {
             return .fire
         case "432hz":
             return .fourThirtyTwo
-        case "14hz":
-            return .fourteen
-        case "11hz":
-            return .eleven
-        case "6hz":
-            return .six
+        case "beta":
+            return .beta
+        case "alpha":
+            return .alpha
+        case "theta":
+            return .theta
         case "piano1":
             return .piano1
         case "piano2":

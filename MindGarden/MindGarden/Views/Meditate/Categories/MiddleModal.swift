@@ -81,10 +81,11 @@ struct MiddleModal: View {
                                 Image(systemName: "person.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20)
+                                    .frame(width: 15)
+                                    .font(Font.mada(.medium, size: 18))
                                 Text("\(model.selectedMeditation?.instructor ?? "Bijan")")
+                                    .font(Font.mada(.semiBold, size: 18))
                             }.foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: 18))
                                 .padding(.top)
                                 .padding(.horizontal)
                                 .frame(width: abs(g.size.width - 80), alignment: .leading)
@@ -94,9 +95,10 @@ struct MiddleModal: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20)
+                                    .font(Font.mada(.medium, size: 18))
                                 Text("\(userModel.selectedPlant?.title ?? "none")")
+                                    .font(Font.mada(.semiBold, size: 18))
                             }.foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: 18))
                                 .padding(.top, 10)
                                 .padding(.horizontal)
                                 .frame(width: abs(g.size.width - 80), alignment: .leading)
@@ -106,24 +108,27 @@ struct MiddleModal: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20)
+                                    .font(Font.mada(.medium, size: 18))
                                 Text("\(model.selectedMeditation?.reward ?? 0)")
+                                    .font(Font.mada(.semiBold, size: 18))
                             }.foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: 18))
                                 .padding(.top, 10)
                                 .padding(.horizontal)
                                 .frame(width: abs(g.size.width - 80), alignment: .leading)
                         Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                             withAnimation {
-                                shown = false
-                                viewRouter.currentPage = .play
+                                    shown = false
+                                    viewRouter.currentPage = .play
+                                }
                             }
                         } label: {
                             Capsule()
-                                .fill(Clr.brightGreen)
+                                .fill(Clr.darkgreen)
                                 .overlay(
-                                    Text("▶️ Start Session")
+                                    Text("Start Session")
                                         .font(Font.mada(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .lineLimit(1)

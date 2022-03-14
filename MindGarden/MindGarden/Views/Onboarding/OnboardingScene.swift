@@ -128,8 +128,8 @@ struct OnboardingScene: View {
                             // Fallback on earlier versions
                         }
                         Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             Analytics.shared.log(event: .onboarding_tapped_continue)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 viewRouter.progressValue = 0.4
                                 viewRouter.currentPage = .experience
@@ -138,13 +138,13 @@ struct OnboardingScene: View {
                             Capsule()
                                 .fill(Clr.yellow)
                                 .overlay(
-                                    Text("Get Happier 👉🏻")
+                                    Text("Start Growing 👉🏻")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 20))
                                 )
                         }.frame(height: 50)
                             .padding([.horizontal, .bottom])
-                        .buttonStyle(BonusPress())
+                        .buttonStyle(NeumorphicPress())
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_sign_in)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()

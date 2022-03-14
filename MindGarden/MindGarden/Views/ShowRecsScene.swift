@@ -117,16 +117,17 @@ struct RecRow: View {
                     .fill(Clr.darkWhite)
                     .cornerRadius(16)
                     .frame(width: width * 0.85, height: isWeekly ? 140 : 120)
+                
                 if isWeekly {
                     Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
                         .foregroundColor(Color.gray)
                         .font(Font.mada(.semiBold, size: 16))
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
-                        .frame(width: abs(UIScreen.main.bounds.width * 0.85), alignment: .leading)
-                        .position(x: sizeCategory > .large ? 250 : 225, y: sizeCategory > .large ? -10 : 30)
-                
+                        .frame(width: abs(UIScreen.main.bounds.width), alignment: .leading)
+                        .position(x: sizeCategory > .large ? 300 : K.isSmall() ? 225 : width * 0.64, y: sizeCategory > .large ? -10 : 30)
                 }
+                
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                             Text(meditation.title)

@@ -51,8 +51,22 @@ struct CourseScene: View {
                     }
                     .offset(x: width/6, y: K.isSmall() ? -50 : -25)
                     .frame(width: width, height: 400)
-                    
-                } .offset(x: -width/6, y: completed ? 0 : UIScreen.main.bounds.height)
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Capsule()
+                            .fill(Clr.yellow)
+                            .overlay(
+                                Text("Done")
+                                    .font(Font.mada(.bold, size: 22))
+                                    .foregroundColor(.black)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                            )
+                            .frame(width: width * 0.5, height: 50)
+                    }.offset(x: width/6, y: 80)
+                    .buttonStyle(NeumorphicPress())
+                }.offset(x: -width/6, y: completed ? 0 : UIScreen.main.bounds.height)
                 Spacer()
                 VStack(){
                     Spacer()
@@ -127,6 +141,9 @@ struct CourseScene: View {
                                         .padding()
                                         .onTapGesture {
                                             withAnimation {
+                                                if completed {
+                                                    completed = false
+                                                }
                                                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                                 index -= 1
                                                 progressValue -= 1.0/Double(course.slides.count)
@@ -174,8 +191,8 @@ struct CourseScene: View {
                                                         Analytics.shared.log(event: .learn_finished_meditation_course)
                                                     }
                                                     completed = true
+                                                    isPlaying = true
                                                 }
-                                                isPlaying = true
                                             }
                                         }
                                 }.frame(width: 60, height: 60)
@@ -220,7 +237,7 @@ struct FeaturedItem: View {
             Text(slide.topText)
                 .font(Font.mada(.semiBold, size: 18))
                 .lineLimit(sizeCategory > .large ? 4 : 8)
-                .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .bottom)
+                .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .center)
                 .padding(.horizontal)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
@@ -237,7 +254,7 @@ struct FeaturedItem: View {
             Text(slide.bottomText)
                 .font(Font.mada(.semiBold, size: 18))
                 .lineLimit(sizeCategory > .large ? 4 : 8)
-                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.185, alignment: .top)
+                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.185, alignment: .center)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(Clr.black2)
                 .padding(.horizontal)

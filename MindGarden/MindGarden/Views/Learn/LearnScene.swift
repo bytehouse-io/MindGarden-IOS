@@ -10,6 +10,7 @@ import OneSignal
 
 struct LearnScene: View {
     @State private var meditationCourses: [LearnCourse] = []
+    @State private var lifeCourses: [LearnCourse] = []
     @State private var showCourse: Bool = false
     @State private var selectedSlides: [Slide] = []
     @State private var learnCourse: LearnCourse = LearnCourse(id: 0, title: "", img: "", description: "", duration: "", category: "", slides: [Slide(topText: "", img: "", bottomText: "")])
@@ -24,7 +25,7 @@ struct LearnScene: View {
                 let width = g.size.width
                 let height = g.size.height + (K.hasNotch() ? 0 : 50)
                 ScrollView(showsIndicators: false) {
-                VStack {
+                LazyVStack {
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
@@ -71,7 +72,7 @@ struct LearnScene: View {
                                     .lineLimit(1)
                             )
                             .position(x: width * 0.272, y: 0)
-                        HStack {
+                        LazyHStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
                                     ForEach(meditationCourses, id: \.self) { course in
@@ -102,10 +103,10 @@ struct LearnScene: View {
                                     .lineLimit(1)
                             )
                             .position(x: width * 0.272, y: 0)
-                        HStack {
+                        LazyHStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
-                                    ForEach(meditationCourses, id: \.self) { course in
+                                    ForEach(lifeCourses, id: \.self) { course in
                                         LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
                                     }
                                 }.frame(height: height * 0.3 + 15)
@@ -143,16 +144,17 @@ struct LearnScene: View {
                                             Analytics.shared.log(event: .notification_success_learn)
                                             NotificationHelper.addOneDay()
                                             NotificationHelper.addThreeDay()
+                                            UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                                             UserDefaults.standard.setValue(true, forKey: "mindful")
                                             NotificationHelper.createMindfulNotifs()
                                             isNotifOn = true
-                                            NotificationHelper.addUnlockedFeature(title: "🤓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+                                            NotificationHelper.addUnlockedFeature(title: "🔓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
                                         }
                                         UserDefaults.standard.setValue(true, forKey: "showedNotif")
                                     })
                                 } else {
                                     promptNotif()
-                                    NotificationHelper.addUnlockedFeature(title: "🤓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+                                    NotificationHelper.addUnlockedFeature(title: "🔓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
                                 }
                                 
                             } label: {
@@ -183,7 +185,7 @@ struct LearnScene: View {
                     if course.category == "meditation" {
                         meditationCourses.append(course)
                     } else {
-                        meditationCourses.append(course)
+                        lifeCourses.append(course)
                     }
                 }
             }
@@ -204,20 +206,21 @@ struct LearnScene: View {
                     NotificationHelper.addThreeDay()
                 }
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
+                isNotifOn = true
             case .denied:
-                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                 Analytics.shared.log(event: .notification_settings_learn)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
+                        UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                     }
                 }
             case .notDetermined:
-                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                     Analytics.shared.log(event: .notification_settings_learn)
                     DispatchQueue.main.async {
                         if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                             UIApplication.shared.open(appSettings)
+                            UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                         }
                     }
             default:

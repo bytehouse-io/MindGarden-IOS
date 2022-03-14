@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */; };
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
+		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
+		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
 		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
 		58A9EE7D27C749C500254AC2 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7727C749C500254AC2 /* common.swift */; };
@@ -21,18 +23,10 @@
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
+		887734BC27DD5988007EDC9E /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 887734BB27DD5987007EDC9E /* 30 Second Meditation.mp3 */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
-		88C28A0227D15FAB00FCF11D /* 11hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C289FF27D15FAA00FCF11D /* 11hz.mp3 */; };
-		88C28A0327D15FAB00FCF11D /* 432hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0027D15FAB00FCF11D /* 432hz.mp3 */; };
-		88C28A0427D15FAB00FCF11D /* 14hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0127D15FAB00FCF11D /* 14hz.mp3 */; };
-		88C28A0B27D2B52200FCF11D /* 6hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0527D2B52100FCF11D /* 6hz.mp3 */; };
-		88C28A0C27D2B52200FCF11D /* flute.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0627D2B52100FCF11D /* flute.mp3 */; };
-		88C28A0D27D2B52200FCF11D /* guitar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0727D2B52100FCF11D /* guitar.mp3 */; };
-		88C28A0E27D2B52200FCF11D /* piano1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0827D2B52200FCF11D /* piano1.mp3 */; };
-		88C28A0F27D2B52200FCF11D /* piano2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0927D2B52200FCF11D /* piano2.mp3 */; };
-		88C28A1027D2B52200FCF11D /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88C28A0A27D2B52200FCF11D /* music.mp3 */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
@@ -154,7 +148,6 @@
 		FEBF1AC027138635000BF1BD /* Compassion & Self-Love.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */; };
 		FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */; };
 		FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */; };
-		FEBF1ACB271511CA000BF1BD /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */; };
 		FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */; };
 		FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF22C926DC3860002572E2 /* bell.mp3 */; };
 		FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */; };
@@ -213,6 +206,8 @@
 		1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
 		21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
+		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
 		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
 		58A9EE7727C749C500254AC2 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -225,18 +220,10 @@
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
+		887734BB27DD5987007EDC9E /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
-		88C289FF27D15FAA00FCF11D /* 11hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 11hz.mp3; path = "../../../../../../Downloads/drive-download-20220303T204100Z-001/11hz.mp3"; sourceTree = "<group>"; };
-		88C28A0027D15FAB00FCF11D /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 432hz.mp3; path = "../../../../../../Downloads/drive-download-20220303T204100Z-001/432hz.mp3"; sourceTree = "<group>"; };
-		88C28A0127D15FAB00FCF11D /* 14hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 14hz.mp3; path = "../../../../../../Downloads/drive-download-20220303T204100Z-001/14hz.mp3"; sourceTree = "<group>"; };
-		88C28A0527D2B52100FCF11D /* 6hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 6hz.mp3; path = "../../../../../../Downloads/drive-download-20220304T202659Z-001/6hz.mp3"; sourceTree = "<group>"; };
-		88C28A0627D2B52100FCF11D /* flute.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = flute.mp3; path = "../../../../../../Downloads/drive-download-20220304T202659Z-001/flute.mp3"; sourceTree = "<group>"; };
-		88C28A0727D2B52100FCF11D /* guitar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = guitar.mp3; path = "../../../../../../Downloads/drive-download-20220304T202659Z-001/guitar.mp3"; sourceTree = "<group>"; };
-		88C28A0827D2B52200FCF11D /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = piano1.mp3; path = "../../../../../../Downloads/drive-download-20220304T202659Z-001/piano1.mp3"; sourceTree = "<group>"; };
-		88C28A0927D2B52200FCF11D /* piano2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = piano2.mp3; path = "../../../../../../Downloads/drive-download-20220304T202659Z-001/piano2.mp3"; sourceTree = "<group>"; };
-		88C28A0A27D2B52200FCF11D /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = music.mp3; path = "../../../../../../Downloads/drive-download-20220304T202659Z-001/music.mp3"; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -355,7 +342,6 @@
 		FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Compassion & Self-Love.mp3"; sourceTree = "<group>"; };
 		FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Gaining Clarity.mp3"; sourceTree = "<group>"; };
 		FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Joy on demand.mp3"; sourceTree = "<group>"; };
-		FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
 		FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extension.swift"; sourceTree = "<group>"; };
 		FEBF22C926DC3860002572E2 /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -443,6 +429,15 @@
 				ED8CDB12AA546761D320FBB9 /* Pods-MindGardenTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		5803A31A27DBB8A100F1F2E7 /* StreakView */ = {
+			isa = PBXGroup;
+			children = (
+				5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */,
+				5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */,
+			);
+			path = StreakView;
 			sourceTree = "<group>";
 		};
 		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
@@ -537,6 +532,7 @@
 		FE6289B22675477400007889 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
+				FEB85FC0266C19CD008CDAA4 /* Extensions */,
 				FE6289B326754A1200007889 /* ShadowViewModifier.swift */,
 				FE683F34269CCF6E009A66DF /* ButtonModifier.swift */,
 				FE6FBFA727ADC00400F05A66 /* KeyboardModifier.swift */,
@@ -658,7 +654,6 @@
 			isa = PBXGroup;
 			children = (
 				FE6289B22675477400007889 /* ViewModifiers */,
-				FEB85FC0266C19CD008CDAA4 /* Extensions */,
 				FEA592CE267E8D98006558A2 /* Util.swift */,
 			);
 			path = Helpers;
@@ -716,6 +711,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5803A31A27DBB8A100F1F2E7 /* StreakView */,
 				58A9EE7427C749C500254AC2 /* Animation&Tab */,
 				8876A60427C03C2A00A9622F /* Learn */,
 				FE11F0B42691071500E1E71A /* Profile */,
@@ -812,15 +808,6 @@
 		FEBF1AB2271385A1000BF1BD /* BackgroundSounds */ = {
 			isa = PBXGroup;
 			children = (
-				88C28A0527D2B52100FCF11D /* 6hz.mp3 */,
-				88C28A0627D2B52100FCF11D /* flute.mp3 */,
-				88C28A0727D2B52100FCF11D /* guitar.mp3 */,
-				88C28A0A27D2B52200FCF11D /* music.mp3 */,
-				88C28A0827D2B52200FCF11D /* piano1.mp3 */,
-				88C28A0927D2B52200FCF11D /* piano2.mp3 */,
-				88C289FF27D15FAA00FCF11D /* 11hz.mp3 */,
-				88C28A0127D15FAB00FCF11D /* 14hz.mp3 */,
-				88C28A0027D15FAB00FCF11D /* 432hz.mp3 */,
 				FEBF22C926DC3860002572E2 /* bell.mp3 */,
 				FE9B407F26A65A40000DF00C /* fire.mp3 */,
 				FE9B407D26A65820000DF00C /* nature.mp3 */,
@@ -834,7 +821,7 @@
 		FEBF1AB327138608000BF1BD /* Meditations */ = {
 			isa = PBXGroup;
 			children = (
-				FEBF1ACA271511CA000BF1BD /* 30 Second Meditation.mp3 */,
+				887734BB27DD5987007EDC9E /* 30 Second Meditation.mp3 */,
 				FEBF1AB427138623000BF1BD /* Why Meditate?.mp3 */,
 				FEBF1AB727138631000BF1BD /* Create Your Anchor.mp3 */,
 				FEBF1AB627138630000BF1BD /* Tuning Into Your Body.mp3 */,
@@ -1045,42 +1032,33 @@
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
-				88C28A0327D15FAB00FCF11D /* 432hz.mp3 in Resources */,
-				88C28A1027D2B52200FCF11D /* music.mp3 in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
-				88C28A0F27D2B52200FCF11D /* piano2.mp3 in Resources */,
 				FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
+				887734BC27DD5988007EDC9E /* 30 Second Meditation.mp3 in Resources */,
 				FEBF1AB527138623000BF1BD /* Why Meditate?.mp3 in Resources */,
-				88C28A0E27D2B52200FCF11D /* piano1.mp3 in Resources */,
 				FEBF1AC027138635000BF1BD /* Compassion & Self-Love.mp3 in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
-				88C28A0C27D2B52200FCF11D /* flute.mp3 in Resources */,
-				88C28A0427D15FAB00FCF11D /* 14hz.mp3 in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
 				FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
-				FEBF1ACB271511CA000BF1BD /* 30 Second Meditation.mp3 in Resources */,
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
 				FEBF1ABD27138635000BF1BD /* Create Your Anchor.mp3 in Resources */,
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
-				88C28A0D27D2B52200FCF11D /* guitar.mp3 in Resources */,
-				88C28A0227D15FAB00FCF11D /* 11hz.mp3 in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
 				FEBF1ABC27138635000BF1BD /* Tuning Into Your Body.mp3 in Resources */,
-				88C28A0B27D2B52200FCF11D /* 6hz.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,6 +1280,7 @@
 				FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */,
 				FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */,
 				FE6FBFA827ADC00400F05A66 /* KeyboardModifier.swift in Sources */,
+				5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */,
@@ -1357,6 +1336,7 @@
 				58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */,
 				FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */,
 				FE9BE35727434025004FEBF0 /* String+Extensions.swift in Sources */,
+				5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */,
 				FEA592D3267E94B9006558A2 /* GridStack.swift in Sources */,
 				FEC5B00A267D2ACF00BC8D8C /* Play.swift in Sources */,
 				FE39A0BC2772A039007A3E82 /* MindfulScene.swift in Sources */,
@@ -1441,7 +1421,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1453,7 +1433,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.37;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1469,7 +1449,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1481,7 +1461,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.37;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1499,7 +1479,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1511,7 +1491,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.37;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1529,7 +1509,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1541,7 +1521,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.37;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1677,7 +1657,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1688,7 +1668,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.37;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1706,7 +1686,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 37;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1717,7 +1697,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.37;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

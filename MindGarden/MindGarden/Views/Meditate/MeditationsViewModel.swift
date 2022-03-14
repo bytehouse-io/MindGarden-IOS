@@ -48,7 +48,7 @@ class MeditationViewModel: ObservableObject {
                 if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
                 } else {
                     self.selectedMeditations = Meditation.allMeditations.filter { med in
-                        if value == .courses && med.title == "Intro to Meditation" {
+                        if value == .courses && (med.title == "Intro to Meditation" || med.title == "The Basics Course" ) {
                             return true
                         } else {
                             return med.category == value && med.type != .lesson

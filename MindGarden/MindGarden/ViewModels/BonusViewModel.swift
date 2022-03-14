@@ -71,7 +71,7 @@ class BonusViewModel: ObservableObject {
         if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
             interval = formatter.date(from: lastTutorialDate)! - Date()
         } else {
-            interval = 43200
+            interval = 120
         }
         
 
@@ -81,6 +81,7 @@ class BonusViewModel: ObservableObject {
             progressiveInterval = interval.stringFromTimeInterval()
             if interval <= 0 {
                 timer.invalidate()
+                progressiveDisclosure(lastStreakDate: formatter.string(from: Date()))
             }
         }
     }
@@ -169,6 +170,21 @@ class BonusViewModel: ObservableObject {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
             NotificationHelper.addThreeDay()
         }
+        
+        if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd")  {
+            if UserDefaults.standard.bool(forKey: "newUser") {
+                progressiveDisclosure(lastStreakDate: lastTutorialDate)
+            }
+        } else if UserDefaults.standard.bool(forKey: "newUser") {
+            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!)
+            UserDefaults.standard.setValue(dte, forKey: "ltd")
+            progressiveDisclosure(lastStreakDate: dte)
+        } else {
+            UserDefaults.standard.setValue(true, forKey: "day1")
+            UserDefaults.standard.setValue(true, forKey: "day2")
+            UserDefaults.standard.setValue(true, forKey: "day3")
+            UserDefaults.standard.setValue(1, forKey: "day")
+        }
 
 
         if let email = Auth.auth().currentUser?.email {
@@ -251,16 +267,6 @@ class BonusViewModel: ObservableObject {
             lastStreakDate = String(self.streak![plusOffset...])
             
             // for new users only 
-            if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
-                progressiveDisclosure(lastStreakDate: lastTutorialDate)
-                createProgressiveCountdown()
-            } else {
-                NotificationHelper.addUnlockedFeature(title: "🤓 Your Learn Page has been unlocked!", body: "We recommend starting with Understanding Mindfulness")
-                createProgressiveCountdown()
-                let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
-                UserDefaults.standard.setValue(dte, forKey: "ltd")
-                progressiveDisclosure(lastStreakDate: dte)
-            }
             
             // Progressive Disclosure
             if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
@@ -311,9 +317,10 @@ class BonusViewModel: ObservableObject {
     }
     
     private func progressiveDisclosure(lastStreakDate: String) {
+        print(lastStreakDate, formatter.string(from: Date()), "arig")
         if formatter.date(from: lastStreakDate)! - Date() <= 0 {
-            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
-            UserDefaults.standard.setValue(formatter.string(for: dte),forKey: "ltd")
+            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!)
+            UserDefaults.standard.setValue(dte,forKey: "ltd")
             if UserDefaults.standard.bool(forKey: "day1") {
                 if UserDefaults.standard.bool(forKey: "day2") {
                     if UserDefaults.standard.bool(forKey: "day3") {
@@ -328,6 +335,7 @@ class BonusViewModel: ObservableObject {
                         UserDefaults.standard.setValue(3, forKey: "day")
                     }
                 } else { // second day back
+                    NotificationHelper.addUnlockedFeature(title: "⚙️ Widget has been unlocked", body: "Add it to your home screen!")
                     UserDefaults.standard.setValue(true, forKey: "day2")
                     UserDefaults.standard.setValue(2, forKey: "day")
                 }
@@ -337,6 +345,7 @@ class BonusViewModel: ObservableObject {
                 UserDefaults.standard.setValue(1, forKey: "day")
             }
         }
+        createProgressiveCountdown()
     }
 
     private func calculateProgress() {

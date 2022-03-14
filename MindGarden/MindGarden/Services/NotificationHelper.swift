@@ -95,7 +95,7 @@ struct NotificationHelper {
         content.body = body
         content.sound = UNNotificationSound.default
 
-        let modifiedDate = Calendar.current.date(byAdding: .minute, value: 10, to: Date())
+        let modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
         // Create the trigger as a repeating event.

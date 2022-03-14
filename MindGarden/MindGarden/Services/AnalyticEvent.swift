@@ -311,11 +311,11 @@ extension AnalyticEvent {
             return .play_tapped_sound_nature
         case .fourThirtyTwo:
             return .play_tapped_hz
-        case .fourteen:
+        case .theta:
             return .play_tapped_hz
-        case .eleven:
+        case .alpha:
             return .play_tapped_hz
-        case .six:
+        case .beta:
             return .play_tapped_hz
         case .flute:
             return .play_tapped_instrument

@@ -61,8 +61,8 @@ class UrlImageModel: ObservableObject {
             return
         }
         
-        let url = URL(string: urlString)!
-        let task = URLSession.shared.dataTask(with: url, completionHandler: getImageFromResponse(data:response:error:))
+        let url = URL(string: urlString) ?? URL(string: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/How%20to%20practice%20Mindfulness%2Fslide1.png?alt=media&token=2bf32908-fb07-4c47-a9c4-e4bad5e44842")
+        let task = URLSession.shared.dataTask(with: url!, completionHandler: getImageFromResponse(data:response:error:))
         task.resume()
     }
     

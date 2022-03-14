@@ -98,7 +98,7 @@ struct PurchaseModal: View {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
                                 case "🙏 Write 30 Gratitudes": Text("Total gratitudes: \(UserDefaults.standard.integer(forKey: "numGrads"))")
                                 case "7️⃣ Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
-                                case  "📆 30 Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
+                                case  "🌸 Meditate on Mar 20": Text("Current Streak: \(bonusModel.streakNumber)")
                                 default: Text("")
                                 }
                             }

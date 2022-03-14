@@ -148,6 +148,16 @@ class UserViewModel: ObservableObject {
         }
 
     }
+    
+     func modTitle() -> String {
+        let title = selectedPlant?.title ?? "s"
+        let endIdx = title.count
+        if title[endIdx - 1] == "s" {
+            return title
+        } else {
+            return "a " + title
+        }
+    }
 
     func checkIfPro() {
         var isPro = false

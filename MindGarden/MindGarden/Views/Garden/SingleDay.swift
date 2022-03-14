@@ -24,7 +24,7 @@ struct SingleDay: View {
     @State var plant: Plant?
     @State var sessionCounter: Int = 0
     @State var isOnboarding = false
-    @State var showOnboardingModal = true
+    @State var showOnboardingModal = false
     
     init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
         self._showSingleModal = showSingleModal
@@ -229,7 +229,7 @@ struct SingleDay: View {
                                 
                         }.buttonStyle(NeumorphicPress())
                          .frame(height: 45)
-                         .padding(.top, 35)
+                         .padding(.vertical, 25)
                         Text("Not Now")
                             .font(Font.mada(.semiBold, size: 22))
                             .foregroundColor(Color.gray)
@@ -239,7 +239,7 @@ struct SingleDay: View {
                                 withAnimation {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showOnboardingModal = false
-                                    fromPage = "profile"
+                                    fromPage = "onboarding2"
                                     viewRouter.currentPage = .pricing
                                 }
                             }
@@ -248,10 +248,10 @@ struct SingleDay: View {
                 }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
-            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 isOnboarding = true
                 showOnboardingModal = true
+                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
             }
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [String] {
                 self.moods = moods
@@ -285,6 +285,7 @@ struct SingleDay: View {
             Image(systemName: "xmark")
                 .font(.system(size: 22))
                 .foregroundColor(Clr.black1)
+                .opacity(isOnboarding ? 0 : 1)
         }
     }
 

@@ -44,8 +44,30 @@ extension View {
                         )
             
     }
+    
     func strokeStyle(cornerRadius: CGFloat = 30) -> some View {
         modifier(StrokeStyleNew(cornerRadius: cornerRadius))
+    }
+    
+    func streakTitleStyle() -> some View {
+        self
+            .font(Font.mada(.bold, size: 32))
+            .foregroundColor(Clr.gardenRed)
+    }
+    
+    func streakBodyStyle() -> some View {
+        self
+            .font(Font.mada(.regular, size: 20))
+            .multilineTextAlignment(.center)
+            .lineLimit(2)
+            .padding()
+    }
+    
+    func daysProgressTitleStyle() -> some View {
+        self
+            .foregroundColor(Clr.blackShadow)
+            .frame(width:44)
+            .font(Font.mada(.bold, size: 20))
     }
 }
 
@@ -92,4 +114,10 @@ private extension UIEdgeInsets {
     var insets: EdgeInsets {
         EdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
     }
+}
+
+//MARK: screen common
+extension UIScreen{
+    static let screenWidth = UIScreen.main.bounds.size.width
+    static let screenHeight = UIScreen.main.bounds.size.height
 }

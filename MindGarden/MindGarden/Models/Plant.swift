@@ -67,7 +67,7 @@ struct Plant: Hashable {
         4: "💌 Refer a friend",
         2: "⭐️ Rate the app",
         0: "7️⃣ Day Streak",
-        1: "📆 30 Day Streak",
+        1: "🌸 Meditate in March",
         5: "🎅 Meditate on Dec 25",
         6: "🙏 Write 30 Gratitudes",
         7: "👨‍👩‍👦‍👦 Join our Reddit"

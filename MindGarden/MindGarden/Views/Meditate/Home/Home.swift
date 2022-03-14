@@ -125,7 +125,7 @@ struct Home: View {
                         .offset(y: -height * 0.1)
                         //MARK: - scroll view
                         ScrollView(.vertical, showsIndicators: false) {
-                            VStack {
+                            LazyVStack {
                                 HStack(spacing: width * 0.04) {
                                     Button {
                                         Analytics.shared.log(event: .home_tapped_bonus)
@@ -214,8 +214,8 @@ struct Home: View {
                                                     }
                                                     Spacer()
                                                 }
-                                                .frame(width: g.size.width * 0.65 * 0.525)
-                                                .position(x: g.size.width - g.size.width * 0.85 + 25, y: g.size.height * 0.21)
+                                                .frame(width: UIScreen.main.bounds.width * 0.65 * 0.525)
+                                                .position(x: UIScreen.main.bounds.width - UIScreen.main.bounds.width * 0.85 + 25, y: g.size.height * 0.21)
                                                 VStack(spacing: 0) {
                                                     ZStack {
                                                         Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
@@ -226,10 +226,11 @@ struct Home: View {
                                                     }.offset(x: 35, y: K.isPad() ? 45 : 25)
                                                         .padding([.top, .leading])
                                                         .zIndex(100)
+                                                        .neoShadow()
                                                     (model.featuredMeditation?.img ?? Img.daisy3)
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
-                                                        .frame(width: g.size.width * 0.80 * 0.5, height: g.size.height * 0.2)
+                                                        .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: g.size.height * 0.2)
                                                         .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
                                                 }.padding([.top, .bottom, .trailing])
                                             }.onTapGesture {
@@ -405,7 +406,7 @@ struct Home: View {
                                                 }
                                             }
                                     }.padding(.top, 24)
-                                        .buttonStyle(NeumorphicPress())
+                                    .neoShadow()
                                 } else {
                                     // Fallback on earlier versions
                                     
@@ -458,7 +459,6 @@ struct Home: View {
                     CategoriesScene(isSearch: true, showSearch: $showSearch)
                 }
             }
-            .transition(.opacity)
             .navigationBarHidden(true)
             .alert(isPresented: $wentPro) {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
@@ -468,7 +468,6 @@ struct Home: View {
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
-        .transition(.opacity)
         .onAppear {
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
@@ -498,12 +497,11 @@ struct Home: View {
                         viewRouter.currentPage = .middle
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
-                    
-                    if UserDefaults.standard.bool(forKey: "christmasLink") {
-                        viewRouter.currentPage = .shop
-                    } else {
-                        showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
-                    }
+//                    if UserDefaults.standard.bool(forKey: "christmasLink") {
+//                        viewRouter.currentPage = .shop
+//                    } else {
+//                        showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
+//                    }
                 }
                 
                 
