@@ -28,6 +28,15 @@
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
+		88F36AB827DFBE900060FD8E /* theta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AAF27DFBE8E0060FD8E /* theta.mp3 */; };
+		88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */; };
+		88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB127DFBE8F0060FD8E /* piano1.mp3 */; };
+		88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB227DFBE8F0060FD8E /* beta.mp3 */; };
+		88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB327DFBE8F0060FD8E /* flute.mp3 */; };
+		88F36ABD27DFBE900060FD8E /* guitar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB427DFBE8F0060FD8E /* guitar.mp3 */; };
+		88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB527DFBE900060FD8E /* alpha.mp3 */; };
+		88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB627DFBE900060FD8E /* music.mp3 */; };
+		88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB727DFBE900060FD8E /* piano2.mp3 */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
@@ -225,6 +234,15 @@
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
+		88F36AAF27DFBE8E0060FD8E /* theta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theta.mp3; sourceTree = "<group>"; };
+		88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432hz.mp3; sourceTree = "<group>"; };
+		88F36AB127DFBE8F0060FD8E /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano1.mp3; sourceTree = "<group>"; };
+		88F36AB227DFBE8F0060FD8E /* beta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beta.mp3; sourceTree = "<group>"; };
+		88F36AB327DFBE8F0060FD8E /* flute.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = flute.mp3; sourceTree = "<group>"; };
+		88F36AB427DFBE8F0060FD8E /* guitar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = guitar.mp3; sourceTree = "<group>"; };
+		88F36AB527DFBE900060FD8E /* alpha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alpha.mp3; sourceTree = "<group>"; };
+		88F36AB627DFBE900060FD8E /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
+		88F36AB727DFBE900060FD8E /* piano2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano2.mp3; sourceTree = "<group>"; };
 		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -808,6 +826,15 @@
 		FEBF1AB2271385A1000BF1BD /* BackgroundSounds */ = {
 			isa = PBXGroup;
 			children = (
+				88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */,
+				88F36AB527DFBE900060FD8E /* alpha.mp3 */,
+				88F36AB227DFBE8F0060FD8E /* beta.mp3 */,
+				88F36AB327DFBE8F0060FD8E /* flute.mp3 */,
+				88F36AB427DFBE8F0060FD8E /* guitar.mp3 */,
+				88F36AB627DFBE900060FD8E /* music.mp3 */,
+				88F36AB127DFBE8F0060FD8E /* piano1.mp3 */,
+				88F36AB727DFBE900060FD8E /* piano2.mp3 */,
+				88F36AAF27DFBE8E0060FD8E /* theta.mp3 */,
 				FEBF22C926DC3860002572E2 /* bell.mp3 */,
 				FE9B407F26A65A40000DF00C /* fire.mp3 */,
 				FE9B407D26A65820000DF00C /* nature.mp3 */,
@@ -1031,21 +1058,28 @@
 			files = (
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
+				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
+				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
 				FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
+				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
 				FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
+				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
 				887734BC27DD5988007EDC9E /* 30 Second Meditation.mp3 in Resources */,
 				FEBF1AB527138623000BF1BD /* Why Meditate?.mp3 in Resources */,
 				FEBF1AC027138635000BF1BD /* Compassion & Self-Love.mp3 in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
+				88F36AB827DFBE900060FD8E /* theta.mp3 in Resources */,
+				88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
+				88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
 				FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */,
@@ -1054,8 +1088,10 @@
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
 				FEBF1ABD27138635000BF1BD /* Create Your Anchor.mp3 in Resources */,
+				88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */,
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
+				88F36ABD27DFBE900060FD8E /* guitar.mp3 in Resources */,
 				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
 				FEBF1ABC27138635000BF1BD /* Tuning Into Your Body.mp3 in Resources */,
