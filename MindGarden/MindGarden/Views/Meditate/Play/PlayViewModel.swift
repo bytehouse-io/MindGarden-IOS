@@ -59,7 +59,7 @@ extension MeditationViewModel {
                         playImage = Img.seed
                     }
 
-                    if secondsRemaining <= 0 {
+                    if secondsRemaining <= -1 {
                         if let med = self.selectedMeditation {
                             if med.id != 27 && med.id != 39 && med.id != 54 {
                                 bellPlayer.play()
@@ -92,7 +92,9 @@ extension MeditationViewModel {
                             UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
                             getFeaturedMeditation()
                         }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         viewRouter?.currentPage = .finished
+                        }
                         return
                     }
                 }
@@ -117,7 +119,10 @@ extension MeditationViewModel {
 
     func secondsToMinutesSeconds (totalSeconds: Float) -> String {
         let minutes = Int(totalSeconds / 60)
-        let seconds = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
+        var seconds = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
+        if seconds < 0 {
+            seconds = 0
+        }
         return String(format:"%02d:%02d", minutes, seconds)
     }
 }

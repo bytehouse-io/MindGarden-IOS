@@ -80,6 +80,7 @@ enum AnalyticEvent {
     // left & right arrow in single day modal if present
     case garden_tapped_single_next_session //
     case garden_tapped_single_previous_session //
+    case screen_load_single
 
     //MARK: - HOME
     case screen_load_home //
@@ -311,11 +312,11 @@ extension AnalyticEvent {
             return .play_tapped_sound_nature
         case .fourThirtyTwo:
             return .play_tapped_hz
-        case .fourteen:
+        case .theta:
             return .play_tapped_hz
-        case .eleven:
+        case .alpha:
             return .play_tapped_hz
-        case .six:
+        case .beta:
             return .play_tapped_hz
         case .flute:
             return .play_tapped_instrument
@@ -656,6 +657,7 @@ extension AnalyticEvent {
         case .learn_finished_meditation_course: return "learn_finished_meditation_course"
         case .learn_tapped_life_course: return "learn_tapped_life_course"
         case .learn_finished_life_course: return "learn_finished_life_course"
+        case .screen_load_single: return "screen_load_single"
         }
     }
 }

@@ -13,7 +13,7 @@ struct StatBox: View {
     let value: String
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             Rectangle()
                 .fill(Clr.darkWhite)
                 .cornerRadius(15)
@@ -21,23 +21,29 @@ struct StatBox: View {
             HStack(spacing: 0){
                 img
                     .resizable()
-                    .aspectRatio(contentMode: .fill)
+                    .aspectRatio(contentMode: .fit)
                     .padding(8)
-                VStack(alignment: .center, spacing: 0) {
-                    Text(label)
-                        .font(Font.mada(.regular, size: 12))
-                        .minimumScaleFactor(0.05)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.center)
-                    Text(value)
-                        .font(Font.mada(.bold, size: 26))
-                        .minimumScaleFactor(0.05)
-                        .multilineTextAlignment(.center)
-                }.frame(maxWidth: 75, maxHeight: 150)
-                .padding(5)
-            }
-        } 
-        .padding(.trailing, 10)
+                    .frame(width: 65)
+                if label == "Total Minutes"  {
+                    Spacer()
+                }
+                    VStack(alignment: .center, spacing: 0) {
+                        Text(label)
+                            .font(Font.mada(.regular, size: 12))
+                            .minimumScaleFactor(0.05)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.center)
+                        Text(value)
+                            .font(Font.mada(.bold, size: 22))
+                            .minimumScaleFactor(0.05)
+                            .multilineTextAlignment(.center)
+                    }.padding(5)
+                    .offset(x: label == "Total Minutes" ? 0 : -3)
+                if label == "Total Minutes"  {
+                    Spacer()
+                }
+            }.frame(height:60)
+        }
     }
 }
 

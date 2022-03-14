@@ -124,7 +124,6 @@ struct ReviewScene: View {
                                                 Capsule()
                                                     .fill(Clr.yellow)
                                                     .frame(width: width * 0.2, height: height * 0.03)
-                                                    .neoShadow()
                                                     .overlay(
                                                         Text("Turn On")
                                                             .foregroundColor(.black)
@@ -132,6 +131,7 @@ struct ReviewScene: View {
                                                             .lineLimit(1)
                                                             .minimumScaleFactor(0.05)
                                                     )
+                                                    .neoShadow()
                                             }
                                         }
                                     }

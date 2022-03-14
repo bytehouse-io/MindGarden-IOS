@@ -130,21 +130,23 @@ struct OnboardingScene: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             Analytics.shared.log(event: .onboarding_tapped_continue)
-                            withAnimation {
-                                viewRouter.progressValue = 0.4
-                                viewRouter.currentPage = .experience
+                            withAnimation(.easeOut(duration: 0.5)) {
+                                DispatchQueue.main.async {
+                                    viewRouter.progressValue = 0.4
+                                    viewRouter.currentPage = .experience
+                                }
                             }
                         } label: {
                             Capsule()
                                 .fill(Clr.yellow)
                                 .overlay(
-                                    Text("Get Happier 👉🏻")
+                                    Text("Start Growing 👉🏻")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 20))
                                 )
                         }.frame(height: 50)
                             .padding([.horizontal, .bottom])
-                        .buttonStyle(BonusPress())
+                        .buttonStyle(NeumorphicPress())
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_sign_in)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()

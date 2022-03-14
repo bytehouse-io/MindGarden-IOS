@@ -47,7 +47,7 @@ struct PricingView: View {
                                 Img.morningSun
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                Image(systemName: "sk")
+                                Image(systemName: "xmark")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20)
@@ -75,7 +75,7 @@ struct PricingView: View {
                                                 let center = UNUserNotificationCenter.current()
                                                 let content = UNMutableNotificationContent()
                                                 content.title = "Don't Miss This Opportunity"
-                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2374 other pro users"
+                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2974 other pro users"
                                                 // Step 3: Create the notification trigger
                                                 let date = Date().addingTimeInterval(13200)
                                                 let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)

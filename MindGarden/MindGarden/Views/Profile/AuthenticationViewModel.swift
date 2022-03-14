@@ -161,11 +161,17 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         if isSignUp && checked {
             Analytics.shared.log(event: .authentication_signuped_newsletter)
             OneSignal.sendTag("newsletter", value: "true")
-
         }
         if isSignUp {
             OneSignal.sendTag("signedUp", value: "true")
+        } else {
+            UserDefaults.standard.setValue(true, forKey: "day1")
+            UserDefaults.standard.setValue(true, forKey: "day2")
+            UserDefaults.standard.setValue(true, forKey: "day3")
+            UserDefaults.standard.setValue(false, forKey: "newUser")
+            UserDefaults.standard.setValue(1, forKey: "day")
         }
+        
         if !fromOnboarding {
             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         }

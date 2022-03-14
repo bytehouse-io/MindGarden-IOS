@@ -149,7 +149,7 @@ struct NotificationScene: View {
                                                 promptNotification()
                                             } else {
                                                 Analytics.shared.log(event: .onboarding_notification_off)
-                                                promptNotification()
+                                                viewRouter.currentPage = .review
                                             }
                                             UserDefaults.standard.setValue(true, forKey: "showedNotif")
                                         })
@@ -176,12 +176,14 @@ struct NotificationScene: View {
                                         UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
-                                            withAnimation {
-                                                if tappedTurnOn {
-                                                    viewRouter.currentPage = .review
-                                                } else {
-                                                    viewRouter.progressValue += 0.1
-                                                    viewRouter.currentPage = .name
+                                            withAnimation(.easeOut(duration: 0.5)) {
+                                                DispatchQueue.main.async {
+                                                    if tappedTurnOn {
+                                                        viewRouter.currentPage = .review
+                                                    } else {
+                                                        viewRouter.progressValue += 0.1
+                                                        viewRouter.currentPage = .name
+                                                    }
                                                 }
                                             }
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -258,7 +260,6 @@ struct NotificationScene: View {
             case .authorized:
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
-                Analytics.shared.log(event: .notification_success)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
@@ -267,7 +268,6 @@ struct NotificationScene: View {
                 }
                 UserDefaults.standard.setValue(dateTime, forKey: "notif")
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
-
                 if frequency == "Everyday" {
                     for i in 1...7 {
                         let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
@@ -281,7 +281,7 @@ struct NotificationScene: View {
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
                 }
-
+                NotificationHelper.addUnlockedFeature(title: "🔓 Your Learn Page has been unlocked!", body: "We recommend starting with Understanding Mindfulness")
                 DispatchQueue.main.async {
                     if fromSettings {
                         presentationMode.wrappedValue.dismiss()
@@ -289,11 +289,10 @@ struct NotificationScene: View {
                         if tappedTurnOn {
                             viewRouter.currentPage = .review
                         } else {
-                            viewRouter.progressValue += 0.15
+                            viewRouter.progressValue += 0.3
                             viewRouter.currentPage = .name
                         }
                     }
-                    
                 }
             case .denied:
                 if fromSettings || tappedTurnOn {

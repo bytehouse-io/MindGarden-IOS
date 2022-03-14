@@ -150,42 +150,40 @@ struct Garden: View {
                                 }
 
                             }
-                        }.offset(y: -10)
+                        }
                         .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
                         .zIndex(-1000)
                         HStack(spacing: 5) {
-                            VStack(spacing: 15) {
-                                StatBox(label: "Total mins", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
-                                StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                                StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
-                            }
-                            .frame(maxWidth: gp.size.width * 0.33)
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
                                     .cornerRadius(15)
+                                    .frame(height: gp.size.height * 0.3)
                                     .neoShadow()
-                                VStack(spacing: 10) {
-                                    Spacer()
-                                    HStack(alignment: .bottom) {
-                                        MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
-                                        MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
-                                    }.padding(.horizontal, sizeCategory > .large ? 0 : 10)
-                                    HStack(alignment: .bottom) {
-                                        MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
-                                        MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
-                                    }.padding(.horizontal, sizeCategory > .large ? 0 : 10)
-                                    HStack(alignment: .bottom) {
-                                        
-                                        MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
-                                            .frame(maxWidth:120)
+                                VStack {
+                                    HStack(spacing:5) {
+                                        StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
+                                        HStack(alignment: .bottom) {
+                                            MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0).padding(0)
+                                            MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0).padding(0)
+                                        }.offset(x: 10)
+                                    }.padding(.horizontal,5)
+                                    HStack(spacing:5) {
+                                        StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
+                                        HStack(alignment: .bottom) {
+                                            MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0).padding(0)
+                                            MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0).padding(0)
+                                        }.offset(x: 10)
+                                    }.padding(.horizontal,5)
+                                    HStack {
+                                        StatBox(label: "Total Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
+                                        Spacer().frame(width:10)
                                         Spacer()
-                                    }.padding(.horizontal, 5)
-                                    Spacer()
-
-                                }
-                            }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 0.75 : 0.5))
-                        }.frame(maxHeight: gp.size.height * 0.235)
+                                        MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0).frame(maxWidth:90)
+                                    }.padding(.horizontal,5)
+                                }.padding(10)
+                            }.padding(.horizontal,10)
+                        }
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants:")
@@ -278,10 +276,10 @@ struct Garden: View {
                                     .frame(width: 40, height: 20)
                                     .rotationEffect(.radians(.pi))
                             }
-                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? gp.size.height * 0.1 : gp.size.height * -0.03)
+                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? gp.size.height * 0.025 : gp.size.height * -0.07)
                     }
 
-                }
+                }.padding(.bottom ,50)
             }
             .popover(isPresented: $showSingleModal) {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
@@ -339,26 +337,31 @@ struct MoodImage: View {
     let mood: Mood
     let value: Int
     @Environment(\.sizeCategory) var sizeCategory
+    var isStressed: Bool {
+        return mood == .stressed
+    }
 
     var body: some View {
         HStack(spacing: 0) {
             Mood.getMoodImage(mood: mood)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: .infinity)
+                .frame(width: 35)
+                .padding(.leading, 2)
             VStack(alignment: .center) {
                 Text(mood.title)
-                    .font(.subheadline)
-                    .minimumScaleFactor(0.5)
+                    .font(Font.mada(.semiBold, size: 14))
                     .lineLimit(1)
+                    .frame(width: isStressed ? 60 : 38)
+                    .foregroundColor(Clr.black2)
                 Text(String(value))
                     .font(.headline)
                     .bold()
-                    .minimumScaleFactor(0.5)
                     .lineLimit(1)
-            }.padding(.leading, 3)
+                    .frame(width: isStressed ? 60 : 40)
+            }.padding(.leading, 1)
             .frame(maxWidth: .infinity)
-        }.padding(3)
+        }
     }
 }
 

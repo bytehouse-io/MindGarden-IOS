@@ -42,6 +42,7 @@ struct FirebaseAPI {
                     if let duration = document["duration"] as? String {
                         courseDuration = duration
                     }
+                    
                     if let category = document["category"] as? String {
                         courseCategory = category
                     }

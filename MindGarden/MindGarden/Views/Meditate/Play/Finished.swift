@@ -8,6 +8,9 @@
 import SwiftUI
 import Photos
 import StoreKit
+import AppsFlyerLib
+import Amplitude
+import Firebase
 
 struct Finished: View {
     var model: MeditationViewModel
@@ -120,7 +123,7 @@ struct Finished: View {
                                                                 }
                                                             }
                                                     }
-                                                    .buttonStyle(NeumorphicPress())
+                                                    .buttonStyle(BonusPress())
                                                     Button { } label: {
                                                         HStack {
                                                             Img.hands
@@ -147,7 +150,7 @@ struct Finished: View {
                                                                 }
                                                             }
                                                     }
-                                                    .buttonStyle(NeumorphicPress())
+                                                    .buttonStyle(BonusPress())
                                                 }.frame(width: g.size.width, height: 45)
                                                 .padding(.top, 10)
                                                 .zIndex(100)
@@ -165,13 +168,13 @@ struct Finished: View {
                                             .font(Font.mada(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
-                                        Text("With patience and mindfulness you were able to grow a \(userModel.selectedPlant?.title ?? "")!")
+                                        Text("With patience and mindfulness you were able to grow  \(userModel.modTitle())!")
                                             .font(Font.mada(.bold, size: 22))
-                                            .lineLimit(2)
+                                            .lineLimit(3)
                                             .minimumScaleFactor(0.05)
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(Clr.black1)
-                                            .frame(height: g.size.height/12)
+                                            .frame(height: g.size.height/10)
                                             .padding([.horizontal])
                                         userModel.selectedPlant?.badge
                                             .resizable()
@@ -180,7 +183,7 @@ struct Finished: View {
                                             .padding(.top, 10)
                                             .animation(.easeInOut(duration: 2.0))
                                     }
-                                    .frame(height: g.size.height/2.5)
+                                    .frame(width: g.size.width * 0.85, height: g.size.height/2.25)
                                 }
                                 Spacer()
                             }.offset(y: !isOnboarding ? 0 : -50)
@@ -233,19 +236,19 @@ struct Finished: View {
                                                 Analytics.shared.log(event: .finished_tapped_finished)
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
-                                                    if !UserDefaults.standard.bool(forKey: "saveProgress") {
-                                                        saveProgress = true
-                                                    }else {
+                                                    if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
+                                                        saveProgress.toggle()
+                                                    } else {
                                                         viewRouter.currentPage = .garden
                                                     }
                                                 }
                                             }
-                                    }.buttonStyle(NeumorphicPress())
+                                    }.buttonStyle(BonusPress())
                                         .zIndex(100)
                                         .frame(width: g.size.width * 0.6, height: g.size.height/12)
                                 }.frame(width: g.size.width, height: g.size.height/8)
                                 .padding()
-                                .offset(y: 15)
+                                .offset(y: 50)
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
 
@@ -282,15 +285,7 @@ struct Finished: View {
 //                                .multilineTextAlignment(.center)
 //                                .frame(height: 50)
                             Button {
-                                saveProgress.toggle()
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .finished_save_progress)
-                                    fromOnboarding = true
-                                    viewRouter.currentPage = .authentication
-                                    UserDefaults.standard.setValue(true, forKey: "saveProgress")
-                                }
+                     
                             } label: {
                                 Capsule()
                                     .fill(Clr.darkgreen)
@@ -300,22 +295,35 @@ struct Finished: View {
                                              .foregroundColor(.white)
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.5)
-                                    )
-                                    
+                                    ).onTapGesture {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            Analytics.shared.log(event: .finished_save_progress)
+                                            fromOnboarding = true
+                                            viewRouter.currentPage = .authentication
+                                            UserDefaults.standard.setValue(true, forKey: "saveProgress")
+                                        }
+                                    }
                             }.buttonStyle(NeumorphicPress())
                              .frame(height: 45)
                              .padding(.top, 35)
+                             .padding(.bottom, 20)
                             Text("Not Now")
                                 .font(Font.mada(.semiBold, size: 20))
                                 .foregroundColor(Color.gray)
                                 .underline()
-                                .padding(.top, 25)
                                 .onTapGesture {
                                     withAnimation {
                                         saveProgress.toggle()
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        fromPage = "profile"
-                                        viewRouter.currentPage = .pricing
+                                        if isOnboarding {
+                                            viewRouter.currentPage = .garden
+                                        } else {
+                                            fromPage = "onboarding2"
+                                            viewRouter.currentPage = .pricing
+                                        }
+                              
                                     }
                                 }
                         }.frame(width: g.size.width * 0.8, alignment: .center)
@@ -341,26 +349,27 @@ struct Finished: View {
                         }
                     }
                 }
-                //unlock christmas tree
-//                var dateComponents = DateComponents()
-//                dateComponents.month = 12
-//                dateComponents.day = 20
-//                dateComponents.year = 2021
-//                let userCalendar = Calendar(identifier: .gregorian)
-//                let dec20 = userCalendar.date(from: dateComponents)
-//                var dateComponents2 = DateComponents()
-//                dateComponents2.month = 1
-//                dateComponents2.day = 5
-//                dateComponents2.year = 2022
-//                let jan5 = userCalendar.date(from: dateComponents2)
-//
-//                if Date.isBetween(dec20!, and: jan5!) && !UserDefaults.standard.bool(forKey: "christmas") {
-//                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-//                        p.title == "Christmas Tree"
-//                    })
-//                    userModel.buyPlant(unlockedStrawberry: true)
-//                    UserDefaults.standard.setValue(true, forKey: "christmas")
-//                }
+                
+                //unlock cherry blossom
+                var dateComponents = DateComponents()
+                dateComponents.month = 03
+                dateComponents.day = 05
+                dateComponents.year = 2022
+                let userCalendar = Calendar(identifier: .gregorian)
+                let mar5 = userCalendar.date(from: dateComponents)
+                var dateComponents2 = DateComponents()
+                dateComponents2.month = 5
+                dateComponents2.day = 10
+                dateComponents2.year = 2022
+                let Apr10 = userCalendar.date(from: dateComponents2)
+
+                if Date.isBetween(mar5!, and: Apr10!) && !UserDefaults.standard.bool(forKey: "cherry") {
+                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                        p.title == "Cherry Blossoms"
+                    })
+                    userModel.buyPlant(unlockedStrawberry: true)
+                    UserDefaults.standard.setValue(true, forKey: "cherry")
+                }
 
                 //num times med
                 var num = UserDefaults.standard.integer(forKey: "numMeds")
@@ -376,9 +385,6 @@ struct Finished: View {
                     UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                     isOnboarding = true
                 }
-
-
-                Analytics.shared.log(event: AnalyticEvent.getMeditation(meditation: "finished_\(model.selectedMeditation?.returnEventName() ?? "")"))
                 var session = [String: String]()
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
@@ -398,6 +404,14 @@ struct Finished: View {
                 }
                 userCoins += reward
                 gardenModel.save(key: "sessions", saveValue: session)
+                
+                //Log Analytics
+                #if !targetEnvironment(simulator)
+                 Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])
+                 AppsFlyerLib.shared().logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", withValues: [AFEventParamContent: "true"])
+                 Amplitude.instance().logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")")
+                #endif
+                 print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
             }
             .onAppearAnalytics(event: .screen_load_finished)
 

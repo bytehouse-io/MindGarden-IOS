@@ -26,7 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-        if !UserDefaults.standard.bool(forKey: "showedNotif") {
+        let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        if launchNum == 0 {
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
             UserDefaults.standard.setValue("nature", forKey: "sound")
@@ -36,8 +37,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd,yyyy"
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")
-
+            UserDefaults.standard.setValue(true, forKey: "newUser")
         }
+        
+        
         Analytics.shared.log(event: .launchedApp)
 
 
@@ -50,7 +53,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         medModel.updateSelf()
         SceneDelegate.userModel.updateSelf()
         gardenModel.updateSelf()
-        SceneDelegate.bonusModel.updateBonus()
         FirebaseAPI.fetchMeditations(meditationModel: medModel)
         FirebaseAPI.fetchCourses()
 
@@ -89,6 +91,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         numberOfMeds = Int.random(in: 585..<611)
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        if launchNum == 0 {
+            UserDefaults.standard.setValue(true, forKey: "newUser")
+        }
         launchNum += 1
         launchedApp = true
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")

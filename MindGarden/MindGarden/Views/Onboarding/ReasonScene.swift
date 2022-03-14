@@ -63,10 +63,12 @@ struct ReasonScene: View {
                                         default:
                                             break
                                         }
-                                        withAnimation {
+                                    withAnimation(.easeOut(duration: 0.5)) {
+                                        DispatchQueue.main.async {
                                             viewRouter.progressValue += 0.1
                                             viewRouter.currentPage = .notification
                                         }
+                                    }
                                 } //TODO gray out button if not selected
                             } label: {
                                 Capsule()
