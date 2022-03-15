@@ -26,6 +26,7 @@ struct Finished: View {
     @State private var reward = 0
     @State private var saveProgress = false
     @State private var hideConfetti = false
+    @State private var showStreak = false
     @Environment(\.sizeCategory) var sizeCategory
 
     var minsMed: Int {
@@ -239,7 +240,8 @@ struct Finished: View {
                                                     if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
                                                         saveProgress.toggle()
                                                     } else {
-                                                        viewRouter.currentPage = .garden
+                                                        showStreak.toggle()
+//                                                        viewRouter.currentPage = .garden
                                                     }
                                                 }
                                             }
@@ -331,6 +333,9 @@ struct Finished: View {
                 }
             }
         }.transition(.move(edge: .trailing))
+            .fullScreenCover(isPresented: $showStreak, content: {
+                StreakScene(currentDay: .constant(4))
+            })
             .onDisappear {
                 model.playImage = Img.seed
                 model.lastSeconds = false

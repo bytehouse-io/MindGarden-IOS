@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct StreakScene: View {
+    @Environment(\.presentationMode) var presentationMode
     
     var title : String {
         return "\(currentDay) Day Streak"
@@ -21,15 +22,17 @@ struct StreakScene: View {
     @Binding var currentDay: Int
     var body: some View {
         ZStack {
-            VStack {
-                Img.fire
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 200, height: 200, alignment: .center)
+            VStack(spacing: 0) {
+                LottieAnimationView(filename: "fire", loopMode: .playOnce, isPlaying: .constant(true))
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 500, height: 500, alignment: .center)
+                Spacer()
                 Text(title)
                     .streakTitleStyle()
                 Text(subTitle)
                     .streakBodyStyle()
+                    .frame(height: 100)
                 DaysProgressBar(currentDay: $currentDay)
                 Spacer()
                 Button {
@@ -46,8 +49,9 @@ struct StreakScene: View {
                 }
                 .buttonStyle(NeumorphicPress())
                 .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
-                Spacer()
+                .padding(.top, 50)
             }
+            .offset(y: -145)
         }
     }
 }

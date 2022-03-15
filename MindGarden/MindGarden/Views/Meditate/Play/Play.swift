@@ -66,7 +66,7 @@ struct Play: View {
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
                                         .foregroundColor(Clr.brightGreen)
                                         .rotationEffect(Angle(degrees: 270.0))
-                                        .animation(.linear(duration: 3), value: model.secondsRemaining)
+                                        .animation(.linear(duration: 2), value: model.secondsRemaining)
                                     Circle()
                                         .frame(width: K.isPad() ? 480 : 230)
                                         .foregroundColor(Clr.darkWhite)
