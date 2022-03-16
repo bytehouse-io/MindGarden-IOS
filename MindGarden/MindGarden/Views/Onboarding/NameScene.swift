@@ -68,12 +68,14 @@ struct NameScene: View {
                             Button {
                                 Analytics.shared.log(event: .name_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    if !name.isEmpty {
-                                        UserDefaults.standard.set(name, forKey: "name")
-                                        viewRouter.progressValue += 0.15
-                                        viewRouter.currentPage = .review
-                                        userModel.name = name
+                                withAnimation(.easeOut(duration: 0.3)) {
+                                    DispatchQueue.main.async {
+                                        if !name.isEmpty {
+                                            UserDefaults.standard.set(name, forKey: "name")
+                                            viewRouter.progressValue += 0.15
+                                            viewRouter.currentPage = .review
+                                            userModel.name = name
+                                        }
                                     }
                                 }
                             } label: {
