@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Paywall
+import OneSignal
+import Purchases
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -133,6 +135,9 @@ struct OnboardingScene: View {
                             withAnimation {
                                 viewRouter.progressValue = 0.4
                                 viewRouter.currentPage = .experience
+                            }
+                            if let onesignalId = OneSignal.getDeviceState().userId {
+                                   Purchases.shared.setOnesignalID(onesignalId)
                             }
                         } label: {
                             Capsule()

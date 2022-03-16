@@ -358,6 +358,9 @@ extension AuthenticationViewModel {
 //            if let onesignalId = OneSignal.getUserID() {
 //                Purchases.shared.setOnesignalID(onesignalId)
 //            }
+            if let onesignalId = OneSignal.getDeviceState().userId {
+                   Purchases.shared.setOnesignalID(onesignalId)
+            }
             Amplitude.instance().setUserId(email)
             Purchases.shared.logIn(email) { info, bool, error in }
             Paywall.identify(userId: email)
