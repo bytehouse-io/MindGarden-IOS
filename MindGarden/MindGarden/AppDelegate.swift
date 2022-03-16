@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Purchases.shared.collectDeviceIdentifiers()
         if let onesignalId = OneSignal.getDeviceState().userId {
                Purchases.shared.setOnesignalID(onesignalId)
-           }
+        }
 
         // Set the Appsflyer Id
         Purchases.shared.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID())

@@ -22,6 +22,7 @@
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
+		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		887734BC27DD5988007EDC9E /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 887734BB27DD5987007EDC9E /* 30 Second Meditation.mp3 */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
@@ -37,7 +38,6 @@
 		88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB527DFBE900060FD8E /* alpha.mp3 */; };
 		88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB627DFBE900060FD8E /* music.mp3 */; };
 		88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB727DFBE900060FD8E /* piano2.mp3 */; };
-		88F36AC227E01E240060FD8E /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AC127E01E240060FD8E /* fire.json */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
@@ -229,6 +229,7 @@
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
+		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		887734BB27DD5987007EDC9E /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -244,7 +245,6 @@
 		88F36AB527DFBE900060FD8E /* alpha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alpha.mp3; sourceTree = "<group>"; };
 		88F36AB627DFBE900060FD8E /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		88F36AB727DFBE900060FD8E /* piano2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano2.mp3; sourceTree = "<group>"; };
-		88F36AC127E01E240060FD8E /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -527,7 +527,7 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				88F36AC127E01E240060FD8E /* fire.json */,
+				8864293527E13B6400DB7564 /* fire.json */,
 				8862586A27C4369D0093D18C /* check2.json */,
 				FED7437327A734E700435D0A /* coins.json */,
 				FE09DA2226F53BD00018099F /* confetti.json */,
@@ -1062,7 +1062,6 @@
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
-				88F36AC227E01E240060FD8E /* fire.json in Resources */,
 				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
@@ -1072,6 +1071,7 @@
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
 				FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */,
+				8864293627E13B6400DB7564 /* fire.json in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
 				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
 				887734BC27DD5988007EDC9E /* 30 Second Meditation.mp3 in Resources */,

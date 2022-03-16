@@ -12,6 +12,7 @@ import Purchases
 import Firebase
 import FirebaseFirestore
 import AppsFlyerLib
+import Paywall
 
 var launchedApp = false
 struct Home: View {
@@ -279,34 +280,33 @@ struct Home: View {
                                             .animation(.default, value: isRecent)
                                     }
                                     Spacer()
-                                    if !UserDefaults.standard.bool(forKey: "isPro") {
-                                        Button { } label: {
-                                            HStack {
-                                                Text("💚 Go Pro!")
-                                                    .font(Font.mada(.semiBold, size: 14))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                    .font(.footnote)
-                                                    .lineLimit(1)
-                                                    .minimumScaleFactor(0.05)
-                                            }
-                                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
-                                            .padding(8)
-                                            .background(Clr.darkWhite)
-                                            .cornerRadius(25)
-                                            .onTapGesture {
-                                                Analytics.shared.log(event: .home_tapped_pro)
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                withAnimation {
-                                                    fromPage = "home"
-                                                    viewRouter.currentPage = .pricing
-                                                }
-                                            }
-                                        }
-                                        .buttonStyle(NeumorphicPress())
-                                    }
+//                                    if !UserDefaults.standard.bool(forKey: "isPro") {
+//                                        Button { } label: {
+//                                            HStack {
+//                                                Text("💚 Go Pro!")
+//                                                    .font(Font.mada(.semiBold, size: 14))
+//                                                    .foregroundColor(Clr.darkgreen)
+//                                                    .font(.footnote)
+//                                                    .lineLimit(1)
+//                                                    .minimumScaleFactor(0.05)
+//                                            }
+//                                            .frame(width: UIScreen.main.bounds.width * 0.2, height: 18)
+//                                            .padding(8)
+//                                            .background(Clr.darkWhite)
+//                                            .cornerRadius(25)
+//                                            .onTapGesture {
+//                                                Analytics.shared.log(event: .home_tapped_pro)
+//                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                                withAnimation {
+//                                                    fromPage = "home"
+//                                                    viewRouter.currentPage = .pricing
+//                                                }
+//                                            }
+//                                        }
+//                                        .buttonStyle(NeumorphicPress())
+//                                    }
                                 }.frame(width: abs(g.size.width * 0.825), alignment: .leading)
-                                    .padding(.top, 20)
-                                
+                                .padding(.top, 20)
                                 ScrollView(.horizontal, showsIndicators: false, content: {
                                     HStack(spacing: 15) {
                                         if model.favoritedMeditations.isEmpty && !isRecent {
@@ -349,7 +349,40 @@ struct Home: View {
                                         .padding([.leading, .trailing], g.size.width * 0.07)
                                 }).frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
                                 .padding(.top, 5)
-                                
+                                if !UserDefaults.standard.bool(forKey: "isPro") {
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Paywall.present()
+                                } label: {
+                                    ZStack {
+                                        Rectangle()
+                                            .fill(Clr.darkWhite)
+                                            .cornerRadius(16)
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Clr.darkgreen, lineWidth: 2)
+                                        HStack {
+                                            Spacer()
+                                            Img.panda
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height: g.size.height * 0.1)
+                                            Spacer()
+                                            VStack(alignment: .leading) {
+                                                Spacer()
+                                                Text("Start Free Trial")
+                                                    .foregroundColor(Clr.black2)
+                                                    .font(Font.mada(.bold, size: 20))
+                                                Text("Join 1378 pro members who practice daily 💚")
+                                                    .foregroundColor(Clr.black2)
+                                                    .font(Font.mada(.medium, size: 14))
+                                                Spacer()
+                                            }.frame(width: g.size.width * 0.5)
+                                            Spacer()
+                                        }
+                                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.125, alignment: .center)
+                                }.padding(.vertical)
+                                .buttonStyle(BonusPress())
+                               }
                                 //MARK: - New Meds
                                 Text("☀️ New Meditations")
                                     .font(Font.mada(.semiBold, size: 28))

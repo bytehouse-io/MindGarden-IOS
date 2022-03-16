@@ -22,7 +22,7 @@ struct OnboardingScene: View {
     }
     let titles = ["Simple gamified meditation that actually sticks", "Visualize Your Progress", "Collect all the flowers, fruits and trees!"]
     let subtitles = ["Stress less. Get 1% happier everyday by making meditation a lifestyle.", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
-    let images = [Img.pottedPlants, Img.gardenCalender, Img.packets]
+    let images = [Img.coloredPots, Img.gardenCalender, Img.packets]
     var body: some View {
         NavigationView {
             GeometryReader { g in
@@ -146,7 +146,7 @@ struct OnboardingScene: View {
                                 )
                         }.frame(height: 50)
                             .padding([.horizontal, .bottom])
-                        .buttonStyle(NeumorphicPress())
+                        .buttonStyle(BonusPress())
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_sign_in)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()

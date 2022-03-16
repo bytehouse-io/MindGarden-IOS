@@ -308,7 +308,7 @@ struct Store: View {
         }.onAppear {
             DispatchQueue.main.async {
                 isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
-                if UserDefaults.standard.bool(forKey: "day2") {
+                if UserDefaults.standard.bool(forKey: "day2") && isShop {
                     if !UserDefaults.standard.bool(forKey: "storeTutorial") {
                         currentHightlight = 0
                     }
@@ -333,7 +333,7 @@ struct Store: View {
             switch permission.authorizationStatus  {
             case .authorized:
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
-                Analytics.shared.log(event: .notification_success_learn)
+                Analytics.shared.log(event: .notification_success_store)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
@@ -343,7 +343,7 @@ struct Store: View {
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
                 isNotifOn = true
             case .denied:
-                Analytics.shared.log(event: .notification_settings_learn)
+                Analytics.shared.log(event: .notification_settings_store)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)

@@ -37,6 +37,8 @@ struct StreakScene: View {
                 Spacer()
                 Button {
                     //TODO: implement continue tap event
+                    presentationMode.wrappedValue.dismiss()
+
                 } label: {
                     Capsule()
                         .fill(Clr.gardenRed)
