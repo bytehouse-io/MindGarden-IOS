@@ -190,6 +190,7 @@ struct LearnScene: View {
                 }
             }
         }
+        .onAppearAnalytics(event: .screen_load_learn)
     }
     
     private func promptNotif() {

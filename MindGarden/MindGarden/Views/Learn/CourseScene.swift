@@ -33,7 +33,7 @@ struct CourseScene: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100)
-                .position(x: 30, y: UIScreen.main.bounds.height * (K.isSmall() ? 0.79 : 0.72))
+                .position(x: 30, y: UIScreen.main.bounds.height * (K.isSmall() ? 0.79 : 0.75))
             Img.books
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -52,6 +52,7 @@ struct CourseScene: View {
                     .offset(x: width/6, y: K.isSmall() ? -50 : -25)
                     .frame(width: width, height: 400)
                     Button {
+                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Capsule()

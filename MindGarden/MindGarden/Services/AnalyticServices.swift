@@ -12,6 +12,7 @@ import OSLog
 import AppsFlyerLib
 import Amplitude
 import OneSignal
+import Paywall
 
 final class Analytics: ObservableObject {
     static let shared = Analytics()
@@ -37,6 +38,7 @@ final class Analytics: ObservableObject {
          Firebase.Analytics.logEvent(event.eventName, parameters: [:])
          AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
          Amplitude.instance().logEvent(event.eventName)
+         Paywall.track(name: event.eventName)
         #endif
          print("logging, \(event.eventName)")
      }

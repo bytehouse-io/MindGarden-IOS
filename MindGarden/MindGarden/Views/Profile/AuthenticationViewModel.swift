@@ -162,6 +162,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             Analytics.shared.log(event: .authentication_signuped_newsletter)
             OneSignal.sendTag("newsletter", value: "true")
         }
+        
         if isSignUp {
             OneSignal.sendTag("signedUp", value: "true")
         } else {
@@ -354,6 +355,9 @@ extension AuthenticationViewModel {
         if let email = Auth.auth().currentUser?.email {
             OneSignal.setEmail(email)
             OneSignal.setExternalUserId(email)
+//            if let onesignalId = OneSignal.getUserID() {
+//                Purchases.shared.setOnesignalID(onesignalId)
+//            }
             Amplitude.instance().setUserId(email)
             Purchases.shared.logIn(email) { info, bool, error in }
             Paywall.identify(userId: email)

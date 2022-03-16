@@ -127,7 +127,7 @@ struct NotificationScene: View {
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
-                            Img.eggs
+                            Img.turtleLetter
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .neoShadow()
