@@ -130,9 +130,11 @@ struct OnboardingScene: View {
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                viewRouter.progressValue = 0.4
-                                viewRouter.currentPage = .experience
+                            withAnimation(.easeOut(duration: 0.4)) {
+                                DispatchQueue.main.async {
+                                    viewRouter.progressValue = 0.4
+                                    viewRouter.currentPage = .experience
+                                }
                             }
                         } label: {
                             Capsule()

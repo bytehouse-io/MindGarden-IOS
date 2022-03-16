@@ -165,9 +165,11 @@ struct ReviewScene: View {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                            withAnimation {
-                                viewRouter.progressValue += 0.15
-                                viewRouter.currentPage = .meditate
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                DispatchQueue.main.async {
+                                    viewRouter.progressValue += 0.15
+                                    viewRouter.currentPage = .meditate
+                                }
                             }
                         } label: {
                                 Text("Not Now")

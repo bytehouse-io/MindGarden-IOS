@@ -61,9 +61,11 @@ struct ExperienceScene: View {
                                     default:
                                         break
                                     }
-                                    withAnimation {
-                                        viewRouter.currentPage = .reason
-                                        viewRouter.progressValue += 0.15
+                                    withAnimation(.easeOut(duration: 0.3)) {
+                                        DispatchQueue.main.async {
+                                            viewRouter.currentPage = .reason
+                                            viewRouter.progressValue += 0.15
+                                        }
                                     }
                                 } //TODO gray out button if not selected
                             } label: {
