@@ -126,13 +126,15 @@ struct Home: View {
                         .offset(y: -height * 0.1)
                         //MARK: - scroll view
                         ScrollView(.vertical, showsIndicators: false) {
-                            LazyVStack {
+                            VStack {
                                 HStack(spacing: width * 0.04) {
                                     Button {
                                         Analytics.shared.log(event: .home_tapped_bonus)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
-                                            showModal = true
+                                            DispatchQueue.main.async {
+                                                showModal = true
+                                            }
                                         }
                                     } label: {
                                         HStack {
@@ -246,11 +248,13 @@ struct Home: View {
                                                 Analytics.shared.log(event: .home_tapped_featured)
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
-                                                    model.selectedMeditation = model.featuredMeditation
-                                                    if model.featuredMeditation?.type == .course {
-                                                        viewRouter.currentPage = .middle
-                                                    } else {
-                                                        viewRouter.currentPage = .play
+                                                    DispatchQueue.main.async {
+                                                        model.selectedMeditation = model.featuredMeditation
+                                                        if model.featuredMeditation?.type == .course {
+                                                            viewRouter.currentPage = .middle
+                                                        } else {
+                                                            viewRouter.currentPage = .play
+                                                        }
                                                     }
                                                 }
                                             }
@@ -263,7 +267,9 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 Analytics.shared.log(event: .home_tapped_recents)
                                                 withAnimation {
-                                                    isRecent = true
+                                                    DispatchQueue.main.async {
+                                                        isRecent = true
+                                                    }
                                                 }
                                             } label: {
                                                 Text("Recent")
@@ -274,7 +280,9 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 Analytics.shared.log(event: .home_tapped_favorites)
                                                 withAnimation {
-                                                    isRecent = false
+                                                    DispatchQueue.main.async {
+                                                        isRecent = false
+                                                    }
                                                 }
                                             } label: {
                                                 Text("Favorites")
@@ -440,10 +448,12 @@ struct Home: View {
                                             .cornerRadius(25)
                                             .onTapGesture {
                                                 withAnimation {
-                                                    Analytics.shared.log(event: .home_tapped_categories)
-                                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                                    impact.impactOccurred()
-                                                    viewRouter.currentPage = .categories
+                                                    DispatchQueue.main.async {
+                                                        Analytics.shared.log(event: .home_tapped_categories)
+                                                        let impact = UIImpactFeedbackGenerator(style: .light)
+                                                        impact.impactOccurred()
+                                                        viewRouter.currentPage = .categories
+                                                    }
                                                 }
                                             }
                                     }.padding(.top, 24)
