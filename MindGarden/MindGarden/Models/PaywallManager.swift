@@ -13,7 +13,6 @@ import Amplitude
 import Firebase
 
 class PaywallManager: PaywallDelegate {
-    
     static var shared = PaywallManager()
     
     func purchase(product: SKProduct) {
@@ -24,6 +23,10 @@ class PaywallManager: PaywallDelegate {
             // check purchaserInfo and unlock the app if the user is paying.
             // no need to handle any errors or dismiss the paywall, Superwall does this for you automatically
         }
+    }
+    
+    func shouldPresentPaywall() -> Bool {
+        return false
     }
     
 
@@ -51,8 +54,11 @@ class PaywallManager: PaywallDelegate {
   func isUserSubscribed() -> Bool {
         
     // TODO: Return true if the user is subscribed, otherwise return false
-        
-    return false
+      if UserDefaults.standard.bool(forKey: "isPro") {
+          return true
+      } else {
+          return false
+      }
   }
     
     func reset() {
@@ -60,9 +66,5 @@ class PaywallManager: PaywallDelegate {
     }
     
     
-    func shouldTrack(event: String, params: [String : Any]) {
-        Firebase.Analytics.logEvent(event, parameters: params)
-        AppsFlyerLib.shared().logEvent(event, withValues: params)
-        Amplitude.instance().logEvent(event, withEventProperties: params)
-    }
+    func shouldTrack(event: String, params: [String : Any]) {}
 }

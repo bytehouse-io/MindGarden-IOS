@@ -140,6 +140,7 @@ class UserViewModel: ObservableObject {
 
     private func buyBonsai() {
         if !UserDefaults.standard.bool(forKey: "bonsai") {
+            userWentPro = true
             if !ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
                 willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
                 buyPlant(unlockedStrawberry: true)

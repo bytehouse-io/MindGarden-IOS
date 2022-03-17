@@ -21,6 +21,8 @@
 		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
+		882738D327E2D75E00F8D4D0 /* first_part.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D227E2D75D00F8D4D0 /* first_part.json */; };
+		882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D427E2D76E00F8D4D0 /* second_part_loop.json */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
@@ -228,6 +230,8 @@
 		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
+		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
+		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
@@ -527,6 +531,8 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
+				882738D227E2D75D00F8D4D0 /* first_part.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
 				8862586A27C4369D0093D18C /* check2.json */,
 				FED7437327A734E700435D0A /* coins.json */,
@@ -1067,11 +1073,13 @@
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
+				882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */,
 				FEBF22CA26DC3860002572E2 /* bell.mp3 in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
 				FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */,
 				8864293627E13B6400DB7564 /* fire.json in Resources */,
+				882738D327E2D75E00F8D4D0 /* first_part.json in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
 				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
 				887734BC27DD5988007EDC9E /* 30 Second Meditation.mp3 in Resources */,

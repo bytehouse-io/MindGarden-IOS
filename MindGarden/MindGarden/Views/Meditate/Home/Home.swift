@@ -228,11 +228,19 @@ struct Home: View {
                                                         .padding([.top, .leading])
                                                         .zIndex(100)
                                                         .neoShadow()
-                                                    (model.featuredMeditation?.img ?? Img.daisy3)
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: g.size.height * 0.2)
-                                                        .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
+                                                    if model.featuredMeditation?.imgURL != "" {
+                                                        UrlImageView(urlString: model.featuredMeditation?.imgURL)
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: g.size.height * 0.2)
+                                                            .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
+                                                    } else {
+                                                        (model.featuredMeditation?.img ?? Img.daisy3)
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: g.size.height * 0.2)
+                                                            .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
+                                                    }
+                                                      
                                                 }.padding([.top, .bottom, .trailing])
                                             }.onTapGesture {
                                                 Analytics.shared.log(event: .home_tapped_featured)
@@ -502,6 +510,7 @@ struct Home: View {
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
         .onAppear {
+            userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     ios14 = false
