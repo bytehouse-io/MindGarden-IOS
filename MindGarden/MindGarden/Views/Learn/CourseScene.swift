@@ -235,15 +235,18 @@ struct FeaturedItem: View {
     var body: some View {
         ZStack {
         VStack(alignment: .center, spacing: 8) {
-            Text(slide.topText)
-                .font(Font.mada(.semiBold, size: 18))
-                .lineLimit(sizeCategory > .large ? 4 : 8)
-                .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .center)
-                .padding(.horizontal)
-                .minimumScaleFactor(0.5)
-                .foregroundColor(Clr.black2)
-                .padding([.horizontal])
-                .offset(y: 25)
+            if slide.topText != "" {
+                Text(slide.topText)
+                    .font(Font.mada(.semiBold, size: 18))
+                    .lineLimit(sizeCategory > .large ? 4 : 8)
+                    .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .center)
+                    .padding(.horizontal)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(Clr.black2)
+                    .padding([.horizontal])
+                    .offset(y: 25)
+
+            }
             Spacer()
             UrlImageView(urlString: slide.img)
                 .aspectRatio(contentMode: .fit)
@@ -252,14 +255,16 @@ struct FeaturedItem: View {
                 .padding(.horizontal, 10)
                 .neoShadow()
             Spacer()
-            Text(slide.bottomText)
-                .font(Font.mada(.semiBold, size: 18))
-                .lineLimit(sizeCategory > .large ? 4 : 8)
-                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.185, alignment: .center)
-                .minimumScaleFactor(0.5)
-                .foregroundColor(Clr.black2)
-                .padding(.horizontal)
-                .offset(y: -25)
+            if slide.bottomText != "" {
+                Text(slide.bottomText)
+                    .font(Font.mada(.semiBold, size: 18))
+                    .lineLimit(sizeCategory > .large ? 4 : 8)
+                    .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.185, alignment: .center)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(Clr.black2)
+                    .padding(.horizontal)
+                    .offset(y: -25)
+            }
         }
             RoundedRectangle(cornerRadius: 30)
                 .stroke(Clr.brightGreen, lineWidth: 4)

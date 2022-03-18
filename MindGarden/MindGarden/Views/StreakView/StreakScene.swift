@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StreakScene: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var gardenModel: GardenViewModel
     
     var title : String {
         return "\(currentDay) Day Streak"

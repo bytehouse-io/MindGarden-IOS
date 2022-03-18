@@ -57,7 +57,7 @@ extension View {
     
     func streakBodyStyle() -> some View {
         self
-            .font(Font.mada(.regular, size: 20))
+            .font(Font.mada(.regular, size: 24))
             .multilineTextAlignment(.center)
             .lineLimit(2)
             .padding()

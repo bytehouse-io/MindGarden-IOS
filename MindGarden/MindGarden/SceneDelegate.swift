@@ -103,7 +103,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SceneDelegate.bonusModel.bonusTimer = nil
         }
         SceneDelegate.bonusModel.updateBonus()
-        
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

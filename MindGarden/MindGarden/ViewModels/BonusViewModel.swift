@@ -27,6 +27,7 @@ class BonusViewModel: ObservableObject {
     @Published var bonusTimer: Timer? = Timer()
     @Published var progressiveTimer: Timer? = Timer()
     @Published var progressiveInterval: String = ""
+    @Published var lastStreakDate = ""
     var userModel: UserViewModel
     var streakNumber = 1
     let formatter: DateFormatter = {
@@ -161,7 +162,6 @@ class BonusViewModel: ObservableObject {
     func updateBonus() {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
-        var lastStreakDate = ""
         if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
             NotificationHelper.addOneDay()
@@ -192,11 +192,13 @@ class BonusViewModel: ObservableObject {
             docRef.getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
                     self.totalBonuses = 0
-                    if let lSD = document[K.defaults.lastStreakDate] as? String {
-                        lastStreakDate = lSD
-                    }
                     if let streak = document["streak"] as? String {
                         self.streak = streak
+                        if let plus = self.streak?.firstIndex(of: "+") {
+                            self.streakNumber = Int(self.streak![..<plus])!
+                            let plusOffset = self.streak!.index(plus, offsetBy: 1)
+                            self.lastStreakDate = String(self.streak![plusOffset...])
+                        }
                     }
                     if let seven = document[K.defaults.seven] as? Int {
                         self.sevenDay = seven
@@ -211,39 +213,25 @@ class BonusViewModel: ObservableObject {
                         self.userModel.referredStack = referredStack
                         self.userModel.checkIfPro()
                     }
-
-                    lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
-                    if self.streakNumber == 7 {
-                        if !self.userModel.ownedPlants.contains(where: { p in p.title == "Red Mushroom" }) {
-                            self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Red Mushroom" })
-                            self.userModel.buyPlant(unlockedStrawberry: true)
-                        }
-                    } else if self.streakNumber == 30 {
-                        if !self.userModel.ownedPlants.contains(where: { p in p.title == "Cherry Blossoms" }) {
-                            self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Cherry Blossoms" })
-                            self.userModel.buyPlant(unlockedStrawberry: true)
-                        }
+                    
+                    self.calculateProgress()
+                    if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
+                        self.createDailyCountdown()
                     }
-
-                    self.db.collection(K.userPreferences).document(email).updateData([
-                        "streak": String(self.streakNumber) + "+" + lastStreakDate
-                    ]) { (error) in
-                        if let e = error {
-                            print("There was a issue saving data to firestore \(e) ")
-                        } else {
-                            print("Succesfully saved streak")
-                        }
-                    }
-
                 }
             }
         } else {
             self.totalBonuses = 0
             if let lSD = UserDefaults.standard.value(forKey: K.defaults.lastStreakDate) as? String {
-                lastStreakDate = lSD
+                self.lastStreakDate = lSD
             }
             if let streak = UserDefaults.standard.value(forKey: "streak") as? String {
                 self.streak = streak
+                if let plus = self.streak?.firstIndex(of: "+") {
+                    self.streakNumber = Int(self.streak![..<plus])!
+                    let plusOffset = self.streak!.index(plus, offsetBy: 1)
+                    self.lastStreakDate = String(self.streak![plusOffset...])
+                }
             }
             if let seven = UserDefaults.standard.value(forKey: K.defaults.seven) as? Int {
                 self.sevenDay = seven
@@ -254,6 +242,39 @@ class BonusViewModel: ObservableObject {
             if let dailyBonus = UserDefaults.standard.value(forKey: K.defaults.dailyBonus) as? String {
                 self.dailyBonus = dailyBonus
             }
+            self.calculateProgress()
+            if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
+                self.createDailyCountdown()
+            }
+        }
+
+    }
+    
+    func updateStreak() {
+        if let email = Auth.auth().currentUser?.email {
+            lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
+            if self.streakNumber == 7 {
+                if !self.userModel.ownedPlants.contains(where: { p in p.title == "Red Mushroom" }) {
+                    self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Red Mushroom" })
+                    self.userModel.buyPlant(unlockedStrawberry: true)
+                }
+            } else if self.streakNumber == 30 {
+                if !self.userModel.ownedPlants.contains(where: { p in p.title == "Cherry Blossoms" }) {
+                    self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Cherry Blossoms" })
+                    self.userModel.buyPlant(unlockedStrawberry: true)
+                }
+            }
+            
+            self.db.collection(K.userPreferences).document(email).updateData([
+                "streak": String(self.streakNumber) + "+" + lastStreakDate
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved streak")
+                }
+            }
+        } else {
             lastStreakDate = self.calculateStreak(lastStreakDate: lastStreakDate)
             UserDefaults.standard.setValue((String(self.streakNumber) + "+" + lastStreakDate), forKey: "streak")
         }
@@ -301,8 +322,6 @@ class BonusViewModel: ObservableObject {
                     UserDefaults.standard.setValue(0, forKey: "thirtyDay")
                 }
             } // else no need to update
-
-            self.calculateProgress()
         } else {
             lastStreakDate  = formatter.string(from: Date())
             self.streakNumber = 1
@@ -310,9 +329,7 @@ class BonusViewModel: ObservableObject {
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
-        if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
-            self.createDailyCountdown()
-        }
+
         return lastStreakDate
     }
     

@@ -66,6 +66,20 @@ extension Date {
             return 0
         }
     }
+    
+    func intToAbrev(weekDay: Int) -> String {
+        switch weekDay {
+        case 0: return "S"
+        case 1: return "M"
+        case 2: return "T"
+        case 3: return "W"
+        case 4: return "Th"
+        case 5: return "F"
+        case 6: return "S"
+        case 7: return "Su"
+        default: return "S"
+        }
+    }
 
     func getNumberOfDays(month: String, year: String) -> Int {
         switch month {

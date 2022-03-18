@@ -52,8 +52,9 @@ struct DaysProgressBar: View {
                     Spacer()
                     ForEach(0..<days.count) { index in
                         Circle()
-                            .fill( index >= currentDay ? Color.white : Color.orange)
-                            .frame(width: 44, height: 44).shadow(radius: 2)
+                            .fill( index >= currentDay ? Clr.darkWhite : Color.orange)
+                            .frame(width: 44, height: 44)
+                            .neoShadow()
                         Spacer()
                     }
                 }
