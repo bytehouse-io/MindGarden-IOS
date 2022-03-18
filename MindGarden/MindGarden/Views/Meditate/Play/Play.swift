@@ -234,16 +234,16 @@ struct Play: View {
                         .animation(.default)
                 }
             }
-//            .onChange(of: model.secondsRemaining) { value in
-//                guard isTraceTimeMannual else { return }
-//
-//                self.timerSeconds = Double(model.isOpenEnded ? model.secondsCounted : model.secondsRemaining)
+            .onChange(of: model.secondsRemaining) { value in
+                guard isTraceTimeMannual else { return }
+
+                self.timerSeconds = Double(model.isOpenEnded ? model.secondsCounted : model.secondsRemaining)
 //                if model.isOpenEnded {
 //                    self.progressValue  = 1.0
 //                } else {
 //                    self.progressValue = Double(1 - (model.secondsRemaining/model.totalTime))
 //                }
-//            }
+            }
         .transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)

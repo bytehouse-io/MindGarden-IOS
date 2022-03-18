@@ -92,7 +92,7 @@ extension MeditationViewModel {
                             UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
                             getFeaturedMeditation()
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         viewRouter?.currentPage = .finished
                         }
                         return
