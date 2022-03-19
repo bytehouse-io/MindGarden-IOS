@@ -196,7 +196,6 @@ struct Home: View {
                                         .border(Clr.darkWhite)
                                         .cornerRadius(25)
                                         .frame(width: g.size.width * 0.85, height: g.size.height * 0.275, alignment: .center)
-                                        .neoShadow()
                                         .overlay(
                                             HStack(alignment: .top) {
                                                 VStack(alignment: .leading) {

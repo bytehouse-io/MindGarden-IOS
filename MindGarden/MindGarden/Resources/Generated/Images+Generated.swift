@@ -205,6 +205,7 @@ public enum Img {
   public static let panda = Image("panda")
   public static let pencil = Image("pencil")
   public static let pencilIcon = Image("pencilIcon")
+  public static let plant = Image("plant")
   public static let pot = Image("pot")
   public static let pottedPlants = Image("pottedPlants")
   public static let powerofgratitude = Image("powerofgratitude")
