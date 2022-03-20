@@ -193,6 +193,7 @@ public enum Img {
   public static let kiwi = Image("kiwi")
   public static let launcher = Image("launcher")
   public static let lemon = Image("lemon")
+  public static let loadingyour = Image("loadingyour")
   public static let lockIcon = Image("lockIcon")
   public static let magnifyingGlass = Image("magnifyingGlass")
   public static let mainIcon = Image("mainIcon")
