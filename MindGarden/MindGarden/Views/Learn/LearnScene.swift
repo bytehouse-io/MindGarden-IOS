@@ -295,10 +295,10 @@ struct LearnScene: View {
                             Spacer()
                         }.onTapGesture {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            if course.category == "life" {
-                                Analytics.shared.log(event: .learn_tapped_life_course)
-                            } else if course.category == "meditation" {
+                            if course.category == "meditation" {
                                 Analytics.shared.log(event: .learn_tapped_meditation_course)
+                            } else {
+                                Analytics.shared.log(event: .learn_tapped_life_course)
                             }
                             learnCourse = course
                             showCourse = true

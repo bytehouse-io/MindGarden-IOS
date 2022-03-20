@@ -263,3 +263,21 @@ extension TimeInterval{
             return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
         }
     }
+
+extension Date {
+    static func getDates(forLastNDays nDays: Int) -> [Date] {
+        let cal = NSCalendar.current
+        // start with today
+        var date = cal.startOfDay(for: Date())
+
+        var arrDates = [Date]()
+
+        for _ in 1 ... nDays {
+            // move back in time by one day:
+            date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
+            arrDates.append(date)
+        }
+        
+        return arrDates
+    }
+}

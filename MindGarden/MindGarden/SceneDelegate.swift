@@ -77,6 +77,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+        // Get URL components from the incoming user activity.
+            if let userActivity = connectionOptions.userActivities.first {
+                  processUserActivity(userActivity)
+            }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -124,6 +128,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         // use this to add friends
+        // Get URL components from the incoming user activity.
+        processUserActivity(userActivity)
+ 
         if let incomingUrl = userActivity.webpageURL {
             let _ = DynamicLinks.dynamicLinks().handleUniversalLink(incomingUrl) { (dynamicLink, error) in
                 guard error == nil else {
@@ -199,3 +206,49 @@ extension URL {
 }
 
 
+extension SceneDelegate {
+    private func processUserActivity(_ userActivity: NSUserActivity) {
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let urlToOpen = userActivity.webpageURL else {
+                  return
+              }
+        
+        print("Universal Link: \(urlToOpen)")
+            processUniversalLinkData(
+                pathComponents: getUniversalLinkPathComponentsAndParams(urlToOpen).0,
+                queryParams: getUniversalLinkPathComponentsAndParams(urlToOpen).1
+            )
+        
+    }
+    
+    private func getUniversalLinkPathComponentsAndParams(_ url: URL) -> (
+        [String],
+        [String: String]
+    ){
+        let pathComponents = url.pathComponents.filter { component in
+            component != "/"
+        }
+        
+        var queryParams = [String: String]()
+        let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        
+        if let queryItems = urlComponents?.queryItems {
+            for queryItem in queryItems {
+                if let val = queryItem.value {
+                    queryParams[queryItem.name] = val
+                }
+            }
+        }
+        
+        return (pathComponents, queryParams)
+    }
+
+    private func processUniversalLinkData(
+        pathComponents: [String],
+        queryParams: [String: String]
+    ) {
+        // Process the data
+        print(pathComponents)
+        print(queryParams)
+    }
+}

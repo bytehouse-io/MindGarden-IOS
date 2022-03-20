@@ -34,6 +34,7 @@ class GardenViewModel: ObservableObject {
     init() {
         selectedMonth = (Int(Date().get(.month)) ?? 1)
         selectedYear = Int(Date().get(.year)) ?? 2021
+        let bink = getLastFive()
     }
 
     func getRecentMeditations() {
@@ -173,6 +174,37 @@ class GardenViewModel: ObservableObject {
                 monthTiles[weekNumber] = [day: (plant,mood)]
             }
         }
+    }
+    
+    func getLastFive() -> [(Plant?, Mood?)]{
+        let lastFive = Date.getDates(forLastNDays: 5)
+        // edge cases:
+        // from last year, only if month is january
+        
+        // from last month, only if date is 23 or higher
+        
+        // else:
+        let strMonth = String(selectedMonth)
+        let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
+        var returnFive = [(Plant?,Mood?)]()
+        for day in 0...lastFive.count - 1{
+            let selMon = Int(lastFive[day].get(.month)) ?? 1
+            let selYear = String(Int(lastFive[day].get(.year)) ?? 2021)
+            let selDay = String(Int(lastFive[day].get(.day)) ?? 1)
+            var plant: Plant? = nil
+            var mood: Mood? = nil
+            if let sessions = grid[selYear]?[String(selMon)]?[selDay]?[K.defaults.sessions] as? [[String: String]] {
+                let fbPlant = sessions[sessions.count - 1][K.defaults.plantSelected]
+                plant = Plant.allPlants.first(where: { $0.title == fbPlant })
+            }
+
+            if let moods = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.moods] as? [String] {
+                mood = Mood.getMood(str: moods[moods.count - 1])
+            }
+            returnFive.append((plant,mood))
+        }
+
+        return returnFive
     }
 
     func updateSelf() {

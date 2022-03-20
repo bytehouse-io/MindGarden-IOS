@@ -68,6 +68,7 @@ struct StreakScene: View {
                 timeRemaining -= 1
             }
         }
+        .background(Clr.darkWhite)
     }
 }
 
