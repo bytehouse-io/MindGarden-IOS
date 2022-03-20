@@ -48,6 +48,7 @@ struct ContentView: View {
         // check for auth here
     }
 
+    @State var offset:CGSize = .zero
     var body: some View {
         VStack {
             if showSplash {
@@ -140,6 +141,20 @@ struct ContentView: View {
                                                     self.isOnboarding = false
                                                 }
                                             }
+//                                            .offset(x: offset.width)
+//                                            .gesture(DragGesture().onChanged({ value in
+//                                                withAnimation(.interactiveSpring(response: 0.7, dampingFraction: 0.6, blendDuration: 0.6)){
+//                                                    offset = value.translation.width <  0.0 ? CGSize(width: 0, height: value.translation.height) : value.translation
+//                                                }
+//                                            }).onEnded({ value in
+//                                                if offset.width >= (UIScreen.screenWidth - 100){
+//                                                    viewRouter.currentPage = .meditate
+//                                                } else {
+//                                                    withAnimation(.spring()){
+//                                                        offset = .zero
+//                                                    }
+//                                                }
+//                                            }))
                                     case .finished:
                                         Finished(model: meditationModel, userModel: userModel, gardenModel: gardenModel)
                                             .frame(height: geometry.size.height + 160)
