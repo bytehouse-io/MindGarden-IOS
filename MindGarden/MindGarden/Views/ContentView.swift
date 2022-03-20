@@ -35,6 +35,8 @@ struct ContentView: View {
     @State var selectedTab: TabType = .meditate
 
     @State var selectedPopupOption: PlusMenuType = .none
+    
+    @State private var showSplash = true
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -48,6 +50,11 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
+            if showSplash {
+                SplashView()
+                    .transition(.scaledCircle)
+                    .animation(.linear(duration:0.5))
+            } else {
             ZStack {
                 // Content
                 ZStack {
@@ -283,6 +290,7 @@ struct ContentView: View {
                     }.navigationViewStyle(StackNavigationViewStyle())
                 }
             }
+          }
         }
         .sheet(isPresented: $showRecs) {
             if !isOnboarding {
@@ -291,6 +299,11 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                withAnimation(.linear(duration: 0.5)) {
+                    showSplash.toggle()
+                }
+            }
             let monitor = NWPathMonitor()
             monitor.pathUpdateHandler = { path in
                 if path.status == .satisfied {
@@ -302,7 +315,6 @@ struct ContentView: View {
             let queue = DispatchQueue(label: "Monitor")
             monitor.start(queue: queue)
         }.onChange(of: viewRouter.currentPage) { value in
-            debugPrint(viewRouter.currentPage)
             if viewRouter.currentPage == .garden && selectedTab != .garden {
                 selectedTab = .garden
             }

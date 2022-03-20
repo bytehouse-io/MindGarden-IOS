@@ -21,6 +21,8 @@
 		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
+		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
+		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
 		882738D327E2D75E00F8D4D0 /* first_part.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D227E2D75D00F8D4D0 /* first_part.json */; };
 		882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D427E2D76E00F8D4D0 /* second_part_loop.json */; };
@@ -231,6 +233,8 @@
 		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
+		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
@@ -480,8 +484,17 @@
 				58A9EE7A27C749C500254AC2 /* TabButtonView.swift */,
 				58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */,
 				58F171A527E45A93008D380E /* WiggleModifier.swift */,
+				58D90A9727E70DA4008C4E1C /* ViewTransition.swift */,
 			);
 			path = "Animation&Tab";
+			sourceTree = "<group>";
+		};
+		58D90A9427E6F910008C4E1C /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				58D90A9527E6F925008C4E1C /* SplashView.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		8876A60427C03C2A00A9622F /* Learn */ = {
@@ -741,6 +754,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58D90A9427E6F910008C4E1C /* Splash */,
 				5803A31A27DBB8A100F1F2E7 /* StreakView */,
 				58A9EE7427C749C500254AC2 /* Animation&Tab */,
 				8876A60427C03C2A00A9622F /* Learn */,
@@ -1342,6 +1356,7 @@
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
+				58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */,
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
@@ -1381,6 +1396,7 @@
 				FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */,
 				58C4A52027CE764700856913 /* UrlImageView.swift in Sources */,
 				FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */,
+				58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
 				FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */,
 				88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */,
