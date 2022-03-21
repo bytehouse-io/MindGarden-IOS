@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct SplashView: View {
-    @State private var text = "  "
     var body: some View {
         ZStack(alignment:.center) {
             Color.white
             Img.mindGardenSplash
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-            HStack(alignment:.bottom) {
+                .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight, alignment: .center)
+            VStack(alignment:.center) {
                 Img.loadingyour
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.screenWidth*0.8)
             }
-        }.ignoresSafeArea()
+        }
     }
 }
