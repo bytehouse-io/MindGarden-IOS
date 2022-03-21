@@ -248,12 +248,13 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
                                                     DispatchQueue.main.async {
-                                                        model.selectedMeditation = model.featuredMeditation
-                                                        if model.featuredMeditation?.type == .course {
-                                                            viewRouter.currentPage = .middle
-                                                        } else {
-                                                            viewRouter.currentPage = .play
-                                                        }
+                                                        Purchases.shared.presentCodeRedemptionSheet()
+//                                                        model.selectedMeditation = model.featuredMeditation
+//                                                        if model.featuredMeditation?.type == .course {
+//                                                            viewRouter.currentPage = .middle
+//                                                        } else {
+//                                                            viewRouter.currentPage = .play
+//                                                        }
                                                     }
                                                 }
                                             }

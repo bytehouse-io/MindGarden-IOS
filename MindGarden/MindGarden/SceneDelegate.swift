@@ -248,7 +248,7 @@ extension SceneDelegate {
         queryParams: [String: String]
     ) {
         // Process the data
-        print(pathComponents)
-        print(queryParams)
+        print(pathComponents, "pathComponents")
+        print(queryParams, "queryParams")
     }
 }

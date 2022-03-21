@@ -9,6 +9,7 @@ import SwiftUI
 import Paywall
 
 var tappedTurnOn = false
+var onboardingTime = false
 struct ReviewScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var experience: (Image, String) =  (Img.moon, "")
@@ -140,6 +141,7 @@ struct ReviewScene: View {
                         }
                         Spacer()
                         Button {
+                            onboardingTime = true
                             Analytics.shared.log(event: .review_tapped_tutorial)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
@@ -161,6 +163,7 @@ struct ReviewScene: View {
                         }.padding(.top, 50)
                         .buttonStyle(NeumorphicPress())
                         Button {
+                            onboardingTime = true
                             Analytics.shared.log(event: .review_tapped_explore)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()

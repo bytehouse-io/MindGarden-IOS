@@ -663,7 +663,7 @@ struct ProfileScene: View {
     func actionSheet() {
         guard var urlShare2 = URL(string: "https://mindgarden.io") else { return }
         if selection == .referrals {
-            showSpinner = true
+//            showSpinner = true
             guard let uid = Auth.auth().currentUser?.email else { return }
             guard let link = URL(string: "https://mindgarden.io?referral=\(uid)") else { return }
             let referralLink = DynamicLinkComponents(link: link, domainURIPrefix: "https://mindgarden.page.link")
@@ -671,7 +671,7 @@ struct ProfileScene: View {
 
             if let myBundleId = Bundle.main.bundleIdentifier {
                 referralLink?.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
-                referralLink?.iOSParameters?.minimumAppVersion = "1.18"
+                referralLink?.iOSParameters?.minimumAppVersion = "1.37"
                 referralLink?.iOSParameters?.appStoreID = "1588582890"
             }
 
