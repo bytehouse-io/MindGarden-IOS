@@ -52,7 +52,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if showSplash {
-                SplashView()
+                SplashView().ignoresSafeArea()
                     .transition(.scaledCircle)
                     .animation(.linear(duration:0.5))
             } else {

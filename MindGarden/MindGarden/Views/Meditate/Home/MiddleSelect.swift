@@ -14,6 +14,10 @@ struct MiddleSelect: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
     @State var tappedMeditation: Bool = false
+    
+    enum currentState {
+        case locked,checked,playable
+    }
 
     var body: some View {
             GeometryReader { g in
@@ -75,7 +79,7 @@ struct MiddleSelect: View {
                                         Divider().padding(.bottom)
                                         VStack {
                                             ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
-                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx)
+                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, state: .playable, tappedMeditation: $tappedMeditation, idx: idx)
                                             }
                                         }
                                         Divider().padding()
@@ -179,7 +183,7 @@ struct MiddleSelect: View {
         let meditation: Meditation
         let viewRouter: ViewRouter
         let model: MeditationViewModel
-        let didComplete: Bool
+        let state: currentState
         @Binding var tappedMeditation: Bool
         @State var isFavorited: Bool = false
         let idx: Int
@@ -206,19 +210,25 @@ struct MiddleSelect: View {
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
                     Spacer()
-                    if didComplete {
+                    switch state {
+                    case .locked:
+                        Image(systemName: "lock.fill")
+                            .renderingMode(.template)
+                            .foregroundColor(Clr.darkgreen)
+                            .font(.system(size: 24))
+                            .padding(.horizontal, 10)
+                    case .checked:
                         Image(systemName: "checkmark.circle.fill")
                             .renderingMode(.template)
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 24))
                             .padding(.horizontal, 10)
-                    } else {
+                    case .playable:
                         Image(systemName: "play.fill")
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 24))
                             .padding(.horizontal, 10)
                     }
-
                     Image(systemName: isFavorited ? "heart.fill" : "heart")
                         .foregroundColor(isFavorited ? Color.red : Color.gray)
                         .font(.system(size: 24))
