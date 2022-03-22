@@ -14,6 +14,7 @@ struct MiddleSelect: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
     @State var tappedMeditation: Bool = false
+    @State var lastPlayed: Int = -1
     
     enum currentState {
         case locked,checked,playable
@@ -79,7 +80,7 @@ struct MiddleSelect: View {
                                         Divider().padding(.bottom)
                                         VStack {
                                             ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
-                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, state: .playable, tappedMeditation: $tappedMeditation, idx: idx)
+                                                MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed)
                                             }
                                         }
                                         Divider().padding()
@@ -146,6 +147,9 @@ struct MiddleSelect: View {
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
             model.checkIfFavorited()
+            if let id =  model.selectedMeditations.lastIndex(where: { ($0.type == .lesson || $0.type == .single_and_lesson) && gardenModel.medIds.contains(String($0.id)) && $0.belongsTo != "Timed Meditation" && $0.belongsTo != "Open-ended Meditation"}) {
+                lastPlayed = id
+            }
         }
         .onAppearAnalytics(event: .screen_load_middle)
     }
@@ -183,13 +187,16 @@ struct MiddleSelect: View {
         let meditation: Meditation
         let viewRouter: ViewRouter
         let model: MeditationViewModel
-        let state: currentState
+        let didComplete: Bool
+        @State var state: currentState = .playable
         @Binding var tappedMeditation: Bool
         @State var isFavorited: Bool = false
         let idx: Int
+        @Binding var lastPlayed: Int
 
         var body: some View {
             Button {
+                if state == .locked {return}
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 Analytics.shared.log(event: .middle_tapped_row)
                 tappedMeditation = true
@@ -243,6 +250,13 @@ struct MiddleSelect: View {
             .padding(5)
             .frame(width: width)
             .onAppear {
+                if didComplete {
+                    state = .checked
+                }
+                else {
+                    state =  (idx - 1 == lastPlayed) ? .playable : .locked
+                }
+                
                 isFavorited = model.favoritedMeditations.contains { $0 == meditation}
             }
         }
