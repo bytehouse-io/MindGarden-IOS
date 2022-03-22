@@ -682,17 +682,18 @@ struct ProfileScene: View {
             referralLink?.socialMetaTagParameters?.descriptionText = "📱 Download the app by \(newDateString) to claim your 2 free weeks of PRO! ⬇️ Keep it checked"
             guard let imgUrl = URL(string: "https://i.ibb.co/1GW6YxY/MINDGARDEN.png") else { return }
             referralLink?.socialMetaTagParameters?.imageURL = imgUrl
-            referralLink?.shorten { (shortURL, warnings, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                urlShare2 = shortURL!
-                let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: {
-                    showSpinner = false
-                })
-            }
+            let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: {
+                showSpinner = false
+            })
+//            referralLink?.shorten { (shortURL, warnings, error) in
+//                if let error = error {
+//                    print(error.localizedDescription)
+//                    return
+//                }
+//                urlShare2 = shortURL!
+//
+//            }
         } else {
             let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
             UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)

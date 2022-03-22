@@ -34,7 +34,6 @@ class GardenViewModel: ObservableObject {
     init() {
         selectedMonth = (Int(Date().get(.month)) ?? 1)
         selectedYear = Int(Date().get(.year)) ?? 2021
-        let bink = getLastFive()
     }
 
     func getRecentMeditations() {
@@ -174,6 +173,7 @@ class GardenViewModel: ObservableObject {
                 monthTiles[weekNumber] = [day: (plant,mood)]
             }
         }
+        let bink = getLastFive()
     }
     
     func getLastFive() -> [(Plant?, Mood?)]{
@@ -185,8 +185,8 @@ class GardenViewModel: ObservableObject {
         
         // else:
         let strMonth = String(selectedMonth)
-        let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
         var returnFive = [(Plant?,Mood?)]()
+
         for day in 0...lastFive.count - 1{
             let selMon = Int(lastFive[day].get(.month)) ?? 1
             let selYear = String(Int(lastFive[day].get(.year)) ?? 2021)
@@ -198,11 +198,12 @@ class GardenViewModel: ObservableObject {
                 plant = Plant.allPlants.first(where: { $0.title == fbPlant })
             }
 
-            if let moods = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.moods] as? [String] {
+            if let moods = grid[selYear]?[String(selMon)]?[selDay]?[K.defaults.moods] as? [String] {
                 mood = Mood.getMood(str: moods[moods.count - 1])
             }
             returnFive.append((plant,mood))
         }
+        print("returnFive", returnFive)
 
         return returnFive
     }
