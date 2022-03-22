@@ -366,6 +366,7 @@ struct ProfileScene: View {
                                                 withAnimation {
                                                     tappedSignIn = false
                                                     viewRouter.currentPage = .authentication
+                                                    presentationMode.wrappedValue.dismiss()
                                                 }
                                             }
                                         } label: {
