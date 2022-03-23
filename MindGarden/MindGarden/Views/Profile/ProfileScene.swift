@@ -48,6 +48,9 @@ struct ProfileScene: View {
     @State private var deleteAccount = false
     @Environment(\.sizeCategory) var sizeCategory
     @Environment(\.presentationMode) var presentationMode
+    
+    @State private var isSharePresented: Bool = false
+    @State private var urlShare2 = URL(string: "https://mindgarden.io")
 
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -488,6 +491,9 @@ struct ProfileScene: View {
                     .sheet(isPresented: $showMailView) {
                         MailView()
                     }
+                    .sheet(isPresented: $isSharePresented) {
+                        ReferralView(url: $urlShare2)
+                    }
                     .fullScreenCover(isPresented: $showNotif) {
                         NotificationScene(fromSettings: true)
                     }
@@ -662,7 +668,6 @@ struct ProfileScene: View {
     }
 
     func actionSheet() {
-        guard var urlShare2 = URL(string: "https://mindgarden.io") else { return }
         if selection == .referrals {
             showSpinner = true
             guard let uid = Auth.auth().currentUser?.email else { return }
@@ -684,19 +689,16 @@ struct ProfileScene: View {
             guard let imgUrl = URL(string: "https://i.ibb.co/1GW6YxY/MINDGARDEN.png") else { return }
             referralLink?.socialMetaTagParameters?.imageURL = imgUrl
             referralLink?.shorten { (shortURL, warnings, error) in
+                showSpinner = false
                 if let error = error {
                     print(error.localizedDescription)
                     return
                 }
                 urlShare2 = shortURL!
-                let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: {
-                    showSpinner = false
-                })
+                isSharePresented = true
             }
         } else {
-            let activityVC = UIActivityViewController(activityItems: [urlShare2], applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+            isSharePresented = true
         }
     }
 
@@ -817,3 +819,12 @@ struct SelectionButton: View {
     }
 }
 
+struct ReferralView: View {
+    @Binding var url: URL?
+    
+    var body: some View {
+        if let shareUrl = url {
+            ActivityViewController(activityItems: [shareUrl])
+        }
+    }
+}
