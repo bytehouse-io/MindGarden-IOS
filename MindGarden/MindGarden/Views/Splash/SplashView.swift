@@ -19,8 +19,8 @@ struct SplashView: View {
                 Img.loadingyour
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: UIScreen.screenWidth*0.8)
-            }
+                    .frame(width: UIScreen.screenWidth*0.75)
+            }.offset(y: -50)
         }
     }
 }
