@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StreakScene: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var gardenModel: GardenViewModel
     
     var title : String {
@@ -22,14 +23,12 @@ struct StreakScene: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Binding var currentDay: Int
     @State var timeRemaining = 2
-
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 ZStack {
                     LottieAnimationView(filename: "fire", loopMode: .playOnce, isPlaying: .constant(true))
-    //                    .resizable()
-    //                    .aspectRatio(contentMode: .fit)
                         .frame(width: 500, height: 500, alignment: .center)
                         .opacity(timeRemaining <= 0 ? 0 : 1)
                     LottieAnimationView(filename: "second_part_loop", loopMode: .loop, isPlaying: .constant(true))
@@ -42,12 +41,11 @@ struct StreakScene: View {
                 Text(subTitle)
                     .streakBodyStyle()
                     .frame(height: 100)
-                DaysProgressBar(currentDay: $currentDay)
+                DaysProgressBar()
                 Spacer()
                 Button {
                     //TODO: implement continue tap event
-                    presentationMode.wrappedValue.dismiss()
-
+                    viewRouter.currentPage = .garden
                 } label: {
                     Capsule()
                         .fill(Clr.gardenRed)

@@ -413,7 +413,7 @@ struct Finished: View {
                 #if !targetEnvironment(simulator)
                  Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])
                  AppsFlyerLib.shared().logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", withValues: [AFEventParamContent: "true"])
-                 Amplitude.instance().logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")")
+                 Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName()])
                 #endif
                  print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
             }

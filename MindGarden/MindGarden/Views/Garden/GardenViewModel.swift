@@ -23,8 +23,8 @@ class GardenViewModel: ObservableObject {
     @Published var favoritePlants = [String: Int]()
     @Published var recentMeditations: [Meditation] = []
     @Published var gratitudes = 0
+    @Published var lastFive =  [(String, Plant?,Mood?)]()
     var medIds: [String] = [] //TODO turn this into a set
-
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -173,20 +173,11 @@ class GardenViewModel: ObservableObject {
                 monthTiles[weekNumber] = [day: (plant,mood)]
             }
         }
-        let bink = getLastFive()
     }
     
-    func getLastFive() -> [(Plant?, Mood?)]{
+    func getLastFive() {
         let lastFive = Date.getDates(forLastNDays: 5)
-        // edge cases:
-        // from last year, only if month is january
-        
-        // from last month, only if date is 23 or higher
-        
-        // else:
-        let strMonth = String(selectedMonth)
-        var returnFive = [(Plant?,Mood?)]()
-
+        var returnFive = [(String, Plant?,Mood?)]()
         for day in 0...lastFive.count - 1{
             let selMon = Int(lastFive[day].get(.month)) ?? 1
             let selYear = String(Int(lastFive[day].get(.year)) ?? 2021)
@@ -201,11 +192,11 @@ class GardenViewModel: ObservableObject {
             if let moods = grid[selYear]?[String(selMon)]?[selDay]?[K.defaults.moods] as? [String] {
                 mood = Mood.getMood(str: moods[moods.count - 1])
             }
-            returnFive.append((plant,mood))
+            let dayString = Date().intToAbrev(weekDay: Int(lastFive[day].get(.weekday)) ?? 1 )
+            returnFive.append((dayString, plant,mood))
         }
-        print("returnFive", returnFive)
 
-        return returnFive
+        self.lastFive = returnFive.reversed()
     }
 
     func updateSelf() {
@@ -221,6 +212,7 @@ class GardenViewModel: ObservableObject {
                         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
                         WidgetCenter.shared.reloadAllTimelines()
                     }
+                    self.getLastFive()
                     if let allTimeMins = document["totalMins"] as? Int {
                         self.allTimeMinutes = allTimeMins
                     }
@@ -235,6 +227,7 @@ class GardenViewModel: ObservableObject {
             if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
                 self.grid = gridd
             }
+            getLastFive()
             if let allTimeMins = UserDefaults.standard.value(forKey: "allTimeMinutes") as? Int {
                 self.allTimeMinutes = allTimeMins
             }
@@ -245,9 +238,7 @@ class GardenViewModel: ObservableObject {
             self.getRecentMeditations()
             UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
             WidgetCenter.shared.reloadAllTimelines()
-
         }
-
     }
     
 
@@ -302,6 +293,7 @@ class GardenViewModel: ObservableObject {
                         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
                         WidgetCenter.shared.reloadAllTimelines()
                         self.populateMonth()
+                        self.getLastFive()
                         if key == "sessions" {
                             self.getRecentMeditations()
                         }
@@ -339,6 +331,7 @@ class GardenViewModel: ObservableObject {
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
         WidgetCenter.shared.reloadAllTimelines()
         self.populateMonth()
+        self.getLastFive()
         if key == "sessions" {
             self.getRecentMeditations()
         }

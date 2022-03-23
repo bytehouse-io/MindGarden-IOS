@@ -67,6 +67,12 @@ extension View {
         self
             .foregroundColor(Clr.blackShadow)
             .frame(width:44)
+            .font(Font.mada(.medium, size: 20))
+    }
+    func currentDayStyle() -> some View {
+        self
+            .foregroundColor(Clr.redGradientBottom)
+            .frame(width:44)
             .font(Font.mada(.bold, size: 20))
     }
 }

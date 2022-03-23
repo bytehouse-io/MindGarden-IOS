@@ -69,14 +69,13 @@ extension Date {
     
     func intToAbrev(weekDay: Int) -> String {
         switch weekDay {
-        case 0: return "S"
-        case 1: return "M"
-        case 2: return "T"
-        case 3: return "W"
-        case 4: return "Th"
-        case 5: return "F"
-        case 6: return "S"
-        case 7: return "Su"
+        case 1: return "Su"
+        case 2: return "M"
+        case 3: return "T"
+        case 4: return "W"
+        case 5: return "Th"
+        case 6: return "F"
+        case 7: return "S"
         default: return "S"
         }
     }
@@ -220,9 +219,7 @@ extension Date {
         }
     }
     func isLeapYear(_ year: Int) -> Bool {
-
         let isLeapYear = ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
-
 
         return isLeapYear
     }
@@ -271,8 +268,8 @@ extension Date {
         var date = cal.startOfDay(for: Date())
 
         var arrDates = [Date]()
-
-        for _ in 1 ... nDays {
+        arrDates.append(Date())
+        for _ in 1 ... nDays - 1 {
             // move back in time by one day:
             date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
             arrDates.append(date)
