@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SplashView: View {
     @State private var image: Image = Img.plant1
+    @State private var timer : Timer?
     private let imageNames: [Image] = [Img.plant1, Img.plant2, Img.plant3, Img.plant4]
     var body: some View {
         ZStack(alignment:.center) {
@@ -25,26 +26,28 @@ struct SplashView: View {
                 Img.loadingyour
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-            }.frame(width: UIScreen.screenWidth*0.75,height:100)
+            }.frame(width: 280,height:100)
             .offset(y: -50)
         }.onAppear() {
             self.animate()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                self.animate()
-            }
+        }.onDisappear(){
+            timer?.invalidate()
         }
     }
     
     private func animate() {
         var imageIndex: Int = 0
         
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.08, repeats: true) { timer in
             if imageIndex < self.imageNames.count {
                 self.image = self.imageNames[imageIndex]
                 imageIndex += 1
             }
             else {
                 timer.invalidate()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.animate()
+                }
             }
         }
     }
