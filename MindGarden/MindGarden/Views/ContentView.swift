@@ -315,7 +315,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
                 withAnimation(.linear(duration: 0.5)) {
                     showSplash.toggle()
                 }
