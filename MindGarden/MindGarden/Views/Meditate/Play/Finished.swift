@@ -16,6 +16,7 @@ struct Finished: View {
     var model: MeditationViewModel
     var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var bonusModel: BonusViewModel
     var gardenModel: GardenViewModel
     @State private var sharedImage: UIImage?
     @State private var shotting = true
@@ -334,13 +335,14 @@ struct Finished: View {
             }
         }.transition(.move(edge: .trailing))
             .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene(currentDay: .constant(4))
+                StreakScene(streakNumber: .constant(bonusModel.streakNumber))
             })
             .onDisappear {
                 model.playImage = Img.seed
                 model.lastSeconds = false
             }
             .onAppear {
+                bonusModel.updateStreak()
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)

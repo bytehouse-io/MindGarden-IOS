@@ -33,7 +33,7 @@ final class Analytics: ObservableObject {
     /// Currently submits to FirebaseAnalytics in all cases and GoogleAnalytics if not running in a simulator.
     /// This function shuold only be called from within the `logSubject` Combine subject, never directly from code.
     /// To log an event from code, use the `log(event:)` function above.
-     func logActual(event: AnalyticEvent) {
+    func logActual(event: AnalyticEvent) {
         #if !targetEnvironment(simulator)
          Firebase.Analytics.logEvent(event.eventName, parameters: [:])
          AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
@@ -42,6 +42,7 @@ final class Analytics: ObservableObject {
         #endif
          print("logging, \(event.eventName)")
      }
+    
 
     init() {
         logSubject

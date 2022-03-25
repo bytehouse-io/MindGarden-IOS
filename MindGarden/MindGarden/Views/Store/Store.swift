@@ -53,33 +53,46 @@ struct Store: View {
                         }
                         .padding(.top, 35)
                         .zIndex(currentHightlight == 0 ? 50 : -4)
+                    } else {
+                        HStack {
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20)
+                                    .foregroundColor(Clr.black1)
+                                    .padding(.leading)
+                            }
+                            Text("🌻 Plant Select" )
+                                .font(Font.mada(.bold, size: 32))
+                                .minimumScaleFactor(0.005)
+                                .lineLimit(1)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Clr.black1)
+                                .padding(.horizontal, 25)
+                            Spacer()
+                        }.frame(width: g.size.width * 0.9)
+             
+                        
                     }
                 ScrollView(showsIndicators: false) {
                     HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
-                                if !isShop {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        presentationMode.wrappedValue.dismiss()
-                                    } label: {
-                                        Image(systemName: "xmark")
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 20)
-                                            .foregroundColor(Clr.black1)
-                                            .padding(.leading)
-                                    }
+                                if isStore {
+                                    Text(isShop ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
+                                        .font(Font.mada(.bold, size: 32))
+                                        .minimumScaleFactor(0.005)
+                                        .lineLimit(2)
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(Clr.black1)
+                                        .padding(.horizontal, isShop ? 25 : 10)
+                                        .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                                 }
-                                Text(isShop ? !isStore ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" : "🌻 Plant Select")
-                                    .font(Font.mada(.bold, size: 32))
-                                    .minimumScaleFactor(0.005)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Clr.black1)
-                                    .padding(.horizontal, isShop ? 25 : 10)
-                                    .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                             }
                             if isShop && !isStore {
                                 ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in

@@ -369,7 +369,10 @@ struct Home: View {
                                 if !UserDefaults.standard.bool(forKey: "isPro") {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Paywall.present()
+                                    withAnimation {
+                                        fromPage = "home"
+                                        viewRouter.currentPage = .pricing
+                                    }
                                 } label: {
                                     ZStack {
                                         Rectangle()
@@ -563,9 +566,6 @@ struct Home: View {
             }
         }
         .onAppearAnalytics(event: .screen_load_home)
-        .fullScreenCover(isPresented: .constant(true), content: {
-            StreakScene(currentDay: .constant(4))
-        })
     }
     func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {
         counter.wrappedValue = start

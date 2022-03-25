@@ -63,13 +63,14 @@ struct PricingView: View {
                                             case "profile": viewRouter.currentPage = .meditate
                                             case "onboarding": viewRouter.currentPage = .middle
                                             case "store": viewRouter.currentPage = .shop
-                                            case "onboarding2": viewRouter.currentPage = .garden
+                                            case "onboarding2": viewRouter.currentPage = .meditate
                                             case "lockedMeditation": viewRouter.currentPage = .categories
                                             case "middle": viewRouter.currentPage = .middle
                                             case "widget": viewRouter.currentPage = .meditate
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
+                                        
                                         if fromPage == "onboarding2" {
                                             if !UserDefaults.standard.bool(forKey: "isPro") {
                                                 let center = UNUserNotificationCenter.current()

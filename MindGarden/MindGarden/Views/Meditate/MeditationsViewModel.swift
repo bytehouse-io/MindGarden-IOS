@@ -45,7 +45,7 @@ class MeditationViewModel: ObservableObject {
     init() {
         $selectedCategory
             .sink { [unowned self] value in
-                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
+                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed()
                 } else {
                     self.selectedMeditations = Meditation.allMeditations.filter { med in
                         if value == .courses && (med.title == "Intro to Meditation" || med.title == "The Basics Course" ) {

@@ -180,8 +180,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         withAnimation {
             if fromOnboarding {
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                    fromPage = "onboarding2"
-                    viewRouter.currentPage = .pricing
+                    viewRouter.currentPage = .garden
                 } else {
                     viewRouter.currentPage = .garden
                 }

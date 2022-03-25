@@ -12,16 +12,28 @@ struct StreakScene: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var gardenModel: GardenViewModel
-    
+    @Binding var streakNumber: Int
     var title : String {
-        return "\(currentDay) Day Streak"
+        return "\(streakNumber) Day Streak"
     }
     
     var subTitle : String {
-        return "Great Work! Let's make it \(currentDay+1) \ntomorrow!"
+        switch streakNumber {
+        case 1:  return "👣 A journey of a thousand miles begins with a single step - Confucius"
+        case 2:  return "Great Work! Let's make it \(streakNumber+1) in a row \ntomorrow!"
+        case 3: return "3 is a magical 🦄 number, and you're on fire!"
+        case 4: return "👀 Wow only 22% of our users make it this far"
+        case 7: return "🎉 1 Full Week! You're killing it"
+        case 10: return "Double digits!!! Only 10% of our users make it this far"
+        case 14: return "🎉 2 Full Weeks!! You're a star"
+        case 21: return "🎉 3 Full Weeks!! You've offially made it a habit"
+        case 30: return "👏 Everyone here on the MindGarden team applauds you"
+        case 50: return "🥑 We're half way to a 100!"
+        case 60: return "2 Full MONTHS! You're in the 1% of MindGarden meditators"
+        default: return "Great Work! Let's make it \(streakNumber+1) in a row \ntomorrow!"
+        }
     }
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @Binding var currentDay: Int
     @State var timeRemaining = 2
     
     var body: some View {
@@ -40,7 +52,9 @@ struct StreakScene: View {
                     .streakTitleStyle()
                 Text(subTitle)
                     .streakBodyStyle()
-                    .frame(height: 100)
+                    .frame(width: UIScreen.main.bounds.width * 0.9, height: 150)
+                    .offset(y: -25)
+                
                 DaysProgressBar()
                 Spacer()
                 Button {
@@ -49,7 +63,7 @@ struct StreakScene: View {
                 } label: {
                     Capsule()
                         .fill(Clr.gardenRed)
-                        .frame(width: UIScreen.main.bounds.width * 0.8 , height: 58)
+                        .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
                         .overlay(
                             Text("Continue")
                                 .font(Font.mada(.bold, size: 24))
@@ -72,6 +86,6 @@ struct StreakScene: View {
 
 struct StreakScene_Previews: PreviewProvider {
     static var previews: some View {
-        StreakScene(currentDay: .constant(3))
+        StreakScene(streakNumber: .constant(3))
     }
 }
