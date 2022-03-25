@@ -154,7 +154,14 @@ struct ReviewScene: View {
                                 } onDismiss: {  didPurchase, productId, paywallInfo in
                                     switch productId {
                                     case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-                                    case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                    case "io.mindgarden.pro.yearly":
+                                        Analytics.shared.log(event: .yearly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                            NotificationHelper.freeTrial()
+                                        }
                                     default: break
                                     }
                                     viewRouter.currentPage = .meditate
@@ -189,7 +196,13 @@ struct ReviewScene: View {
                                     } onDismiss: {  didPurchase, productId, paywallInfo in
                                         switch productId {
                                         case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
                                         case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                                NotificationHelper.freeTrial()
+                                            }
                                         default: break
                                         }
                                         viewRouter.currentPage = .meditate

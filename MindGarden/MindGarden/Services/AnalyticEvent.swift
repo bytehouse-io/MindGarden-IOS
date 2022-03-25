@@ -296,6 +296,7 @@ enum AnalyticEvent {
     case screen_load_superwall
     case yearly_started_from_superwall
     case monthly_started_from_superwall
+    case screen_load_14pricing
 }
 
 extension AnalyticEvent {
@@ -664,6 +665,7 @@ extension AnalyticEvent {
         case .screen_load_superwall: return "screen_load_superwall"
         case .yearly_started_from_superwall: return "yearly_started_from_superwall"
         case .monthly_started_from_superwall: return "monthly_started_from_superwall"
+        case .screen_load_14pricing: return "screen_load_14pricing"
         }
     }
 }

@@ -262,6 +262,9 @@ struct Store: View {
                                                 Analytics.shared.log(event: .notification_success_learn)
                                                 NotificationHelper.addOneDay()
                                                 NotificationHelper.addThreeDay()
+                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                                                    NotificationHelper.freeTrial()
+                                                }
                                                 UserDefaults.standard.setValue(true, forKey: "mindful")
                                                 NotificationHelper.createMindfulNotifs()
                                                 isNotifOn = true
@@ -352,6 +355,10 @@ struct Store: View {
                 }
                 if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
                     NotificationHelper.addThreeDay()
+                }
+                
+                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                    NotificationHelper.freeTrial()
                 }
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
                 isNotifOn = true

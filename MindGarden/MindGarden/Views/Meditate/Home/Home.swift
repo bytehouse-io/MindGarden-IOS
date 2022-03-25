@@ -367,13 +367,7 @@ struct Home: View {
                                 }).frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
                                 .padding(.top, 5)
                                 if !UserDefaults.standard.bool(forKey: "isPro") {
-                                Button {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        fromPage = "home"
-                                        viewRouter.currentPage = .pricing
-                                    }
-                                } label: {
+                                Button {} label: {
                                     ZStack {
                                         Rectangle()
                                             .fill(Clr.darkWhite)
@@ -400,6 +394,13 @@ struct Home: View {
                                             Spacer()
                                         }
                                     }.frame(width: g.size.width * 0.85, height: g.size.height * 0.125, alignment: .center)
+                                    .onTapGesture {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            fromPage = "home"
+                                            viewRouter.currentPage = .pricing
+                                        }
+                                    }
                                 }.padding(.vertical)
                                 .buttonStyle(BonusPress())
                                }
@@ -553,11 +554,9 @@ struct Home: View {
                         viewRouter.currentPage = .middle
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
-//                    if UserDefaults.standard.bool(forKey: "christmasLink") {
-//                        viewRouter.currentPage = .shop
-//                    } else {
-//                        showUpdateModal = !UserDefaults.standard.bool(forKey: "1.4Update")
-//                    }
+                }
+                if UserDefaults.standard.integer(forKey: "launchNumber") == 3 && !UserDefaults.standard.bool(forKey: "isPro") {
+                    showUpdateModal = true
                 }
                 
                 

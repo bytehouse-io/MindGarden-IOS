@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+var fourteenDay = false
 
 struct NewUpdateModal: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -21,48 +22,33 @@ struct NewUpdateModal: View {
                     VStack(alignment: .center, spacing: 0) {
                         HStack {
                             Spacer()
-                            Img.mainIcon
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: g.size.height * 0.12)
-                            Text("\nMindGarden \nWhat's New:")
+//                            Img.mainIcon
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(height: g.size.height * 0.1)
+                            Text("💎 You've Earned a Free 14 Day Trial!")
+                                .multilineTextAlignment(.center)
                                 .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.1)
                             Spacer()
                         }.padding([.horizontal, .top])
-//                            HStack {
-//                                Text("😩 Based on many user requests, we have added a stressed mood!")
-//                            }.multilineTextAlignment(.leading)
-//                            .font(Font.mada(.regular, size: 20))
-//                            .foregroundColor(Clr.black2)
-//                            .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
-//                            .padding(.bottom, 10)
-//                            .padding(.top)
-                        Img.widgetExample
+                            .frame(width: g.size.width * 0.85 * 0.9)
+                    
+                        Img.treasureChest
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .cornerRadius(26)
-                            .frame(width:  g.size.width * 0.85 * 0.8)
+                            .frame(width:  g.size.width * 0.85 * 0.6)
                             .padding()
-                        Button {
-                            withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "1.4Update")
-                                shown = false
-                            }
-                        } label: {
-                            HStack {
-                                Text("🧘 Make meditation even \neasier. ")
-                                + Text("Add my widget")
-                                    .bold().underline().foregroundColor(.blue)
-                            }.multilineTextAlignment(.leading)
-                            .font(Font.mada(.regular, size: 20))
-                        }
+                        HStack {
+                            Text("Just for coming back, we're offering you a free 14-day free trial of Pro. This is one time offer!")
+                        }.multilineTextAlignment(.center)
+                        .font(Font.mada(.semiBold, size: 18))
                         .foregroundColor(Clr.black2)
-                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .center)
+                        .frame(width: g.size.width * 0.85 * 0.8)
                         .padding(.bottom, 10)
                         .padding(.top)
-
 //                        Button {
 //                            withAnimation {
 //                                UserDefaults.standard.setValue(true, forKey: "1.1Update")
@@ -101,30 +87,41 @@ struct NewUpdateModal: View {
 //                            .frame(width: g.size.width * 0.85 * 0.8, alignment: .trailing)
 //                            .padding(.bottom, 10)
 //                            .padding(.top, 5)
-                        Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "1.4Update")
+                                UserDefaults.standard.setValue(true, forKey: "14DayModal")
+                                fourteenDay = true
+                                viewRouter.currentPage = .pricing
                             }
                         } label: {
                             Capsule()
-                                .fill(Clr.brightGreen)
+                                .fill(Clr.darkgreen)
                                 .overlay(
-                                    Text("Got it!")
+                                    Text("Claim my free trial")
                                         .font(Font.mada(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
                                 )
-                                .frame(width: g.size.width * 0.7 * 0.5, height: g.size.height * 0.05)
+                                .frame(width: g.size.width * 0.6, height: g.size.height * 0.065)
                         }.buttonStyle(NeumorphicPress())
-                            .padding([.horizontal, .bottom])
-                        Spacer()
+                        .padding()
+                        Button {
+                            withAnimation {
+                                UserDefaults.standard.setValue(true, forKey: "14DayModal")
+                                shown = false
+                            }
+                        } label: {
+                                Text("No Thanks")
+                                    .foregroundColor(Color.gray)
+                                    .font(Font.mada(.regular, size: 20))
+                        }
+                        .padding(.bottom, 20)
                     }
                     .font(Font.mada(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.75 : 0.8), alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.66, alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()
