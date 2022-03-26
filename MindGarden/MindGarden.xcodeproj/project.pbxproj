@@ -11,6 +11,9 @@
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
 		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
 		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
+		582B303027EF3D960026DD16 /* ExitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302D27EF3D960026DD16 /* ExitButton.swift */; };
+		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
+		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
 		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
 		58A9EE7D27C749C500254AC2 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7727C749C500254AC2 /* common.swift */; };
@@ -224,6 +227,9 @@
 		269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
 		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
+		582B302D27EF3D960026DD16 /* ExitButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitButton.swift; sourceTree = "<group>"; };
+		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
+		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
 		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
 		58A9EE7727C749C500254AC2 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -470,6 +476,16 @@
 				5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */,
 			);
 			path = StreakView;
+			sourceTree = "<group>";
+		};
+		582B302C27EF3D960026DD16 /* ShareStreak */ = {
+			isa = PBXGroup;
+			children = (
+				582B302D27EF3D960026DD16 /* ExitButton.swift */,
+				582B302E27EF3D960026DD16 /* ShareStreak.swift */,
+				582B302F27EF3D960026DD16 /* ShareStreakModel.swift */,
+			);
+			path = ShareStreak;
 			sourceTree = "<group>";
 		};
 		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
@@ -757,6 +773,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				582B302C27EF3D960026DD16 /* ShareStreak */,
 				58D90A9427E6F910008C4E1C /* Splash */,
 				5803A31A27DBB8A100F1F2E7 /* StreakView */,
 				58A9EE7427C749C500254AC2 /* Animation&Tab */,
@@ -1343,6 +1360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */,
+				582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */,
 				88A7D91827C0897C001A53DE /* Course.swift in Sources */,
 				FEF976E7275EE36700D1715C /* ReviewScene.swift in Sources */,
 				FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */,
@@ -1351,6 +1369,7 @@
 				5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
+				582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */,
 				88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */,
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
@@ -1392,6 +1411,7 @@
 				8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */,
 				FEB6AF98265D95F500224BFD /* SceneDelegate.swift in Sources */,
 				FEBF22CE26E16B68002572E2 /* BonusViewModel.swift in Sources */,
+				582B303027EF3D960026DD16 /* ExitButton.swift in Sources */,
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */,
