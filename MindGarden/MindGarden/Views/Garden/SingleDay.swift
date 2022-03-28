@@ -188,10 +188,7 @@ struct SingleDay: View {
                     isOpen: self.$showOnboardingModal,
                     maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
                     minHeight: 0.1,
-                    trigger: {
-                        fromPage = "onboarding2"
-                        viewRouter.currentPage = .pricing
-                    }
+                    trigger: { }
                 ) {
                     VStack {
                         Text("🥳")
@@ -213,8 +210,7 @@ struct SingleDay: View {
                                 UserDefaults.standard.setValue(false, forKey: "introLink")
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                fromPage = "onboarding"
-                                viewRouter.currentPage = .pricing
+                                viewRouter.currentPage = .middle
                             }
                         } label: {
                             Capsule()
@@ -239,8 +235,6 @@ struct SingleDay: View {
                                 withAnimation {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showOnboardingModal = false
-                                    fromPage = "onboarding2"
-                                    viewRouter.currentPage = .pricing
                                 }
                             }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
@@ -274,6 +268,8 @@ struct SingleDay: View {
                     self.minutesMeditated = (Double(duration) ?? 0.0).toInt() ?? 0
                 }
             }
+        }.onDisappear {
+            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
         }
     }
 
@@ -285,7 +281,6 @@ struct SingleDay: View {
             Image(systemName: "xmark")
                 .font(.system(size: 22))
                 .foregroundColor(Clr.black1)
-                .opacity(isOnboarding ? 0 : 1)
         }
     }
 

@@ -20,6 +20,7 @@ struct ReviewScene: View {
         formatter.dateFormat = "hh:mm a"
         return formatter
     }
+    @State private var showPaywall = false
 
     var body: some View {
         ZStack {
@@ -74,7 +75,7 @@ struct ReviewScene: View {
                                 .neoShadow()
                             HStack(spacing: -10) {
                                 experience.0
-                                    .resizable()
+                                    .resizable() 
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.2, height: width * 0.2)
                                     .padding()
@@ -141,14 +142,33 @@ struct ReviewScene: View {
                         }
                         Spacer()
                         Button {
-                            onboardingTime = true
+                            onboardingTime = false
                             Analytics.shared.log(event: .review_tapped_tutorial)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                             withAnimation {
                                 viewRouter.progressValue += 0.1
-                                viewRouter.currentPage = .meditate
+                                Paywall.present { info in
+                                    Analytics.shared.log(event: .screen_load_superwall)
+                                } onDismiss: {  didPurchase, productId, paywallInfo in
+                                    switch productId {
+                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                    case "io.mindgarden.pro.yearly":
+                                        Analytics.shared.log(event: .yearly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                            NotificationHelper.freeTrial()
+                                        }
+                                    default: break
+                                    }
+                                    viewRouter.currentPage = .meditate
+                                } onFail: { error in
+                                    fromPage = "onboarding2"
+                                    viewRouter.currentPage = .pricing
+                                }
                             }
                         } label: {
                             HStack {
@@ -171,7 +191,25 @@ struct ReviewScene: View {
                             withAnimation(.easeOut(duration: 0.3)) {
                                 DispatchQueue.main.async {
                                     viewRouter.progressValue += 0.15
-                                    viewRouter.currentPage = .meditate
+                                    Paywall.present { info in
+                                        Analytics.shared.log(event: .screen_load_superwall)
+                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+                                        switch productId {
+                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                                NotificationHelper.freeTrial()
+                                            }
+                                        default: break
+                                        }
+                                        viewRouter.currentPage = .meditate
+                                    } onFail: { error in
+                                        fromPage = "onboarding2"
+                                        viewRouter.currentPage = .pricing
+                                    }
                                 }
                             }
                         } label: {

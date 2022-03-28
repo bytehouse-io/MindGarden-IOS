@@ -45,7 +45,7 @@ class MeditationViewModel: ObservableObject {
     init() {
         $selectedCategory
             .sink { [unowned self] value in
-                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }
+                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed()
                 } else {
                     self.selectedMeditations = Meditation.allMeditations.filter { med in
                         if value == .courses && (med.title == "Intro to Meditation" || med.title == "The Basics Course" ) {
@@ -90,13 +90,13 @@ class MeditationViewModel: ObservableObject {
         }
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                if UserDefaults.standard.integer(forKey: "shownFive") <= 5 {
+                if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
                 } else {
                     setFeaturedReason()
                 }
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                if UserDefaults.standard.integer(forKey: "shownFive") <= 5 {
+                if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
                 } else {
                     setFeaturedReason()

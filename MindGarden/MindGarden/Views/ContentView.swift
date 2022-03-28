@@ -159,8 +159,10 @@ struct ContentView: View {
                                         Finished(model: meditationModel, userModel: userModel, gardenModel: gardenModel)
                                             .frame(height: geometry.size.height + 160)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .environmentObject(bonusModel)
                                     case .authentication:
                                         Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
+                                            .frame(height: geometry.size.height)
                                             .ignoresSafeArea()
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .notification:

@@ -1,7 +1,6 @@
 //
 //  BonusViewModel.swift
 //  MindGarden
-//
 //  Created by Dante Kim on 9/2/21.
 //
 
@@ -13,6 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import WidgetKit
 
+var updatedStreak = false
 class BonusViewModel: ObservableObject {
     @Published var lastLogin: String = ""
     @Published var dailyBonus: String = ""
@@ -29,7 +29,7 @@ class BonusViewModel: ObservableObject {
     @Published var progressiveInterval: String = ""
     @Published var lastStreakDate = ""
     var userModel: UserViewModel
-    var streakNumber = 1
+    var streakNumber = 0
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
@@ -198,6 +198,7 @@ class BonusViewModel: ObservableObject {
                             self.streakNumber = Int(self.streak![..<plus])!
                             let plusOffset = self.streak!.index(plus, offsetBy: 1)
                             self.lastStreakDate = String(self.streak![plusOffset...])
+                            self.updateLaunchNumber()
                         }
                     }
                     if let seven = document[K.defaults.seven] as? Int {
@@ -231,6 +232,7 @@ class BonusViewModel: ObservableObject {
                     self.streakNumber = Int(self.streak![..<plus])!
                     let plusOffset = self.streak!.index(plus, offsetBy: 1)
                     self.lastStreakDate = String(self.streak![plusOffset...])
+                    self.updateLaunchNumber()
                 }
             }
             if let seven = UserDefaults.standard.value(forKey: K.defaults.seven) as? Int {
@@ -248,6 +250,36 @@ class BonusViewModel: ObservableObject {
             }
         }
 
+    }
+    
+    private func updateLaunchNumber() {
+        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        if launchNum == 7 {
+            Analytics.shared.log(event: .seventh_time_coming_back)
+        }
+        
+        if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {
+            launchNum += 1
+        } else if  Date() - formatter.date(from: self.lastStreakDate)! > 172800 {
+            self.streakNumber = 0
+            lastStreakDate = formatter.string(from: Date())
+            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
+            if let email = Auth.auth().currentUser?.email {
+                self.db.collection(K.userPreferences).document(email).updateData([
+                    "streak": String(self.streakNumber) + "+" + lastStreakDate
+                ]) { (error) in
+                    if let e = error {
+                        print("There was a issue saving data to firestore \(e) ")
+                    } else {
+                        print("Succesfully saved streak")
+                    }
+                }
+            } else {
+                UserDefaults.standard.setValue((String(self.streakNumber) + "+" + lastStreakDate), forKey: "streak")
+            }
+            launchNum += 1
+        }
+        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
     }
     
     func updateStreak() {
@@ -291,6 +323,7 @@ class BonusViewModel: ObservableObject {
             
             // Progressive Disclosure
             if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {  // update streak number and date
+                updatedStreak = true
                 self.streakNumber += 1
                 if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
                     if longestStreak < streakNumber {
@@ -302,6 +335,7 @@ class BonusViewModel: ObservableObject {
 
                 lastStreakDate = formatter.string(from: Date())
             } else if Date() - formatter.date(from: lastStreakDate)! > 172800 { //broke streak
+                updatedStreak = true
                 self.streakNumber = 1
                 lastStreakDate = formatter.string(from: Date())
                 if let email = Auth.auth().currentUser?.email {
@@ -321,10 +355,25 @@ class BonusViewModel: ObservableObject {
                     UserDefaults.standard.setValue(0, forKey: "sevenDay")
                     UserDefaults.standard.setValue(0, forKey: "thirtyDay")
                 }
-            } // else no need to update
+            } else {
+                lastStreakDate  = formatter.string(from: Date())
+                if streakNumber == 0 {
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                        updatedStreak = true
+                        self.streakNumber = 1
+                    } else {
+                        self.streakNumber = 0
+                    }
+                }
+            }
         } else {
+            updatedStreak = true
             lastStreakDate  = formatter.string(from: Date())
-            self.streakNumber = 1
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                self.streakNumber = 1
+            } else {
+                self.streakNumber = 0
+            }
         }
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")

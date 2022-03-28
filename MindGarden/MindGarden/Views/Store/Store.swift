@@ -53,33 +53,56 @@ struct Store: View {
                         }
                         .padding(.top, 35)
                         .zIndex(currentHightlight == 0 ? 50 : -4)
+                    } else {
+                        HStack {
+                            Spacer()
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                presentationMode.wrappedValue.dismiss()
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20)
+                                    .foregroundColor(Clr.black1)
+                                    .padding(.leading)
+                            }
+                            Text("🌻 Plant Select" )
+                                .font(Font.mada(.bold, size: 32))
+                                .minimumScaleFactor(0.005)
+                                .lineLimit(1)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Clr.black1)
+                                .padding(.horizontal, 25)
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .renderingMode(.template)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20)
+                                .foregroundColor(Clr.black1)
+                                .padding(.leading)
+                                .opacity(0)
+                            Spacer()
+                            
+                        }.frame(width: g.size.width * 0.9)
+             
+                        
                     }
                 ScrollView(showsIndicators: false) {
                     HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
-                                if !isShop {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        presentationMode.wrappedValue.dismiss()
-                                    } label: {
-                                        Image(systemName: "xmark")
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 20)
-                                            .foregroundColor(Clr.black1)
-                                            .padding(.leading)
-                                    }
+                                if isStore {
+                                    Text(isShop ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
+                                        .font(Font.mada(.bold, size: 32))
+                                        .minimumScaleFactor(0.005)
+                                        .lineLimit(2)
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(Clr.black1)
+                                        .padding(.horizontal, isShop ? 25 : 10)
+                                        .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                                 }
-                                Text(isShop ? !isStore ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" : "🌻 Plant Select")
-                                    .font(Font.mada(.bold, size: 32))
-                                    .minimumScaleFactor(0.005)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Clr.black1)
-                                    .padding(.horizontal, isShop ? 25 : 10)
-                                    .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                             }
                             if isShop && !isStore {
                                 ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
@@ -249,8 +272,11 @@ struct Store: View {
                                                 Analytics.shared.log(event: .notification_success_learn)
                                                 NotificationHelper.addOneDay()
                                                 NotificationHelper.addThreeDay()
+                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                                                    NotificationHelper.freeTrial()
+                                                }
                                                 UserDefaults.standard.setValue(true, forKey: "mindful")
-                                                NotificationHelper.createMindfulNotifs()
+//                                                NotificationHelper.createMindfulNotifs()
                                                 isNotifOn = true
                                                 if UserDefaults.standard.bool(forKey: "day1") {
                                                     NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
@@ -339,6 +365,10 @@ struct Store: View {
                 }
                 if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
                     NotificationHelper.addThreeDay()
+                }
+                
+                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                    NotificationHelper.freeTrial()
                 }
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
                 isNotifOn = true

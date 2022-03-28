@@ -44,16 +44,26 @@ struct PricingView: View {
                     VStack {
                         ScrollView(showsIndicators: false) {
                             ZStack {
-                                Img.morningSun
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                                if fourteenDay {
+                                    Img.treasureChest
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * 0.5, height: height * 0.2)
+                                } else {
+                                    Img.sun2
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * 0.7, height: height * 0.2)
+                                        .offset(x: -25)
+                                }
+                         
                                 Image(systemName: "xmark")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20)
                                     .foregroundColor(.gray)
                                     .padding(.leading, UIScreen.main.bounds.width/1.25)
-                                    .padding(.bottom, 100)
+                                    .padding(.bottom, 50)
                                     .opacity(0.5)
                                     .onTapGesture {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -63,13 +73,15 @@ struct PricingView: View {
                                             case "profile": viewRouter.currentPage = .meditate
                                             case "onboarding": viewRouter.currentPage = .middle
                                             case "store": viewRouter.currentPage = .shop
-                                            case "onboarding2": viewRouter.currentPage = .garden
+                                            case "onboarding2": viewRouter.currentPage = .meditate
                                             case "lockedMeditation": viewRouter.currentPage = .categories
+                                            case "lockedHome": viewRouter.currentPage = .meditate
                                             case "middle": viewRouter.currentPage = .middle
                                             case "widget": viewRouter.currentPage = .meditate
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
+                                        
                                         if fromPage == "onboarding2" {
                                             if !UserDefaults.standard.bool(forKey: "isPro") {
                                                 let center = UNUserNotificationCenter.current()
@@ -89,10 +101,11 @@ struct PricingView: View {
                                         }
                                     }
                             }.frame(width: g.size.width)
+                            .padding(.bottom, -25)
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text("🍏 Unlock ") + Text("MindGarden Pro").foregroundColor(Clr.brightGreen)
+                            (Text(fourteenDay ? "💎 Claim my 14 day " : "🍏 Unlock ") + Text("MindGarden Pro").foregroundColor(Clr.brightGreen)
                              +
-                                  Text(" & get 1% happier everyday"))
+                             Text(fourteenDay ? " free trial" : " & get 1% happier everyday"))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
@@ -359,7 +372,13 @@ struct PricingView: View {
                             let product = package.product
                             let price = product.price
                             if let period = product.introductoryPrice?.subscriptionPeriod {
-                                 trialLength = period.numberOfUnits
+                                if fourteenDay {
+                                    trialLength = 2
+                                } else {
+                                    if product.productIdentifier == "io.mindgarden.pro.yearly" {
+                                        trialLength = period.numberOfUnits
+                                    }
+                                }
                               }
                             let name = product.productIdentifier
 
@@ -374,7 +393,7 @@ struct PricingView: View {
                     }
                 }
             }
-            .onAppearAnalytics(event: .screen_load_pricing)
+            .onAppearAnalytics(event: fourteenDay ? .screen_load_14pricing : .screen_load_pricing)
     }
 
     private func unlockPro() {
@@ -384,12 +403,23 @@ struct PricingView: View {
         var event3 = "cancelled_"
         switch selectedBox {
         case "Yearly":
-            package = packagesAvailableForPurchase.last { (package) -> Bool in
-                return package.product.productIdentifier == "io.mindgarden.pro.yearly"
-            }!
-            price = yearlyPrice
-            event2 = "Yearly" + event2
-            event3 += "yearly"
+            if fourteenDay {
+                package = packagesAvailableForPurchase.last { (package) -> Bool in
+                    return package.product.productIdentifier == "yearly_pro_14"
+                }!
+                price = yearlyPrice
+                event2 = "Yearly14" + event2
+                event3 += "yearly14"
+            } else {
+                package = packagesAvailableForPurchase.last { (package) -> Bool in
+                    return package.product.productIdentifier == "io.mindgarden.pro.yearly"
+                }!
+                price = yearlyPrice
+                event2 = "Yearly" + event2
+                event3 += "yearly"
+            }
+        
+     
         case "Lifetime":
             package = packagesAvailableForPurchase.last { (package) -> Bool in
                 return package.product.productIdentifier == "io.mindgarden.pro.lifetime"
@@ -402,15 +432,20 @@ struct PricingView: View {
                 return package.product.productIdentifier == "io.mindgarden.pro.monthly"
             }!
             price = monthlyPrice
-            event2 = "Monthly" + event2
-            event3 += "monthly"
+            if fourteenDay {
+                event2 = "Monthly14" + event2
+                event3 += "monthly14"
+            } else {
+                event2 = "Monthly" + event2
+                event3 += "monthly"
+            }
+ 
         default: break
         }
 
         Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
                 let event = logEvent()
-
                 let revenue = AMPRevenue().setProductIdentifier(event)
                 revenue?.setPrice(NSNumber(value: price))
                 if !event.contains("yearly") {
@@ -507,6 +542,8 @@ struct PricingView: View {
                 event = event + "fromStore"
             } else if fromPage == "widget" {
                 event = event + "fromWidget"
+            } else if fromPage == "lockedHome" {
+                event = event + "lockedHome"
             }
             return event
         }
@@ -556,7 +593,7 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "\(trialLength == 1 ? "7" : "3") day\nfree trial" : "50% OFF")
+                                Text(title == "Yearly" ? "\(trialLength == 1 ? "7" : trialLength == 2 ? "14" : "3") day\nfree trial" : "50% OFF")
                                     .foregroundColor(Color.black.opacity(0.8))
                                     .font(Font.mada(.bold, size: 12))
                                     .multilineTextAlignment(.center)

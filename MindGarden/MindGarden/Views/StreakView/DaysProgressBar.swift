@@ -30,51 +30,44 @@ struct DaysProgressBar: View {
     
     var body: some View {
         VStack {
-            HStack(alignment:.center) {
-                Spacer()
-                ForEach(0..<gardenModel.lastFive.count) { index in
-                    if index == gardenModel.lastFive.count - 1 {
-                        Text("\(gardenModel.lastFive[index].0)")
-                            .currentDayStyle()
-                    } else {
-                        Text("\(gardenModel.lastFive[index].0)")
-                            .daysProgressTitleStyle()
-                    }
-                    Spacer()
-                }
-            }
-            
             ZStack(alignment:.center) {
                 HStack {
                     Spacer()
-                    ForEach(0..<gardenModel.lastFive.count) { index in
-                        ZStack {
-                            if index != 0 {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Clr.darkgreen)
-                                    .frame(width: 40, height: 12, alignment: .leading)
-                                    .offset(x: -40)
-                            }
-                            if let mood = gardenModel.lastFive[index].2 {
-                                Circle()
-                                    .fill(mood.color)
-                                    .frame(width: 50, height: 50)
-//                                    .progressShadow()
-                            } else {
-                                Circle()
-                                    .fill(Clr.darkWhite)
-                                    .frame(width: 50, height: 50)
-                            }
-                            if let plant = gardenModel.lastFive[index].1 {
-                                plant.head
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 35, height: 35)
-                            }
-                     
-                        }.padding(10)
+                        ForEach(0..<gardenModel.lastFive.count) { index in
+                            VStack {
+                                Text("\(gardenModel.lastFive[index].0)")
+                                    .foregroundColor(index == gardenModel.lastFive.count - 1 ? Clr.redGradientBottom : Clr.black2)
+                                    .frame(width:44)
+                                    .font(Font.mada(index == gardenModel.lastFive.count - 1 ? .bold : .medium, size: 20))
+                                ZStack {
+                                    if index != 0 {
+                                        Rectangle()
+                                            .fill(Clr.darkgreen)
+                                            .frame(width: 40, height: 15, alignment: .leading)
+                                            .neoShadow()
+                                    }
+                                    if let mood = gardenModel.lastFive[index].2 {
+                                        Circle()
+                                            .fill(mood.color)
+                                            .frame(width: 50, height: 50)
+                                            .neoShadow()
+                                    } else {
+                                        Circle()
+                                            .fill(Clr.darkWhite)
+                                            .frame(width: 50, height: 50)
+                                            .neoShadow()
+                                    }
+                                    if let plant = gardenModel.lastFive[index].1 {
+                                        plant.head
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 35, height: 35)
+                                    }
+                                }
+                        }
+                        Spacer()
                     }
-                }.frame(width: UIScreen.main.bounds.width * 0.8, alignment: .center)
+                }.frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
             }
         }.onAppear {
         }

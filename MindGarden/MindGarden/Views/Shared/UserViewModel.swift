@@ -47,6 +47,7 @@ class UserViewModel: ObservableObject {
         if let defaultName = UserDefaults.standard.string(forKey: "name") {
             self.name = defaultName
         }
+        
         if let coins = UserDefaults.standard.value(forKey: "coins") as? Int {
             userCoins = coins
         }
@@ -68,6 +69,9 @@ class UserViewModel: ObservableObject {
                         self.name = name
                         UserDefaults.standard.set(self.name, forKey: "name")
                         tappedSignIn = false
+                    }
+                    if let stack = document["referredStack"] as? String {
+                        self.referredStack = stack
                     }
         
 
@@ -102,6 +106,8 @@ class UserViewModel: ObservableObject {
             if let joinDate = UserDefaults.standard.string(forKey: "joinDate") {
                 self.joinDate = joinDate
             }
+            
+            userCoins = UserDefaults.standard.integer(forKey: "coins") 
         }
 
         //set selected plant

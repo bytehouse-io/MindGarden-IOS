@@ -218,23 +218,23 @@ struct MiddleSelect: View {
                         .multilineTextAlignment(.leading)
                     Spacer()
                     switch state {
-                    case .locked:
-                        Image(systemName: "lock.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 24))
-                            .padding(.horizontal, 10)
-                    case .checked:
-                        Image(systemName: "checkmark.circle.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 24))
-                            .padding(.horizontal, 10)
-                    case .playable:
-                        Image(systemName: "play.fill")
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 24))
-                            .padding(.horizontal, 10)
+                        case .locked:
+                            Image(systemName: "lock.fill")
+                                .renderingMode(.template)
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.system(size: 24))
+                                .padding(.horizontal, 10)
+                        case .checked:
+                            Image(systemName: "checkmark.circle.fill")
+                                .renderingMode(.template)
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.system(size: 24))
+                                .padding(.horizontal, 10)
+                        case .playable:
+                            Image(systemName: "play.fill")
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.system(size: 24))
+                                .padding(.horizontal, 10)
                     }
                     Image(systemName: isFavorited ? "heart.fill" : "heart")
                         .foregroundColor(isFavorited ? Color.red : Color.gray)
@@ -250,10 +250,11 @@ struct MiddleSelect: View {
             .padding(5)
             .frame(width: width)
             .onAppear {
-                if didComplete {
+                if didComplete && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation" {
                     state = .checked
-                }
-                else {
+                } else if  meditation.belongsTo == "Timed Meditation" || meditation.belongsTo == "Open-ended Meditation" {
+                    state =  .playable
+                } else {
                     state =  (idx - 1 == lastPlayed) ? .playable : .locked
                 }
                 

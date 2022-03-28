@@ -89,6 +89,31 @@ struct NotificationHelper {
         }
     }
     
+    static func freeTrial() {
+        let content = UNMutableNotificationContent()
+        content.title = "Your Free trial end tomorrow"
+        content.body = "Users who go pro are 4x more likely to make meditation a habit"
+        content.sound = UNNotificationSound.default
+
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())
+        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
+
+        // Create the trigger as a repeating event.
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents, repeats: true)
+        // Create the request
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString,
+                    content: content, trigger: trigger)
+        // Schedule the request with the system.
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+           if error != nil {
+              // Handle any errors.
+           }
+        }
+    }
+    
     static func addUnlockedFeature(title: String, body: String) {
         let content = UNMutableNotificationContent()
         content.title = title

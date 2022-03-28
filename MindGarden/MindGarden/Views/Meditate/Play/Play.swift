@@ -291,7 +291,6 @@ struct Play: View {
             }
 
 
-
             //bell at the end of a session
             let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
             model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))

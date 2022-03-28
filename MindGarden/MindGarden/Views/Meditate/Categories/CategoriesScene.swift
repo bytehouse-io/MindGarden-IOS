@@ -160,16 +160,11 @@ struct CategoriesScene: View {
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
             }
-        .transition(.move(edge: .bottom))
         .onAppear {
             model.selectedCategory = .all
 
         }
-        .gesture(DragGesture()
-                     .onChanged({ _ in
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                     })
-         )
+        .transition(.move(edge: .bottom))
         .onDisappear {
             if tappedMed {
                 if model.selectedMeditation?.type == .course {
@@ -190,8 +185,10 @@ struct CategoriesScene: View {
                 self.presentationMode.wrappedValue.dismiss()
             } else {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                withAnimation {
-                    viewRouter.currentPage = .meditate
+                DispatchQueue.main.async {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                        viewRouter.currentPage = .meditate
+                    }
                 }
             }
         } label: {

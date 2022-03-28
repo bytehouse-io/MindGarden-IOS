@@ -16,6 +16,7 @@ struct Finished: View {
     var model: MeditationViewModel
     var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var bonusModel: BonusViewModel
     var gardenModel: GardenViewModel
     @State private var sharedImage: UIImage?
     @State private var shotting = true
@@ -238,10 +239,23 @@ struct Finished: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
                                                     if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
-                                                        saveProgress.toggle()
+                                                        if Auth.auth().currentUser == nil {
+                                                            saveProgress.toggle()
+                                                        } else {
+                                                            if updatedStreak {
+                                                                showStreak.toggle()
+                                                                updatedStreak = false
+                                                            } else {
+                                                                viewRouter.currentPage = .garden
+                                                            }
+                                                        }
                                                     } else {
-                                                        showStreak.toggle()
-//                                                        viewRouter.currentPage = .garden
+                                                        if updatedStreak {
+                                                            showStreak.toggle()
+                                                            updatedStreak = false
+                                                        } else {
+                                                            viewRouter.currentPage = .garden
+                                                        }
                                                     }
                                                 }
                                             }
@@ -269,8 +283,8 @@ struct Finished: View {
                         maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
                         minHeight: 0.1,
                         trigger: {
-                            fromPage = "onboarding2"
-                            viewRouter.currentPage = .pricing
+//                            fromPage = "onboarding2"
+//                            viewRouter.currentPage = .pricing
                         }
                     ) {
                         VStack {
@@ -318,13 +332,16 @@ struct Finished: View {
                                     withAnimation {
                                         saveProgress.toggle()
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if isOnboarding {
-                                            viewRouter.currentPage = .garden
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                                            if updatedStreak {
+                                                showStreak.toggle()
+                                                updatedStreak = false
+                                            } else {
+                                                viewRouter.currentPage = . garden
+                                            }
                                         } else {
-                                            fromPage = "onboarding2"
-                                            viewRouter.currentPage = .pricing
+                                            viewRouter.currentPage = .garden
                                         }
-                              
                                     }
                                 }
                         }.frame(width: g.size.width * 0.8, alignment: .center)
@@ -333,23 +350,21 @@ struct Finished: View {
                 }
             }
         }.transition(.move(edge: .trailing))
-            .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene(currentDay: .constant(4))
-            })
             .onDisappear {
                 model.playImage = Img.seed
                 model.lastSeconds = false
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
+            { _ in }
+                    .fullScreenCover(isPresented: $showStreak, content: {
+                StreakScene(streakNumber: .constant(bonusModel.streakNumber))
+                    .background(Clr.darkWhite)
+            })
             .onAppear {
+                bonusModel.updateStreak()
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") == 4 || UserDefaults.standard.integer(forKey: "launchNumber") == 10 {
+                    if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 6 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                        }
-                        if UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
-                            UserDefaults.standard.setValue(4, forKey: "launchNumber")
-                        } else {
-                            Analytics.shared.log(event: .seventh_time_coming_back)
-                            UserDefaults.standard.setValue(11, forKey: "launchNumber")
                         }
                     }
                 }
@@ -413,7 +428,7 @@ struct Finished: View {
                 #if !targetEnvironment(simulator)
                  Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])
                  AppsFlyerLib.shared().logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", withValues: [AFEventParamContent: "true"])
-                 Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName()])
+                Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
                 #endif
                  print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
             }
