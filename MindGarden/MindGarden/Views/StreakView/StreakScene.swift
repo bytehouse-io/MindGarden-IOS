@@ -36,16 +36,18 @@ struct StreakScene: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var timeRemaining = 2
     
+    
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 ZStack {
                     LottieAnimationView(filename: "fire", loopMode: .playOnce, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
-                        .opacity(timeRemaining <= 0 ? 0 : 1)
-                    LottieAnimationView(filename: "second_part_loop", loopMode: .loop, isPlaying: .constant(true))
-                        .frame(width: 500, height: 500, alignment: .center)
-                        .opacity(timeRemaining <= 0 ? 1 : 0)
+//                        .opacity(timeRemaining <= 0 ? 0 : 1)
+//                    LottieAnimationView(filename: "second_part_loop", loopMode: .loop, isPlaying: .constant(true))
+//                        .frame(width: 500, height: 500, alignment: .center)
+//                        .opacity(timeRemaining <= 0 ? 1 : 0)
                 }
                 Spacer()
                 Text(title)
@@ -75,11 +77,15 @@ struct StreakScene: View {
                 .padding(.top, 50)
             }
             .offset(y: -145)
-        }.onReceive(timer) { _ in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            }
         }
+        .onAppear()
+//        .onReceive(timer) { theValue in
+//            print("-----> The Value is \(theValue)") // <--- this will be executed
+//            if timeRemaining > 0 {
+//                timeRemaining -= 1
+//            }
+//        }
+
         .background(Clr.darkWhite)
     }
 }

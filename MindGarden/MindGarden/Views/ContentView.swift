@@ -162,6 +162,7 @@ struct ContentView: View {
                                             .environmentObject(bonusModel)
                                     case .authentication:
                                         Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
+                                            .frame(height: geometry.size.height)
                                             .ignoresSafeArea()
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .notification:

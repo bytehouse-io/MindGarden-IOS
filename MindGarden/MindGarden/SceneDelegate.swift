@@ -38,8 +38,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             formatter.dateFormat = "MMM dd,yyyy"
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")
             UserDefaults.standard.setValue(true, forKey: "newUser")
+            UserDefaults.standard.setValue(1, forKey: "launchNumber")
         }
-        
         
         Analytics.shared.log(event: .launchedApp)
 
@@ -93,14 +93,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        numberOfMeds = Int.random(in: 585..<611)
-        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-        if launchNum == 0 {
-            UserDefaults.standard.setValue(true, forKey: "newUser")
-        }
-        launchNum += 1
+        numberOfMeds = Int.random(in: 685..<711)
         launchedApp = true
-        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
         Analytics.shared.log(event: .sceneDidBecomeActive)
         DispatchQueue.main.async {
             SceneDelegate.bonusModel.bonusTimer?.invalidate()

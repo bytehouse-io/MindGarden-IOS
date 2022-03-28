@@ -125,7 +125,7 @@ struct RecRow: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .frame(width: abs(UIScreen.main.bounds.width), alignment: .leading)
-                        .position(x: sizeCategory > .large ? 300 : K.isSmall() ? 225 : width * 0.64, y: sizeCategory > .large ? -10 : 30)
+                        .position(x: sizeCategory > .large ? 300 : K.isSmall() ? 240 : width * 0.64, y: sizeCategory > .large ? -10 : 30)
                 }
                 
                 HStack {

@@ -55,6 +55,7 @@ struct Store: View {
                         .zIndex(currentHightlight == 0 ? 50 : -4)
                     } else {
                         HStack {
+                            Spacer()
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 presentationMode.wrappedValue.dismiss()
@@ -74,7 +75,16 @@ struct Store: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Clr.black1)
                                 .padding(.horizontal, 25)
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .renderingMode(.template)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20)
+                                .foregroundColor(Clr.black1)
+                                .padding(.leading)
+                                .opacity(0)
                             Spacer()
+                            
                         }.frame(width: g.size.width * 0.9)
              
                         
@@ -266,7 +276,7 @@ struct Store: View {
                                                     NotificationHelper.freeTrial()
                                                 }
                                                 UserDefaults.standard.setValue(true, forKey: "mindful")
-                                                NotificationHelper.createMindfulNotifs()
+//                                                NotificationHelper.createMindfulNotifs()
                                                 isNotifOn = true
                                                 if UserDefaults.standard.bool(forKey: "day1") {
                                                     NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")

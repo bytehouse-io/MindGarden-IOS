@@ -469,6 +469,7 @@ extension AuthenticationViewModel {
                     if let isPro = document["isPro"] {
                         UserDefaults.standard.setValue(isPro, forKey: "isPro")
                     }
+              
                 }
             }
         }

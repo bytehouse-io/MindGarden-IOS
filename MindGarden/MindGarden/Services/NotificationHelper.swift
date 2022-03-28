@@ -95,7 +95,7 @@ struct NotificationHelper {
         content.body = "Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
 
-        let modifiedDate = Calendar.current.date(byAdding: .minute, value: 3, to: Date())
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
         // Create the trigger as a repeating event.

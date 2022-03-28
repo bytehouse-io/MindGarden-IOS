@@ -60,7 +60,7 @@ struct Home: View {
                         Img.yellowBubble
                             .resizable()
                             .frame(width: width + 25, height: height * 0.4)
-                            .neoShadow()
+                            .oldShadow()
                             .offset(x: -10)
                             HStack {
                                 Img.topBranch.offset(x: 40,  y: height * -0.1)
@@ -166,7 +166,7 @@ struct Home: View {
                                         .cornerRadius(20)
                                         .modifier(Shake(animatableData: CGFloat(attempts)))
                                     }
-                                    .buttonStyle(NeumorphicPress())
+                                    .buttonStyle(BonusPress())
                                     Button {
                                         Analytics.shared.log(event: .home_tapped_plant_select)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -188,7 +188,7 @@ struct Home: View {
                                         .background(Clr.yellow)
                                         .cornerRadius(20)
                                     }
-                                    .buttonStyle(NeumorphicPress())
+                                    .buttonStyle(BonusPress())
                                 }.padding(.top, 15)
                                 Button {} label: {
                                     Rectangle()
@@ -228,7 +228,7 @@ struct Home: View {
                                                     }.offset(x: 35, y: K.isPad() ? 45 : 25)
                                                         .padding([.top, .leading])
                                                         .zIndex(100)
-                                                        .neoShadow()
+                                                        .oldShadow()
                                                     if model.featuredMeditation?.imgURL != "" {
                                                         UrlImageView(urlString: model.featuredMeditation?.imgURL)
                                                             .aspectRatio(contentMode: .fit)
@@ -248,19 +248,19 @@ struct Home: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
                                                     DispatchQueue.main.async {
-                                                        Purchases.shared.presentCodeRedemptionSheet()
-//                                                        model.selectedMeditation = model.featuredMeditation
-//                                                        if model.featuredMeditation?.type == .course {
-//                                                            viewRouter.currentPage = .middle
-//                                                        } else {
-//                                                            viewRouter.currentPage = .play
-//                                                        }
+                                                        onboardingTime = false
+                                                        model.selectedMeditation = model.featuredMeditation
+                                                        if model.featuredMeditation?.type == .course {
+                                                            viewRouter.currentPage = .middle
+                                                        } else {
+                                                            viewRouter.currentPage = .play
+                                                        }
                                                     }
                                                 }
                                             }
                                         ).padding(.top, K.isSmall() ? 10 : 20)
                                         .wiggling()
-                                }.buttonStyle(NeumorphicPress())
+                                }.buttonStyle(BonusPress())
                                 HStack {
                                     VStack(spacing: 1) {
                                         HStack {
@@ -354,7 +354,7 @@ struct Home: View {
                                                                 viewRouter.currentPage = .play
                                                             }
                                                         }
-                                                }.buttonStyle(NeumorphicPress())
+                                                }.buttonStyle(BonusPress())
                                             }
                                         }
                                         if !isRecent && model.favoritedMeditations.count == 1 {
@@ -366,7 +366,7 @@ struct Home: View {
                                         .padding([.leading, .trailing], g.size.width * 0.07)
                                 }).frame(width: g.size.width, height: g.size.height * 0.2, alignment: .center)
                                 .padding(.top, 5)
-                                if !UserDefaults.standard.bool(forKey: "isPro") {
+                                if !UserDefaults.standard.bool(forKey: "isPro") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                                 Button {} label: {
                                     ZStack {
                                         Rectangle()
@@ -424,17 +424,25 @@ struct Home: View {
                                                             model.selectedMeditation = meditation
                                                             Analytics.shared.log(event: .home_tapped_new_meditation)
                                                             model.selectedMeditation = meditation
-                                                            if meditation.type == .course  {
+                                                            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id) {
                                                                 withAnimation {
-                                                                    viewRouter.currentPage = .middle
+                                                                    fromPage = "lockedHome"
+                                                                    Analytics.shared.log(event: .home_tapped_locked_meditation)
+                                                                    viewRouter.currentPage = .pricing
                                                                 }
                                                             } else {
-                                                                withAnimation {
-                                                                    showMiddleModal = true
+                                                                if meditation.type == .course  {
+                                                                    withAnimation {
+                                                                        viewRouter.currentPage = .middle
+                                                                    }
+                                                                } else {
+                                                                    withAnimation {
+                                                                        showMiddleModal = true
+                                                                    }
                                                                 }
                                                             }
                                                         }
-                                                }.buttonStyle(NeumorphicPress())
+                                                }.buttonStyle(BonusPress())
                                             }
                                         }.frame(height: g.size.height * 0.2 + 15)
                                             .padding([.leading, .trailing], g.size.width * 0.07)
@@ -442,6 +450,7 @@ struct Home: View {
                                         .offset(y: -15)
                                         .padding(.top, 16)
                                 }
+                                
                                 if #available(iOS 14.0, *) {
                                     Button { } label: {
                                         HStack {
@@ -453,16 +462,14 @@ struct Home: View {
                                             .cornerRadius(25)
                                             .onTapGesture {
                                                 withAnimation {
-                                                    DispatchQueue.main.async {
-                                                        Analytics.shared.log(event: .home_tapped_categories)
-                                                        let impact = UIImpactFeedbackGenerator(style: .light)
-                                                        impact.impactOccurred()
-                                                        viewRouter.currentPage = .categories
-                                                    }
+                                                    Analytics.shared.log(event: .home_tapped_categories)
+                                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                                    impact.impactOccurred()
+                                                    viewRouter.currentPage = .categories
                                                 }
                                             }
                                     }.padding(.top, 24)
-                                    .neoShadow()
+                                    .oldShadow()
                                 } else {
                                     // Fallback on earlier versions
                                     
@@ -522,8 +529,11 @@ struct Home: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
         { _ in
-            runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
+            if !onboardingTime {
+                runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
+            }
         }
+        
         .onAppear {
             userModel.checkIfPro()
             DispatchQueue.main.async {
@@ -555,10 +565,10 @@ struct Home: View {
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
                 }
-                if UserDefaults.standard.integer(forKey: "launchNumber") == 3 && !UserDefaults.standard.bool(forKey: "isPro") {
+                if UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal") {
                     showUpdateModal = true
                 }
-                
+                                
                 
                 coins = userCoins
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)

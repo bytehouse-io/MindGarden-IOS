@@ -198,6 +198,7 @@ public enum Img {
   public static let lockIcon = Image("lockIcon")
   public static let magnifyingGlass = Image("magnifyingGlass")
   public static let mainIcon = Image("mainIcon")
+  public static let mgGuestPass = Image("mgGuestPass")
   public static let moonFull = Image("moonFull")
   public static let morningBackground = Image("morningBackground")
   public static let morningSun = Image("morningSun")

@@ -142,7 +142,7 @@ struct ReviewScene: View {
                         }
                         Spacer()
                         Button {
-                            onboardingTime = true
+                            onboardingTime = false
                             Analytics.shared.log(event: .review_tapped_tutorial)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()

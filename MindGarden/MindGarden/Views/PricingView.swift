@@ -75,6 +75,7 @@ struct PricingView: View {
                                             case "store": viewRouter.currentPage = .shop
                                             case "onboarding2": viewRouter.currentPage = .meditate
                                             case "lockedMeditation": viewRouter.currentPage = .categories
+                                            case "lockedHome": viewRouter.currentPage = .meditate
                                             case "middle": viewRouter.currentPage = .middle
                                             case "widget": viewRouter.currentPage = .meditate
                                             default: viewRouter.currentPage = .meditate
@@ -374,7 +375,9 @@ struct PricingView: View {
                                 if fourteenDay {
                                     trialLength = 2
                                 } else {
-                                    trialLength = period.numberOfUnits
+                                    if product.productIdentifier == "io.mindgarden.pro.yearly" {
+                                        trialLength = period.numberOfUnits
+                                    }
                                 }
                               }
                             let name = product.productIdentifier
@@ -443,7 +446,6 @@ struct PricingView: View {
         Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
                 let event = logEvent()
-
                 let revenue = AMPRevenue().setProductIdentifier(event)
                 revenue?.setPrice(NSNumber(value: price))
                 if !event.contains("yearly") {
@@ -540,6 +542,8 @@ struct PricingView: View {
                 event = event + "fromStore"
             } else if fromPage == "widget" {
                 event = event + "fromWidget"
+            } else if fromPage == "lockedHome" {
+                event = event + "lockedHome"
             }
             return event
         }

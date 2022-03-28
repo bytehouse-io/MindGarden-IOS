@@ -310,6 +310,14 @@ struct ProfileScene: View {
                                                 .offset(y: -24)
                                                 .lineLimit(3)
                                                 .minimumScaleFactor(0.5)
+                                            if !K.isSmall() {
+                                                Img.mgGuestPass
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: abs(width - 150))
+                                                    .neoShadow()
+                                                    .offset(y: -20)
+                                            }
                                             ZStack {
                                                 Rectangle()
                                                     .fill(Clr.darkWhite)
@@ -350,8 +358,6 @@ struct ProfileScene: View {
                                                         .font(Font.mada(.bold, size: 24))
                                                         .foregroundColor(Clr.darkgreen)
                                                         .frame(width: abs(width - 150), alignment: .leading)
-                                                        .lineLimit(1)
-                                                        .minimumScaleFactor(0.5)
                                                 }.padding()
                                             }.frame(width: abs(width - 100), height: height/4)
                                                 .padding(.horizontal)
@@ -388,8 +394,8 @@ struct ProfileScene: View {
                                                 .font(Font.mada(.bold, size: 20))
                                                 .minimumScaleFactor(0.5)
                                                 .lineLimit(2)
-                                                .padding(.top, 50)
-                                                .frame(width: abs(width - 100), alignment: .leading)
+                                                .padding(.top, K.isSmall() ? 10 : 50)
+                                                .frame(width: abs(width - 100), alignment: .center)
                                             Button {
                                                 rateFunc()
                                             } label: {
@@ -567,8 +573,8 @@ struct ProfileScene: View {
             VStack {
                 VStack(alignment: .center, spacing: 20) {
                     HStack(alignment: .center, spacing: 15) {
-                        StatBox(label: "All Mins", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(totalMins),isNewLine: true))")
-                        StatBox(label: "All Sess", img: Img.iconSessions, value: "\(totalSessions)")
+                        StatBox(label: "Total Time", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(totalMins),isNewLine: true))")
+                        StatBox(label: "All Sessions", img: Img.iconSessions, value: "\(totalSessions)")
                     }.padding(.horizontal, 5)
                     HStack(alignment: .center, spacing: 15) {
                         StatBox(label: "All Gratitudes", img: Img.hands, value: "\(UserDefaults.standard.integer(forKey: "numGrads"))")
@@ -684,7 +690,7 @@ struct ProfileScene: View {
             let newDate = Calendar.current.date(byAdding: .day, value: 2, to: Date())
             let newDateString = dateFormatter.string(from: newDate ?? Date())
             referralLink?.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
-            referralLink?.socialMetaTagParameters?.title = "\(userModel.name) invited you to MindGarden"
+            referralLink?.socialMetaTagParameters?.title = "\(userModel.name) has invited you to 👨‍🌾 MindGarden"
             referralLink?.socialMetaTagParameters?.descriptionText = "📱 Download the app by \(newDateString) to claim your 2 free weeks of PRO! ⬇️ Keep it checked"
             guard let imgUrl = URL(string: "https://i.ibb.co/1GW6YxY/MINDGARDEN.png") else { return }
             referralLink?.socialMetaTagParameters?.imageURL = imgUrl

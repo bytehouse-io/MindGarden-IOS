@@ -90,13 +90,13 @@ class MeditationViewModel: ObservableObject {
         }
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                if UserDefaults.standard.integer(forKey: "shownFive") <= 5 {
+                if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
                 } else {
                     setFeaturedReason()
                 }
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                if UserDefaults.standard.integer(forKey: "shownFive") <= 5 {
+                if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
                 } else {
                     setFeaturedReason()
