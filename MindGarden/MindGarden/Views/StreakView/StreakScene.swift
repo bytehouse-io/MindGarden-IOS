@@ -33,10 +33,8 @@ struct StreakScene: View {
         default: return "Great Work! Let's make it \(streakNumber+1) in a row \ntomorrow!"
         }
     }
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var timeRemaining = 2
-    
-    
+    @State private var timer : Timer?
     
     var body: some View {
         ZStack {
@@ -78,8 +76,13 @@ struct StreakScene: View {
             }
             .offset(y: -145)
         }
-        .onAppear()
-//        .onReceive(timer) { theValue in
+        .onAppear() {
+            self.animate()
+        }
+        .onDisappear() {
+            timer?.invalidate()
+        }
+//        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { theValue in
 //            print("-----> The Value is \(theValue)") // <--- this will be executed
 //            if timeRemaining > 0 {
 //                timeRemaining -= 1
@@ -87,6 +90,17 @@ struct StreakScene: View {
 //        }
 
         .background(Clr.darkWhite)
+    }
+    
+    private func animate() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            print("-----> The Value is \(timeRemaining)") // <--- this will be executed
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            } else {
+                timer.invalidate()
+            }
+        }
     }
 }
 
