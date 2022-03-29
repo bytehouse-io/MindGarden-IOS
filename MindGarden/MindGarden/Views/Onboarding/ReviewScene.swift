@@ -187,7 +187,6 @@ struct ReviewScene: View {
                             Analytics.shared.log(event: .review_tapped_explore)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
-                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                             withAnimation(.easeOut(duration: 0.3)) {
                                 DispatchQueue.main.async {
                                     viewRouter.progressValue += 0.15
@@ -206,9 +205,11 @@ struct ReviewScene: View {
                                         default: break
                                         }
                                         viewRouter.currentPage = .meditate
+                                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                     } onFail: { error in
                                         fromPage = "onboarding2"
                                         viewRouter.currentPage = .pricing
+                                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                     }
                                 }
                             }

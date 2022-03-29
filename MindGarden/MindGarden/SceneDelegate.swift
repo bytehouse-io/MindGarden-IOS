@@ -40,7 +40,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(true, forKey: "newUser")
             UserDefaults.standard.setValue(1, forKey: "launchNumber")
         }
-        
         Analytics.shared.log(event: .launchedApp)
 
 

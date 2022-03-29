@@ -31,7 +31,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var isSignUp: Bool = false
     @Published var falseAppleId: Bool = false
     @Published var checked = true
-
+    @Published var showStreak = false
+    
     var currentNonce: String?
     var googleIsNew: Bool = true
     let db = Firestore.firestore()
@@ -180,7 +181,13 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         withAnimation {
             if fromOnboarding {
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                    viewRouter.currentPage = .garden
+                    if UserDefaults.standard.integer(forKey: "numMeds") == 1  {
+                        if updatedStreak {
+                            showStreak = true
+                        }
+                    } else {
+                        viewRouter.currentPage = .garden
+                    }
                 } else {
                     viewRouter.currentPage = .garden
                 }

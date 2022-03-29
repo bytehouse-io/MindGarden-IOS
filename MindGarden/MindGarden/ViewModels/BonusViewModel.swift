@@ -232,8 +232,10 @@ class BonusViewModel: ObservableObject {
                     self.streakNumber = Int(self.streak![..<plus])!
                     let plusOffset = self.streak!.index(plus, offsetBy: 1)
                     self.lastStreakDate = String(self.streak![plusOffset...])
-                    self.updateLaunchNumber()
                 }
+            } else {
+                lastStreakDate = formatter.string(from: Date())
+                streakNumber = 0
             }
             if let seven = UserDefaults.standard.value(forKey: K.defaults.seven) as? Int {
                 self.sevenDay = seven
@@ -248,11 +250,13 @@ class BonusViewModel: ObservableObject {
             if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
                 self.createDailyCountdown()
             }
+            self.updateLaunchNumber()
         }
 
     }
     
     private func updateLaunchNumber() {
+//        UserDefaults.standard.setValue(2, forKey: "launchNumber")
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)

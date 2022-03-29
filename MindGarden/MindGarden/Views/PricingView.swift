@@ -569,7 +569,7 @@ struct PricingView: View {
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
                         HStack(spacing: 2) {
-                            if title == "Yearly" {
+                            if title == "Yearly" && (fourteenDay || UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done") {
                                 (Text(Locale.current.currencySymbol ?? "$") + Text("\(price * 2 + 0.01, specifier: "%.2f")"))
                                     .strikethrough(color: Color("lightGray"))
                                     .foregroundColor(Color("lightGray"))
@@ -605,7 +605,7 @@ struct PricingView: View {
                     }
                     Spacer()
 
-                        (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo")
+                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? !fourteenDay ? "\(price, specifier: "%.2f")" : "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo")
                        )
                             .foregroundColor(selected == title ? .white : Clr.black2)
                             .font(Font.mada(.bold, size: 20))

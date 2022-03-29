@@ -45,6 +45,7 @@
 		88F5CBBC27F0281F00744D9F /* 30 Sec Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBB27F0281E00744D9F /* 30 Sec Meditation.mp3 */; };
 		88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBD27F0E6DA00744D9F /* bell.mp3 */; };
 		88F5CBC027F0E6ED00744D9F /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */; };
+		88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBC127F2244A00744D9F /* theta.mp3 */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
 		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
@@ -258,6 +259,7 @@
 		88F5CBBB27F0281E00744D9F /* 30 Sec Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Sec Meditation.mp3"; sourceTree = "<group>"; };
 		88F5CBBD27F0E6DA00744D9F /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
+		88F5CBC127F2244A00744D9F /* theta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theta.mp3; sourceTree = "<group>"; };
 		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
 		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -858,6 +860,7 @@
 				88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */,
 				88F36AB527DFBE900060FD8E /* alpha.mp3 */,
 				88F36AB227DFBE8F0060FD8E /* beta.mp3 */,
+				88F5CBC127F2244A00744D9F /* theta.mp3 */,
 				88F36AB327DFBE8F0060FD8E /* flute.mp3 */,
 				88F5CBBD27F0E6DA00744D9F /* bell.mp3 */,
 				88F36AB427DFBE8F0060FD8E /* guitar.mp3 */,
@@ -1093,6 +1096,7 @@
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
+				88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */,
 				882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
@@ -1493,7 +1497,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1505,7 +1509,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.38;
+				MARKETING_VERSION = 1.42;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1521,7 +1525,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1533,7 +1537,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.38;
+				MARKETING_VERSION = 1.42;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1551,7 +1555,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1563,7 +1567,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.38;
+				MARKETING_VERSION = 1.42;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1581,7 +1585,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1593,7 +1597,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.38;
+				MARKETING_VERSION = 1.42;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1729,7 +1733,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 42;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1740,7 +1744,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.38;
+				MARKETING_VERSION = 1.42;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1758,7 +1762,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 42;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -1769,7 +1773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.38;
+				MARKETING_VERSION = 1.42;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -19,7 +19,7 @@ struct StreakScene: View {
     
     var subTitle : String {
         switch streakNumber {
-        case 1:  return "👣 A journey of a thousand miles begins with a single step - Confucius"
+        case 1:  return "👣 A journey of a thousand miles begins with a single step - Lao Tzu"
         case 2:  return "Great Work! Let's make it \(streakNumber+1) in a row \ntomorrow!"
         case 3: return "3 is a magical 🦄 number, and you're on fire!"
         case 4: return "👀 Wow only 22% of our users make it this far"

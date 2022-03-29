@@ -173,7 +173,6 @@ struct Authentication: View {
                                 }
                                 self.isSignUp.toggle()
                                 viewModel.isSignUp = self.isSignUp
-                                print(viewModel.isSignUp, "101")
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
                                 Capsule()
@@ -234,7 +233,12 @@ struct Authentication: View {
                     gardenModel.updateSelf()
                     medModel.updateSelf()
                 }
-            }.onAppear {
+            }
+            .fullScreenCover(isPresented: viewModel.$showStreak, content: {
+                StreakScene(streakNumber: .constant(2))
+                    .background(Clr.darkWhite)
+            })
+            .onAppear {
                 //                viewModel.isLoading = true
                 if !tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_onboarding_signup)
