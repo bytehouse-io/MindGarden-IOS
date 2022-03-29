@@ -13,7 +13,6 @@ extension View {
 }
 
 struct WiggleModifier: ViewModifier {
-    @State private var isWiggling1 = false
     @State private var buttonRotating = -10.0
     
     private let rotateAnimation = Animation
@@ -24,8 +23,10 @@ struct WiggleModifier: ViewModifier {
             .rotationEffect(.degrees(Double(buttonRotating)), anchor: .center)
             .animation(onboardingTime ? rotateAnimation.repeatForever(autoreverses: false) : nil, value: buttonRotating)
             .onAppear() {
-                withAnimation(Animation.interpolatingSpring(stiffness: 170, damping: 5)) {
-                    buttonRotating = 0
+                DispatchQueue.main.async {
+                    withAnimation(Animation.interpolatingSpring(stiffness: 170, damping: 5)) {
+                        buttonRotating = 0
+                    }
                 }
             }
     }
