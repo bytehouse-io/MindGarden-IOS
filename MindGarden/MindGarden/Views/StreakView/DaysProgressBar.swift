@@ -23,14 +23,28 @@ struct DaysProgressBar: View {
 //                DayItem(title: "Th", plant: nil, mood: nil),
 //                DayItem(title: "F", plant: nil, mood: nil)]
     
-    var progress: CGFloat {
-        return 0.3
-    }
-    
+    @State var progress: CGFloat  = 0.0
+    @State var circleProgress: CGFloat  = 0.0
     
     var body: some View {
         VStack {
             ZStack(alignment:.center) {
+                ZStack {
+                    VStack {
+                        HStack(spacing:0) {
+                            ForEach(0..<gardenModel.lastFive.count) { index in
+                                Rectangle()
+                                    .fill(.white)
+                                    .frame(width:50, height: 15, alignment: .leading)
+                                    .neoShadow()
+                                    .overlay(
+                                        Rectangle()
+                                            .fill(index == gardenModel.lastFive.count - 1 ? Clr.darkgreen : .orange)
+                                            .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
+                                    )
+                            }
+                        }.offset(y: 20)
+                    }
                 HStack {
                     Spacer()
                         ForEach(0..<gardenModel.lastFive.count) { index in
@@ -40,22 +54,26 @@ struct DaysProgressBar: View {
                                     .frame(width:44)
                                     .font(Font.mada(index == gardenModel.lastFive.count - 1 ? .bold : .medium, size: 20))
                                 ZStack {
-                                    if index != 0 {
-                                        Rectangle()
-                                            .fill(Clr.darkgreen)
-                                            .frame(width: 40, height: 15, alignment: .leading)
-                                            .neoShadow()
-                                    }
                                     if let mood = gardenModel.lastFive[index].2 {
                                         Circle()
                                             .fill(mood.color)
                                             .frame(width: 50, height: 50)
                                             .neoShadow()
+                                            .overlay(
+                                                Circle()
+                                                    .fill(index == gardenModel.lastFive.count - 1 ? Clr.darkgreen : .clear)
+                                                    .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
+                                            )
                                     } else {
                                         Circle()
                                             .fill(Clr.darkWhite)
                                             .frame(width: 50, height: 50)
                                             .neoShadow()
+                                            .overlay(
+                                                Circle()
+                                                    .fill(index == gardenModel.lastFive.count - 1 ? Clr.darkgreen : .clear)
+                                                    .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
+                                            )
                                     }
                                     if let plant = gardenModel.lastFive[index].1 {
                                         plant.head
@@ -68,8 +86,21 @@ struct DaysProgressBar: View {
                         Spacer()
                     }
                 }.frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
+                }
             }
         }.onAppear {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.easeInOut){
+                    progress = 1.0
+                }
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                withAnimation(.easeInOut){
+                    circleProgress = 1.0
+                }
+            }
         }
     }
 }
