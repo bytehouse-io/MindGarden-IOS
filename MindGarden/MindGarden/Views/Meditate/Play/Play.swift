@@ -254,6 +254,7 @@ struct Play: View {
         }
         
         .onAppear {
+            model.forwardCounter = 0
             if model.selectedMeditation?.id != 22 {
                 showTutorialModal = !UserDefaults.standard.bool(forKey: "playTutorialModal")
             }
@@ -361,6 +362,7 @@ struct Play: View {
     func goForward() {
         let playerCurrentTime = CMTimeGetSeconds(mainPlayer!.currentTime())
         let newTime = playerCurrentTime + 15
+        model.forwardCounter += 1
         
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
         self.mainPlayer!.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)

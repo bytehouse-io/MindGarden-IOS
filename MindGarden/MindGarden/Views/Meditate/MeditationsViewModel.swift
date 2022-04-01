@@ -34,6 +34,7 @@ class MeditationViewModel: ObservableObject {
     //animation glitch with a picture so added this var to trigger it manually
     @Published var lastSeconds: Bool = false
     var timer: Timer = Timer()
+    var forwardCounter = 0
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()

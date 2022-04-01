@@ -408,7 +408,9 @@ struct Finished: View {
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
-                if model.selectedMeditation?.duration == -1 {
+                if model.forwardCounter > 5 {
+                    reward = 0
+                } else if model.selectedMeditation?.duration == -1 {
                     switch model.secondsRemaining {
                     case 0...299: reward = 1
                     case 300...599: reward = 5
