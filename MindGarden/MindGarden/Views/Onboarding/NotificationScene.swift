@@ -147,9 +147,12 @@ struct NotificationScene: View {
                                                 Analytics.shared.log(event: .onboarding_notification_on)
                                                 NotificationHelper.addOneDay()
                                                 NotificationHelper.addThreeDay()
-                                                UserDefaults.standard.setValue(true, forKey: "mindful")
+//                                                UserDefaults.standard.setValue(true, forKey: "mindful")
 //                                                NotificationHelper.createMindfulNotifs()
                                                 promptNotification()
+                                                if fromSettings && UserDefaults.standard.bool(forKey: "isPro"){
+                                                    NotificationHelper.freeTrial()
+                                                }
                                             } else {
                                                 Analytics.shared.log(event: .onboarding_notification_off)
                                                 viewRouter.currentPage = .review
@@ -268,6 +271,9 @@ struct NotificationScene: View {
                 }
                 if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
                     NotificationHelper.addThreeDay()
+                }
+                if fromSettings && UserDefaults.standard.bool(forKey: "isPro"){
+                    NotificationHelper.freeTrial()
                 }
                 UserDefaults.standard.setValue(dateTime, forKey: "notif")
                 UserDefaults.standard.setValue(true, forKey: "notifOn")

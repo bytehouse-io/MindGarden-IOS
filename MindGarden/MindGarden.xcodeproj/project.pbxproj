@@ -36,6 +36,9 @@
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
+		88D4C5D327F63C0A00CBB956 /* Storyly in Frameworks */ = {isa = PBXBuildFile; productRef = 88D4C5D227F63C0A00CBB956 /* Storyly */; };
+		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
+		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
 		88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */; };
 		88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB127DFBE8F0060FD8E /* piano1.mp3 */; };
@@ -253,6 +256,8 @@
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
+		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
+		88D4C5D627F6439A00CBB956 /* StorylyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorylyManager.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432hz.mp3; sourceTree = "<group>"; };
 		88F36AB127DFBE8F0060FD8E /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano1.mp3; sourceTree = "<group>"; };
@@ -421,6 +426,7 @@
 			files = (
 				FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */,
 				88F7528727CABBB2004E86D4 /* Paywall in Frameworks */,
+				88D4C5D327F63C0A00CBB956 /* Storyly in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
 				558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */,
 			);
@@ -588,6 +594,7 @@
 				FE11F0B2268FAABE00E1E71A /* Gratitude.swift */,
 				FE9B408326A66D0E000DF00C /* MiddleSelect.swift */,
 				FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */,
+				88D4C5D427F63D8B00CBB956 /* Stories.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -810,6 +817,7 @@
 				FE17B8AF26C06C20002CF8C2 /* Sound.swift */,
 				88A7D91727C0897C001A53DE /* Course.swift */,
 				88F7528827CABD50004E86D4 /* PaywallManager.swift */,
+				88D4C5D627F6439A00CBB956 /* StorylyManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -982,6 +990,7 @@
 			packageProductDependencies = (
 				FE39A0B4277116CC007A3E82 /* OneSignal */,
 				88F7528627CABBB2004E86D4 /* Paywall */,
+				88D4C5D227F63C0A00CBB956 /* Storyly */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -1067,6 +1076,7 @@
 			packageReferences = (
 				FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */,
+				88D4C5D127F63C0A00CBB956 /* XCRemoteSwiftPackageReference "storyly-ios" */,
 			);
 			productRefGroup = FEB6AF93265D95F500224BFD /* Products */;
 			projectDirPath = "";
@@ -1390,8 +1400,10 @@
 				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
+				88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */,
 				58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */,
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
+				88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */,
 				FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */,
 				58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
@@ -1949,6 +1961,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		88D4C5D127F63C0A00CBB956 /* XCRemoteSwiftPackageReference "storyly-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Netvent/storyly-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/superwall-me/paywall-ios";
@@ -1969,6 +1989,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		88D4C5D227F63C0A00CBB956 /* Storyly */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88D4C5D127F63C0A00CBB956 /* XCRemoteSwiftPackageReference "storyly-ios" */;
+			productName = Storyly;
+		};
 		88F7528627CABBB2004E86D4 /* Paywall */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */;

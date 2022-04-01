@@ -70,9 +70,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                             .environmentObject(SceneDelegate.userModel)
                                             .environmentObject(gardenModel))
         
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = rootHost
+            Stories.storylyViewProgrammatic.rootViewController = rootHost
             self.window = window
             window.makeKeyAndVisible()
         }

@@ -42,10 +42,10 @@ struct StreakScene: View {
                 ZStack {
                     LottieAnimationView(filename: "fire", loopMode: .playOnce, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
-//                        .opacity(timeRemaining <= 0 ? 0 : 1)
-//                    LottieAnimationView(filename: "second_part_loop", loopMode: .loop, isPlaying: .constant(true))
-//                        .frame(width: 500, height: 500, alignment: .center)
-//                        .opacity(timeRemaining <= 0 ? 1 : 0)
+                        .opacity(timeRemaining <= 0 ? 0 : 1)
+                    LottieAnimationView(filename: "second_part_loop", loopMode: .loop, isPlaying: .constant(true))
+                        .frame(width: 500, height: 500, alignment: .center)
+                        .opacity(timeRemaining <= 0 ? 1 : 0)
                 }
                 Spacer()
                 Text(title)
@@ -94,7 +94,6 @@ struct StreakScene: View {
     
     private func animate() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            print("-----> The Value is \(timeRemaining)") // <--- this will be executed
             if timeRemaining > 0 {
                 timeRemaining -= 1
             } else {

@@ -461,6 +461,8 @@ struct PricingView: View {
                                                                     [
                                                                         AFEventParamContent: "true"
                                                                     ])
+                    Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
+                    Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
                 }
                 AppsFlyerLib.shared().logEvent(name: event2, values:
                                                                 [

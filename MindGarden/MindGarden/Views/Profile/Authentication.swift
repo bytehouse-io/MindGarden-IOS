@@ -17,6 +17,7 @@ struct Authentication: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     @State private var alertError = false
     @State private var showForgotAlert = false
     @ObservedObject var viewModel: AuthenticationViewModel
@@ -234,8 +235,8 @@ struct Authentication: View {
                     medModel.updateSelf()
                 }
             }
-            .fullScreenCover(isPresented: viewModel.$showStreak, content: {
-                StreakScene(streakNumber: .constant(2))
+            .fullScreenCover(isPresented: $viewModel.showStreak, content: {
+                StreakScene(streakNumber: .constant(bonusModel.streakNumber))
                     .background(Clr.darkWhite)
             })
             .onAppear {

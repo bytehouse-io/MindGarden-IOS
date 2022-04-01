@@ -85,6 +85,7 @@ struct Home: View {
                                                 activeSheet = .profile
                                             }
                                     }.offset(x: 15, y: -25)
+                          
                                     HStack{
                                         Spacer()
                                         VStack(alignment: .trailing) {
@@ -127,69 +128,81 @@ struct Home: View {
                         //MARK: - scroll view
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack {
-                                HStack(spacing: width * 0.04) {
-                                    Button {
-                                        Analytics.shared.log(event: .home_tapped_bonus)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            DispatchQueue.main.async {
-                                                showModal = true
-                                            }
-                                        }
-                                    } label: {
-                                        HStack {
-                                            if bonusModel.totalBonuses == 0 {
-                                                Img.coin
-                                                    .font(.system(size: 22))
-                                            } else {
-                                                ZStack {
-                                                    Circle().frame(height: 16)
-                                                        .foregroundColor(Clr.redGradientBottom)
-                                                    Text("\(bonusModel.totalBonuses)")
-                                                        .font(Font.mada(.bold, size: 12))
-                                                        .foregroundColor(.white)
-                                                        .lineLimit(1)
-                                                        .minimumScaleFactor(0.005)
-                                                        .frame(width: 10)
-                                                }.frame(width: 15)
-                                            }
-                                            Text("Daily Bonus")
-                                                .font(Font.mada(.regular, size: 16))
-                                                .foregroundColor(.black)
-                                                .font(.footnote)
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.05)
-                                        }
-                                        .frame(width: g.size.width * 0.35, height: 20)
-                                        .padding(8)
-                                        .background(Clr.yellow)
-                                        .cornerRadius(20)
-                                        .modifier(Shake(animatableData: CGFloat(attempts)))
-                                    }
-                                    .buttonStyle(BonusPress())
-                                    Button {
-                                        Analytics.shared.log(event: .home_tapped_plant_select)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        activeSheet = .plant
-                                    } label: {
-                                        HStack {
-                                            userModel.selectedPlant?.head
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                            Text("Plant Select")
-                                                .font(Font.mada(.regular, size: 16))
-                                                .foregroundColor(.black)
-                                                .font(.footnote)
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.05)
-                                        }
-                                        .frame(width: g.size.width * 0.35, height: 20)
-                                        .padding(8)
-                                        .background(Clr.yellow)
-                                        .cornerRadius(20)
-                                    }
-                                    .buttonStyle(BonusPress())
-                                }.padding(.top, 15)
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Clr.darkWhite)
+                                        .cornerRadius(14)
+                                        .frame(height: 120, alignment: .center)
+                                        .oldShadow()
+                                    Stories()
+                                        .padding(.horizontal, 15)
+                                        .padding(.top)
+                                }.frame(width: g.size.width * 0.85, height: 120, alignment: .center)
+                              
+                                
+//                                HStack(spacing: width * 0.04) {
+//                                    Button {
+//                                        Analytics.shared.log(event: .home_tapped_bonus)
+//                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                        withAnimation {
+//                                            DispatchQueue.main.async {
+//                                                showModal = true
+//                                            }
+//                                        }
+//                                    } label: {
+//                                        HStack {
+//                                            if bonusModel.totalBonuses == 0 {
+//                                                Img.coin
+//                                                    .font(.system(size: 22))
+//                                            } else {
+//                                                ZStack {
+//                                                    Circle().frame(height: 16)
+//                                                        .foregroundColor(Clr.redGradientBottom)
+//                                                    Text("\(bonusModel.totalBonuses)")
+//                                                        .font(Font.mada(.bold, size: 12))
+//                                                        .foregroundColor(.white)
+//                                                        .lineLimit(1)
+//                                                        .minimumScaleFactor(0.005)
+//                                                        .frame(width: 10)
+//                                                }.frame(width: 15)
+//                                            }
+//                                            Text("Daily Bonus")
+//                                                .font(Font.mada(.regular, size: 16))
+//                                                .foregroundColor(.black)
+//                                                .font(.footnote)
+//                                                .lineLimit(1)
+//                                                .minimumScaleFactor(0.05)
+//                                        }
+//                                        .frame(width: g.size.width * 0.35, height: 20)
+//                                        .padding(8)
+//                                        .background(Clr.yellow)
+//                                        .cornerRadius(20)
+//                                        .modifier(Shake(animatableData: CGFloat(attempts)))
+//                                    }
+//                                    .buttonStyle(BonusPress())
+//                                    Button {
+//                                        Analytics.shared.log(event: .home_tapped_plant_select)
+//                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                        activeSheet = .plant
+//                                    } label: {
+//                                        HStack {
+//                                            userModel.selectedPlant?.head
+//                                                .resizable()
+//                                                .aspectRatio(contentMode: .fit)
+//                                            Text("Plant Select")
+//                                                .font(Font.mada(.regular, size: 16))
+//                                                .foregroundColor(.black)
+//                                                .font(.footnote)
+//                                                .lineLimit(1)
+//                                                .minimumScaleFactor(0.05)
+//                                        }
+//                                        .frame(width: g.size.width * 0.35, height: 20)
+//                                        .padding(8)
+//                                        .background(Clr.yellow)
+//                                        .cornerRadius(20)
+//                                    }
+//                                    .buttonStyle(BonusPress())
+//                                }.padding(.top, 15)
                                 Button {} label: {
                                     Rectangle()
                                         .fill(Color("darkWhite"))

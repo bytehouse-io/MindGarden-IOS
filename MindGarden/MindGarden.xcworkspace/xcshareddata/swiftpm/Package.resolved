@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "Storyly",
+        "repositoryURL": "https://github.com/Netvent/storyly-ios",
+        "state": {
+          "branch": null,
+          "revision": "3da7e29613f24a2438e578effddf18c0f2fe034a",
+          "version": "1.20.1"
+        }
+      },
+      {
         "package": "TPInAppReceipt",
         "repositoryURL": "https://github.com/tikhop/TPInAppReceipt.git",
         "state": {

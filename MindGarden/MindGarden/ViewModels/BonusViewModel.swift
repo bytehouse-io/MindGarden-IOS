@@ -256,7 +256,6 @@ class BonusViewModel: ObservableObject {
     }
     
     private func updateLaunchNumber() {
-//        UserDefaults.standard.setValue(2, forKey: "launchNumber")
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
