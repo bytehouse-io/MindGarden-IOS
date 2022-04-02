@@ -186,11 +186,11 @@ struct CourseScene: View {
                                                         completedCourses = [course.id]
                                                         UserDefaults.standard.setValue([course.id], forKey: "completedCourses")
                                                     }
-                                                    if course.category == "life" {
-                                                        Analytics.shared.log(event: .learn_finished_life_course)
-                                                    } else if course.category == "meditation" {
+                                                   if course.category == "meditation" {
                                                         Analytics.shared.log(event: .learn_finished_meditation_course)
-                                                    }
+                                                   } else {
+                                                       Analytics.shared.log(event: .learn_finished_life_course)
+                                                   }
                                                     completed = true
                                                     isPlaying = true
                                                 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-var fourteenDay = false
+var fiftyOff = false
 
 struct NewUpdateModal: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -92,7 +92,7 @@ struct NewUpdateModal: View {
                             withAnimation {
                                 shown = false
                                 UserDefaults.standard.setValue(true, forKey: "14DayModal")
-                                fourteenDay = true
+                                fiftyOff = true
                                 viewRouter.currentPage = .pricing
                             }
                         } label: {

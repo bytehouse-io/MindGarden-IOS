@@ -44,7 +44,7 @@ struct PricingView: View {
                     VStack {
                         ScrollView(showsIndicators: false) {
                             ZStack {
-                                if fourteenDay {
+                                if fiftyOff {
                                     Img.treasureChest
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
@@ -81,31 +81,31 @@ struct PricingView: View {
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
-                                        
-                                        if fromPage == "onboarding2" {
-                                            if !UserDefaults.standard.bool(forKey: "isPro") {
-                                                let center = UNUserNotificationCenter.current()
-                                                let content = UNMutableNotificationContent()
-                                                content.title = "Don't Miss This Opportunity"
-                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2974 other pro users"
-                                                // Step 3: Create the notification trigger
-                                                let date = Date().addingTimeInterval(13200)
-                                                let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-                                                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-                                                // Step 4: Create the request
-                                                let uuidString = UUID().uuidString
-                                                let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-                                                // Step 5: Register the request
-                                                center.add(request) { (error) in }
-                                            }
-                                        }
+//
+//                                        if fromPage == "onboarding2" {
+//                                            if !UserDefaults.standard.bool(forKey: "isPro") {
+//                                                let center = UNUserNotificationCenter.current()
+//                                                let content = UNMutableNotificationContent()
+//                                                content.title = "Don't Miss This Opportunity"
+//                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2974 other pro users"
+//                                                // Step 3: Create the notification trigger
+//                                                let date = Date().addingTimeInterval(13200)
+//                                                let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+//                                                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+//                                                // Step 4: Create the request
+//                                                let uuidString = UUID().uuidString
+//                                                let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+//                                                // Step 5: Register the request
+//                                                center.add(request) { (error) in }
+//                                            }
+//                                        }
                                     }
                             }.frame(width: g.size.width)
                             .padding(.bottom, -25)
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text(fourteenDay ? "💎 Claim my 14 day " : "🍏 Unlock ") + Text("MindGarden Pro").foregroundColor(Clr.brightGreen)
+                            (Text(fiftyOff ? "💎 Claim my 50% off for " : "🍏 Unlock ") + Text("MindGarden Pro").foregroundColor(Clr.brightGreen)
                              +
-                             Text(fourteenDay ? " free trial" : " & get 1% happier everyday"))
+                             Text(fiftyOff ? " (limited time)" : " & get 1% happier everyday"))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
@@ -372,8 +372,8 @@ struct PricingView: View {
                             let product = package.product
                             let price = product.price
                             if let period = product.introductoryPrice?.subscriptionPeriod {
-                                if fourteenDay {
-                                    trialLength = 2
+                                if fiftyOff {
+                                    trialLength = 0
                                 } else {
                                     if product.productIdentifier == "io.mindgarden.pro.yearly" {
                                         trialLength = period.numberOfUnits
@@ -388,12 +388,14 @@ struct PricingView: View {
                                 yearlyPrice = round(100 * Double(truncating: price))/100
                             } else if name == "io.mindgarden.pro.lifetime" {
                                 lifePrice = round(100 * Double(truncating: price))/100
+                            } else if name == "yearly_pro_14" {
+                                yearlyPrice = round(100 * Double(truncating: price))/100
                             }
                         }
                     }
                 }
             }
-            .onAppearAnalytics(event: fourteenDay ? .screen_load_14pricing : .screen_load_pricing)
+            .onAppearAnalytics(event: fiftyOff ? .screen_load_50pricing : .screen_load_pricing)
     }
 
     private func unlockPro() {
@@ -403,13 +405,13 @@ struct PricingView: View {
         var event3 = "cancelled_"
         switch selectedBox {
         case "Yearly":
-            if fourteenDay {
+            if fiftyOff {
                 package = packagesAvailableForPurchase.last { (package) -> Bool in
                     return package.product.productIdentifier == "yearly_pro_14"
                 }!
                 price = yearlyPrice
-                event2 = "Yearly14" + event2
-                event3 += "yearly14"
+                event2 = "Yearly50" + event2
+                event3 += "yearly50"
             } else {
                 package = packagesAvailableForPurchase.last { (package) -> Bool in
                     return package.product.productIdentifier == "io.mindgarden.pro.yearly"
@@ -432,9 +434,9 @@ struct PricingView: View {
                 return package.product.productIdentifier == "io.mindgarden.pro.monthly"
             }!
             price = monthlyPrice
-            if fourteenDay {
-                event2 = "Monthly14" + event2
-                event3 += "monthly14"
+            if fiftyOff {
+                event2 = "Monthly50" + event2
+                event3 += "monthly50"
             } else {
                 event2 = "Monthly" + event2
                 event3 += "monthly"
@@ -571,7 +573,7 @@ struct PricingView: View {
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
                         HStack(spacing: 2) {
-                            if title == "Yearly" && (fourteenDay || UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done") {
+                            if title == "Yearly" && (fiftyOff || UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done") {
                                 (Text(Locale.current.currencySymbol ?? "$") + Text("\(price * 2 + 0.01, specifier: "%.2f")"))
                                     .strikethrough(color: Color("lightGray"))
                                     .foregroundColor(Color("lightGray"))
@@ -595,7 +597,7 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "\(trialLength == 1 ? "7" : trialLength == 2 ? "14" : "3") day\nfree trial" : "50% OFF")
+                                Text(title == "Yearly" ? "\(trialLength == 1 ? "7" : trialLength == 2 ? "14" :  trialLength == 0 ? "50%\nOFF" : "3")" : "day\nfree trial" )
                                     .foregroundColor(Color.black.opacity(0.8))
                                     .font(Font.mada(.bold, size: 12))
                                     .multilineTextAlignment(.center)
@@ -607,7 +609,7 @@ struct PricingView: View {
                     }
                     Spacer()
 
-                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? !fourteenDay ? "\(price, specifier: "%.2f")" : "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo")
+                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? !fiftyOff ? "\(price, specifier: "%.2f")" : "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo")
                        )
                             .foregroundColor(selected == title ? .white : Clr.black2)
                             .font(Font.mada(.bold, size: 20))
