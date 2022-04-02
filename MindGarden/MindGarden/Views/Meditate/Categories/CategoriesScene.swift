@@ -161,8 +161,9 @@ struct CategoriesScene: View {
                         .animation(.default, value: showModal)
             }
         .onAppear {
-            model.selectedCategory = .all
-
+            DispatchQueue.main.async {
+                model.selectedCategory = .all
+            }
         }
         .transition(.move(edge: .bottom))
         .onDisappear {
@@ -229,8 +230,9 @@ struct CategoriesScene: View {
                 }
                 .padding(8)
                 .background(selected == category ? Clr.yellow : Clr.darkWhite)
-                .cornerRadius(25)
             }
+            .frame(height:32)
+            .cornerRadius(16)
             .buttonStyle(NeumorphicPress())
             .padding(0)
         }

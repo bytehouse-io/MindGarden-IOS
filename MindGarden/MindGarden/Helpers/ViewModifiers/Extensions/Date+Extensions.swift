@@ -277,4 +277,27 @@ extension Date {
         
         return arrDates
     }
+    
+    func interval(ofComponent comp: Calendar.Component, fromDate date: Date) -> Int {
+
+        let currentCalendar = Calendar.current
+
+        guard let start = currentCalendar.ordinality(of: comp, in: .era, for: date) else { return 0 }
+        guard let end = currentCalendar.ordinality(of: comp, in: .era, for: self) else { return 0 }
+
+        return end - start
+    }
+    
+    func setTime(hour: Int, min: Int, sec: Int, timeZoneAbbrev: String = "UTC") -> Date? {
+        let x: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
+        let cal = Calendar.current
+        var components = cal.dateComponents(x, from: self)
+        
+        components.timeZone = TimeZone(abbreviation: timeZoneAbbrev)
+        components.hour = hour
+        components.minute = min
+        components.second = sec
+        
+        return cal.date(from: components)
+    }
 }

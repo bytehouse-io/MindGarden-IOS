@@ -24,7 +24,7 @@ struct Finished: View {
     @State private var animateViews = false
     @State private var favorited = false
     @State private var showUnlockedModal = false
-    @State private var reward = 0
+    @State private var reward : Int = 0
     @State private var saveProgress = false
     @State private var hideConfetti = false
     @State private var showStreak = false
@@ -242,7 +242,7 @@ struct Finished: View {
                                                         if Auth.auth().currentUser == nil {
                                                             saveProgress.toggle()
                                                         } else {
-                                                            if updatedStreak {
+                                                            if updatedStreak && model.isStreakUpdate {
                                                                 showStreak.toggle()
                                                                 updatedStreak = false
                                                             } else {
@@ -250,7 +250,7 @@ struct Finished: View {
                                                             }
                                                         }
                                                     } else {
-                                                        if updatedStreak {
+                                                        if updatedStreak && model.isStreakUpdate {
                                                             showStreak.toggle()
                                                             updatedStreak = false
                                                         } else {
@@ -408,21 +408,7 @@ struct Finished: View {
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
-                if model.forwardCounter > 5 {
-                    reward = 0
-                } else if model.selectedMeditation?.duration == -1 {
-                    switch model.secondsRemaining {
-                    case 0...299: reward = 1
-                    case 300...599: reward = 5
-                    case 600...899: reward = 10
-                    case 900...1199: reward = 12
-                    case 1200...1499: reward = 15
-                    case 1500...1799: reward = 18
-                    default: reward = 20
-                    }
-                } else {
-                    reward = model.selectedMeditation?.reward ?? 0
-                }
+                reward = model.getReward()
                 userCoins += reward
                 gardenModel.save(key: "sessions", saveValue: session)
                 
