@@ -25,6 +25,9 @@
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
 		58D4F03927EAE9C400451081 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4F03827EAE9C400451081 /* ActivityViewController.swift */; };
+		58D5C0F127FB672500454937 /* FlowerPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0EF27FB672500454937 /* FlowerPop.swift */; };
+		58D5C0F227FB672500454937 /* PlantGrowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0F027FB672500454937 /* PlantGrowing.swift */; };
+		58D5C0F427FB675A00454937 /* background.json in Resources */ = {isa = PBXBuildFile; fileRef = 58D5C0F327FB675A00454937 /* background.json */; };
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
@@ -241,6 +244,9 @@
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
 		58D4F03827EAE9C400451081 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		58D5C0EF27FB672500454937 /* FlowerPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowerPop.swift; sourceTree = "<group>"; };
+		58D5C0F027FB672500454937 /* PlantGrowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantGrowing.swift; sourceTree = "<group>"; };
+		58D5C0F327FB675A00454937 /* background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = background.json; sourceTree = "<group>"; };
 		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
@@ -507,6 +513,15 @@
 			path = "Animation&Tab";
 			sourceTree = "<group>";
 		};
+		58D5C0EE27FB670C00454937 /* PlantGrowing */ = {
+			isa = PBXGroup;
+			children = (
+				58D5C0EF27FB672500454937 /* FlowerPop.swift */,
+				58D5C0F027FB672500454937 /* PlantGrowing.swift */,
+			);
+			path = PlantGrowing;
+			sourceTree = "<group>";
+		};
 		58D90A9427E6F910008C4E1C /* Splash */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,6 +580,7 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				58D5C0F327FB675A00454937 /* background.json */,
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
 				882738D227E2D75D00F8D4D0 /* first_part.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
@@ -773,6 +789,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58D5C0EE27FB670C00454937 /* PlantGrowing */,
 				582B302C27EF3D960026DD16 /* ShareStreak */,
 				58D90A9427E6F910008C4E1C /* Splash */,
 				5803A31A27DBB8A100F1F2E7 /* StreakView */,
@@ -1105,6 +1122,7 @@
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
+				58D5C0F427FB675A00454937 /* background.json in Resources */,
 				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
@@ -1435,9 +1453,11 @@
 				FE48B44527791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
 				58A9EE7F27C749C500254AC2 /* HomeTabView.swift in Sources */,
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
+				58D5C0F127FB672500454937 /* FlowerPop.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
 				FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */,
 				FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */,
+				58D5C0F227FB672500454937 /* PlantGrowing.swift in Sources */,
 				FE6B5163270B9E05000118E8 /* NewUpdateModal.swift in Sources */,
 				FE683F3C269FC550009A66DF /* CategoriesScene.swift in Sources */,
 				FEB2E3C8270F9AC700F5C23C /* AnalyticEvent.swift in Sources */,
