@@ -36,6 +36,8 @@ struct Play: View {
     @State var showTutorialModal = false
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
+    
+    @Environment(\.scenePhase) var scenePhase
 
     var body: some View {
             ZStack {
@@ -234,6 +236,17 @@ struct Play: View {
                         .animation(.default)
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                player?.pause()
+                model.stop()
+                mainPlayer?.pause()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                player?.play()
+                model.startTimer()
+                mainPlayer?.play()
+            }
+
             .onChange(of: model.secondsRemaining) { value in
                 guard isTraceTimeMannual else { return }
 
@@ -365,7 +378,7 @@ struct Play: View {
         model.forwardCounter += 1
         
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
-        self.mainPlayer!.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        self.mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
 
     func goBackward() {
@@ -376,7 +389,7 @@ struct Play: View {
                 newTime = 0
             }
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
-        mainPlayer!.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
 
 
