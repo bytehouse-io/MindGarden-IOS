@@ -17,11 +17,7 @@ struct DayItem: Identifiable {
 
 struct DaysProgressBar: View {
     @EnvironmentObject var gardenModel: GardenViewModel
-//    var days = [DayItem(title: "M", plant: nil, mood: nil),
-//                DayItem(title: "T", plant: nil, mood: nil),
-//                DayItem(title: "W", plant: nil, mood: nil),
-//                DayItem(title: "Th", plant: nil, mood: nil),
-//                DayItem(title: "F", plant: nil, mood: nil)]
+
     
     @State var progress: CGFloat  = 0.0
     @State var circleProgress: CGFloat  = 0.0
@@ -39,7 +35,7 @@ struct DaysProgressBar: View {
                                     .neoShadow()
                                     .overlay(
                                         Rectangle()
-                                            .fill(index == gardenModel.lastFive.count - 1 ? Clr.darkgreen : .orange)
+                                            .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : Clr.darkWhite)
                                             .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
                                     )
                             }
@@ -58,20 +54,20 @@ struct DaysProgressBar: View {
                                         Circle()
                                             .fill(mood.color)
                                             .frame(width: 50, height: 50)
-                                            .neoShadow()
+                                            .rightShadow()
                                             .overlay(
                                                 Circle()
-                                                    .fill(index == gardenModel.lastFive.count - 1 ? Clr.darkgreen : .clear)
+                                                    .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : .clear)
                                                     .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
                                             )
                                     } else {
                                         Circle()
                                             .fill(Clr.darkWhite)
                                             .frame(width: 50, height: 50)
-                                            .neoShadow()
+                                            .rightShadow()
                                             .overlay(
                                                 Circle()
-                                                    .fill(index == gardenModel.lastFive.count - 1 ? Clr.darkgreen : .clear)
+                                                    .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : .clear)
                                                     .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
                                             )
                                     }

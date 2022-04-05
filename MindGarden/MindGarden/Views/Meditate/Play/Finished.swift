@@ -27,7 +27,7 @@ struct Finished: View {
     @State private var reward : Int = 0
     @State private var saveProgress = false
     @State private var hideConfetti = false
-    @State private var showStreak = false
+    @State private var showStreak = true
     @Environment(\.sizeCategory) var sizeCategory
 
     var minsMed: Int {
@@ -242,7 +242,7 @@ struct Finished: View {
                                                         if Auth.auth().currentUser == nil {
                                                             saveProgress.toggle()
                                                         } else {
-                                                            if updatedStreak && model.isStreakUpdate {
+                                                            if updatedStreak && model.shouldStreakUpdate {
                                                                 showStreak.toggle()
                                                                 updatedStreak = false
                                                             } else {
@@ -250,7 +250,7 @@ struct Finished: View {
                                                             }
                                                         }
                                                     } else {
-                                                        if updatedStreak && model.isStreakUpdate {
+                                                        if updatedStreak && model.shouldStreakUpdate {
                                                             showStreak.toggle()
                                                             updatedStreak = false
                                                         } else {
@@ -361,7 +361,6 @@ struct Finished: View {
                     .background(Clr.darkWhite)
             })
             .onAppear {
-                bonusModel.updateStreak()
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 6 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
@@ -411,7 +410,9 @@ struct Finished: View {
                 reward = model.getReward()
                 userCoins += reward
                 gardenModel.save(key: "sessions", saveValue: session)
-                
+                if model.shouldStreakUpdate {
+                    bonusModel.updateStreak()
+                }
                 //Log Analytics
                 #if !targetEnvironment(simulator)
                  Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])

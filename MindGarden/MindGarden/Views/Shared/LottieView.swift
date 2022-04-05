@@ -35,6 +35,7 @@ struct LottieView: UIViewRepresentable {
 
         return view
     }
+    
     func playAnimation() {
         animationView.play()
     }

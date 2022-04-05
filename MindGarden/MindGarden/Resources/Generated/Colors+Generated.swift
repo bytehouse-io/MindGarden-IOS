@@ -34,6 +34,10 @@ public enum Clr {
   ///
   /// **Universal - Dark**: `#74804B` with alpha: `1.000`
   public static let finishedGreen = Color("finishedGreen")
+  /// **Universal - Any**: `#F7CB5A` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#F7CB5A` with alpha: `1.000`
+  public static let freezeBlue = Color("freezeBlue")
   /// **Universal - Any**: `#DDAA69` with alpha: `1.000`
   public static let gardenBlue = Color("gardenBlue")
   /// **Universal - Any**: `#D7C7BD` with alpha: `1.000`
@@ -56,6 +60,10 @@ public enum Clr {
   public static let shadow = Color("shadow")
   /// **Universal - Any**: `#FDE292` with alpha: `1.000`
   public static let skyBlue = Color("skyBlue")
+  /// **Universal - Any**: `#47C4E9` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#47C4E9` with alpha: `1.000`
+  public static let sunshine = Color("sunshine")
   /// **Universal - Any**: `#000000` with alpha: `1.000`
   ///
   /// **Universal - Dark**: `#000000` with alpha: `1.000`

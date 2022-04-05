@@ -35,7 +35,7 @@ class MeditationViewModel: ObservableObject {
     @Published var lastSeconds: Bool = false
     var timer: Timer = Timer()
     var forwardCounter = 0
-    var isStreakUpdate = true
+    var shouldStreakUpdate = true
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
@@ -274,12 +274,13 @@ class MeditationViewModel: ObservableObject {
     func getReward() -> Int {
         let duration = selectedMeditation?.duration ?? 0
         var reward = 0
-        if (forwardCounter > 2 && duration <= 120) || (forwardCounter > 6)  {
+        if ((forwardCounter > 2 && duration <= 120) || (forwardCounter > 6) || (selectedMeditation?.id == 22 && forwardCounter >= 1) || (duration < 60 && selectedMeditation?.belongsTo == "Open-ended Meditation")) {
             reward = 0
-            isStreakUpdate = false
+            shouldStreakUpdate = false
         } else if selectedMeditation?.duration == -1 {
             switch secondsRemaining {
-            case 0...299: reward = 1
+            case 0...59: reward = 0
+            case 60...299: reward = 1
             case 300...599: reward = 5
             case 600...899: reward = 10
             case 900...1199: reward = 12

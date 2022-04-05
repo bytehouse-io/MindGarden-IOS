@@ -17,6 +17,17 @@ struct ShadowViewModifier: ViewModifier {
     }
 }
 
+struct RightShadow: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .drawingGroup()
+            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.darkShadow.opacity(0.95), radius: 5 , x: 5, y: 5)
+//            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Clr.blackShadow.opacity(0.4), radius: 5, x: -5, y: -5)
+    }
+}
+
 struct OldModifier: ViewModifier {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
@@ -34,5 +45,9 @@ extension View {
     }
     func oldShadow() -> some View {
         self.modifier(OldModifier())
+    }
+    
+    func rightShadow()  -> some View {
+        self.modifier(RightShadow())
     }
 }

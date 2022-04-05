@@ -100,7 +100,7 @@ struct Home: View {
                                                 Img.streak
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 20)
+                                                    .frame(height: 25)
                                                     .oldShadow()
                                                 Text("Streak: ")
                                                     .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
@@ -108,14 +108,7 @@ struct Home: View {
                                                 + Text("\(bonusModel.streakNumber)")
                                                     .font(Font.mada(.semiBold, size: 22))
                                                     .foregroundColor(Clr.darkgreen)
-                                                Img.coin
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 20)
-                                                    .oldShadow()
-                                                Text("\(coins)")
-                                                    .font(Font.mada(.semiBold, size: 22))
-                                                    .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
+                                                PlusCoins()
                                             }.padding(.trailing, 20)
                                                 .padding(.top, -10)
                                                 .padding(.bottom, 10)
@@ -237,13 +230,13 @@ struct Home: View {
                                                     ZStack {
                                                         Circle().frame(width: g.size.width * 0.15, height:  g.size.width * 0.15)
                                                             .foregroundColor(Clr.brightGreen)
+                                                            .rightShadow()
                                                         Image(systemName: "play.fill")
                                                             .foregroundColor(.white)
                                                             .font(.system(size: K.isPad() ? 50 : 26))
                                                     }.offset(x: 35, y: K.isPad() ? 45 : 25)
                                                         .padding([.top, .leading])
                                                         .zIndex(100)
-                                                        .oldShadow()
                                                     if model.featuredMeditation?.imgURL != "" {
                                                         UrlImageView(urlString: model.featuredMeditation?.imgURL)
                                                             .aspectRatio(contentMode: .fit)
@@ -524,7 +517,7 @@ struct Home: View {
                         .animation(.default, value: showUpdateModal)
                 }
             }
-            .fullScreenCover(item: $activeSheet) { item in
+            .sheet(item: $activeSheet) { item in
                 switch item {
                 case .profile:
                     ProfileScene(profileModel: profileModel)

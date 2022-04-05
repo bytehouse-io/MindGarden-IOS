@@ -78,8 +78,8 @@
             filePath = "MindGarden/ViewModels/BonusViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "updateBonus()"
             landmarkType = "7">
          </BreakpointContent>

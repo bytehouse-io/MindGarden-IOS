@@ -12,12 +12,10 @@ class StorylyManager: StorylyDelegate {
     func storylyLoaded(_ storylyView: Storyly.StorylyView,
                           storyGroupList: [Storyly.StoryGroup],
                           dataSource: StorylyDataSource) {
-        print("gang")
        }
 
        func storylyLoadFailed(_ storylyView: Storyly.StorylyView,
                               errorMessage: String) {
-           print("slang")
        }
 
        func storylyActionClicked(_ storylyView: Storyly.StorylyView,

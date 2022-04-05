@@ -27,6 +27,8 @@ class BonusViewModel: ObservableObject {
     @Published var bonusTimer: Timer? = Timer()
     @Published var progressiveTimer: Timer? = Timer()
     @Published var progressiveInterval: String = ""
+    @Published var fiftyOffTimer: Timer? = Timer()
+    @Published var fiftyOffInterval: String = ""
     @Published var lastStreakDate = ""
     var userModel: UserViewModel
     var streakNumber = 0
@@ -63,6 +65,29 @@ class BonusViewModel: ObservableObject {
         }
     }
     
+    private func createFiftyCountdown() {
+        self.fiftyOffTimer?.invalidate()
+        self.fiftyOffTimer = nil
+        fiftyOffInterval = ""
+        var interval = TimeInterval()
+
+        if let fifty = UserDefaults.standard.string(forKey: "fiftyTimer") {
+            interval = formatter.date(from: fifty)! - Date()
+        } else {
+            interval = 7200
+        }
+        
+
+        fiftyOffInterval = interval.stringFromTimeInterval()
+        self.fiftyOffTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
+            interval -= 1
+            fiftyOffInterval = interval.stringFromTimeInterval()
+            if interval <= 0 {
+                timer.invalidate()
+            }
+        }
+    }
+    
     private func createProgressiveCountdown() {
         self.progressiveTimer?.invalidate()
         self.progressiveTimer = nil
@@ -72,7 +97,7 @@ class BonusViewModel: ObservableObject {
         if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
             interval = formatter.date(from: lastTutorialDate)! - Date()
         } else {
-            interval = 120
+            interval = 43200
         }
         
 
@@ -323,9 +348,9 @@ class BonusViewModel: ObservableObject {
             lastStreakDate = String(self.streak![plusOffset...])
             
             // for new users only
-            let sreakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
+            let streakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
             let currentDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!//Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
-            let interval = currentDate.interval(ofComponent: .day, fromDate: sreakDate ?? Date())
+            let interval = currentDate.interval(ofComponent: .day, fromDate: streakDate ?? Date())
             
             // Progressive Disclosure
             if (interval >= 1 && interval <= 2) {  // update streak number and date
