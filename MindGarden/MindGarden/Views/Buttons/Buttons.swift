@@ -1,0 +1,78 @@
+//
+//  Buttons.swift
+//  MindGarden
+//
+//  Created by Vishal Davara on 05/04/22.
+//
+
+import SwiftUI
+
+struct ExitButton: View {
+    
+    let action: () -> Void
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: "xmark")
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 25, height: 25, alignment: .center)
+                .foregroundColor(Clr.black1)
+            
+        }.padding(20)
+    }
+}
+
+struct ExitButton_Previews: PreviewProvider {
+    static var previews: some View {
+        ExitButton(action: {
+            // tap event
+        })
+    }
+}
+
+enum buttonType {
+    case lightYellow,darkGreen
+}
+
+struct LightButton: View {
+    @State var type : buttonType = .lightYellow
+    @Binding var title : String
+    @State var showNextArrow : Bool = false
+    let action: () -> Void
+    
+    var body: some View {
+        ZStack {
+            Button {
+                action()
+            } label: {
+                HStack {
+                    Text(title)
+                        .foregroundColor(type == .lightYellow ? Clr.superBlack : Clr.superWhite)
+                        .font(Font.mada(.bold, size: 22))
+                        .padding()
+                    if showNextArrow {
+                        Image(systemName: "arrow.right")
+                            .foregroundColor(Color.black)
+                            .font(.system(size: 22, weight: .bold))
+                    }
+                }
+                .padding()
+                .background(type == .lightYellow ? Clr.yellow : Clr.darkgreen)
+            }
+            .frame(height: 58, alignment: .center)
+            .buttonStyle(BonusPress())
+            .cornerRadius(28)
+        }
+    }
+}
+
+struct LightButton_Previews: PreviewProvider {
+    static var previews: some View {
+        LightButton(title: .constant(""), action: {
+            // tap event
+        })
+    }
+}

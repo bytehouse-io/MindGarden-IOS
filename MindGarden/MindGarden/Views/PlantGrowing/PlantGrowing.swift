@@ -8,15 +8,12 @@
 import SwiftUI
 
 struct PlantGrowing: View {
-    @State private var buttonRotating = -10.0
+    @State private var buttonRotating = -20.0
     @State private var scale = 0.0
     @State private var isTransit = false
-    let title = "New!\n Red Tulips"
     
     var body: some View {
         ZStack {
-            LottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
-                .frame(width: 630, height: 1000, alignment: .center)
             VStack {
                 if !isTransit {
                     Img.seedPacket
@@ -25,19 +22,8 @@ struct PlantGrowing: View {
                         .animation(Animation
                                     .interpolatingSpring(stiffness: 170, damping: 5), value: buttonRotating)
                 } else {
-                    ZStack {
-                        FlowerPop()
-                            .transition(.scale)
-                        VStack {
-                            Spacer()
-                                .frame(height: 100, alignment: .center)
-                            Text(title)
-                                .font(.mada(.bold, size: 40))
-                                .foregroundColor(Clr.superBlack)
-                                .multilineTextAlignment(.center)
-                            Spacer()
-                        }
-                    }
+                    FlowerPop()
+                        .transition(.scale)
                 }
             }
         }
@@ -54,5 +40,12 @@ struct PlantGrowing: View {
                 }
             }
         }
+    }
+}
+
+
+struct PlantGrowing_Previews: PreviewProvider {
+    static var previews: some View {
+        PlantGrowing()
     }
 }
