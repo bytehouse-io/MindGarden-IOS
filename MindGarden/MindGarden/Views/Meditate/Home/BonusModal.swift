@@ -15,6 +15,7 @@ struct BonusModal: View {
     @State private var streakCoins: Bool = false
     var body: some View {
         GeometryReader { g in
+        ZStack {
             VStack(spacing: 10) {
                 Spacer()
                 HStack(alignment: .center) {
@@ -58,10 +59,6 @@ struct BonusModal: View {
                                 BonusBox(bonusModel: bonusModel, width: g.size.width, height: g.size.height, video: false)
                             }.padding(.bottom, 10)
                                 .buttonStyle(NeumorphicPress())
-                            LottieView(fileName: "coins")
-                                .frame(width: g.size.width/2, height: 50)
-                                .offset(x: -g.size.width/3, y: streakCoins ? 0 : -g.size.height/4)
-                                .opacity(showCoins ? 1 : streakCoins ? 1 : 0)
                         }
                         Spacer()
                         if !K.isIpod() {
@@ -137,6 +134,12 @@ struct BonusModal: View {
                 } 
                 Spacer()
             }
+            if showCoins {
+                LottieAnimationView(filename: "coins", loopMode: .playOnce)
+                .frame(height: 300)
+                .offset(y: -130)
+            }
+        }
         }
     }
     
