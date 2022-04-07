@@ -8,19 +8,18 @@
 import SwiftUI
 
 struct PlantGrowing: View {
-    @State private var buttonRotating = -20.0
-    @State private var scale = 0.0
     @State private var isTransit = false
+    @State private var shake = 0
+    @State private var calendarWiggles = false
     
     var body: some View {
         ZStack {
             VStack {
                 if !isTransit {
                     Img.seedPacket
-                        .scaleEffect(CGSize(width: scale, height: scale))
-                        .rotationEffect(.degrees(Double(buttonRotating)), anchor: .center)
-                        .animation(Animation
-                                    .interpolatingSpring(stiffness: 170, damping: 5), value: buttonRotating)
+                        .modifier(Shake1(animatableData: CGFloat(shake)))
+                        .rotationEffect(.degrees(calendarWiggles ? -8 : 16), anchor: .bottom)
+                        .animation(Animation.easeInOut(duration: 0.15).repeatForever(autoreverses: true))
                 } else {
                     FlowerPop()
                         .transition(.scale)
@@ -29,9 +28,9 @@ struct PlantGrowing: View {
         }
         .onAppear() {
             DispatchQueue.main.async {
-                withAnimation(Animation.interpolatingSpring(stiffness: 170, damping: 5)) {
-                    buttonRotating = 0
-                    scale = 1.0
+                withAnimation(.linear(duration: 3.0)) {
+                    calendarWiggles = true
+                    shake = 10
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
@@ -49,3 +48,16 @@ struct PlantGrowing_Previews: PreviewProvider {
         PlantGrowing()
     }
 }
+
+struct Shake1: GeometryEffect {
+    var amount: CGFloat = 10
+    var shakesPerUnit = 3
+    var animatableData: CGFloat
+
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        ProjectionTransform(CGAffineTransform(translationX:
+            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
+                                              y: amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)) ))
+    }
+}
+
