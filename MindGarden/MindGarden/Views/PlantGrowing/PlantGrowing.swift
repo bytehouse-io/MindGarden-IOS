@@ -17,6 +17,9 @@ struct PlantGrowing: View {
             VStack {
                 if !isTransit {
                     Img.seedPacket
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: UIScreen.screenWidth*0.6, alignment: .center)
                         .modifier(Shake1(animatableData: CGFloat(shake)))
                         .rotationEffect(.degrees(calendarWiggles ? -8 : 16), anchor: .bottom)
                         .animation(Animation.easeInOut(duration: 0.15).repeatForever(autoreverses: true))

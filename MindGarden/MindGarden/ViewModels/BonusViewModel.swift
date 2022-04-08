@@ -348,9 +348,10 @@ class BonusViewModel: ObservableObject {
             lastStreakDate = String(self.streak![plusOffset...])
             
             // for new users only
-            let streakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
-            let currentDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())! //Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
-            let interval = currentDate.interval(ofComponent: .day, fromDate: streakDate ?? Date())
+
+            let sreakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
+            let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
+            let interval = currentDate.interval(ofComponent: .day, fromDate: sreakDate ?? Date())
             
             if (interval >= 1 && interval <= 2) {  // update streak number and date
                 updatedStreak = true

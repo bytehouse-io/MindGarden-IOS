@@ -258,7 +258,7 @@ struct MiddleSelect: View {
                     state =  (idx - 1 == lastPlayed) ? .playable : .locked
                 }
                 
-                isFavorited = model.favoritedMeditations.contains { $0 == meditation}
+                isFavorited = model.favoritedMeditations.contains { $0 == meditation }
             }
         }
     }

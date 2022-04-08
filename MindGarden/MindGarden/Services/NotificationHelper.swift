@@ -17,28 +17,23 @@ struct NotificationHelper {
     static func addOneDay() {
         let content = UNMutableNotificationContent()
         if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
+            content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
             switch UserDefaults.standard.string(forKey: "reason") {
             case "Sleep better":
-                content.title = "Don't Break Your Streak!"
                 content.body = "Sleeping better starts tonight"
             case "Get more focused":
-                content.title = "Don't Break Your Streak!"
                 content.body = "Let's train and increase focus"
             case "Managing Stress & Anxiety":
-                content.title = "Don't Break Your Streak!"
                 content.body = "Let's train and prevent anxiety"
             case "Just trying it out":
-                content.title = "Don't Break Your Streak!"
                 content.body = "Tend to your garden by meditating."
             default:
-                content.title = "Don't Break Your Streak!"
                 content.body = "Tend to your garden by meditating."
             }
         } else {
-            content.title = "🌱 Start your first session"
+            content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? "") start your first session"
             content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
         }
-//r
 
 
         content.sound = UNNotificationSound.default
@@ -54,11 +49,13 @@ struct NotificationHelper {
             }
         } else {
             if hour < 11 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 32, to: Date())
             } else if hour < 16 {
                 modifiedDate = Calendar.current.date(byAdding: .hour, value: 24, to: Date())
+            } else if hour < 20 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
             } else {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
             }
         }
        
@@ -83,7 +80,7 @@ struct NotificationHelper {
 
     static func addThreeDay() {
         let content = UNMutableNotificationContent()
-        content.title = "The best time to plant a tree was 20 years ago."
+        content.title = ""
         content.body = "The second best time is right now."
         content.sound = UNNotificationSound.default
 
