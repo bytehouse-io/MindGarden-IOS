@@ -321,7 +321,7 @@ class BonusViewModel: ObservableObject {
             
             // for new users only
             let sreakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
-            let currentDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!//Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
+            let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
             let interval = currentDate.interval(ofComponent: .day, fromDate: sreakDate ?? Date())
             
             // Progressive Disclosure
