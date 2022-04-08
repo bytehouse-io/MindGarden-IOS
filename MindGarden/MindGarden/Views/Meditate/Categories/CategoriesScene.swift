@@ -90,27 +90,7 @@ struct CategoriesScene: View {
                                 }), id: \.self) { item in
                                     HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
                                         .onTapGesture {
-                                            withAnimation {
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
-                                                    fromPage = "lockedMeditation"
-                                                    Analytics.shared.log(event: .categories_tapped_locked_meditation)
-                                                    viewRouter.currentPage = .pricing
-                                                } else {
-                                                    Analytics.shared.log(event: .categories_tapped_meditation)
-                                                    model.selectedMeditation = item
-                                                    if isSearch {
-                                                        tappedMed = true
-                                                        presentationMode.wrappedValue.dismiss()
-                                                    } else {
-                                                        if model.selectedMeditation?.type == .course {
-                                                            viewRouter.currentPage = .middle
-                                                        } else {
-                                                            showModal = true
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                            didSelectcategory(item: item)
                                         }
                                         .neoShadow()
                                         .padding(.vertical, 8)
@@ -206,6 +186,30 @@ struct CategoriesScene: View {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 22))
                 .foregroundColor(Clr.darkgreen)
+        }
+    }
+    
+    private func didSelectcategory(item: Meditation){
+        withAnimation {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
+                fromPage = "lockedMeditation"
+                Analytics.shared.log(event: .categories_tapped_locked_meditation)
+                viewRouter.currentPage = .pricing
+            } else {
+                Analytics.shared.log(event: .categories_tapped_meditation)
+                model.selectedMeditation = item
+                if isSearch {
+                    tappedMed = true
+                    presentationMode.wrappedValue.dismiss()
+                } else {
+                    if model.selectedMeditation?.type == .course {
+                        viewRouter.currentPage = .middle
+                    } else {
+                        showModal = true
+                    }
+                }
+            }
         }
     }
 
