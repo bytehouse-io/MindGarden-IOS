@@ -348,7 +348,6 @@ class BonusViewModel: ObservableObject {
             lastStreakDate = String(self.streak![plusOffset...])
             
             // for new users only
-
             let sreakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
             let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
             let interval = currentDate.interval(ofComponent: .day, fromDate: sreakDate ?? Date())
@@ -415,7 +414,6 @@ class BonusViewModel: ObservableObject {
     }
     
     private func progressiveDisclosure(lastStreakDate: String) {
-        print(lastStreakDate, formatter.string(from: Date()), "arig")
         if formatter.date(from: lastStreakDate)! - Date() <= 0 {
             let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!)
             UserDefaults.standard.setValue(dte,forKey: "ltd")
