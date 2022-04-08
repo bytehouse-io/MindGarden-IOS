@@ -349,10 +349,9 @@ class BonusViewModel: ObservableObject {
             
             // for new users only
             let streakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
-            let currentDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())!//Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
+            let currentDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())! //Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
             let interval = currentDate.interval(ofComponent: .day, fromDate: streakDate ?? Date())
             
-            // Progressive Disclosure
             if (interval >= 1 && interval <= 2) {  // update streak number and date
                 updatedStreak = true
                 self.streakNumber += 1
@@ -360,6 +359,7 @@ class BonusViewModel: ObservableObject {
                     if longestStreak < streakNumber {
                         UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
                     }
+                    UserDefaults.standard.setValue(true, forKey: "updatedStreak")
                 } else {
                     UserDefaults.standard.setValue(1, forKey: "longestStreak")
                 }

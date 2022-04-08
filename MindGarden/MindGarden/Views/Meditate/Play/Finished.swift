@@ -27,7 +27,7 @@ struct Finished: View {
     @State private var reward : Int = 0
     @State private var saveProgress = false
     @State private var hideConfetti = false
-    @State private var showStreak = true
+    @State private var showStreak = false
     @Environment(\.sizeCategory) var sizeCategory
 
     var minsMed: Int {

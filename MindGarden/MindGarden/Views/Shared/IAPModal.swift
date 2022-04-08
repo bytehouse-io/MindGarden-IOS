@@ -12,7 +12,15 @@ import Amplitude
 
 struct IAPModal: View {
     @Binding var shown: Bool
+    var fromPage: String
+    @State private var freezePrice = 0.0
+    @State private var potionPrice  = 0.0
+    @State private var chestPrice  = 0.0
+    @State private var packagesAvailableForPurchase = [Purchases.Package]()
 
+    //TODO if user has a potion or chest activated can't purchase more or the other.
+    //TODO give user the ability to stack freeze streaks
+    
     var body: some View {
         GeometryReader { g in
             VStack(spacing: 10) {
@@ -20,56 +28,172 @@ struct IAPModal: View {
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center, spacing: 0) {
-                        ZStack {
+                        VStack(spacing: 0) {
+                            ZStack(alignment: .top) {
+                                Img.coverImage
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation { shown.toggle() }
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.gray.opacity(0.85))
+                                        .font(.system(size: 22))
+                                        .padding()
+                                }.position(x: 30, y: 25)
+                            }
+                            Text("Potion Shop")
+                                    .font(Font.mada(.bold, size: 24))
+                                    .foregroundColor(Clr.black1)
+                            Text("Purchases will activate immediately")
+                                .font(Font.mada(.semiBold, size: 16))
+                                .foregroundColor(Clr.black1)
+                                .opacity(0.8)
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                        }
+                        .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.3 : 0.25), alignment: .top)
+                        VStack {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation { shown.toggle() }
+                                Analytics.shared.log(event: .IAP_tapped_freeze)
                             } label: {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.gray.opacity(0.5))
-                                    .font(.system(size: 22))
-                                    .padding()
-                            }.position(x: 30, y: 35)
-                            HStack(alignment: .center) {
-                                Text("Daily Bonus")
-                                    .font(Font.mada(.bold, size: 30))
-                                    .foregroundColor(Clr.black1)
-                                    .padding()
-                            }.padding(.bottom, -5)
+                                PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice)
+                            }.padding(.bottom, 10)
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                Analytics.shared.log(event: .IAP_tapped_potion)
+                            } label: {
+                                PurchaseBox(width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice)
+                            }.padding(.bottom, 10)
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                Analytics.shared.log(event: .IAP_tapped_chest)
 
-                        }.frame(height: g.size.height * 0.08)
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            
-                        } label: {
-                            PurchaseBox(width: g.size.width, height: g.size.height, img: Img.streak, title: "Freeze Streak", subtitle: "Protect your streak if you a miss a day of meditation. Equip 2 at once")
-                        }.padding(.bottom, 10)
-                        .buttonStyle(NeumorphicPress())
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            
-                        } label: {
-                            PurchaseBox(width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK")
-                        }.padding(.bottom, 10)
-                            .buttonStyle(NeumorphicPress())
-                        Spacer()
+                            } label: {
+                                PurchaseBox(width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice)
+                            }.padding(.bottom, 10)
+                             
+                        }.frame(height: g.size.height * 0.4)
                         Spacer()
                     }
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.7, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.7), alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(12)
                     Spacer()
                 }
                 Spacer()
             }
+        }.onAppear {
+            Purchases.shared.offerings { [self] (offerings, error) in
+                if let offerings = offerings {
+                    let offer = offerings.current
+                    let packages = offer?.availablePackages
+                    guard packages != nil else {
+                        return
+                    }
+                    for i in 0...packages!.count - 1 {
+                        let package = packages![i]
+                        self.packagesAvailableForPurchase.append(package)
+                        let product = package.product
+                        let price = product.price
+                        let name = product.productIdentifier
+
+                        if name == "io.bytehouse.mindgarden.freeze" {
+                            freezePrice = round(100 * Double(truncating: price))/100
+                        } else if name == "io.bytehouse.mindgarden.potion" {
+                            potionPrice = round(100 * Double(truncating: price))/100
+                        } else if name == "io.bytehouse.mindgarden.chest" {
+                            chestPrice = round(100 * Double(truncating: price))/100
+                        }
+                    }
+                }
+            }
+
         }
     }
     
+    private func unlockPurchase(selectedBox: String) {
+        var price = 0.0
+        var package = packagesAvailableForPurchase[0]
+        var event2 = "_started_from_all"
+        var event3 = "cancelled_"
+        switch selectedBox {
+        case "freeze":
+            package = packagesAvailableForPurchase.last { (package) -> Bool in
+                return package.product.productIdentifier == "io.bytehouse.mindgarden.freeze"
+            }!
+            price = freezePrice
+            event2 = "freeze" + event2
+            event3 += "freeze"
+        case "potion":
+            package = packagesAvailableForPurchase.last { (package) -> Bool in
+                return package.product.productIdentifier == "io.bytehouse.mindgarden.potion"
+            }!
+            price = potionPrice
+            event2 = "potion" + event2
+            event3 += "potion"
+        case "chest":
+            package = packagesAvailableForPurchase.last { (package) -> Bool in
+                return package.product.productIdentifier == "io.bytehouse.mindgarden.monthly"
+            }!
+            price = chestPrice
+            event2 = "chest" + event2
+            event3 += "chest"
+        default: break
+        }
+
+        Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
+            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+                let event = logEvent(selectedBox: selectedBox)
+                let revenue = AMPRevenue().setProductIdentifier(event)
+                revenue?.setPrice(NSNumber(value: price))
+                    AppsFlyerLib.shared().logEvent(name: event, values:
+                                                                    [
+                                                                        AFEventParamContent: "true"
+                                                                    ])
+                    Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
+                    Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
+    
+                AppsFlyerLib.shared().logEvent(name: event2, values:
+                                                                [
+                                                                    AFEventParamContent: "true"
+                                                                ])
+//                userIsPro()
+            } else if userCancelled {
+                AppsFlyerLib.shared().logEvent(name: event3, values:
+                                                [
+                                                    AFEventParamContent: "true"
+                                                ])
+                Amplitude.instance().logEvent(event3)
+            }
+        }
+    }
+    private func logEvent(selectedBox: String) -> String {
+            var event = ""
+
+            switch selectedBox {
+            case "freeze":
+                event = "freeze_started_from_"
+            case "potion":
+                event = "potion_started_from_"
+            case "chest":
+                event = "chest_started_from_"
+            default: break
+            }
+
+            event += fromPage
+        
+            return event
+        }
     struct PurchaseBox: View {
         let width, height: CGFloat
         let img: Image
         let title: String
         let subtitle: String
+        let price: Double
 
 
         var body: some View {
@@ -87,37 +211,40 @@ struct IAPModal: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 12)
-                        Text("0.99")
+                        Text("\(price)")
                             .foregroundColor(Clr.darkgreen)
                             .font(Font.mada(.medium, size: 16))
                     })
                     .position(x: width * 0.615, y: height * 0.03)
                 HStack(spacing: 10){
-                    Img.fire
+                    img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 35)
                     VStack(alignment: .leading) {
                         HStack {
                             Text(title)
-                                .foregroundColor(title == "Freeze Streak" ? Clr.freezeBlue : Clr.sunshine)
-                                .font(Font.mada(.bold, size: 18))
+                                .foregroundColor(title == "Freeze Streak (2x)" ? Clr.freezeBlue : Clr.sunshine)
+                                .font(Font.mada(.bold, size: K.isSmall() ? 16 : 18))
                         }
                         Text(subtitle)
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.medium, size: 12))
+                            .font(Font.mada(.medium, size: 14))
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.05)
                     }.frame(width: width * 0.5)
                         .padding(.trailing)
+                        .multilineTextAlignment(.leading)
                 }.frame(width: width * 0.75)
             }
             .frame(width: width * 0.75, height: height * 0.125)
-            .padding()
+            .padding(.horizontal)
         }
     }
 }
 
 struct IAPModal_Previews: PreviewProvider {
     static var previews: some View {
-        IAPModal(shown: .constant(false))
+        IAPModal(shown: .constant(false), fromPage: "home")
     }
 }

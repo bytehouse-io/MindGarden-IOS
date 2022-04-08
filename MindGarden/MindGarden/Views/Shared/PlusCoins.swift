@@ -21,7 +21,7 @@ struct PlusCoins: View {
                     .fill(Clr.darkWhite)
                     .neoShadow()
                 Text("\(userCoins)")
-                    .font(Font.mada(.semiBold, size: 22))
+                    .font(Font.mada(.semiBold, size: userCoins >= 1000 ? 18 : 20))
                     .foregroundColor(Clr.black2)
             }.frame(width: 80, height: 20)
             Circle()

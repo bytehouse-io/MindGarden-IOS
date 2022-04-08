@@ -103,6 +103,12 @@ enum AnalyticEvent {
     case home_claim_daily //
     case home_claim_seven //
     case home_claim_thirty //
+    case home_tapped_IAP
+    
+    // IAP
+    case IAP_tapped_freeze
+    case IAP_tapped_potion
+    case IAP_tapped_chest
 
     //MARK: - Store
     case screen_load_store //
@@ -495,6 +501,10 @@ extension AnalyticEvent {
         case .home_claim_thirty: return "home_claim_thirty"
         case .home_tapped_new_meditation: return "home_tapped_new_meditation"
         case .home_tapped_weekly_meditation: return "home_tapped_weekly_meditation"
+        case .IAP_tapped_freeze: return "IAP_tapped_freeze"
+        case .IAP_tapped_potion: return "IAP_tapped_potion"
+        case .IAP_tapped_chest: return "IAP_tapped_chest"
+        case .home_tapped_IAP: return "home_tapped_IAP"
         case .screen_load_store: return "screen_load_store"
         case .store_tapped_plant_tile: return "store_tapped_plant_tile"
         case .store_tapped_purchase_modal_buy: return "store_tapped_purchase_modal_buy"

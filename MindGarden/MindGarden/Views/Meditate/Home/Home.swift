@@ -26,6 +26,7 @@ struct Home: View {
     @State private var showSearch = false
     @State private var showUpdateModal = false
     @State private var showMiddleModal = false
+    @State private var showIAP = false
     @State private var wentPro = false
     @State private var ios14 = true
     var bonusModel: BonusViewModel
@@ -109,6 +110,10 @@ struct Home: View {
                                                     .font(Font.mada(.semiBold, size: 22))
                                                     .foregroundColor(Clr.darkgreen)
                                                 PlusCoins()
+                                                    .onTapGesture {
+                                                        Analytics.shared.log(event: .home_tapped_IAP)
+                                                        withAnimation { showIAP.toggle() }
+                                                    }
                                             }.padding(.trailing, 20)
                                                 .padding(.top, -10)
                                                 .padding(.bottom, 10)
@@ -498,10 +503,16 @@ struct Home: View {
                         }.frame(height: height)
                         .offset(y: -height * 0.23)
                     }
-                    if showModal || showUpdateModal || showMiddleModal {
+                    if showModal || showUpdateModal || showMiddleModal || showIAP {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
+                            .onTapGesture {
+                                showModal = false
+                                showUpdateModal = false
+                                showMiddleModal = false
+                                showIAP = false
+                            }
                         Spacer()
                     }
                     MiddleModal(shown: $showMiddleModal)
@@ -515,6 +526,10 @@ struct Home: View {
                     NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
+                    IAPModal(shown: $showIAP, fromPage: "home")
+                        .offset(y: showIAP ? 0 : g.size.height)
+                        .edgesIgnoringSafeArea(.top)
+                        .animation(.default, value: showIAP)
                 }
             }
             .sheet(item: $activeSheet) { item in

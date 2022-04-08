@@ -29,15 +29,21 @@ struct DaysProgressBar: View {
                     VStack {
                         HStack(spacing:0) {
                             ForEach(0..<gardenModel.lastFive.count) { index in
-                                Rectangle()
-                                    .fill(.white)
-                                    .frame(width:50, height: 15, alignment: .leading)
-                                    .neoShadow()
-                                    .overlay(
+                                ZStack {
+                                    Rectangle()
+                                        .fill(.white)
+                                        .frame(width:50, height: 15, alignment: .leading)
+                                        .neoShadow()
+                                    if let mood = gardenModel.lastFive[index].2 {
+                                        Rectangle()
+                                            .fill(index == gardenModel.lastFive.count - 1 ? mood.color : Clr.darkWhite)
+                                            .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
+                                    } else {
                                         Rectangle()
                                             .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : Clr.darkWhite)
                                             .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
-                                    )
+                                    }
+                                }
                             }
                         }.offset(y: 20)
                     }
@@ -52,12 +58,12 @@ struct DaysProgressBar: View {
                                 ZStack {
                                     if let mood = gardenModel.lastFive[index].2 {
                                         Circle()
-                                            .fill(mood.color)
+                                            .fill(Clr.darkWhite)
                                             .frame(width: 50, height: 50)
                                             .rightShadow()
                                             .overlay(
                                                 Circle()
-                                                    .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : .clear)
+                                                    .fill(index == gardenModel.lastFive.count - 1 ? mood.color : .clear)
                                                     .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
                                             )
                                     } else {

@@ -16,34 +16,52 @@ struct NotificationHelper {
     static var present = ["Do not ruin today by mourning tomorrow. Live right now.",  "If you want to conquer the anxiety of life, live in the moment, live in the breath. - AMit Ray", "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is. - Alan Watts."]
     static func addOneDay() {
         let content = UNMutableNotificationContent()
-        switch UserDefaults.standard.string(forKey: "reason") {
-        case "Sleep better":
-            content.title = "Don't Break Your Streak!"
-            content.body = "Sleeping better starts tonight"
-        case "Get more focused":
-            content.title = "Don't Break Your Streak!"
-            content.body = "Let's train and increase focus"
-        case "Managing Stress & Anxiety":
-            content.title = "Don't Break Your Streak!"
-            content.body = "Let's train and prevent anxiety"
-        case "Just trying it out":
-            content.title = "Don't Break Your Streak!"
-            content.body = "Tend to your garden by meditating."
-        default:
-            content.title = "Don't Break Your Streak!"
-            content.body = "Tend to your garden by meditating."
+        if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
+            switch UserDefaults.standard.string(forKey: "reason") {
+            case "Sleep better":
+                content.title = "Don't Break Your Streak!"
+                content.body = "Sleeping better starts tonight"
+            case "Get more focused":
+                content.title = "Don't Break Your Streak!"
+                content.body = "Let's train and increase focus"
+            case "Managing Stress & Anxiety":
+                content.title = "Don't Break Your Streak!"
+                content.body = "Let's train and prevent anxiety"
+            case "Just trying it out":
+                content.title = "Don't Break Your Streak!"
+                content.body = "Tend to your garden by meditating."
+            default:
+                content.title = "Don't Break Your Streak!"
+                content.body = "Tend to your garden by meditating."
+            }
+        } else {
+            content.title = "🌱 Start your first session"
+            content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
         }
+//r
+
 
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
-        if hour < 11 {
-            modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
-        } else if hour < 16 {
-            modifiedDate = Calendar.current.date(byAdding: .hour, value: 24, to: Date())
+        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+            if hour < 18 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+            } else if hour > 22 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
+            } else {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+            }
         } else {
-            modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
+            if hour < 11 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
+            } else if hour < 16 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 24, to: Date())
+            } else {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
+            }
         }
+       
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
         // Create the trigger as a repeating event.
