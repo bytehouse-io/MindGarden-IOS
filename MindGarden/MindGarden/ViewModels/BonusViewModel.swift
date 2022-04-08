@@ -342,6 +342,11 @@ class BonusViewModel: ObservableObject {
 
     private func calculateStreak(lastStreakDate: String = "") -> String {
         var lastStreakDate = lastStreakDate
+        
+        if (Auth.auth().currentUser?.email == nil)  {
+            streak = UserDefaults.standard.value(forKey: "streak") as? String
+        }
+        
         if let plus = self.streak?.firstIndex(of: "+") {
             self.streakNumber = Int(self.streak![..<plus])!
             let plusOffset = self.streak!.index(plus, offsetBy: 1)
