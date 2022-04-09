@@ -17,6 +17,10 @@ class UserViewModel: ObservableObject {
     @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge)]
     @Published var selectedPlant: Plant?
     @Published var willBuyPlant: Plant?
+    @Published var streakFreeze = 0
+    @Published var potion = ""
+    @Published var chest = ""
+    
     private var validationCancellables: Set<AnyCancellable> = []
 
     var name: String = ""
@@ -40,6 +44,28 @@ class UserViewModel: ObservableObject {
             self.selectedPlant = Plant.allPlants.first(where: { plant in
                 return plant.title == plantTitle
             })
+        }
+    }
+    
+    func saveIAP() {
+        if let email = Auth.auth().currentUser?.email {
+            let docRef = db.collection(K.userPreferences).document(email)
+            //Read Data from firebase, for syncing
+            self.db.collection(K.userPreferences).document(email).updateData([
+                "streakFreeze": streakFreeze,
+                "potion": potion,
+                "chest": chest
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved meditations")
+                }
+            }
+        } else {
+            UserDefaults.standard.setValue(potion, forKey: "potion")
+            UserDefaults.standard.setValue(chest, forKey: "chest")
+            UserDefaults.standard.setValue(streakFreeze, forKey: "streakFreeze")
         }
     }
 
@@ -73,7 +99,19 @@ class UserViewModel: ObservableObject {
                     if let stack = document["referredStack"] as? String {
                         self.referredStack = stack
                     }
-        
+                    
+                    if let strFreeze = document["streakFreeze"] as? Int {
+                        self.streakFreeze = strFreeze
+                    }
+                    
+                    if let fbPotion = document["potion"] as? String {
+                        self.potion = fbPotion
+                    }
+                    
+                    if let fbChest = document["chest"] as? String {
+                        self.chest = fbChest
+                    }
+
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.allPlants.filter({ plant in
@@ -106,6 +144,13 @@ class UserViewModel: ObservableObject {
             if let joinDate = UserDefaults.standard.string(forKey: "joinDate") {
                 self.joinDate = joinDate
             }
+            if let potion = UserDefaults.standard.value(forKey: "potion") as? String {
+                self.potion = potion
+            }
+            if let chest = UserDefaults.standard.value(forKey: "chest") as? String {
+                self.chest = chest
+            }
+            self.streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
             
             userCoins = UserDefaults.standard.integer(forKey: "coins") 
         }

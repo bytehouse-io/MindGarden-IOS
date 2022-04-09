@@ -30,13 +30,21 @@ struct DaysProgressBar: View {
                         HStack(spacing:0) {
                             ForEach(0..<gardenModel.lastFive.count) { index in
                                 ZStack {
-                                    Rectangle()
-                                        .fill(.white)
-                                        .frame(width:50, height: 15, alignment: .leading)
-                                        .neoShadow()
+                                    if let _ = gardenModel.lastFive[index].1 {
+                                        Rectangle()
+                                            .fill(Color.orange)
+                                            .frame(width:50, height: 15, alignment: .leading)
+                                            .neoShadow()
+                                    } else {
+                                        Rectangle()
+                                            .fill(Clr.darkWhite)
+                                            .frame(width:50, height: 15, alignment: .leading)
+                                            .neoShadow()
+                                    }
+                                    
                                     if let mood = gardenModel.lastFive[index].2 {
                                         Rectangle()
-                                            .fill(index == gardenModel.lastFive.count - 1 ? mood.color : Clr.darkWhite)
+                                            .fill(index == gardenModel.lastFive.count - 1 ? mood.color : gardenModel.lastFive[index].1 == nil ? Color.orange : Clr.darkWhite)
                                             .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
                                     } else {
                                         Rectangle()

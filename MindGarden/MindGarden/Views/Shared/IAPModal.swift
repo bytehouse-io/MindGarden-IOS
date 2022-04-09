@@ -11,6 +11,7 @@ import AppsFlyerLib
 import Amplitude
 
 struct IAPModal: View {
+    @EnvironmentObject var userModel: UserViewModel
     @Binding var shown: Bool
     var fromPage: String
     @State private var freezePrice = 0.0
@@ -46,10 +47,17 @@ struct IAPModal: View {
                             Text("Potion Shop")
                                     .font(Font.mada(.bold, size: 24))
                                     .foregroundColor(Clr.black1)
-                            Text("Purchases will activate immediately")
-                                .font(Font.mada(.semiBold, size: 16))
-                                .foregroundColor(Clr.black1)
-                                .opacity(0.8)
+                            if userModel.streakFreeze > 0 {
+                                Text("You have \(userModel.streakFreeze) streak freeze" + "\(userModel.streakFreeze == 1 ? " " : "s ")" + "equipped")
+                                    .font(Font.mada(.semiBold, size: 16))
+                                    .foregroundColor(Clr.freezeBlue)
+                            } else {
+                                Text("Purchases will activate immediately")
+                                    .font(Font.mada(.semiBold, size: 16))
+                                    .foregroundColor(Clr.black1)
+                                    .opacity(0.8)
+                            }
+                            
                             Spacer()
                             Spacer()
                             Spacer()
@@ -59,6 +67,8 @@ struct IAPModal: View {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .IAP_tapped_freeze)
+                                userModel.streakFreeze += 2
+                                userModel.saveIAP()
                             } label: {
                                 PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice)
                             }.padding(.bottom, 10)
@@ -146,22 +156,18 @@ struct IAPModal: View {
         }
 
         Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
-            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-                let event = logEvent(selectedBox: selectedBox)
-                let revenue = AMPRevenue().setProductIdentifier(event)
-                revenue?.setPrice(NSNumber(value: price))
-                    AppsFlyerLib.shared().logEvent(name: event, values:
-                                                                    [
-                                                                        AFEventParamContent: "true"
-                                                                    ])
-                    Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
-                    Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
-    
-                AppsFlyerLib.shared().logEvent(name: event2, values:
-                                                                [
-                                                                    AFEventParamContent: "true"
-                                                                ])
+            let event = logEvent(selectedBox: selectedBox)
+            let revenue = AMPRevenue().setProductIdentifier(event)
+            revenue?.setPrice(NSNumber(value: price))
+
+            if purchaserInfo?.entitlements.all["freeze"]?.isActive == true {
+                logRevenue(event: event, event2: event2, price: price)
+                userModel.streakFreeze += 2
 //                userIsPro()
+            } else if purchaserInfo?.entitlements.all["potion"]?.isActive == true  {
+                logRevenue(event: event, event2: event2, price: price)
+            } else if purchaserInfo?.entitlements.all["potion"]?.isActive == true  {
+                logRevenue(event: event, event2: event2, price: price)
             } else if userCancelled {
                 AppsFlyerLib.shared().logEvent(name: event3, values:
                                                 [
@@ -171,6 +177,21 @@ struct IAPModal: View {
             }
         }
     }
+    
+    private func logRevenue(event: String, event2: String, price: Double) {
+        AppsFlyerLib.shared().logEvent(name: event, values:
+                                                        [
+                                                            AFEventParamContent: "true"
+                                                        ])
+        Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
+        Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
+
+    AppsFlyerLib.shared().logEvent(name: event2, values:
+                                                    [
+                                                        AFEventParamContent: "true"
+                                                    ])
+    }
+    
     private func logEvent(selectedBox: String) -> String {
             var event = ""
 
@@ -211,7 +232,7 @@ struct IAPModal: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 12)
-                        Text("\(price)")
+                        Text("\(price,  specifier: "%.2f")")
                             .foregroundColor(Clr.darkgreen)
                             .font(Font.mada(.medium, size: 16))
                     })
