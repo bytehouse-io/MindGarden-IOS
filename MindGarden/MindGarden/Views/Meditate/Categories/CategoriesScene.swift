@@ -234,9 +234,9 @@ struct CategoriesScene: View {
                 }
                 .padding(8)
                 .background(selected == category ? Clr.yellow : Clr.darkWhite)
+                .cornerRadius(16)
             }
             .frame(height:32)
-            .cornerRadius(16)
             .buttonStyle(NeumorphicPress())
             .padding(0)
         }
