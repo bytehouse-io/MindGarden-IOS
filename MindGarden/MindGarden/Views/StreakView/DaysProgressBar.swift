@@ -23,74 +23,35 @@ struct DaysProgressBar: View {
     @State var circleProgress: CGFloat  = 0.0
     
     var body: some View {
-        VStack {
-            ZStack(alignment:.center) {
-                ZStack {
+        HStack {
+            Spacer()
+                ForEach(0..<gardenModel.lastFive.count) { index in
                     VStack {
-                        HStack(spacing:0) {
-                            ForEach(0..<gardenModel.lastFive.count) { index in
-                                ZStack {
-                                    Rectangle()
-                                        .fill(.white)
-                                        .frame(width:50, height: 15, alignment: .leading)
-                                        .neoShadow()
-                                    if let mood = gardenModel.lastFive[index].2 {
-                                        Rectangle()
-                                            .fill(index == gardenModel.lastFive.count - 1 ? mood.color : Clr.darkWhite)
-                                            .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
-                                    } else {
-                                        Rectangle()
-                                            .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : Clr.darkWhite)
-                                            .frame(width:index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
-                                    }
-                                }
+                        Text("\(gardenModel.lastFive[index].0)")
+                            .foregroundColor(index == gardenModel.lastFive.count - 1 ? Clr.redGradientBottom : Clr.black2)
+                            .frame(width:44)
+                            .font(Font.mada(index == gardenModel.lastFive.count - 1 ? .bold : .medium, size: 20))
+                        ZStack {
+                            Rectangle()
+                                .fill(getColor(index: index))
+                                .frame(width:index == 0 ? 0 : index == gardenModel.lastFive.count - 1 ? (50 * progress) : 50, height: 15, alignment: .leading)
+                                .neoShadow()
+                                .offset(x:-25)
+                            Circle()
+                                .fill(getColor(index: index))
+                                .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
+                                .rightShadow()
+                            if let plant = gardenModel.lastFive[index].1 {
+                                plant.head
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 35, height: 35)
                             }
-                        }.offset(y: 20)
-                    }
-                HStack {
-                    Spacer()
-                        ForEach(0..<gardenModel.lastFive.count) { index in
-                            VStack {
-                                Text("\(gardenModel.lastFive[index].0)")
-                                    .foregroundColor(index == gardenModel.lastFive.count - 1 ? Clr.redGradientBottom : Clr.black2)
-                                    .frame(width:44)
-                                    .font(Font.mada(index == gardenModel.lastFive.count - 1 ? .bold : .medium, size: 20))
-                                ZStack {
-                                    if let mood = gardenModel.lastFive[index].2 {
-                                        Circle()
-                                            .fill(Clr.darkWhite)
-                                            .frame(width: 50, height: 50)
-                                            .rightShadow()
-                                            .overlay(
-                                                Circle()
-                                                    .fill(index == gardenModel.lastFive.count - 1 ? mood.color : .clear)
-                                                    .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
-                                            )
-                                    } else {
-                                        Circle()
-                                            .fill(Clr.darkWhite)
-                                            .frame(width: 50, height: 50)
-                                            .rightShadow()
-                                            .overlay(
-                                                Circle()
-                                                    .fill(index == gardenModel.lastFive.count - 1 ? Color.orange : .clear)
-                                                    .frame(width: index == gardenModel.lastFive.count - 1 ? (50 * circleProgress) : 50, height: 50)
-                                            )
-                                    }
-                                    if let plant = gardenModel.lastFive[index].1 {
-                                        plant.head
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 35, height: 35)
-                                    }
-                                }
                         }
-                        Spacer()
-                    }
-                }.frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center)
-                }
+                    }.zIndex(Double(5-index))
+                Spacer()
             }
-        }.onAppear {
+        }.frame(width: UIScreen.main.bounds.width * 0.9, alignment: .center).onAppear {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 withAnimation(.easeInOut){
@@ -104,6 +65,17 @@ struct DaysProgressBar: View {
                 }
             }
         }
+    }
+    
+    private func getColor(index:Int) -> Color {
+        if let mood = gardenModel.lastFive[index].2 {
+            return mood.color
+        } else if gardenModel.lastFive[index].1 != nil {
+            return Clr.orange
+        } else if index == gardenModel.lastFive.count - 1 {
+            return Clr.orange
+        }
+        return Clr.darkWhite
     }
 }
 
