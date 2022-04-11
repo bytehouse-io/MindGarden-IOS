@@ -31,12 +31,16 @@ struct PlantGrowing: View {
         }
         .onAppear() {
             DispatchQueue.main.async {
+                MGAudio.sharedInstance.stopSound()
+                MGAudio.sharedInstance.playSound(soundFileName: "seedPacket.wav")
                 withAnimation(.linear(duration: 3.0)) {
                     calendarWiggles = true
                     shake = 10
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                MGAudio.sharedInstance.stopSound()
+                MGAudio.sharedInstance.playSound(soundFileName: "plantUnlock.mp3")
                 withAnimation() {
                     isTransit = true
                 }
