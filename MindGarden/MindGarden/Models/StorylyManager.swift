@@ -48,7 +48,7 @@ class StorylyManager: StorylyDelegate {
            if let story = story {
                if story.title == "Shopping" {
                    UserDefaults.standard.setValue(UserDefaults.standard.array(forKey: "storySegments"), forKey: "oldSegments")
-                   UserDefaults.standard.setValue(["anxiety"], forKey: "storySegments")
+                   UserDefaults.standard.setValue(["focus"], forKey: "storySegments")
                }
                print(story.title, "story")
            }

@@ -12,8 +12,10 @@ import FirebaseDynamicLinks
 import Firebase
 import Foundation
 import OneSignal
+import Storyly
 
 var numberOfMeds = 0
+var storylyViewProgrammatic = StorylyView()
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     static let userModel = UserViewModel()
@@ -80,7 +82,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = rootHost
-            Stories.storylyViewProgrammatic.rootViewController = rootHost
+            storylyViewProgrammatic.rootViewController = rootHost
             self.window = window
             window.makeKeyAndVisible()
         }

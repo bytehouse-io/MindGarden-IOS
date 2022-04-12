@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 import WidgetKit
+import Storyly
 
 var updatedStreak = false
 var storylySegments: Set = ["new users"]
@@ -31,7 +32,7 @@ class BonusViewModel: ObservableObject {
     @Published var fiftyOffTimer: Timer? = Timer()
     @Published var fiftyOffInterval: String = ""
     @Published var lastStreakDate = ""
-    @Published var updateStoryly = false
+    @Published var storySegments: Set<String> = []
     var userModel: UserViewModel
     var streakNumber = 0
     let formatter: DateFormatter = {
@@ -311,12 +312,12 @@ class BonusViewModel: ObservableObject {
             launchNum += 1
         } else {
             if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                storylySegments = Set(oldSegments)
-                Stories.storylyViewProgrammatic.refresh()
-                Stories.storylyViewProgrammatic.pause()
-                Stories.storylyViewProgrammatic.resume()
-                Stories.storylyViewProgrammatic.refresh()
-                updateStoryly.toggle()
+                storySegments = Set(oldSegments)
+                storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: storySegments))
+                storylyViewProgrammatic.refresh()
+                storylyViewProgrammatic.pause()
+                storylyViewProgrammatic.resume()
+                storylyViewProgrammatic.refresh()
             }
         }
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")

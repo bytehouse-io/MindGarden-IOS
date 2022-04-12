@@ -76,10 +76,16 @@ struct StreakScene: View {
             }
             .offset(y: -145)
         }
+//        .sheet(isPresented: $isSharePresented) {
+//            ReferralView(url: $urlShare2)
+//        }
         .onAppear() {
+            MGAudio.sharedInstance.stopSound()
+            MGAudio.sharedInstance.playSounds(soundFileNames: ["fire_ignite.mp3","fire.mp3"])
             self.animate()
         }
         .onDisappear() {
+            MGAudio.sharedInstance.stopSound()
             timer?.invalidate()
         }
 //        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { theValue in

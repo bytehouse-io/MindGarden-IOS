@@ -24,6 +24,10 @@
 		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
+		58C8BE2C280498ED00075FD2 /* PlaySounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C8BE2B280498ED00075FD2 /* PlaySounds.swift */; };
+		58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 58C8BE2D28049A1E00075FD2 /* fire_ignite.mp3 */; };
+		58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */ = {isa = PBXBuildFile; fileRef = 58C8BE2F2804AAAE00075FD2 /* seedPacket.wav */; };
+		58C8BE322804AACA00075FD2 /* plantUnlock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 58C8BE312804AACA00075FD2 /* plantUnlock.mp3 */; };
 		58D4F03927EAE9C400451081 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4F03827EAE9C400451081 /* ActivityViewController.swift */; };
 		58D5C0F127FB672500454937 /* FlowerPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0EF27FB672500454937 /* FlowerPop.swift */; };
 		58D5C0F227FB672500454937 /* PlantGrowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0F027FB672500454937 /* PlantGrowing.swift */; };
@@ -251,6 +255,10 @@
 		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
+		58C8BE2B280498ED00075FD2 /* PlaySounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySounds.swift; sourceTree = "<group>"; };
+		58C8BE2D28049A1E00075FD2 /* fire_ignite.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fire_ignite.mp3; sourceTree = "<group>"; };
+		58C8BE2F2804AAAE00075FD2 /* seedPacket.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = seedPacket.wav; sourceTree = "<group>"; };
+		58C8BE312804AACA00075FD2 /* plantUnlock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = plantUnlock.mp3; sourceTree = "<group>"; };
 		58D4F03827EAE9C400451081 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		58D5C0EF27FB672500454937 /* FlowerPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowerPop.swift; sourceTree = "<group>"; };
 		58D5C0F027FB672500454937 /* PlantGrowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantGrowing.swift; sourceTree = "<group>"; };
@@ -536,6 +544,14 @@
 			path = "Animation&Tab";
 			sourceTree = "<group>";
 		};
+		58C8BE2A280498D400075FD2 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				58C8BE2B280498ED00075FD2 /* PlaySounds.swift */,
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
 		58D5C0EE27FB670C00454937 /* PlantGrowing */ = {
 			isa = PBXGroup;
 			children = (
@@ -815,6 +831,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				58C8BE2A280498D400075FD2 /* Sound */,
 				584FAC6127FC2BCC001445D6 /* Buttons */,
 				58D5C0EE27FB670C00454937 /* PlantGrowing */,
 				582B302C27EF3D960026DD16 /* ShareStreak */,
@@ -919,6 +936,9 @@
 		FEBF1AB2271385A1000BF1BD /* BackgroundSounds */ = {
 			isa = PBXGroup;
 			children = (
+				58C8BE312804AACA00075FD2 /* plantUnlock.mp3 */,
+				58C8BE2F2804AAAE00075FD2 /* seedPacket.wav */,
+				58C8BE2D28049A1E00075FD2 /* fire_ignite.mp3 */,
 				88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */,
 				88F36AB527DFBE900060FD8E /* alpha.mp3 */,
 				88F36AB227DFBE8F0060FD8E /* beta.mp3 */,
@@ -1155,12 +1175,15 @@
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
+				58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */,
 				58D5C0F427FB675A00454937 /* background.json in Resources */,
 				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
+				58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				88D4C5DB27FA468C00CBB956 /* sloth.json in Resources */,
+				58C8BE322804AACA00075FD2 /* plantUnlock.mp3 in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
 				88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */,
 				882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */,
@@ -1452,6 +1475,7 @@
 				88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */,
 				FE1CA3CA27B218DD0074C497 /* PlayViewModel.swift in Sources */,
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
+				58C8BE2C280498ED00075FD2 /* PlaySounds.swift in Sources */,
 				FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */,
 				FEA607E326FD69090076A177 /* NameScene.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
