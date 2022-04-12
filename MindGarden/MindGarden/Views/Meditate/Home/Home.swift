@@ -15,6 +15,14 @@ import AppsFlyerLib
 import Paywall
 
 var launchedApp = false
+
+enum Sheet: Identifiable {
+    case profile, plant, search
+    var id: Int {
+        hashValue
+    }
+}
+
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
@@ -35,12 +43,6 @@ struct Home: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
     
-    enum Sheet: Identifiable {
-        case profile, plant, search
-        var id: Int {
-            hashValue
-        }
-    }
     @State var activeSheet: Sheet?
 
     init() {
@@ -56,72 +58,7 @@ struct Home: View {
                     let width = g.size.width
                     let height = g.size.height
                     VStack {
-                    ZStack {
-                        Img.yellowBubble
-                            .resizable()
-                            .frame(width: width + 25, height: height * 0.4)
-                            .oldShadow()
-                            .offset(x: -10)
-                            HStack {
-                                Img.topBranch.offset(x: 40,  y: height * -0.1)
-                                Spacer()
-                                VStack {
-                                    HStack {
-                                        Image(systemName: "magnifyingglass")
-                                            .foregroundColor(Clr.darkgreen)
-                                            .font(.system(size: 22))
-                                            .onTapGesture {
-                                                Analytics.shared.log(event: .home_tapped_search)
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                showSearch = true
-                                                activeSheet = .search
-                                            }
-                                        Image(systemName: "person.fill")
-                                            .foregroundColor(Clr.darkgreen)
-                                            .font(.system(size: 22))
-                                            .onTapGesture {
-                                                Analytics.shared.log(event: .home_tapped_search)
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                activeSheet = .profile
-                                            }
-                                    }.offset(x: 15, y: -25)
-                          
-                                    HStack{
-                                        Spacer()
-                                        VStack(alignment: .trailing) {
-                                            Text("\(userModel.greeting), \(userModel.name)")
-                                                .font(Font.mada(.bold, size: 25))
-                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
-                                                .fontWeight(.bold)
-                                                .padding(.trailing, 20)
-                                                .lineLimit(1)
-                                                .minimumScaleFactor(0.05)
-                                            HStack {
-                                                Img.streak
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 25)
-                                                    .oldShadow()
-                                                Text("Streak: ")
-                                                    .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
-                                                    .font(Font.mada(.medium, size: 21))
-                                                + Text("\(bonusModel.streakNumber)")
-                                                    .font(Font.mada(.semiBold, size: 22))
-                                                    .foregroundColor(Clr.darkgreen)
-                                                PlusCoins()
-                                                    .onTapGesture {
-                                                        Analytics.shared.log(event: .home_tapped_IAP)
-                                                        withAnimation { showIAP.toggle() }
-                                                    }
-                                            }.padding(.trailing, 20)
-                                                .padding(.top, -10)
-                                                .padding(.bottom, 10)
-                                        }
-                                    }.offset(x: -width * 0.25, y: -10)
-                                }.frame(width: width * 0.8)
-                            }
-                        }.frame(width: width)
-                        .offset(y: -height * 0.1)
+                        HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP)
                         //MARK: - scroll view
                         ScrollView(.vertical, showsIndicators: false) {
                             VStack {
@@ -254,7 +191,7 @@ struct Home: View {
                                                             .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: g.size.height * 0.2)
                                                             .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
                                                     }
-                                                      
+
                                                 }.padding([.top, .bottom, .trailing])
                                             }.onTapGesture {
                                                 Analytics.shared.log(event: .home_tapped_featured)
