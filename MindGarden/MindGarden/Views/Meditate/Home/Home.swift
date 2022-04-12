@@ -21,6 +21,7 @@ struct Home: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     @State private var isRecent = true
     @State private var showModal = false
     @State private var showSearch = false
@@ -29,7 +30,6 @@ struct Home: View {
     @State private var showIAP = false
     @State private var wentPro = false
     @State private var ios14 = true
-    var bonusModel: BonusViewModel
     @State private var coins = 0
     @State private var attempts = 0
     @Environment(\.colorScheme) var colorScheme
@@ -43,10 +43,9 @@ struct Home: View {
     }
     @State var activeSheet: Sheet?
 
-    init(bonusModel: BonusViewModel) {
+    init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
-        self.bonusModel = bonusModel
     }
     
     var body: some View {
@@ -136,6 +135,7 @@ struct Home: View {
                                     Stories()
                                         .padding(.horizontal, 15)
                                         .padding(.top)
+                                    let _ = print("updating 2")
                                 }.frame(width: g.size.width * 0.85, height: 120, alignment: .center)
                               
                                 
@@ -556,8 +556,9 @@ struct Home: View {
                 runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
             }
         }
-        
         .onAppear {
+      
+
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
@@ -614,9 +615,7 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home(bonusModel: BonusViewModel(userModel: UserViewModel())).navigationViewStyle(StackNavigationViewStyle())
-            .environmentObject(MeditationViewModel())
-            .environmentObject(UserViewModel())
+        Home()
     }
 }
 

@@ -13,6 +13,7 @@ import FirebaseFirestore
 import WidgetKit
 
 var updatedStreak = false
+var storylySegments: Set = ["new users"]
 class BonusViewModel: ObservableObject {
     @Published var lastLogin: String = ""
     @Published var dailyBonus: String = ""
@@ -30,6 +31,7 @@ class BonusViewModel: ObservableObject {
     @Published var fiftyOffTimer: Timer? = Timer()
     @Published var fiftyOffInterval: String = ""
     @Published var lastStreakDate = ""
+    @Published var updateStoryly = false
     var userModel: UserViewModel
     var streakNumber = 0
     let formatter: DateFormatter = {
@@ -226,6 +228,7 @@ class BonusViewModel: ObservableObject {
                             self.updateLaunchNumber()
                         }
                     }
+                    
                     if let seven = document[K.defaults.seven] as? Int {
                         self.sevenDay = seven
                     }
@@ -306,9 +309,19 @@ class BonusViewModel: ObservableObject {
                 UserDefaults.standard.setValue((String(self.streakNumber) + "+" + lastStreakDate), forKey: "streak")
             }
             launchNum += 1
+        } else {
+            if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+                storylySegments = Set(oldSegments)
+                Stories.storylyViewProgrammatic.refresh()
+                Stories.storylyViewProgrammatic.pause()
+                Stories.storylyViewProgrammatic.resume()
+                Stories.storylyViewProgrammatic.refresh()
+                updateStoryly.toggle()
+            }
         }
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
     }
+    
     
     func updateStreak() {
         if let email = Auth.auth().currentUser?.email {

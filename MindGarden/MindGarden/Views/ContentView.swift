@@ -88,7 +88,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
-                                        Home(bonusModel: bonusModel)
+                                        Home()
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
@@ -100,6 +100,7 @@ struct ContentView: View {
                                             }
                                             .disabled(isOnboarding)
                                             .environmentObject(profileModel)
+                                            .environmentObject(bonusModel)
                                     case .garden:
                                         Garden()
                                             .frame(height: geometry.size.height + 10)
@@ -504,4 +505,5 @@ extension NSNotification {
     static let pro = Notification.Name.init("pro")
     static let garden = Notification.Name.init("garden")
     static let runCounter = Notification.Name.init("runCounter")
+
 }

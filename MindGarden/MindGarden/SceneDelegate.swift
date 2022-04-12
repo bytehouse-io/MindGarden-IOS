@@ -18,6 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     static let userModel = UserViewModel()
     static let bonusModel = BonusViewModel(userModel: userModel)
+    let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
+        return formatter
+    }()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -28,6 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 0 {
+            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
             UserDefaults.standard.setValue("nature", forKey: "sound")
@@ -89,6 +95,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        print("scene did disconnect")
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -119,6 +126,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+
+        
+//        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
+//            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
+//            return
+//        }
+//
+//        if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
+//            UserDefaults.standard.setValue(Date(), forKey: "userDate")
+//            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
+//                storylySegments = Set(stories)
+//            }
+//        } else if  Date() - formatter.date(from: userDate)! > 172800 {
+//            UserDefaults.standard.setValue(Date(), forKey: "userDate")
+//            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
+//                storylySegments = Set(stories)
+//            }
+//        } else {
+//            if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+//                storylySegments = Set(oldSegments)
+//            }
+//        }
+  
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
