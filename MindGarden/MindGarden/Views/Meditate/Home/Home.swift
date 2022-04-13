@@ -135,7 +135,6 @@ struct Home: View {
                                     Stories()
                                         .padding(.horizontal, 15)
                                         .padding(.top)
-                                    let _ = print("updating 2")
                                 }.frame(width: g.size.width * 0.85, height: 120, alignment: .center)
                               
                                 

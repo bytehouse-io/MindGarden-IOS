@@ -130,26 +130,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         
-//        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
-//            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
-//            return
-//        }
-//
-//        if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
-//            UserDefaults.standard.setValue(Date(), forKey: "userDate")
-//            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
-//                storylySegments = Set(stories)
-//            }
-//        } else if  Date() - formatter.date(from: userDate)! > 172800 {
-//            UserDefaults.standard.setValue(Date(), forKey: "userDate")
-//            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
-//                storylySegments = Set(stories)
-//            }
-//        } else {
-//            if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-//                storylySegments = Set(oldSegments)
-//            }
-//        }
+        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
+            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
+            return
+        }
+
+        if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
+            UserDefaults.standard.setValue(Date(), forKey: "userDate")
+            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
+                storylySegments = Set(stories)
+            }
+        } else if  Date() - formatter.date(from: userDate)! > 172800 {
+            UserDefaults.standard.setValue(Date(), forKey: "userDate")
+            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
+                storylySegments = Set(stories)
+            }
+        } else {
+            if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+                storySegments = Set(oldSegments)
+                storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: storySegments))
+                storylyViewProgrammatic.refresh()
+            }
+        }
   
     }
 

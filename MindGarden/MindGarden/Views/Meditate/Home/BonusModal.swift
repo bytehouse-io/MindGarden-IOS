@@ -169,7 +169,10 @@ struct BonusModal: View {
                         Spacer()
                     }
                     Img.coin
+                        .resizable()
                         .renderingMode(.original)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: width * 0.06)
                     Text(weekly ? "30" : "100")
                         .foregroundColor(Clr.black1)
                         .font(Font.mada(.semiBold, size: 16))

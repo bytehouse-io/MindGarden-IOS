@@ -17,6 +17,7 @@ struct NewUpdateModal: View {
         GeometryReader { g in
             VStack(spacing: 10) {
                 Spacer()
+                Spacer()
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center, spacing: 0) {
@@ -26,7 +27,7 @@ struct NewUpdateModal: View {
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
 //                                .frame(height: g.size.height * 0.1)
-                            Text("💎 You've Earned a Free 14 Day Trial!")
+                            Text("💎 You've Earned a 50% Pro Chest")
                                 .multilineTextAlignment(.center)
                                 .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(Clr.black2)
@@ -42,7 +43,7 @@ struct NewUpdateModal: View {
                             .frame(width:  g.size.width * 0.85 * 0.6)
                             .padding()
                         HStack {
-                            Text("Just for coming back, we're offering you a free 14-day free trial of Pro. This is one time offer!")
+                            Text("Just for coming back, we're offering you 50% off MindGarden Pro. This is one time offer!")
                         }.multilineTextAlignment(.center)
                         .font(Font.mada(.semiBold, size: 18))
                         .foregroundColor(Clr.black2)

@@ -8,13 +8,12 @@
 import SwiftUI
 import Storyly
 import WidgetKit
-
+var storySegments: Set<String> = ["new users"]
 struct Stories: UIViewRepresentable {
-//    @Binding var segments: Set<String>
-
+    
     func makeUIView(context: UIViewRepresentableContext<Stories>) -> UIView {
         let view = UIView(frame: .zero)
-//        storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: segments))
+        storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: storySegments))
         view.addSubview(storylyViewProgrammatic)
         storylyViewProgrammatic.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
