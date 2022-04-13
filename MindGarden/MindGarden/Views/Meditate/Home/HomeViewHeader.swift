@@ -89,3 +89,9 @@ struct HomeViewHeader: View {
             .offset(y: -height * 0.1)
     }
 }
+
+struct HomeViewHeader_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeViewHeader(greeting: "", name: "", streakNumber: 0, showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true))
+    }
+}
