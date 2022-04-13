@@ -35,6 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 0 {
+            UserDefaults.standard.setValue(["new users", "bijan_1", "quotes_1", "comic_1"], forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -97,12 +98,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-        print("scene did disconnect")
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
         numberOfMeds = Int.random(in: 685..<711)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)
@@ -121,38 +122,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
-
+        if let _ = UserDefaults.standard.array(forKey: "storySegments") as? [String] {} else {
+            UserDefaults.standard.setValue(["new users", "bijan_1", "quotes_1", "comic_1"], forKey: "storySegments")
+        }
+        
+        StorylyManager.updateStories()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-
-        
-        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
-            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
-            return
-        }
-
-        if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
-            UserDefaults.standard.setValue(Date(), forKey: "userDate")
-            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
-                storylySegments = Set(stories)
-            }
-        } else if  Date() - formatter.date(from: userDate)! > 172800 {
-            UserDefaults.standard.setValue(Date(), forKey: "userDate")
-            if let stories = UserDefaults.standard.value(forKey: "storySegments") as? [String] {
-                storylySegments = Set(stories)
-            }
-        } else {
-            if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                storySegments = Set(oldSegments)
-                storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: storySegments))
-                storylyViewProgrammatic.refresh()
-            }
-        }
-  
+        // to restore the scene back to its current state.  
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
