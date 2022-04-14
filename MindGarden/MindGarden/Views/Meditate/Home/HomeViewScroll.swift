@@ -38,11 +38,10 @@ struct HomeViewScroll: View {
                                 .frame(height: 120, alignment: .center)
                                 .oldShadow()
                             Stories()
-                                .padding(.horizontal, 15)
+                                .padding(.leading, 15)
                                 
                         }.frame(width: width * 0.85, height: 120, alignment: .center)
-                            .padding(.top,10)
-                        
+                         .padding(.top,10)
                         HStack(spacing: width * 0.04) {
                             Button {
                                 Analytics.shared.log(event: .home_tapped_bonus)
@@ -56,7 +55,10 @@ struct HomeViewScroll: View {
                                 HStack {
                                     if totalBonuses == 0 {
                                         Img.coin
-                                            .font(.system(size: 22))
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 17)
+                                            .neoShadow()
                                     } else {
                                         ZStack {
                                             Circle().frame(height: 16)

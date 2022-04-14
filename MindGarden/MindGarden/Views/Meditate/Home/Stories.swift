@@ -23,19 +23,18 @@ struct Stories: UIViewRepresentable {
         storylyViewProgrammatic.storyGroupIconBorderColorNotSeen = [UIColor.systemGreen, UIColor.systemYellow]
         storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "Mada-Medium", size: 14)!
         storylyViewProgrammatic.storyGroupTextColor = UIColor.systemGray
-        storylyViewProgrammatic.storyGroupSize = "small"
+        storylyViewProgrammatic.storyGroupSize = "large"
+//        storylyViewProgrammatic.storyGroupIconWidth = 4.0
         storylyViewProgrammatic.delegate = StorylyManager.shared
         storylyViewProgrammatic.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         storylyViewProgrammatic.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         storylyViewProgrammatic.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-        storylyViewProgrammatic.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        storylyViewProgrammatic.heightAnchor.constraint(equalToConstant: 100).isActive = true
         return view
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {
-//        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
         print("updating \(true)")
-//        Stori.storylyViewProgrammatic.refresh()
     }
     
 }
