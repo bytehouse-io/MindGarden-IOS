@@ -76,6 +76,9 @@ struct PlantTile: View {
                                 } else {
                                     Img.coin
                                         .renderingMode(.original)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 20)
                                 }
 
                                 Text(isBadge ? Plant.badgeDict[plant.price] ?? "" : String(plant.price))

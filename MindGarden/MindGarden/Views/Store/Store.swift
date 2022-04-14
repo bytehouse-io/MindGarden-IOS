@@ -398,6 +398,7 @@ struct Store: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var showSuccess: Bool
         @Binding var showMainModal: Bool
+        @State private var showPlantAnimation = false
 
         var  body: some View {
             GeometryReader { g in
@@ -426,6 +427,7 @@ struct Store: View {
                                 withAnimation {
                                     showSuccess = false
                                     showMainModal = false
+                                    showPlantAnimation = true
                                 }
                             } label: {
                                 Text("Got it")
@@ -443,6 +445,9 @@ struct Store: View {
                         Spacer()
                     }
                     Spacer()
+                }
+                .fullScreenCover(isPresented: $showPlantAnimation) {
+                    PlantGrowing(plant: $userModel.selectedPlant)
                 }
             }
         }
