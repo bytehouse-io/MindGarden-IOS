@@ -12,6 +12,8 @@ struct FlowerPop: View {
     let title = "New!\n Red Tulips"
     @State private var isEquipped = false
     @State private var euipeButtonTitle = "Equip?"
+    
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
             LottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
@@ -36,8 +38,7 @@ struct FlowerPop: View {
                         euipeButtonTitle = isEquipped ? "Equipped" :"Equip?"
                     }
                     LightButton(title:.constant("Done"), showNextArrow: true) {
-                        //TODO: implement done action
-                        print("Done")
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
                 .padding(.bottom,100)
@@ -45,6 +46,8 @@ struct FlowerPop: View {
         }
         .onAppear() {
             DispatchQueue.main.async {
+                MGAudio.sharedInstance.stopSound()
+                MGAudio.sharedInstance.playSound(soundFileName: "plantUnlock.mp3")
                 withAnimation(Animation.spring(response: 0.3, dampingFraction: 3.0)) {
                     scale = 1.0
                 }

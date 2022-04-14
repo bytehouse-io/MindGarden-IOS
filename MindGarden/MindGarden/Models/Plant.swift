@@ -8,6 +8,7 @@ import SwiftUI
 
 
 struct Plant: Hashable {
+    let id = UUID()
     let title: String
     let price: Int
     let selected: Bool
