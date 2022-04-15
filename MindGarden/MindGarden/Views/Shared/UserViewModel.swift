@@ -49,7 +49,6 @@ class UserViewModel: ObservableObject {
     
     func saveIAP() {
         if let email = Auth.auth().currentUser?.email {
-            let docRef = db.collection(K.userPreferences).document(email)
             //Read Data from firebase, for syncing
             self.db.collection(K.userPreferences).document(email).updateData([
                 "streakFreeze": streakFreeze,
@@ -287,8 +286,10 @@ class UserViewModel: ObservableObject {
                         }
                         finalPlants.append(plant.title)
                     }
+                    
+                    let uniquePlants = Array<String>(Set(finalPlants))
                     self.db.collection(K.userPreferences).document(email).updateData([
-                        K.defaults.plants: finalPlants,
+                        K.defaults.plants: uniquePlants,
                         K.defaults.coins: userCoins
                     ]) { (error) in
                         if let e = error {

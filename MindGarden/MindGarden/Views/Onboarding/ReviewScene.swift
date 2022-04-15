@@ -147,6 +147,7 @@ struct ReviewScene: View {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                            UserDefaults.standard.setValue(true, forKey: "onboarded")
                             withAnimation {
                                 viewRouter.progressValue += 0.1
                                 Paywall.present { info in

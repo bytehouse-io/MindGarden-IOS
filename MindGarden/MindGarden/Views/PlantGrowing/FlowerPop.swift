@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FlowerPop: View {
+    @EnvironmentObject var userModel: UserViewModel
     @State private var scale = 0.0
     let title = "New!\n Red Tulips"
     @State private var isEquipped = false
@@ -18,28 +19,49 @@ struct FlowerPop: View {
         ZStack {
             LottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
                 .frame(width: UIScreen.screenWidth * 1.35 , height: UIScreen.screenHeight, alignment: .center)
-            Img.flower
+            userModel.selectedPlant?.coverImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: UIScreen.screenWidth/2)
                 .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
                 .animation(Animation
                             .spring(response: 0.3, dampingFraction: 3.0), value: scale)
             VStack {
                 Spacer()
                     .frame(height: 100, alignment: .center)
-                Text(title)
+                Text("New!\n\(userModel.selectedPlant?.title ?? "Red Tulips")")
                     .font(.mada(.bold, size: 40))
-                    .foregroundColor(Clr.superBlack)
+                    .foregroundColor(Clr.black1)
                     .multilineTextAlignment(.center)
                 Spacer()
                 HStack {
-                    Img.share
-                        .padding()
-                    LightButton(type:.darkGreen, title:$euipeButtonTitle) {
-                        isEquipped.toggle()
-                        euipeButtonTitle = isEquipped ? "Equipped" :"Equip?"
-                    }
-                    LightButton(title:.constant("Done"), showNextArrow: true) {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    Button { } label: {
+                        HStack {
+                            Text("Continue")
+                                .foregroundColor(.black)
+                                .font(Font.mada(.bold, size: 24))
+                        }.frame(width: UIScreen.screenWidth * 0.85, height: 60)
+                            .background(Clr.yellow)
+                            .cornerRadius(25)
+                            .onTapGesture {
+                                withAnimation {
+                                    Analytics.shared.log(event: .store_animation_continue)
+                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                    impact.impactOccurred()
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            }
+                    }.buttonStyle(NeumorphicPress())
+//                    Img.share
+//                        .padding()
+//                    LightButton(type:.darkGreen, title: $euipeButtonTitle) {
+//                        isEquipped.toggle()
+//                        euipeButtonTitle = isEquipped ? "Equipped" :"Equip?"
+//                    }
+//                    LightButton(title:.constant("Done"), showNextArrow: true) {
+//                        presentationMode.wrappedValue.dismiss()
+//                    }
+                    
                 }
                 .padding(.bottom,100)
             }

@@ -287,7 +287,20 @@ class BonusViewModel: ObservableObject {
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
-        }
+        } else if launchNum == 4 && !UserDefaults.standard.bool(forKey: "singleTile") && !UserDefaults.standard.bool(forKey: "onboarded") {
+            UserDefaults.standard.setValue(true, forKey: "singleTile")
+            for story in storySegments {
+                var segments = Set<String>()
+                if story.lowercased().contains("tip")  {
+                    segments = storySegments.filter { str in  return str.lowercased().contains("tip")  }
+                }
+                segments.insert("Tip Tile")
+                UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
+                storySegments = segments
+            }
+            StorylyManager.refresh()
+        } 
+       
         
         if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {
             launchNum += 1
@@ -310,15 +323,7 @@ class BonusViewModel: ObservableObject {
             }
             
             launchNum += 1
-            
-        } else {
-//            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
-//                storySegments = Set(oldSegments)
-//                storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: storySegments))
-//                storylyViewProgrammatic.refresh()
-//            }
         }
-        
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
     }
     

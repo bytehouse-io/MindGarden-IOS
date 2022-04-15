@@ -90,6 +90,7 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
             }
         }
+        
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
@@ -182,6 +183,7 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21
             }
         }
+        
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 22 && med.type != .weekly}
@@ -189,6 +191,7 @@ class MeditationViewModel: ObservableObject {
                 filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 14 && med.id != 22 && med.type != .weekly }
             }
         }
+        
         let randomInt = Int.random(in: 0..<filteredMeds.count)
         var randomInt2 =  Int.random(in: 0..<filteredMeds.count)
         while randomInt2 == randomInt {

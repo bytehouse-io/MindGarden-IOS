@@ -18,23 +18,21 @@ struct Stories: UIViewRepresentable {
         storylyViewProgrammatic.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             storylyViewProgrammatic.widthAnchor.constraint(equalTo: view.widthAnchor),
-            storylyViewProgrammatic.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
         storylyViewProgrammatic.storyGroupIconBorderColorNotSeen = [UIColor.systemGreen, UIColor.systemYellow]
-        storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "Mada-Medium", size: 14)!
+        storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "Mada-Medium", size: 12)!
         storylyViewProgrammatic.storyGroupTextColor = UIColor.systemGray
-        storylyViewProgrammatic.storyGroupSize = "large"
-//        storylyViewProgrammatic.storyGroupIconWidth = 4.0
+
+        //        storylyViewProgrammatic.storyGroupIconWidth = 4.0
         storylyViewProgrammatic.delegate = StorylyManager.shared
         storylyViewProgrammatic.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         storylyViewProgrammatic.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        storylyViewProgrammatic.topAnchor.constraint(equalTo: view.topAnchor, constant: 10).isActive = true
-        storylyViewProgrammatic.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        storylyViewProgrammatic.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        storylyViewProgrammatic.storyGroupListStyling = StoryGroupListStyling(edgePadding: 10, paddingBetweenItems: 0)
         return view
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {
         print("updating \(true)")
     }
-    
 }

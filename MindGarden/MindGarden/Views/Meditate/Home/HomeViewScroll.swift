@@ -21,7 +21,7 @@ struct HomeViewScroll: View {
     @State private var isRecent = true
     
     let width = UIScreen.screenWidth
-    let height = UIScreen.screenHeight
+    let height = UIScreen.screenHeight - 100
     
     @Environment(\.sizeCategory) var sizeCategory
     
@@ -38,9 +38,11 @@ struct HomeViewScroll: View {
                                 .frame(height: 120, alignment: .center)
                                 .oldShadow()
                             Stories()
-                                .padding(.leading, 15)
+                                .frame(height: K.isSmall() ? 90 : 130)
+                                .padding(.leading, K.isSmall() ? 10 : 20)
+                                .padding(.top, K.isSmall() ? 15 : 45)
                                 
-                        }.frame(width: width * 0.85, height: 120, alignment: .center)
+                        }.frame(width: width * 0.85, height: K.isSmall() ? 90 : 120, alignment: .center)
                          .padding(.top,10)
                         HStack(spacing: width * 0.04) {
                             Button {
@@ -109,6 +111,7 @@ struct HomeViewScroll: View {
                             .buttonStyle(BonusPress())
                         }.padding(.top, 15)
                     }
+                    
                     Button {} label: {
                         Rectangle()
                             .fill(Color("darkWhite"))

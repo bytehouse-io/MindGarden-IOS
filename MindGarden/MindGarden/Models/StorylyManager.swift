@@ -46,26 +46,37 @@ class StorylyManager: StorylyDelegate {
            }
            
            if let story = story {
-               print(story.seen, "nobody")
-               if let _ = UserDefaults.standard.array(forKey: "storySegments") { } else {
-                   UserDefaults.standard.setValue(["new users", "Bijan 11", "Quotes 9", "Story 7"], forKey: "storySegments")
-               }
-               var storySegments = UserDefaults.standard.array(forKey: "storySegments") as? [String]
-//               if !story.seen {
+               if !story.seen {
+                   var storySegments = UserDefaults.standard.array(forKey: "storySegments") as? [String]
                    if story.title.lowercased().contains("bijan")  {
                        storySegments?.removeAll(where: { str in
                            str.lowercased().contains("bijan")
                        })
-                       let components = story.title.components(separatedBy: " ")
-                       if let num = Int(components[1]) {
-                           let count = num + 1
-                           let finalStr = components[0] + " " + String(count)
-                           storySegments?.append(finalStr)
-                           let unique = Array(Set(storySegments ?? [""]))
-                           UserDefaults.standard.setValue(unique, forKey: "storySegments")
-                       }
+                   } else if story.title.lowercased() == "#3" || story.title.lowercased().contains("tip") {
+                       storySegments?.removeAll(where: { str in
+                           str.lowercased().contains("tip")
+                       })
+                       let unique = Array(Set(storySegments ?? [""]))
+                       UserDefaults.standard.setValue(unique, forKey: "storySegments")
+                       return
+                   } else if story.title.lowercased().contains("quotes") {
+                       storySegments?.removeAll(where: { str in
+                           str.lowercased().contains("quotes")
+                       })
+                   } else if story.title.lowercased().contains("story") {
+                       storySegments?.removeAll(where: { str in
+                           str.lowercased().contains("quotes")
+                       })
                    }
-//               }
+                   let components = story.title.components(separatedBy: " ")
+                   if let num = Int(components[1]) {
+                       let count = num + 1
+                       let finalStr = components[0] + " " + String(count)
+                       storySegments?.append(finalStr)
+                       let unique = Array(Set(storySegments ?? [""]))
+                       UserDefaults.standard.setValue(unique, forKey: "storySegments")
+                   }
+               }
            }
        }
     
@@ -104,7 +115,13 @@ class StorylyManager: StorylyDelegate {
     
     static func updateSegments(segs: [String]) {
         storySegments = Set(segs)
+        StorylyManager.refresh()
+    }
+    
+    static func refresh() {
         storylyViewProgrammatic.storylyInit = StorylyInit(storylyId: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NfaWQiOjU2OTgsImFwcF9pZCI6MTA2MDcsImluc19pZCI6MTEyNTV9.zW_oJyQ7FTAXHw8MXnEeP4k4oOafFrDGKylUw81pi3I", segmentation: StorylySegmentation(segments: storySegments))
+        storylyViewProgrammatic.storyGroupListStyling = StoryGroupListStyling(edgePadding: 0, paddingBetweenItems: 0)
+        storylyViewProgrammatic.storyGroupSize = "small"
         storylyViewProgrammatic.refresh()
     }
 }

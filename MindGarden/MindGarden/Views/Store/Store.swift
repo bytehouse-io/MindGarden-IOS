@@ -93,8 +93,8 @@ struct Store: View {
                     HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
-                                if isStore {
-                                    Text(isShop ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
+                                if isShop {
+                                    Text(!isStore ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
                                         .font(Font.mada(.bold, size: 32))
                                         .minimumScaleFactor(0.005)
                                         .lineLimit(2)
@@ -324,7 +324,7 @@ struct Store: View {
 
                 ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
-                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
+//                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
                 .alert(isPresented: $showTip) {
                     Alert(title: Text("💡 Quick Tip"), message:
@@ -392,7 +392,7 @@ struct Store: View {
                 print("Unknow Status")
             }
         })
-    }
+    } 
     
     struct SuccessModal: View {
         @EnvironmentObject var userModel: UserViewModel
@@ -447,7 +447,8 @@ struct Store: View {
                     Spacer()
                 }
                 .fullScreenCover(isPresented: $showPlantAnimation) {
-                    PlantGrowing(plant: $userModel.selectedPlant)
+                    PlantGrowing()
+                        .environmentObject(userModel)
                 }
             }
         }
@@ -473,6 +474,7 @@ struct Store: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var shown: Bool
         @Binding var showSuccess: Bool
+        @State private var showPlantAnimation = false
 
         var body: some View {
             GeometryReader { g in
@@ -488,14 +490,14 @@ struct Store: View {
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.center)
                                 .padding(.vertical)
-                            Text("Are you sure you want to spend \(userCoins) coins on unlocking \(userModel.willBuyPlant?.title ?? "")")
+                            Text("Are you sure you want to spend \(userModel.willBuyPlant?.price ?? 0) coins on unlocking \(userModel.willBuyPlant?.title ?? "")")
                                 .font(Font.mada(.medium, size: 18))
                                 .foregroundColor(Clr.black2.opacity(0.7))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
-                            HStack(alignment: .center, spacing: -10) {
+                            HStack(alignment: .center, spacing: 10) {
                                 Button {
                                     Analytics.shared.log(event: .store_tapped_confirm_modal_cancel)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -508,6 +510,8 @@ struct Store: View {
                                         .foregroundColor(.white)
                                         .frame(width: g.size.width/3, height: 40)
                                         .background(Color.gray)
+                                        .cornerRadius(20)
+                                        .neoShadow()
                                 }
                                 Button {
                                     Analytics.shared.log(event: .store_tapped_confirm_modal_confirm)
@@ -515,7 +519,8 @@ struct Store: View {
                                     userModel.buyPlant()
                                     withAnimation {
                                         shown = false
-                                        showSuccess = true
+                                        showPlantAnimation = true
+//                                        showSuccess = true
                                     }
                                 } label: {
                                     Text("Confirm")
@@ -525,9 +530,8 @@ struct Store: View {
                                         .background(Clr.darkgreen)
                                         .clipShape(Capsule())
                                         .neoShadow()
-                                        .padding()
                                 }
-                            }.padding(.horizontal)
+                            }.padding()
                         }.frame(width: g.size.width * 0.85, height: g.size.height * 0.30, alignment: .center)
                             .background(Clr.darkWhite)
                             .cornerRadius(20)
@@ -535,6 +539,9 @@ struct Store: View {
                     }
                     Spacer()
                 }
+            }.fullScreenCover(isPresented: $showPlantAnimation) {
+                PlantGrowing()
+                    .environmentObject(userModel)
             }
         }
     }

@@ -123,7 +123,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         if let _ = UserDefaults.standard.array(forKey: "storySegments") as? [String] {} else {
-            UserDefaults.standard.setValue(["new users", "bijan_1", "quotes_1", "comic_1"], forKey: "storySegments")
+            UserDefaults.standard.setValue(["bijan_1", "quotes_1", "comic_1"], forKey: "storySegments")
         }
         
         StorylyManager.updateStories()

@@ -124,6 +124,7 @@ enum AnalyticEvent {
     case store_tapped_reddit //
     case store_tapped_go_pro
     case store_tapped_badge_tile
+    case store_animation_continue //
     case notification_success_store //
     case notification_settings_store //
 
@@ -518,6 +519,7 @@ extension AnalyticEvent {
         case .store_tapped_go_pro: return "store_tapped_go_pro"
         case .store_tapped_reddit: return "store_tapped_reddit"
         case .store_tapped_badge_tile: return "store_tapped_badge_tile"
+        case .store_animation_continue: return "store_animation_continue"
         case .notification_success_store: return "notification_success_store"
         case .notification_settings_store: return "notification_settings_store"
         case .screen_load_middle: return "screen_load_middle"

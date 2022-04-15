@@ -429,7 +429,11 @@ extension AuthenticationViewModel {
         if let favorites = UserDefaults.standard.array(forKey: K.defaults.favorites) as? [Int] {
             favs = favorites
         }
-
+        var uniquePlants = ["White Daisy"]
+        if let plantArr = UserDefaults.standard.array(forKey: K.defaults.plants) as? [String]{
+             uniquePlants = Array<String>(Set(plantArr))
+        }
+        
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 
@@ -438,7 +442,7 @@ extension AuthenticationViewModel {
                 "totalSessions": UserDefaults.standard.integer(forKey: "allTimeSessions"),
                 "totalMins": UserDefaults.standard.integer(forKey: "allTimeMinutes"),
                 "gardenGrid": thisGrid,
-                "plants": UserDefaults.standard.array(forKey: K.defaults.plants) ?? ["White Daisy"],
+                "plants": uniquePlants,
                 K.defaults.lastStreakDate: UserDefaults.standard.string(forKey: K.defaults.lastStreakDate) ?? "",
                 "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
                 K.defaults.seven: UserDefaults.standard.integer(forKey: K.defaults.seven),

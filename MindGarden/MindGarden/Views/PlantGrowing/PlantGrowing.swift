@@ -8,21 +8,23 @@
 import SwiftUI
 
 struct PlantGrowing: View {
+    @EnvironmentObject var userModel: UserViewModel
     @State private var isTransit = false
     @State private var shake = 0
     @State private var calendarWiggles = false
-    @Binding var plant : Plant?
+    @State var plant : Plant?
     
     var body: some View {
         ZStack {
             VStack {
                 if !isTransit {
-                    Img.seedPacket
+                    plant?.packetImage
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: UIScreen.screenWidth*0.6, alignment: .center)
+                        .frame(width: UIScreen.screenWidth*0.7, alignment: .center)
                         .modifier(Shake1(animatableData: CGFloat(shake)))
-                        .rotationEffect(.degrees(calendarWiggles ? -8 : 16), anchor: .bottom)
+
+                        .rotationEffect(.degrees(calendarWiggles ? 16 : -8), anchor: .bottom)
                         .animation(Animation.easeInOut(duration: 0.15).repeatForever(autoreverses: true))
                 } else {
                     FlowerPop()
@@ -31,6 +33,7 @@ struct PlantGrowing: View {
             }
         }
         .onAppear() {
+            plant = userModel.selectedPlant
             if let selectedPlant = plant?.id, (Plant.badgePlants.first(where: { $0.id == selectedPlant }) != nil) {
                 isTransit = true
             } else {
@@ -55,7 +58,7 @@ struct PlantGrowing: View {
 
 struct PlantGrowing_Previews: PreviewProvider {
     static var previews: some View {
-        PlantGrowing(plant: .constant(nil))
+        PlantGrowing()
     }
 }
 

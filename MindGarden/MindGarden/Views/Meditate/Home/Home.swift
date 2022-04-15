@@ -55,7 +55,7 @@ struct Home: View {
                         HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP)
                         //MARK: - scroll view
                         HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, attempts: attempts, totalBonuses: bonusModel.totalBonuses, userModel: userModel)
-                            .padding(.top,0)
+                            .padding(.top, -20)
                     }
                     if showModal || showUpdateModal || showMiddleModal || showIAP {
                         Color.black
@@ -110,9 +110,11 @@ struct Home: View {
                 runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
             }
         }
+        .fullScreenCover(isPresented: .constant(true)) {
+            PlantGrowing()
+                .environmentObject(userModel)
+        }
         .onAppear {
-      
-
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {

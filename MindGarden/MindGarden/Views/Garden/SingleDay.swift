@@ -242,6 +242,7 @@ struct SingleDay: View {
                 }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
+            UserDefaults.standard.setValue(true, forKey: "singleTile")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 isOnboarding = true
                 showOnboardingModal = true
