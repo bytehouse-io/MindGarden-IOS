@@ -123,6 +123,7 @@ struct LearnScene: View {
             .disabled(!UserDefaults.standard.bool(forKey: "day1"))
             if !UserDefaults.standard.bool(forKey: "day1") {
                 Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+                    .frame(height: UIScreen.screenHeight)
                 ZStack {
                     Rectangle()
                         .fill(Clr.darkWhite)
