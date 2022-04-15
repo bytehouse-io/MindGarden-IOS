@@ -243,6 +243,8 @@ struct Store: View {
                 }
                 if !UserDefaults.standard.bool(forKey: "day2") && isShop {
                     Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+                        .frame(height: UIScreen.screenHeight)
+                    
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
@@ -314,6 +316,7 @@ struct Store: View {
                     Color.black
                         .opacity(0.3)
                         .edgesIgnoringSafeArea(.all)
+                        .frame(height: UIScreen.screenHeight)
                 }
                 if isShop {
                     PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)

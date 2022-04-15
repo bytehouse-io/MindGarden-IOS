@@ -350,6 +350,7 @@ struct MoodImage: View {
                 .padding(.leading, 2)
             VStack(alignment: .center) {
                 Text(mood.title)
+                    .minimumScaleFactor(0.5)
                     .font(Font.mada(.semiBold, size: 14))
                     .lineLimit(1)
                     .frame(width: isStressed ? 60 : 38)
@@ -359,6 +360,7 @@ struct MoodImage: View {
                     .bold()
                     .lineLimit(1)
                     .frame(width: isStressed ? 60 : 40)
+                    .minimumScaleFactor(0.5)
             }.padding(.leading, 1)
             .frame(maxWidth: .infinity)
         }

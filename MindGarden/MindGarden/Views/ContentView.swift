@@ -89,7 +89,6 @@ struct ContentView: View {
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
                                         Home()
-                                            .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
