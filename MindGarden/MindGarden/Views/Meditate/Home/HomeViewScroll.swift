@@ -17,6 +17,7 @@ struct HomeViewScroll: View {
     @State var attempts : Int
     @State var totalBonuses: Int
     @State var userModel: UserViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     
     @State private var isRecent = true
     
@@ -127,7 +128,7 @@ struct HomeViewScroll: View {
                                             .lineLimit(3)
                                             .minimumScaleFactor(0.05)
                                         if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
-                                            Text("7 Day Course")
+                                            Text("Day \(bonusModel.streakNumber + 1) of 7")
                                                 .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
                                                 .foregroundColor(Color.gray)
                                         }
