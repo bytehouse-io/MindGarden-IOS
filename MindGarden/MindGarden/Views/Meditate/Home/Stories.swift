@@ -23,7 +23,7 @@ struct Stories: UIViewRepresentable {
         storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "Mada-Medium", size: 12)!
         storylyViewProgrammatic.storyGroupTextColor = UIColor.systemGray
 
-        //        storylyViewProgrammatic.storyGroupIconWidth = 4.0
+        storylyViewProgrammatic.storyGroupSize = "small"
         storylyViewProgrammatic.delegate = StorylyManager.shared
         storylyViewProgrammatic.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         storylyViewProgrammatic.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

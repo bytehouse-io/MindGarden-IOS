@@ -19,7 +19,8 @@ var storylyViewProgrammatic = StorylyView()
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     static let userModel = UserViewModel()
-    static let bonusModel = BonusViewModel(userModel: userModel)
+    static let gardenModel = GardenViewModel()
+    static let bonusModel = BonusViewModel(userModel: userModel, gardenModel: gardenModel)
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
@@ -35,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 0 {
-            UserDefaults.standard.setValue(["new users", "bijan_1", "quotes_1", "comic_1"], forKey: "storySegments")
+            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quotes 1", "Tales 1"], forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -55,12 +56,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let router = ViewRouter()
         let medModel = MeditationViewModel()
 
-        let gardenModel = GardenViewModel()
         let profileModel = ProfileViewModel()
         let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
         medModel.updateSelf()
         SceneDelegate.userModel.updateSelf()
-        gardenModel.updateSelf()
+        SceneDelegate.gardenModel.updateSelf()
         FirebaseAPI.fetchMeditations(meditationModel: medModel)
         FirebaseAPI.fetchCourses()
 
@@ -77,7 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                             .environmentObject(router)
                                             .environmentObject(medModel)
                                             .environmentObject(SceneDelegate.userModel)
-                                            .environmentObject(gardenModel))
+                                            .environmentObject(SceneDelegate.gardenModel))
         
         
         if let windowScene = scene as? UIWindowScene {
@@ -123,7 +123,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         if let _ = UserDefaults.standard.array(forKey: "storySegments") as? [String] {} else {
-            UserDefaults.standard.setValue(["bijan_1", "quotes_1", "comic_1"], forKey: "storySegments")
+            UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tales 1"], forKey: "storySegments")
         }
         
         StorylyManager.updateStories()

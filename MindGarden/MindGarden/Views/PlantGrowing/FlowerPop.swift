@@ -19,17 +19,17 @@ struct FlowerPop: View {
         ZStack {
             LottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
                 .frame(width: UIScreen.screenWidth * 1.35 , height: UIScreen.screenHeight, alignment: .center)
-            userModel.selectedPlant?.coverImage
+            userModel.willBuyPlant?.coverImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: UIScreen.screenWidth/2)
+                .frame(width: UIScreen.screenWidth/2, height: UIScreen.screenHeight/3)
                 .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
                 .animation(Animation
                             .spring(response: 0.3, dampingFraction: 3.0), value: scale)
             VStack {
                 Spacer()
                     .frame(height: 100, alignment: .center)
-                Text("New!\n\(userModel.selectedPlant?.title ?? "Red Tulips")")
+                Text("New!\n\(userModel.willBuyPlant?.title ?? "Red Tulips")")
                     .font(.mada(.bold, size: 40))
                     .foregroundColor(Clr.black1)
                     .multilineTextAlignment(.center)
@@ -48,6 +48,7 @@ struct FlowerPop: View {
                                     Analytics.shared.log(event: .store_animation_continue)
                                     let impact = UIImpactFeedbackGenerator(style: .light)
                                     impact.impactOccurred()
+                                    userModel.triggerAnimation = false
                                     presentationMode.wrappedValue.dismiss()
                                 }
                             }
@@ -61,7 +62,6 @@ struct FlowerPop: View {
 //                    LightButton(title:.constant("Done"), showNextArrow: true) {
 //                        presentationMode.wrappedValue.dismiss()
 //                    }
-                    
                 }
                 .padding(.bottom,100)
             }

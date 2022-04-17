@@ -36,6 +36,7 @@ struct K {
         static var onboarding = "onboarding"
         static var referred = "referred"
     }
+    
     struct ScreenSize
     {
         static let SCREEN_WIDTH         = UIScreen.main.bounds.size.width
@@ -57,6 +58,9 @@ struct K {
         return bottom > 0
     }
 
+    static func isBig() -> Bool {
+        return UIScreen.main.nativeBounds.height > 2688
+    }
     static func isSmall() -> Bool {
         return UIDevice.current.type == .iPhone_6_6S_7_8_SE2 || UIDevice.current.type == .iPhone_5_5S_5C_SE1
     }
@@ -72,6 +76,7 @@ extension UIDevice {
         case iPhone_XS_11Pro_Max
         case iPhone_12_Pro
         case iPhone_12_Pro_Max
+        case iPhone_13_Pro_Max
         case iPhone_13_Mini
     }
 

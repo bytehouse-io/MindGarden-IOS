@@ -52,9 +52,9 @@ struct Home: View {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 GeometryReader { g in
                     VStack {
-                        HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP)
+                        HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP)
                         //MARK: - scroll view
-                        HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, attempts: attempts, totalBonuses: bonusModel.totalBonuses, userModel: userModel)
+                        HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: attempts, userModel: userModel)
                             .padding(.top, -20)
                     }
                     if showModal || showUpdateModal || showMiddleModal || showIAP {
@@ -86,6 +86,9 @@ struct Home: View {
                         .animation(.default, value: showIAP)
                 }
             }
+            .fullScreenCover(isPresented: $userModel.triggerAnimation) {
+                PlantGrowing()
+            }
             .sheet(item: $activeSheet) { item in
                 switch item {
                 case .profile:
@@ -109,10 +112,6 @@ struct Home: View {
             if !onboardingTime {
                 runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
             }
-        }
-        .fullScreenCover(isPresented: .constant(true)) {
-            PlantGrowing()
-                .environmentObject(userModel)
         }
         .onAppear {
             userModel.checkIfPro()
@@ -154,7 +153,13 @@ struct Home: View {
             }
         }
         .onAppearAnalytics(event: .screen_load_home)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("notification")))
+               { _ in
+                   mindfulNotifs = true
+                   activeSheet = .profile
+               }
     }
+    
     func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {
         counter.wrappedValue = start
         

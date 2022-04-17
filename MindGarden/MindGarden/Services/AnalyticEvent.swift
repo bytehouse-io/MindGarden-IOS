@@ -306,6 +306,14 @@ enum AnalyticEvent {
     case monthly_started_from_superwall
     case screen_load_50pricing
     case modal_50_not_now
+    
+    //Stories
+    case story_notification_swipe
+    case story_comic_opened
+    case story_bijan_opened
+    case story_journal_opened
+    case story_quote_opened
+    case story_tip_opened
 }
 
 extension AnalyticEvent {
@@ -682,6 +690,12 @@ extension AnalyticEvent {
         case .screen_load_50pricing: return "screen_load_50pricing"
         case .home_tapped_locked_meditation: return "home_tapped_locked_meditation"
         case .modal_50_not_now: return "modal_50_not_now"
+        case .story_notification_swipe: return "story_notification_swipe"
+        case .story_comic_opened: return "story_comic_opened"
+        case .story_bijan_opened: return "story_bijan_opened"
+        case .story_journal_opened: return "story_journal_opened"
+        case .story_quote_opened: return "story_quote_opened"
+        case .story_tip_opened: return "story_tip_opened"
         }
     }
 }

@@ -43,8 +43,9 @@ struct Plant: Hashable {
         Plant(title: "Strawberry", price: 150, selected: false, description: "The strawberry is widely appreciated for its characteristic aroma, bright red color, juicy texture, and sweetness. The average strawberry has 200 seeds.", packetImage: Img.strawberryPacket, one: Img.strawberry1, two: Img.strawberry2, coverImage: Img.strawberry3, head: Img.strawberryHead, badge: Img.strawberryBadge),
         //head
         Plant(title: "Aloe", price: 160, selected: false, description: "Aloe sometimes described as a “wonder plant,” is a short-stemmed shrub. It is grown commercially for the health and moisturizing benefits found inside its leaves. Cleopatra applied aloe gel to her body as part of her beauty regimen!", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.aloeHead, badge: Img.aloeBadge),
+        Plant(title: "Ice Flower", price: 0, selected: false, description: "", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.iceFlower, badge: Img.aloeBadge)
     ]
-
+    
     static var badgePlants: [Plant] = [
         // rate the app
         Plant(title: "Camellia", price: 6, selected: false, description: "The flowers are large and conspicuous, from 1 to 12 centimeters in diameter, with 5 to 9 petals; color varies from white to pink and red. It is often used in religious and sacred ceremonies.", packetImage: Img.daisyPacket, one: Img.camellia1, two: Img.camellia2, coverImage: Img.camellia3, head: Img.camelliaHead, badge: Img.camelliaBadge),

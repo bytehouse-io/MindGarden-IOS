@@ -33,7 +33,8 @@ class BonusViewModel: ObservableObject {
     @Published var fiftyOffInterval: String = ""
     @Published var lastStreakDate = ""
     var userModel: UserViewModel
-    var streakNumber = 0
+    var gardenModel: GardenViewModel
+    @Published var streakNumber = 0
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
@@ -41,8 +42,9 @@ class BonusViewModel: ObservableObject {
     }()
     let db = Firestore.firestore()
 
-    init(userModel: UserViewModel) {
+    init(userModel: UserViewModel, gardenModel: GardenViewModel) {
         self.userModel = userModel
+        self.gardenModel = gardenModel
     }
 
     private func createDailyCountdown() {
@@ -283,45 +285,35 @@ class BonusViewModel: ObservableObject {
 
     }
     
+    private func updateTips(tip: String) {
+        for story in storySegments {
+            var segments = Set<String>()
+            if story.lowercased().contains("tip")  {
+                segments = storySegments.filter { str in  return str.lowercased().contains("tip")  }
+            }
+            segments.insert(tip)
+            UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
+            storySegments = segments
+        }
+        StorylyManager.refresh()
+    }
+    
     private func updateLaunchNumber() {
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
         } else if launchNum == 4 && !UserDefaults.standard.bool(forKey: "singleTile") && !UserDefaults.standard.bool(forKey: "onboarded") {
             UserDefaults.standard.setValue(true, forKey: "singleTile")
-            for story in storySegments {
-                var segments = Set<String>()
-                if story.lowercased().contains("tip")  {
-                    segments = storySegments.filter { str in  return str.lowercased().contains("tip")  }
-                }
-                segments.insert("Tip Tile")
-                UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
-                storySegments = segments
-            }
-            StorylyManager.refresh()
-        } 
+            updateTips(tip: "Tip Tile")
+        } else if launchNum >= 2 && !UserDefaults.standard.bool(forKey: "remindersOn") {
+            UserDefaults.standard.setValue(true, forKey: "remindersOn")
+            updateTips(tip: "Tip Reminders")
+        }
        
         
         if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {
             launchNum += 1
         } else if  Date() - formatter.date(from: self.lastStreakDate)! > 172800 {
-            self.streakNumber = 0
-            lastStreakDate = formatter.string(from: Date())
-            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
-            if let email = Auth.auth().currentUser?.email {
-                self.db.collection(K.userPreferences).document(email).updateData([
-                    "streak": String(self.streakNumber) + "+" + lastStreakDate
-                ]) { (error) in
-                    if let e = error {
-                        print("There was a issue saving data to firestore \(e) ")
-                    } else {
-                        print("Succesfully saved streak")
-                    }
-                }
-            } else {
-                UserDefaults.standard.setValue((String(self.streakNumber) + "+" + lastStreakDate), forKey: "streak")
-            }
-            
             launchNum += 1
         }
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
@@ -335,11 +327,13 @@ class BonusViewModel: ObservableObject {
                 if !self.userModel.ownedPlants.contains(where: { p in p.title == "Red Mushroom" }) {
                     self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Red Mushroom" })
                     self.userModel.buyPlant(unlockedStrawberry: true)
+                    userModel.triggerAnimation = true
                 }
             } else if self.streakNumber == 30 {
                 if !self.userModel.ownedPlants.contains(where: { p in p.title == "Cherry Blossoms" }) {
                     self.userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Cherry Blossoms" })
                     self.userModel.buyPlant(unlockedStrawberry: true)
+                    userModel.triggerAnimation = true
                 }
             }
             
@@ -375,26 +369,19 @@ class BonusViewModel: ObservableObject {
             let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
             let interval = currentDate.interval(ofComponent: .day, fromDate: streakDate ?? Date())
             
+            
+            
             if (interval >= 1 && interval < 2) {  // update streak number and date
                 updatedStreak = true
                 self.streakNumber += 1
-                if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
-                    if longestStreak < streakNumber {
-                        UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
-                    }
-                    UserDefaults.standard.setValue(true, forKey: "updatedStreak")
-                } else {
-                    UserDefaults.standard.setValue(1, forKey: "longestStreak")
-                }
-
-                lastStreakDate = formatter.string(from: Date())
+                updateLongest()
             } else if interval >= 2 { //broke streak
                 updatedStreak = true
                 if userModel.streakFreeze >= interval {
-                    
+                    freezeStreak(interval: interval)
+                    updateLongest()
                 } else {
                     self.streakNumber = 1
-                    lastStreakDate = formatter.string(from: Date())
                     if let email = Auth.auth().currentUser?.email {
                         self.db.collection(K.userPreferences).document(email).updateData([
                             "sevenDay": 0,
@@ -414,7 +401,6 @@ class BonusViewModel: ObservableObject {
                     }
                 }
             } else {
-                lastStreakDate  = formatter.string(from: Date())
                 if streakNumber == 0 {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                         updatedStreak = true
@@ -423,9 +409,8 @@ class BonusViewModel: ObservableObject {
                         self.streakNumber = 0
                     }
                 }
-                
-                lastStreakDate = formatter.string(from: Date())
             }
+            lastStreakDate = formatter.string(from: Date())
         } else {
             updatedStreak = true
             lastStreakDate  = formatter.string(from: Date())
@@ -435,11 +420,56 @@ class BonusViewModel: ObservableObject {
                 self.streakNumber = 0
             }
         }
+        
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
 
         return lastStreakDate
+    }
+    
+    private func recSaveFreeze(day: Int, dates: [Date], session: [String: String]) {
+        if day == dates.count {
+            return
+        } else {
+            gardenModel.save(key: "sessions", saveValue: session, date: dates[day], freeze: true) { [self] in
+                let day = day + 1
+                recSaveFreeze(day: day, dates: dates, session: session)
+            }
+        }
+     
+    }
+    
+    private func freezeStreak(interval: Int) {
+        let inter = interval - 1
+        let datesBetweenArray = Date.dates(from: formatter.date(from: lastStreakDate) ?? Date(), to: Date())
+        var session = [String: String]()
+        session[K.defaults.plantSelected] = "Ice Flower"
+        session[K.defaults.meditationId] = "0"
+        session[K.defaults.duration] = "0"
+        recSaveFreeze(day: 0, dates: datesBetweenArray, session: session)
+//        gardenModel.save(key: "sessions", saveValue: session, date: datesBetweenArray[0], freeze: true) { [self] in
+//            for day in 1..<inter {
+//                gardenModel.save(key: "sessions", saveValue: session, date: datesBetweenArray[0], freeze: true)
+//            }
+//        }
+
+        
+        userModel.streakFreeze -= datesBetweenArray.count
+        userModel.saveIAP()
+        updatedStreak = true
+        self.streakNumber += 1
+    }
+    
+    private func updateLongest() {
+        if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
+        if longestStreak < streakNumber {
+            UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
+        }
+        UserDefaults.standard.setValue(true, forKey: "updatedStreak")
+        } else {
+            UserDefaults.standard.setValue(1, forKey: "longestStreak")
+        }
     }
     
     private func progressiveDisclosure(lastStreakDate: String) {

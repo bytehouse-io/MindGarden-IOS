@@ -165,6 +165,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height)
                                             .ignoresSafeArea()
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .environmentObject(bonusModel)
                                     case .notification:
                                         NotificationScene()
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
@@ -493,7 +494,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(bonusModel: BonusViewModel(userModel: UserViewModel()), profileModel: ProfileViewModel(), authModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
+        ContentView(bonusModel: BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()), profileModel: ProfileViewModel(), authModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
     }
 }
 

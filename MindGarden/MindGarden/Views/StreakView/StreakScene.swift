@@ -12,6 +12,7 @@ struct StreakScene: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @Binding var streakNumber: Int
     var title : String {
         return "\(streakNumber) Day Streak"
@@ -80,6 +81,14 @@ struct StreakScene: View {
 //            ReferralView(url: $urlShare2)
 //        }
         .onAppear() {
+            if UserDefaults.standard.bool(forKey: "unlockStrawberry") {
+                UserDefaults.standard.setValue(false, forKey: "unlockStrawberry")
+                Analytics.shared.log(event: .onboarding_claimed_strawberry)
+                userModel.willBuyPlant = Plant.plants.first(where: { $0.title == "Strawberry" })
+                userCoins += 150
+                userModel.buyPlant(unlockedStrawberry: true)
+                userModel.triggerAnimation = true
+            }
             MGAudio.sharedInstance.stopSound()
             MGAudio.sharedInstance.playSounds(soundFileNames: ["fire_ignite.mp3","fire.mp3"])
             self.animate()

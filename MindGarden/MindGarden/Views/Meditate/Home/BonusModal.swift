@@ -246,7 +246,7 @@ struct BonusModal: View {
 struct BonusModal_Previews: PreviewProvider {
     static var previews: some View {
         PreviewDisparateDevices {
-            BonusModal(bonusModel: BonusViewModel(userModel: UserViewModel()), shown: .constant(true), coins: .constant(0))
+            BonusModal(bonusModel: BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()), shown: .constant(true), coins: .constant(0))
         }
     }
 }

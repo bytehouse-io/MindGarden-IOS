@@ -56,11 +56,6 @@ struct OnboardingModal: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             shown = false
-                                            Analytics.shared.log(event: .onboarding_claimed_strawberry)
-                                            UserDefaults.standard.setValue(true, forKey: "strawberryUnlocked")
-                                            userModel.willBuyPlant = Plant.plants.first(where: { $0.title == "Strawberry" })
-                                            userCoins += 150
-                                            userModel.buyPlant(unlockedStrawberry: true)
                                         }
                                     } label: {
                                         Capsule()

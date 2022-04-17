@@ -485,6 +485,7 @@ struct PricingView: View {
         if !userModel.ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
             userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
             userModel.buyPlant(unlockedStrawberry: true)
+            userModel.triggerAnimation = true
         }
         UserDefaults.standard.setValue(true, forKey: "bonsai")
         UserDefaults.standard.setValue(true, forKey: "isPro")
@@ -500,7 +501,7 @@ struct PricingView: View {
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
-                        print("Succesfully saved new items")
+                        print("Succesfully saved from pricing page")
                     }
                 }
             }
@@ -508,6 +509,7 @@ struct PricingView: View {
             viewRouter.currentPage = .meditate
         }
     }
+    
     private func logEvent(cancelled: Bool = false) -> String {
             var event = ""
 

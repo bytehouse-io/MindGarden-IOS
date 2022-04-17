@@ -177,7 +177,7 @@ struct Store: View {
                             } else {
                                 ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
                                         : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
-                                    if userModel.ownedPlants.contains(plant) && isShop {
+                                    if userModel.ownedPlants.contains(plant) && isShop && plant.title != "Ice Flower" {
                                         PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                     } else {
                                         Button {
@@ -325,7 +325,7 @@ struct Store: View {
                         .environmentObject(profileModel)
                 }
 
-                ConfirmModal(shown: $confirmModal, showSuccess: $showSuccess).offset(y: confirmModal ? 0 : g.size.height)
+                ConfirmModal(shown: $confirmModal, showMainModal: $showModal).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
 //                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
@@ -476,7 +476,7 @@ struct Store: View {
     struct ConfirmModal: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var shown: Bool
-        @Binding var showSuccess: Bool
+        @Binding var showMainModal: Bool
         @State private var showPlantAnimation = false
 
         var body: some View {
@@ -522,8 +522,8 @@ struct Store: View {
                                     userModel.buyPlant()
                                     withAnimation {
                                         shown = false
+                                        showMainModal = false
                                         showPlantAnimation = true
-//                                        showSuccess = true
                                     }
                                 } label: {
                                     Text("Confirm")

@@ -70,8 +70,12 @@ struct DaysProgressBar: View {
     private func getColor(index:Int) -> Color {
         if let mood = gardenModel.lastFive[index].2 {
             return mood.color
-        } else if gardenModel.lastFive[index].1 != nil {
-            return Clr.orange
+        } else if let plant = gardenModel.lastFive[index].1  {
+            if plant.title == "Ice Flower" {
+                return Clr.freezeBlue
+            } else {
+                return Clr.orange
+            }
         } else if index == gardenModel.lastFive.count - 1 {
             return Clr.orange
         }

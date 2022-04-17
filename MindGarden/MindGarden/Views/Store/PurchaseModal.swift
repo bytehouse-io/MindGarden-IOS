@@ -107,6 +107,7 @@ struct PurchaseModal: View {
                             .padding(.bottom, -10)
                         }
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
                                 case "⭐️ Rate the app":

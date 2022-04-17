@@ -6,6 +6,7 @@ import SwiftUI
 public enum Img {
   public static let moon = Image(" moon")
   public static let house = Image("House")
+  public static let iceFlower = Image("Ice Flower")
   public static let angry = Image("angry")
   public static let happy = Image("happy")
   public static let okay = Image("okay")

@@ -59,7 +59,8 @@ extension View {
         self
             .font(Font.mada(.regular, size: 24))
             .multilineTextAlignment(.center)
-            .lineLimit(3)
+            .minimumScaleFactor(0.05)
+            .lineLimit(2)
             .padding()
     }
     

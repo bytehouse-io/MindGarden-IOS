@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Garden: View {
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State private var isMonth: Bool = true
     @State private var showSingleModal = false
     @State private var day: Int = 0
@@ -107,9 +108,10 @@ struct Garden: View {
                                         }
                                     } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
                                         ZStack {
-                                            let plantHead = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0?.head
+                                            let plant = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0
+                                            let plantHead = plant?.head
                                             Rectangle()
-                                                .fill(Clr.dirtBrown)
+                                                .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue :Clr.dirtBrown)
                                                 .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                 .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
                                             plantHead
@@ -134,21 +136,22 @@ struct Garden: View {
                                 Analytics.shared.log(event: .garden_tapped_single_day)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 day = col + (row * 7) + 1  - gardenModel.placeHolders
-                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
-                                    if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
-                                        Analytics.shared.log(event: .onboarding_finished_single)
-                                        showSingleModal = true
-                                        isOnboarding = false
-                                        UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
-                                    }
-                                } else {
-                                    if day <= 31 && day >= 1 {
-                                        if !isOnboarding {
+                                if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0?.title != "Ice Flower" {
+                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
+                                        if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
+                                            Analytics.shared.log(event: .onboarding_finished_single)
                                             showSingleModal = true
+                                            isOnboarding = false
+                                            UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
+                                        }
+                                    } else {
+                                        if day <= 31 && day >= 1 {
+                                            if !isOnboarding {
+                                                showSingleModal = true
+                                            }
                                         }
                                     }
                                 }
-
                             }
                         }
                         .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
@@ -280,6 +283,8 @@ struct Garden: View {
                     }
 
                 }.padding(.bottom ,50)
+            }.fullScreenCover(isPresented: $userModel.triggerAnimation) {
+                PlantGrowing()
             }
             .popover(isPresented: $showSingleModal) {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)

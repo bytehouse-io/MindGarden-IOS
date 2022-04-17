@@ -14,8 +14,8 @@ struct HomeViewScroll: View {
     @Binding var showModal : Bool
     @Binding var showMiddleModal : Bool
     @Binding var activeSheet: Sheet?
+    @Binding var totalBonuses: Int
     @State var attempts : Int
-    @State var totalBonuses: Int
     @State var userModel: UserViewModel
     
     @State private var isRecent = true
@@ -308,7 +308,7 @@ struct HomeViewScroll: View {
                                         Text("Start Free Trial")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.bold, size: 20))
-                                        Text("Join 1378 pro members who practice daily 💚")
+                                        Text("Invest in your mental health, focus, and happiness 💚")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.medium, size: 14))
                                         Spacer()

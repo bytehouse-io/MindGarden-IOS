@@ -83,6 +83,7 @@ extension MeditationViewModel {
                             OneSignal.sendTag("day7", value: "true")
                         default: break
                         }
+                        
                         if UserDefaults.standard.bool(forKey: "day5") &&  UserDefaults.standard.bool(forKey: "day6") &&  UserDefaults.standard.bool(forKey: "day7") {
                             UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
                             UserDefaults.standard.setValue(true, forKey: "unlockStrawberry")

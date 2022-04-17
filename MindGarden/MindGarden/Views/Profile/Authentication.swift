@@ -233,6 +233,7 @@ struct Authentication: View {
                     userModel.updateSelf()
                     gardenModel.updateSelf()
                     medModel.updateSelf()
+                    bonusModel.updateBonus()
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showStreak, content: {

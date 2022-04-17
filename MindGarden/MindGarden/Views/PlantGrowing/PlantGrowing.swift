@@ -23,7 +23,6 @@ struct PlantGrowing: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: UIScreen.screenWidth*0.7, alignment: .center)
                         .modifier(Shake1(animatableData: CGFloat(shake)))
-
                         .rotationEffect(.degrees(calendarWiggles ? 16 : -8), anchor: .bottom)
                         .animation(Animation.easeInOut(duration: 0.15).repeatForever(autoreverses: true))
                 } else {
@@ -33,7 +32,7 @@ struct PlantGrowing: View {
             }
         }
         .onAppear() {
-            plant = userModel.selectedPlant
+            plant = userModel.willBuyPlant
             if let selectedPlant = plant?.id, (Plant.badgePlants.first(where: { $0.id == selectedPlant }) != nil) {
                 isTransit = true
             } else {

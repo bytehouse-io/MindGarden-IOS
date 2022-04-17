@@ -635,7 +635,7 @@ struct ProfileScene: View {
                                     if let e = error {
                                         print("There was a issue saving data to firestore \(e) ")
                                     } else {
-                                        print("Succesfully saved new items")
+                                        print("Succesfully saved pro")
                                     }
                                 }
                             }

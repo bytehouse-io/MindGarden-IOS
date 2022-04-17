@@ -20,6 +20,7 @@ class UserViewModel: ObservableObject {
     @Published var streakFreeze = 0
     @Published var potion = ""
     @Published var chest = ""
+    @Published var triggerAnimation = false
     
     private var validationCancellables: Set<AnyCancellable> = []
 
@@ -232,17 +233,17 @@ class UserViewModel: ObservableObject {
                     }
                     UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
                     WidgetCenter.shared.reloadAllTimelines()
-                    if let email = Auth.auth().currentUser?.email {
-                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                            "isPro": isPro,
-                        ]) { (error) in
-                            if let e = error {
-                                print("There was a issue saving data to firestore \(e) ")
-                            } else {
-                                print("Succesfully saved new items")
-                            }
-                        }
-                    }
+//                    if let email = Auth.auth().currentUser?.email {
+//                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+//                            "isPro": isPro,
+//                        ]) { (error) in
+//                            if let e = error {
+//                                print("There was a issue saving data to firestore \(e) ")
+//                            } else {
+//                                print("Succesfully saved user is pro")
+//                            }
+//                        }
+//                    }
                 } else {
                     buyBonsai()
                 }
@@ -270,12 +271,14 @@ class UserViewModel: ObservableObject {
             if !unlockedStrawberry {
                 userCoins -= willBuyPlant?.price ?? 0
             }
-            ownedPlants.append(plant)
-            if !isUnlocked {
-                if !unlockedStrawberry {
-                    selectedPlant = willBuyPlant
-                }
+            
+            if unlockedStrawberry {
+                triggerAnimation = true
             }
+            
+            ownedPlants.append(plant)
+            selectedPlant = willBuyPlant
+
             var finalPlants: [String] = [String]()
             if let email = Auth.auth().currentUser?.email {
                 let docRef = db.collection(K.userPreferences).document(email)

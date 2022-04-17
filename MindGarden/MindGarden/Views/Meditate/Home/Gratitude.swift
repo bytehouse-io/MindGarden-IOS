@@ -100,6 +100,7 @@ struct Gratitude: View, KeyboardReadable {
                         if num == 30 {
                             userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
                             userModel.buyPlant(unlockedStrawberry: true)
+                            userModel.triggerAnimation = true
                         }
                         UserDefaults.standard.setValue(num, forKey: "numGrads")
                         Analytics.shared.log(event: .gratitude_tapped_done)

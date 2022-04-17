@@ -275,9 +275,9 @@ struct Finished: View {
                         Spacer()
                     }
                     
-                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
-                        .offset(y: showUnlockedModal ? 0 : g.size.height)
-                        .animation(.default, value: showUnlockedModal)
+//                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
+//                        .offset(y: showUnlockedModal ? 0 : g.size.height)
+//                        .animation(.default, value: showUnlockedModal)
                     BottomSheet(
                         isOpen: self.$saveProgress,
                         maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
@@ -357,7 +357,7 @@ struct Finished: View {
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
             { _ in }
                     .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene(streakNumber: .constant(bonusModel.streakNumber))
+                StreakScene(streakNumber: $bonusModel.streakNumber)
                     .background(Clr.darkWhite)
             })
             .onAppear {
@@ -394,7 +394,7 @@ struct Finished: View {
                 num += 1
                 UserDefaults.standard.setValue(num, forKey: "numMeds")
 
-                showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
+//                showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
 
                 favorited = model.isFavorited
                 // onboarding
@@ -409,9 +409,10 @@ struct Finished: View {
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
                 reward = model.getReward()
                 userCoins += reward
-                gardenModel.save(key: "sessions", saveValue: session)
-                if model.shouldStreakUpdate {
-                    bonusModel.updateStreak()
+                gardenModel.save(key: "sessions", saveValue: session) {
+                    if model.shouldStreakUpdate {
+                        bonusModel.updateStreak()
+                    }
                 }
                 //Log Analytics
                 #if !targetEnvironment(simulator)

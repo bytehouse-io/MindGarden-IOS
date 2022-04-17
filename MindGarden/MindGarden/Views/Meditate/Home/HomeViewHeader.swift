@@ -10,10 +10,11 @@ import SwiftUI
 struct HomeViewHeader: View {
     @State var greeting : String
     @State var name : String
-    @State var streakNumber : Int
+    @Binding var streakNumber : Int
     @Binding var showSearch : Bool
     @Binding var activeSheet : Sheet?
     @Binding var showIAP : Bool
+    @EnvironmentObject var userModel: UserViewModel
     
     let width = UIScreen.screenWidth
     let height = UIScreen.screenHeight
@@ -62,17 +63,32 @@ struct HomeViewHeader: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                             HStack {
+                                if userModel.streakFreeze > 0 {
+                                    HStack {
+                                        Img.iceFlower
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 25)
+                                            .oldShadow()
+                                        Text("\(userModel.streakFreeze)")
+                                            .font(Font.mada(.semiBold, size: 22))
+                                            .foregroundColor(Clr.darkgreen)
+                                            .frame(height: 30, alignment: .bottom)
+                                    }.offset(x: -7)
+                                }
                                 Img.streak
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 25)
                                     .oldShadow()
-                                Text("Streak: ")
-                                    .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
-                                    .font(Font.mada(.medium, size: 21))
-                                + Text("\(streakNumber)")
-                                    .font(Font.mada(.semiBold, size: 22))
-                                    .foregroundColor(Clr.darkgreen)
+                                HStack {
+                                    Text("Streak: ")
+                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
+                                        .font(Font.mada(.medium, size: 21))
+                                    + Text("\(streakNumber)")
+                                        .font(Font.mada(.semiBold, size: 22))
+                                        .foregroundColor(Clr.darkgreen)
+                                }.frame(height: 30, alignment: .bottom)
                                 PlusCoins()
                                     .onTapGesture {
                                         Analytics.shared.log(event: .home_tapped_IAP)
@@ -83,7 +99,7 @@ struct HomeViewHeader: View {
                                 .padding(.bottom, 10)
                         }
                     }.offset(x: -width * 0.25, y: -10)
-                }.frame(width: width * 0.8)
+                }.frame(width: width * (userModel.streakFreeze > 0 ? 0.85 : 0.8))
             }
         }.frame(width: width)
             .offset(y: -height * 0.1)
@@ -92,6 +108,6 @@ struct HomeViewHeader: View {
 
 struct HomeViewHeader_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewHeader(greeting: "", name: "", streakNumber: 0, showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true))
+        HomeViewHeader(greeting: "", name: "", streakNumber: .constant(0), showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true))
     }
 }
