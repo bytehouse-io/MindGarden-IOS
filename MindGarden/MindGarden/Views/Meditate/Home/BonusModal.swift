@@ -188,7 +188,7 @@ struct BonusModal: View {
         @State private var dailyCooldown = ""
         let width, height: CGFloat
         let video: Bool
-
+        @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
         var body: some View {
             ZStack(alignment: .center){
@@ -229,7 +229,7 @@ struct BonusModal: View {
                             .padding(.leading)
                             .neoShadow()
                     } else {
-                        Text(bonusModel.dailyInterval)
+                        Text("\(bonusModel.dailyInterval.stringFromTimeInterval())")
                             .foregroundColor(Clr.darkgreen)
                             .font(Font.mada(.bold, size: 30))
                             .minimumScaleFactor(0.5)
@@ -238,6 +238,11 @@ struct BonusModal: View {
                     }
 
                 }.padding()
+            }
+            .onReceive(timer) { time in
+                if bonusModel.dailyInterval > 0 {
+                    bonusModel.dailyInterval -= 1
+                }
             }
         }
     }

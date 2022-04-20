@@ -25,7 +25,7 @@ class BonusViewModel: ObservableObject {
     @Published var thirtyDayProgress: Double = 0.08
     @Published var longestStreak: Int = 0
     @Published var totalBonuses: Int = 0
-    @Published var dailyInterval: String = ""
+    @Published var dailyInterval: TimeInterval = 0
     @Published var bonusTimer: Timer? = Timer()
     @Published var progressiveTimer: Timer? = Timer()
     @Published var progressiveInterval: String = ""
@@ -45,24 +45,12 @@ class BonusViewModel: ObservableObject {
         self.userModel = userModel
     }
 
-    private func createDailyCountdown() {
-        self.bonusTimer?.invalidate()
-        self.bonusTimer = nil
-        dailyInterval = ""
-        var interval = TimeInterval()
-
+    func createDailyCountdown() {
         if dailyBonus == "" { // first daily bonus ever
-            interval = 86400
+            dailyInterval = 86400
         } else {
-            interval = formatter.date(from: dailyBonus)! - Date()
-        }
-
-        dailyInterval = interval.stringFromTimeInterval()
-        self.bonusTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
-            interval -= 1
-            dailyInterval = interval.stringFromTimeInterval()
-            if interval <= 0 {
-                timer.invalidate()
+            if let date = formatter.date(from: dailyBonus) {
+                dailyInterval = date - Date()
             }
         }
     }
