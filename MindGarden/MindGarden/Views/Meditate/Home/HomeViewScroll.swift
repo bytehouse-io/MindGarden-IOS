@@ -57,6 +57,8 @@ struct HomeViewScroll: View {
                                 HStack {
                                     if totalBonuses == 0 {
                                         Img.coin
+                                            .resizable()
+                                            .frame(width: 20)
                                             .font(.system(size: 22))
                                     } else {
                                         ZStack {
