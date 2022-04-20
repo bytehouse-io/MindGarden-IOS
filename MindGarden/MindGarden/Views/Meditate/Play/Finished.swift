@@ -408,6 +408,9 @@ struct Finished: View {
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
                 reward = model.getReward()
+                if userModel.isPotion || userModel.isChest {
+                    reward = reward * 3
+                }
                 userCoins += reward
                 gardenModel.save(key: "sessions", saveValue: session)
                 if model.shouldStreakUpdate {
