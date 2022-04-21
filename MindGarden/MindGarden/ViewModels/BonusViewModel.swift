@@ -26,7 +26,6 @@ class BonusViewModel: ObservableObject {
     @Published var longestStreak: Int = 0
     @Published var totalBonuses: Int = 0
     @Published var dailyInterval: TimeInterval = 0
-    @Published var bonusTimer: Timer? = Timer()
     @Published var progressiveTimer: Timer? = Timer()
     @Published var progressiveInterval: String = ""
     @Published var fiftyOffTimer: Timer? = Timer()

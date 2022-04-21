@@ -130,7 +130,8 @@ struct HomeViewScroll: View {
                                             .lineLimit(3)
                                             .minimumScaleFactor(0.05)
                                         if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
-                                            Text("Day \(bonusModel.streakNumber + 1) of 7")
+                                            let count = Meditation.allMeditations.filter { $0.belongsTo.lowercased() == model.featuredMeditation?.title.lowercased() }.count
+                                            Text("Day \(bonusModel.streakNumber + 1) of \(count)")
                                                 .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
                                                 .foregroundColor(Color.gray)
                                         }
