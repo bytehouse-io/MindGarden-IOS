@@ -13,6 +13,13 @@ struct BonusModal: View {
     @Binding var coins: Int
     @State private var showCoins: Bool = false
     @State private var streakCoins: Bool = false
+    
+    private enum animationPlace {
+        case button1, button2, button3
+    }
+    
+    @State private var place : animationPlace = .button1
+    
     var body: some View {
         GeometryReader { g in
         ZStack {
@@ -45,14 +52,12 @@ struct BonusModal: View {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
-                                    showCoins = true
+                                    place = .button1
+                                    playCoinAnimation()
                                     Analytics.shared.log(event: .home_claim_daily)
                                     bonusModel.saveDaily(plusCoins: 5)
                                     coins += 5
                                     bonusModel.totalBonuses -= 1
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        self.showCoins.toggle()
-                                    }
                                 }
 
                             } label: {
@@ -89,6 +94,8 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.sevenDayProgress >= 1.0 {
+                                            place = .button2
+                                            playCoinAnimation()
                                             streakCoins = true
                                             coins += 30
                                             Analytics.shared.log(event: .home_claim_seven)
@@ -109,6 +116,8 @@ struct BonusModal: View {
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if bonusModel.thirtyDayProgress >= 1.0 {
+                                            place = .button3
+                                            playCoinAnimation()
                                             self.streakCoins = true
                                             Analytics.shared.log(event: .home_claim_thirty)
                                             coins += 100
@@ -137,9 +146,17 @@ struct BonusModal: View {
             if showCoins {
                 LottieAnimationView(filename: "coins", loopMode: .playOnce)
                 .frame(height: 300)
-                .offset(y: -130)
+                .offset(x: place == .button1 ? 0 : 50 )
+                .offset(y: place == .button1 ? -130 : (place == .button2 ? 50 : 110))
             }
         }
+        }
+    }
+    
+    private func playCoinAnimation(){
+        showCoins = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.showCoins = false
         }
     }
     
