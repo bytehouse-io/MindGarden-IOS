@@ -110,7 +110,7 @@ struct HomeViewScroll: View {
                                 .cornerRadius(20)
                             }
                             .buttonStyle(BonusPress())
-                        }.padding(.top, 15)
+                        }.padding(.top, K.isSmall() ? 30 : 15)
                     }
                     
                     Button {} label: {
@@ -170,14 +170,12 @@ struct HomeViewScroll: View {
                                     Analytics.shared.log(event: .home_tapped_featured)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        DispatchQueue.main.async {
-                                            onboardingTime = false
-                                            model.selectedMeditation = model.featuredMeditation
-                                            if model.featuredMeditation?.type == .course {
-                                                viewRouter.currentPage = .middle
-                                            } else {
-                                                viewRouter.currentPage = .play
-                                            }
+                                        onboardingTime = false
+                                        model.selectedMeditation = model.featuredMeditation
+                                        if model.featuredMeditation?.type == .course {
+                                            viewRouter.currentPage = .middle
+                                        } else {
+                                            viewRouter.currentPage = .play
                                         }
                                     }
                                 }

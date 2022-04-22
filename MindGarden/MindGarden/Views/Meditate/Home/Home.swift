@@ -114,11 +114,13 @@ struct Home: View {
             }
         }
         .onAppear {
+//            storylyViewProgrammatic.openStory(storyGroupId: 42740)
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
+                
                 if launchedApp {
                     gardenModel.updateSelf()
                     launchedApp = false
@@ -154,10 +156,10 @@ struct Home: View {
         }
         .onAppearAnalytics(event: .screen_load_home)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("notification")))
-               { _ in
-                   mindfulNotifs = true
-                   activeSheet = .profile
-               }
+           { _ in
+               mindfulNotifs = true
+               activeSheet = .profile
+           }
     }
     
     func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {

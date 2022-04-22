@@ -38,7 +38,7 @@ class ProfileViewModel: ObservableObject {
         UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
         UserDefaults.standard.setValue(false, forKey: "isPro")
         UserDefaults.standard.setValue("", forKey: K.defaults.onboarding)
-        UserDefaults.standard.setValue("nature", forKey: "sound")
+        UserDefaults.standard.setValue("432hz", forKey: "sound")
         UserDefaults.standard.setValue(50, forKey: "coins")
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"

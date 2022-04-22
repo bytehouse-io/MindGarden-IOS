@@ -52,13 +52,20 @@ struct MiddleSelect: View {
                                         }.foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 16))
                                         .padding(.top)
-                                        .padding(.bottom, -20)
+                                        .padding(.bottom, -10)
                                     HStack(spacing: 0) {
-                                        model.selectedMeditation?.img
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: g.size.width/3.5, height: g.size.height/(K.isSmall() ? 4 : 5))
-                                            .padding(.horizontal, 10)
+                                        if model.selectedMeditation?.imgURL != "" {
+                                            UrlImageView(urlString: model.selectedMeditation?.imgURL ?? "")
+                                                .frame(width: g.size.width/3.5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                                .padding(.horizontal, 10)
+                                        } else {
+                                            model.selectedMeditation?.img
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: g.size.width/3.5, height: g.size.height/(K.isSmall() ? 4 : 5))
+                                                .padding(.horizontal, 10)
+                                        }
+                                  
                                         VStack(alignment: .leading) {
                                             Text(model.selectedMeditation?.title ?? "")
                                                 .foregroundColor(Clr.black2)

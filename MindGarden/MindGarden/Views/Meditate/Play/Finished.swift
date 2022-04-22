@@ -94,7 +94,7 @@ struct Finished: View {
                                                 Img.coin
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 20)
+                                                    .frame(height: 25)
                                                 Text("\(reward)!")
                                                     .font(Font.mada(.bold, size: 24))
                                                     .foregroundColor(.white)
@@ -156,7 +156,7 @@ struct Finished: View {
                                                 }.frame(width: g.size.width, height: 45)
                                                 .padding(.top, 10)
                                                 .zIndex(100)
-                                                .offset(y: sizeCategory > .large ? -60 : 0)
+                                                .offset(y: sizeCategory > .large ? -60 : K.isSmall() ? -15 : 0)
                                             }
                                         }.offset(y: !isOnboarding ? 0 : -25)
                                     }.offset(y: !isOnboarding ? 15 : -50)
@@ -170,7 +170,7 @@ struct Finished: View {
                                             .font(Font.mada(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
-                                        Text("With patience and mindfulness you were able to grow  \(userModel.modTitle())!")
+                                        Text("With patience and mindfulness you were able to grow \(userModel.modTitle())!")
                                             .font(Font.mada(.bold, size: 22))
                                             .lineLimit(3)
                                             .minimumScaleFactor(0.05)
@@ -190,84 +190,85 @@ struct Finished: View {
                                 Spacer()
                             }.offset(y: !isOnboarding ? 0 : -50)
                             Spacer()
-                                HStack {
-                                    Image(systemName: favorited ? "heart.fill" : "heart")
-                                        .font(.system(size: 36, weight: .bold))
-                                        .foregroundColor(favorited ? Color.red : Clr.black1)
-                                        .padding()
-                                        .padding(.leading)
-                                        .onTapGesture {
-                                            Analytics.shared.log(event: .finished_tapped_favorite)
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if let med = model.selectedMeditation {
-                                                model.favorite(selectMeditation: med)
-                                            }
-                                            favorited.toggle()
-                                        }
-                                    Image(systemName: "square.and.arrow.up")
-                                        .font(.system(size: 32, weight: .bold))
-                                        .foregroundColor(Clr.black1)
-                                        .onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            PHPhotoLibrary.requestAuthorization { (status) in
-                                                // No crash
-                                            }
-                                            let snap = self.takeScreenshot(origin: g.frame(in: .global).origin, size: g.size)
-                                            let myURL = URL(string: "https://mindgarden.io")
-                                            let objectToshare = [snap, myURL!] as [Any]
-                                            let activityVC = UIActivityViewController(activityItems: objectToshare, applicationActivities: nil)
-                                            UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-                                        }
-                                    Spacer()
-                                    Button {
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.yellow)
-                                            .padding(.horizontal)
-                                            .overlay(
-                                                HStack {
-                                                    Text("Finished")
-                                                        .foregroundColor(Color.black)
-                                                        .font(Font.mada(.bold, size: 22))
-                                                    Image(systemName: "arrow.right")
-                                                        .foregroundColor(Color.black)
-                                                        .font(.system(size: 22, weight: .bold))
-                                                }
-                                            )
-                                            .onTapGesture {
-                                                Analytics.shared.log(event: .finished_tapped_finished)
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                withAnimation {
-                                                    if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
-                                                        if Auth.auth().currentUser == nil {
-                                                            saveProgress.toggle()
-                                                        } else {
-                                                            if updatedStreak && model.shouldStreakUpdate {
-                                                                showStreak.toggle()
-                                                                updatedStreak = false
-                                                            } else {
-                                                                viewRouter.currentPage = .garden
-                                                            }
-                                                        }
-                                                    } else {
-                                                        if updatedStreak && model.shouldStreakUpdate {
-                                                            showStreak.toggle()
-                                                            updatedStreak = false
-                                                        } else {
-                                                            viewRouter.currentPage = .garden
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                    }.buttonStyle(BonusPress())
-                                        .zIndex(100)
-                                        .frame(width: g.size.width * 0.6, height: g.size.height/12)
-                                }.frame(width: g.size.width, height: g.size.height/8)
-                                .padding()
-                                .offset(y: 50)
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
-
+                    HStack {
+                        Image(systemName: favorited ? "heart.fill" : "heart")
+                            .font(.system(size: 32, weight: .bold))
+                            .foregroundColor(favorited ? Color.red : Clr.black1)
+                            .padding()
+                            .padding(.leading)
+                            .onTapGesture {
+                                Analytics.shared.log(event: .finished_tapped_favorite)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                if let med = model.selectedMeditation {
+                                    model.favorite(selectMeditation: med)
+                                }
+                                favorited.toggle()
+                            }
+                        Image(systemName: "square.and.arrow.up")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(Clr.black1)
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                PHPhotoLibrary.requestAuthorization { (status) in
+                                    // No crash
+                                }
+                                let snap = self.takeScreenshot(origin: g.frame(in: .global).origin, size: g.size)
+                                let myURL = URL(string: "https://mindgarden.io")
+                                let objectToshare = [snap, myURL!] as [Any]
+                                let activityVC = UIActivityViewController(activityItems: objectToshare, applicationActivities: nil)
+                                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                            }
+                        Spacer()
+                        Button {
+                        } label: {
+                            Capsule()
+                                .fill(Clr.yellow)
+                                .padding(.horizontal)
+                                .overlay(
+                                    HStack {
+                                        Text("Finished")
+                                            .foregroundColor(Color.black)
+                                            .font(Font.mada(.bold, size: 22))
+                                        Image(systemName: "arrow.right")
+                                            .foregroundColor(Color.black)
+                                            .font(.system(size: 22, weight: .bold))
+                                    }
+                                )
+                                .onTapGesture {
+                                    Analytics.shared.log(event: .finished_tapped_finished)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
+                                            if Auth.auth().currentUser == nil {
+                                                saveProgress.toggle()
+                                            } else {
+                                                if updatedStreak && model.shouldStreakUpdate {
+                                                    showStreak.toggle()
+                                                    updatedStreak = false
+                                                } else {
+                                                    viewRouter.currentPage = .garden
+                                                }
+                                            }
+                                        } else {
+                                            if updatedStreak && model.shouldStreakUpdate {
+                                                showStreak.toggle()
+                                                updatedStreak = false
+                                            } else {
+                                                viewRouter.currentPage = .garden
+                                            }
+                                        }
+                                    }
+                                }
+                        }
+                        .zIndex(100)
+                        .frame(width: g.size.width * 0.6, height: g.size.height/16)
+                        .buttonStyle(BonusPress())
+                    }.frame(width: g.size.width, height: g.size.height/10)
+                    .background(Clr.darkWhite)
+                    .padding()
+                    .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? 9 : 4))
                     if showUnlockedModal || saveProgress {
                         Color.black
                             .opacity(0.55)
@@ -414,6 +415,7 @@ struct Finished: View {
                         bonusModel.updateStreak()
                     }
                 }
+                
                 //Log Analytics
                 #if !targetEnvironment(simulator)
                  Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])

@@ -63,7 +63,7 @@ class MeditationViewModel: ObservableObject {
         $selectedMeditation
             .sink { [unowned self] value in 
                 if value?.type == .course {
-                    selectedMeditations = Meditation.allMeditations.filter { med in med.belongsTo == value?.title }
+                    selectedMeditations = Meditation.allMeditations.filter { med in med.belongsTo == value?.title }.sorted(by: { med1, med2 in med1.id < med2.id  })
                 }
                 secondsRemaining = value?.duration ?? 0
                 totalTime = secondsRemaining
@@ -78,11 +78,11 @@ class MeditationViewModel: ObservableObject {
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
         if Calendar.current.component( .hour, from:Date() ) < 16 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
-            med.id != 27 && med.id != 54 && med.id != 39 }
+                med.id != 27 && med.id != 54 && med.id != 39 && med.category != .sleep}
         }
         if Calendar.current.component(.hour, from: Date()) > 11 { // not morning
             filtedMeds = filtedMeds.filter { med in
-                med.id != 53 && med.id != 49
+                med.id != 53 && med.id != 49 && med.id != 84
             }
         }
         if UserDefaults.standard.bool(forKey: "intermediateCourse") {
@@ -90,22 +90,28 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
             }
         }
-        
-        if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
+
+        if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
+                if UserDefaults.standard.integer(forKey: "launchNumber") <= 6 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
                 } else {
-                    setFeaturedReason()
-                }
-            } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                if UserDefaults.standard.integer(forKey: "launchNumber") <= 5 {
-                    featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
-                } else {
-                    setFeaturedReason()
+                    if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
+                        featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 103 })
+                    } else {
+                        setFeaturedReason()
+                    }
                 }
             } else {
-                setFeaturedReason()
+                if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
+                    featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 103 })
+                } else {
+                    if UserDefaults.standard.integer(forKey: "launchNumber") <= 18 && !UserDefaults.standard.bool(forKey: "intermediateCourse") {
+                        featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
+                    } else {
+                        setFeaturedReason()
+                    }
+                }
             }
         } else {
             if UserDefaults.standard.integer(forKey: "launchNumber") <= 3 {
@@ -184,7 +190,7 @@ class MeditationViewModel: ObservableObject {
             }
         }
         
-        if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
+        if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 22 && med.type != .weekly}
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {

@@ -339,7 +339,7 @@ extension AuthenticationViewModel {
                 } else {
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
-                UserDefaults.standard.setValue("nature", forKey: "sound")
+                UserDefaults.standard.setValue("432hz", forKey: "sound")
                 goToHome()
             }
         }
@@ -456,7 +456,7 @@ extension AuthenticationViewModel {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
                     UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
-                    UserDefaults.standard.setValue("nature", forKey: "sound")
+                    UserDefaults.standard.setValue("432hz", forKey: "sound")
                     self.userModel.getSelectedPlant()
                 }
             }

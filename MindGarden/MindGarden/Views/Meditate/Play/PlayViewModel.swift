@@ -81,14 +81,17 @@ extension MeditationViewModel {
                         case 13:
                             UserDefaults.standard.setValue(true, forKey: "day7")
                             OneSignal.sendTag("day7", value: "true")
+                        case 101:
+                            UserDefaults.standard.setValue(true, forKey: "10days")
                         default: break
                         }
                         
-                        if UserDefaults.standard.bool(forKey: "day5") &&  UserDefaults.standard.bool(forKey: "day6") &&  UserDefaults.standard.bool(forKey: "day7") {
+                        if UserDefaults.standard.bool(forKey: "day7") {
                             UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
                             UserDefaults.standard.setValue(true, forKey: "unlockStrawberry")
                             getFeaturedMeditation()
                         }
+                        
                         if self.selectedMeditation?.id == 21 {
                             UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
                             getFeaturedMeditation()

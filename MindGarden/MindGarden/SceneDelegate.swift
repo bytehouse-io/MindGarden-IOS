@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
-            UserDefaults.standard.setValue("nature", forKey: "sound")
+            UserDefaults.standard.setValue("432hz", forKey: "sound")
             UserDefaults.standard.setValue(50, forKey: "coins")
             UserDefaults.standard.setValue(2, forKey: "frequency")
             UserDefaults.standard.setValue(["gratitude", "smiling", "loving", "breathing", "present"], forKey: "notifTypes")
@@ -123,8 +123,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         if let _ = UserDefaults.standard.array(forKey: "storySegments") as? [String] {} else {
-            UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tales 1"], forKey: "storySegments")
+            UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tale 1"], forKey: "storySegments")
         }
+        UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tale 1", "New Users"], forKey: "storySegments")
+
         
         StorylyManager.updateStories()
     }
