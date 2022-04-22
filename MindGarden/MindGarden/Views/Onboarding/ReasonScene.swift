@@ -9,7 +9,7 @@ import SwiftUI
 import OneSignal
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ReasonScene: View {
-    @State var selected: String = ""
+    @State var selected: [ReasonItem] = []
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
@@ -39,30 +39,19 @@ struct ReasonScene: View {
                                 .padding(.top, 20)
                                 .padding(.horizontal)
                                 .frame(height: 50)
-                            SelectionRow(width: width, height: height, title: "Sleep better", img: Img.moon, selected: $selected).padding(.top, 30)
-                            SelectionRow(width: width, height: height, title: "Get more focused", img: Img.target, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Managing Stress & Anxiety", img: Img.heart, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Just trying it out", img: Img.magnifyingGlass, selected: $selected)
+                                .padding(.bottom, 30)
+                            ForEach(reasonList) { reason in
+                                SelectionRow(width: width, height: height, reason: reason, selected: $selected)
+                            }
                             Button {
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                if selected != "" {
-                                    switch selected {
-                                        case "Sleep better":
-                                            OneSignal.sendTag("sleepBetter", value: "true")
-                                            Analytics.shared.log(event: .reason_tapped_sleep)
-                                        case "Get more focused":
-                                            OneSignal.sendTag("focused", value: "true")
-                                            Analytics.shared.log(event: .reason_tapped_focus)
-                                        case "Managing Stress & Anxiety":
-                                            OneSignal.sendTag("anxiety", value: "true")
-                                            Analytics.shared.log(event: .reason_tapped_stress)
-                                        case "Just trying it out":
-                                            OneSignal.sendTag("trying", value: "true")
-                                            Analytics.shared.log(event: .reason_tapped_trying)
-                                        default:
-                                            break
-                                        }
+                                
+                                selected.forEach { item in
+                                    OneSignal.sendTag(item.tag, value: "true")
+                                    Analytics.shared.log(event: item.event)
+                                }
+                                if selected.count > 0 {
                                     withAnimation(.easeOut(duration: 0.5)) {
                                         DispatchQueue.main.async {
                                             viewRouter.progressValue += 0.1
@@ -94,37 +83,44 @@ struct ReasonScene: View {
 
     struct SelectionRow: View {
         var width, height: CGFloat
-        var title: String
-        var img: Image
-        @Binding var selected: String
+        @State var reason: ReasonItem
+        @Binding var selected: [ReasonItem]
         @Environment(\.colorScheme) var colorScheme
 
         var body: some View {
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
-                    selected = title
-                    UserDefaults.standard.setValue(title, forKey: "reason")
+                    if selected.contains(where: { $0.id == reason.id }) {
+                        selected.removeAll(where: { $0.id == reason.id })
+                        return
+                    }
+                    
+                    if selected.count >= 3 {
+                        selected.removeFirst()
+                    }
+                    selected.append(reason)
+                    UserDefaults.standard.setValue(selected.map { $0.title }, forKey: "reason")
                 }
             } label: {
                 ZStack {
                     Rectangle()
-                        .fill(selected == title ? Clr.yellow : Clr.darkWhite)
+                        .fill(selected.contains(where: { $0.id == reason.id }) ? Clr.yellow : Clr.darkWhite)
                         .cornerRadius(15)
                         .frame(height: height * (K.isSmall() ? 0.11 : 0.125))
                         .overlay(RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Clr.darkgreen, lineWidth: selected == title ? 3 : 0))
+                                    .stroke(Clr.darkgreen, lineWidth: selected.contains(where: { $0.id == reason.id }) ? 3 : 0))
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                     HStack(spacing: 50) {
-                        Text(title)
+                        Text(reason.title)
                             .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
-                            .foregroundColor(selected == title ? (colorScheme == .dark ? Color.black : Clr.black1 ): Clr.black1)
+                            .foregroundColor(selected.contains(where: { $0.id == reason.id }) ? (colorScheme == .dark ? Color.black : Clr.black1 ): Clr.black1)
                             .padding()
                             .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
                             .lineLimit(2)
                             .minimumScaleFactor(0.05)
-                        img
+                        reason.img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.15)
