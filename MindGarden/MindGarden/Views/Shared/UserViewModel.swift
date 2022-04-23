@@ -21,6 +21,9 @@ class UserViewModel: ObservableObject {
     @Published var potion = ""
     @Published var chest = ""
     @Published var triggerAnimation = false
+    @Published var timeRemaining =  TimeInterval()
+    @Published var isPotion : Bool = false
+    @Published var isChest : Bool = false
     
     private var validationCancellables: Set<AnyCancellable> = []
 
@@ -38,6 +41,19 @@ class UserViewModel: ObservableObject {
     init() {
         getSelectedPlant()
         getGreeting()
+        updateTimeRemaining()
+    }
+    
+    func updateTimeRemaining() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+        if let date = dateFormatter.date(from: potion), date > Date() {
+            timeRemaining = date - Date()
+            isPotion = timeRemaining > 0
+        } else if let date = dateFormatter.date(from: chest), date > Date() {
+            timeRemaining = date - Date()
+            isChest = timeRemaining > 0
+        }
     }
 
     func getSelectedPlant() {
@@ -120,6 +136,8 @@ class UserViewModel: ObservableObject {
                             })
                         })
                     }
+                    
+                    self.updateTimeRemaining()
                 }
             }
         } else {
@@ -152,7 +170,8 @@ class UserViewModel: ObservableObject {
             }
             self.streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
             
-            userCoins = UserDefaults.standard.integer(forKey: "coins") 
+            userCoins = UserDefaults.standard.integer(forKey: "coins")
+            self.updateTimeRemaining()
         }
 
         //set selected plant

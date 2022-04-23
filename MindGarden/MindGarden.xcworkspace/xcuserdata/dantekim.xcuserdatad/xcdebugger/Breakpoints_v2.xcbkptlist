@@ -14,8 +14,8 @@
             filePath = "MindGarden/ViewModels/BonusViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
             landmarkName = "calculateStreak(lastStreakDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -33,6 +33,22 @@
             startingLineNumber = "28"
             endingLineNumber = "28"
             landmarkName = "storylyActionClicked(_:rootViewController:story:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3C5907AF-B3DB-486F-BF2B-9AC4E47E4206"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MindGarden/ViewModels/BonusViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
+            landmarkName = "updateTips(tip:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

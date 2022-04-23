@@ -25,8 +25,7 @@ class BonusViewModel: ObservableObject {
     @Published var thirtyDayProgress: Double = 0.08
     @Published var longestStreak: Int = 0
     @Published var totalBonuses: Int = 0
-    @Published var dailyInterval: String = ""
-    @Published var bonusTimer: Timer? = Timer()
+    @Published var dailyInterval: TimeInterval = 0
     @Published var progressiveTimer: Timer? = Timer()
     @Published var progressiveInterval: String = ""
     @Published var fiftyOffTimer: Timer? = Timer()
@@ -47,24 +46,12 @@ class BonusViewModel: ObservableObject {
         self.gardenModel = gardenModel
     }
 
-    private func createDailyCountdown() {
-        self.bonusTimer?.invalidate()
-        self.bonusTimer = nil
-        dailyInterval = ""
-        var interval = TimeInterval()
-
+    func createDailyCountdown() {
         if dailyBonus == "" { // first daily bonus ever
-            interval = 86400
+            dailyInterval = 86400
         } else {
-            interval = formatter.date(from: dailyBonus)! - Date()
-        }
-
-        dailyInterval = interval.stringFromTimeInterval()
-        self.bonusTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
-            interval -= 1
-            dailyInterval = interval.stringFromTimeInterval()
-            if interval <= 0 {
-                timer.invalidate()
+            if let date = formatter.date(from: dailyBonus) {
+                dailyInterval = date - Date()
             }
         }
     }
@@ -286,19 +273,22 @@ class BonusViewModel: ObservableObject {
     }
     
     private func updateTips(tip: String) {
+        var segments = storySegments
+        segments = storySegments.filter { str in return !str.lowercased().contains("tip")  }
         for story in storySegments {
-            var segments = Set<String>()
-            if story.lowercased().contains("tip")  {
-                segments = storySegments.filter { str in  return str.lowercased().contains("tip")  }
+            print(story, "story")
+            if story.lowercased().contains("tip") {
+                
             }
-            segments.insert(tip)
-            UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
-            storySegments = segments
         }
+        segments.insert(tip)
+        UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
+        storySegments = segments
         StorylyManager.refresh()
     }
     
     private func updateLaunchNumber() {
+        updateTips(tip: "Tip Tile")
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
@@ -308,6 +298,19 @@ class BonusViewModel: ObservableObject {
         } else if launchNum >= 2 && !UserDefaults.standard.bool(forKey: "remindersOn") {
             UserDefaults.standard.setValue(true, forKey: "remindersOn")
             updateTips(tip: "Tip Reminders")
+        } else if launchNum == 3 && !UserDefaults.standard.bool(forKey: "allMeditations") {
+            UserDefaults.standard.setValue(true, forKey: "allMeditations")
+            updateTips(tip: "Tip Meditations")
+        } else if launchNum == 30 {
+            var storySegs = UserDefaults.standard.array(forKey: "storySegments") as? [String]
+            storySegs?.removeAll(where: { str in
+                str.lowercased().contains("new users")
+            })
+            UserDefaults.standard.setValue(storySegments, forKey: "storySegments")
+            if let segs = storySegs {
+                storySegments = Set(segs)
+                StorylyManager.refresh()
+            }
         }
        
         

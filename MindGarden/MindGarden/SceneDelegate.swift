@@ -107,10 +107,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         numberOfMeds = Int.random(in: 685..<711)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)
-        DispatchQueue.main.async {
-            SceneDelegate.bonusModel.bonusTimer?.invalidate()
-            SceneDelegate.bonusModel.bonusTimer = nil
-        }
         SceneDelegate.bonusModel.updateBonus()
     }
 

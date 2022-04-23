@@ -54,7 +54,7 @@ class StorylyManager: StorylyDelegate {
                        storySegments?.removeAll(where: { str in
                            str.lowercased().contains("bijan")
                        })
-                   } else if story.title.lowercased() == "#3" || story.title.lowercased().contains("tip") {
+                   } else if story.title.lowercased() == "#4" || story.title.lowercased().contains("tip") {
                        Analytics.shared.log(event: .story_tip_opened)
                        storySegments?.removeAll(where: { str in
                            str.lowercased().contains("tip")

@@ -40,6 +40,8 @@ struct Home: View {
     @State private var coins = 0
     @State private var attempts = 0
     @State var activeSheet: Sheet?
+    @State private var showAlert = false
+    @State private var alertMsg = ""
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -80,7 +82,7 @@ struct Home: View {
                     NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
-                    IAPModal(shown: $showIAP, fromPage: "home")
+                    IAPModal(shown: $showIAP, fromPage: "home", alertMsg: $alertMsg, showAlert: $showAlert)
                         .offset(y: showIAP ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showIAP)
@@ -107,6 +109,9 @@ struct Home: View {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Success"), message: Text(alertMsg), dismissButton: .default(Text("Ok")))
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
         { _ in
             if !onboardingTime {
@@ -129,10 +134,12 @@ struct Home: View {
                     UserDefaults.standard.setValue(num, forKey: "shownFive")
                     model.getFeaturedMeditation()
                 }
+                
                 if userWentPro {
                     wentPro = userWentPro
                     userWentPro = false
                 }
+                
                 numberOfMeds += Int.random(in: -3 ... 3)
                 //handle update modal or deeplink
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
