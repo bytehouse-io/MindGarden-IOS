@@ -37,6 +37,8 @@ struct ContentView: View {
     @State var selectedPopupOption: PlusMenuType = .none
     
     @State private var showSplash = true
+    @State private var goShinny = false
+    @State private var progressWidth = 0.0
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -220,10 +222,33 @@ struct ContentView: View {
                                             Rectangle().frame(width: geometry.size.width - 50 , height: 20)
                                                 .opacity(0.3)
                                                 .foregroundColor(Clr.darkWhite)
-                                            Rectangle().frame(width: min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50), height: 20)
+                                            Rectangle().frame(width:progressWidth, height: 20)
                                                 .foregroundColor(Clr.brightGreen)
                                                 .animation(.linear)
                                                 .neoShadow()
+                                            Rectangle().frame(width: progressWidth, height: 20)
+                                                .foregroundColor(.white.opacity(0.6))
+                                                .animation(.linear)
+                                                .mask(
+                                                    Capsule()
+                                                        .fill(LinearGradient(gradient: .init(colors: [.clear,.white,.clear]), startPoint: .top, endPoint: .bottom))
+                                                        .rotationEffect(.init(degrees:90))
+                                                        .offset(x: goShinny ? progressWidth : -progressWidth)
+                                                )
+                                                .onChange(of: viewRouter.progressValue) { _ in
+                                                    self.goShinny = false
+                                                    let duration = progressWidth * 0.01
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + duration/2 ) {
+                                                        progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50)
+                                                    }
+                                                    withAnimation(.easeOut(duration: duration)){
+                                                        self.goShinny = true
+                                                        
+                                                    }
+                                                }
+                                                .onAppear {
+                                                    progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50)
+                                                }
                                         }.cornerRadius(45.0)
                                             .padding()
                                             .oldShadow()
