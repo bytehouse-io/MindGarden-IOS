@@ -119,7 +119,12 @@ struct Home: View {
             }
         }
         .onAppear {
-//            storylyViewProgrammatic.openStory(storyGroupId: 42740)
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") {
+                let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
+                storylyViewProgrammatic.resume()
+                UserDefaults.standard.setValue(true, forKey: "firstStory")
+            }
+            
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
@@ -157,7 +162,7 @@ struct Home: View {
                     showUpdateModal = true
                 }
                                 
-                coins = userCoins
+                coins = userModel.coins
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
         }

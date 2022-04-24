@@ -53,7 +53,7 @@ struct Finished: View {
             ZStack {
                 GeometryReader { g in
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
-                    ScrollView {
+                    ScrollView(showsIndicators: false) {
                         VStack {
                             ZStack {
                                 Rectangle()
@@ -248,6 +248,7 @@ struct Finished: View {
                                                     showStreak.toggle()
                                                     updatedStreak = false
                                                 } else {
+                                                    
                                                     viewRouter.currentPage = .garden
                                                 }
                                             }
@@ -264,9 +265,9 @@ struct Finished: View {
                         }
                         .zIndex(100)
                         .frame(width: g.size.width * 0.6, height: g.size.height/16)
-                        .buttonStyle(BonusPress())
+                        .rightShadow()
                     }.frame(width: g.size.width, height: g.size.height/10)
-                    .background(Clr.darkWhite)
+                    .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
                     .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? 9 : 4))
                     if showUnlockedModal || saveProgress {
@@ -369,27 +370,40 @@ struct Finished: View {
                     }
                 }
                 
-                //unlock cherry blossom
-                var dateComponents = DateComponents()
-                dateComponents.month = 03
-                dateComponents.day = 05
-                dateComponents.year = 2022
-                let userCalendar = Calendar(identifier: .gregorian)
-                let mar5 = userCalendar.date(from: dateComponents)
-                var dateComponents2 = DateComponents()
-                dateComponents2.month = 5
-                dateComponents2.day = 10
-                dateComponents2.year = 2022
-                let Apr10 = userCalendar.date(from: dateComponents2)
-
-                if Date.isBetween(mar5!, and: Apr10!) && !UserDefaults.standard.bool(forKey: "cherry") {
-                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-                        p.title == "Cherry Blossoms"
-                    })
-                    userModel.buyPlant(unlockedStrawberry: true)
-                    UserDefaults.standard.setValue(true, forKey: "cherry")
+                var session = [String: String]()
+                session[K.defaults.plantSelected] = userModel.selectedPlant?.title
+                session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
+                session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+                reward = model.getReward()
+                if userModel.isPotion || userModel.isChest {
+                    reward = reward * 3
                 }
+                userModel.coins += reward
+                gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
+                    if model.shouldStreakUpdate {
+                        bonusModel.updateStreak()
+                    }
+                    //unlock cherry blossom
+                    var dateComponents = DateComponents()
+                    dateComponents.month = 03
+                    dateComponents.day = 05
+                    dateComponents.year = 2022
+                    let userCalendar = Calendar(identifier: .gregorian)
+                    let mar5 = userCalendar.date(from: dateComponents)
+                    var dateComponents2 = DateComponents()
+                    dateComponents2.month = 5
+                    dateComponents2.day = 10
+                    dateComponents2.year = 2022
+                    let Apr10 = userCalendar.date(from: dateComponents2)
 
+                    if Date.isBetween(mar5!, and: Apr10!) && !UserDefaults.standard.bool(forKey: "cherry") {
+                        userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                            p.title == "Cherry Blossoms"
+                        })
+                        userModel.buyPlant(unlockedStrawberry: true)
+                        UserDefaults.standard.setValue(true, forKey: "cherry")
+                    }
+                }
                 //num times med
                 var num = UserDefaults.standard.integer(forKey: "numMeds")
                 num += 1
@@ -404,21 +418,10 @@ struct Finished: View {
                     UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                     isOnboarding = true
                 }
-                var session = [String: String]()
-                session[K.defaults.plantSelected] = userModel.selectedPlant?.title
-                session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
-                session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
-                reward = model.getReward()
-                if userModel.isPotion || userModel.isChest {
-                    reward = reward * 3
-                }
-                userCoins += reward
-                gardenModel.save(key: "sessions", saveValue: session) {
-                    if model.shouldStreakUpdate {
-                        bonusModel.updateStreak()
-                    }
-                }
                 
+         
+             
+
                 //Log Analytics
                 #if !targetEnvironment(simulator)
                  Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])

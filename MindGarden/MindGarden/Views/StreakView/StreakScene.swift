@@ -85,7 +85,7 @@ struct StreakScene: View {
                 UserDefaults.standard.setValue(false, forKey: "unlockStrawberry")
                 Analytics.shared.log(event: .onboarding_claimed_strawberry)
                 userModel.willBuyPlant = Plant.plants.first(where: { $0.title == "Strawberry" })
-                userCoins += 150
+                userModel.coins += 150
                 userModel.buyPlant(unlockedStrawberry: true)
                 userModel.triggerAnimation = true
             }

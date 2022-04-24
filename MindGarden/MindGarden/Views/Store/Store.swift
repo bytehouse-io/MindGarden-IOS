@@ -153,7 +153,7 @@ struct Store: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 25)
                                     .padding(5)
-                                Text(String(userCoins))
+                                Text(String(userModel.coins))
                                     .font(Font.mada(.semiBold, size: 24))
                                     .foregroundColor(Clr.black1)
                             }.padding(.bottom, -10)

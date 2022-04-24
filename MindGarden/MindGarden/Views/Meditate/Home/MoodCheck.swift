@@ -77,6 +77,7 @@ struct MoodCheck: View {
     @Binding var showPopUp: Bool
     @State var moodSelected: Mood = .none
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
 
     ///Ashvin : Binding variable for pass animation flag
     @Binding var PopUpIn: Bool
@@ -142,7 +143,7 @@ struct MoodCheck: View {
                                     UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
                                     showPopupWithAnimation {}
                                 }
-                                gardenModel.save(key: "moods", saveValue: moodSelected.title)
+                                gardenModel.save(key: "moods", saveValue: moodSelected.title, coins: userModel.coins)
                             }
                         }, moodSelected: moodSelected,showRecs: $showRecs).padding(.bottom)
     

@@ -47,49 +47,59 @@ class StorylyManager: StorylyDelegate {
                          storyComponent: Storyly.StoryComponent?) {
            if let story = story {
                if !story.seen {
+                   print("logging", story.title)
+                   let components = story.title.components(separatedBy: " ")
                    Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
-                   var storySegments = UserDefaults.standard.array(forKey: "storySegments") as? [String]
+                   var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
                    if story.title.lowercased().contains("bijan")  {
                        Analytics.shared.log(event: .story_bijan_opened)
-                       storySegments?.removeAll(where: { str in
+                       storyArray?.removeAll(where: { str in
                            str.lowercased().contains("bijan")
                        })
+                       updateComps(components: components, segs: storyArray)
                    } else if story.title.lowercased() == "#4" || story.title.lowercased().contains("tip") {
                        Analytics.shared.log(event: .story_tip_opened)
-                       storySegments?.removeAll(where: { str in
+                       storyArray?.removeAll(where: { str in
                            str.lowercased().contains("tip")
                        })
-                       let unique = Array(Set(storySegments ?? [""]))
+                       storySegments = Set(storyArray ?? [""])
+                       StorylyManager.refresh()
+//                       storylyViewProgrammatic.dismiss(animated: true)
+                       let unique = Array(Set(storyArray ?? [""]))
                        UserDefaults.standard.setValue(unique, forKey: "storySegments")
                        return
                    } else if story.title.lowercased().contains("quotes") {
                        Analytics.shared.log(event: .story_quote_opened)
-                       storySegments?.removeAll(where: { str in
+                       storyArray?.removeAll(where: { str in
                            str.lowercased().contains("quotes")
                        })
+                       updateComps(components: components, segs: storyArray)
                    } else if story.title.lowercased().contains("tale") {
                        Analytics.shared.log(event: .story_comic_opened)
-                       storySegments?.removeAll(where: { str in
+                       storyArray?.removeAll(where: { str in
                            str.lowercased().contains("tale")
                        })
+                       updateComps(components: components, segs: storyArray)
                    } else if story.title.lowercased().contains("quotes") {
                        Analytics.shared.log(event: .story_quote_opened)
                    } else if story.title.lowercased().contains("journal") {
                        Analytics.shared.log(event: .story_journal_opened)
                    }
 
-                   let components = story.title.components(separatedBy: " ")
-                   if let num = Int(components[1]) {
-                       let count = num + 1
-                       let finalStr = components[0] + " " + String(count)
-                       storySegments?.append(finalStr)
-                       let unique = Array(Set(storySegments ?? [""]))
-                       UserDefaults.standard.setValue(unique, forKey: "storySegments")
-                   }
+          
+                   let unique = Array(Set(storyArray ?? [""]))
+                   UserDefaults.standard.setValue(unique, forKey: "storySegments")
                }
            }
        }
-    
+    private func updateComps(components: [String], segs: [String]?) {
+        var segments = segs
+        if let num = Int(components[1]) {
+            let count = num + 1
+            let finalStr = components[0] + " " + String(count)
+            segments?.append(finalStr)
+        }
+    }
     static func updateStories() {
         let formatter: DateFormatter = {
             let formatter = DateFormatter()
@@ -115,9 +125,8 @@ class StorylyManager: StorylyDelegate {
                 StorylyManager.updateSegments(segs: newSegments)
             }
         } else {
-//            UserDefaults.standard.setValue(false, forKey: "openedStory")
-            if let oldSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
+            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+//                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: oldSegments)
             }
         }

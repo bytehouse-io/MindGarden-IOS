@@ -93,6 +93,15 @@ struct ReasonScene: View {
                 withAnimation {
                     if selected.contains(where: { $0.id == reason.id }) {
                         selected.removeAll(where: { $0.id == reason.id })
+                        if reason.title == "Sleep better" {
+                            if selected.count == 1 {
+                                UserDefaults.standard.setValue("Sleep better", forKey: "reason")
+                            }
+                        } else if reason.title == "Just trying it out" {
+                            if selected.count == 1 {
+                                UserDefaults.standard.setValue("Just trying it out", forKey: "reason")
+                            }
+                        }
                         return
                     }
                     
@@ -100,7 +109,18 @@ struct ReasonScene: View {
                         selected.removeFirst()
                     }
                     selected.append(reason)
-                    UserDefaults.standard.setValue(selected.map { $0.title }, forKey: "reason")
+                    
+                    if reason.title == "Sleep better" {
+                        if selected.count == 1 {
+                            UserDefaults.standard.setValue("Sleep better", forKey: "reason")
+                        }
+                    } else if reason.title == "Just trying it out" {
+                        if selected.count == 1 {
+                            UserDefaults.standard.setValue("Just trying it out", forKey: "reason")
+                        }
+                    } else {
+                        UserDefaults.standard.setValue(reason.title, forKey: "reason")
+                    }
                 }
             } label: {
                 ZStack {

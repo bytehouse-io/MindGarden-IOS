@@ -83,13 +83,14 @@ struct HomeViewHeader: View {
                                     .oldShadow()
                                 HStack {
                                     Text("Streak: ")
+                                    
                                         .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                         .font(Font.mada(.medium, size: 21))
                                     + Text("\(streakNumber)")
                                         .font(Font.mada(.semiBold, size: 22))
                                         .foregroundColor(Clr.darkgreen)
                                 }.frame(height: 30, alignment: .bottom)
-                                PlusCoins()
+                                PlusCoins(coins: $userModel.coins)
                                     .onTapGesture {
                                         Analytics.shared.log(event: .home_tapped_IAP)
                                         withAnimation { showIAP.toggle() }

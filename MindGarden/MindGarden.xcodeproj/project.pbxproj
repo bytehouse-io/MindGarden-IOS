@@ -44,10 +44,10 @@
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		8894E73B27FA809F00234466 /* IAPModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894E73A27FA809F00234466 /* IAPModal.swift */; };
+		88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */ = {isa = PBXBuildFile; productRef = 88A6FABF2814A9B500B88BEF /* Storyly */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
-		88D4C5D327F63C0A00CBB956 /* Storyly in Frameworks */ = {isa = PBXBuildFile; productRef = 88D4C5D227F63C0A00CBB956 /* Storyly */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
 		88D4C5D927FA468800CBB956 /* yogi.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D4C5D827FA468700CBB956 /* yogi.json */; };
@@ -454,7 +454,7 @@
 			files = (
 				FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */,
 				88F7528727CABBB2004E86D4 /* Paywall in Frameworks */,
-				88D4C5D327F63C0A00CBB956 /* Storyly in Frameworks */,
+				88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
 				558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */,
 			);
@@ -1056,7 +1056,7 @@
 			packageProductDependencies = (
 				FE39A0B4277116CC007A3E82 /* OneSignal */,
 				88F7528627CABBB2004E86D4 /* Paywall */,
-				88D4C5D227F63C0A00CBB956 /* Storyly */,
+				88A6FABF2814A9B500B88BEF /* Storyly */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -1142,7 +1142,7 @@
 			packageReferences = (
 				FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */,
-				88D4C5D127F63C0A00CBB956 /* XCRemoteSwiftPackageReference "storyly-ios" */,
+				88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */,
 			);
 			productRefGroup = FEB6AF93265D95F500224BFD /* Products */;
 			projectDirPath = "";
@@ -2041,12 +2041,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		88D4C5D127F63C0A00CBB956 /* XCRemoteSwiftPackageReference "storyly-ios" */ = {
+		88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Netvent/storyly-ios";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.19.4;
 			};
 		};
 		88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */ = {
@@ -2069,9 +2069,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		88D4C5D227F63C0A00CBB956 /* Storyly */ = {
+		88A6FABF2814A9B500B88BEF /* Storyly */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88D4C5D127F63C0A00CBB956 /* XCRemoteSwiftPackageReference "storyly-ios" */;
+			package = 88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */;
 			productName = Storyly;
 		};
 		88F7528627CABBB2004E86D4 /* Paywall */ = {

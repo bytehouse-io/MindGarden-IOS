@@ -104,16 +104,16 @@ class BonusViewModel: ObservableObject {
     }
 
     func saveDaily(plusCoins: Int) {
-        userCoins += plusCoins
+        userModel.coins += plusCoins
         dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
         createDailyCountdown()
         UserDefaults.standard.setValue(self.dailyBonus, forKey: K.defaults.dailyBonus)
-        UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
         if let email = Auth.auth().currentUser?.email {
                 self.db.collection(K.userPreferences).document(email).updateData([
                     //TODO turn this into userdefault
                     K.defaults.dailyBonus: self.dailyBonus,
-                    K.defaults.coins: userCoins
+                    K.defaults.coins: userModel.coins
                 ]) { (error) in
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
@@ -122,20 +122,20 @@ class BonusViewModel: ObservableObject {
                     }
                 }
         } else {
-            UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
             UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
         }
     }
 
     func saveSeven() {
-        userCoins += 30
+        userModel.coins += 30
         sevenDay += 1
         UserDefaults.standard.setValue(sevenDay, forKey: K.defaults.seven)
-        UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
         if let email = Auth.auth().currentUser?.email {
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.seven: sevenDay,
-                K.defaults.coins: userCoins
+                K.defaults.coins: userModel.coins
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -145,21 +145,21 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
             UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
             self.calculateProgress()
         }
     }
 
     func saveThirty() {
-        userCoins += 100
+        userModel.coins += 100
         thirtyDay += 1
         UserDefaults.standard.setValue(thirtyDay, forKey: K.defaults.thirty)
-        UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
         if let email = Auth.auth().currentUser?.email {
             self.db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.thirty: thirtyDay,
-                K.defaults.coins: userCoins
+                K.defaults.coins: userModel.coins
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -169,7 +169,7 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
             UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
             self.calculateProgress()
         }
@@ -281,6 +281,7 @@ class BonusViewModel: ObservableObject {
                 
             }
         }
+        
         segments.insert(tip)
         UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
         storySegments = segments
@@ -288,7 +289,6 @@ class BonusViewModel: ObservableObject {
     }
     
     private func updateLaunchNumber() {
-        updateTips(tip: "Tip Tile")
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
@@ -435,7 +435,7 @@ class BonusViewModel: ObservableObject {
         if day == dates.count {
             return
         } else {
-            gardenModel.save(key: "sessions", saveValue: session, date: dates[day], freeze: true) { [self] in
+            gardenModel.save(key: "sessions", saveValue: session, date: dates[day], freeze: true, coins: userModel.coins) { [self] in
                 let day = day + 1
                 recSaveFreeze(day: day, dates: dates, session: session)
             }

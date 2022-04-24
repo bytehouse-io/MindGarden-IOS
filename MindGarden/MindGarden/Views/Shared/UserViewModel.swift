@@ -12,7 +12,6 @@ import FirebaseFirestore
 import Purchases
 import WidgetKit
 
-var userCoins: Int = 0
 class UserViewModel: ObservableObject {
     @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge)]
     @Published var selectedPlant: Plant?
@@ -24,6 +23,7 @@ class UserViewModel: ObservableObject {
     @Published var timeRemaining =  TimeInterval()
     @Published var isPotion : Bool = false
     @Published var isChest : Bool = false
+    @Published var coins: Int = 0
     
     private var validationCancellables: Set<AnyCancellable> = []
 
@@ -91,7 +91,7 @@ class UserViewModel: ObservableObject {
         }
         
         if let coins = UserDefaults.standard.value(forKey: "coins") as? Int {
-            userCoins = coins
+            self.coins = coins
         }
 
         
@@ -103,8 +103,8 @@ class UserViewModel: ObservableObject {
                     }
 
                     if let coins = document[K.defaults.coins] as? Int {
-                        userCoins = coins
-                        UserDefaults.standard.set(userCoins, forKey: "coins")
+                        self.coins = coins
+                        UserDefaults.standard.set(self.coins, forKey: "coins")
                     }
 
                     if let name = document["name"] as? String {
@@ -170,7 +170,7 @@ class UserViewModel: ObservableObject {
             }
             self.streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
             
-            userCoins = UserDefaults.standard.integer(forKey: "coins")
+            self.coins = UserDefaults.standard.integer(forKey: "coins")
             self.updateTimeRemaining()
         }
 
@@ -288,15 +288,15 @@ class UserViewModel: ObservableObject {
     func buyPlant(isUnlocked: Bool = false, unlockedStrawberry: Bool = false) {
         if let plant = willBuyPlant {
             if !unlockedStrawberry {
-                userCoins -= willBuyPlant?.price ?? 0
+                self.coins -= willBuyPlant?.price ?? 0
             }
             
             if unlockedStrawberry {
                 triggerAnimation = true
+                selectedPlant = willBuyPlant
             }
             
             ownedPlants.append(plant)
-            selectedPlant = willBuyPlant
 
             var finalPlants: [String] = [String]()
             if let email = Auth.auth().currentUser?.email {
@@ -312,7 +312,7 @@ class UserViewModel: ObservableObject {
                     let uniquePlants = Array<String>(Set(finalPlants))
                     self.db.collection(K.userPreferences).document(email).updateData([
                         K.defaults.plants: uniquePlants,
-                        K.defaults.coins: userCoins
+                        K.defaults.coins: self.coins
                     ]) { (error) in
                         if let e = error {
                             print("There was a issue saving data to firestore \(e) ")
@@ -331,7 +331,7 @@ class UserViewModel: ObservableObject {
                     newPlants.append(plant.title)
                     UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
                 }
-                UserDefaults.standard.setValue(userCoins, forKey: K.defaults.coins)
+                UserDefaults.standard.setValue(self.coins, forKey: K.defaults.coins)
             }
         }
     }

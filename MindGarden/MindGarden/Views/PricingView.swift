@@ -611,7 +611,7 @@ struct PricingView: View {
                     }
                     Spacer()
 
-                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? !fiftyOff ? "\(price, specifier: "%.2f")" : "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text("/mo")
+                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? !fiftyOff ? "\(price, specifier: "%.2f")" : "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text(title == "Monthly" ? "/mo" : "/yr")
                        )
                             .foregroundColor(selected == title ? .white : Clr.black2)
                             .font(Font.mada(.bold, size: 20))

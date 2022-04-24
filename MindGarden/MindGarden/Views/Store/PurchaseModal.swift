@@ -158,7 +158,7 @@ struct PurchaseModal: View {
                                 }
                             } else {
                                 Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
-                                if userCoins >= userModel.willBuyPlant?.price ?? 0 {
+                                if userModel.coins >= userModel.willBuyPlant?.price ?? 0 {
                                     withAnimation {
                                         showConfirm = true
                                     }

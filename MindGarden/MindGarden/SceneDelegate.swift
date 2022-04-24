@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         if launchNum == 0 {
-            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quotes 1", "Tales 1"], forKey: "storySegments")
+            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quotes 1", "Tales 1", "Tip New Users"], forKey: "oldSegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -121,7 +121,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let _ = UserDefaults.standard.array(forKey: "storySegments") as? [String] {} else {
             UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tale 1"], forKey: "storySegments")
         }
-        UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tale 1", "New Users"], forKey: "storySegments")
 
         
         StorylyManager.updateStories()

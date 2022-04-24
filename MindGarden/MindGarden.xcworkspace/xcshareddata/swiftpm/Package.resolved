@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/OneSignal/OneSignal-XCFramework",
         "state": {
           "branch": null,
-          "revision": "f3b2ae02a073d247345b88bf04dd5ab1ca37abb4",
-          "version": "3.10.0"
+          "revision": "a0b4c9250172a90330f3e33042ec7dfa93ed19bf",
+          "version": "3.10.3"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/superwall-me/paywall-ios",
         "state": {
           "branch": null,
-          "revision": "52bdb74ecc398f13acabf6b5a73ec6f2652623c5",
-          "version": "2.2.7"
+          "revision": "5690fe196622a8bcc29485a8debc220550d1b313",
+          "version": "2.3.0"
         }
       },
       {
@@ -33,17 +33,8 @@
         "repositoryURL": "https://github.com/Netvent/storyly-ios",
         "state": {
           "branch": null,
-          "revision": "3da7e29613f24a2438e578effddf18c0f2fe034a",
-          "version": "1.20.1"
-        }
-      },
-      {
-        "package": "TPInAppReceipt",
-        "repositoryURL": "https://github.com/tikhop/TPInAppReceipt.git",
-        "state": {
-          "branch": null,
-          "revision": "2b9946f8fe2dd74ed87dfcb5dbedc3be06c5ccab",
-          "version": "3.3.3"
+          "revision": "04b2892389e07478fde30892c801c938ceaedbfb",
+          "version": "1.19.4"
         }
       }
     ]

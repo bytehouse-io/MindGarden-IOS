@@ -119,6 +119,7 @@ struct LegacyTextField: UIViewRepresentable {
 
     public func makeUIView(context: Context) -> UITextField {
         let view = UITextField()
+        view.autocorrectionType = .no
         view.addTarget(context.coordinator, action: #selector(Coordinator.textViewDidChange), for: .editingChanged)
         view.delegate = context.coordinator
         return view

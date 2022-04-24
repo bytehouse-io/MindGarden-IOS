@@ -175,7 +175,7 @@ struct LearnScene: View {
                         }
                     }
                 }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
-                    .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+                    .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/1.8)
             }
         }
         .fullScreenCover(isPresented: $showCourse) {

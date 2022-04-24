@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlusCoins: View {
+    @Binding var coins: Int
+    
     var body: some View {
         HStack(spacing: -15) {
             Img.coin
@@ -20,8 +22,8 @@ struct PlusCoins: View {
                 Rectangle()
                     .fill(Clr.darkWhite)
                     .neoShadow()
-                Text("\(userCoins)")
-                    .font(Font.mada(.semiBold, size: userCoins >= 1000 ? 18 : 20))
+                Text("\(coins)")
+                    .font(Font.mada(.semiBold, size: coins >= 1000 ? 18 : 20))
                     .foregroundColor(Clr.black2)
             }.frame(width: 80, height: 20)
             Circle()
@@ -41,7 +43,7 @@ struct PlusCoins: View {
 
 struct PlusCoins_Previews: PreviewProvider {
     static var previews: some View {
-        PlusCoins()
+        PlusCoins(coins: .constant(40))
         
     }
 }

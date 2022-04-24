@@ -242,7 +242,7 @@ class GardenViewModel: ObservableObject {
     }
     
 
-    func save(key: String, saveValue: Any, date: Date = Date(), freeze: Bool = false, completionHandler:  @escaping ()->Void = { }) {
+    func save(key: String, saveValue: Any, date: Date = Date(), freeze: Bool = false, coins: Int,  completionHandler:  @escaping ()->Void = { }) {
         if key == "sessions" {
             if let session = saveValue as? [String: String] {
                 if !freeze {  self.allTimeSessions += 1  }
@@ -284,7 +284,7 @@ class GardenViewModel: ObservableObject {
                     "gardenGrid": self.grid,
                     "totalMins": self.allTimeMinutes,
                     "totalSessions": self.allTimeSessions,
-                    "coins": userCoins,
+                    "coins": coins,
                 ]) { (error) in
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
@@ -303,7 +303,7 @@ class GardenViewModel: ObservableObject {
         } else {
             UserDefaults.standard.setValue(self.allTimeMinutes, forKey: "allTimeMinutes")
             UserDefaults.standard.setValue(self.allTimeSessions, forKey: "allTimeSessions")
-            UserDefaults.standard.setValue(userCoins, forKey: "coins")
+            UserDefaults.standard.setValue(coins, forKey: "coins")
             if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
                 self.grid = gridd
             }
@@ -335,5 +335,6 @@ class GardenViewModel: ObservableObject {
         if key == "sessions" {
             self.getRecentMeditations()
         }
+        completionHandler()
     }
 }
