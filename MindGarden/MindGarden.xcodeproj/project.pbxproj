@@ -1046,6 +1046,7 @@
 				FE48B44927791B5B00CA7B63 /* Embed App Extensions */,
 				3C3992E0C604A7C6E1FFA251 /* [CP] Embed Pods Frameworks */,
 				C0C8C8ABA1FF5B74850CB317 /* [CP] Copy Pods Resources */,
+				58BAD4DB28182A29005BBB9A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1315,6 +1316,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		58BAD4DB28182A29005BBB9A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		71531E88CC7BDAA56CA5941A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

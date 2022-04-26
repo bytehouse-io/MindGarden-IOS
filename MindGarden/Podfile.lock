@@ -362,6 +362,9 @@ PODS:
     - FirebaseAnalytics (~> 8.14.0)
   - Firebase/CoreOnly (8.14.0):
     - FirebaseCore (= 8.14.0)
+  - Firebase/Crashlytics (8.14.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 8.14.0)
   - Firebase/DynamicLinks (8.14.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 8.14.0)
@@ -397,6 +400,13 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.14.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseDynamicLinks (8.14.0):
     - FirebaseCore (~> 8.0)
   - FirebaseFirestore (8.14.0):
@@ -509,6 +519,7 @@ DEPENDENCIES:
   - Amplitude-iOS (~> 4.9.3)
   - AppsFlyerFramework
   - Firebase
+  - Firebase/Crashlytics
   - Firebase/DynamicLinks
   - FirebaseAuth (~> 8.9)
   - FirebaseFirestore
@@ -529,6 +540,7 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
     - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseInstallations
@@ -559,6 +571,7 @@ SPEC CHECKSUMS:
   FirebaseAuth: c5fde343630090253d3af7e2d35697b414b40202
   FirebaseCore: b84a44ee7ba999e0f9f76d198a9c7f60a797b848
   FirebaseCoreDiagnostics: fd0c8490f34287229c1d6c103d3a55f81ec85712
+  FirebaseCrashlytics: 079ef36f5c4b7161188928faec40fa276ebefd84
   FirebaseDynamicLinks: 5fe9d2405cc93a58fead4af4ef4c81a466516ba0
   FirebaseFirestore: fff37682b934e3e94d83e5c24936721890a2edf0
   FirebaseInstallations: 7d1d967a307c12f1aadd76844fc321cef699b1ce
@@ -577,6 +590,6 @@ SPEC CHECKSUMS:
   Purchases: b714751c386c2204d2d5aafaa903fd424a25cd59
   PurchasesCoreSwift: 2cf98c52dd4b785177539fbfd1c32f60c89eafe7
 
-PODFILE CHECKSUM: 733c358b1c3f2ef144418e5531b84f3a96c32ca1
+PODFILE CHECKSUM: f14b132c27d5c1055b1977601f6383c94a0376ac
 
 COCOAPODS: 1.11.2
