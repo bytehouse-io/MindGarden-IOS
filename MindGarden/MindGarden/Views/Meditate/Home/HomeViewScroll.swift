@@ -263,7 +263,7 @@ struct HomeViewScroll: View {
                             } else {
                                 ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                     Button { } label: {
-                                        HomeSquare(width: width, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                        HomeSquare(width: width * 0.85, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                             .onTapGesture {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
@@ -285,8 +285,8 @@ struct HomeViewScroll: View {
                                 Spacer()
                             }
                         }.frame(height: height * 0.2 + 15)
-                            .padding([.leading, .trailing], width * 0.07)
-                    }).frame(width: width, height: height * 0.2, alignment: .center)
+                            .padding([.leading, .trailing], 5)
+                    }).frame(width: width * 0.85, height: height * 0.2, alignment: .center)
                         .padding(.top, 5)
                     if !UserDefaults.standard.bool(forKey: "isPro") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                         Button {} label: {
@@ -340,7 +340,7 @@ struct HomeViewScroll: View {
                             HStack(spacing: 15) {
                                 ForEach(model.newMeditations, id: \.self) { meditation in
                                     Button {} label: {
-                                        HomeSquare(width: width, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                        HomeSquare(width: width * 0.85, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                             .onTapGesture {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
@@ -367,8 +367,8 @@ struct HomeViewScroll: View {
                                     }.buttonStyle(BonusPress())
                                 }
                             }.frame(height: height * 0.2 + 15)
-                                .padding([.leading, .trailing], width * 0.07)
-                        }.frame(width: width, height: height * 0.2, alignment: .center)
+                            .padding([.leading, .trailing], 5)
+                        }.frame(width: width*0.85, height: height * 0.2, alignment: .center)
                             .offset(y: -15)
                             .padding(.top, 16)
                     }
