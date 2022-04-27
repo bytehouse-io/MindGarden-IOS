@@ -23,6 +23,8 @@
 		58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE8127C779E200254AC2 /* PlusMenuView.swift */; };
 		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
+		58BAD4DD2818FCE5005BBB9A /* ReferralScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */; };
+		58BAD4E12819AB3B005BBB9A /* RererralsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */; };
 		58C052E22805DF3E007B4D2B /* HomeViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C052E12805DF3E007B4D2B /* HomeViewHeader.swift */; };
 		58C4A52027CE764700856913 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4A51F27CE764700856913 /* UrlImageView.swift */; };
 		58C8BE2C280498ED00075FD2 /* PlaySounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C8BE2B280498ED00075FD2 /* PlaySounds.swift */; };
@@ -257,6 +259,8 @@
 		58A9EE8127C779E200254AC2 /* PlusMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenuView.swift; sourceTree = "<group>"; };
 		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralScene.swift; sourceTree = "<group>"; };
+		58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RererralsModel.swift; sourceTree = "<group>"; };
 		58C052E12805DF3E007B4D2B /* HomeViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewHeader.swift; sourceTree = "<group>"; };
 		58C4A51F27CE764700856913 /* UrlImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlImageView.swift; sourceTree = "<group>"; };
 		58C8BE2B280498ED00075FD2 /* PlaySounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySounds.swift; sourceTree = "<group>"; };
@@ -587,6 +591,7 @@
 		FE11F0B42691071500E1E71A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */,
 				FE11F0B52691073200E1E71A /* Authentication.swift */,
 				FEAA837726927B9400E4C62F /* AuthenticationViewModel.swift */,
 				FEAA837C2695447300E4C62F /* ProfileScene.swift */,
@@ -878,6 +883,7 @@
 				88A7D91727C0897C001A53DE /* Course.swift */,
 				88F7528827CABD50004E86D4 /* PaywallManager.swift */,
 				88D4C5D627F6439A00CBB956 /* StorylyManager.swift */,
+				58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1505,6 +1511,7 @@
 				FE1CA3CA27B218DD0074C497 /* PlayViewModel.swift in Sources */,
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
 				58C8BE2C280498ED00075FD2 /* PlaySounds.swift in Sources */,
+				58BAD4E12819AB3B005BBB9A /* RererralsModel.swift in Sources */,
 				FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */,
 				FEA607E326FD69090076A177 /* NameScene.swift in Sources */,
 				FEB85FE7266EA49A008CDAA4 /* ViewRouter.swift in Sources */,
@@ -1560,6 +1567,7 @@
 				FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */,
 				58C052E22805DF3E007B4D2B /* HomeViewHeader.swift in Sources */,
 				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
+				58BAD4DD2818FCE5005BBB9A /* ReferralScene.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
 				FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */,
 				88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */,
