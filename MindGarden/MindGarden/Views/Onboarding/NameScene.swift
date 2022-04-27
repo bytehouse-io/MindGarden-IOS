@@ -31,6 +31,7 @@ struct NameScene: View {
                                     .onTapGesture {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
+                                            viewRouter.progressValue -= 0.1
                                             viewRouter.currentPage = .notification
                                         }
                                     }

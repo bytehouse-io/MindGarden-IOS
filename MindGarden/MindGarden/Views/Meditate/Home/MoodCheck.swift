@@ -58,15 +58,15 @@ enum Mood: String {
     static func getMoodImage(mood: Mood) -> Image {
         switch mood {
         case .happy:
-            return Image("happy")
+            return Image("happyPot")
         case .sad:
-            return Image("sad")
+            return Image("sadPot")
         case .angry:
-            return Image("angry")
+            return Image("angryPot")
         case .okay:
-            return Image("okay")
+            return Image("okayPot")
         case .stressed:
-            return Image("stressed")
+            return Image("stressedPot")
         default:
             return Image("okay")
         }
@@ -193,27 +193,33 @@ struct SingleMood: View {
 
     var body: some View {
         ZStack {
-            Mood.getMoodImage(mood: mood)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(5)
-                .onTapGesture {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    switch mood {
-                    case .angry: Analytics.shared.log(event: .mood_tapped_angry)
-                    case .sad: Analytics.shared.log(event: .mood_tapped_sad)
-                    case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
-                    case .okay: Analytics.shared.log(event: .mood_tapped_okay)
-                    case .happy: Analytics.shared.log(event: .mood_tapped_happy)
-                    case .none: Analytics.shared.log(event: .mood_tapped_cancel)
-                    }
-                    if moodSelected == mood {
-                        moodSelected = .none
-                    } else {
-                        moodSelected = mood
-                    }
-                }
-                .opacity(moodSelected == mood ? 0.3 : 1)
+            VStack(spacing: 2) {
+                Mood.getMoodImage(mood: mood)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(5)
+                    .onTapGesture {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        switch mood {
+                        case .angry: Analytics.shared.log(event: .mood_tapped_angry)
+                        case .sad: Analytics.shared.log(event: .mood_tapped_sad)
+                        case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
+                        case .okay: Analytics.shared.log(event: .mood_tapped_okay)
+                        case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                        case .none: Analytics.shared.log(event: .mood_tapped_cancel)
+                        }
+                        if moodSelected == mood {
+                            moodSelected = .none
+                        } else {
+                            moodSelected = mood
+                        }
+                    }.opacity(moodSelected == mood ? 0.3 : 1)
+                Text(mood.title)
+                    .font(Font.mada(.semiBold, size: 14))
+                    .foregroundColor(.gray)
+                    .minimumScaleFactor(0.05)
+                    .lineLimit(1)
+            }
             if moodSelected == mood {
                 Image(systemName: "checkmark")
                     .font(Font.title.weight(.bold))

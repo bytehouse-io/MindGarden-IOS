@@ -41,8 +41,8 @@ struct PurchaseModal: View {
                                     .padding()
                             }
                             Spacer()
-                            Text(userModel.willBuyPlant?.title ?? "")
-                                .font(Font.mada(.bold, size: 30))
+                            Text((userModel.willBuyPlant?.title == "Real Tree" ? "Plant a " : "") + (userModel.willBuyPlant?.title ?? ""))
+                                .font(Font.mada(.bold, size: userModel.willBuyPlant?.title == "Real Tree" ? 26 : 30))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .foregroundColor(Clr.black1)
@@ -59,24 +59,57 @@ struct PurchaseModal: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: g.size.width * 0.325, height: g.size.height * 0.225, alignment: .center)
                         } else {
-                            userModel.willBuyPlant?.packetImage
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: g.size.width * 0.325, height: g.size.height * 0.225, alignment: .center)
+                            if userModel.willBuyPlant?.title == "Real Tree" {
+                                Img.treeCover
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: g.size.width * 0.6, alignment: .center)
+                                    .cornerRadius(20)
+                                    .shadow(radius: 7)
+                            } else {
+                                userModel.willBuyPlant?.packetImage
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: g.size.width * 0.4, alignment: .center)
+                            }
+                            
                         }
-                        HStack(spacing: 5) {
-                            Text(" \(userModel.willBuyPlant?.description ?? "")")
-                                .font(Font.mada(.semiBold, size: 20))
-                                .foregroundColor(Clr.black1)
-                        }.padding(.horizontal, 40)
-                        .minimumScaleFactor(0.05)
-                        .lineLimit(8)
-                        .padding(.vertical, 10)
+                        if userModel.willBuyPlant?.title == "Real Tree" {
+                            HStack(spacing: 5) {
+                                Text("\(userModel.willBuyPlant?.description ?? "")")
+                                    .font(Font.mada(.semiBold, size: 18))
+                                    .foregroundColor(Clr.black1)
+                                + Text(" Learn More")
+                                    .font(Font.mada(.bold, size: 18))
+                                    .foregroundColor(Clr.darkgreen)
+                            }.padding(.horizontal, 20)
+                            .minimumScaleFactor(0.05)
+                            .lineLimit(8)
+                            .padding(.vertical, 10)
+                            .onTapGesture {
+                                guard let url = URL(string: "https://trees.org/our-work/") else { return }
+                                UIApplication.shared.open(url)
+                            }
+                        } else {
+                            HStack(spacing: 5) {
+                                Text("\(userModel.willBuyPlant?.description ?? "")")
+                                    .font(Font.mada(.semiBold, size: 20))
+                                    .foregroundColor(Clr.black1)
+                        
+                            }.padding(.horizontal, 40)
+                            .minimumScaleFactor(0.05)
+                            .lineLimit(8)
+                            .padding(.vertical, 10)
+                        }
+           
                         HStack(spacing: 10){
 //                            userModel.willBuyPlant?.title == "Aloe" || userModel.willBuyPlant?.title == "Monstera" ?
 //                            Img.pot
 //                            :
                             Img.seed
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: g.size.width * 0.025)
                             Image(systemName: "arrow.right")
                             userModel.willBuyPlant?.one
                                 .resizable()
@@ -92,7 +125,7 @@ struct PurchaseModal: View {
                                 .resizable() 
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: g.size.width * 0.2)
-                        }.padding(.horizontal, 10)
+                        }.padding(.horizontal, 20)
                         if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                             HStack {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
@@ -105,6 +138,19 @@ struct PurchaseModal: View {
                             .font(Font.mada(.semiBold, size: 18))
                             .foregroundColor(Clr.black2)
                             .padding(.bottom, -10)
+                        }
+                        if userModel.willBuyPlant?.title == "Real Tree" {
+                            Text("💰 MindGarden will donate one tree per purchase.")
+                                .font(Font.mada(.medium, size: 20))
+                                .foregroundColor(Clr.lightTextGray)
+                                .multilineTextAlignment(.leading)
+                                .frame(width: g.size.width * 0.7)
+                            Text("🌱 You have planted: 0 trees")
+                                .font(Font.mada(.semiBold, size: 22))
+                                .foregroundColor(Clr.darkgreen)
+                                .multilineTextAlignment(.leading)
+                                .frame(width: g.size.width * 0.7, alignment: .leading)
+                                .padding(.top)
                         }
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -187,7 +233,7 @@ struct PurchaseModal: View {
                                     }
                                 })
                         }
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.80, alignment: .top)
+                    }.frame(width: g.size.width * 0.85, height: g.size.height * (userModel.willBuyPlant?.title == "Real Tree" ? 0.85 : 0.80), alignment: .top)
                     .background(Clr.darkWhite)
                     .cornerRadius(20)
                     .padding(.bottom)

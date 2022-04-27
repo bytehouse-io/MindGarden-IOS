@@ -11,6 +11,7 @@ import Firebase
 import AVKit
 import FirebaseFirestore
 import OneSignal
+import Amplitude
 
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
@@ -141,37 +142,35 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
             }
         }
-        if let reasons = UserDefaults.standard.array(forKey: "reason") as? [String] {
-            switch UserDefaults.standard.string(forKey: "reason") {
-            case "Sleep better":
-                if Calendar.current.component( .hour, from:Date() ) >= 18 {
-                    filtedMeds = filtedMeds.filter { med in // day time meds only
-                        med.id == 27 || med.id == 54 || med.id == 39 }
-                }
-                let randomInt = Int.random(in: 0..<filtedMeds.count)
-                featuredMeditation = filtedMeds[randomInt]
-            case "Get more focused":
-                filtedMeds = filtedMeds.filter { med in
-                    med.category == .focus
-                }
-                let randomInt = Int.random(in: 0..<filtedMeds.count)
-                featuredMeditation = filtedMeds[randomInt]
-            case "Managing Stress & Anxiety":
-                filtedMeds = filtedMeds.filter { med in
-                    med.category == .anxiety
-                }
-                let randomInt = Int.random(in: 0..<filtedMeds.count)
-                featuredMeditation = filtedMeds[randomInt]
-            case "Just trying it out":
-                filtedMeds = filtedMeds.filter { med in
-                    med.category == .beginners
-                }
-                let randomInt = Int.random(in: 0..<filtedMeds.count)
-                featuredMeditation = filtedMeds[randomInt]
-            default:
-                let randomInt = Int.random(in: 0..<filtedMeds.count)
-                featuredMeditation = filtedMeds[randomInt]
+        switch UserDefaults.standard.string(forKey: "reason") {
+        case "Sleep better":
+            if Calendar.current.component( .hour, from:Date() ) >= 18 {
+                filtedMeds = filtedMeds.filter { med in // day time meds only
+                    med.id == 27 || med.id == 54 || med.id == 39 }
             }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        case "Get more focused":
+            filtedMeds = filtedMeds.filter { med in
+                med.category == .focus
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        case "Managing Stress & Anxiety":
+            filtedMeds = filtedMeds.filter { med in
+                med.category == .anxiety
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        case "Just trying it out":
+            filtedMeds = filtedMeds.filter { med in
+                med.category == .beginners
+            }
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
+        default:
+            let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
         }
     }
 
@@ -213,6 +212,7 @@ class MeditationViewModel: ObservableObject {
         if let defaultFavorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
             self.favoritedMeditations = Meditation.allMeditations.filter({ med in defaultFavorites.contains(med.id) }).reversed()
         }
+        
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
@@ -225,6 +225,7 @@ class MeditationViewModel: ObservableObject {
     }
 
     func favorite(selectMeditation: Meditation) {
+        Amplitude.instance().logEvent("favorited_meditation", withEventProperties: ["meditation": selectedMeditation?.returnEventName() ?? ""])
         if let email = Auth.auth().currentUser?.email {
             let docRef = db.collection(K.userPreferences).document(email)
             //Read Data from firebase, for syncing

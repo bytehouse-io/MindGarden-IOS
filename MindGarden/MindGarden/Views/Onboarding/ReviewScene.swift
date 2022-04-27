@@ -185,6 +185,9 @@ struct ReviewScene: View {
                         .buttonStyle(NeumorphicPress())
                         Button {
                             onboardingTime = true
+                            if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
+                            }
                             Analytics.shared.log(event: .review_tapped_explore)
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()

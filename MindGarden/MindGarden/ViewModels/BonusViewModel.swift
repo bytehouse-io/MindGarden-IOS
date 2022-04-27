@@ -178,10 +178,6 @@ class BonusViewModel: ObservableObject {
     func updateBonus() {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
-        if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
-            NotificationHelper.addOneDay()
-        }
         if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
             NotificationHelper.addThreeDay()
@@ -221,12 +217,15 @@ class BonusViewModel: ObservableObject {
                     if let seven = document[K.defaults.seven] as? Int {
                         self.sevenDay = seven
                     }
+                    
                     if let thirty = document[K.defaults.thirty] as? Int {
                         self.thirtyDay = thirty
                     }
+                    
                     if let dailyBonus = document[K.defaults.dailyBonus] as? String {
                         self.dailyBonus = dailyBonus
                     }
+                    
                     if let referredStack = document["referredStack"] as? String {
                         self.userModel.referredStack = referredStack
                         self.userModel.checkIfPro()
@@ -275,12 +274,6 @@ class BonusViewModel: ObservableObject {
     private func updateTips(tip: String) {
         var segments = storySegments
         segments = storySegments.filter { str in return !str.lowercased().contains("tip")  }
-        for story in storySegments {
-            print(story, "story")
-            if story.lowercased().contains("tip") {
-                
-            }
-        }
         
         segments.insert(tip)
         UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")

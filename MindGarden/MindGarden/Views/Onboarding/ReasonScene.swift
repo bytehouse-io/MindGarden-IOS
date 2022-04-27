@@ -52,6 +52,16 @@ struct ReasonScene: View {
                                     Analytics.shared.log(event: item.event)
                                 }
                                 if selected.count > 0 {
+                                    for reason in selected {
+                                        if reason.title == "Sleep better" {
+                                            if let oldSegs = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+                                                var segs = oldSegs
+                                                segs.append("sleep 1")
+                                                UserDefaults.standard.setValue(segs, forKey: "oldSegments")
+                                            }
+                                        }
+                                    }
+                                    
                                     withAnimation(.easeOut(duration: 0.5)) {
                                         DispatchQueue.main.async {
                                             viewRouter.progressValue += 0.1
@@ -108,6 +118,7 @@ struct ReasonScene: View {
                     if selected.count >= 3 {
                         selected.removeFirst()
                     }
+                    
                     selected.append(reason)
                     
                     if reason.title == "Sleep better" {

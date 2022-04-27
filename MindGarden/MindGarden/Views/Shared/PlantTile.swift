@@ -88,6 +88,20 @@ struct PlantTile: View {
                                     .padding(.leading, 5)
                                     .lineLimit(2)
                                     .minimumScaleFactor(0.05)
+                                    .offset(x: -2)
+                                if plant.title == "Real Tree" {
+                                    Img.realLeaf
+                                        .renderingMode(.original)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 30)
+                                    Text("0")
+                                        .font(Font.mada(.semiBold, size: isBadge ? 16 : 20))
+                                        .foregroundColor(Clr.black2)
+                                        .multilineTextAlignment(.trailing)
+                                        .offset(x: -3)
+                                }
+                                
                             }.frame(width: width * 0.35 * 0.85, alignment: .leading)
                         }
                     } else {

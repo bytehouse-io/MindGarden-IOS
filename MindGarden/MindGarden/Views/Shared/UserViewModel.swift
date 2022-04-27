@@ -289,11 +289,11 @@ class UserViewModel: ObservableObject {
         if let plant = willBuyPlant {
             if !unlockedStrawberry {
                 self.coins -= willBuyPlant?.price ?? 0
+                selectedPlant = willBuyPlant
             }
             
             if unlockedStrawberry {
                 triggerAnimation = true
-                selectedPlant = willBuyPlant
             }
             
             ownedPlants.append(plant)

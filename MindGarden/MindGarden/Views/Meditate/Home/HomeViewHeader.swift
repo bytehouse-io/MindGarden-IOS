@@ -69,7 +69,7 @@ struct HomeViewHeader: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(height: 25)
-                                            .oldShadow()
+                                            .shadow(radius: 4)
                                         Text("\(userModel.streakFreeze)")
                                             .font(Font.mada(.semiBold, size: 22))
                                             .foregroundColor(Clr.darkgreen)
@@ -80,10 +80,9 @@ struct HomeViewHeader: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 25)
-                                    .oldShadow()
+                                    .shadow(radius: 4)
                                 HStack {
                                     Text("Streak: ")
-                                    
                                         .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                         .font(Font.mada(.medium, size: 21))
                                     + Text("\(streakNumber)")

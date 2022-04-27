@@ -118,7 +118,7 @@ struct HomeViewScroll: View {
                             .fill(Color("darkWhite"))
                             .border(Clr.darkWhite)
                             .cornerRadius(25)
-                            .frame(width: width * 0.85, height: height * 0.275, alignment: .center)
+                            .frame(width: width * 0.85, height: height * (K.isSmall() ? 0.325 : 0.275), alignment: .center)
                             .overlay(
                                 HStack(alignment: .top) {
                                     VStack(alignment: .leading) {
@@ -141,7 +141,7 @@ struct HomeViewScroll: View {
                                         Spacer()
                                     }
                                     .frame(width: UIScreen.main.bounds.width * 0.65 * 0.525)
-                                    .position(x: UIScreen.main.bounds.width - UIScreen.main.bounds.width * 0.85 + 25, y: height * 0.21)
+                                    .position(x: UIScreen.main.bounds.width - UIScreen.main.bounds.width * 0.85 + 25, y: height * (K.isSmall() ? 0.24 : 0.21))
                                     VStack(spacing: 0) {
                                         ZStack {
                                             Circle().frame(width: width * 0.15, height:  width * 0.15)
@@ -263,7 +263,7 @@ struct HomeViewScroll: View {
                             } else {
                                 ForEach(isRecent ? gardenModel.recentMeditations : model.favoritedMeditations, id: \.self) { meditation in
                                     Button { } label: {
-                                        HomeSquare(width: width, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                        HomeSquare(width: UIScreen.main.bounds.width, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                             .onTapGesture {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation
@@ -315,7 +315,7 @@ struct HomeViewScroll: View {
                                     }.frame(width: width * 0.5)
                                     Spacer()
                                 }
-                            }.frame(width: width * 0.85, height: height * 0.125, alignment: .center)
+                            }.frame(width: width * 0.85, height: height * (K.isSmall() ? 0.15 : 0.125), alignment: .center)
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
@@ -340,7 +340,7 @@ struct HomeViewScroll: View {
                             HStack(spacing: 15) {
                                 ForEach(model.newMeditations, id: \.self) { meditation in
                                     Button {} label: {
-                                        HomeSquare(width: width, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
+                                        HomeSquare(width: UIScreen.main.bounds.width, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
                                             .onTapGesture {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 model.selectedMeditation = meditation

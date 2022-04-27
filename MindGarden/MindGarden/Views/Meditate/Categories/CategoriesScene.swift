@@ -10,7 +10,7 @@ import Combine
 
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
-    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -20), count: 2)
+    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -25), count: 2)
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -88,7 +88,7 @@ struct CategoriesScene: View {
                                 ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
                                     return meditation.title.hasPrefix(searchText) || searchText == ""
                                 }), id: \.self) { item in
-                                    HomeSquare(width: UIScreen.main.bounds.width / (K.isPad() ? 1.4 : 1), height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
+                                    HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
                                         .onTapGesture {
                                             didSelectcategory(item: item)
                                         }

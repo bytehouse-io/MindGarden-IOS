@@ -125,6 +125,8 @@ enum AnalyticEvent {
     case store_tapped_go_pro
     case store_tapped_badge_tile
     case store_animation_continue //
+    case store_tapped_real_tree //
+    case store_bought_real_tree //
     case notification_success_store //
     case notification_settings_store //
 
@@ -309,6 +311,7 @@ enum AnalyticEvent {
     
     //Stories
     case story_notification_swipe
+    case story_notification_swipe_gratitude
     case story_comic_opened
     case story_bijan_opened
     case story_journal_opened
@@ -696,6 +699,9 @@ extension AnalyticEvent {
         case .story_journal_opened: return "story_journal_opened"
         case .story_quote_opened: return "story_quote_opened"
         case .story_tip_opened: return "story_tip_opened"
+        case .story_notification_swipe_gratitude: return "story_notification_swipe_gratitude"
+        case .store_tapped_real_tree: return "store_tapped_real_tree"
+        case .store_bought_real_tree: return "store_bought_real_tree"
         }
     }
 }

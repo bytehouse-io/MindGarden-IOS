@@ -46,8 +46,8 @@ struct Garden: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                         HStack {
-                            Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear))")
-                                .font(Font.mada(.bold, size: 30))
+                            Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden")
+                                .font(Font.mada(.bold, size: 28))
                             Spacer()
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()

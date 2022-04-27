@@ -47,6 +47,7 @@ struct NotificationScene: View {
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
+                                        viewRouter.progressValue -= 0.1
                                         if fromSettings {
                                             presentationMode.wrappedValue.dismiss()
                                         } else if tappedTurnOn {
@@ -272,6 +273,10 @@ struct NotificationScene: View {
                 if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
                     NotificationHelper.addThreeDay()
                 }
+                if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
+                    NotificationHelper.addOnboarding()
+                }
+
                 if fromSettings && UserDefaults.standard.bool(forKey: "isPro"){
                     NotificationHelper.freeTrial()
                 }

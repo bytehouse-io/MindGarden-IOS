@@ -363,6 +363,11 @@ struct Finished: View {
                     .background(Clr.darkWhite)
             })
             .onAppear {
+                if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+                    NotificationHelper.addOneDay()
+                }
+                
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 6 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)

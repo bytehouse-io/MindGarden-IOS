@@ -240,8 +240,8 @@ struct MiddleSelect: View {
                         case .playable:
                             Image(systemName: "play.fill")
                                 .foregroundColor(Clr.darkgreen)
-                                .font(.system(size: 24))
-                                .padding(.horizontal, 10)
+                                .font(.system(size: 20))
+                                .padding(.trailing, 15)
                     }
                     Image(systemName: isFavorited ? "heart.fill" : "heart")
                         .foregroundColor(isFavorited ? Color.red : Color.gray)

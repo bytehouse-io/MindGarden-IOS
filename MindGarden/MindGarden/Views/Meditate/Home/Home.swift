@@ -120,6 +120,9 @@ struct Home: View {
         }
         .onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") {
+                if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
+                }
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
                 storylyViewProgrammatic.resume()
                 UserDefaults.standard.setValue(true, forKey: "firstStory")
@@ -172,6 +175,11 @@ struct Home: View {
                mindfulNotifs = true
                activeSheet = .profile
            }
+           .onReceive(NotificationCenter.default.publisher(for: Notification.Name("referrals")))
+              { _ in
+                  tappedRefer = true
+                  activeSheet = .profile
+              }
     }
     
     func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {

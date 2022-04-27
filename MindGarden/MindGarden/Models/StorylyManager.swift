@@ -27,6 +27,14 @@ class StorylyManager: StorylyDelegate {
                Analytics.shared.log(event: .story_notification_swipe)
                storylyViewProgrammatic.dismiss(animated: true)
                NotificationCenter.default.post(name: Notification.Name("notification"), object: nil)
+           } else if story.media.actionUrl == "referral"  {
+               Analytics.shared.log(event: .story_notification_swipe)
+               storylyViewProgrammatic.dismiss(animated: true)
+               NotificationCenter.default.post(name: Notification.Name("referrals"), object: nil)
+           } else if story.media.actionUrl == "gratitude" {
+               Analytics.shared.log(event: .story_notification_swipe_gratitude)
+               storylyViewProgrammatic.dismiss(animated: true)
+               NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
            }
        }
 
@@ -50,7 +58,7 @@ class StorylyManager: StorylyDelegate {
                    print("logging", story.title)
                    let components = story.title.components(separatedBy: " ")
                    Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
-                   var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
+                   var storyArray = UserDefaults.standard.array(forKey: "oldSegments") as? [String]
                    if story.title.lowercased().contains("bijan")  {
                        Analytics.shared.log(event: .story_bijan_opened)
                        storyArray?.removeAll(where: { str in
@@ -65,8 +73,9 @@ class StorylyManager: StorylyDelegate {
                        storySegments = Set(storyArray ?? [""])
                        StorylyManager.refresh()
 //                       storylyViewProgrammatic.dismiss(animated: true)
-                       let unique = Array(Set(storyArray ?? [""]))
+                       let unique = Array(storySegments)
                        UserDefaults.standard.setValue(unique, forKey: "storySegments")
+                       UserDefaults.standard.setValue(unique, forKey: "oldSegments")
                        return
                    } else if story.title.lowercased().contains("quotes") {
                        Analytics.shared.log(event: .story_quote_opened)
@@ -80,12 +89,15 @@ class StorylyManager: StorylyDelegate {
                            str.lowercased().contains("tale")
                        })
                        updateComps(components: components, segs: storyArray)
-                   } else if story.title.lowercased().contains("quotes") {
-                       Analytics.shared.log(event: .story_quote_opened)
                    } else if story.title.lowercased().contains("journal") {
                        Analytics.shared.log(event: .story_journal_opened)
+                   } else if story.title.lowercased().contains("sleep") {
+                       Analytics.shared.log(event: .story_comic_opened)
+                       storyArray?.removeAll(where: { str in
+                           str.lowercased().contains("sleep")
+                       })
+                       updateComps(components: components, segs: storyArray)
                    }
-
           
                    let unique = Array(Set(storyArray ?? [""]))
                    UserDefaults.standard.setValue(unique, forKey: "storySegments")
@@ -99,6 +111,9 @@ class StorylyManager: StorylyDelegate {
             let finalStr = components[0] + " " + String(count)
             segments?.append(finalStr)
         }
+
+        let unique = Array(Set(segments ?? [""]))
+        UserDefaults.standard.setValue(unique, forKey: "oldSegments")
     }
     static func updateStories() {
         let formatter: DateFormatter = {

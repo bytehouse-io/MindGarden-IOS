@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeSquare: View {
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     let width, height: CGFloat
     let img: Image
     let title: String
@@ -33,7 +35,7 @@ struct HomeSquare: View {
                                 .foregroundColor(Clr.black2)
                                 .minimumScaleFactor(0.05)
                                 .lineLimit(3)
-                            HStack(spacing: 3) {
+                            HStack(spacing: 4) {
                                 Image(systemName: "speaker.wave.2.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -46,7 +48,8 @@ struct HomeSquare: View {
                                     .minimumScaleFactor(0.05)
                             }
                             .padding(.top, 10)
-                            HStack(spacing: 3) {
+                            .foregroundColor(Clr.lightTextGray)
+                            HStack(spacing: 4) {
                                 Image(systemName: "timer")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -58,7 +61,8 @@ struct HomeSquare: View {
                                     .minimumScaleFactor(0.05)
                             }
                             .padding(.top, 5)
-                            HStack(spacing: 3) {
+                            .foregroundColor(Clr.lightTextGray)
+                            HStack(spacing: 4) {
                                 Image(systemName: "person.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -70,6 +74,7 @@ struct HomeSquare: View {
                                     .minimumScaleFactor(0.05)
                             }
                             .padding(.top, 5)
+                            .foregroundColor(Clr.lightTextGray)
                             Spacer()
                     }.padding(.leading, 25)
                     .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
@@ -94,7 +99,7 @@ struct HomeSquare: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .position(x: UIScreen.main.bounds.width * 0.385, y: 30)
+                    .position(x: UIScreen.main.bounds.width * 0.275, y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8)
             }
             if isNew {
                 Capsule()
@@ -107,7 +112,7 @@ struct HomeSquare: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                     )
-                    .position(x: width * 0.35, y: 17)
+                    .position(x: width * (viewRouter.currentPage == .categories ? 0.385 : 0.34), y: viewRouter.currentPage == .categories ? 20 : 17)
                     .opacity(0.8)
             }
         }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id)) ? 0.45 : 1)

@@ -25,7 +25,7 @@ struct K {
         }
     }
 
-    static let plantImages = ["White Daisy":"daisy3", "Red Tulip":"redTulips3", "Cactus":"cactus3", "Blueberry":"blueberry3", "Monstera":"monstera3", "Daffodil":"daffodil3", "Rose":"rose3", "Lavender":"lavender3", "Sunflower":"sunflower3", "Lily of the Valley":"lilyValley3", "Lily":"lily3",  "Strawberry":"strawberry3", "Aloe":"aloe3", "Camellia":"camellia3", "Cherry Blossoms":"cherryBlossoms3", "Red Mushroom":"redMushroom3", "Bonsai Tree":"bonsai3", "Venus Fly Trap":"venus3", "Christmas Tree":"christmas3", "Apples":"apple3", "Lemons": "lemon3"]
+    static let plantImages = ["White Daisy":"daisy3", "Red Tulip":"redTulips3", "Cactus":"cactus3", "Blueberry":"blueberry3", "Monstera":"monstera3", "Daffodil":"daffodil3", "Rose":"rose3", "Lavender":"lavender3", "Sunflower":"sunflower3", "Lily of the Valley":"lilyValley3", "Lily":"lily3",  "Strawberry":"strawberry3", "Aloe":"aloe3", "Camellia":"camellia3", "Cherry Blossoms":"cherryBlossoms3", "Red Mushroom":"redMushroom3", "Bonsai Tree":"bonsai3", "Venus Fly Trap":"venus3", "Christmas Tree":"christmas3", "Apples":"apple3", "Lemons": "lemon3", "Ice Flower": "Ice Flower"]
 
 
 

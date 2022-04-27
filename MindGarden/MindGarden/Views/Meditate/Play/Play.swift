@@ -449,7 +449,7 @@ struct Play: View {
                         VStack(alignment: .center, spacing: 0) {
                             HStack {
                                 Spacer()
-                                Text("🔔 New: increase & decrease bell volume")
+                                Text("🔔 New: change background sounds")
                                     .font(Font.mada(.bold, size: 28))
                                     .foregroundColor(Clr.black2)
                                     .frame(height: g.size.height * 0.06)
