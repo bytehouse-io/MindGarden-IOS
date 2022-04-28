@@ -11,7 +11,10 @@ struct ReferralScene: View {
     @State private var currentPage = 0
     let inviteContactTitle = "Invite Contacts"
     let shareLinkTitle = "Share Link"
-    
+    init() {
+        UIPageControl.appearance().currentPageIndicatorTintColor = Clr.darkgreen.uiColor()
+        UIPageControl.appearance().pageIndicatorTintColor = Clr.lightGray.uiColor()
+           }
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -49,7 +52,6 @@ struct ReferralScene: View {
                                     Text(item.title)
                                         .padding()
                                         .multilineTextAlignment(.center)
-                                        .lineLimit(2)
                                         .foregroundColor(Clr.black2)
                                         .font(Font.mada(.semiBold, size: 22))
                                     Text(item.subTitle)
@@ -60,9 +62,9 @@ struct ReferralScene: View {
                                 }.padding()
                             )
                     }
-                }.frame(width: UIScreen.screenWidth * 0.85, height:UIScreen.screenHeight*0.4)
-                .tabViewStyle(.page)
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    .padding(.vertical)
+                }.frame(width: UIScreen.screenWidth*0.85, height:UIScreen.screenHeight*0.4)
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                                 
                 Button {
                 } label: {
