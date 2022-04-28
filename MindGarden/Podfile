@@ -16,6 +16,8 @@ target 'MindGarden' do
    pod 'Purchases'
    pod 'Firebase/DynamicLinks'
    pod 'Amplitude', '~> 8.5.0'
+   pod 'Firebase/Crashlytics'
+
   target 'MindGardenTests' do
     inherit! :search_paths
     # Pods for testing

@@ -99,7 +99,7 @@ struct HomeSquare: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .position(x: UIScreen.main.bounds.width * 0.275, y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8)
+                    .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .categories ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .categories ? 0 : 10))
             }
             if isNew {
                 Capsule()

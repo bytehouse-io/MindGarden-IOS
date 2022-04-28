@@ -74,6 +74,11 @@
 			<key>orderHint</key>
 			<integer>11</integer>
 		</dict>
+		<key>FirebaseCrashlytics.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>34</integer>
+		</dict>
 		<key>FirebaseDynamicLinks.xcscheme</key>
 		<dict>
 			<key>isShown</key>

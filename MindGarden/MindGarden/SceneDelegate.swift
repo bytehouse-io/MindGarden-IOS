@@ -105,7 +105,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         
-        numberOfMeds = Int.random(in: 685..<711)
+        numberOfMeds = Int.random(in: 785..<811)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)
         SceneDelegate.bonusModel.updateBonus()
