@@ -38,6 +38,10 @@ struct Play: View {
     @State var timerSeconds = 0.0
     
     @Environment(\.scenePhase) var scenePhase
+    
+    init() {
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
 
     var body: some View {
             ZStack {
