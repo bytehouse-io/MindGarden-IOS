@@ -189,7 +189,13 @@ struct Finished: View {
                                 }
                                 Spacer()
                             }.offset(y: !isOnboarding ? 0 : -50)
-                            Spacer()
+                            if !UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                ReminderView()
+                                    .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
+                                    .padding(.top,50)
+                                    .padding()
+                                Spacer()
+                            }
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
                     HStack {
