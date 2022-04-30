@@ -237,7 +237,7 @@ struct ContentView: View {
                                                 )
                                                 .onChange(of: viewRouter.progressValue) { _ in
                                                     self.goShinny = false
-                                                    let duration = progressWidth * 0.01
+                                                    let duration = progressWidth * 0.005
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + duration/2 ) {
                                                         progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50)
                                                     }
