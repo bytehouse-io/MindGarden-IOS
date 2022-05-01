@@ -54,7 +54,7 @@ class StorylyManager: StorylyDelegate {
                          story: Storyly.Story?,
                          storyComponent: Storyly.StoryComponent?) {
            if let story = story {
-               if story.seen {
+               if !story.seen {
                    let components = story.title.components(separatedBy: " ")
                    Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
                    var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
@@ -76,10 +76,10 @@ class StorylyManager: StorylyDelegate {
                        UserDefaults.standard.setValue(unique, forKey: "storySegments")
                        UserDefaults.standard.setValue(unique, forKey: "oldSegments")
                        return
-                   } else if story.title.lowercased().contains("quotes") {
+                   } else if story.title.lowercased().contains("quote") {
                        Analytics.shared.log(event: .story_quote_opened)
                        storyArray?.removeAll(where: { str in
-                           str.lowercased().contains("quotes")
+                           str.lowercased().contains("quote")
                        })
                        storyArray = updateComps(components: components, segs: storyArray)
                    } else if story.title.lowercased().contains("tale")  {
@@ -128,7 +128,15 @@ class StorylyManager: StorylyDelegate {
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             return
         }
-
+        // start with today
+//        let cal = NSCalendar.current
+//        var date = cal.startOfDay(for: Date())
+//        var arrDates = [Date]()
+//        arrDates.append(Date())
+//        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
+//        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
+//        let userDate = UserDefaults.standard.string(forKey: "userDate")!
+        
         if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
             UserDefaults.standard.setValue(Date(), forKey: "userDate")
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {

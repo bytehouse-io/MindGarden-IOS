@@ -362,6 +362,7 @@ struct ProfileScene: View {
                                                             .font(.system(size: 22))
                                                             .foregroundColor(Color.gray)
                                                             .onTapGesture {
+                                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                                 presentationMode.wrappedValue.dismiss()
                                                             }
                                     )

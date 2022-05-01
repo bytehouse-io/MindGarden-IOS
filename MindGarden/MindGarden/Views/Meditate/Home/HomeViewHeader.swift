@@ -14,6 +14,7 @@ struct HomeViewHeader: View {
     @Binding var showSearch : Bool
     @Binding var activeSheet : Sheet?
     @Binding var showIAP : Bool
+    @Binding var showPurchase: Bool
     @EnvironmentObject var userModel: UserViewModel
     
     let width = UIScreen.screenWidth
@@ -75,6 +76,28 @@ struct HomeViewHeader: View {
                                             .foregroundColor(Clr.darkgreen)
                                             .frame(height: 30, alignment: .bottom)
                                     }.offset(x: -7)
+                                } else {
+                                    HStack {
+                                        Img.leaf
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 35)
+                                            .shadow(radius: 4)
+                                        Text("\(userModel.plantedTrees.count)")
+                                            .font(Font.mada(.semiBold, size: 22))
+                                            .foregroundColor(Clr.darkgreen)
+                                            .frame(height: 30, alignment: .bottom)
+                                            .offset(x: -5)
+                                    }.offset(x: -5)
+                                        .onTapGesture {
+                                            Analytics.shared.log(event: .home_tapped_real_tree)
+                                            withAnimation {
+                                                userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
+                                                    plt.title == "Real Tree"
+                                                })
+                                                showPurchase = true
+                                            }
+                                        }
                                 }
                                 Img.streak
                                     .resizable()
@@ -118,6 +141,6 @@ struct HomeViewHeader: View {
 
 struct HomeViewHeader_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewHeader(greeting: "", name: "", streakNumber: .constant(0), showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true))
+        HomeViewHeader(greeting: "", name: "", streakNumber: .constant(0), showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true), showPurchase: .constant(false))
     }
 }

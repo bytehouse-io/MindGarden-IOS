@@ -35,8 +35,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+//        UserDefaults.standard.setValue(["Bijan 2", "Quote 1", "Tale 2", "New Users"], forKey: "storySegments")
         if launchNum == 0 {
-            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quotes 1", "Tale 1", "Tip New Users"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users"], forKey: "oldSegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -119,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         if let _ = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {} else {
-            UserDefaults.standard.setValue(["Bijan 1", "Quotes 1", "Tale 1"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1"], forKey: "oldSegments")
         }
 
         

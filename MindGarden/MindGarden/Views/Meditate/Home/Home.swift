@@ -34,6 +34,8 @@ struct Home: View {
     @State private var showSearch = false
     @State private var showUpdateModal = false
     @State private var showMiddleModal = false
+    @State private var showPurchase = false
+    @State private var confirmModal = false
     @State private var showIAP = false
     @State private var wentPro = false
     @State private var ios14 = true
@@ -54,12 +56,12 @@ struct Home: View {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 GeometryReader { g in
                     VStack {
-                        HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP)
+                        HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP, showPurchase: $showPurchase)
                         //MARK: - scroll view
                         HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: attempts, userModel: userModel)
                             .padding(.top, -20)
                     }
-                    if showModal || showUpdateModal || showMiddleModal || showIAP {
+                    if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
@@ -71,6 +73,15 @@ struct Home: View {
                             }
                         Spacer()
                     }
+                    PurchaseModal(shown: $showPurchase, showConfirm: $confirmModal)
+                        .offset(y: showPurchase ? -35 : g.size.height)
+                        .opacity(confirmModal ? 0.3 : 1)
+                        .environmentObject(bonusModel)
+                        .environmentObject(profileModel)
+                        .animation(.default, value: showPurchase)
+                    ConfirmModal(shown: $confirmModal, showMainModal: $showPurchase)
+                        .offset(y: confirmModal ? 0 : g.size.height)
+                        .animation(.default, value: confirmModal)
                     MiddleModal(shown: $showMiddleModal)
                         .offset(y: showMiddleModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)

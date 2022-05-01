@@ -14,7 +14,6 @@ import WidgetKit
 import Storyly
 
 var updatedStreak = false
-var storylySegments: Set = ["new users"]
 var showWidgetTip = false
 class BonusViewModel: ObservableObject {
     @Published var lastLogin: String = ""

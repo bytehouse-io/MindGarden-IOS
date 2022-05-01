@@ -8,7 +8,7 @@
 import SwiftUI
 import Storyly
 import WidgetKit
-var storySegments: Set<String> = ["new users"]
+var storySegments: Set<String> = Set<String>()
 struct Stories: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<Stories>) -> UIView {
