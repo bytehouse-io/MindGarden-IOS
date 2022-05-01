@@ -37,8 +37,6 @@ struct Play: View {
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
     
-    @Environment(\.scenePhase) var scenePhase
-    
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -240,16 +238,16 @@ struct Play: View {
                         .animation(.default)
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                player?.pause()
-                model.stop()
-                mainPlayer?.pause()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            .onAppCameToForeground {
                 player?.play()
                 model.startTimer()
                 mainPlayer?.play()
-            }
+              }
+              .onAppWentToBackground {
+                  player?.pause()
+                  model.stop()
+                  mainPlayer?.pause()
+              }
 
             .onChange(of: model.secondsRemaining) { value in
                 guard isTraceTimeMannual else { return }
