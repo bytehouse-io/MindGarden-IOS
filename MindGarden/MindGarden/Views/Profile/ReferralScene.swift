@@ -11,7 +11,10 @@ struct ReferralScene: View {
     @State private var currentPage = 0
     let inviteContactTitle = "Invite Contacts"
     let shareLinkTitle = "Share Link"
-    
+    init() {
+        UIPageControl.appearance().currentPageIndicatorTintColor = Clr.darkgreen.uiColor()
+        UIPageControl.appearance().pageIndicatorTintColor = Clr.lightGray.uiColor()
+    }
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -32,43 +35,44 @@ struct ReferralScene: View {
                     .frame(width: UIScreen.screenWidth * 0.7, height: 50)
                     .padding(.top, 30)
                     .neoShadow()
-                TabView {
-                    ForEach(referralList) { item in
-                        Rectangle()
-                            .fill(Clr.darkWhite)
-                            .cornerRadius(25)
-                            .padding(20)
-                            .neoShadow()
-                            .overlay(
-                                VStack {
-                                    item.image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 100, height: 100, alignment: .center)
-                                        .padding()
-                                    Text(item.title)
-                                        .padding()
-                                        .multilineTextAlignment(.center)
-                                        .lineLimit(2)
-                                        .foregroundColor(Clr.black2)
-                                        .font(Font.mada(.semiBold, size: 22))
-                                    Text(item.subTitle)
-                                        .multilineTextAlignment(.center)
-                                        .foregroundColor(Clr.black2)
-                                        .font(Font.mada(.regular, size: 16))
-                                        .padding()
-                                }.padding()
-                            )
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(referralList) { item in
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .cornerRadius(25)
+                                .padding(20)
+                                .neoShadow()
+                                .overlay(
+                                    VStack {
+                                        item.image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100, height: 100, alignment: .center)
+                                            .padding()
+                                        Text(item.title)
+                                            .padding()
+                                            .multilineTextAlignment(.center)
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.mada(.semiBold, size: 22))
+                                        Text(item.subTitle)
+                                            .multilineTextAlignment(.center)
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.mada(.regular, size: 16))
+                                            .padding()
+                                    }.padding()
+                                )
+                        }
+                        .frame(width: UIScreen.screenWidth*0.85, height:UIScreen.screenHeight*0.4)
+                        .padding(.vertical)
                     }
-                }.frame(width: UIScreen.screenWidth * 0.85, height:UIScreen.screenHeight*0.4)
-                .tabViewStyle(.page)
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
-                                
+                }
+                
                 Button {
                 } label: {
                     HStack {
                         Text(inviteContactTitle)
-                            .foregroundColor(Clr.superWhite)
+                            .foregroundColor(Clr.black2)
                             .font(Font.mada(.semiBold, size: 16))
                             .padding(.trailing)
                             .lineLimit(1)
@@ -76,10 +80,10 @@ struct ReferralScene: View {
                     }
                     .frame(width: UIScreen.screenWidth * 0.7, height:50)
                     .background(Clr.darkgreen)
-                        .cornerRadius(25)
-                        .onTapGesture {
-                            
-                        }
+                    .cornerRadius(25)
+                    .onTapGesture {
+                        
+                    }
                 }
                 .buttonStyle(BonusPress())
                 
@@ -87,7 +91,7 @@ struct ReferralScene: View {
                 } label: {
                     HStack {
                         Text(shareLinkTitle)
-                            .foregroundColor(Clr.superBlack)
+                            .foregroundColor(.black)
                             .font(Font.mada(.semiBold, size: 16))
                             .padding(.trailing)
                             .lineLimit(1)
@@ -95,10 +99,10 @@ struct ReferralScene: View {
                     }
                     .frame(width: UIScreen.screenWidth * 0.7, height:50)
                     .background(Clr.yellow)
-                        .cornerRadius(25)
-                        .onTapGesture {
-                            
-                        }
+                    .cornerRadius(25)
+                    .onTapGesture {
+                        
+                    }
                 }
                 .buttonStyle(BonusPress())
                 .padding()

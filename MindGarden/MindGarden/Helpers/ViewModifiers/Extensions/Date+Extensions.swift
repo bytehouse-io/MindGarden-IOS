@@ -250,14 +250,28 @@ extension Date {
 }
 
 extension TimeInterval{
-        func stringFromTimeInterval() -> String {
-            let time = NSInteger(self)
-            let seconds = time % 60
-            let minutes = (time / 60) % 60
-            let hours = (time / 3600)
-            return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
-        }
+    func stringFromTimeInterval() -> String {
+        let time = NSInteger(self)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        let hours = (time / 3600)
+        return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
     }
+    
+    func secondsToHourMinFormat() -> String? {
+        let time = self
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.zeroFormattingBehavior = .pad
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+
+        let date = dateFormatter.date(from: formatter.string(from: time) ?? "")
+        dateFormatter.dateFormat = "hh:mm a"
+        return dateFormatter.string(from: date ?? Date())
+    }
+}
 
 extension Date {
     static func dates(from fromDate: Date, to toDate: Date) -> [Date] {
