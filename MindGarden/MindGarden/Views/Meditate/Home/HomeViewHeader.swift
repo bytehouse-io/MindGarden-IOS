@@ -89,11 +89,21 @@ struct HomeViewHeader: View {
                                         .font(Font.mada(.semiBold, size: 22))
                                         .foregroundColor(Clr.darkgreen)
                                 }.frame(height: 30, alignment: .bottom)
-                                PlusCoins(coins: $userModel.coins)
-                                    .onTapGesture {
-                                        Analytics.shared.log(event: .home_tapped_IAP)
-                                        withAnimation { showIAP.toggle() }
-                                    }
+                                HStack {
+                                    Img.coin
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 25)
+                                        .shadow(radius: 4)
+                                    Text("\(userModel.coins)")
+                                        .font(Font.mada(.semiBold, size: 20))
+                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
+                                }
+//                                PlusCoins(coins: )
+//                                    .onTapGesture {
+//                                        Analytics.shared.log(event: .home_tapped_IAP)
+//                                        withAnimation { showIAP.toggle() }
+//                                    }
                             }.padding(.trailing, 20)
                                 .padding(.top, -10)
                                 .padding(.bottom, 10)

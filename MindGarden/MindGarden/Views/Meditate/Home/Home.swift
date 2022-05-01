@@ -119,7 +119,7 @@ struct Home: View {
             }
         }
         .onAppear {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
                 if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                 }
@@ -164,8 +164,7 @@ struct Home: View {
                 if UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal") {
                     showUpdateModal = true
                 }
-                                
-                coins = userModel.coins
+//r                coins = userModel.coins
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
         }

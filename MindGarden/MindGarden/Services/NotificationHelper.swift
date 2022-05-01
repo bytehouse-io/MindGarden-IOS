@@ -36,14 +36,19 @@ struct NotificationHelper {
             content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
         }
 
-
+        // 1 = 1 AM
+        // 10 = 10AM
+        // 14 = 2PM
+        // 18: 6PM
+        // 19:55 = 7:55PM
+        // 20 = 8PM
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
         if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
             if hour < 18 {
                 modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
-            } else if hour > 22 {
+            } else if hour > 20 {
                 modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
             } else {
                 modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
@@ -88,15 +93,20 @@ struct NotificationHelper {
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .hour, value: 6, to: Date())
         
+        // 1 = 1 AM
+        // 10 = 10AM
+        // 14 = 2PM
+        // 18: 6PM
+        // 19:55 = 7:55PM
+        // 20 = 8PM
         if hour > 20 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
         } else if hour > 18 {
-            modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+            modifiedDate = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
             content.title = "Finish where you left off"
             content.body = "🌱 Grow your first flower & start your first meditation session before you go to sleep"
         } else {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
             content.title = "Finish where you left off"
             content.body = "🌱 Grow your first flower & start your first meditation session"
         }

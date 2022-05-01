@@ -24,6 +24,7 @@ class UserViewModel: ObservableObject {
     @Published var isPotion : Bool = false
     @Published var isChest : Bool = false
     @Published var coins: Int = 0
+    @Published var plantedTrees = [String]()
     
     private var validationCancellables: Set<AnyCancellable> = []
 
@@ -127,7 +128,9 @@ class UserViewModel: ObservableObject {
                     if let fbChest = document["chest"] as? String {
                         self.chest = fbChest
                     }
-
+                    if let fbTrees = document["plantedTrees"] as? [String] {
+                        self.plantedTrees = fbTrees
+                    }
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.allPlants.filter({ plant in
@@ -285,7 +288,7 @@ class UserViewModel: ObservableObject {
         }
     }
 
-    func buyPlant(isUnlocked: Bool = false, unlockedStrawberry: Bool = false) {
+    func buyPlant(isUnlocked: Bool = false, unlockedStrawberry: Bool = false, realTree: Bool = false) {
         if let plant = willBuyPlant {
             if !unlockedStrawberry {
                 self.coins -= willBuyPlant?.price ?? 0
@@ -297,6 +300,10 @@ class UserViewModel: ObservableObject {
             }
             
             ownedPlants.append(plant)
+            
+            if realTree {
+                self.plantedTrees.append(dateFormatter.string(from: Date()))
+            }
 
             var finalPlants: [String] = [String]()
             if let email = Auth.auth().currentUser?.email {
@@ -312,7 +319,8 @@ class UserViewModel: ObservableObject {
                     let uniquePlants = Array<String>(Set(finalPlants))
                     self.db.collection(K.userPreferences).document(email).updateData([
                         K.defaults.plants: uniquePlants,
-                        K.defaults.coins: self.coins
+                        K.defaults.coins: self.coins,
+                        "plantedTrees": self.plantedTrees
                     ]) { (error) in
                         if let e = error {
                             print("There was a issue saving data to firestore \(e) ")

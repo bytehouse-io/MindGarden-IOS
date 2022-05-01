@@ -242,7 +242,7 @@ struct MindGardenWidgetEntryView : View {
                             .foregroundColor(Color.white)
                             .offset(y: 5)
                         HStack(spacing: 5) {
-                             Image("newStar")
+                             Image("streak")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: width * 0.05)

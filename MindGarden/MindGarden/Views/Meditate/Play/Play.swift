@@ -180,6 +180,7 @@ struct Play: View {
                                 }
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {
+                                        model.forwardCounter += 1
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if model.selectedMeditation?.belongsTo != "Timed Meditation" {
                                             goForward()
@@ -375,7 +376,6 @@ struct Play: View {
     func goForward() {
         let playerCurrentTime = CMTimeGetSeconds(mainPlayer!.currentTime())
         let newTime = playerCurrentTime + 15
-        model.forwardCounter += 1
         
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
         self.mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)

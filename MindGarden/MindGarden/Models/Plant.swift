@@ -28,7 +28,7 @@ struct Plant: Hashable {
     }
     // ADD TO WIDGET
     static var plants: [Plant] = [
-        Plant(title: "Real Tree", price: 700, selected: false, description: "Trees for the Future (TREES) trains communities on sustainable land use so that they can grow vibrant economies, thriving food systems, and a healthier planet.", packetImage: Img.treePacket, one: Img.sapling, two: Img.youngTree, coverImage: Img.realTree, head: Img.iceFlower, badge: Img.aloeBadge),
+        Plant(title: "Real Tree", price: 700, selected: false, description: "Trees for the Future (TREES) trains communities on sustainable land use so that they can grow vibrant economies, thriving food systems, and a healthier planet.", packetImage: Img.treePacket, one: Img.sapling, two: Img.youngTree, coverImage: Img.realTree, head: Img.leaf, badge: Img.realTree),
         Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),
         Plant(title: "Red Tulip", price: 90, selected: false, description: "Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redTulipsBadge),
         Plant(title: "Cactus", price: 130, selected: false, description: "Cactuses are a type of desert plant that have thick, leafless stems covered in prickly spines or sharp spikes, some cacti are able to store hundreds of gallons of water. Cactus originates from the Greek name Kaktos.", packetImage: Img.cactusPacket, one: Img.cactus1, two: Img.cactus2, coverImage: Img.cactus3, head: Img.cactusHead, badge: Img.cactusBadge),
@@ -44,7 +44,7 @@ struct Plant: Hashable {
         Plant(title: "Strawberry", price: 150, selected: false, description: "The strawberry is widely appreciated for its characteristic aroma, bright red color, juicy texture, and sweetness. The average strawberry has 200 seeds.", packetImage: Img.strawberryPacket, one: Img.strawberry1, two: Img.strawberry2, coverImage: Img.strawberry3, head: Img.strawberryHead, badge: Img.strawberryBadge),
         //head
         Plant(title: "Aloe", price: 160, selected: false, description: "Aloe sometimes described as a “wonder plant,” is a short-stemmed shrub. It is grown commercially for the health and moisturizing benefits found inside its leaves. Cleopatra applied aloe gel to her body as part of her beauty regimen!", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.aloeHead, badge: Img.aloeBadge),
-        Plant(title: "Ice Flower", price: 0, selected: false, description: "", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.iceFlower, badge: Img.aloeBadge),
+//        Plant(title: "Ice Flower", price: 0, selected: false, description: "", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.iceFlower, badge: Img.aloeBadge),
 
     ]
     

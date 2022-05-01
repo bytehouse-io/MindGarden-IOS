@@ -145,7 +145,7 @@ struct PurchaseModal: View {
                                 .foregroundColor(Clr.lightTextGray)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: g.size.width * 0.7)
-                            Text("🌱 You have planted: 0 trees")
+                            Text("🌱 You have planted: \(userModel.plantedTrees.count) trees")
                                 .font(Font.mada(.semiBold, size: 22))
                                 .foregroundColor(Clr.darkgreen)
                                 .multilineTextAlignment(.leading)

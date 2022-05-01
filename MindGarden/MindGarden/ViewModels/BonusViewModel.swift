@@ -15,6 +15,7 @@ import Storyly
 
 var updatedStreak = false
 var storylySegments: Set = ["new users"]
+var showWidgetTip = false
 class BonusViewModel: ObservableObject {
     @Published var lastLogin: String = ""
     @Published var dailyBonus: String = ""
@@ -187,6 +188,7 @@ class BonusViewModel: ObservableObject {
             if UserDefaults.standard.bool(forKey: "newUser") {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
             }
+            progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!))
         } else if UserDefaults.standard.bool(forKey: "newUser") {
             let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!)
             UserDefaults.standard.setValue(dte, forKey: "ltd")
@@ -294,6 +296,9 @@ class BonusViewModel: ObservableObject {
         } else if launchNum == 3 && !UserDefaults.standard.bool(forKey: "allMeditations") {
             UserDefaults.standard.setValue(true, forKey: "allMeditations")
             updateTips(tip: "Tip Meditations")
+        } else if showWidgetTip && !UserDefaults.standard.bool(forKey: "widgetTip") {
+            UserDefaults.standard.setValue(true, forKey: "widgetTip")
+            updateTips(tip: "Tip Widget")
         } else if launchNum == 30 {
             var storySegs = UserDefaults.standard.array(forKey: "storySegments") as? [String]
             storySegs?.removeAll(where: { str in
@@ -332,7 +337,7 @@ class BonusViewModel: ObservableObject {
                     userModel.triggerAnimation = true
                 }
             }
-            
+            self.streak = String(self.streakNumber) + "+" + lastStreakDate
             self.db.collection(K.userPreferences).document(email).updateData([
                 "streak": String(self.streakNumber) + "+" + lastStreakDate
             ]) { (error) in
@@ -365,8 +370,6 @@ class BonusViewModel: ObservableObject {
             let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
             let interval = currentDate.interval(ofComponent: .day, fromDate: streakDate ?? Date())
             
-            
-            
             if (interval >= 1 && interval < 2) {  // update streak number and date
                 updatedStreak = true
                 self.streakNumber += 1
@@ -377,6 +380,7 @@ class BonusViewModel: ObservableObject {
                     freezeStreak(interval: interval)
                     updateLongest()
                 } else {
+                    updatedStreak = true
                     self.streakNumber = 1
                     if let email = Auth.auth().currentUser?.email {
                         self.db.collection(K.userPreferences).document(email).updateData([
@@ -410,6 +414,7 @@ class BonusViewModel: ObservableObject {
         } else {
             updatedStreak = true
             lastStreakDate  = formatter.string(from: Date())
+            
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                 self.streakNumber = 1
             } else {
@@ -482,6 +487,7 @@ class BonusViewModel: ObservableObject {
                             UserDefaults.standard.setValue(4, forKey: "day")
                         }
                     } else { // third day back
+                        showWidgetTip = true
                         UserDefaults.standard.setValue(true, forKey: "day3")
                         UserDefaults.standard.setValue(3, forKey: "day")
                     }

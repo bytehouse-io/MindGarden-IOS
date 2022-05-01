@@ -35,7 +35,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 //        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-        UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quotes 1", "Tale 1", "Tip New Users"], forKey: "oldSegments")
         if launchNum == 0 {
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quotes 1", "Tale 1", "Tip New Users"], forKey: "oldSegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")

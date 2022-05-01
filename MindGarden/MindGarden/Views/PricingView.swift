@@ -322,7 +322,7 @@ struct PricingView: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
                                 HStack {
-                                    Text(selectedBox == "Yearly" ? "👨‍🌾 Start your free trial" : "👨‍🌾 Unlock MindGarden Pro")
+                                    Text(selectedBox == "Yearly" ? fiftyOff ? "👨‍🌾 Unlock MindGarden Pro" : "👨‍🌾 Start your free trial" : "👨‍🌾 Unlock MindGarden Pro")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.bold, size: 18))
                                 }.frame(width: g.size.width * 0.825, height: 50)
@@ -611,7 +611,7 @@ struct PricingView: View {
                     }
                     Spacer()
 
-                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? !fiftyOff ? "\(price, specifier: "%.2f")" : "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text(title == "Monthly" ? "/mo" : "/yr")
+                    (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text(title == "Monthly" ? "/mo" : "/mo")
                        )
                             .foregroundColor(selected == title ? .white : Clr.black2)
                             .font(Font.mada(.bold, size: 20))

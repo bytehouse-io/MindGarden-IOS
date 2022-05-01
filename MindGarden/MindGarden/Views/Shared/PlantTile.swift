@@ -58,7 +58,7 @@ struct PlantTile: View {
                         .frame(width: width * 0.35 * 0.85, alignment: .leading)
                         .padding(.leading, isBadge ? 3 : isShop ? 0 : 5)
                     if isShop {
-                        if isOwned && !isBadge{
+                        if isOwned && !isBadge {
                             Text("Bought")
                                 .font(Font.mada(.bold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
@@ -90,7 +90,7 @@ struct PlantTile: View {
                                     .minimumScaleFactor(0.05)
                                     .offset(x: -2)
                                 if plant.title == "Real Tree" {
-                                    Img.realLeaf
+                                    Img.leaf
                                         .renderingMode(.original)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)

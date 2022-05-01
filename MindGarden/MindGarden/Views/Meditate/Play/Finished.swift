@@ -64,8 +64,7 @@ struct Finished: View {
                                 Img.greenBlob
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: g.size
-                                            .width/1, height: g.size.height/2)
+                                    .frame(width: g.size.width/1, height: g.size.height/2)
                                     .offset(x: g.size.width/6, y: -g.size.height/6)
                                 LottieView(fileName: "confetti")
                                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height/2)
@@ -184,8 +183,7 @@ struct Finished: View {
                                             .frame(height: g.size.height/2.75)
                                             .padding(.top, 10)
                                             .animation(.easeInOut(duration: 2.0))
-                                    }
-                                    .frame(width: g.size.width * 0.85, height: g.size.height/2.25)
+                                    }.frame(width: g.size.width * 0.85, height: g.size.height/2.25)
                                 }
                                 Spacer()
                             }.offset(y: !isOnboarding ? 0 : -50)
@@ -248,7 +246,6 @@ struct Finished: View {
                                                     showStreak.toggle()
                                                     updatedStreak = false
                                                 } else {
-                                                    
                                                     viewRouter.currentPage = .garden
                                                 }
                                             }
@@ -336,10 +333,10 @@ struct Finished: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                                             if updatedStreak {
-                                                showStreak.toggle()
+                                                showStreak = true
                                                 updatedStreak = false
                                             } else {
-                                                viewRouter.currentPage = . garden
+                                                viewRouter.currentPage = .garden
                                             }
                                         } else {
                                             viewRouter.currentPage = .garden
@@ -358,7 +355,7 @@ struct Finished: View {
             }
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
             { _ in }
-                    .fullScreenCover(isPresented: $showStreak, content: {
+            .fullScreenCover(isPresented: $showStreak, content: {
                 StreakScene(streakNumber: $bonusModel.streakNumber)
                     .background(Clr.darkWhite)
             })
@@ -383,6 +380,7 @@ struct Finished: View {
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3
                 }
+                
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
                     if model.shouldStreakUpdate {
@@ -405,9 +403,12 @@ struct Finished: View {
                         userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
                             p.title == "Cherry Blossoms"
                         })
+                        
                         userModel.buyPlant(unlockedStrawberry: true)
                         UserDefaults.standard.setValue(true, forKey: "cherry")
+                        
                     }
+                    
                 }
                 //num times med
                 var num = UserDefaults.standard.integer(forKey: "numMeds")

@@ -100,7 +100,7 @@ struct NewUpdateModal: View {
                             Capsule()
                                 .fill(Clr.darkgreen)
                                 .overlay(
-                                    Text("Claim my free trial")
+                                    Text("Claim my 50% off")
                                         .font(Font.mada(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .lineLimit(1)

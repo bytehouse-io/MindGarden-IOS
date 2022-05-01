@@ -124,7 +124,7 @@ struct Store: View {
                             } else {
                                 ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
                                 { plant in
-                                    if userModel.ownedPlants.contains(plant) && isShop {
+                                    if userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree" {
                                         PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                     } else {
                                         Button {
@@ -177,30 +177,30 @@ struct Store: View {
                             } else {
                                 ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
                                         : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
-                                    if userModel.ownedPlants.contains(plant) && isShop && plant.title != "Ice Flower" {
-                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                    } else {
-                                        Button {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if isShop {
-                                                Analytics.shared.log(event: .store_tapped_plant_tile)
-                                                userModel.willBuyPlant = plant
-                                                if userModel.willBuyPlant?.title == "Real Tree" {
-                                                    Analytics.shared.log(event: .store_tapped_real_tree)
+                                        if (userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree") {
+                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                        } else {
+                                            Button {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                if isShop {
+                                                    Analytics.shared.log(event: .store_tapped_plant_tile)
+                                                    userModel.willBuyPlant = plant
+                                                    if plant.title == "Real Tree" {
+                                                        Analytics.shared.log(event: .store_tapped_real_tree)
+                                                    }
+                                                    withAnimation {
+                                                        showModal = true
+                                                    }
+                                                } else {
+                                                    UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                    userModel.selectedPlant = plant
+                                                    Analytics.shared.log(event: .home_selected_plant)
                                                 }
-                                                withAnimation {
-                                                    showModal = true
-                                                }
-                                            } else {
-                                                UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                                userModel.selectedPlant = plant
-                                                Analytics.shared.log(event: .home_selected_plant)
-                                            }
-                                        } label: {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                        }.buttonStyle(NeumorphicPress())
+                                            } label: {
+                                                PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                            }.buttonStyle(NeumorphicPress())
+                                        }
                                     }
-                                }
                             }
 
                         }
@@ -525,15 +525,17 @@ struct Store: View {
                                     Analytics.shared.log(event: .store_tapped_confirm_modal_confirm)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-//                                        if userModel.selectedPlant?.title == "Real Tree" {
-//
-//                                        } else {
-//
-//                                        }
-                                        userModel.buyPlant()
-                                        showPlantAnimation = true
-                                        shown = false
-                                        showMainModal = false
+                                        if userModel.willBuyPlant?.title == "Real Tree" {
+                                            userModel.buyPlant(realTree: true)
+                                            if !userModel.ownedPlants.contains(where: { plt in
+                                                plt.title == "Real Tree"
+                                            }) {
+                                                showPlantAnimation = true
+                                            }
+                                            shown = false
+                                            showMainModal = false
+                                        }
+                                   
                                     }
                                 } label: {
                                     Text("Confirm")
