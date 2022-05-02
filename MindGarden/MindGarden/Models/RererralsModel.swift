@@ -26,25 +26,25 @@ struct ReferralItem: Identifiable {
     
     var image: Image {
         switch self.tabName {
-        case .ref1: return Img.books
-        case .ref2: return Img.brain
-        case .ref3: return Img.candle
+        case .ref1: return Img.venusBadge
+        case .ref2: return Img.referral2
+        case .ref3: return Img.referral3
         }
     }
     
     var title : String {
         switch self.tabName {
-        case .ref1: return "Enter monthly $150 rare plants giveaway!"
-        case .ref2: return "Enter monthly $150 rare plants giveaway!"
-        case .ref3: return "Enter monthly $150 rare plants giveaway!"
+        case .ref1: return "Your 1st Friend Invited"
+        case .ref2: return "Every Friend Invited = +50 free coins"
+        case .ref3: return "5 Friends = Limited Edition Sticker Packer"
         }
     }
     
     var subTitle: String {
         switch self.tabName {
-        case .ref1: return "share your flora garden with friends enter to win up to $150 worth of rare plants every month!"
-        case .ref2: return "share your flora garden with friends enter to win up to $150 worth of rare plants every month!"
-        case .ref3: return "share your flora garden with friends enter to win up to $150 worth of rare plants every month!"
+        case .ref1: return "Unlock a rare venus fly trap when you invite your first friend"
+        case .ref2: return "In order for a referral to go through, your friend must create an account"
+        case .ref3: return "Email us a screenshot team@mindgarden.io, and we'll mail you stickers for free!"
         }
     }
 }

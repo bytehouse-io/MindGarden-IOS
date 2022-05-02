@@ -225,6 +225,8 @@ public enum Img {
   public static let pottedPlants = Image("pottedPlants")
   public static let powerofgratitude = Image("powerofgratitude")
   public static let realTree = Image("realTree")
+  public static let referral2 = Image("referral2")
+  public static let referral3 = Image("referral3")
   public static let sadPot = Image("sadPot")
   public static let sapling = Image("sapling")
   public static let seed = Image("seed")

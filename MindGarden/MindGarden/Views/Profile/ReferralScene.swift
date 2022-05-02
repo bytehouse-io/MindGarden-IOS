@@ -10,7 +10,7 @@ import SwiftUI
 struct ReferralScene: View {
     @State private var currentPage = 0
     let inviteContactTitle = "Invite Contacts"
-    let shareLinkTitle = "Share Link"
+    let shareLinkTitle = "Share Link 🔗"
     init() {
         UIPageControl.appearance().currentPageIndicatorTintColor = Clr.darkgreen.uiColor()
         UIPageControl.appearance().pageIndicatorTintColor = Clr.lightGray.uiColor()
@@ -38,55 +38,62 @@ struct ReferralScene: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(referralList) { item in
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(25)
-                                .padding(20)
-                                .neoShadow()
-                                .overlay(
-                                    VStack {
-                                        item.image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 100, height: 100, alignment: .center)
-                                            .padding()
+                            ZStack {
+                                VStack(spacing: 5) {
+                                    item.image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 175, height:  150, alignment: .center)
+                                        .padding()
+                                        .padding(.top, item.image == Img.venusBadge ? 50 : 30)
+                                    VStack(spacing: -10) {
                                         Text(item.title)
-                                            .padding()
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.semiBold, size: 22))
+                                            .frame(width: UIScreen.screenWidth * 0.5, height: 50)
+                                            .minimumScaleFactor(0.05)
+                                            .lineLimit(2)
+                                            .padding(20)
                                         Text(item.subTitle)
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.regular, size: 16))
-                                            .padding()
-                                    }.padding()
-                                )
+                                            .frame(width: UIScreen.screenWidth * 0.6, height: 75, alignment: .top)
+                                            .padding([.bottom, .horizontal])
+                                    }.offset(y: -25)
+                           
+                                }.padding()
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Clr.brightGreen, lineWidth: 6)
+                                    .frame(width: UIScreen.screenWidth*0.75, height:UIScreen.screenHeight*0.45)
+                            }.frame(width: UIScreen.screenWidth*0.75, height:UIScreen.screenHeight*0.45)
+                                .background(Clr.darkWhite)
+                                .cornerRadius(30)
+                                .neoShadow()
+                            .padding(.vertical)
                         }
-                        .frame(width: UIScreen.screenWidth*0.85, height:UIScreen.screenHeight*0.4)
-                        .padding(.vertical)
                     }
                 }
                 
-                Button {
-                } label: {
-                    HStack {
-                        Text(inviteContactTitle)
-                            .foregroundColor(Clr.black2)
-                            .font(Font.mada(.semiBold, size: 16))
-                            .padding(.trailing)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.05)
-                    }
-                    .frame(width: UIScreen.screenWidth * 0.7, height:50)
-                    .background(Clr.darkgreen)
-                    .cornerRadius(25)
-                    .onTapGesture {
-                        
-                    }
-                }
-                .buttonStyle(BonusPress())
-                
+//                Button {
+//                } label: {
+//                    HStack {
+//                        Text(inviteContactTitle)
+//                            .foregroundColor(.white)
+//                            .font(Font.mada(.semiBold, size: 16))
+//                            .padding(.trailing)
+//                            .lineLimit(1)
+//                            .minimumScaleFactor(0.05)
+//                    }
+//                    .frame(width: UIScreen.screenWidth * 0.7, height:50)
+//                    .background(Clr.darkgreen)
+//                    .cornerRadius(25)
+//                    .onTapGesture {
+//
+//                    }
+//                }
+//                .buttonStyle(BonusPress())
                 Button {
                 } label: {
                     HStack {
@@ -105,8 +112,11 @@ struct ReferralScene: View {
                     }
                 }
                 .buttonStyle(BonusPress())
-                .padding()
-                
+                .padding(.top)
+                Text("The average users refers 2.3 people!")
+                    .font(Font.mada(.regular, size: 18))
+                    .foregroundColor(.black)
+                    .opacity(0.4)
                 Spacer()
             }
             
