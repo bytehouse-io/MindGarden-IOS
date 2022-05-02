@@ -239,16 +239,18 @@ struct Play: View {
                         .animation(.default)
                 }
             }
-            .onAppCameToForeground {
-                player?.play()
-                model.startTimer()
-                mainPlayer?.play()
-              }
-              .onAppWentToBackground {
-                  player?.pause()
-                  model.stop()
-                  mainPlayer?.pause()
-              }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+               pause()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                play()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                play()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                pause()
+            }
 
             .onChange(of: model.secondsRemaining) { value in
                 guard isTraceTimeMannual else { return }
@@ -392,6 +394,18 @@ struct Play: View {
             }
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
         mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+    }
+    
+    private func pause(){
+        player?.pause()
+        model.stop()
+        mainPlayer?.pause()
+    }
+    
+    private func play(){
+        player?.play()
+        model.startTimer()
+        mainPlayer?.play()
     }
 
 

@@ -12,6 +12,7 @@ struct ReminderView: View {
     let reminderTitle = "Remind me Tomorrow"
     @State private var time = 0.0
     @State private var isToggled : Bool = false
+
     var body: some View {
         VStack {
             Text(reminderTitle)
@@ -22,6 +23,7 @@ struct ReminderView: View {
                     .fill(Clr.darkWhite)
                     .cornerRadius(25)
                     .neoShadow()
+                
                 VStack {
                     Slider(value: $time, in: 0...86399)
                         .accentColor(.gray)

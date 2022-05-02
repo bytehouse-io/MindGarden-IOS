@@ -108,7 +108,7 @@ struct NewUpdateModal: View {
                                 )
                                 .frame(width: g.size.width * 0.6, height: g.size.height * 0.065)
                         }.buttonStyle(NeumorphicPress())
-                        .padding()
+                            .padding(.top)
                         Button {
                             withAnimation {
                                 UserDefaults.standard.setValue(true, forKey: "14DayModal")
@@ -119,7 +119,7 @@ struct NewUpdateModal: View {
                                     .foregroundColor(Color.gray)
                                     .font(Font.mada(.regular, size: 20))
                         }
-                        .padding(.bottom, 20)
+                        .padding(20)
                     }
                     .font(Font.mada(.regular, size: 18))
                     .frame(width: g.size.width * 0.85, height: g.size.height * 0.66, alignment: .center)
