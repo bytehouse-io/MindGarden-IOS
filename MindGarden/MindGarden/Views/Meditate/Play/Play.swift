@@ -145,27 +145,7 @@ struct Play: View {
                                 }
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
-                                        if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
-                                            self.mainPlayer.rate = 0
-                                        } else {
-                                            mainPlayer.play()
-                                        }
-                                    }
-
-                                    if player.isPlaying {
-                                        player.pause()
-                                    } else {
-                                        player.play()
-                                    }
-
-                                    if timerStarted {
-                                        model.stop()
-                                    } else {
-                                        model.startCountdown()
-                                    }
-
-                                    timerStarted.toggle()
+                                    changeState()
                                 } label: {
                                     ZStack {
                                         Circle()
@@ -240,16 +220,10 @@ struct Play: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-               pause()
+                changeState()
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                play()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                play()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-                pause()
+                changeState()
             }
 
             .onChange(of: model.secondsRemaining) { value in
@@ -396,16 +370,28 @@ struct Play: View {
         mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
     }
     
-    private func pause(){
-        player?.pause()
-        model.stop()
-        mainPlayer?.pause()
-    }
-    
-    private func play(){
-        player?.play()
-        model.startTimer()
-        mainPlayer?.play()
+    private func changeState(){
+        if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
+            if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
+                self.mainPlayer.rate = 0
+            } else {
+                mainPlayer.play()
+            }
+        }
+
+        if player.isPlaying {
+            player.pause()
+        } else {
+            player.play()
+        }
+
+        if timerStarted {
+            model.stop()
+        } else {
+            model.startCountdown()
+        }
+
+        timerStarted.toggle()
     }
 
 
