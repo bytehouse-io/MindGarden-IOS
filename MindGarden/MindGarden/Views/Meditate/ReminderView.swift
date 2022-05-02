@@ -10,7 +10,7 @@ import SwiftUI
 struct ReminderView: View {
     let reminderTitle = "SET A REMINDER"
     @State private var time = 0.0
-    @State private var isToggle : Bool = false
+    @State private var isSwitchOn : Bool = false
     var body: some View {
         VStack {
             Text(reminderTitle)
@@ -55,7 +55,7 @@ struct ReminderView: View {
                                 Text(timeInterval.secondsToHourMinFormat() ?? "")
                                     .font(Font.mada(.bold, size: 20))
                                     .foregroundColor(Clr.black2)
-                                Toggle(isOn: $isToggle) {}
+                                Toggle(isOn: $isSwitchOn) {}
                             }
                         }.padding()
                     }
