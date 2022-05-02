@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(["Bijan 2", "Quote 1", "Tale 2", "New Users"], forKey: "storySegments")
         if launchNum == 0 {
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users"], forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)

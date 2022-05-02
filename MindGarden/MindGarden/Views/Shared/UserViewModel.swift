@@ -302,6 +302,7 @@ class UserViewModel: ObservableObject {
             ownedPlants.append(plant)
             
             if realTree {
+                Analytics.shared.log(event: .store_bought_real_tree)
                 self.plantedTrees.append(dateFormatter.string(from: Date()))
             }
 

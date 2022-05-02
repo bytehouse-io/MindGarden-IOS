@@ -167,6 +167,7 @@ enum AnalyticEvent {
     case finished_tapped_finished //
     case finished_tapped_gratitude //
     case finished_tapped_mood //
+    case finished_set_reminder //
     
     //MARK: - Learn
     case screen_load_learn //
@@ -560,6 +561,7 @@ extension AnalyticEvent {
         case .finished_save_progress: return "finished_save_progress"
         case .finished_not_now: return "finished_not_now"
         case .finished_tapped_share: return "finished_tapped_share"
+        case .finished_set_reminder: return "finished_set_reminder"
         case .finished_tapped_favorite: return "finished_tapped_favorite"
         case .finished_tapped_unfavorite: return "finished_tapped_unfavorite"
         case .finished_tapped_finished: return "finished_tapped_finished"

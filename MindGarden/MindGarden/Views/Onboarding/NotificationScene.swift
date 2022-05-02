@@ -277,11 +277,13 @@ struct NotificationScene: View {
                     NotificationHelper.addOnboarding()
                 }
 
-                if fromSettings && UserDefaults.standard.bool(forKey: "isPro"){
+                if fromSettings && UserDefaults.standard.bool(forKey: "freeTrial")  {
                     NotificationHelper.freeTrial()
                 }
+                
                 UserDefaults.standard.setValue(dateTime, forKey: "notif")
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
+                
                 if frequency == "Everyday" {
                     for i in 1...7 {
                         let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)

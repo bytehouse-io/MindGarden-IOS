@@ -220,7 +220,6 @@ struct NotificationHelper {
            let formatter = DateFormatter()
            formatter.dateFormat = "MM/dd/yyyy hh:mm a"
            let calendar = Calendar(identifier: .gregorian)
-           print(formatter.string(from: calendar.date(from: components)!), weekday)
            return calendar.date(from: components)!
        }
 

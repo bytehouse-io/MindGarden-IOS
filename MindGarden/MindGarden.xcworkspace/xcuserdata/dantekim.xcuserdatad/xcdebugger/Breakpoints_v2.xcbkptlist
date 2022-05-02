@@ -72,7 +72,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "335B7975-1B94-4C1E-A1F1-C97D7A13E542"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MindGarden/Views/Profile/AuthenticationViewModel.swift"
@@ -88,7 +88,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "486EC8A2-4AED-4319-A4EE-5E3BD6B6D49D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MindGarden/Views/Profile/AuthenticationViewModel.swift"
@@ -152,7 +152,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "BA6942A0-1A6D-4CF7-BD88-E2C9E42E83E7"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MindGarden/ViewModels/BonusViewModel.swift"
@@ -176,6 +176,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "141"
             endingLineNumber = "141"
+            landmarkName = "updateStories()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E41829B-9E5A-4440-A3A9-16D8F29B6113"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MindGarden/Models/StorylyManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "updateStories()"
             landmarkType = "7">
          </BreakpointContent>
