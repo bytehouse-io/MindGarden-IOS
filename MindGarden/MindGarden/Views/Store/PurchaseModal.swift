@@ -181,12 +181,11 @@ struct PurchaseModal: View {
                                         }
                                     }
                                 case "👨‍👩‍👦‍👦 Join our Reddit":
+                                    if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
+                                        UIApplication.shared.open(url)
+                                    }
+                                    Analytics.shared.log(event: .store_tapped_reddit)
                                     if !UserDefaults.standard.bool(forKey: "reddit") {
-                                        Analytics.shared.log(event: .store_tapped_reddit)
-                                        if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
-                                            UIApplication.shared.open(url)
-                                            userModel.buyPlant(unlockedStrawberry: true)
-                                        }
                                         UserDefaults.standard.setValue(true, forKey: "reddit")
                                     }
                                 case "🙏 30 Gratitudes":

@@ -22,7 +22,7 @@ class MGAudio: NSObject, AVAudioPlayerDelegate {
             let soundFileNameURL = URL(fileURLWithPath: bundle)
             
             if let player = players[soundFileNameURL] { //player for sound has been found
-                
+                player.volume = 0.4
                 if !player.isPlaying { //player is not in use, so use that one
                     player.prepareToPlay()
                     player.play()
@@ -47,6 +47,7 @@ class MGAudio: NSObject, AVAudioPlayerDelegate {
             } else { //player has not been found, create a new player with the URL if possible
                 do {
                     let player = try AVAudioPlayer(contentsOf: soundFileNameURL)
+                    player.volume = 0.4
                     players[soundFileNameURL] = player
                     player.prepareToPlay()
                     player.play()

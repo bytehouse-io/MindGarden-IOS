@@ -338,7 +338,8 @@ struct Store: View {
                             Text("You can click on badges and open them up")
                           , dismissButton: .default(Text("Got it!")))
                 }
-        }.onAppear {
+        }
+        .onAppear {
             let _ = storylyViewProgrammatic.openStory(storyGroupId: 41611, play: .StoryGroup)
             DispatchQueue.main.async {
                 isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
@@ -356,9 +357,13 @@ struct Store: View {
                 }
             }
         }
-            .onDisappear {
-                UserDefaults.standard.setValue(true, forKey: "showTip")
-            }.onAppearAnalytics(event: .screen_load_store)
+        .fullScreenCover(isPresented: $userModel.showPlantAnimation) {
+            PlantGrowing()
+                .environmentObject(userModel)
+        }
+        .onDisappear {
+            UserDefaults.standard.setValue(true, forKey: "showTip")
+        }.onAppearAnalytics(event: .screen_load_store)
     }
     
     private func promptNotif() {
@@ -406,7 +411,6 @@ struct Store: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var showSuccess: Bool
         @Binding var showMainModal: Bool
-        @State private var showPlantAnimation = false
 
         var  body: some View {
             GeometryReader { g in
@@ -435,7 +439,7 @@ struct Store: View {
                                 withAnimation {
                                     showSuccess = false
                                     showMainModal = false
-                                    showPlantAnimation = true
+                                    userModel.showPlantAnimation = true
                                 }
                             } label: {
                                 Text("Got it")
@@ -454,7 +458,7 @@ struct Store: View {
                     }
                     Spacer()
                 }
-                .fullScreenCover(isPresented: $showPlantAnimation) {
+                .fullScreenCover(isPresented: $userModel.showPlantAnimation) {
                     PlantGrowing()
                         .environmentObject(userModel)
                 }

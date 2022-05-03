@@ -25,6 +25,7 @@ class UserViewModel: ObservableObject {
     @Published var isChest : Bool = false
     @Published var coins: Int = 0
     @Published var plantedTrees = [String]()
+    @Published var showPlantAnimation = false
     
     private var validationCancellables: Set<AnyCancellable> = []
 

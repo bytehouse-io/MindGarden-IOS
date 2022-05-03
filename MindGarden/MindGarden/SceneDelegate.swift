@@ -105,7 +105,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        
         numberOfMeds = Int.random(in: 785..<811)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)
@@ -118,12 +117,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
+//        UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         if let _ = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {} else {
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1"], forKey: "oldSegments")
         }
-
+        
+        if UserDefaults.standard.bool(forKey: "reddit") && !UserDefaults.standard.bool(forKey: "redditOne") {
+            SceneDelegate.userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                p.title == "Apples"
+            })
+            SceneDelegate.userModel.buyPlant(unlockedStrawberry: true)
+            SceneDelegate.userModel.showPlantAnimation = true
+            UserDefaults.standard.setValue(true, forKey: "redditOne")
+        }
         
         StorylyManager.updateStories()
     }

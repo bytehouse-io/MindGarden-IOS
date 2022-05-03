@@ -272,13 +272,7 @@ struct ProfileScene: View {
                                                                 Analytics.shared.log(event: .profile_tapped_reddit)
                                                                 if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                                                     UIApplication.shared.open(url)
-                                                                    if !UserDefaults.standard.bool(forKey: "reddit") {
-                                                                        userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-                                                                            p.title == "Lemon"
-                                                                        })
-                                                                        userModel.buyPlant(unlockedStrawberry: true)
-                                                                        UserDefaults.standard.setValue(true, forKey: "reddit")
-                                                                    }
+                                                                    UserDefaults.standard.setValue(true, forKey: "reddit")
                                                                 }
                                                             }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
                                                                 .frame(height: K.isSmall() ? 30 : 40)
