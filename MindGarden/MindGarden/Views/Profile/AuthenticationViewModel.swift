@@ -95,7 +95,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         falseAppleId = true
                                         return
                                     } else { // sign up
-                                        Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                        Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                             if (error != nil) {
                                                 alertError = true
                                                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
@@ -380,6 +380,7 @@ extension AuthenticationViewModel {
             let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: Date())
             date = dateFormatter.string(from: newDate ?? Date())
         }
+        
         if let referredEmail = UserDefaults.standard.string(forKey: K.defaults.referred) {
             if referredEmail != "" {
                 var refDate = ""
@@ -392,6 +393,10 @@ extension AuthenticationViewModel {
                             refDate = stack.substring(to: plusIndex)
                             refStack = Int(stack.substring(from: plusIndex + 1)) ?? 0
                         }
+                        var coins = 0
+                        if let fbCoins = document["coins"] as? Int {
+                            coins = fbCoins
+                        }
                         var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
                         if dte ?? Date() < Date() {
                             dte = Date()
@@ -399,10 +404,12 @@ extension AuthenticationViewModel {
                         let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
                         let newDateString = dateFormatter.string(from: newDate ?? Date())
                         refStack += 1
+                        coins += 50
                         let referredStack = newDateString+"+"+String(refStack)
                         db.collection(K.userPreferences).document(referredEmail)
                             .updateData([
-                                "referredStack": referredStack
+                                "referredStack": referredStack,
+                                "coins": coins
                         ])
                     }
                 }

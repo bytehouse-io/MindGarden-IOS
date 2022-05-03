@@ -190,10 +190,13 @@ class UserViewModel: ObservableObject {
         if dte ?? Date() < Date() {
             dte = Date()
         }
-        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") {
+        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") && !ownedPlants.contains(where: { plt in
+            plt.title == "Venus Fly Trap"
+        }) {
             willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Venus Fly Trap"})
             buyPlant(unlockedStrawberry: true)
             UserDefaults.standard.setValue(true, forKey: "referPlant")
+            showPlantAnimation = true
         }
 
         let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: dte ?? Date())
