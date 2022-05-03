@@ -13,15 +13,15 @@ struct StreakScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
-    @Binding var streakNumber: Int
+    @EnvironmentObject var bonusModel: BonusViewModel
     var title : String {
-        return "\(streakNumber) Day Streak"
+        return "\(bonusModel.streakNumber) Day Streak"
     }
     
     var subTitle : String {
-        switch streakNumber {
+        switch bonusModel.streakNumber {
         case 1:  return "👣 A journey of a thousand miles begins with a single step - Lao Tzu"
-        case 2:  return "Great Work! Let's make it \(streakNumber+1) in a row \ntomorrow!"
+        case 2:  return "Great Work! Let's make it \(bonusModel.streakNumber+1) in a row \ntomorrow!"
         case 3: return "3 is a magical 🦄 number, and you're on fire!"
         case 4: return "👀 Wow only 22% of our users make it this far"
         case 7: return "🎉 1 Full Week! You're killing it"
@@ -31,7 +31,7 @@ struct StreakScene: View {
         case 30: return "👏 Everyone here on the MindGarden team applauds you"
         case 50: return "🥑 We're half way to a 100!"
         case 60: return "2 Full MONTHS! You're in the 1% of MindGarden meditators"
-        default: return "Great Work! Let's make it \(streakNumber+1) in a row \ntomorrow!"
+        default: return "Great Work! Let's make it \(bonusModel.streakNumber+1) in a row \ntomorrow!"
         }
     }
     @State var timeRemaining = 2
@@ -59,7 +59,8 @@ struct StreakScene: View {
                 DaysProgressBar()
                 Spacer()
                 Button {
-                    //TODO: implement continue tap event
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
                     viewRouter.currentPage = .garden
                 } label: {
                     Capsule()
@@ -120,6 +121,7 @@ struct StreakScene: View {
 
 struct StreakScene_Previews: PreviewProvider {
     static var previews: some View {
-        StreakScene(streakNumber: .constant(3))
+        StreakScene()
+            .environmentObject(BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
     }
 }

@@ -237,7 +237,8 @@ struct Authentication: View {
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showStreak, content: {
-                StreakScene(streakNumber: .constant(bonusModel.streakNumber))
+                StreakScene()
+                    .environmentObject(bonusModel)
                     .background(Clr.darkWhite)
             })
             .onAppear {

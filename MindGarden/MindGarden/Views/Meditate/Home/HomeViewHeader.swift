@@ -41,6 +41,7 @@ struct HomeViewHeader: View {
                                 Analytics.shared.log(event: .home_tapped_search)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 showSearch = true
+                                searchScreen = true
                                 activeSheet = .search
                             }
                         Image(systemName: "person.fill")

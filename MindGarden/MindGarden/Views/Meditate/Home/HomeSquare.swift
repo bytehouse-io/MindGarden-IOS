@@ -99,7 +99,7 @@ struct HomeSquare: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .categories ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .categories ? 0 : 10))
+                    .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .categories || searchScreen ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .categories || searchScreen ? 0 : 10))
             }
             if isNew {
                 Capsule()
@@ -112,7 +112,7 @@ struct HomeSquare: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                     )
-                    .position(x: width * (viewRouter.currentPage == .categories ? 0.385 : 0.34), y: viewRouter.currentPage == .categories ? 20 : 17)
+                    .position(x: width * (viewRouter.currentPage == .categories || searchScreen ? 0.385 : 0.34), y: viewRouter.currentPage == .categories || searchScreen ? 20 : 17)
                     .opacity(0.8)
             }
         }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id)) ? 0.45 : 1)

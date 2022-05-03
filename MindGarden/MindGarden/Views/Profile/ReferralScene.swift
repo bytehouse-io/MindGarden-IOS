@@ -10,11 +10,17 @@ import SwiftUI
 struct ReferralScene: View {
     @State private var currentPage = 0
     let inviteContactTitle = "Invite Contacts"
-    let shareLinkTitle = "Share Link 🔗"
-    init() {
-        UIPageControl.appearance().currentPageIndicatorTintColor = Clr.darkgreen.uiColor()
-        UIPageControl.appearance().pageIndicatorTintColor = Clr.lightGray.uiColor()
-    }
+    let shareLinkTitle = "🔗 Share Link"
+    @Binding var numRefs: Int
+    var action: () -> ()
+//
+//    init(numRefs: Binding<Int>, action: () -> ()) {
+//        UIPageControl.appearance().currentPageIndicatorTintColor = Clr.darkgreen.uiColor()
+//        UIPageControl.appearance().pageIndicatorTintColor = Clr.lightGray.uiColor()
+//        self.numRefs = numRefs
+//        self.action = action
+//    }
+    
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -27,7 +33,7 @@ struct ReferralScene: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 40, height: 40, alignment: .center)
-                            Text("0 Referrals Sent")
+                            Text("\(numRefs) Referrals Sent")
                                 .foregroundColor(Clr.black2)
                                 .font(Font.mada(.semiBold, size: 20))
                         }
@@ -95,6 +101,7 @@ struct ReferralScene: View {
 //                }
 //                .buttonStyle(BonusPress())
                 Button {
+                    action()
                 } label: {
                     HStack {
                         Text(shareLinkTitle)
@@ -113,7 +120,7 @@ struct ReferralScene: View {
                 }
                 .buttonStyle(BonusPress())
                 .padding(.top)
-                Text("The average users refers 2.3 people!")
+                Text("The average user refers 2.3 people!")
                     .font(Font.mada(.regular, size: 18))
                     .foregroundColor(.black)
                     .opacity(0.4)

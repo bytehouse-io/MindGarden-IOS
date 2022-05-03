@@ -114,9 +114,9 @@ struct ContentView: View {
                                     case .shop:
                                         Store()
                                             .frame(height: geometry.size.height + 10)
-                                            .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
                                             .environmentObject(profileModel)
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .learn:
                                         NavigationView {
                                         LearnScene()
@@ -158,7 +158,7 @@ struct ContentView: View {
 //                                                }
 //                                            }))
                                     case .finished:
-                                        Finished(model: meditationModel, userModel: userModel, gardenModel: gardenModel)
+                                        Finished(bonusModel: bonusModel, model: meditationModel, userModel: userModel, gardenModel: gardenModel)
                                             .frame(height: geometry.size.height + 160)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)

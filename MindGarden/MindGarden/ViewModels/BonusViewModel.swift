@@ -411,10 +411,9 @@ class BonusViewModel: ObservableObject {
             }
             lastStreakDate = formatter.string(from: Date())
         } else {
-            updatedStreak = true
             lastStreakDate  = formatter.string(from: Date())
-            
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                updatedStreak = true
                 self.streakNumber = 1
             } else {
                 self.streakNumber = 0

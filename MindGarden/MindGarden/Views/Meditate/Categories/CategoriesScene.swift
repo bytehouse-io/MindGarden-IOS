@@ -147,6 +147,7 @@ struct CategoriesScene: View {
         }
         .transition(.move(edge: .bottom))
         .onDisappear {
+            searchScreen = false
             if tappedMed {
                 if model.selectedMeditation?.type == .course {
                     viewRouter.currentPage = .middle

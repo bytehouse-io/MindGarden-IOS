@@ -296,7 +296,9 @@ struct ProfileScene: View {
                                         // Journey
                                         JourneyPage(profileModel: profileModel, width: width, height: height, totalSessions: gardenModel.totalSessions, totalMins: gardenModel.totalMins)
                                     } else {
-                                      ReferralScene()
+                                        ReferralScene(numRefs: $numRefs, action: {
+                                            actionSheet()
+                                        })
                                     }
                                     if selection == .referrals {
                                  

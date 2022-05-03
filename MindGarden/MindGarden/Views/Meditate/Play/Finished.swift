@@ -13,10 +13,10 @@ import Amplitude
 import Firebase
 
 struct Finished: View {
+    var bonusModel: BonusViewModel
     var model: MeditationViewModel
     var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
-    @EnvironmentObject var bonusModel: BonusViewModel
     var gardenModel: GardenViewModel
     @State private var sharedImage: UIImage?
     @State private var shotting = true
@@ -42,7 +42,8 @@ struct Finished: View {
         }
     }
 
-    init(model: MeditationViewModel, userModel: UserViewModel, gardenModel: GardenViewModel) {
+    init(bonusModel: BonusViewModel, model: MeditationViewModel, userModel: UserViewModel, gardenModel: GardenViewModel) {
+        self.bonusModel = bonusModel
         self.model = model
         self.userModel = userModel
         self.gardenModel = gardenModel
@@ -362,7 +363,8 @@ struct Finished: View {
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
             { _ in }
             .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene(streakNumber: $bonusModel.streakNumber)
+                StreakScene()
+                    .environmentObject(bonusModel)
                     .background(Clr.darkWhite)
             })
             .onAppear {
@@ -389,6 +391,7 @@ struct Finished: View {
                 
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
+                    
                     if model.shouldStreakUpdate {
                         bonusModel.updateStreak()
                     }
@@ -451,7 +454,7 @@ struct Finished: View {
 
 struct Finished_Previews: PreviewProvider {
     static var previews: some View {
-        Finished(model: MeditationViewModel(), userModel: UserViewModel(), gardenModel: GardenViewModel())
+        Finished(bonusModel: BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()), model: MeditationViewModel(), userModel: UserViewModel(), gardenModel: GardenViewModel())
     }
 }
 

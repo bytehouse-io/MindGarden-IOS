@@ -117,7 +117,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-//        UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         if let _ = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {} else {
@@ -132,6 +131,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SceneDelegate.userModel.showPlantAnimation = true
             UserDefaults.standard.setValue(true, forKey: "redditOne")
         }
+
         
         StorylyManager.updateStories()
     }

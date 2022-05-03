@@ -22,6 +22,7 @@ enum Sheet: Identifiable {
         hashValue
     }
 }
+var searchScreen = false
 
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -112,7 +113,7 @@ struct Home: View {
                 case .plant:
                     Store(isShop: false)
                 case .search:
-                    CategoriesScene(isSearch: true, showSearch: $showSearch)
+                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch)
                 }
             }
             .navigationBarHidden(true)
