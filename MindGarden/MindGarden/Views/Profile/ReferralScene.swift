@@ -12,6 +12,9 @@ struct ReferralScene: View {
     let inviteContactTitle = "Invite Contacts"
     let shareLinkTitle = "🔗 Share Link"
     @Binding var numRefs: Int
+    @State var index: Int = 0
+    @State private var offset: CGFloat = 0
+    
     var action: () -> ()
 //
 //    init(numRefs: Binding<Int>, action: () -> ()) {
@@ -41,8 +44,9 @@ struct ReferralScene: View {
                     .frame(width: UIScreen.screenWidth * 0.7, height: 50)
                     .padding(.top, 30)
                     .neoShadow()
+                let cardWidth = UIScreen.screenWidth*0.75
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
+                    HStack {
                         ForEach(referralList) { item in
                             ZStack {
                                 VStack(spacing: 5) {
@@ -69,16 +73,41 @@ struct ReferralScene: View {
                                             .padding([.bottom, .horizontal])
                                     }.offset(y: -25)
                            
-                                }.padding()
+                                }
+                                .padding()
+                                
+                            }.frame(width: cardWidth, height:UIScreen.screenHeight*0.45)
+                                .overlay(
                                 RoundedRectangle(cornerRadius: 30)
                                     .stroke(Clr.brightGreen, lineWidth: 6)
-                                    .frame(width: UIScreen.screenWidth*0.75, height:UIScreen.screenHeight*0.45)
-                            }.frame(width: UIScreen.screenWidth*0.75, height:UIScreen.screenHeight*0.45)
-                                .background(Clr.darkWhite)
-                                .cornerRadius(30)
-                                .neoShadow()
+                            )
+                            .background(Clr.darkWhite)
+                            .cornerRadius(30)
+                            .neoShadow()
                             .padding(.vertical)
                         }
+                    }
+                }
+                .content.offset(x: self.offset)
+                    .frame(width: cardWidth, height: nil, alignment: .leading)
+                    .gesture(DragGesture()
+                        .onChanged({ value in
+                            self.offset = value.translation.width - cardWidth * CGFloat(self.index)
+                        })
+                        .onEnded({ value in
+                            if abs(value.predictedEndTranslation.width) >= cardWidth / 2 {
+                                var nextIndex: Int = (value.predictedEndTranslation.width < 0) ? 1 : -1
+                                nextIndex += self.index
+                                self.index = nextIndex.keepIndexInRange(min: 0, max: referralList.count - 1)
+                            }
+                        withAnimation { self.offset = (-cardWidth * CGFloat(self.index)) - CGFloat((self.index * 10)) }
+                        })
+                    )
+                HStack(alignment:.center) {
+                    ForEach(0..<referralList.count) { indx in
+                        Circle()
+                            .fill(indx == self.index ? Clr.brightGreen : Clr.gardenGray)
+                            .frame(width: 8, height: 8)
                     }
                 }
                 
@@ -127,6 +156,17 @@ struct ReferralScene: View {
                 Spacer()
             }
             
+        }
+    }
+}
+
+
+extension Int {
+    func keepIndexInRange(min: Int, max: Int) -> Int {
+        switch self {
+            case ..<min: return min
+            case max...: return max
+            default: return self
         }
     }
 }
