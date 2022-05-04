@@ -26,6 +26,7 @@ class UserViewModel: ObservableObject {
     @Published var coins: Int = 0
     @Published var plantedTrees = [String]()
     @Published var showPlantAnimation = false
+    @Published var completedMeditations: [String] = []
     
     private var validationCancellables: Set<AnyCancellable> = []
 
@@ -141,6 +142,10 @@ class UserViewModel: ObservableObject {
                         })
                     }
                     
+                    if let completedMeditations = document[K.defaults.completedMeditations] as? [String] {
+                        self.completedMeditations = completedMeditations
+                    }
+                    
                     self.updateTimeRemaining()
                 }
             }
@@ -172,6 +177,10 @@ class UserViewModel: ObservableObject {
             if let chest = UserDefaults.standard.value(forKey: "chest") as? String {
                 self.chest = chest
             }
+            if let completedMeditations = UserDefaults.standard.value(forKey: K.defaults.completedMeditations) as? [String] {
+                self.completedMeditations = completedMeditations
+            }
+            
             self.streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
             
             self.coins = UserDefaults.standard.integer(forKey: "coins")
@@ -210,6 +219,22 @@ class UserViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func finishedMeditation(id:String){
+        if !self.completedMeditations.contains(id) {
+            self.completedMeditations.append(id)
+            if let email = Auth.auth().currentUser?.email {
+                self.db.collection(K.userPreferences).document(email).updateData([
+                    K.defaults.completedMeditations: self.completedMeditations])
+            } else {
+                UserDefaults.standard.setValue(self.completedMeditations, forKey: K.defaults.completedMeditations)
+            }
+        }
+    }
+    
+    func getCourseCounter(title:String) -> Int {
+        return Meditation.allMeditations.filter { $0.belongsTo == title }.filter { self.completedMeditations.contains("\($0.id)") }.count
     }
 
     private func buyBonsai() {

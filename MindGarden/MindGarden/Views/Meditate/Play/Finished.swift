@@ -384,6 +384,7 @@ struct Finished: View {
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+                userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3
