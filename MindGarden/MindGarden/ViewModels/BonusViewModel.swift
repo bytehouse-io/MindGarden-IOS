@@ -187,9 +187,9 @@ class BonusViewModel: ObservableObject {
             if UserDefaults.standard.bool(forKey: "newUser") {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
             }
-            progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!))
+            progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!))
         } else if UserDefaults.standard.bool(forKey: "newUser") {
-            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!)
+            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
             UserDefaults.standard.setValue(dte, forKey: "ltd")
             progressiveDisclosure(lastStreakDate: dte)
         } else {
@@ -473,7 +473,7 @@ class BonusViewModel: ObservableObject {
     
     private func progressiveDisclosure(lastStreakDate: String) {
         if formatter.date(from: lastStreakDate)! - Date() <= 0 {
-            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 14, to: Date())!)
+            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
             UserDefaults.standard.setValue(dte,forKey: "ltd")
             if UserDefaults.standard.bool(forKey: "day1") {
                 if UserDefaults.standard.bool(forKey: "day2") {

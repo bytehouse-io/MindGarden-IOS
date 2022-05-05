@@ -404,7 +404,7 @@ struct Finished: View {
                     let mar5 = userCalendar.date(from: dateComponents)
                     var dateComponents2 = DateComponents()
                     dateComponents2.month = 5
-                    dateComponents2.day = 10
+                    dateComponents2.day = 20
                     dateComponents2.year = 2022
                     let Apr10 = userCalendar.date(from: dateComponents2)
 

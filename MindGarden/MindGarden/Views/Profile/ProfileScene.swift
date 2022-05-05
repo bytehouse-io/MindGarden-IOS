@@ -300,6 +300,7 @@ struct ProfileScene: View {
                                             actionSheet()
                                         })
                                     }
+                                    
                                     if selection == .referrals {
                                  
                                     } else {
@@ -573,7 +574,7 @@ struct ProfileScene: View {
 
             if let myBundleId = Bundle.main.bundleIdentifier {
                 referralLink?.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
-                referralLink?.iOSParameters?.minimumAppVersion = "1.37"
+                referralLink?.iOSParameters?.minimumAppVersion = "1.44"
                 referralLink?.iOSParameters?.appStoreID = "1588582890"
             }
 
@@ -581,7 +582,7 @@ struct ProfileScene: View {
             let newDateString = dateFormatter.string(from: newDate ?? Date())
             referralLink?.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
             referralLink?.socialMetaTagParameters?.title = "\(userModel.name) has invited you to 👨‍🌾 MindGarden"
-            referralLink?.socialMetaTagParameters?.descriptionText = "📱 Download the app by \(newDateString) to claim your 2 free weeks of PRO! ⬇️ Keep it checked"
+            referralLink?.socialMetaTagParameters?.descriptionText = "📱 Download the app by \(newDateString) to claim your free trial"
             guard let imgUrl = URL(string: "https://i.ibb.co/1GW6YxY/MINDGARDEN.png") else { return }
             referralLink?.socialMetaTagParameters?.imageURL = imgUrl
             referralLink?.shorten { (shortURL, warnings, error) in

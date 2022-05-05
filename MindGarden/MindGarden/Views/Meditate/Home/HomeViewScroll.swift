@@ -32,19 +32,19 @@ struct HomeViewScroll: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     VStack {
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(14)
-                                .frame(height: 120, alignment: .center)
-                                .oldShadow()
-                            Stories()
-                                .frame(height: K.isSmall() ? 90 : 130)
-                                .padding(.leading, K.isSmall() ? 10 : 20)
-                                .padding(.top, K.isSmall() ? 15 : 45)
-                                
-                        }.frame(width: width * 0.85, height: K.isSmall() ? 90 : 120, alignment: .center)
-                         .padding(.top,10)
+//                        ZStack {
+//                            Rectangle()
+//                                .fill(Clr.darkWhite)
+//                                .cornerRadius(14)
+//                                .frame(height: 120, alignment: .center)
+//                                .oldShadow()
+//                            Stories()
+//                                .frame(height: K.isSmall() ? 90 : 130)
+//                                .padding(.leading, K.isSmall() ? 10 : 20)
+//                                .padding(.top, K.isSmall() ? 15 : 45)
+//
+//                        }.frame(width: width * 0.85, height: K.isSmall() ? 90 : 120, alignment: .center)
+//                         .padding(.top,10)
                         HStack(spacing: width * 0.04) {
                             Button {
                                 Analytics.shared.log(event: .home_tapped_bonus)
@@ -134,9 +134,12 @@ struct HomeViewScroll: View {
                                             .minimumScaleFactor(0.05)
                                         if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
                                             let count = Meditation.allMeditations.filter { $0.belongsTo.lowercased() == model.featuredMeditation?.title.lowercased() }.count
-                                            Text("Day \(bonusModel.streakNumber + 1) of \(count)")
+                                            Text(model.featuredMeditation?.type.toString() ?? "")
                                                 .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
                                                 .foregroundColor(Color.gray)
+//                                            Text("Day \(bonusModel.streakNumber + 1) of \(count)")
+//                                                .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
+//                                                .foregroundColor(Color.gray)
                                         }
                                         Spacer()
                                     }

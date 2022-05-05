@@ -203,7 +203,7 @@ struct MiddleSelect: View {
 
         var body: some View {
             Button {
-                if state == .locked {return}
+//                if state == .locked {return}
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 Analytics.shared.log(event: .middle_tapped_row)
                 tappedMeditation = true

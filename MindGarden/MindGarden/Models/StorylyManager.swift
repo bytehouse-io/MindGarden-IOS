@@ -136,7 +136,7 @@ class StorylyManager: StorylyDelegate {
 //        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
 //        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
 //        let userDate = UserDefaults.standard.string(forKey: "userDate")!
-        
+        print(Date() - formatter.date(from: userDate)!, "demon")
         if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
             UserDefaults.standard.setValue(Date(), forKey: "userDate")
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
@@ -168,4 +168,5 @@ class StorylyManager: StorylyDelegate {
         storylyViewProgrammatic.storyGroupSize = "small"
         storylyViewProgrammatic.refresh()
     }
+    
 }

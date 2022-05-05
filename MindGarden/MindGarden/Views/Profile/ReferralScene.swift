@@ -129,9 +129,7 @@ struct ReferralScene: View {
 //                    }
 //                }
 //                .buttonStyle(BonusPress())
-                Button {
-                    action()
-                } label: {
+                Button { } label: {
                     HStack {
                         Text(shareLinkTitle)
                             .foregroundColor(.black)
@@ -144,7 +142,9 @@ struct ReferralScene: View {
                     .background(Clr.yellow)
                     .cornerRadius(25)
                     .onTapGesture {
-                        
+                        print("suns")
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        action()
                     }
                 }
                 .buttonStyle(BonusPress())

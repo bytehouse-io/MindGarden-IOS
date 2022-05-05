@@ -97,7 +97,7 @@ extension MeditationViewModel {
                             getFeaturedMeditation()
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        viewRouter?.currentPage = .finished
+                            self.viewRouter?.currentPage = .finished
                         }
                         return
                     }
