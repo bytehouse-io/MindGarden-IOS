@@ -93,6 +93,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let userActivity = connectionOptions.userActivities.first {
                   processUserActivity(userActivity)
             }
+        
+        registerforDeviceLockNotification()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -211,6 +213,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
       }
       return true
+    }
+    
+    func registerforDeviceLockNotification() {
+        //Screen lock notifications
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),     //center
+            Unmanaged.passUnretained(self).toOpaque(),     // observer
+            displayStatusChangedCallback,     // callback
+            "com.apple.springboard.lockcomplete" as CFString,     // event name
+            nil,     // object
+            .deliverImmediately)
+
+    }
+
+    private let displayStatusChangedCallback: CFNotificationCallback = { _, cfObserver, cfName, _, _ in
+        guard let lockState = cfName?.rawValue as String? else {return}
+
+        if (lockState == "com.apple.springboard.lockcomplete") {
+            print("DEVICE LOCKED")
+            NotificationCenter.default.post(name: Notification.Name("devicelocked"), object: nil)
+           } else {
+               print("LOCK STATUS CHANGED")
+           }
     }
 }
 

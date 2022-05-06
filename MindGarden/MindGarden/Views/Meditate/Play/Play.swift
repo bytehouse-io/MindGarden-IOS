@@ -36,6 +36,7 @@ struct Play: View {
     @State var showTutorialModal = false
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
+    @State var isDeviceLocked = false
     
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
@@ -219,6 +220,12 @@ struct Play: View {
                         .animation(.default)
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("devicelocked"))) { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    changeState()
+                    isDeviceLocked = true
+                }
+            }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                 changeState()
             }
@@ -371,6 +378,10 @@ struct Play: View {
     }
     
     private func changeState(){
+        if isDeviceLocked {
+            isDeviceLocked = false
+            return
+        }
         if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
             if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
                 self.mainPlayer.rate = 0
