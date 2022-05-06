@@ -134,12 +134,11 @@ struct HomeViewScroll: View {
                                             .minimumScaleFactor(0.05)
                                         if model.featuredMeditation?.type == .course && model.featuredMeditation?.id != 57 && model.featuredMeditation?.id != 2 {
                                             let count = Meditation.allMeditations.filter { $0.belongsTo.lowercased() == model.featuredMeditation?.title.lowercased() }.count
-                                            Text(model.featuredMeditation?.type.toString() ?? "")
-                                                .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
-                                                .foregroundColor(Color.gray)
-//                                            Text("Day \(bonusModel.streakNumber + 1) of \(count)")
-//                                                .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
-//                                                .foregroundColor(Color.gray)
+                                            if let meditationTitle = model.featuredMeditation?.title {
+                                                Text("Day \(userModel.getCourseCounter(title:meditationTitle) + 1) of \(count)")
+                                                    .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
+                                                    .foregroundColor(Color.gray)
+                                            }
                                         }
                                         Spacer()
                                     }

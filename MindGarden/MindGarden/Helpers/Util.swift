@@ -35,6 +35,7 @@ struct K {
         static var loggedIn = "loggedIn"
         static var onboarding = "onboarding"
         static var referred = "referred"
+        static var completedMeditations = "completedMeditations"
     }
     
     struct ScreenSize
