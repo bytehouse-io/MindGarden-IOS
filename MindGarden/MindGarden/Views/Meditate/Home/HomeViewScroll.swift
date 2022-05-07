@@ -32,19 +32,19 @@ struct HomeViewScroll: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     VStack {
-//                        ZStack {
-//                            Rectangle()
-//                                .fill(Clr.darkWhite)
-//                                .cornerRadius(14)
-//                                .frame(height: 120, alignment: .center)
-//                                .oldShadow()
-//                            Stories()
-//                                .frame(height: K.isSmall() ? 90 : 130)
-//                                .padding(.leading, K.isSmall() ? 10 : 20)
-//                                .padding(.top, K.isSmall() ? 15 : 45)
-//
-//                        }.frame(width: width * 0.85, height: K.isSmall() ? 90 : 120, alignment: .center)
-//                         .padding(.top,10)
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .cornerRadius(14)
+                                .frame(height: 120, alignment: .center)
+                                .oldShadow()
+                            Stories()
+                                .frame(height: K.isSmall() ? 90 : 130)
+                                .padding(.leading, K.isSmall() ? 10 : 20)
+                                .padding(.top, K.isSmall() ? 15 : 45)
+
+                        }.frame(width: width * 0.85, height: K.isSmall() ? 90 : 120, alignment: .center)
+                         .padding(.top,10)
                         HStack(spacing: width * 0.04) {
                             Button {
                                 Analytics.shared.log(event: .home_tapped_bonus)
@@ -144,7 +144,7 @@ struct HomeViewScroll: View {
                                     }
                                     .frame(width: UIScreen.main.bounds.width * 0.65 * 0.525)
                                     .position(x: UIScreen.main.bounds.width - UIScreen.main.bounds.width * 0.85 + 30, y: height * (K.isSmall() ? 0.24 : 0.21))
-                                    VStack(spacing: 0) {
+                                    VStack(spacing: 0) { 
                                         ZStack {
                                             Circle().frame(width: width * 0.15, height:  width * 0.15)
                                                 .foregroundColor(Clr.brightGreen)
