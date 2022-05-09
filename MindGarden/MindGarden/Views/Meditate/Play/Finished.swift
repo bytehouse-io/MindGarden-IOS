@@ -369,11 +369,18 @@ struct Finished: View {
                 }
             }
             .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene()
-                    .environmentObject(bonusModel)
-                    .background(Clr.darkWhite)
+                    StreakScene()
+                        .environmentObject(bonusModel)
+                        .environmentObject(viewRouter)
+                        .background(Clr.darkWhite)
             })
+            
         }.transition(.move(edge: .trailing))
+            .fullScreenCover(isPresented: $showStreak, content: {
+                    StreakScene()
+                        .environmentObject(bonusModel)
+                        .background(Clr.darkWhite)
+            })
             .onDisappear {
                 model.playImage = Img.seed
                 model.lastSeconds = false
