@@ -296,8 +296,8 @@ class MeditationViewModel: ObservableObject {
         
         if ((forwardCounter > 2 && duration <= 120) || (forwardCounter > 6) || (selectedMeditation?.id == 22 && forwardCounter >= 1)) {
             reward = 0
-            shouldStreakUpdate = true
             forwardCounter = 0
+            shouldStreakUpdate = true
         } else if selectedMeditation?.duration == -1 {
             switch secondsRemaining {
             case 0...59:

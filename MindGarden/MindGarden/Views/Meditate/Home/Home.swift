@@ -45,7 +45,7 @@ struct Home: View {
     @State var activeSheet: Sheet?
     @State private var showAlert = false
     @State private var alertMsg = ""
-
+    
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -107,9 +107,9 @@ struct Home: View {
                 switch item {
                 case .profile:
                     ProfileScene(profileModel: profileModel)
-                                        .environmentObject(userModel)
-                                        .environmentObject(gardenModel)
-                                        .environmentObject(viewRouter)
+                        .environmentObject(userModel)
+                        .environmentObject(gardenModel)
+                        .environmentObject(viewRouter)
                 case .plant:
                     Store(isShop: false)
                 case .search:
@@ -173,25 +173,39 @@ struct Home: View {
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
                 }
-
+                
                 if UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal") {
                     showUpdateModal = true
                 }
-//r                coins = userModel.coins
+                //r                coins = userModel.coins
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
         }
         .onAppearAnalytics(event: .screen_load_home)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("notification")))
-           { _ in
-               mindfulNotifs = true
-               activeSheet = .profile
-           }
-           .onReceive(NotificationCenter.default.publisher(for: Notification.Name("referrals")))
-              { _ in
-                  tappedRefer = true
-                  activeSheet = .profile
-              }
+        { _ in
+            withAnimation {
+                mindfulNotifs = true
+                activeSheet = .profile
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("referrals")))
+        { _ in
+            withAnimation {
+                tappedRefer = true
+                activeSheet = .profile
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("trees")))
+        { _ in
+            withAnimation {
+                withAnimation {
+                    userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
+                        plt.title == "Real Tree"
+                    })
+                    showPurchase = true
+                }            }
+        }
     }
     
     func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {

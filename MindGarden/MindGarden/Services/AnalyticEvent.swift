@@ -314,6 +314,7 @@ enum AnalyticEvent {
     //Stories
     case story_notification_swipe
     case story_notification_swipe_gratitude
+    case story_swipe_trees_future
     case story_comic_opened
     case story_bijan_opened
     case story_journal_opened
@@ -704,6 +705,7 @@ extension AnalyticEvent {
         case .story_quote_opened: return "story_quote_opened"
         case .story_tip_opened: return "story_tip_opened"
         case .story_notification_swipe_gratitude: return "story_notification_swipe_gratitude"
+        case .story_swipe_trees_future: return "story_swipe_trees_future"
         case .store_tapped_real_tree: return "store_tapped_real_tree"
         case .store_bought_real_tree: return "store_bought_real_tree"
         }

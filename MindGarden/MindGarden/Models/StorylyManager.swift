@@ -35,6 +35,10 @@ class StorylyManager: StorylyDelegate {
                Analytics.shared.log(event: .story_notification_swipe_gratitude)
                storylyViewProgrammatic.dismiss(animated: true)
                NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+           } else if story.media.actionUrl == "trees" {
+               Analytics.shared.log(event: .story_swipe_trees_future)
+               storylyViewProgrammatic.dismiss(animated: true)
+               NotificationCenter.default.post(name: Notification.Name("trees"), object: nil)
            }
        }
 
@@ -76,7 +80,14 @@ class StorylyManager: StorylyDelegate {
                        UserDefaults.standard.setValue(unique, forKey: "storySegments")
                        UserDefaults.standard.setValue(unique, forKey: "oldSegments")
                        return
-                   } else if story.title.lowercased().contains("quote") {
+                   } else if story.title.lowercased().contains("trees for the future") {
+                       storyArray?.removeAll(where: { str in
+                           str.lowercased().contains("trees for the future")
+                       })
+//                       storylyViewProgrammatic.dismiss(animated: true)
+                       UserDefaults.standard.setValue(storyArray, forKey: "storySegments")
+                       return
+                    } else if story.title.lowercased().contains("quote") {
                        Analytics.shared.log(event: .story_quote_opened)
                        storyArray?.removeAll(where: { str in
                            str.lowercased().contains("quote")
@@ -132,8 +143,8 @@ class StorylyManager: StorylyDelegate {
             }
             return
         }
-        
-        // start with today
+//
+//         start with today
 //        let cal = NSCalendar.current
 //        var date = cal.startOfDay(for: Date())
 //        var arrDates = [Date]()
