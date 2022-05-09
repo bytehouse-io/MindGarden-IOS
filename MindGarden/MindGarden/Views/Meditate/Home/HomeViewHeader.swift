@@ -77,10 +77,10 @@ struct HomeViewHeader: View {
                                             .frame(height: 30, alignment: .bottom)
                                     }.offset(x: -7)
                                     HStack {
-                                        Img.leaf
+                                        Img.realTree
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(height: 35)
+                                            .frame(height: 30)
                                             .shadow(radius: 4)
                                         Text("\(userModel.plantedTrees.count)")
                                             .font(Font.mada(.semiBold, size: 22))
