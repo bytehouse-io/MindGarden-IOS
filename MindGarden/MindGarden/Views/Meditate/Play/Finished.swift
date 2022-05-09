@@ -99,6 +99,13 @@ struct Finished: View {
                                                     .font(Font.mada(.bold, size: 24))
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)
+                                                if userModel.isPotion || userModel.isChest {
+                                                    Img.sunshinepotion
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(height: 30)
+                                                        .rotationEffect(.degrees(30))
+                                                }
                                             }.offset(y: sizeCategory > .large ? -60 : -25)
                                             if !isOnboarding {
                                                 HStack {
@@ -392,7 +399,6 @@ struct Finished: View {
                 
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
-                    
                     if model.shouldStreakUpdate {
                         bonusModel.updateStreak()
                     }
@@ -416,7 +422,6 @@ struct Finished: View {
                         
                         userModel.buyPlant(unlockedStrawberry: true)
                         UserDefaults.standard.setValue(true, forKey: "cherry")
-                        
                     }
                     
                 }

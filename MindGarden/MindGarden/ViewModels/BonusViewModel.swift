@@ -440,19 +440,12 @@ class BonusViewModel: ObservableObject {
     }
     
     private func freezeStreak(interval: Int) {
-        let inter = interval - 1
         let datesBetweenArray = Date.dates(from: formatter.date(from: lastStreakDate) ?? Date(), to: Date())
         var session = [String: String]()
         session[K.defaults.plantSelected] = "Ice Flower"
         session[K.defaults.meditationId] = "0"
         session[K.defaults.duration] = "0"
-        recSaveFreeze(day: 0, dates: datesBetweenArray, session: session)
-//        gardenModel.save(key: "sessions", saveValue: session, date: datesBetweenArray[0], freeze: true) { [self] in
-//            for day in 1..<inter {
-//                gardenModel.save(key: "sessions", saveValue: session, date: datesBetweenArray[0], freeze: true)
-//            }
-//        }
-
+        recSaveFreeze(day: 1, dates: datesBetweenArray, session: session)
         
         userModel.streakFreeze -= datesBetweenArray.count
         userModel.saveIAP()

@@ -224,7 +224,7 @@ struct NotificationHelper {
        }
 
        //Schedule Notification with weekly bases.
-    static func scheduleNotification(at date: Date, weekDay: Int, title: String = "🧘‍♀️ LET'S GOOOOOOOO", subtitle: String = "Practice makes perfect, tend to your garden today.", isMindful: Bool = false) {
+    static func scheduleNotification(at date: Date, weekDay: Int, title: String = "🧘‍♀️ Let's Go! Mental fitness training time", subtitle: String = "Practice makes perfect, tend to your garden today.", isMindful: Bool = false) {
            let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute], from: date)
 
            let content = UNMutableNotificationContent()

@@ -91,6 +91,8 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
             }
         }
+        
+ 
 
         if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
@@ -142,6 +144,7 @@ class MeditationViewModel: ObservableObject {
                 med.id != 15 && med.id != 16 && med.id != 17 && med.id != 18 && med.id != 19 && med.id != 20 && med.id != 21 && med.id != 14
             }
         }
+        filtedMeds = filtedMeds.filter { med in med.type != .lesson && med.isNew == false}
         switch UserDefaults.standard.string(forKey: "reason") {
         case "Sleep better":
             if Calendar.current.component( .hour, from:Date() ) >= 18 {
@@ -293,7 +296,7 @@ class MeditationViewModel: ObservableObject {
         
         if ((forwardCounter > 2 && duration <= 120) || (forwardCounter > 6) || (selectedMeditation?.id == 22 && forwardCounter >= 1)) {
             reward = 0
-            shouldStreakUpdate = false
+            shouldStreakUpdate = true
             forwardCounter = 0
         } else if selectedMeditation?.duration == -1 {
             switch secondsRemaining {

@@ -126,8 +126,13 @@ class StorylyManager: StorylyDelegate {
         
         guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
+            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+//                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
+                StorylyManager.updateSegments(segs: oldSegments)
+            }
             return
         }
+        
         // start with today
 //        let cal = NSCalendar.current
 //        var date = cal.startOfDay(for: Date())
@@ -136,7 +141,7 @@ class StorylyManager: StorylyDelegate {
 //        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
 //        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
 //        let userDate = UserDefaults.standard.string(forKey: "userDate")!
-        print(Date() - formatter.date(from: userDate)!, "demon")
+
         if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
             UserDefaults.standard.setValue(Date(), forKey: "userDate")
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {

@@ -289,14 +289,7 @@ class GardenViewModel: ObservableObject {
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
-                        completionHandler()
-                        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
-                        WidgetCenter.shared.reloadAllTimelines()
-                        self.populateMonth()
-                        self.getLastFive()
-                        if key == "sessions" {
-                            self.getRecentMeditations()
-                        }
+                        self.updateData(completionHandler: completionHandler, key: key)
                     }
                 }
             }
@@ -326,7 +319,11 @@ class GardenViewModel: ObservableObject {
             } else {
                 self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
             }
+            self.updateData(completionHandler: completionHandler, key: key)
         }
+    
+    }
+    private func updateData(completionHandler: ()->Void = { }, key: String) {
         UserDefaults.standard.setValue(self.grid, forKey: "grid")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
         WidgetCenter.shared.reloadAllTimelines()
@@ -338,3 +335,5 @@ class GardenViewModel: ObservableObject {
         completionHandler()
     }
 }
+
+

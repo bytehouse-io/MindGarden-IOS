@@ -110,18 +110,24 @@ struct IAPModal: View {
         }.onAppear {
             Purchases.shared.offerings { [self] (offerings, error) in
                 if let offerings = offerings {
-                    let offer = offerings.current
-                    let packages = offer?.availablePackages
-                    guard packages != nil else {
-                        return
-                    }
-                    for i in 0...packages!.count - 1 {
-                        let package = packages![i]
+                    let freeze = offerings["potion"]?.availablePackages[0]
+                    let potion = offerings["streak_freeze"]?.availablePackages[0]
+                    let chest = offerings["potion"]?.availablePackages[0]
+                    
+                    guard freeze != nil else { return }
+                    guard potion != nil else { return }
+                    guard chest != nil else { return }
+        
+                    let consumables = [freeze,potion, chest]
+                    
+                    
+                    for i in 0...consumables.count - 1 {
+                        let package = consumables[i]!
                         self.packagesAvailableForPurchase.append(package)
                         let product = package.product
                         let price = product.price
                         let name = product.productIdentifier
-
+                        
                         if name == "io.bytehouse.mindgarden.freeze" {
                             freezePrice = round(100 * Double(truncating: price))/100
                         } else if name == "io.bytehouse.mindgarden.potion" {
@@ -261,6 +267,8 @@ struct IAPModal: View {
                             Text("\(userModel.timeRemaining.stringFromTimeInterval())")
                                 .foregroundColor(Clr.darkgreen)
                                 .font(Font.mada(.medium, size: 16))
+                                .minimumScaleFactor(0.05)
+                                .lineLimit(1)
                         } else {
                             Img.moneybag
                                 .resizable()
@@ -271,7 +279,7 @@ struct IAPModal: View {
                                 .font(Font.mada(.medium, size: 16))
                         }
                     })
-                    .position(x: width * 0.615, y: height * 0.03)
+                    .position(x: width * 0.635, y: height * 0.03)
                 HStack(spacing: 10){
                     img
                         .resizable()

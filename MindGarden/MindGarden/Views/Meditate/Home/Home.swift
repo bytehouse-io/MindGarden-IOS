@@ -173,6 +173,7 @@ struct Home: View {
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
                 }
+
                 if UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal") {
                     showUpdateModal = true
                 }

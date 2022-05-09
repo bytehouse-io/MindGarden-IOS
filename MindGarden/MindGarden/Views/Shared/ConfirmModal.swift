@@ -61,10 +61,13 @@ struct ConfirmModal: View {
                                         }) {
                                             showPlantAnimation = true
                                         }
-                                        shown = false
-                                        showMainModal = false
+                         
+                                    } else {
+                                        userModel.buyPlant()
+                                        showPlantAnimation = true
                                     }
-                               
+                                    shown = false
+                                    showMainModal = false
                                 }
                             } label: {
                                 Text("Confirm")
