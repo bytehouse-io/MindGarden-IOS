@@ -12,6 +12,16 @@ import Amplitude
 
 enum IAPType {
     case freeze,potion,chest
+    var productId: String {
+        switch self {
+        case .freeze:
+            return "io.bytehouse.mindgarden.freeze"
+        case .potion:
+            return "io.bytehouse.mindgarden.potion"
+        case .chest:
+            return "io.bytehouse.mindgarden.chest"
+        }
+    }
 }
 
 struct IAPModal: View {
@@ -73,28 +83,25 @@ struct IAPModal: View {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .IAP_tapped_freeze)
-                                userModel.streakFreeze += 2
-                                userModel.saveIAP()
+                                onPurchase(type: .freeze)
                             } label: {
                                 PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice, type: .freeze)
                             }.padding(.bottom, 10)
                             Button {
+                                guard  !userModel.isPotion && !userModel.isChest else { return }
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .IAP_tapped_potion)
-                                if !userModel.isPotion && !userModel.isChest {
-                                    onSuccess(type: .potion)
-                                }
+                                onPurchase(type: .potion)
                             } label: {
-                                PurchaseBox(width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice, type: .potion)
+                                PurchaseBox(isEnabled: (!userModel.isPotion && !userModel.isChest), width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice, type: .potion)
                             }.padding(.bottom, 10)
                             Button {
+                                guard  !userModel.isPotion && !userModel.isChest else { return }
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .IAP_tapped_chest)
-                                if !userModel.isPotion && !userModel.isChest {
-                                    onSuccess(type: .chest)
-                                }
+                                onPurchase(type: .chest)
                             } label: {
-                                PurchaseBox(width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice, type: .chest)
+                                PurchaseBox(isEnabled: (!userModel.isPotion && !userModel.isChest), width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice, type: .chest)
                             }.padding(.bottom, 10)
                              
                         }.frame(height: g.size.height * 0.4)
@@ -146,6 +153,7 @@ struct IAPModal: View {
         switch type {
         case .freeze:
             alertMsg = "Freeze streak purchase was successful"
+            userModel.streakFreeze += 2
         case .potion:
             alertMsg = "Sunshine potion purchase was successful"
             userModel.potion = Date().getdateAfterweek(week: 1)?.toString() ?? ""
@@ -156,6 +164,17 @@ struct IAPModal: View {
         userModel.saveIAP()
         userModel.updateSelf()
         showAlert = true
+    }
+    
+    private func onPurchase(type:IAPType){
+        let package = packagesAvailableForPurchase.last { (package) -> Bool in
+            return package.product.productIdentifier == type.productId
+        }!
+        Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
+            if purchaserInfo != nil {
+                onSuccess(type: type)
+            }
+        }
     }
     
     private func unlockPurchase(selectedBox: String) {
@@ -244,6 +263,7 @@ struct IAPModal: View {
         }
     struct PurchaseBox: View {
         @EnvironmentObject var userModel: UserViewModel
+        var isEnabled = true
         let width, height: CGFloat
         let img: Image
         let title: String
@@ -262,6 +282,7 @@ struct IAPModal: View {
                     .fill(Clr.yellow)
                     .frame(width: 75, height: 25)
                     .neoShadow()
+                    .opacity(isEnabled ? 1.0 : 0.5)
                     .overlay(HStack(spacing: 5) {
                         if (type == .potion && userModel.isPotion) || (type == .chest && userModel.isChest) {
                             Text("\(userModel.timeRemaining.stringFromTimeInterval())")
@@ -269,14 +290,17 @@ struct IAPModal: View {
                                 .font(Font.mada(.medium, size: 16))
                                 .minimumScaleFactor(0.05)
                                 .lineLimit(1)
+                                
                         } else {
                             Img.moneybag
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 12)
+                                .opacity(isEnabled ? 1.0 : 0.5)
                             Text("\(price,  specifier: "%.2f")")
                                 .foregroundColor(Clr.darkgreen)
                                 .font(Font.mada(.medium, size: 16))
+                                .opacity(isEnabled ? 1.0 : 0.5)
                         }
                     })
                     .position(x: width * 0.635, y: height * 0.03)
@@ -300,6 +324,7 @@ struct IAPModal: View {
                         .padding(.trailing)
                         .multilineTextAlignment(.leading)
                 }.frame(width: width * 0.75)
+                    .opacity(isEnabled ? 1.0 : 0.5)
             }
             .onReceive(timer) { time in
                 if userModel.timeRemaining > 0 {
