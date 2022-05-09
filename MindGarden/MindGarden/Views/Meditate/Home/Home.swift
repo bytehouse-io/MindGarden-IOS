@@ -174,8 +174,10 @@ struct Home: View {
                     }
                 }
                 
-                if UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal") {
+                if (UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
                     showUpdateModal = true
+                    userModel.show50Off = false
+                    UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")
                 }
                 //r                coins = userModel.coins
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)

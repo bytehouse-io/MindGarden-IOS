@@ -487,6 +487,9 @@ struct PricingView: View {
             userModel.buyPlant(unlockedStrawberry: true)
             userModel.triggerAnimation = true
         }
+        if !fiftyOff {
+            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+        }
         UserDefaults.standard.setValue(true, forKey: "bonsai")
         UserDefaults.standard.setValue(true, forKey: "isPro")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")

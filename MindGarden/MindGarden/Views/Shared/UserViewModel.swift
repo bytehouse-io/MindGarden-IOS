@@ -27,7 +27,7 @@ class UserViewModel: ObservableObject {
     @Published var plantedTrees = [String]()
     @Published var showPlantAnimation = false
     @Published var completedMeditations: [String] = []
-    
+    @Published var show50Off = false
     private var validationCancellables: Set<AnyCancellable> = []
 
     var name: String = ""
@@ -263,7 +263,6 @@ class UserViewModel: ObservableObject {
     }
 
     func checkIfPro() {
-        var isPro = false
         Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
                 buyBonsai()
@@ -271,13 +270,17 @@ class UserViewModel: ObservableObject {
                 UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
                 WidgetCenter.shared.reloadAllTimelines()
             } else {
+                if UserDefaults.standard.bool(forKey: "freeTrial") && !UserDefaults.standard.bool(forKey: "freeTrialTo50"){
+                    // cancelled free trial
+                    show50Off = true
+                }
+                
                 if !UserDefaults.standard.bool(forKey: "promoCode") {
                     UserDefaults.standard.setValue(false, forKey: "isPro")
                     if referredStack != "" {
                         let plusIndex = referredStack.indexInt(of: "+") ?? 0
                         if dateFormatter.date(from: referredStack.substring(to: plusIndex)) ?? Date() > Date() {
                             UserDefaults.standard.setValue(true, forKey: "isPro")
-                            isPro = true
                         } else {
                             UserDefaults.standard.setValue(false, forKey: "isPro")
                         }
