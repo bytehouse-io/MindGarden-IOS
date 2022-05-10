@@ -6,14 +6,25 @@
 //
 
 import SwiftUI
+import FirebaseDynamicLinks
+import Firebase
 
 struct ReferralScene: View {
+    @EnvironmentObject var userModel: UserViewModel
     @State private var currentPage = 0
     let inviteContactTitle = "Invite Contacts"
     let shareLinkTitle = "🔗 Share Link"
     @Binding var numRefs: Int
     @State var index: Int = 0
     @State private var offset: CGFloat = 0
+    @State private var isSharePresented: Bool = false
+    @State private var urlShare2 = URL(string: "https://mindgarden.io")
+    
+    var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
+        return dateFormatter
+    }()
     
     var action: () -> ()
 //
@@ -142,7 +153,7 @@ struct ReferralScene: View {
                     .background(Clr.yellow)
                     .cornerRadius(25)
                     .onTapGesture {
-                        print("suns")
+                        createDynamicLink()
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         action()
                     }
@@ -155,7 +166,40 @@ struct ReferralScene: View {
                     .opacity(0.4)
                 Spacer()
             }
-            
+            .sheet(isPresented: $isSharePresented) {
+                ReferralView(url: $urlShare2)
+            }
+        }
+    }
+    
+    private func createDynamicLink() {
+        guard let uid = Auth.auth().currentUser?.email else {
+            return
+        }
+        guard let link = URL(string: "https://mindgarden.io?referral=\(uid)") else { return }
+        let referralLink = DynamicLinkComponents(link: link, domainURIPrefix: "https://mindgarden.page.link")
+
+
+        if let myBundleId = Bundle.main.bundleIdentifier {
+            referralLink?.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+            referralLink?.iOSParameters?.minimumAppVersion = "1.44"
+            referralLink?.iOSParameters?.appStoreID = "1588582890"
+        }
+
+        let newDate = Calendar.current.date(byAdding: .day, value: 2, to: Date())
+        let newDateString = dateFormatter.string(from: newDate ?? Date())
+        referralLink?.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        referralLink?.socialMetaTagParameters?.title = "\(userModel.name) has invited you to 👨‍🌾 MindGarden"
+        referralLink?.socialMetaTagParameters?.descriptionText = "📱 Download the app by \(newDateString) to claim your 50 coins"
+        guard let imgUrl = URL(string: "https://i.ibb.co/1GW6YxY/MINDGARDEN.png") else { return }
+        referralLink?.socialMetaTagParameters?.imageURL = imgUrl
+        referralLink?.shorten { (shortURL, warnings, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            urlShare2 = shortURL!
+            isSharePresented = true
         }
     }
 }
