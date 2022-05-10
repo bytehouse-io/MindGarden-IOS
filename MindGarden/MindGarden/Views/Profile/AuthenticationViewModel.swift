@@ -385,6 +385,7 @@ extension AuthenticationViewModel {
             if referredEmail != "" {
                 var refDate = ""
                 var refStack = 0
+                UserDefaults.standard.removeObject(forKey: K.defaults.referred)
                 //update referred stack for user that referred
                 db.collection(K.userPreferences).document(referredEmail).getDocument { [self] (snapshot, error) in
                     if let document = snapshot, document.exists {
