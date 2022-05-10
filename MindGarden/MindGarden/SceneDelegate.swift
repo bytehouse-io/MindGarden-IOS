@@ -53,6 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(true, forKey: "newUser")
             UserDefaults.standard.setValue(1, forKey: "launchNumber")
         }
+        UserDefaults.standard.removeObject(forKey: K.defaults.referred)
         Analytics.shared.log(event: .launchedApp)
 
         let medModel = MeditationViewModel()
@@ -197,6 +198,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       // link, sign in the user anonymously and record the referrer UID in the
       // user's RTDB record.
       if user == nil && invitedBy != nil {
+          UserDefaults.standard.setValue(invitedBy, forKey: K.defaults.referred)
           self.router.currentPage = .authentication
       }
     }
