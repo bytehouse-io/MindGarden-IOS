@@ -58,11 +58,7 @@ struct StreakScene: View {
                 
                 DaysProgressBar()
                 Spacer()
-                Button {
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
-                    viewRouter.currentPage = .garden
-                } label: {
+                Button {} label: {
                     Capsule()
                         .fill(Clr.gardenRed)
                         .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
@@ -71,6 +67,14 @@ struct StreakScene: View {
                                 .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(.white)
                         )
+                        .onTapGesture {
+                            withAnimation {
+                                viewRouter.currentPage = .garden
+                                presentationMode.wrappedValue.dismiss()
+                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                impact.impactOccurred()
+                            }
+                        }
                 }
                 .buttonStyle(NeumorphicPress())
                 .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)

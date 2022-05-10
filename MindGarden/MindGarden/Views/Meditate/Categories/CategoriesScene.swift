@@ -86,7 +86,7 @@ struct CategoriesScene: View {
                     ScrollView(showsIndicators: false) {
                             LazyVGrid(columns: gridItemLayout, content: {
                                 ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
-                                    return meditation.title.hasPrefix(searchText) || searchText == ""
+                                    return meditation.title.lowercased().contains(searchText.lowercased()) || searchText == ""
                                 }), id: \.self) { item in
                                     HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
                                         .onTapGesture {

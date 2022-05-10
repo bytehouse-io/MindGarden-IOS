@@ -28,6 +28,7 @@ struct Finished: View {
     @State private var saveProgress = false
     @State private var hideConfetti = false
     @State private var showStreak = false
+    @State private var ios14 = true
     @Environment(\.sizeCategory) var sizeCategory
 
     var minsMed: Int {
@@ -80,6 +81,11 @@ struct Finished: View {
                                                     viewRouter.currentPage  = .garden
                                                 }
                                             }
+                                            .font(Font.mada(.bold, size: 70))
+                                            .foregroundColor(.white)
+                                            .animation(.easeInOut(duration: 1.5))
+                                            .opacity(animateViews ? 0 : 1)
+                                            .offset(x: animateViews ? 500 : 0)
                                         Text(String(minsMed))
                                             .font(Font.mada(.bold, size: 70))
                                             .foregroundColor(.white)
@@ -167,7 +173,7 @@ struct Finished: View {
                                             }
                                         }.offset(y: !isOnboarding ? 0 : -25)
                                     }.offset(y: !isOnboarding ? 15 : -50)
-                                }
+                                }.padding(.top, ios14 && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" ? 50 : 0)
                             }
                             HStack(alignment: .center) {
                                 Spacer()
@@ -280,7 +286,7 @@ struct Finished: View {
                     }.frame(width: g.size.width, height: g.size.height/10)
                     .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
-                    .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? 9 : 4))
+                    .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? ios14 ? 7 : 9 : 4))
                     if showUnlockedModal || saveProgress {
                         Color.black
                             .opacity(0.55)
@@ -362,19 +368,32 @@ struct Finished: View {
                     }.offset(y: g.size.height * 0.1)
                 }
             }
+            .fullScreenCover(isPresented: $showStreak, content: {
+                    StreakScene()
+                        .environmentObject(bonusModel)
+                        .environmentObject(viewRouter)
+                        .background(Clr.darkWhite)
+            })
+            
         }.transition(.move(edge: .trailing))
+            .fullScreenCover(isPresented: $showStreak, content: {
+                    StreakScene()
+                        .environmentObject(bonusModel)
+                        .background(Clr.darkWhite)
+            })
             .onDisappear {
                 model.playImage = Img.seed
                 model.lastSeconds = false
             }
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
             { _ in }
-            .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene()
-                    .environmentObject(bonusModel)
-                    .background(Clr.darkWhite)
-            })
+    
             .onAppear {
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        ios14 = false
+                    }
+                }
                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
                     NotificationHelper.addOneDay()

@@ -303,12 +303,10 @@ struct NotificationScene: View {
                     if fromSettings {
                         presentationMode.wrappedValue.dismiss()
                     } else {
-                        if tappedTurnOn {
-                            viewRouter.currentPage = .review
-                        } else {
+                        if !tappedTurnOn {
                             viewRouter.progressValue += 0.3
-                            viewRouter.currentPage = .name
                         }
+                        viewRouter.currentPage = .review
                     }
                 }
             case .denied:
