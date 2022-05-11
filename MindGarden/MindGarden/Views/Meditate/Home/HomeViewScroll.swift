@@ -15,7 +15,7 @@ struct HomeViewScroll: View {
     @Binding var showMiddleModal : Bool
     @Binding var activeSheet: Sheet?
     @Binding var totalBonuses: Int
-    @State var attempts : Int
+    @Binding var attempts : Int
     @State var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
     
