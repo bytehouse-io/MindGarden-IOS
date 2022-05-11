@@ -45,6 +45,7 @@ struct Home: View {
     @State var activeSheet: Sheet?
     @State private var showAlert = false
     @State private var alertMsg = ""
+    @State private var showCoinCredit = false
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -98,6 +99,10 @@ struct Home: View {
                         .offset(y: showIAP ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showIAP)
+                }
+                
+                if showCoinCredit {
+                    CoinCreditView(showCoinCredit: $showCoinCredit, coin: userModel.referredCoins)
                 }
             }
             .fullScreenCover(isPresented: $userModel.triggerAnimation) {
@@ -182,6 +187,10 @@ struct Home: View {
                 //r                coins = userModel.coins
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
+        
+            if userModel.referredCoins > 0 {
+                showCoinCredit = true
+            }
         }
         .onAppearAnalytics(event: .screen_load_home)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("notification")))
@@ -239,5 +248,45 @@ struct Shake: GeometryEffect {
         ProjectionTransform(CGAffineTransform(translationX:
                                                 amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
                                               y: 0))
+    }
+}
+
+
+struct CoinCreditView: View {
+    @EnvironmentObject var userModel: UserViewModel
+    @Binding var showCoinCredit : Bool
+    var coin : Int
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.3)
+            Rectangle()
+                .fill(Clr.darkWhite)
+                .cornerRadius(30)
+                .overlay(
+                    VStack {
+                        Img.referral2
+                            .resizable()
+                            .lineLimit(0)
+                            .frame(width:100, height: 100, alignment: .center)
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.top,50)
+                            .padding()
+                        Text("Congratulations! \n You won \(coin) coins by referrals")
+                            .multilineTextAlignment(.center)
+                            .font(Font.mada(.semiBold, size: 22))
+                            .foregroundColor(Clr.black2)
+                            .padding()
+                        LightButton(type:.darkGreen, title: .constant("Got it!")) {
+                            showCoinCredit = false
+                        }
+                        .padding()
+                        Spacer()
+                    }
+                )
+                .frame(width: UIScreen.screenWidth*0.85, height: UIScreen.screenHeight*0.5, alignment: .center)
+                .onAppear {
+                    userModel.getRefered()
+                }
+        }.ignoresSafeArea()
     }
 }

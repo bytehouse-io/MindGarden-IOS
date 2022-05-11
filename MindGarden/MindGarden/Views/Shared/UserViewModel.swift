@@ -29,6 +29,7 @@ class UserViewModel: ObservableObject {
     @Published var showCoinAnimation = false
     @Published var completedMeditations: [String] = []
     @Published var show50Off = false
+    @Published var referredCoins: Int = 0
     private var validationCancellables: Set<AnyCancellable> = []
 
     var name: String = ""
@@ -149,6 +150,10 @@ class UserViewModel: ObservableObject {
                     }
                     if let fbTrees = document["plantedTrees"] as? [String] {
                         self.plantedTrees = fbTrees
+                    }
+                    
+                    if let refCoins = document["lastReferred"] as? Int {
+                        self.referredCoins = refCoins
                     }
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
@@ -360,6 +365,20 @@ class UserViewModel: ObservableObject {
                     UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
                 }
                 UserDefaults.standard.setValue(self.coins, forKey: K.defaults.coins)
+            }
+        }
+    }
+    
+    func getRefered(){
+        if let email = Auth.auth().currentUser?.email, referredCoins > 0 {
+            self.db.collection(K.userPreferences).document(email).updateData([
+                "lastReferred": 0
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved user model")
+                }
             }
         }
     }
