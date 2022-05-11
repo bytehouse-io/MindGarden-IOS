@@ -282,7 +282,7 @@ struct ContentView: View {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
                                     Rectangle()
-                                        .opacity(addMood || addGratitude || isOnboarding ? 0.3 : 0.0)
+                                        .opacity(addMood || addGratitude || isOnboarding || userModel.showCoinAnimation ? 0.3 : 0.0)
                                         .foregroundColor(Clr.black1)
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
@@ -326,6 +326,49 @@ struct ContentView: View {
                                                                                      : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
                                                                                        : 4.5 * (openPrompts ? 3.5 : 1) ) ) + (viewRouter.currentPage == .finished ? -60 : 0))
                                                 : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.12 : 0))
+                                BottomSheet(
+                                    isOpen: $userModel.showCoinAnimation,
+                                    maxHeight: geometry.size.height * (K.isSmall() ? 0.75 : 0.6),
+                                    minHeight: 0.1,
+                                    trigger: { }
+                                ) {
+                                    VStack {
+                                        Img.tripleCoins
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 100)
+                                        Text("Thanks for Referring 🤝")
+                                            .font(Font.mada(.bold, size: 28))
+                                            .foregroundColor(Clr.darkgreen)
+                                            .padding(.bottom, -5)
+                                        Text("You just got 50 coins!")
+                                            .font(Font.mada(.medium, size: 20))
+                                            .foregroundColor(Clr.black2)
+                                            .multilineTextAlignment(.center)
+                                            .frame(height: 50)
+                                        Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            withAnimation {
+                                                userModel.showCoinAnimation = false
+                                                Analytics.shared.log(event: .onboarding_finished_single_course)
+                                            }
+                                        } label: {
+                                            Capsule()
+                                                .fill(Clr.darkgreen)
+                                                .overlay(
+                                                    Text("Cool beans 👌")
+                                                        .font(Font.mada(.bold, size: 18))
+                                                         .foregroundColor(.white)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.5)
+                                                )
+                                                
+                                        }.buttonStyle(NeumorphicPress())
+                                         .frame(height: 45)
+                                         .padding(.vertical, 25)
+                                    }.frame(width: geometry.size.width * 0.85, alignment: .center)
+                                    .padding()
+                                }.offset(y: geometry.size.height * 0.1)
                             }
                         }
                         .navigationBarTitle("", displayMode: .inline)

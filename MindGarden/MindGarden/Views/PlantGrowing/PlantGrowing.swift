@@ -33,6 +33,9 @@ struct PlantGrowing: View {
         }
         .onAppear() {
             plant = userModel.willBuyPlant
+            if plant?.title == "Real Tree" {
+                isTransit = true
+            }
             if let selectedPlant = plant?.id, (Plant.badgePlants.first(where: { $0.id == selectedPlant }) != nil) {
                 isTransit = true
             } else {

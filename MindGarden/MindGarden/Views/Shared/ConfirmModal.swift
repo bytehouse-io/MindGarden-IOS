@@ -56,12 +56,11 @@ struct ConfirmModal: View {
                                 withAnimation {
                                     if userModel.willBuyPlant?.title == "Real Tree" {
                                         userModel.buyPlant(realTree: true)
-                                        if !userModel.ownedPlants.contains(where: { plt in
-                                            plt.title == "Real Tree"
-                                        }) {
-                                            showPlantAnimation = true
-                                        }
-                         
+//                                        if !userModel.ownedPlants.contains(where: { plt in
+//                                            plt.title == "Real Tree"
+//                                        }) {
+//                                        }
+                                        showPlantAnimation = true
                                     } else {
                                         userModel.buyPlant()
                                         showPlantAnimation = true

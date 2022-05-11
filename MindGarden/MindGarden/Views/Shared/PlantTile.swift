@@ -95,7 +95,7 @@ struct PlantTile: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 30)
-                                    Text("0")
+                                    Text("\(userModel.plantedTrees.count)")
                                         .font(Font.mada(.semiBold, size: isBadge ? 16 : 20))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.trailing)

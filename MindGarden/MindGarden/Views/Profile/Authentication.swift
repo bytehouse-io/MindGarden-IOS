@@ -40,7 +40,7 @@ struct Authentication: View {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack(spacing: 0)  {
-                        Text(isSignUp ?  "Sign Up." : "Sign In.")
+                        Text(isSignUp ?  tappedRefer ? "Sign Up to Refer" : "Sign Up." : "Sign In.")
                             .foregroundColor(Clr.black2)
                             .font(Font.mada(.bold, size: 32))
                             .padding()

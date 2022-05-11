@@ -34,92 +34,94 @@ struct IAPModal: View {
     @State private var packagesAvailableForPurchase = [Purchases.Package]()
     @Binding var alertMsg: String
     @Binding var showAlert: Bool
-
+    @State var isLoading = false
     //TODO if user has a potion or chest activated can't purchase more or the other.
     //TODO give user the ability to stack freeze streaks
     
     var body: some View {
-        GeometryReader { g in
-            VStack(spacing: 10) {
-                Spacer()
-                HStack(alignment: .center) {
+        LoadingView(isShowing: $isLoading) {
+            GeometryReader  { g in
+                VStack(spacing: 10) {
                     Spacer()
-                    VStack(alignment: .center, spacing: 0) {
-                        VStack(spacing: 0) {
-                            ZStack(alignment: .top) {
-                                Img.coverImage
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                    HStack(alignment: .center) {
+                        Spacer()
+                        VStack(alignment: .center, spacing: 0) {
+                            VStack(spacing: 0) {
+                                ZStack(alignment: .top) {
+                                    Img.coverImage
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation { shown.toggle() }
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                            .foregroundColor(.gray.opacity(0.85))
+                                            .font(.system(size: 22))
+                                            .padding()
+                                    }.position(x: 30, y: 25)
+                                }
+                                Text("Potion Shop")
+                                        .font(Font.mada(.bold, size: 24))
+                                        .foregroundColor(Clr.black1)
+                                if userModel.streakFreeze > 0 {
+                                    Text("You have \(userModel.streakFreeze) streak freeze" + "\(userModel.streakFreeze == 1 ? " " : "s ")" + "equipped")
+                                        .font(Font.mada(.semiBold, size: 16))
+                                        .foregroundColor(Clr.freezeBlue)
+                                } else {
+                                    Text("Purchases will activate immediately")
+                                        .font(Font.mada(.semiBold, size: 16))
+                                        .foregroundColor(Clr.black1)
+                                        .opacity(0.8)
+                                }
+                                
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                            }
+                            .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.3 : 0.25), alignment: .top)
+                            VStack {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation { shown.toggle() }
+                                    Analytics.shared.log(event: .IAP_tapped_freeze)
+                                    onPurchase(type: .freeze)
                                 } label: {
-                                    Image(systemName: "xmark")
-                                        .foregroundColor(.gray.opacity(0.85))
-                                        .font(.system(size: 22))
-                                        .padding()
-                                }.position(x: 30, y: 25)
-                            }
-                            Text("Potion Shop")
-                                    .font(Font.mada(.bold, size: 24))
-                                    .foregroundColor(Clr.black1)
-                            if userModel.streakFreeze > 0 {
-                                Text("You have \(userModel.streakFreeze) streak freeze" + "\(userModel.streakFreeze == 1 ? " " : "s ")" + "equipped")
-                                    .font(Font.mada(.semiBold, size: 16))
-                                    .foregroundColor(Clr.freezeBlue)
-                            } else {
-                                Text("Purchases will activate immediately")
-                                    .font(Font.mada(.semiBold, size: 16))
-                                    .foregroundColor(Clr.black1)
-                                    .opacity(0.8)
-                            }
-                            
-                            Spacer()
-                            Spacer()
+                                    PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice, type: .freeze)
+                                }.padding(.bottom, 10)
+                                Button {
+                                    guard  !userModel.isPotion && !userModel.isChest else { return }
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .IAP_tapped_potion)
+                                    onPurchase(type: .potion)
+                                } label: {
+                                    PurchaseBox(isEnabled: (!userModel.isPotion && !userModel.isChest), width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice, type: .potion)
+                                }.padding(.bottom, 10)
+                                Button {
+                                    guard  !userModel.isPotion && !userModel.isChest else { return }
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .IAP_tapped_chest)
+                                    onPurchase(type: .chest)
+                                } label: {
+                                    PurchaseBox(isEnabled: (!userModel.isPotion && !userModel.isChest), width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice, type: .chest)
+                                }.padding(.bottom, 10)
+                                 
+                            }.frame(height: g.size.height * 0.4)
                             Spacer()
                         }
-                        .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.3 : 0.25), alignment: .top)
-                        VStack {
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .IAP_tapped_freeze)
-                                onPurchase(type: .freeze)
-                            } label: {
-                                PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice, type: .freeze)
-                            }.padding(.bottom, 10)
-                            Button {
-                                guard  !userModel.isPotion && !userModel.isChest else { return }
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .IAP_tapped_potion)
-                                onPurchase(type: .potion)
-                            } label: {
-                                PurchaseBox(isEnabled: (!userModel.isPotion && !userModel.isChest), width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice, type: .potion)
-                            }.padding(.bottom, 10)
-                            Button {
-                                guard  !userModel.isPotion && !userModel.isChest else { return }
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .IAP_tapped_chest)
-                                onPurchase(type: .chest)
-                            } label: {
-                                PurchaseBox(isEnabled: (!userModel.isPotion && !userModel.isChest), width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice, type: .chest)
-                            }.padding(.bottom, 10)
-                             
-                        }.frame(height: g.size.height * 0.4)
+                        .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.7), alignment: .center)
+                        .background(Clr.darkWhite)
+                        .cornerRadius(12)
                         Spacer()
                     }
-                    .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.7), alignment: .center)
-                    .background(Clr.darkWhite)
-                    .cornerRadius(12)
                     Spacer()
                 }
-                Spacer()
             }
-        }.onAppear {
+        } .onAppear {
             Purchases.shared.offerings { [self] (offerings, error) in
                 if let offerings = offerings {
                     let freeze = offerings["potion"]?.availablePackages[0]
                     let potion = offerings["streak_freeze"]?.availablePackages[0]
-                    let chest = offerings["potion"]?.availablePackages[0]
+                    let chest = offerings["chest"]?.availablePackages[0]
                     
                     guard freeze != nil else { return }
                     guard potion != nil else { return }
@@ -150,6 +152,7 @@ struct IAPModal: View {
     }
     
     private func onSuccess(type:IAPType) {
+        isLoading = false
         switch type {
         case .freeze:
             alertMsg = "Freeze streak purchase was successful"
@@ -167,6 +170,7 @@ struct IAPModal: View {
     }
     
     private func onPurchase(type:IAPType){
+        isLoading = true
         let package = packagesAvailableForPurchase.last { (package) -> Bool in
             return package.product.productIdentifier == type.productId
         }!
@@ -256,11 +260,10 @@ struct IAPModal: View {
                 event = "chest_started_from_"
             default: break
             }
-
             event += fromPage
-        
             return event
-        }
+    }
+    
     struct PurchaseBox: View {
         @EnvironmentObject var userModel: UserViewModel
         var isEnabled = true
@@ -331,7 +334,7 @@ struct IAPModal: View {
                     userModel.timeRemaining -= 1
                 }
             }
-            .frame(width: width * 0.75, height: height * 0.125)
+            .frame(width: width * 0.75, height: UIScreen.screenHeight * 0.125)
             .padding(.horizontal)
         }
     }

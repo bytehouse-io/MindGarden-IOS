@@ -10,7 +10,6 @@ import SwiftUI
 struct FlowerPop: View {
     @EnvironmentObject var userModel: UserViewModel
     @State private var scale = 0.0
-    let title = "New!\n Red Tulips"
     @State private var isEquipped = false
     @State private var euipeButtonTitle = "Equip?"
     
@@ -19,6 +18,7 @@ struct FlowerPop: View {
         ZStack {
             LottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
                 .frame(width: UIScreen.screenWidth * 1.35 , height: UIScreen.screenHeight, alignment: .center)
+     
             userModel.willBuyPlant?.coverImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -28,11 +28,20 @@ struct FlowerPop: View {
                             .spring(response: 0.3, dampingFraction: 3.0), value: scale)
             VStack {
                 Spacer()
-                    .frame(height: 100, alignment: .center)
-                Text("New!\n\(userModel.willBuyPlant?.title ?? "Red Tulips")")
+                    .frame(height: 75, alignment: .center)
+                Text(userModel.willBuyPlant?.title == "Real Tree" ? "🌍 Planet Earth \nThanks You!": "New!\n\(userModel.willBuyPlant?.title ?? "Red Tulips")")
                     .font(.mada(.bold, size: 40))
                     .foregroundColor(Clr.black1)
                     .multilineTextAlignment(.center)
+                if userModel.willBuyPlant?.title == "Real Tree" {
+                    Img.treesForTheFuture
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 100)
+                        .position(x: UIScreen.screenWidth/2, y: 50)
+                        .cornerRadius(20)
+                        .shadow(radius: 10)
+                }
                 Spacer()
                 HStack {
                     Button { } label: {

@@ -252,6 +252,8 @@ public enum Img {
   public static let treeBadge = Image("treeBadge")
   public static let treeCover = Image("treeCover")
   public static let treePacket = Image("treePacket")
+  public static let treesForTheFuture = Image("trees for the future")
+  public static let tripleCoins = Image("tripleCoins")
   public static let turtleLetter = Image("turtleLetter")
   public static let tutorialImage = Image("tutorialImage")
   public static let utensils = Image("utensils")

@@ -158,6 +158,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
 
     private func goToHome() {
+        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
         OneSignal.sendTag("first_name", value: UserDefaults.standard.string(forKey: "name") ?? "")
         if isSignUp && checked {
             Analytics.shared.log(event: .authentication_signuped_newsletter)
@@ -170,8 +171,13 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             UserDefaults.standard.setValue(true, forKey: "day1")
             UserDefaults.standard.setValue(true, forKey: "day2")
             UserDefaults.standard.setValue(true, forKey: "day3")
+            UserDefaults.standard.setValue(true, forKey: "day4")
             UserDefaults.standard.setValue(false, forKey: "newUser")
-            UserDefaults.standard.setValue(1, forKey: "day")
+            UserDefaults.standard.setValue(4, forKey: "day")
+            let arr = ["finalUser"]
+            storySegments = Set(arr)
+            UserDefaults.standard.setValue(arr, forKey: "storySegments")
+            UserDefaults.standard.setValue(arr, forKey: "oldSegments")
         }
         
         if !fromOnboarding {

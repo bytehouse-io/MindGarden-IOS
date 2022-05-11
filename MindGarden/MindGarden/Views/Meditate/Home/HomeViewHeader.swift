@@ -48,7 +48,7 @@ struct HomeViewHeader: View {
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
-                                Analytics.shared.log(event: .home_tapped_search)
+                                Analytics.shared.log(event: .home_tapped_profile)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 activeSheet = .profile
                             }
@@ -110,21 +110,26 @@ struct HomeViewHeader: View {
                                         .font(Font.mada(.semiBold, size: 22))
                                         .foregroundColor(Clr.darkgreen)
                                 }.frame(height: 30, alignment: .bottom)
-//                                HStack {
-//                                    Img.coin
-//                                        .resizable()
-//                                        .aspectRatio(contentMode: .fit)
-//                                        .frame(width: 25)
-//                                        .shadow(radius: 4)
-//                                    Text("\(userModel.coins)")
-//                                        .font(Font.mada(.semiBold, size: 20))
-//                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-//                                }
-                                PlusCoins(coins: $userModel.coins)
-                                    .onTapGesture {
-                                        Analytics.shared.log(event: .home_tapped_IAP)
-                                        withAnimation { showIAP.toggle() }
+                                if UserDefaults.standard.bool(forKey: "day4") {
+                                    HStack {
+                                        Img.coin
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 25)
+                                            .shadow(radius: 4)
+                                        Text("\(userModel.coins)")
+                                            .font(Font.mada(.semiBold, size: 20))
+                                            .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
                                     }
+                                } else {
+                                    PlusCoins(coins: $userModel.coins)
+                                        .onTapGesture {
+                                            UserDefaults.standard.setValue(true, forKey: "plusCoins")
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            Analytics.shared.log(event: .home_tapped_IAP)
+                                            withAnimation { showIAP.toggle() }
+                                        }
+                                }
                             }.padding(.trailing, 20)
                                 .padding(.top, -10)
                                 .padding(.bottom, 10)
