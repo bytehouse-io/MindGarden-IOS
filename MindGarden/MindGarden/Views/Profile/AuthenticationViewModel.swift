@@ -398,6 +398,9 @@ extension AuthenticationViewModel {
                         if let fbCoins = document["coins"] as? Int {
                             coins = fbCoins
                         }
+                        
+                        var lastReferred = document["lastReferred"] as? Int ?? 0
+                        
                         var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
                         if dte ?? Date() < Date() {
                             dte = Date()
@@ -406,11 +409,13 @@ extension AuthenticationViewModel {
                         let newDateString = dateFormatter.string(from: newDate ?? Date())
                         refStack += 1
                         coins += 50
+                        lastReferred += 50
                         let referredStack = newDateString+"+"+String(refStack)
                         db.collection(K.userPreferences).document(referredEmail)
                             .updateData([
                                 "referredStack": referredStack,
-                                "coins": coins
+                                "coins": coins,
+                                "lastReferred":lastReferred
                         ])
                     }
                 }
