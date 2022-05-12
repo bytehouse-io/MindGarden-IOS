@@ -16,6 +16,10 @@ public enum Clr {
   public static let blackShadow = Color("blackShadow")
   /// **Universal - Any**: `#80A800` with alpha: `1.000`
   public static let brightGreen = Color("brightGreen")
+  /// **Universal - Any**: `#249453` with alpha: `1.000`
+  ///
+  /// **Universal - Dark**: `#000000` with alpha: `1.000`
+  public static let calenderSquare = Color("calenderSquare")
   /// **Universal - Any**: `#121212` with alpha: `1.000`
   public static let darkShadow = Color("darkShadow")
   /// **Universal - Any**: `#F5F5F5` with alpha: `1.000`
