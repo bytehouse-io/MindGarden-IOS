@@ -206,7 +206,8 @@ struct Home: View {
                         plt.title == "Real Tree"
                     })
                     showPurchase = true
-                }            }
+                }
+            }
         }
 
     }
