@@ -37,6 +37,7 @@ struct Play: View {
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
     @State var isDeviceLocked = false
+    private let audioSession = AVAudioSession.sharedInstance()
     
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
@@ -220,18 +221,6 @@ struct Play: View {
                         .animation(.default)
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("devicelocked"))) { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    changeState()
-                    isDeviceLocked = true
-                }
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                changeState()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                changeState()
-            }
 
             .onChange(of: model.secondsRemaining) { value in
                 guard isTraceTimeMannual else { return }
@@ -341,11 +330,50 @@ struct Play: View {
 //                    self.progressValue = timer < 0.001 ? 0.001 : timer
 //                }
             }
+            try! audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowAirPlay, .allowBluetoothA2DP])
+            try! self.audioSession.setActive(true)
+            setupRemoteTransportControls()
+            setupNowPlaying()
         }
         .onDisappear {
             StopPlaying()
         }
     }
+    
+    func setupRemoteTransportControls() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { event in
+            changeState()
+            return .success
+        }
+        
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { event in
+            changeState()
+            return .success
+        }
+        
+    }
+    
+    func setupNowPlaying() {
+        // Define Now Playing Info
+        var nowPlayingInfo = [String : Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = model.selectedMeditation?.title ?? "Mind Garden"
+        if let image = UIImage(named: "meditateIcon") {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] =
+                MPMediaItemArtwork(boundsSize: image.size) { size in
+                    return image
+            }
+        }
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = model.totalTime
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
+        // Set the metadata
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
     private func StopPlaying(){
 //        self.progressValue = 1.0
         if player.isPlaying {
