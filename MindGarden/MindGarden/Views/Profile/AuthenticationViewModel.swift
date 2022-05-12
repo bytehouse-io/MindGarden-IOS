@@ -9,7 +9,7 @@ import GoogleSignIn
 import FirebaseAuth
 import Firebase
 import FirebaseFirestore
-import CryptoKit 
+import CryptoKit
 import SwiftUI
 import AuthenticationServices
 import Combine
@@ -385,7 +385,6 @@ extension AuthenticationViewModel {
             if referredEmail != "" {
                 var refDate = ""
                 var refStack = 0
-                UserDefaults.standard.removeObject(forKey: K.defaults.referred)
                 //update referred stack for user that referred
                 db.collection(K.userPreferences).document(referredEmail).getDocument { [self] (snapshot, error) in
                     if let document = snapshot, document.exists {
@@ -398,9 +397,6 @@ extension AuthenticationViewModel {
                         if let fbCoins = document["coins"] as? Int {
                             coins = fbCoins
                         }
-                        
-                        var lastReferred = document["lastReferred"] as? Int ?? 0
-                        
                         var dte = dateFormatter.date(from: refDate == "" ? dateFormatter.string(from: Date()) : refDate)
                         if dte ?? Date() < Date() {
                             dte = Date()
@@ -409,13 +405,11 @@ extension AuthenticationViewModel {
                         let newDateString = dateFormatter.string(from: newDate ?? Date())
                         refStack += 1
                         coins += 50
-                        lastReferred += 50
                         let referredStack = newDateString+"+"+String(refStack)
                         db.collection(K.userPreferences).document(referredEmail)
                             .updateData([
                                 "referredStack": referredStack,
-                                "coins": coins,
-                                "lastReferred":lastReferred
+                                "coins": coins
                         ])
                     }
                 }
@@ -449,7 +443,7 @@ extension AuthenticationViewModel {
         
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
-                "name": UserDefaults.standard.string(forKey: "name") ?? "hg", 
+                "name": UserDefaults.standard.string(forKey: "name") ?? "hg",
                 "coins": UserDefaults.standard.integer(forKey: "coins"),
                 "joinDate": UserDefaults.standard.string(forKey: "joinDate") ?? "",
                 "totalSessions": UserDefaults.standard.integer(forKey: "allTimeSessions"),
@@ -460,7 +454,7 @@ extension AuthenticationViewModel {
                 "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
                 K.defaults.seven: UserDefaults.standard.integer(forKey: K.defaults.seven),
                 K.defaults.thirty: UserDefaults.standard.integer(forKey: K.defaults.thirty),
-                K.defaults.dailyBonus: UserDefaults.standard.string(forKey: K.defaults.dailyBonus) ?? "", 
+                K.defaults.dailyBonus: UserDefaults.standard.string(forKey: K.defaults.dailyBonus) ?? "",
                 "referredStack": "\(date)+0",
                 "isPro": UserDefaults.standard.bool(forKey: "isPro"),
                 "favorited": favs

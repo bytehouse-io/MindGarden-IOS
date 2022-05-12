@@ -284,8 +284,13 @@ class BonusViewModel: ObservableObject {
     
     private func updateLaunchNumber() {
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
+            if UserDefaults.standard.bool(forKey: "referTip") {
+                UserDefaults.standard.setValue(true, forKey: "referTip")
+                updateTips(tip: "Tip Referrals")
+            }
         } else if launchNum == 4 && !UserDefaults.standard.bool(forKey: "singleTile") && !UserDefaults.standard.bool(forKey: "onboarded") {
             UserDefaults.standard.setValue(true, forKey: "singleTile")
             updateTips(tip: "Tip Tile")
@@ -303,11 +308,14 @@ class BonusViewModel: ObservableObject {
             storySegs?.removeAll(where: { str in
                 str.lowercased().contains("new users")
             })
-            UserDefaults.standard.setValue(storySegments, forKey: "storySegments")
+            UserDefaults.standard.setValue(storySegs, forKey: "storySegments")
             if let segs = storySegs {
                 storySegments = Set(segs)
                 StorylyManager.refresh()
             }
+        } else if UserDefaults.standard.bool(forKey: "day4") && !UserDefaults.standard.bool(forKey: "plusCoins") {
+            UserDefaults.standard.setValue(true, forKey: "plusCoins")
+            updateTips(tip: "Tip Potion Shop")
         }
        
         
@@ -472,8 +480,9 @@ class BonusViewModel: ObservableObject {
                 if UserDefaults.standard.bool(forKey: "day2") {
                     if UserDefaults.standard.bool(forKey: "day3") {
                         if UserDefaults.standard.bool(forKey: "day4") {
-                                
-                        } else { //fourth day back
+                            
+                        } else { //fourth day back unlock plusCoins
+                            
                             UserDefaults.standard.setValue(true, forKey: "day4")
                             UserDefaults.standard.setValue(4, forKey: "day")
                         }

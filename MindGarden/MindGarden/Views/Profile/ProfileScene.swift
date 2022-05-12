@@ -566,8 +566,17 @@ struct ProfileScene: View {
 
     func actionSheet() {
         if selection == .referrals {
+            if Auth.auth().currentUser?.email == nil {
+                tappedRefer = true
+                viewRouter.currentPage = .authentication
+            }
+        }
+        if selection == .referrals {
 //            showSpinner = true
-            guard let uid = Auth.auth().currentUser?.email else { return }
+            guard let uid = Auth.auth().currentUser?.email else {
+                return
+            }
+            
             guard let link = URL(string: "https://mindgarden.io?referral=\(uid)") else { return }
             let referralLink = DynamicLinkComponents(link: link, domainURIPrefix: "https://mindgarden.page.link")
 

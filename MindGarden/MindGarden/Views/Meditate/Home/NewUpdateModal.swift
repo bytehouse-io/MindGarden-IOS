@@ -110,6 +110,7 @@ struct NewUpdateModal: View {
                         }.buttonStyle(NeumorphicPress())
                             .padding(.top)
                         Button {
+                            Analytics.shared.log(event: .no_thanks_50)
                             withAnimation {
                                 UserDefaults.standard.setValue(true, forKey: "14DayModal")
                                 shown = false

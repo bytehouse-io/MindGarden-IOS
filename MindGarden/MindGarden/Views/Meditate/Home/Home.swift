@@ -41,11 +41,10 @@ struct Home: View {
     @State private var wentPro = false
     @State private var ios14 = true
     @State private var coins = 0
-    @State private var attempts = 0
+    @State private var attempts = 5
     @State var activeSheet: Sheet?
     @State private var showAlert = false
     @State private var alertMsg = ""
-    @State private var showCoinCredit = false
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -60,7 +59,7 @@ struct Home: View {
                     VStack {
                         HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP, showPurchase: $showPurchase)
                         //MARK: - scroll view
-                        HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: attempts, userModel: userModel)
+                        HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, userModel: userModel)
                             .padding(.top, -20)
                     }
                     if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase {
@@ -100,10 +99,6 @@ struct Home: View {
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showIAP)
                 }
-                
-                if showCoinCredit {
-                    CoinCreditView(showCoinCredit: $showCoinCredit, coin: userModel.referredCoins)
-                }
             }
             .fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
@@ -129,11 +124,10 @@ struct Home: View {
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Success"), message: Text(alertMsg), dismissButton: .default(Text("Ok")))
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
         { _ in
-            if !onboardingTime {
-                runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
-            }
+            print("gotttem")
+            runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
         .onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
@@ -178,7 +172,7 @@ struct Home: View {
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
                 }
-                
+
                 if (UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
                     showUpdateModal = true
                     userModel.show50Off = false
@@ -188,9 +182,6 @@ struct Home: View {
                 //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
         
-            if userModel.referredCoins > 0 {
-                showCoinCredit = true
-            }
         }
         .onAppearAnalytics(event: .screen_load_home)
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("notification")))
@@ -217,21 +208,23 @@ struct Home: View {
                     showPurchase = true
                 }            }
         }
+
     }
+}
+
+
+func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {
+    counter.wrappedValue = start
     
-    func runCounter(counter: Binding<Int>, start: Int, end: Int, speed: Double) {
-        counter.wrappedValue = start
-        
-        Timer.scheduledTimer(withTimeInterval: speed, repeats: true) { timer in
-            counter.wrappedValue += 1
-            if counter.wrappedValue == end {
-                counter.wrappedValue = 0
-                timer.invalidate()
-            }
+    Timer.scheduledTimer(withTimeInterval: speed, repeats: true) { timer in
+        counter.wrappedValue += 1
+        if counter.wrappedValue == end {
+            counter.wrappedValue = 0
+            timer.invalidate()
         }
     }
-    
 }
+
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
@@ -240,7 +233,7 @@ struct Home_Previews: PreviewProvider {
 }
 
 struct Shake: GeometryEffect {
-    var amount: CGFloat = 10
+    var amount: CGFloat = 5
     var shakesPerUnit = 3
     var animatableData: CGFloat
     
@@ -251,42 +244,3 @@ struct Shake: GeometryEffect {
     }
 }
 
-
-struct CoinCreditView: View {
-    @EnvironmentObject var userModel: UserViewModel
-    @Binding var showCoinCredit : Bool
-    var coin : Int
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.3)
-            Rectangle()
-                .fill(Clr.darkWhite)
-                .cornerRadius(30)
-                .overlay(
-                    VStack {
-                        Img.referral2
-                            .resizable()
-                            .lineLimit(0)
-                            .frame(width:100, height: 100, alignment: .center)
-                            .aspectRatio(contentMode: .fit)
-                            .padding(.top,50)
-                            .padding()
-                        Text("Congratulations! \n You won \(coin) coins by referrals")
-                            .multilineTextAlignment(.center)
-                            .font(Font.mada(.semiBold, size: 22))
-                            .foregroundColor(Clr.black2)
-                            .padding()
-                        LightButton(type:.darkGreen, title: .constant("Got it!")) {
-                            showCoinCredit = false
-                        }
-                        .padding()
-                        Spacer()
-                    }
-                )
-                .frame(width: UIScreen.screenWidth*0.85, height: UIScreen.screenHeight*0.5, alignment: .center)
-                .onAppear {
-                    userModel.getRefered()
-                }
-        }.ignoresSafeArea()
-    }
-}

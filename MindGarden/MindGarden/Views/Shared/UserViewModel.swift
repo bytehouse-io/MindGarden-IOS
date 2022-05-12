@@ -26,6 +26,7 @@ class UserViewModel: ObservableObject {
     @Published var coins: Int = 0
     @Published var plantedTrees = [String]()
     @Published var showPlantAnimation = false
+    @Published var showCoinAnimation = false
     @Published var completedMeditations: [String] = []
     @Published var show50Off = false
     @Published var referredCoins: Int = 0
@@ -100,7 +101,7 @@ class UserViewModel: ObservableObject {
 
         
         if let email = Auth.auth().currentUser?.email {
-            db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
+            db.collection(K.userPreferences).document(email).getDocument { [self] (snapshot, error) in
                 if let document = snapshot, document.exists {
                     if let joinDate = document[K.defaults.joinDate] as? String {
                         self.joinDate = joinDate
@@ -118,6 +119,22 @@ class UserViewModel: ObservableObject {
                     }
                     if let stack = document["referredStack"] as? String {
                         self.referredStack = stack
+                        let plusIndex = stack.indexInt(of: "+") ?? 0
+                        let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
+                        
+                        if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
+                            showCoinAnimation = true
+                            UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
+                        }
+                        
+                        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") && !ownedPlants.contains(where: { plt in
+                            plt.title == "Venus Fly Trap"
+                        }) {
+                            willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Venus Fly Trap"})
+                            buyPlant(unlockedStrawberry: true)
+                            UserDefaults.standard.setValue(true, forKey: "referPlant")
+                            showPlantAnimation = true
+                        }
                     }
                     
                     if let strFreeze = document["streakFreeze"] as? Int {
@@ -197,37 +214,7 @@ class UserViewModel: ObservableObject {
             return plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
         })
     }
-    func updateReffered(refDate: String, numRefs: Int) {
-        UserDefaults.standard.setValue(true, forKey: "isPro")
-        var dte = dateFormatter.date(from: self.referredStack == "" ? dateFormatter.string(from: Date()) : refDate)
 
-        if dte ?? Date() < Date() {
-            dte = Date()
-        }
-        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") && !ownedPlants.contains(where: { plt in
-            plt.title == "Venus Fly Trap"
-        }) {
-            willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Venus Fly Trap"})
-            buyPlant(unlockedStrawberry: true)
-            UserDefaults.standard.setValue(true, forKey: "referPlant")
-            showPlantAnimation = true
-        }
-
-        let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: dte ?? Date())
-        let newDateString = dateFormatter.string(from: newDate ?? Date())
-        self.referredStack = newDateString+"+"+String(numRefs)
-        if let email = Auth.auth().currentUser?.email {
-            Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                "referredStack": self.referredStack,
-            ]) { (error) in
-                if let e = error {
-                    print("There was a issue saving data to firestore \(e) ")
-                } else {
-                    print("Succesfully saved new items")
-                }
-            }
-        }
-    }
     
     func finishedMeditation(id:String){
         if !self.completedMeditations.contains(id) {

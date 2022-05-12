@@ -88,6 +88,7 @@ enum AnalyticEvent {
     case home_selected_plant //
     case home_tapped_categories //
     case home_tapped_search //
+    case home_tapped_profile //
     case home_tapped_recents //
     case home_tapped_favorites //
     case home_tapped_featured //
@@ -320,6 +321,8 @@ enum AnalyticEvent {
     case story_journal_opened
     case story_quote_opened
     case story_tip_opened
+    
+    case no_thanks_50
 }
 
 extension AnalyticEvent {
@@ -505,6 +508,7 @@ extension AnalyticEvent {
         case .home_selected_plant: return "home_selected_plant"
         case .home_tapped_categories: return "home_tapped_categories"
         case .home_tapped_search: return "home_tapped_search"
+        case .home_tapped_profile: return "home_tapped_profile"
         case .home_tapped_recents: return "home_tapped_recents"
         case .home_tapped_favorites: return "home_tapped_favorites"
         case .home_tapped_featured: return "home_tapped_featured"
@@ -708,6 +712,7 @@ extension AnalyticEvent {
         case .story_swipe_trees_future: return "story_swipe_trees_future"
         case .store_tapped_real_tree: return "store_tapped_real_tree"
         case .store_bought_real_tree: return "store_bought_real_tree"
+        case .no_thanks_50: return "case no_thanks_50"
         }
     }
 }

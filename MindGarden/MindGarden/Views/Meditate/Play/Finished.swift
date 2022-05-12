@@ -389,6 +389,7 @@ struct Finished: View {
             { _ in }
     
             .onAppear {
+                onboardingTime = false
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         ios14 = false
