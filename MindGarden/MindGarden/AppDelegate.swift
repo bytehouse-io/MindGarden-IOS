@@ -63,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        // sets the delegate (see https://docs.superwall.me/docs/configuring-the-sdk-1)
        Paywall.delegate = PaywallManager.shared // or any object that conforms to `PaywallDelegate
         
+        application.beginReceivingRemoteControlEvents()
+        
         return true
     }
     

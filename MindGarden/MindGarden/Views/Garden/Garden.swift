@@ -45,117 +45,130 @@ struct Garden: View {
                             .padding()
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
-                        HStack {
-                            Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden")
-                                .font(Font.mada(.bold, size: 28))
-                            Spacer()
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .garden_previous_month)
-                                if gardenModel.selectedMonth == 1 {
-                                    gardenModel.selectedMonth = 12
-                                    gardenModel.selectedYear -= 1
-                                } else {
-                                    gardenModel.selectedMonth -= 1
-                                }
-                                gardenModel.populateMonth()
-                                getFavoritePlants()
-                            } label: {
-                                OperatorButton(imgName: "lessthan.square.fill")
-                            }
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .garden_next_month)
-                                if gardenModel.selectedMonth == 12 {
-                                    gardenModel.selectedMonth = 1
-                                    gardenModel.selectedYear += 1
-                                } else {
-                                    gardenModel.selectedMonth += 1
-                                }
-                                gardenModel.populateMonth()
-                                getFavoritePlants()
-                            } label: {
-                                OperatorButton(imgName: "greaterthan.square.fill")
-                            }
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.top, -15)
-                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? 1 : 0.1 : 1)
-                        GridStack(rows: Date.needsExtraRow(month: gardenModel.selectedMonth, year: gardenModel.selectedYear) ? 6 : 5, columns: 7) { row, col in
-                            ZStack {
-                                let c = gardenModel.placeHolders
-                                if col < c && row == 0 {
-                                    Rectangle()
-                                        .fill(Clr.dirtBrown)
-                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                        .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
-                                } else {
-                                    if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
-                                        // mood & plant both exist
-                                        // first tile in onboarding
-                                        let plantHead = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0?.head
-                                        ZStack {
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .padding(5)
+                            VStack(spacing:0) {
+                                GridStack(rows: Date.needsExtraRow(month: gardenModel.selectedMonth, year: gardenModel.selectedYear) ? 6 : 5, columns: 7) { row, col in
+                                    ZStack {
+                                        let c = gardenModel.placeHolders
+                                        if col < c && row == 0 {
                                             Rectangle()
-                                                .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
+                                                .fill(Clr.calenderSquare)
                                                 .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                                //if onboarding
-                                                .opacity(isOnboarding ? tileOpacity : 1)
-                                                .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                            plantHead
-                                                .padding(3)
-                                        }
-                                    } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
-                                        ZStack {
-                                            let plant = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0
-                                            let plantHead = plant?.head
-                                            Rectangle()
-                                                .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue :Clr.dirtBrown)
-                                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                            plantHead
-                                                .padding(3)
-                                        }
-                                    } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
-                                        Rectangle()
-                                            .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.dirtBrown)
-                                            .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
-                                            .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
-                                    } else { //both are nil
-                                        ZStack {
-                                            Rectangle()
-                                                .fill(Clr.dirtBrown)
-                                                .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                                .shadow(color: .black.opacity(0.25), radius: 10, x: 4, y: 4)
+                                                .border(.white, width: 1)
                                                 .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
+                                        } else {
+                                            if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
+                                                // mood & plant both exist
+                                                // first tile in onboarding
+                                                let plantHead = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0?.head
+                                                ZStack {
+                                                    Rectangle()
+                                                        .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.calenderSquare)
+                                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                                        .border(.white, width: 1)
+                                                    //if onboarding
+                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+                                                    plantHead
+                                                        .padding(3)
+                                                }
+                                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
+                                                ZStack {
+                                                    let plant = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0
+                                                    let plantHead = plant?.head
+                                                    Rectangle()
+                                                        .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue :Clr.calenderSquare)
+                                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                                        .border(.white, width: 1)
+                                                    plantHead
+                                                        .padding(3)
+                                                }
+                                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
+                                                Rectangle()
+                                                    .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.calenderSquare)
+                                                    .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
+                                                    .border(.white, width: 4)
+                                            } else { //both are nil
+                                                ZStack {
+                                                    Rectangle()
+                                                        .fill(Clr.calenderSquare)
+                                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
+                                                        .border(.white, width: 1)
+                                                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }.onTapGesture {
-                                Analytics.shared.log(event: .garden_tapped_single_day)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                day = col + (row * 7) + 1  - gardenModel.placeHolders
-                                if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0?.title != "Ice Flower" {
-                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
-                                        if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
-                                            Analytics.shared.log(event: .onboarding_finished_single)
-                                            showSingleModal = true
-                                            isOnboarding = false
-                                            UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
-                                        }
-                                    } else {
-                                        if day <= 31 && day >= 1 {
-                                            if !isOnboarding {
-                                                showSingleModal = true
+                                    .onTapGesture {
+                                        Analytics.shared.log(event: .garden_tapped_single_day)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        day = col + (row * 7) + 1  - gardenModel.placeHolders
+                                        if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0?.title != "Ice Flower" {
+                                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
+                                                if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
+                                                    Analytics.shared.log(event: .onboarding_finished_single)
+                                                    showSingleModal = true
+                                                    isOnboarding = false
+                                                    UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
+                                                }
+                                            } else {
+                                                if day <= 31 && day >= 1 {
+                                                    if !isOnboarding {
+                                                        showSingleModal = true
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
+                                .padding(5)
+                                .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
+                                .zIndex(-1000)
+                                
+                                HStack {
+                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden")
+                                        .font(Font.mada(.semiBold, size: 20))
+                                    Spacer()
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        Analytics.shared.log(event: .garden_previous_month)
+                                        if gardenModel.selectedMonth == 1 {
+                                            gardenModel.selectedMonth = 12
+                                            gardenModel.selectedYear -= 1
+                                        } else {
+                                            gardenModel.selectedMonth -= 1
+                                        }
+                                        gardenModel.populateMonth()
+                                        getFavoritePlants()
+                                    } label: {
+                                        OperatorButton(imgName: "lessthan.square.fill")
+                                    }
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        Analytics.shared.log(event: .garden_next_month)
+                                        if gardenModel.selectedMonth == 12 {
+                                            gardenModel.selectedMonth = 1
+                                            gardenModel.selectedYear += 1
+                                        } else {
+                                            gardenModel.selectedMonth += 1
+                                        }
+                                        gardenModel.populateMonth()
+                                        getFavoritePlants()
+                                    } label: {
+                                        OperatorButton(imgName: "greaterthan.square.fill")
+                                    }
+                                }
+                                .padding(10)
+                                .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? 1 : 0.1 : 1)
                             }
                         }
-                        .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
-                        .zIndex(-1000)
+                        .background(Clr.darkWhite)
+                        .cornerRadius(20)
+                        .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 0)
+                        
                         HStack(spacing: 5) {
                             ZStack {
                                 Rectangle()
@@ -400,7 +413,6 @@ struct OperatorButton: View {
             .foregroundColor(Clr.darkWhite)
             .cornerRadius(10)
             .frame(height: 35)
-            .neoShadow()
     }
 }
 
