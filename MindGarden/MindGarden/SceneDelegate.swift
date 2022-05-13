@@ -199,6 +199,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       // link, sign in the user anonymously and record the referrer UID in the
       // user's RTDB record.
       if user == nil && invitedBy != nil {
+          Analytics.shared.log(event: .onboarding_came_from_referral)
           UserDefaults.standard.setValue(invitedBy, forKey: K.defaults.referred)
           if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
                         self.router.currentPage = .authentication
