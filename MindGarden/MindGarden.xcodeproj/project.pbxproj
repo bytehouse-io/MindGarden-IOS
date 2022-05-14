@@ -66,7 +66,6 @@
 		88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB527DFBE900060FD8E /* alpha.mp3 */; };
 		88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB627DFBE900060FD8E /* music.mp3 */; };
 		88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB727DFBE900060FD8E /* piano2.mp3 */; };
-		88F5CBBC27F0281F00744D9F /* 30 Sec Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBB27F0281E00744D9F /* 30 Sec Meditation.mp3 */; };
 		88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBD27F0E6DA00744D9F /* bell.mp3 */; };
 		88F5CBC027F0E6ED00744D9F /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */; };
 		88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBC127F2244A00744D9F /* theta.mp3 */; };
@@ -183,13 +182,6 @@
 		FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */; };
 		FEBA7E722677D66F00758E58 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBA7E712677D66F00758E58 /* Store.swift */; };
 		FEBD4C6126F979500050A701 /* OverflowScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBD4C6026F9794F0050A701 /* OverflowScrollView.swift */; };
-		FEBF1AB527138623000BF1BD /* Why Meditate?.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB427138623000BF1BD /* Why Meditate?.mp3 */; };
-		FEBF1ABC27138635000BF1BD /* Tuning Into Your Body.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB627138630000BF1BD /* Tuning Into Your Body.mp3 */; };
-		FEBF1ABD27138635000BF1BD /* Create Your Anchor.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB727138631000BF1BD /* Create Your Anchor.mp3 */; };
-		FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AB927138633000BF1BD /* Stress Antidote.mp3 */; };
-		FEBF1AC027138635000BF1BD /* Compassion & Self-Love.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */; };
-		FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */; };
-		FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */; };
 		FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */; };
 		FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */; };
 		FEBF22CE26E16B68002572E2 /* BonusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22CD26E16B68002572E2 /* BonusViewModel.swift */; };
@@ -303,7 +295,6 @@
 		88F36AB527DFBE900060FD8E /* alpha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alpha.mp3; sourceTree = "<group>"; };
 		88F36AB627DFBE900060FD8E /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		88F36AB727DFBE900060FD8E /* piano2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano2.mp3; sourceTree = "<group>"; };
-		88F5CBBB27F0281E00744D9F /* 30 Sec Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Sec Meditation.mp3"; sourceTree = "<group>"; };
 		88F5CBBD27F0E6DA00744D9F /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
 		88F5CBC127F2244A00744D9F /* theta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theta.mp3; sourceTree = "<group>"; };
@@ -417,13 +408,6 @@
 		FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FEBA7E712677D66F00758E58 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		FEBD4C6026F9794F0050A701 /* OverflowScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverflowScrollView.swift; sourceTree = "<group>"; };
-		FEBF1AB427138623000BF1BD /* Why Meditate?.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Why Meditate?.mp3"; sourceTree = "<group>"; };
-		FEBF1AB627138630000BF1BD /* Tuning Into Your Body.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Tuning Into Your Body.mp3"; sourceTree = "<group>"; };
-		FEBF1AB727138631000BF1BD /* Create Your Anchor.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Create Your Anchor.mp3"; sourceTree = "<group>"; };
-		FEBF1AB927138633000BF1BD /* Stress Antidote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Stress Antidote.mp3"; sourceTree = "<group>"; };
-		FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Compassion & Self-Love.mp3"; sourceTree = "<group>"; };
-		FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Gaining Clarity.mp3"; sourceTree = "<group>"; };
-		FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Joy on demand.mp3"; sourceTree = "<group>"; };
 		FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Numbers+Extension.swift"; sourceTree = "<group>"; };
 		FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		FEBF22CD26E16B68002572E2 /* BonusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusViewModel.swift; sourceTree = "<group>"; };
@@ -982,15 +966,7 @@
 		FEBF1AB327138608000BF1BD /* Meditations */ = {
 			isa = PBXGroup;
 			children = (
-				FEBF1AB427138623000BF1BD /* Why Meditate?.mp3 */,
-				FEBF1AB727138631000BF1BD /* Create Your Anchor.mp3 */,
-				FEBF1AB627138630000BF1BD /* Tuning Into Your Body.mp3 */,
-				FEBF1ABB27138635000BF1BD /* Gaining Clarity.mp3 */,
-				FEBF1AB927138633000BF1BD /* Stress Antidote.mp3 */,
 				88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */,
-				88F5CBBB27F0281E00744D9F /* 30 Sec Meditation.mp3 */,
-				FEBF1ABA27138634000BF1BD /* Compassion & Self-Love.mp3 */,
-				FEBF1AC227138639000BF1BD /* Joy on demand.mp3 */,
 			);
 			path = Meditations;
 			sourceTree = "<group>";
@@ -1211,15 +1187,11 @@
 				882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
-				FEBF1AC127138635000BF1BD /* Gaining Clarity.mp3 in Resources */,
 				88D4C5D927FA468800CBB956 /* yogi.json in Resources */,
 				8864293627E13B6400DB7564 /* fire.json in Resources */,
 				882738D327E2D75E00F8D4D0 /* first_part.json in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
-				88F5CBBC27F0281F00744D9F /* 30 Sec Meditation.mp3 in Resources */,
 				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
-				FEBF1AB527138623000BF1BD /* Why Meditate?.mp3 in Resources */,
-				FEBF1AC027138635000BF1BD /* Compassion & Self-Love.mp3 in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */,
@@ -1228,21 +1200,17 @@
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
-				FEBF1AC32713863A000BF1BD /* Joy on demand.mp3 in Resources */,
 				88F5CBC027F0E6ED00744D9F /* 30 Second Meditation.mp3 in Resources */,
-				FEBF1ABF27138635000BF1BD /* Stress Antidote.mp3 in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
-				FEBF1ABD27138635000BF1BD /* Create Your Anchor.mp3 in Resources */,
 				88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */,
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				88F36ABD27DFBE900060FD8E /* guitar.mp3 in Resources */,
 				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
-				FEBF1ABC27138635000BF1BD /* Tuning Into Your Body.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
