@@ -103,12 +103,12 @@ struct NotificationHelper {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
         } else if hour > 18 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
-            content.title = "Finish where you left off"
-            content.body = "🌱 Grow your first flower & start your first meditation session before you go to sleep"
+            content.title = "Finish Onboarding"
+            content.body = "🌱 Start your first session & unlock a free Cherry Blossom (limited time)"
         } else {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            content.title = "Finish where you left off"
-            content.body = "🌱 Grow your first flower & start your first meditation session"
+            content.title = "Finish Onboarding"
+            content.body = "🌱 Start your first session & unlock a free Cherry Blossom (limited time)"
         }
      
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())

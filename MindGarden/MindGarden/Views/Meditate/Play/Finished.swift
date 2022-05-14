@@ -11,6 +11,7 @@ import StoreKit
 import AppsFlyerLib
 import Amplitude
 import Firebase
+import OneSignal
 
 struct Finished: View {
     var bonusModel: BonusViewModel
@@ -177,7 +178,7 @@ struct Finished: View {
                             }
                             HStack(alignment: .center) {
                                 Spacer()
-                                VStack(alignment: .center, spacing: 20) {
+                                VStack(alignment: .center, spacing: 10) {
                                     VStack {
                                         Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
                                             .font(Font.mada(.regular, size: 20))
@@ -185,12 +186,12 @@ struct Finished: View {
                                             .padding([.horizontal])
                                         Text("With patience and mindfulness you were able to grow \(userModel.modTitle())!")
                                             .font(Font.mada(.bold, size: 22))
-                                            .lineLimit(3)
+                                            .lineLimit(2)
                                             .minimumScaleFactor(0.05)
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(Clr.black1)
-                                            .frame(height: g.size.height/10)
-                                            .padding([.horizontal])
+                                            .frame(height: g.size.height/14)
+                                            .padding([.horizontal], 15)
                                         userModel.selectedPlant?.badge
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -200,12 +201,13 @@ struct Finished: View {
                                     }.frame(width: g.size.width * 0.85, height: g.size.height/2.25)
                                 }
                                 Spacer()
-                            }.offset(y: !isOnboarding ? 0 : -50)
+                            }.offset(y: !isOnboarding ? 0 : -100)
                             if !UserDefaults.standard.bool(forKey: "isNotifOn") {
                                 ReminderView()
                                     .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
                                     .padding(.top,50)
                                     .padding()
+                                    .offset(y: !isOnboarding ? 0 : -125)
                                 Spacer()
                             }
                         }.offset(y: -g.size.height/6)
@@ -389,7 +391,6 @@ struct Finished: View {
             { _ in }
     
             .onAppear {
-                onboardingTime = false
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         ios14 = false
@@ -458,6 +459,8 @@ struct Finished: View {
                     Analytics.shared.log(event: .onboarding_finished_meditation)
                     UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                     isOnboarding = true
+                } else {
+                    OneSignal.sendTag("firstMeditation", value: "true")
                 }
                 
          

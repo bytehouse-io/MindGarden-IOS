@@ -193,29 +193,6 @@ struct ContentView: View {
                                 } else {
                                     // Fallback on earlier versions
                                 }
-//                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .onboarding
-//                                                        || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
-//                                            VStack {
-//                                                Img.lily3
-//                                                    .resizable()
-//                                                    .aspectRatio(contentMode: .fit)
-//                                                    .frame(width: 100)
-//                                                    .rotationEffect(Angle(degrees: 20))
-//                                                    .position(x: 30, y: 0)
-//                                                Img.redMushroom3
-//                                                    .resizable()
-//                                                    .aspectRatio(contentMode: .fit)
-//                                                    .frame(width: 100)
-//                                                    .rotationEffect(Angle(degrees: 20))
-//                                                    .position(x: width/4, y: 0)
-//                                                Img.redTulips3
-//                                                    .resizable()
-//                                                    .aspectRatio(contentMode: .fit)
-//                                                    .frame(width: 200)
-//                                                    .rotationEffect(Angle(degrees: 20))
-//                                                    .position(x: UIScreen.main.bounds.width, y: 0)
-//                                            }.frame(height: 100)
-//                                    }
                                 if viewRouter.currentPage == .notification || viewRouter.currentPage == .onboarding
                                                 || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
                                         ZStack(alignment: .leading) {
@@ -253,27 +230,27 @@ struct ContentView: View {
                                             .padding()
                                             .oldShadow()
     
-//                                    ZStack {
-//                                        Img.lilyValley3
-//                                            .resizable()
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .frame(width: 100)
-//                                            .rotationEffect(Angle(degrees: 20))
-//                                            .position(x: 20, y: -15)
-//                                        Img.redMushroom3
-//                                            .resizable()
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .frame(width: 100)
-//                                            .rotationEffect(Angle(degrees: 20))
-//                                            .position(x: UIScreen.main.bounds.width/2, y: 20)
-//                                        Img.redTulips3
-//                                            .resizable()
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .frame(width: 200)
-//                                            .rotationEffect(Angle(degrees: 20))
-//                                            .position(x: UIScreen.main.bounds.width - 15, y: 0)
-//                                    }.frame(height: 100)
-//                                        .zIndex(-100)
+                                    ZStack {
+                                        Img.lilyValley3
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100)
+                                            .rotationEffect(Angle(degrees: 20))
+                                            .position(x: 20, y: -15)
+                                        Img.redMushroom3
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100)
+                                            .rotationEffect(Angle(degrees: 20))
+                                            .position(x: UIScreen.main.bounds.width/2, y: 20)
+                                        Img.redTulips3
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 200)
+                                            .rotationEffect(Angle(degrees: 20))
+                                            .position(x: UIScreen.main.bounds.width - 15, y: 0)
+                                    }.frame(height: 100)
+                                        .zIndex(-100)
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             

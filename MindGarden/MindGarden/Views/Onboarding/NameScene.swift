@@ -39,10 +39,10 @@ struct NameScene: View {
                             }
                             Spacer()
                             HStack {
-                                Img.sheep
+                                Img.foxStudy
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(height: 80)
+                                    .frame(height: 100)
                                     .padding(.trailing, 15)
                                     .neoShadow()
                                 VStack {
@@ -50,7 +50,7 @@ struct NameScene: View {
                                         .font(Font.mada(.bold, size: 26))
                                         .foregroundColor(Clr.darkgreen)
                                         .multilineTextAlignment(.center)
-                                        .frame(width: width * 0.6, height: 60)
+                                        .frame(width: width * 0.55, height: 60)
                                         .minimumScaleFactor(0.05)
                                         .lineLimit(1)
                                     LegacyTextField(text: $name, isFirstResponder: $isFirstResponder)
@@ -60,7 +60,7 @@ struct NameScene: View {
                                                 .foregroundColor(Clr.darkWhite)
                                                 .cornerRadius(14)
                                         )
-                                        .frame(width: width * 0.6, height: 60)
+                                        .frame(width: width * 0.55, height: 60)
                                         .oldShadow()
                                         .disableAutocorrection(true)
                                 }
