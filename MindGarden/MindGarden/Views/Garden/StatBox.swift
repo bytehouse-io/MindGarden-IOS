@@ -18,31 +18,26 @@ struct StatBox: View {
                 .fill(Clr.darkWhite)
                 .cornerRadius(15)
                 .neoShadow()
-            HStack(spacing: 0){
-                img
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(8)
-                    .frame(width: 65)
-                if label == "Total Minutes"  {
-                    Spacer()
+            VStack(alignment:.center, spacing:5){
+                Text(label)
+                    .font(Font.mada(.regular, size: 12))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .minimumScaleFactor(0.05)
+                    .padding(5)
+                    .padding(.top,10)
+                HStack(spacing:5) {
+                    img
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20)
+                    Text(value)
+                        .font(Font.mada(.bold, size: 16))
+                        .minimumScaleFactor(0.05)
                 }
-                    VStack(alignment: .center, spacing: 0) {
-                        Text(label)
-                            .font(Font.mada(.regular, size: 12))
-                            .minimumScaleFactor(0.05)
-                            .lineLimit(2)
-                            .multilineTextAlignment(.center)
-                        Text(value)
-                            .font(Font.mada(.bold, size: 22))
-                            .minimumScaleFactor(0.05)
-                            .multilineTextAlignment(.center)
-                    }.padding(5)
-                    .offset(x: label == "Total Minutes" ? 0 : -3)
-                if label == "Total Minutes"  {
-                    Spacer()
-                }
-            }.frame(height:60)
+                .padding(.horizontal,5)
+                .padding(.bottom,10)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
         }
     }
 }

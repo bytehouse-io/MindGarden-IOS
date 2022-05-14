@@ -111,6 +111,7 @@ struct ContentView: View {
 //                                                    showPopUp = false
                                                     showItems = false
                                             }
+                                            .environmentObject(bonusModel)
                                     case .shop:
                                         Store()
                                             .frame(height: geometry.size.height + 10)

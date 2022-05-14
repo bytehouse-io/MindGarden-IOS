@@ -20,6 +20,14 @@ struct Garden: View {
     @State private var forceRefresh = false
     @State private var color = Clr.yellow
     @Environment(\.sizeCategory) var sizeCategory
+    
+    @EnvironmentObject var bonusModel: BonusViewModel
+    var currentStreak : String {
+        return "\(bonusModel.streakNumber)"
+    }
+    var longestStreak : Int {
+        (UserDefaults.standard.value(forKey: "longestStreak") as? Int) ?? 1
+    }
 
     var body: some View {
         GeometryReader { gp in
@@ -170,35 +178,79 @@ struct Garden: View {
                         .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 0)
                         
                         HStack(spacing: 5) {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Clr.darkWhite)
-                                    .cornerRadius(15)
-                                    .frame(height: gp.size.height * 0.3)
-                                    .neoShadow()
+                            HStack {
                                 VStack {
-                                    HStack(spacing:5) {
-                                        StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
-                                        HStack(alignment: .bottom) {
-                                            MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0).padding(0)
-                                            MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0).padding(0)
-                                        }.offset(x: 10)
-                                    }.padding(.horizontal,5)
-                                    HStack(spacing:5) {
-                                        StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                                        HStack(alignment: .bottom) {
-                                            MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0).padding(0)
-                                            MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0).padding(0)
-                                        }.offset(x: 10)
-                                    }.padding(.horizontal,5)
                                     HStack {
+                                        StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
+                                        StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
                                         StatBox(label: "Total Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
-                                        Spacer().frame(width:10)
-                                        Spacer()
-                                        MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0).frame(maxWidth:90)
-                                    }.padding(.horizontal,5)
-                                }.padding(10)
-                            }.padding(.horizontal,10)
+                                    }
+                                    .frame(height:80)
+                                    ZStack {
+                                        Rectangle()
+                                            .fill(Clr.darkWhite)
+                                            .cornerRadius(15)
+                                            .neoShadow()
+                                        HStack {
+                                            Img.fire
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .padding()
+                                                .padding(.trailing,0)
+                                            VStack {
+                                                RoundedRectangle(cornerRadius: 15)
+                                                    .stroke(Clr.dirtBrown, lineWidth: 2)
+                                                    .background(Clr.calenderSquare.cornerRadius(15))
+                                                    .overlay(
+                                                        VStack {
+                                                            Text("Current Streak")
+                                                                .font(Font.mada(.regular, size: 12))
+                                                            Text(currentStreak)
+                                                                .font(Font.mada(.bold, size: 20))
+                                                        }
+                                                    )
+                                                RoundedRectangle(cornerRadius: 15)
+                                                    .stroke(Clr.dirtBrown, lineWidth: 2)
+                                                    .background(Clr.calenderSquare.cornerRadius(15))
+                                                    .overlay(
+                                                        VStack {
+                                                            Text("Longest Streak")
+                                                                .font(Font.mada(.regular, size: 12))
+                                                            Text("\(longestStreak == 0 ? 1 : longestStreak)")
+                                                                .font(Font.mada(.bold, size: 20))
+                                                        }
+                                                    )
+                                            }
+                                            .padding(.vertical)
+                                            .padding(.trailing)
+                                        }
+                                    }.frame(height:175)
+                                    .padding(.top,15)
+                                }
+                                .padding(.vertical)
+                                .padding(.trailing,5)
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Clr.darkWhite)
+                                        .cornerRadius(10)
+                                        .neoShadow()
+                                    VStack(spacing:5) {
+                                        Text("Moods")
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.mada(.regular, size: 16))
+                                            .padding(0)
+                                        MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
+                                        MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
+                                        MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
+                                        MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
+                                        MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
+                                    }
+                                    .padding()
+                                }
+                                .padding()
+                                .neoShadow()
+                                .frame(width:UIScreen.screenWidth*0.2)
+                            }
                         }
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
@@ -366,22 +418,14 @@ struct MoodImage: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 35)
                 .padding(.leading, 2)
-            VStack(alignment: .center) {
-                Text(mood.title)
-                    .minimumScaleFactor(0.5)
-                    .font(Font.mada(.semiBold, size: 14))
-                    .lineLimit(1)
-                    .frame(width: isStressed ? 60 : 38)
-                    .foregroundColor(Clr.black2)
-                Text(String(value))
-                    .font(.headline)
-                    .bold()
-                    .lineLimit(1)
-                    .frame(width: isStressed ? 60 : 40)
-                    .minimumScaleFactor(0.5)
-            }.padding(.leading, 1)
-            .frame(maxWidth: .infinity)
-        }
+            Text(String(value))
+                .font(.headline)
+                .bold()
+                .lineLimit(1)
+                .frame(width: 20)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity,alignment: .center)
+        }.frame(height:40)
     }
 }
 
