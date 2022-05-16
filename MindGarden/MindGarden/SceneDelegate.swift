@@ -34,10 +34,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
-//        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
 
-        
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         if launchNum == 0 {
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")

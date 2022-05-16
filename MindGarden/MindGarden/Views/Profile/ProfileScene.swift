@@ -469,7 +469,7 @@ struct ProfileScene: View {
                     }.padding(.horizontal, 5)
                     HStack(alignment: .center, spacing: 15) {
                         StatBox(label: "All Gratitudes", img: Img.hands, value: "\(UserDefaults.standard.integer(forKey: "numGrads"))")
-                        StatBox(label: "Longest Streak", img: Img.newStar, value: "\(UserDefaults.standard.integer(forKey: "longestStreak") == 0 ? 1 : UserDefaults.standard.integer(forKey: "longestStreak")  )")
+                        StatBox(label: "Longest Streak", img: Img.fire, value: "\(UserDefaults.standard.integer(forKey: "longestStreak") == 0 ? 1 : UserDefaults.standard.integer(forKey: "longestStreak")  )")
                     }.padding(.horizontal, 5)
                 }.frame(width: width * 0.8, height: 160)
                     .padding()

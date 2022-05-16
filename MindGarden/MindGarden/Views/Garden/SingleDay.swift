@@ -180,19 +180,22 @@ struct SingleDay: View {
                         .opacity(0.3)
                         .edgesIgnoringSafeArea(.all)
                     Spacer()
+        
                 }
 //                OnboardingModal(shown: $showOnboardingModal)
 //                    .offset(y: showOnboardingModal ? 0 : g.size.height)
 //                    .animation(.default, value: showOnboardingModal)
                 BottomSheet(
                     isOpen: self.$showOnboardingModal,
-                    maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
+                    maxHeight: g.size.height * (K.isSmall() ? 1 : 0.9),
                     minHeight: 0.1,
                     trigger: { }
                 ) {
                     VStack {
-                        Text("🥳")
-                            .font(Font.mada(.bold, size: K.isSmall() ? 64 : 80))
+                        Img.completeRacoon
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 200)
                         Text("Tutorial Complete!")
                             .font(Font.mada(.bold, size: 32))
                             .foregroundColor(Clr.darkgreen)
@@ -225,12 +228,12 @@ struct SingleDay: View {
                                 
                         }.buttonStyle(NeumorphicPress())
                          .frame(height: 45)
-                         .padding(.vertical, 25)
+                         .padding(.top, 25)
                         Text("Not Now")
                             .font(Font.mada(.semiBold, size: 22))
                             .foregroundColor(Color.gray)
                             .underline()
-                            .padding(.top, 5)
+                            .padding(.top, 25)
                             .onTapGesture {
                                 withAnimation {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -238,6 +241,7 @@ struct SingleDay: View {
                                 }
                             }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
+                    .offset(y: -15)
                     .padding()
                 }.offset(y: g.size.height * 0.1)
             }

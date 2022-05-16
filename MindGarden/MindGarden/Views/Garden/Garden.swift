@@ -327,6 +327,7 @@ struct Garden: View {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                                         Analytics.shared.log(event: .onboarding_finished_calendar)
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
+                                                   
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                                         UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
                                                         tileOpacity = 0.2
@@ -338,15 +339,37 @@ struct Garden: View {
                                     }.padding()
                                 )
                                 .cornerRadius(12)
+                            
                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                 Triangle()
                                     .fill(Clr.yellow)
                                     .frame(width: 40, height: 20)
                                     .rotationEffect(.radians(.pi))
+                    
                             }
-                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? gp.size.height * 0.025 : gp.size.height * -0.07)
+                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -150 : -125)
                     }
-
+                    switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
+                    case "meditate":
+                        Img.calendarRacoon
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 125)
+                            .position(x: gp.size.width/2, y: gp.size.height/1.35)
+                    case "calendar":
+                        Img.statRacoon
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 125)
+                            .position(x: gp.size.width/2, y: gp.size.height/3.5)
+                    case "stats":
+                        Img.calendarRacoon
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 125)
+                            .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
+                    default: EmptyView()
+                    }
                 }.padding(.bottom ,50)
             }.fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
