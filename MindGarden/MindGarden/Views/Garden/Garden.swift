@@ -204,8 +204,10 @@ struct Garden: View {
                                                     .overlay(
                                                         VStack {
                                                             Text("Current Streak")
+                                                                .foregroundColor(.black)
                                                                 .font(Font.mada(.regular, size: 12))
                                                             Text(currentStreak)
+                                                                .foregroundColor(.black)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
                                                     )
@@ -215,8 +217,10 @@ struct Garden: View {
                                                     .overlay(
                                                         VStack {
                                                             Text("Longest Streak")
+                                                                .foregroundColor(.black)
                                                                 .font(Font.mada(.regular, size: 12))
                                                             Text("\(longestStreak == 0 ? 1 : longestStreak)")
+                                                                .foregroundColor(.black)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
                                                     )

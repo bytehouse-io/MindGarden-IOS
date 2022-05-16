@@ -236,6 +236,7 @@ struct Play: View {
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onChange(of: viewRouter.currentPage) { value in
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
             if viewRouter.currentPage == .finished {
                 StopPlaying()
             }
@@ -355,6 +356,20 @@ struct Play: View {
             return .success
         }
         
+        commandCenter.skipForwardCommand.addTarget { event in
+            goForward()
+            return .success
+        }
+        commandCenter.skipForwardCommand.isEnabled = true
+        commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 15)]
+
+        commandCenter.skipBackwardCommand.addTarget { event in
+            goBackward()
+            return .success
+        }
+        commandCenter.skipBackwardCommand.isEnabled = true
+        commandCenter.skipBackwardCommand.preferredIntervals = [NSNumber(value: 15)]
+        
     }
     
     func setupNowPlaying() {
@@ -367,9 +382,12 @@ struct Play: View {
                     return image
             }
         }
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = model.totalTime
+        let isMainPlayer = model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds)!))
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer.currentTime : player.currentTime
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer.rate : player.rate
+        
         // Set the metadata
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
@@ -391,7 +409,9 @@ struct Play: View {
         let newTime = playerCurrentTime + 15
         
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
-        self.mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        self.mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero) { _ in
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds)!))
+        }
     }
 
     func goBackward() {
@@ -402,7 +422,9 @@ struct Play: View {
                 newTime = 0
             }
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
-        mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        mainPlayer?.seek(to: time2, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero) {_ in
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds)!))
+        }
     }
     
     private func changeState(){
