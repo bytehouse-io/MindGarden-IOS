@@ -22,8 +22,7 @@ struct StatBox: View {
                 Text(label)
                     .font(Font.mada(.regular, size: 12))
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .minimumScaleFactor(0.05)
-                    .padding(5)
+                    .padding(.horizontal, 5)
                     .padding(.top,10)
                 HStack(spacing:5) {
                     img
@@ -33,8 +32,8 @@ struct StatBox: View {
                     Text(value)
                         .font(Font.mada(.bold, size: 16))
                         .minimumScaleFactor(0.05)
+                        .foregroundColor(Clr.black2)
                 }
-                .padding(.horizontal,5)
                 .padding(.bottom,10)
                 .frame(maxWidth: .infinity, alignment: .center)
             }

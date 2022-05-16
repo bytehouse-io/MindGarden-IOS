@@ -53,7 +53,8 @@ struct Garden: View {
                             .padding()
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
-                        ZStack {
+                            .padding(.bottom, -20)
+                        ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .padding(5)
@@ -132,13 +133,15 @@ struct Garden: View {
                                         }
                                     }
                                 }
-                                .padding(5)
+                                .padding(15)
                                 .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
                                 .zIndex(-1000)
                                 
                                 HStack {
-                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden")
+                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
                                         .font(Font.mada(.semiBold, size: 20))
+                                        .foregroundColor(Clr.black2)
+                                        .padding(.leading)
                                     Spacer()
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -153,6 +156,7 @@ struct Garden: View {
                                         getFavoritePlants()
                                     } label: {
                                         OperatorButton(imgName: "lessthan.square.fill")
+                                            .neoShadow()
                                     }
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -167,25 +171,27 @@ struct Garden: View {
                                         getFavoritePlants()
                                     } label: {
                                         OperatorButton(imgName: "greaterthan.square.fill")
+                                            .neoShadow()
                                     }
                                 }
                                 .padding(10)
                                 .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? 1 : 0.1 : 1)
-                            }
+                                .padding(.bottom)
+                            }.frame(width:UIScreen.screenWidth*0.85, alignment: .center)
                         }
                         .background(Clr.darkWhite)
                         .cornerRadius(20)
-                        .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 0)
+                        .neoShadow()
                         
-                        HStack(spacing: 5) {
-                            HStack {
+                        HStack(spacing: 15) {
+                            HStack(spacing: 10) {
                                 VStack {
                                     HStack {
                                         StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
                                         StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                                        StatBox(label: "Total Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
+                                        StatBox(label: "Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
                                     }
-                                    .frame(height:80)
+                                    .frame(height:60)
                                     ZStack {
                                         Rectangle()
                                             .fill(Clr.darkWhite)
@@ -197,17 +203,19 @@ struct Garden: View {
                                                 .aspectRatio(contentMode: .fit)
                                                 .padding()
                                                 .padding(.trailing,0)
-                                            VStack {
+                                                .frame(width: 80)
+                                                .offset(x: 5)
+                                            VStack(spacing: 20) {
                                                 RoundedRectangle(cornerRadius: 15)
                                                     .stroke(Clr.dirtBrown, lineWidth: 2)
                                                     .background(Clr.calenderSquare.cornerRadius(15))
                                                     .overlay(
                                                         VStack {
                                                             Text("Current Streak")
-                                                                .foregroundColor(.black)
+                                                                .foregroundColor(Clr.black2)
                                                                 .font(Font.mada(.regular, size: 12))
                                                             Text(currentStreak)
-                                                                .foregroundColor(.black)
+                                                                .foregroundColor(Clr.black2)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
                                                     )
@@ -217,10 +225,10 @@ struct Garden: View {
                                                     .overlay(
                                                         VStack {
                                                             Text("Longest Streak")
-                                                                .foregroundColor(.black)
+                                                                .foregroundColor(Clr.black2)
                                                                 .font(Font.mada(.regular, size: 12))
                                                             Text("\(longestStreak == 0 ? 1 : longestStreak)")
-                                                                .foregroundColor(.black)
+                                                                .foregroundColor(Clr.black2)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
                                                     )
@@ -228,8 +236,8 @@ struct Garden: View {
                                             .padding(.vertical)
                                             .padding(.trailing)
                                         }
-                                    }.frame(height:175)
-                                    .padding(.top,15)
+                                    }.frame(height:150)
+                                    .padding(.top,5)
                                 }
                                 .padding(.vertical)
                                 .padding(.trailing,5)
@@ -241,7 +249,7 @@ struct Garden: View {
                                     VStack(spacing:5) {
                                         Text("Moods")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.regular, size: 16))
+                                            .font(Font.mada(.regular, size: 12))
                                             .padding(0)
                                         MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
                                         MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
@@ -249,13 +257,13 @@ struct Garden: View {
                                         MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
                                         MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
                                     }
-                                    .padding()
+                                    .padding(15)
                                 }
                                 .padding()
                                 .neoShadow()
-                                .frame(width:UIScreen.screenWidth*0.2)
+                                .frame(width:UIScreen.screenWidth*0.165, height: UIScreen.screenHeight * 0.15)
                             }
-                        }
+                        }.frame(width:UIScreen.screenWidth*0.85)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants:")
@@ -290,7 +298,7 @@ struct Garden: View {
                                     }
                                     Spacer()
                                 }
-                            }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: gp.size.height * 0.4)
+                            }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: 150)
                         }.padding(.vertical, 15)
                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                     }.padding(.horizontal, 25)
@@ -439,20 +447,20 @@ struct MoodImage: View {
     }
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 5) {
             Mood.getMoodImage(mood: mood)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 35)
+                .frame(width: 20)
                 .padding(.leading, 2)
             Text(String(value))
                 .font(.headline)
                 .bold()
                 .lineLimit(1)
-                .frame(width: 20)
+                .frame(width: 10)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity,alignment: .center)
-        }.frame(height:40)
+        }.frame(height:30)
     }
 }
 

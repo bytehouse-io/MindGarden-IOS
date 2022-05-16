@@ -31,7 +31,10 @@ extension String {
     func indexInt(of char: Character) -> Int? {
       return firstIndex(of: char)?.utf16Offset(in: self)
     }
-    
+    func withReplacedCharacters(_ oldChar: String, by newChar: String) -> String {
+        let newStr = self.replacingOccurrences(of: oldChar, with: newChar, options: .literal, range: nil)
+        return newStr
+    }
 }
 extension StringProtocol {
     subscript(offset: Int) -> Character {
