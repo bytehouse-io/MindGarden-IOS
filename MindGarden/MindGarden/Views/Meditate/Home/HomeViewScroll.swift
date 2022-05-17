@@ -57,35 +57,52 @@ struct HomeViewScroll: View {
                             } label: {
                                 HStack {
                                     if totalBonuses == 0 {
-                                        Img.coin
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 17)
-                                            .neoShadow()
-                                    } else {
-                                        ZStack {
-                                            Circle().frame(height: 16)
-                                                .foregroundColor(Clr.redGradientBottom)
-                                            Text("\(totalBonuses)")
-                                                .font(Font.mada(.bold, size: 12))
-                                                .foregroundColor(.white)
+                                        HStack {
+                                            Img.coin
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 17)
+                                                .neoShadow()
+                                            Text("Daily Bonus")
+                                                .font(Font.mada(.regular, size: 16))
+                                                .foregroundColor(.black)
+                                                .font(.footnote)
                                                 .lineLimit(1)
-                                                .minimumScaleFactor(0.005)
-                                                .frame(width: 10)
-                                        }.frame(width: 15)
+                                                .minimumScaleFactor(0.05)
+                                        }
+                                        .frame(width: width * 0.35, height: 20)
+                                        .padding(8)
+                                        .background(Clr.yellow)
+                                        .cornerRadius(20)
+                                        .modifier(Shake(animatableData: CGFloat(attempts)))
+                                    } else {
+                                        HStack {
+                                            ZStack {
+                                                Circle().frame(height: 16)
+                                                    .foregroundColor(Clr.redGradientBottom)
+                                                Text("\(totalBonuses)")
+                                                    .font(Font.mada(.bold, size: 12))
+                                                    .foregroundColor(.white)
+                                                    .lineLimit(1)
+                                                    .minimumScaleFactor(0.005)
+                                                    .frame(width: 10)
+                                            }.frame(width: 15)
+                                            Text("Daily Bonus")
+                                                .font(Font.mada(.regular, size: 16))
+                                                .foregroundColor(.black)
+                                                .font(.footnote)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
+                                        }
+                                        .frame(width: width * 0.35, height: 20)
+                                        .padding(8)
+                                        .background(Clr.yellow)
+                                        .cornerRadius(20)
+                                        .modifier(Shake(animatableData: CGFloat(attempts)))
+                                        .wiggling1()
                                     }
-                                    Text("Daily Bonus")
-                                        .font(Font.mada(.regular, size: 16))
-                                        .foregroundColor(.black)
-                                        .font(.footnote)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
                                 }
-                                .frame(width: width * 0.35, height: 20)
-                                .padding(8)
-                                .background(Clr.yellow)
-                                .cornerRadius(20)
-                                .modifier(Shake(animatableData: CGFloat(attempts)))
+                                
                             }
                             .buttonStyle(BonusPress())
                             Button {
