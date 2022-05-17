@@ -119,15 +119,7 @@ struct Play: View {
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            goBackward()
-                                        }
-                                        if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
-                                            model.secondsRemaining += model.selectedMeditation?.url != "" ? 15 : 15
-                                        } else {
-                                            model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
-                                        }
+                                       backAction()
                                     } label: {
                                         ZStack {
                                             Circle()
@@ -164,16 +156,7 @@ struct Play: View {
                                 }
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {
-                                        model.forwardCounter += 1
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
-                                            goForward()
-                                        }
-                                        if model.secondsRemaining >= 15 {
-                                            model.secondsRemaining -= model.selectedMeditation?.url != "" ? 14 : 15
-                                        } else {
-                                            model.secondsRemaining = 0
-                                        }
+                                        forwardAction()
                                     } label: {
                                         ZStack {
                                             Circle()
@@ -341,6 +324,31 @@ struct Play: View {
         }
     }
     
+    private func forwardAction() {
+        model.forwardCounter += 1
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+            goForward()
+        }
+        if model.secondsRemaining >= 15 {
+            model.secondsRemaining -= model.selectedMeditation?.url != "" ? 14 : 15
+        } else {
+            model.secondsRemaining = 0
+        }
+    }
+     
+    private func backAction() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if model.selectedMeditation?.belongsTo != "Timed Meditation" {
+            goBackward()
+        }
+        if model.secondsRemaining + 15 <= model.selectedMeditation?.duration ?? 0.0 {
+            model.secondsRemaining += model.selectedMeditation?.url != "" ? 15 : 15
+        } else {
+            model.secondsRemaining = model.selectedMeditation?.duration ?? 0.0
+        }
+    }
+    
     func setupRemoteTransportControls() {
         let commandCenter = MPRemoteCommandCenter.shared()
         
@@ -357,14 +365,14 @@ struct Play: View {
         }
         
         commandCenter.skipForwardCommand.addTarget { event in
-            goForward()
+            forwardAction()
             return .success
         }
         commandCenter.skipForwardCommand.isEnabled = true
         commandCenter.skipForwardCommand.preferredIntervals = [NSNumber(value: 15)]
 
         commandCenter.skipBackwardCommand.addTarget { event in
-            goBackward()
+            backAction()
             return .success
         }
         commandCenter.skipBackwardCommand.isEnabled = true
