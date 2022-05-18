@@ -38,6 +38,11 @@ struct GridStack<Content: View>: View {
                 }
             }
         }
+        .cornerRadius(15)
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(Color.white, lineWidth: 2)
+        )
     }
 
     init(rows: Int, columns: Int, @ViewBuilder content: @escaping (Int, Int) -> Content) {
