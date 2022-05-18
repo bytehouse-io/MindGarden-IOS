@@ -232,7 +232,6 @@ extension Date {
         let month = Date().intToMonth(num: month)
         let monthNum = String(Date().getMonthNum(month: month))
         let weekDay = self.dayOfWeek(day: "1", month: monthNum, year: String(year))
-        print("weekDay", weekDay, month, year)
         switch weekDay {
         case "Fri":
             if Date().getNumberOfDays(month: monthNum, year: String(year)) == 31 {

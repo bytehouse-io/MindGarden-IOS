@@ -110,8 +110,8 @@ struct HomeViewHeader: View {
                                         .font(Font.mada(.semiBold, size: 22))
                                         .foregroundColor(Clr.darkgreen)
                                 }.frame(height: 30, alignment: .bottom)
-                                if UserDefaults.standard.bool(forKey: "day4") {
-                                    HStack {
+                                if !UserDefaults.standard.bool(forKey: "day4") {
+                                     HStack {
                                         Img.coin
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)

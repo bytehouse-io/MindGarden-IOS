@@ -412,6 +412,7 @@ class BonusViewModel: ObservableObject {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                         updatedStreak = true
                         self.streakNumber = 1
+                        updateLongest()
                     } else {
                         self.streakNumber = 0
                     }
@@ -423,6 +424,7 @@ class BonusViewModel: ObservableObject {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                 updatedStreak = true
                 self.streakNumber = 1
+                updateLongest()
             } else {
                 self.streakNumber = 0
             }
@@ -463,10 +465,10 @@ class BonusViewModel: ObservableObject {
     
     private func updateLongest() {
         if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
-        if longestStreak < streakNumber {
-            UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
-        }
-        UserDefaults.standard.setValue(true, forKey: "updatedStreak")
+            if longestStreak <= streakNumber {
+                UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
+            }
+            UserDefaults.standard.setValue(true, forKey: "updatedStreak")
         } else {
             UserDefaults.standard.setValue(1, forKey: "longestStreak")
         }
