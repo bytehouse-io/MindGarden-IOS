@@ -62,6 +62,8 @@ struct Garden: View {
                                 GridStack(rows: Date.needsExtraRow(month: gardenModel.selectedMonth, year: gardenModel.selectedYear) ? 6 : 5, columns: 7) { row, col in
                                     ZStack {
                                         let c = gardenModel.placeHolders
+                                        let currentDate = col + (row * 7) + 1 - c
+                                        let maxDate = Date().getNumberOfDays(month: String(gardenModel.selectedMonth),year:String(gardenModel.selectedYear))
                                         if col < c && row == 0 {
                                             Rectangle()
                                                 .fill(Clr.calenderSquare)
@@ -69,13 +71,13 @@ struct Garden: View {
                                                 .border(.white, width: 1)
                                                 .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
                                         } else {
-                                            if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil {
+                                            if gardenModel.monthTiles[row]?[currentDate]?.0 != nil && gardenModel.monthTiles[row]?[currentDate]?.1 != nil {
                                                 // mood & plant both exist
                                                 // first tile in onboarding
-                                                let plantHead = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0?.head
+                                                let plantHead = gardenModel.monthTiles[row]?[currentDate]?.0?.head
                                                 ZStack {
                                                     Rectangle()
-                                                        .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.calenderSquare)
+                                                        .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                     //if onboarding
@@ -83,10 +85,16 @@ struct Garden: View {
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
                                                         .padding(3)
+                                                        .overlay(
+                                                            Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                .font(Font.mada(.semiBold, size: 10))
+                                                                .foregroundColor(Clr.black2)
+                                                                .padding(.leading)
+                                                        )
                                                 }
-                                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0 != nil { // only mood is nil
+                                            } else if gardenModel.monthTiles[row]?[currentDate]?.0 != nil { // only mood is nil
                                                 ZStack {
-                                                    let plant = gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.0
+                                                    let plant = gardenModel.monthTiles[row]?[currentDate]?.0
                                                     let plantHead = plant?.head
                                                     Rectangle()
                                                         .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue :Clr.calenderSquare)
@@ -94,12 +102,24 @@ struct Garden: View {
                                                         .border(.white, width: 1)
                                                     plantHead
                                                         .padding(3)
+                                                        .overlay(
+                                                            Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                .font(Font.mada(.semiBold, size: 10))
+                                                                .foregroundColor(Clr.black2)
+                                                                .padding(.leading)
+                                                        )
                                                 }
-                                            } else if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1 != nil { // only plant is nil
+                                            } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
                                                 Rectangle()
-                                                    .fill(gardenModel.monthTiles[row]?[col + (row * 7) + 1 - c]?.1?.color ?? Clr.calenderSquare)
+                                                    .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                     .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
                                                     .border(.white, width: 4)
+                                                    .overlay(
+                                                        Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                            .font(Font.mada(.semiBold, size: 10))
+                                                            .foregroundColor(Clr.black2)
+                                                            .padding(.leading)
+                                                    )
                                             } else { //both are nil
                                                 ZStack {
                                                     Rectangle()
@@ -107,6 +127,12 @@ struct Garden: View {
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
+                                                        .overlay(
+                                                            Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                .font(Font.mada(.semiBold, size: 10))
+                                                                .foregroundColor(Clr.black2)
+                                                                .padding(.leading)
+                                                        )
                                                 }
                                             }
                                         }
