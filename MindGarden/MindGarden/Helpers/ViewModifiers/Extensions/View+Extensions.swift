@@ -26,7 +26,7 @@ extension View {
 
     func takeScreenshot(origin: CGPoint, size: CGSize) -> UIImage {
         let window = UIWindow(frame: CGRect(origin: origin, size: size))
-        let hosting = UIHostingController(rootView: self)
+        let hosting = UIHostingController(rootView: self.environmentObject(SceneDelegate.userModel))
         hosting.view.frame = window.frame
         window.addSubview(hosting.view)
         window.makeKeyAndVisible()

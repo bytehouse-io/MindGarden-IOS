@@ -391,7 +391,7 @@ struct Play: View {
             }
         }
         let isMainPlayer = model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"
-        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds)!))
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds) ?? 0))
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer.currentTime : player.currentTime
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer.rate : player.rate
