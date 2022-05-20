@@ -87,7 +87,7 @@ struct Garden: View {
                                                         .padding(3)
                                                         .overlay(
                                                             Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                .font(Font.mada(.semiBold, size: 10))
+                                                                .font(Font.mada(.semiBold, size: 8))
                                                                 .foregroundColor(Clr.black2)
                                                                 .padding(.leading)
                                                         )
@@ -97,7 +97,7 @@ struct Garden: View {
                                                     let plant = gardenModel.monthTiles[row]?[currentDate]?.0
                                                     let plantHead = plant?.head
                                                     Rectangle()
-                                                        .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue :Clr.calenderSquare)
+                                                        .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue : Clr.calenderSquare)
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                     plantHead
@@ -113,7 +113,7 @@ struct Garden: View {
                                                 Rectangle()
                                                     .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                     .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
-                                                    .border(.white, width: 4)
+                                                    .border(.white, width: 1)
                                                     .overlay(
                                                         Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
                                                             .font(Font.mada(.semiBold, size: 10))

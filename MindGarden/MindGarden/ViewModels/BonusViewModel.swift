@@ -383,7 +383,7 @@ class BonusViewModel: ObservableObject {
                 updateLongest()
             } else if interval >= 2 { //broke streak
                 updatedStreak = true
-                if userModel.streakFreeze >= interval {
+                if userModel.streakFreeze >= interval - 1 {
                     freezeStreak(interval: interval)
                     updateLongest()
                 } else {

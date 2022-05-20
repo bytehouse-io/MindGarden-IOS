@@ -65,6 +65,7 @@ struct HomeViewHeader: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                             HStack {
+                                if userModel.streakFreeze > 0 {
                                     HStack {
                                         Img.iceFlower
                                             .resizable()
@@ -76,6 +77,8 @@ struct HomeViewHeader: View {
                                             .foregroundColor(Clr.darkgreen)
                                             .frame(height: 30, alignment: .bottom)
                                     }.offset(x: -7)
+                                }
+                             
                                     HStack {
                                         Img.realTree
                                             .resizable()
