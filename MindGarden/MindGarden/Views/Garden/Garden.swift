@@ -136,8 +136,7 @@ struct Garden: View {
                                                 }
                                             }
                                         }
-                                    }
-                                    .onTapGesture {
+                                    }.onTapGesture {
                                         Analytics.shared.log(event: .garden_tapped_single_day)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         day = col + (row * 7) + 1  - gardenModel.placeHolders
@@ -419,6 +418,7 @@ struct Garden: View {
                     .navigationViewStyle(StackNavigationViewStyle())
             }
             .onAppear {
+         
                 DispatchQueue.main.async {
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {

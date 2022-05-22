@@ -47,6 +47,9 @@ struct Plant: Hashable {
         Plant(title: "Ice Flower", price: 0, selected: false, description: "", packetImage: Img.aloePacket, one: Img.aloe1, two: Img.aloe2, coverImage: Img.aloe3, head: Img.iceFlower, badge: Img.aloeBadge),
 
     ]
+    static var packetPlants = Plant.plants.filter { plt in
+        plt.title != "Ice Flower"
+    }
     
     static var badgePlants: [Plant] = [
         // rate the app
