@@ -76,6 +76,7 @@ struct BonusModal: View {
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
+                                .cornerRadius(12)
                                 .neoShadow()
                             HStack(spacing: 0) {
                                 VStack {

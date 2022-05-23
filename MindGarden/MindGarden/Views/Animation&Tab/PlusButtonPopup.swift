@@ -36,7 +36,7 @@ struct PlusButtonPopup: View {
                             .plusButtonStyle(scale: scale)
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                if !isOnboarding {
+                                if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
                                     DispatchQueue.main.async {
                                         withAnimation(.spring()) {
                                             DispatchQueue.main.async {

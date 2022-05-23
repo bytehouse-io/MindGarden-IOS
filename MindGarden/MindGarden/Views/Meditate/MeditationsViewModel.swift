@@ -100,14 +100,14 @@ class MeditationViewModel: ObservableObject {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
                 } else {
                     if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
-                        featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 103 })
+                        featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 105 })
                     } else {
                         setFeaturedReason()
                     }
                 }
             } else {
                 if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
-                    featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 103 })
+                    featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 105 })
                 } else {
                     if UserDefaults.standard.integer(forKey: "launchNumber") <= 18 && !UserDefaults.standard.bool(forKey: "intermediateCourse") {
                         featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
@@ -290,7 +290,7 @@ class MeditationViewModel: ObservableObject {
         let duration = selectedMeditation?.duration ?? 0
         var reward = 0
         
-        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
+        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" && !UserDefaults.standard.bool(forKey: "review") {
             shouldStreakUpdate = false
         }
         

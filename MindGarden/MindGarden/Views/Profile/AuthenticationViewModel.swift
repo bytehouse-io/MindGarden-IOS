@@ -180,11 +180,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
             if fromOnboarding {
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                    if UserDefaults.standard.integer(forKey: "numMeds") == 1  {
-                        if updatedStreak {
-                            showStreak = true
-                        }
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review") {
+                    if updatedStreak {
+                        showStreak = true
                     } else {
                         viewRouter.currentPage = .garden
                     }

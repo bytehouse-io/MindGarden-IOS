@@ -256,11 +256,12 @@ struct Finished: View {
                                             .font(.system(size: 22, weight: .bold))
                                     }
                                 )
+                            // TODO -> change not now in saveProgress modal to trigger showStreak
                                 .onTapGesture {
                                     Analytics.shared.log(event: .finished_tapped_finished)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
+                                        if UserDefaults.standard.integer(forKey: "numMeds") == 1 || UserDefaults.standard.bool(forKey: "review") {
                                             if Auth.auth().currentUser == nil {
                                                 saveProgress.toggle()
                                             } else {
@@ -353,7 +354,7 @@ struct Finished: View {
                                     withAnimation {
                                         saveProgress.toggle()
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" ||  UserDefaults.standard.bool(forKey: "review") {
                                             if updatedStreak {
                                                 showStreak = true
                                                 updatedStreak = false
@@ -423,28 +424,13 @@ struct Finished: View {
                     if model.shouldStreakUpdate {
                         bonusModel.updateStreak()
                     }
-                    //unlock cherry blossom
-                    var dateComponents = DateComponents()
-                    dateComponents.month = 03
-                    dateComponents.day = 05
-                    dateComponents.year = 2022
-                    let userCalendar = Calendar(identifier: .gregorian)
-                    let mar5 = userCalendar.date(from: dateComponents)
-                    var dateComponents2 = DateComponents()
-                    dateComponents2.month = 5
-                    dateComponents2.day = 20
-                    dateComponents2.year = 2022
-                    let Apr10 = userCalendar.date(from: dateComponents2)
-
-                    if Date.isBetween(mar5!, and: Apr10!) && !UserDefaults.standard.bool(forKey: "cherry") {
+                    if !userModel.ownedPlants.contains(where: { plt in  plt.title == "Cherry Blossoms"}) && UserDefaults.standard.bool(forKey: "unlockedCherry") {
                         userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
                             p.title == "Cherry Blossoms"
                         })
-                        
                         userModel.buyPlant(unlockedStrawberry: true)
-                        UserDefaults.standard.setValue(true, forKey: "cherry")
+
                     }
-                    
                 }
                 //num times med
                 var num = UserDefaults.standard.integer(forKey: "numMeds")

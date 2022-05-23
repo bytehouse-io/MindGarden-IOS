@@ -80,7 +80,6 @@ struct Garden: View {
                                                         .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
-                                                    //if onboarding
                                                         .opacity(isOnboarding ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
@@ -100,6 +99,8 @@ struct Garden: View {
                                                         .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue : Clr.calenderSquare)
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
+                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
                                                         .padding(3)
                                                         .overlay(
@@ -136,13 +137,14 @@ struct Garden: View {
                                                 }
                                             }
                                         }
-                                    }.onTapGesture {
+                                    }
+                                    .onTapGesture {
                                         Analytics.shared.log(event: .garden_tapped_single_day)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         day = col + (row * 7) + 1  - gardenModel.placeHolders
                                         if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0?.title != "Ice Flower" {
                                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
-                                                if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil && gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil  {
+                                                if (gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil || gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil)  {
                                                     Analytics.shared.log(event: .onboarding_finished_single)
                                                     showSingleModal = true
                                                     isOnboarding = false
@@ -386,26 +388,28 @@ struct Garden: View {
                             }
                         }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -150 : -75)
                     }
-                    switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
-                    case "meditate":
-                        Img.calendarRacoon
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 125)
-                            .position(x: gp.size.width/2, y: gp.size.height/1.5)
-                    case "calendar":
-                        Img.statRacoon
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 125)
-                            .position(x: gp.size.width/2, y: gp.size.height/3.5)
-                    case "stats":
-                        Img.calendarRacoon
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 125)
-                            .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
-                    default: EmptyView()
+                    if UserDefaults.standard.integer(forKey: "numMeds") > 0 {
+                        switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
+                        case "meditate":
+                            Img.calendarRacoon
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 125)
+                                .position(x: gp.size.width/2, y: gp.size.height/1.5)
+                        case "calendar":
+                            Img.statRacoon
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 125)
+                                .position(x: gp.size.width/2, y: gp.size.height/3.5)
+                        case "stats":
+                            Img.calendarRacoon
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 125)
+                                .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
+                        default: EmptyView()
+                        }
                     }
                     // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
@@ -416,13 +420,16 @@ struct Garden: View {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
-            }
-            .onAppear {
-         
+            }.onAppear {
                 DispatchQueue.main.async {
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                        isOnboarding = true
+                        if UserDefaults.standard.integer(forKey: "numMeds") > 0 {
+                            isOnboarding = true
+                        }
+                        if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+                            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
+                        }
                     }
                 }
             }

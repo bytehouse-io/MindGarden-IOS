@@ -173,7 +173,7 @@ struct ReviewScene: View {
                             }
                         } label: {
                             HStack {
-                                Text("MindGarden tour  👉🏻")
+                                Text("MindGarden Tutorial  👉🏻")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.mada(.semiBold, size: 18))
                                     .lineLimit(1)
@@ -183,47 +183,50 @@ struct ReviewScene: View {
                             .cornerRadius(25)
                         }.padding()
                         .buttonStyle(NeumorphicPress())
-//                        Button {
-//                            onboardingTime = true
-//                            if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
-//                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
-//                            }
-//                            Analytics.shared.log(event: .review_tapped_explore)
-//                            let impact = UIImpactFeedbackGenerator(style: .light)
-//                            impact.impactOccurred()
-//                            withAnimation(.easeOut(duration: 0.3)) {
-//                                DispatchQueue.main.async {
-//                                    viewRouter.progressValue += 0.15
-//                                    Paywall.present { info in
-//                                        Analytics.shared.log(event: .screen_load_superwall)
-//                                    } onDismiss: {  didPurchase, productId, paywallInfo in
-//                                        switch productId {
-//                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                        case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
-//                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
-//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
-//                                                NotificationHelper.freeTrial()
-//                                            }
-//                                        default: break
-//                                        }
-//                                        viewRouter.currentPage = .meditate
-//                                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-//                                    } onFail: { error in
-//                                        fromPage = "onboarding2"
-//                                        viewRouter.currentPage = .pricing
-//                                        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-//                                    }
-//                                }
-//                            }
-//                        } label: {
-//                                Text("Not Now")
-//                                    .underline()
-//                                    .font(Font.mada(.regular, size: 18))
-//                                    .foregroundColor(.gray)
-//                                    .padding(.top, 35)
-//                        }
+                        Button {
+                            onboardingTime = true
+                            if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
+                            }
+                            
+                            Analytics.shared.log(event: .review_tapped_explore)
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                DispatchQueue.main.async {
+                                    viewRouter.progressValue += 0.15
+                                    Paywall.present { info in
+                                        Analytics.shared.log(event: .screen_load_superwall)
+                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+                                        switch productId {
+                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                                NotificationHelper.freeTrial()
+                                            }
+                                        default: break
+                                        }
+                                        viewRouter.currentPage = .meditate
+                                        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+                                        UserDefaults.standard.setValue(true, forKey: "review")
+                                    } onFail: { error in
+                                        fromPage = "onboarding2"
+                                        viewRouter.currentPage = .pricing
+                                        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+                                        UserDefaults.standard.setValue(true, forKey: "review")
+                                    }
+                                }
+                            }
+                        } label: {
+                                Text("Skip (Not Recommended)")
+                                    .underline()
+                                    .font(Font.mada(.regular, size: 18))
+                                    .foregroundColor(.gray)
+                                    .padding(.top, 35)
+                        }
                     }
                 }
             }

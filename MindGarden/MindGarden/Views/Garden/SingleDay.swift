@@ -23,7 +23,6 @@ struct SingleDay: View {
     @State var minutesMeditated: Int = 0
     @State var plant: Plant?
     @State var sessionCounter: Int = 0
-    @State var isOnboarding = false
     @State var showOnboardingModal = false
     
     init(showSingleModal: Binding<Bool>, day: Binding<Int>, month: Int, year: Int) {
@@ -248,8 +247,10 @@ struct SingleDay: View {
         }.onAppear {
             UserDefaults.standard.setValue(true, forKey: "singleTile")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
-                isOnboarding = true
-                showOnboardingModal = true
+                if !UserDefaults.standard.bool(forKey: "day1Intro") {
+                    showOnboardingModal = true
+                }
+
                 if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                 }

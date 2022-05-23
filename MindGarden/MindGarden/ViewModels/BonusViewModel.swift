@@ -409,7 +409,7 @@ class BonusViewModel: ObservableObject {
                 }
             } else {
                 if streakNumber == 0 {
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review") {
                         updatedStreak = true
                         self.streakNumber = 1
                         updateLongest()
@@ -421,7 +421,7 @@ class BonusViewModel: ObservableObject {
             lastStreakDate = formatter.string(from: Date())
         } else {
             lastStreakDate  = formatter.string(from: Date())
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review"){
                 updatedStreak = true
                 self.streakNumber = 1
                 updateLongest()

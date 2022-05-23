@@ -190,7 +190,10 @@ struct HomeViewScroll: View {
                                     Analytics.shared.log(event: .home_tapped_featured)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        onboardingTime = false
+                                        if !UserDefaults.standard.bool(forKey: "tappedFeature") {
+                                            onboardingTime = false
+                                            UserDefaults.standard.setValue(true, forKey: "tappedFeature")
+                                        }
                                         model.selectedMeditation = model.featuredMeditation
                                         if model.featuredMeditation?.type == .course {
                                             viewRouter.currentPage = .middle

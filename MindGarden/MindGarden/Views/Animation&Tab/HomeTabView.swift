@@ -22,7 +22,7 @@ struct HomeTabView: View {
                 .ignoresSafeArea()
                 .opacity(showPopup ? 0.5 : 0)
                 .onTapGesture {
-                    if !isOnboarding {
+                    if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
                         DispatchQueue.main.async {
                             withAnimation(.spring()) {
                                 showPopup.toggle()
@@ -43,7 +43,7 @@ struct HomeTabView: View {
         Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation(.linear(duration: 0.4)) {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single"  {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
                 switch selectedTab {
                 case .garden:
                     viewRouter.currentPage = .garden

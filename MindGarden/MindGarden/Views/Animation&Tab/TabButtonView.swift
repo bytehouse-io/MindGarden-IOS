@@ -16,7 +16,7 @@ struct TabButtonView: View {
         HStack {
             ForEach(tabList) { item in
                 Button {
-                    if !isOnboarding {
+                    if !isOnboarding || UserDefaults.standard.bool(forKey: "review") {
                         DispatchQueue.main.async {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 selectedTab = item.tabName

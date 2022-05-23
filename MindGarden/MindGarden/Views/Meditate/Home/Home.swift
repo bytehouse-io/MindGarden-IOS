@@ -129,7 +129,13 @@ struct Home: View {
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
         .onAppear {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
+            if !UserDefaults.standard.bool(forKey: "tappedFeature") && !UserDefaults.standard.bool(forKey: "day1Intro") {
+                onboardingTime = true
+            } else {
+                onboardingTime = false
+            }
+
+            if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
                 storylyViewProgrammatic.resume()
                 UserDefaults.standard.setValue(true, forKey: "firstStory")

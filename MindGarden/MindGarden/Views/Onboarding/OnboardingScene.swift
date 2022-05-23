@@ -22,8 +22,8 @@ struct OnboardingScene: View {
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
-    let titles = ["Simple gamified meditation that actually sticks", "Visualize Your Progress", "Collect all flowers, fruits and trees!"]
-    let subtitles = ["Stress less. Get 1% happier everyday by making meditation a lifestyle.", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
+    let titles = ["Meditation You'll Actually Stick With.", "Visualize Your Progress", "Collect all flowers, fruits and trees!"]
+    let subtitles = ["Get 1% happier, calmer & more focused everyday by hitting the mental gym 💪", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
     let images = [Img.coloredPots, Img.gardenCalender, Img.packets]
     var body: some View {
         NavigationView {
@@ -97,14 +97,14 @@ struct OnboardingScene: View {
                                             Spacer()
                                             VStack(alignment: .leading) {
                                                 Text(titles[index])
-                                                    .font(Font.mada(.bold, size: 42))
+                                                    .font(Font.mada(.bold, size: 38))
                                                     .minimumScaleFactor(0.05)
                                                     .lineSpacing(0)
                                                     .padding(.bottom, 5)
                                                     .foregroundColor(Clr.darkgreen)
                                                 Text(subtitles[index])
                                                     .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.medium, size: 18))
+                                                    .font(Font.mada(.medium, size: 20))
                                                     .foregroundColor(Clr.black1)
                                                     .lineSpacing(10)                                             }
                                             .multilineTextAlignment(.leading)

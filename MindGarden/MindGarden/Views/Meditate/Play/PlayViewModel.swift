@@ -68,7 +68,9 @@ extension MeditationViewModel {
 
                         stop()
                         switch selectedMeditation?.id {
-                        case 7:  OneSignal.sendTag("day1", value: "true")
+                        case 7:
+                            UserDefaults.standard.setValue(true, forKey: "day1Intro")
+                            OneSignal.sendTag("day1", value: "true")
                         case 8:  OneSignal.sendTag("day2", value: "true")
                         case 11:
                             UserDefaults.standard.setValue(true, forKey: "day5")
@@ -79,6 +81,7 @@ extension MeditationViewModel {
                         case 13:
                             UserDefaults.standard.setValue(true, forKey: "day7")
                             OneSignal.sendTag("day7", value: "true")
+                            UserDefaults.standard.setValue(true, forKey: "unlockedCherry")
                         case 101:
                             UserDefaults.standard.setValue(true, forKey: "10days")
                         default: break
