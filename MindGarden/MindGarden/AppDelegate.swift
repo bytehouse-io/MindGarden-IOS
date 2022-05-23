@@ -64,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        Paywall.delegate = PaywallManager.shared // or any object that conforms to `PaywallDelegate
         
         application.beginReceivingRemoteControlEvents()
+        UNUserNotificationCenter.current().delegate = self
         
         return true
     }
@@ -174,4 +175,14 @@ extension AppDelegate: AppsFlyerLibDelegate{
     func onAppOpenAttributionFailure(_ error: Error) {
         print(error)
     }
+}
+
+
+extension AppDelegate: UNUserNotificationCenterDelegate{
+  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+      if response.notification.request.identifier == "oneDay" {
+          NotificationCenter.default.post(name: Notification.Name("oneDay"), object: nil)
+      }
+    completionHandler()
+  }
 }

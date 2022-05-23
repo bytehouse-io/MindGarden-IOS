@@ -77,10 +77,10 @@ struct NotificationHelper {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         // Create the request
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString,
+        let id = "oneDay"
+        let request = UNNotificationRequest(identifier: id,
                     content: content, trigger: trigger)
-        UserDefaults.standard.setValue(uuidString, forKey: "oneDayNotif")
+        UserDefaults.standard.setValue(id, forKey: "oneDayNotif")
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in

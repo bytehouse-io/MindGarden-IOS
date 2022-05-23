@@ -128,6 +128,10 @@ struct Home: View {
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("oneDay")))
+        { _ in
+            viewRouter.currentPage = .garden
+        }
         .onAppear {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
