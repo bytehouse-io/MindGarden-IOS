@@ -250,6 +250,9 @@ struct SingleDay: View {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 isOnboarding = true
                 showOnboardingModal = true
+                if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
+                }
                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
             }
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [String] {

@@ -13,24 +13,30 @@ struct NotificationHelper {
     static var breathing = ["Exhale & let go.", "Just breathing can be such a luxury at times.", "You’re alive and breathing. That’s a fine reason to celebrate. – Johnny Lung"]
     static var smiling = ["Life is short. Smile while you have teeth", "“Let us always meet each other with smile, for the smile is the beginning of love.” — Mother Teresa", "¨The source of a true smile is an awakened mind.¨- Thich Nhat Hanh"]
     static var loving = ["Everyone is fighting their own battles. Do your part & show some love", "To love is to recognize yourself in another. - Eckhart Tolle", "There is only one happiness in this life, to love and be loved. - George Sand"]
-    static var present = ["Do not ruin today by mourning tomorrow. Live right now.",  "If you want to conquer the anxiety of life, live in the moment, live in the breath. - AMit Ray", "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is. - Alan Watts."]
+    static var present = ["Do not ruin today by mourning tomorrow. Live right now.",  "If you want to conquer the anxiety of life, live in the moment, live in the breath. - Amit Ray", "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is. - Alan Watts."]
     
     static func addOneDay() {
         let content = UNMutableNotificationContent()
         if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
-            content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
-            switch UserDefaults.standard.string(forKey: "reason") {
-            case "Sleep better":
-                content.body = "Sleeping better starts tonight"
-            case "Get more focused":
-                content.body = "Let's train and increase focus"
-            case "Managing Stress & Anxiety":
-                content.body = "Let's train and prevent anxiety"
-            case "Just trying it out":
-                content.body = "Tend to your garden by meditating."
-            default:
-                content.body = "Tend to your garden by meditating."
+            if UserDefaults.standard.integer(forKey: "longestStreak") > 1 {
+                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
+                switch UserDefaults.standard.string(forKey: "reason") {
+                case "Sleep better":
+                    content.body = "Sleeping better starts tonight"
+                case "Get more focused":
+                    content.body = "Let's train and increase focus"
+                case "Managing Stress & Anxiety":
+                    content.body = "Let's train and prevent anxiety"
+                case "Just trying it out":
+                    content.body = "Tend to your garden by meditating."
+                default:
+                    content.body = "Tend to your garden by meditating."
+                }
+            } else {
+                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? ""), start your meditation journey today"
+                content.body = "😔 We get it, meditation is hard but remember, it's the mental gym for your brain 💪"
             }
+ 
         } else {
             content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? "") start your first session"
             content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""

@@ -142,27 +142,7 @@ struct NotificationScene: View {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
-                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
-                                            if accepted {
-                                                Analytics.shared.log(event: .onboarding_notification_on)
-                                                NotificationHelper.addOneDay()
-                                                NotificationHelper.addThreeDay()
-//                                                UserDefaults.standard.setValue(true, forKey: "mindful")
-//                                                NotificationHelper.createMindfulNotifs()
-                                                promptNotification()
-                                                if fromSettings && UserDefaults.standard.bool(forKey: "isPro"){
-                                                    NotificationHelper.freeTrial()
-                                                }
-                                            } else {
-                                                Analytics.shared.log(event: .onboarding_notification_off)
-                                                viewRouter.currentPage = .review
-                                            }
-                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
-                                        })
-                                    } else {
                                         promptNotification()
-                                    }
                                 }
                             } label: {
                                 Capsule()

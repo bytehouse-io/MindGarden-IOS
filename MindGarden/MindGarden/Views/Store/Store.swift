@@ -122,7 +122,7 @@ struct Store: View {
                                     }.buttonStyle(NeumorphicPress())
                                 }
                             } else {
-                                ForEach(isShop ? Plant.plants.prefix(Plant.plants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
+                                ForEach(isShop ? Plant.packetPlants.prefix(Plant.packetPlants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
                                 { plant in
                                     if userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree" {
                                         PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
@@ -175,7 +175,7 @@ struct Store: View {
                                     }.buttonStyle(NeumorphicPress())
                                 }
                             } else {
-                                ForEach(isShop ? Plant.plants.suffix(Plant.plants.count/2 + (Plant.plants.count % 2 == 0 ? 0 : 1))
+                                ForEach(isShop ? Plant.packetPlants.suffix(Plant.packetPlants.count/2 + (Plant.packetPlants.count % 2 == 0 ? 0 : 1))
                                         : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
                                         if (userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree") {
                                             PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)

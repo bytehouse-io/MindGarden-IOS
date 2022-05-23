@@ -36,9 +36,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-
+//        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         if launchNum == 0 {
+            OneSignal.promptForPushNotifications(userResponse: { accepted in
+                if accepted {
+                    Analytics.shared.log(event: .onboarding_notification_on)
+                    NotificationHelper.addOneDay()
+                    NotificationHelper.addThreeDay()
+                } else {
+                    Analytics.shared.log(event: .onboarding_notification_off)
+                }
+            })
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"] , forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")

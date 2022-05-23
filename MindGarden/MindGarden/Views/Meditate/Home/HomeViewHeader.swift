@@ -65,6 +65,7 @@ struct HomeViewHeader: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                             HStack {
+                                if userModel.streakFreeze > 0 {
                                     HStack {
                                         Img.iceFlower
                                             .resizable()
@@ -76,11 +77,13 @@ struct HomeViewHeader: View {
                                             .foregroundColor(Clr.darkgreen)
                                             .frame(height: 30, alignment: .bottom)
                                     }.offset(x: -7)
+                                }
+                             
                                     HStack {
-                                        Img.realTree
+                                        Img.leaf
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(height: 30)
+                                            .frame(height: 35)
                                             .shadow(radius: 4)
                                         Text("\(userModel.plantedTrees.count)")
                                             .font(Font.mada(.semiBold, size: 22))
@@ -97,12 +100,13 @@ struct HomeViewHeader: View {
                                                 showPurchase = true
                                             }
                                 }
-                                Img.streak
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 25)
-                                    .shadow(radius: 4)
+                         
                                 HStack {
+                                    Img.streak
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 25)
+                                        .shadow(radius: 4)
 //                                    Text("Streak: ")
 //                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
 //                                        .font(Font.mada(.medium, size: 21))
@@ -110,8 +114,9 @@ struct HomeViewHeader: View {
                                         .font(Font.mada(.semiBold, size: 22))
                                         .foregroundColor(Clr.darkgreen)
                                 }.frame(height: 30, alignment: .bottom)
-                                if UserDefaults.standard.bool(forKey: "day4") {
-                                    HStack {
+                                    .offset(x: -5)
+                                if !UserDefaults.standard.bool(forKey: "day4") {
+                                     HStack {
                                         Img.coin
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -120,7 +125,7 @@ struct HomeViewHeader: View {
                                         Text("\(userModel.coins)")
                                             .font(Font.mada(.semiBold, size: 20))
                                             .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                    }
+                                     }.frame(height: 30, alignment: .bottom)
                                 } else {
                                     PlusCoins(coins: $userModel.coins)
                                         .onTapGesture {

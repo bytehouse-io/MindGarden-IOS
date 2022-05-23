@@ -129,11 +129,7 @@ struct Home: View {
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
         .onAppear {
-            print("gotttem", UserDefaults.standard.string(forKey: K.defaults.onboarding))
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
-                if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
-                }
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
                 storylyViewProgrammatic.resume()
                 UserDefaults.standard.setValue(true, forKey: "firstStory")

@@ -33,56 +33,56 @@ struct OnboardingScene: View {
                 let screenWidth = UIScreen.screenWidth
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    ZStack {
-                        Img.sunflower3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .rotationEffect(Angle(degrees: 45))
-                            .position(x: -10, y: -10)
-                        Img.strawberry3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .rotationEffect(Angle(degrees: 90))
-                            .position(x: screenWidth/2 - 10, y: -65)
-                        Img.lavender3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .rotationEffect(Angle(degrees: 20))
-                            .position(x: screenWidth, y: -50)
-                        Img.cherryBlossoms3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 80)
-                            .rotationEffect(Angle(degrees: -20))
-                            .position(x: screenWidth + 15, y: height/5)
-                        Img.blueberry3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .rotationEffect(Angle(degrees: -20))
-                            .position(x: 0, y: height/3)
-                        Img.rose3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .rotationEffect(Angle(degrees: -20))
-                            .position(x: screenWidth + 20, y: height/2)
-                        Img.bonsai3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 120)
-                            .rotationEffect(Angle(degrees: -20))
-                            .position(x: 15, y: height/1.3)
-                        Img.lily3
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 90)
-                            .rotationEffect(Angle(degrees: 20))
-                            .position(x: screenWidth - 20, y: height/1.3)
-                    }
+//                    ZStack {
+//                        Img.sunflower3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 100)
+//                            .rotationEffect(Angle(degrees: 45))
+//                            .position(x: -10, y: -10)
+//                        Img.strawberry3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 100)
+//                            .rotationEffect(Angle(degrees: 90))
+//                            .position(x: screenWidth/2 - 10, y: -65)
+//                        Img.lavender3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 100)
+//                            .rotationEffect(Angle(degrees: 20))
+//                            .position(x: screenWidth, y: -50)
+//                        Img.cherryBlossoms3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 80)
+//                            .rotationEffect(Angle(degrees: -20))
+//                            .position(x: screenWidth + 15, y: height/5)
+//                        Img.blueberry3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 100)
+//                            .rotationEffect(Angle(degrees: -20))
+//                            .position(x: 0, y: height/3)
+//                        Img.rose3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 100)
+//                            .rotationEffect(Angle(degrees: -20))
+//                            .position(x: screenWidth + 20, y: height/2)
+//                        Img.bonsai3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 120)
+//                            .rotationEffect(Angle(degrees: -20))
+//                            .position(x: 15, y: height/1.3)
+//                        Img.lily3
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 90)
+//                            .rotationEffect(Angle(degrees: 20))
+//                            .position(x: screenWidth - 20, y: height/1.3)
+//                    }
                     VStack(alignment: .center) {
                         if #available(iOS 14.0, *) {
                             TabView(selection: $index) {

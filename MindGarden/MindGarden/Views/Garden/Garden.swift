@@ -26,7 +26,7 @@ struct Garden: View {
         return "\(bonusModel.streakNumber)"
     }
     var longestStreak : Int {
-        (UserDefaults.standard.value(forKey: "longestStreak") as? Int) ?? 1
+        (UserDefaults.standard.integer(forKey: "longestStreak")) ?? 1
     }
 
     var body: some View {
@@ -87,7 +87,7 @@ struct Garden: View {
                                                         .padding(3)
                                                         .overlay(
                                                             Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                .font(Font.mada(.semiBold, size: 10))
+                                                                .font(Font.mada(.semiBold, size: 8))
                                                                 .foregroundColor(Clr.black2)
                                                                 .padding(.leading)
                                                         )
@@ -97,7 +97,7 @@ struct Garden: View {
                                                     let plant = gardenModel.monthTiles[row]?[currentDate]?.0
                                                     let plantHead = plant?.head
                                                     Rectangle()
-                                                        .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue :Clr.calenderSquare)
+                                                        .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue : Clr.calenderSquare)
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                     plantHead
@@ -113,7 +113,7 @@ struct Garden: View {
                                                 Rectangle()
                                                     .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                     .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
-                                                    .border(.white, width: 4)
+                                                    .border(.white, width: 1)
                                                     .overlay(
                                                         Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
                                                             .font(Font.mada(.semiBold, size: 10))
@@ -136,8 +136,7 @@ struct Garden: View {
                                                 }
                                             }
                                         }
-                                    }
-                                    .onTapGesture {
+                                    }.onTapGesture {
                                         Analytics.shared.log(event: .garden_tapped_single_day)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         day = col + (row * 7) + 1  - gardenModel.placeHolders
@@ -253,7 +252,7 @@ struct Garden: View {
                                                             Text("Longest Streak")
                                                                 .foregroundColor(Clr.black2)
                                                                 .font(Font.mada(.regular, size: 12))
-                                                            Text("\(longestStreak == 0 ? 1 : longestStreak)")
+                                                            Text("\(UserDefaults.standard.integer(forKey: "longestStreak"))")
                                                                 .foregroundColor(Clr.black2)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
@@ -385,7 +384,7 @@ struct Garden: View {
                                     .rotationEffect(.radians(.pi))
                     
                             }
-                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -150 : -125)
+                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -150 : -75)
                     }
                     switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
                     case "meditate":
@@ -393,7 +392,7 @@ struct Garden: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 125)
-                            .position(x: gp.size.width/2, y: gp.size.height/1.35)
+                            .position(x: gp.size.width/2, y: gp.size.height/1.5)
                     case "calendar":
                         Img.statRacoon
                             .resizable()
@@ -408,6 +407,7 @@ struct Garden: View {
                             .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
                     default: EmptyView()
                     }
+                    // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
             }.fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
@@ -418,6 +418,7 @@ struct Garden: View {
                     .navigationViewStyle(StackNavigationViewStyle())
             }
             .onAppear {
+         
                 DispatchQueue.main.async {
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {

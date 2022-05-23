@@ -70,8 +70,6 @@ extension MeditationViewModel {
                         switch selectedMeditation?.id {
                         case 7:  OneSignal.sendTag("day1", value: "true")
                         case 8:  OneSignal.sendTag("day2", value: "true")
-                        case 9:  OneSignal.sendTag("day3", value: "true")
-                        case 10: OneSignal.sendTag("day4", value: "true")
                         case 11:
                             UserDefaults.standard.setValue(true, forKey: "day5")
                             OneSignal.sendTag("day5", value: "true")

@@ -185,6 +185,7 @@ struct BonusModal: View {
                     } else {
                         Spacer()
                     }
+                    
                     Img.coin
                         .resizable()
                         .renderingMode(.original)
