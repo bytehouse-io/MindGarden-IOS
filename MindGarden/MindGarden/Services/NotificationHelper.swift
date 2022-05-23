@@ -77,10 +77,10 @@ struct NotificationHelper {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         // Create the request
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString,
+        let id = "oneDay"
+        let request = UNNotificationRequest(identifier: id,
                     content: content, trigger: trigger)
-        UserDefaults.standard.setValue(uuidString, forKey: "oneDayNotif")
+        UserDefaults.standard.setValue(id, forKey: "oneDayNotif")
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in
@@ -167,6 +167,12 @@ struct NotificationHelper {
         content.title = "Your Free trial ends tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
+        
+        let imageName = "referral2"
+        if let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png") {
+            let attachment = try! UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none)
+            content.attachments = [attachment]
+        }
 
         let modifiedDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
