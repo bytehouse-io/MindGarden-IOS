@@ -266,6 +266,7 @@ struct ReviewScene: View {
                 }
             }
     }
+    
 }
 
 struct ReviewScene_Previews: PreviewProvider {

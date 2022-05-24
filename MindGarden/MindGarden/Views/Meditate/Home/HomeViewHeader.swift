@@ -16,7 +16,14 @@ struct HomeViewHeader: View {
     @Binding var showIAP : Bool
     @Binding var showPurchase: Bool
     @EnvironmentObject var userModel: UserViewModel
-    
+    @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+    @State var challengeOn = false
+    let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd, yyyy"
+        return formatter
+    }()
     let width = UIScreen.screenWidth
     let height = UIScreen.screenHeight
     
@@ -65,6 +72,24 @@ struct HomeViewHeader: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                             HStack {
+                                if challengeOn {
+                                    Capsule()
+                                        .fill(Color.red.opacity(0.7))
+                                        .frame(width: 100, height: 25)
+                                        .overlay(
+                                            Text("\(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge")
+                                                .font(Font.mada(.bold, size: 12))
+                                                .foregroundColor(.white)
+                                                .frame(height: 25, alignment: .center)
+                                        )
+                                        .shadow(radius: 10)
+                                        .onTapGesture {
+                                            withAnimation {
+                                                medModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+                                                viewRouter.currentPage = .middle
+                                            }
+                                        }
+                                }
                                 if userModel.streakFreeze > 0 {
                                     HStack {
                                         Img.iceFlower
@@ -140,10 +165,19 @@ struct HomeViewHeader: View {
                                 .padding(.bottom, 10)
                         }
                     }.offset(x: -width * 0.25, y: -10)
-                }.frame(width: width * (userModel.streakFreeze > 0 ? 0.85 : 0.8))
+                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.85 : 0.8))
             }
         }.frame(width: width)
             .offset(y: -height * 0.1)
+            .onAppear {
+                if let challengeDate = UserDefaults.standard.string(forKey: "challengeDate") {
+                    if challengeDate != "" {
+                        if (Date() - (formatter.date(from: challengeDate) ?? Date()) < 30000) && !UserDefaults.standard.bool(forKey: "day7"){
+                            challengeOn = true
+                        }
+                    }
+                }
+            }
     }
 }
 

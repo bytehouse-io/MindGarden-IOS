@@ -24,6 +24,7 @@ class MeditationViewModel: ObservableObject {
     @Published var isFavorited: Bool = false
     @Published var playImage: Image = Img.seed
     @Published var recommendedMeds: [Meditation] = []
+    @Published var challengeDate = ""
     var viewRouter: ViewRouter?
     var selectedPlant: Plant?
     //user needs to meditate at least 5 mins for plant

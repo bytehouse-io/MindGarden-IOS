@@ -196,6 +196,9 @@ struct CategoriesScene: View {
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
                 fromPage = "lockedMeditation"
                 Analytics.shared.log(event: .categories_tapped_locked_meditation)
+                if isSearch {
+                    presentationMode.wrappedValue.dismiss()
+                }
                 viewRouter.currentPage = .pricing
             } else {
                 Analytics.shared.log(event: .categories_tapped_meditation)

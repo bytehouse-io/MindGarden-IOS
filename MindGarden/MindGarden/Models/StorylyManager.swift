@@ -10,7 +10,7 @@ import Amplitude
 
 class StorylyManager: StorylyDelegate {
     static var shared = StorylyManager()
-    
+
        func storylyLoaded(_ storylyView: Storyly.StorylyView,
                           storyGroupList: [Storyly.StoryGroup],
                           dataSource: StorylyDataSource) {
@@ -44,7 +44,11 @@ class StorylyManager: StorylyDelegate {
 
        func storylyStoryPresented(_ storylyView: Storyly.StorylyView) {}
 
-       func storylyStoryDismissed(_ storylyView: Storyly.StorylyView) {}
+       func storylyStoryDismissed(_ storylyView: Storyly.StorylyView) {
+           if !UserDefaults.standard.bool(forKey: "showedChallenge") {
+               NotificationCenter.default.post(name: Notification.Name("storyOnboarding"), object: nil)
+           }
+       }
 
        func storylyUserInteracted(_ storylyView: Storyly.StorylyView,
                                   storyGroup: Storyly.StoryGroup,

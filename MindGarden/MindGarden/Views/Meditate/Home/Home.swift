@@ -45,6 +45,7 @@ struct Home: View {
     @State var activeSheet: Sheet?
     @State private var showAlert = false
     @State private var alertMsg = ""
+    @State private var showChallenge = false
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -62,7 +63,7 @@ struct Home: View {
                         HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, userModel: userModel)
                             .padding(.top, -20)
                     }
-                    if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase {
+                    if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase || showChallenge {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
@@ -98,6 +99,9 @@ struct Home: View {
                         .offset(y: showIAP ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showIAP)
+                    ChallengeModal(shown: $showChallenge)
+                        .offset(y: showChallenge ? 0 : g.size.height)
+                        .animation(.default, value: showChallenge)
                 }
             }
             .fullScreenCover(isPresented: $userModel.triggerAnimation) {
@@ -144,6 +148,8 @@ struct Home: View {
                 storylyViewProgrammatic.resume()
                 UserDefaults.standard.setValue(true, forKey: "firstStory")
             }
+    
+
             
             userModel.checkIfPro()
             DispatchQueue.main.async {
@@ -195,6 +201,17 @@ struct Home: View {
             withAnimation {
                 mindfulNotifs = true
                 activeSheet = .profile
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("storyOnboarding")))
+        { _ in
+            withAnimation {
+                if (UserDefaults.standard.bool(forKey: "review") || UserDefaults.standard.string(forKey: "onboarding") == "done") && !UserDefaults.standard.bool(forKey: "showedChallenge") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Change `2.0` to the desired number of seconds.
+                       // Code you want to be delayed
+                        showChallenge = true
+                    }
+                }
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("referrals")))

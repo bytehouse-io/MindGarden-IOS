@@ -54,10 +54,10 @@ struct SaveProgressModal: View {
                                 Analytics.shared.log(event: .finished_not_now)
                                 shown = false
                                 UserDefaults.standard.setValue(true, forKey: "saveProgress")
-                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                                    fromPage = "onboarding2"
-                                    viewRouter.currentPage = .pricing
-                                }
+//                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+//                                    fromPage = "onboarding2"
+//                                    viewRouter.currentPage = .pricing
+//                                }
                             }
                         } label: {
                             Capsule()

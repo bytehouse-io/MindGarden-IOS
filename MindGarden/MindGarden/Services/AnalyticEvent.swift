@@ -98,7 +98,9 @@ enum AnalyticEvent {
     case home_tapped_weekly_meditation //
     case home_tapped_locked_meditation //
     case home_tapped_real_tree //
-
+    case challenge_tapped_x //
+    case challenge_tapped_accept //
+    
     // bonus modal
     case home_tapped_bonus //
     case home_tapped_pro
@@ -521,6 +523,8 @@ extension AnalyticEvent {
         case .home_tapped_new_meditation: return "home_tapped_new_meditation"
         case .home_tapped_weekly_meditation: return "home_tapped_weekly_meditation"
         case .home_tapped_real_tree: return "home_tapped_real_tree"
+        case .challenge_tapped_x: return "challenge_tapped_x"
+        case .challenge_tapped_accept: return "challenge_tapped_accept"
         case .IAP_tapped_freeze: return "IAP_tapped_freeze"
         case .IAP_tapped_potion: return "IAP_tapped_potion"
         case .IAP_tapped_chest: return "IAP_tapped_chest"

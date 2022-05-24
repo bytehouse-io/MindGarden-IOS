@@ -167,27 +167,26 @@ struct Authentication: View {
                                 Analytics.shared.log(event: .authentication_tapped_google)
                                 viewModel.signInWithGoogle()
                             }
-                        if tappedSignOut {
-                            Button {
-                                if isSignUp && tappedSignOut {
-                                    Analytics.shared.log(event: .screen_load_signin)
-                                }
-                                self.isSignUp.toggle()
-                                viewModel.isSignUp = self.isSignUp
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            } label: {
-                                Capsule()
-                                    .fill(Clr.darkWhite)
-                                    .overlay(
-                                        Text(isSignUp ? "Already have an account" : "Sign up for an account")
-                                            .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 18))
-                                    )
-                            }.frame(height: 50)
-                                .padding(.horizontal, 40)
-                                .padding(.top, 20)
-                                .buttonStyle(NeumorphicPress())
-                        }
+                        Button {
+                            if isSignUp && tappedSignOut {
+                                Analytics.shared.log(event: .screen_load_signin)
+                            }
+                            self.isSignUp.toggle()
+                            viewModel.isSignUp = self.isSignUp
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        } label: {
+                            Capsule()
+                                .fill(Clr.darkWhite)
+                                .overlay(
+                                    Text(isSignUp ? "Already have an account" : "Sign up for an account")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.mada(.bold, size: 18))
+                                )
+                        }.frame(height: 50)
+                            .padding(.horizontal, 40)
+                            .padding(.top, 20)
+                            .buttonStyle(NeumorphicPress())
+                        
                         Spacer()
                     }
                     .background(Clr.darkWhite)

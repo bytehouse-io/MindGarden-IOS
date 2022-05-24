@@ -15,7 +15,6 @@
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
 		585A4E5E27FC8BB400443F72 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585A4E5D27FC8BB400443F72 /* Buttons.swift */; };
-		58A639A72838D4A0008D879D /* referral2.png in Resources */ = {isa = PBXBuildFile; fileRef = 58A639A62838D4A0008D879D /* referral2.png */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
 		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
 		58A9EE7D27C749C500254AC2 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7727C749C500254AC2 /* common.swift */; };
@@ -44,10 +43,15 @@
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
 		882738D327E2D75E00F8D4D0 /* first_part.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D227E2D75D00F8D4D0 /* first_part.json */; };
 		882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D427E2D76E00F8D4D0 /* second_part_loop.json */; };
+		88588042283C0293007AACC2 /* wavingTurtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 88588041283C0293007AACC2 /* wavingTurtle.png */; };
+		8858804A283C03AD007AACC2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588049283C03AD007AACC2 /* NotificationService.swift */; };
+		8858804E283C03AD007AACC2 /* MindNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88588047283C03AD007AACC2 /* MindNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588052283C0D41007AACC2 /* ChallengeModal.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		8894E73B27FA809F00234466 /* IAPModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894E73A27FA809F00234466 /* IAPModal.swift */; };
+		8897F12B283BEAC100F4E158 /* educatedRacoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8897F12A283BEAC100F4E158 /* educatedRacoon.png */; };
 		88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */ = {isa = PBXBuildFile; productRef = 88A6FABF2814A9B500B88BEF /* Storyly */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
@@ -198,6 +202,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8858804C283C03AD007AACC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FEB6AF8A265D95F500224BFD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88588046283C03AD007AACC2;
+			remoteInfo = MindNotificationService;
+		};
 		FE48B44627791B5B00CA7B63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FEB6AF8A265D95F500224BFD /* Project object */;
@@ -229,6 +240,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed App Extensions */,
+				8858804E283C03AD007AACC2 /* MindNotificationService.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,7 +258,6 @@
 		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		5836FA70281C1DAC001AB151 /* ReminderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		585A4E5D27FC8BB400443F72 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
-		58A639A62838D4A0008D879D /* referral2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = referral2.png; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
 		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
 		58A9EE7727C749C500254AC2 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -275,10 +286,16 @@
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
+		88588041283C0293007AACC2 /* wavingTurtle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wavingTurtle.png; sourceTree = "<group>"; };
+		88588047283C03AD007AACC2 /* MindNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MindNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		88588049283C03AD007AACC2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		8858804B283C03AD007AACC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88588052283C0D41007AACC2 /* ChallengeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModal.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		8894E73A27FA809F00234466 /* IAPModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPModal.swift; sourceTree = "<group>"; };
+		8897F12A283BEAC100F4E158 /* educatedRacoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = educatedRacoon.png; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
@@ -425,6 +442,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		88588044283C03AD007AACC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE39A0A427711644007A3E82 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -569,6 +593,15 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		88588048283C03AD007AACC2 /* MindNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				88588049283C03AD007AACC2 /* NotificationService.swift */,
+				8858804B283C03AD007AACC2 /* Info.plist */,
+			);
+			path = MindNotificationService;
+			sourceTree = "<group>";
+		};
 		8876A60427C03C2A00A9622F /* Learn */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +609,15 @@
 				88A7D91927C0989A001A53DE /* CourseScene.swift */,
 			);
 			path = Learn;
+			sourceTree = "<group>";
+		};
+		8897F12E283BFF0200F4E158 /* NotificationImages */ = {
+			isa = PBXGroup;
+			children = (
+				88588041283C0293007AACC2 /* wavingTurtle.png */,
+				8897F12A283BEAC100F4E158 /* educatedRacoon.png */,
+			);
+			path = NotificationImages;
 			sourceTree = "<group>";
 		};
 		FE11F0B42691071500E1E71A /* Profile */ = {
@@ -647,6 +689,7 @@
 				FE9B408326A66D0E000DF00C /* MiddleSelect.swift */,
 				FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */,
 				88D4C5D427F63D8B00CBB956 /* Stories.swift */,
+				88588052283C0D41007AACC2 /* ChallengeModal.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -695,6 +738,7 @@
 				FEB6AFB6265D95F700224BFD /* MindGardenUITests */,
 				FE39A0A827711644007A3E82 /* OneSignalNotificationServiceExtension */,
 				FE48B43D27791B5500CA7B63 /* MindGardenWidget */,
+				88588048283C03AD007AACC2 /* MindNotificationService */,
 				FEB6AF93265D95F500224BFD /* Products */,
 				3A7661D503EA9E2EFD32F645 /* Pods */,
 				31146EA5291805B3B30F837A /* Frameworks */,
@@ -709,6 +753,7 @@
 				FEB6AFB3265D95F700224BFD /* MindGardenUITests.xctest */,
 				FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */,
 				FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */,
+				88588047283C03AD007AACC2 /* MindNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -798,7 +843,7 @@
 		FEB85FC3266C1B75008CDAA4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				58A639A62838D4A0008D879D /* referral2.png */,
+				8897F12E283BFF0200F4E158 /* NotificationImages */,
 				FEBF1AB327138608000BF1BD /* Meditations */,
 				FEBF1AB2271385A1000BF1BD /* BackgroundSounds */,
 				FE4D80E926ED4A3C002FE291 /* Lottie */,
@@ -988,6 +1033,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		88588046283C03AD007AACC2 /* MindNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8858804F283C03AD007AACC2 /* Build configuration list for PBXNativeTarget "MindNotificationService" */;
+			buildPhases = (
+				88588043283C03AD007AACC2 /* Sources */,
+				88588044283C03AD007AACC2 /* Frameworks */,
+				88588045283C03AD007AACC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MindNotificationService;
+			productName = MindNotificationService;
+			productReference = 88588047283C03AD007AACC2 /* MindNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FE39A0A627711644007A3E82 /* OneSignalNotificationServiceExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE39A0B227711644007A3E82 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
@@ -1043,6 +1105,7 @@
 			);
 			dependencies = (
 				FE48B44727791B5B00CA7B63 /* PBXTargetDependency */,
+				8858804D283C03AD007AACC2 /* PBXTargetDependency */,
 			);
 			name = MindGarden;
 			packageProductDependencies = (
@@ -1100,9 +1163,12 @@
 		FEB6AF8A265D95F500224BFD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1310;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					88588046283C03AD007AACC2 = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
 					FE39A0A627711644007A3E82 = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -1145,11 +1211,19 @@
 				FEB6AFB2265D95F700224BFD /* MindGardenUITests */,
 				FE39A0A627711644007A3E82 /* OneSignalNotificationServiceExtension */,
 				FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */,
+				88588046283C03AD007AACC2 /* MindNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		88588045283C03AD007AACC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE39A0A527711644007A3E82 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1188,7 +1262,6 @@
 				FED7437427A734E700435D0A /* coins.json in Resources */,
 				88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */,
 				882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */,
-				58A639A72838D4A0008D879D /* referral2.png in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
 				88D4C5D927FA468800CBB956 /* yogi.json in Resources */,
@@ -1197,6 +1270,7 @@
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
 				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
+				88588042283C0293007AACC2 /* wavingTurtle.png in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
@@ -1210,6 +1284,7 @@
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
 				88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */,
+				8897F12B283BEAC100F4E158 /* educatedRacoon.png in Resources */,
 				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				88F36ABD27DFBE900060FD8E /* guitar.mp3 in Resources */,
@@ -1424,6 +1499,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		88588043283C03AD007AACC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8858804A283C03AD007AACC2 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE39A0A327711644007A3E82 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1512,6 +1595,7 @@
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */,
+				88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */,
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
 				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
 				FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */,
@@ -1582,6 +1666,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8858804D283C03AD007AACC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88588046283C03AD007AACC2 /* MindNotificationService */;
+			targetProxy = 8858804C283C03AD007AACC2 /* PBXContainerItemProxy */;
+		};
 		FE48B44727791B5B00CA7B63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */;
@@ -1611,6 +1700,60 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		88588050283C03AD007AACC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M5757NXZKD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MindNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		88588051283C03AD007AACC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = M5757NXZKD;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MindNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FE39A0B027711644007A3E82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1992,6 +2135,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8858804F283C03AD007AACC2 /* Build configuration list for PBXNativeTarget "MindNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88588050283C03AD007AACC2 /* Debug */,
+				88588051283C03AD007AACC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FE39A0B227711644007A3E82 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

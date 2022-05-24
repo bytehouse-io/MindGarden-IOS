@@ -17,6 +17,11 @@ struct NotificationHelper {
     
     static func addOneDay() {
         let content = UNMutableNotificationContent()
+//
+//        if let imageURL = Bundle.main.url(forResource: "wavingTurtle", withExtension: "png") {
+//            let attachment = try! UNNotificationAttachment(identifier: "wavingTurtle", url: imageURL, options: .none)
+//            content.attachments = [attachment]
+//        }
         if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
             if UserDefaults.standard.integer(forKey: "longestStreak") > 1 {
                 content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
@@ -34,42 +39,45 @@ struct NotificationHelper {
                 }
             } else {
                 content.title = "\(UserDefaults.standard.string(forKey: "name") ?? ""), start your meditation journey today"
-                content.body = "😔 We get it, meditation is hard but remember, it's the mental gym for your brain 💪"
+                content.body = "😔 We get it, meditation is hard but anything worth doing is. 💪"
             }
  
         } else {
             content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? "") start your first session"
             content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
         }
-
+        
+   
+            
         // 1 = 1 AM
         // 10 = 10AM
         // 14 = 2PM
         // 18: 6PM
         // 19:55 = 7:55PM
         // 20 = 8PM
+        
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
-        var modifiedDate = Calendar.current.date(byAdding: .hour, value: 36, to: Date())
-        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
-            if hour < 18 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
-            } else if hour > 20 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
-            } else {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            }
-        } else {
-            if hour < 11 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 30, to: Date())
-            } else if hour < 16 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
-            } else if hour < 20 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
-            } else {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
-            }
-        }
+        var modifiedDate = Calendar.current.date(byAdding: .second, value: 15, to: Date())
+//        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+//            if hour < 18 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+//            } else if hour > 20 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
+//            } else {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+//            }
+//        } else {
+//            if hour < 11 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 30, to: Date())
+//            } else if hour < 16 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
+//            } else if hour < 20 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
+//            } else {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
+//            }
+//        }
        
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
@@ -141,6 +149,8 @@ struct NotificationHelper {
         content.title = "👋 Hey, it's been a while and we understand."
         content.body = "If meditation was that easy, everyone would be doing it. But \(UserDefaults.standard.string(forKey: "name") ?? "") you're different!"
         content.sound = UNNotificationSound.default
+        
+
 
         let modifiedDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
@@ -163,27 +173,31 @@ struct NotificationHelper {
     }
     
     static func freeTrial() {
+    
         let content = UNMutableNotificationContent()
         content.title = "Your Free trial ends tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
         
-        let imageName = "referral2"
-        if let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png") {
-            let attachment = try! UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none)
-            content.attachments = [attachment]
-        }
-
-        let modifiedDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())
+//        if let imageURL = Bundle.main.url(forResource: "wavingTurtle", withExtension: "png") {
+//            let attachment = try! UNNotificationAttachment(identifier: "wavingTurtle", url: imageURL, options: .none)
+//            content.attachments = [attachment]
+//        } else {
+//
+//        }
+  
+        let modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
-
+        
         // Create the trigger as a repeating event.
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
+        
         // Create the request
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString,
                     content: content, trigger: trigger)
+        
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in
@@ -191,6 +205,7 @@ struct NotificationHelper {
               // Handle any errors.
            }
         }
+        
     }
     
     static func addUnlockedFeature(title: String, body: String) {

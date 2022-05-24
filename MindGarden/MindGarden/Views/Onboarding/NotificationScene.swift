@@ -256,6 +256,7 @@ struct NotificationScene: View {
                 if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
                     NotificationHelper.addOnboarding()
                 }
+                NotificationHelper.freeTrial()
 
                 if fromSettings && UserDefaults.standard.bool(forKey: "freeTrial")  {
                     NotificationHelper.freeTrial()
@@ -290,15 +291,12 @@ struct NotificationScene: View {
                     }
                 }
             case .denied:
-                if fromSettings || tappedTurnOn {
-                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                     Analytics.shared.log(event: .notification_go_to_settings)
                     DispatchQueue.main.async {
                         if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                             UIApplication.shared.open(appSettings)
                         }
                     }
-                }
             case .notDetermined:
                 if fromSettings || tappedTurnOn {
                     UserDefaults.standard.setValue(false, forKey: "isNotifOn")

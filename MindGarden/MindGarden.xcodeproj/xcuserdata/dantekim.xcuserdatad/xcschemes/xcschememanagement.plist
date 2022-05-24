@@ -14,10 +14,15 @@
 			<key>orderHint</key>
 			<integer>34</integer>
 		</dict>
-		<key>OneSignalNotificationServiceExtension.xcscheme_^#shared#^_</key>
+		<key>MindNotificationService.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>33</integer>
+		</dict>
+		<key>OneSignalNotificationServiceExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>35</integer>
 		</dict>
 	</dict>
 </dict>

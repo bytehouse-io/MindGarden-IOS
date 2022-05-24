@@ -166,6 +166,11 @@ struct PurchaseModal: View {
                                             }
                                         }
                                     }
+                                case "🌸 Finish Intro Course":
+                                    withAnimation {
+                                        meditateModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+                                        viewRouter.currentPage = .middle
+                                    }
                                 case "💌 Refer a friend":
                                     Analytics.shared.log(event: .store_tapped_refer_friend)
                                     withAnimation {

@@ -203,7 +203,7 @@ struct HomeViewScroll: View {
                                     }
                                 }
                             ).padding(.top, K.isSmall() ? 10 : 20)
-                            .wiggling()
+
                     }.buttonStyle(BonusPress())
                     HStack {
                         VStack(spacing: 1) {
