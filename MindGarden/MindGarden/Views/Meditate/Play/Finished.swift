@@ -401,6 +401,10 @@ struct Finished: View {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
                     NotificationHelper.addOneDay()
                 }
+                if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
+                    NotificationHelper.addThreeDay()
+                }
                 
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 6 {

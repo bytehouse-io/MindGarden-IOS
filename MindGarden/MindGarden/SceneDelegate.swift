@@ -38,6 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
+        NotificationHelper.addOneDay()
         if launchNum == 0 {
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 if accepted {

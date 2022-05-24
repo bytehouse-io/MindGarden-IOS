@@ -180,8 +180,18 @@ extension AppDelegate: AppsFlyerLibDelegate{
 
 extension AppDelegate: UNUserNotificationCenterDelegate{
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+      print(response.notification.request.identifier, "j,ion")
       if response.notification.request.identifier == "oneDay" {
-          NotificationCenter.default.post(name: Notification.Name("oneDay"), object: nil)
+          Analytics.shared.log(event: .notification_oneDay_reminder)
+      }  else if response.notification.request.identifier == "introNotif"  {
+          NotificationCenter.default.post(name: Notification.Name("intro"), object: nil)
+          Analytics.shared.log(event: .notification_oneDay_reminder)
+      } else if response.notification.request.identifier == "threeDay" {
+          Analytics.shared.log(event: .notification_threeDay_reminder)
+      } else if response.notification.request.identifier == "streakNotStarted" {
+          Analytics.shared.log(event: .notification_streakNotStarted)
+      } else if response.notification.request.identifier == "onboardingNotif" {
+          Analytics.shared.log(event: .notification_onboarding)
       }
     completionHandler()
   }

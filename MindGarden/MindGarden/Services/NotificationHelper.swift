@@ -16,36 +16,57 @@ struct NotificationHelper {
     static var present = ["Do not ruin today by mourning tomorrow. Live right now.",  "If you want to conquer the anxiety of life, live in the moment, live in the breath. - Amit Ray", "I have realized that the past and future are real illusions, that they exist in the present, which is what there is and all there is. - Alan Watts."]
     
     static func addOneDay() {
-        let content = UNMutableNotificationContent()
+        var content = UNMutableNotificationContent()
 //
 //        if let imageURL = Bundle.main.url(forResource: "wavingTurtle", withExtension: "png") {
 //            let attachment = try! UNNotificationAttachment(identifier: "wavingTurtle", url: imageURL, options: .none)
 //            content.attachments = [attachment]
 //        }
-        if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
-            if UserDefaults.standard.integer(forKey: "longestStreak") > 1 {
-                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
-                switch UserDefaults.standard.string(forKey: "reason") {
-                case "Sleep better":
-                    content.body = "Sleeping better starts tonight"
-                case "Get more focused":
-                    content.body = "Let's train and increase focus"
-                case "Managing Stress & Anxiety":
-                    content.body = "Let's train and prevent anxiety"
-                case "Just trying it out":
-                    content.body = "Tend to your garden by meditating."
-                default:
-                    content.body = "Tend to your garden by meditating."
+        let formatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM dd, yyyy"
+            return formatter
+        }()
+        var id = "oneDay"
+        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+            id = "onboardingNotif"
+            if UserDefaults.standard.integer(forKey: "longestStreak") <= 1 {
+                id = "streakNotStarted"
+            }
+        }
+
+        if let challengeDate = UserDefaults.standard.string(forKey: "challengeDate") {
+            if challengeDate != "" {
+                if (Date() - (formatter.date(from: challengeDate) ?? Date()) < 30000) && !UserDefaults.standard.bool(forKey: "day7") {
+                    id = "introNotif"
+                    content.title = "🔥 \(UserDefaults.standard.string(forKey: "name") ?? "")! Don't Break Your Streak"
+                    if !UserDefaults.standard.bool(forKey: "day1Intro") {
+                        content.title = "💪 \(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 1 of the Intro Course"
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Join 3756 other members completing the May Challenge"
+                    } else if !UserDefaults.standard.bool(forKey: "day2Intro")  {
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 2 and Complete the \(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge"
+                    } else if !UserDefaults.standard.bool(forKey: "day2Intro")  {
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 3 and Complete the \(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge"
+                    } else if !UserDefaults.standard.bool(forKey: "day4Intro")  {
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 4 and Complete the \(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge"
+                    } else if !UserDefaults.standard.bool(forKey: "day5Intro") {
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 5 and Complete the \(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge"
+                    } else if !UserDefaults.standard.bool(forKey: "day6Intro") {
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 6 and Complete the \(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge"
+                    } else if !UserDefaults.standard.bool(forKey: "day7") {
+                        content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Finish the Last Day and Finally Complete the May Challenge!"
+                    }
+                }  else {
+                    content = NotificationHelper.generateNotif(notif: content)
                 }
             } else {
-                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? ""), start your meditation journey today"
-                content.body = "😔 We get it, meditation is hard but anything worth doing is. 💪"
+                content = NotificationHelper.generateNotif(notif: content)
             }
- 
         } else {
-            content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? "") start your first session"
-            content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
+            content = NotificationHelper.generateNotif(notif: content)
         }
+
+
         
    
             
@@ -58,7 +79,7 @@ struct NotificationHelper {
         
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
-        var modifiedDate = Calendar.current.date(byAdding: .second, value: 15, to: Date())
+        var modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
 //        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
 //            if hour < 18 {
 //                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
@@ -85,7 +106,6 @@ struct NotificationHelper {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         // Create the request
-        let id = "oneDay"
         let request = UNNotificationRequest(identifier: id,
                     content: content, trigger: trigger)
         UserDefaults.standard.setValue(id, forKey: "oneDayNotif")
@@ -96,6 +116,33 @@ struct NotificationHelper {
               // Handle any errors.
            }
         }
+    }
+    static func generateNotif(notif: UNMutableNotificationContent) -> UNMutableNotificationContent {
+        let content = notif
+        if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
+            if UserDefaults.standard.integer(forKey: "longestStreak") > 1 {
+                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
+                switch UserDefaults.standard.string(forKey: "reason") {
+                case "Sleep better":
+                    content.body = "Sleeping better starts tonight"
+                case "Get more focused":
+                    content.body = "Let's train and increase focus"
+                case "Managing Stress & Anxiety":
+                    content.body = "Let's train and prevent anxiety"
+                case "Just trying it out":
+                    content.body = "Tend to your garden by meditating."
+                default:
+                    content.body = "Tend to your garden by meditating."
+                }
+            } else {
+                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? ""), start your meditation journey today"
+                content.body = "😔 We get it, meditation is hard but anything worth doing is."
+            }
+        } else {
+            content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? "") start your first session"
+            content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
+        }
+        return content
     }
     
     static func addOnboarding() {
@@ -159,10 +206,10 @@ struct NotificationHelper {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         // Create the request
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString,
+        let id = "threeDay"
+        let request = UNNotificationRequest(identifier: id,
                     content: content, trigger: trigger)
-        UserDefaults.standard.setValue(uuidString, forKey: "threeDayNotif")
+        UserDefaults.standard.setValue(id, forKey: "threeDayNotif")
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { (error) in
@@ -178,15 +225,12 @@ struct NotificationHelper {
         content.title = "Your Free trial ends tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
-        
 
-        let imageName = "educatedRacoon"
-        if let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png"), let attachment = try? UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none) {
+                
+        if let imageURL = Bundle.main.url(forResource: "wavingTurtle.png", withExtension: nil), let attachment = try? UNNotificationAttachment(identifier: "wavingTurtle", url: imageURL, options: .none) {
             content.attachments = [attachment]
-        } else {
-            print("gopher")
         }
-
+  
         let modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
         

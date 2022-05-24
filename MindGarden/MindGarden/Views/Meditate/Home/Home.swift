@@ -132,9 +132,10 @@ struct Home: View {
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("oneDay")))
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("intro")))
         { _ in
-            viewRouter.currentPage = .garden
+            model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+            viewRouter.currentPage = .middle
         }
         .onAppear {
             if !UserDefaults.standard.bool(forKey: "tappedFeature") && !UserDefaults.standard.bool(forKey: "day1Intro") {

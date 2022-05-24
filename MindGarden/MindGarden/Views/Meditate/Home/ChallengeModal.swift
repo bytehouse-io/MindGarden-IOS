@@ -100,6 +100,10 @@ struct ChallengeModal: View {
                                 UserDefaults.standard.setValue(challengeDate, forKey: "challengeDate")
                                 viewRouter.currentPage = .middle
                                 UserDefaults.standard.setValue(true, forKey: "showedChallenge")
+                                if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
+                                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+                                    NotificationHelper.addOneDay()
+                                }
                             }
                         } label: {
                             Capsule()

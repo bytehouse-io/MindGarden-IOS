@@ -47,7 +47,12 @@ enum AnalyticEvent {
     case notification_tapped_turn_on //
     case notification_success //
     case notification_tapped_skip //
-    case notification_go_to_settings
+    case notification_go_to_settings //
+    case notification_intro_reminder //
+    case notification_oneDay_reminder //
+    case notification_threeDay_reminder //
+    case notification_streakNotStarted //
+    case notification_onboarding //
     // home + garden
     case onboarding_finished_mood //
     case onboarding_finished_gratitude //
@@ -695,8 +700,14 @@ extension AnalyticEvent {
         case .screen_load_learn: return "screen_load_learn"
         case .notification_success_learn: return "notification_success_learn"
         case .notification_settings_learn: return "notification_settings_learn"
+        case .notification_intro_reminder: return "notification_intro_reminder"
+        case .notification_oneDay_reminder: return "notification_oneDay_reminder"
+        case .notification_threeDay_reminder: return "notification_threeDay_reminder"
+        case .notification_streakNotStarted: return "notification_streakNotStarted"
+        case .notification_onboarding: return "notification_onboarding"
         case .learn_tapped_meditation_course: return "learn_tapped_meditation_course"
         case .learn_finished_meditation_course: return "learn_finished_meditation_course"
+        
         case .learn_tapped_life_course: return "learn_tapped_life_course"
         case .learn_finished_life_course: return "learn_finished_life_course"
         case .screen_load_single: return "screen_load_single"

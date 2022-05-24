@@ -401,6 +401,8 @@ struct ContentView: View {
         }.onChange(of: viewRouter.currentPage) { value in
             if viewRouter.currentPage == .garden && selectedTab != .garden {
                 selectedTab = .garden
+            } else if (viewRouter.currentPage == .meditate && selectedTab != .meditate){
+                selectedTab = .meditate
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.gratitude))

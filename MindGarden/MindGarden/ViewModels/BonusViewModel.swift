@@ -178,11 +178,7 @@ class BonusViewModel: ObservableObject {
     func updateBonus() {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
-        if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
-            NotificationHelper.addThreeDay()
-        }
-        
+
         if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd")  {
             if UserDefaults.standard.bool(forKey: "newUser") {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
