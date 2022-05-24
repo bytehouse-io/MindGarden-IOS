@@ -180,12 +180,14 @@ struct NotificationHelper {
         content.sound = UNNotificationSound.default
         
 
-        let imageName = "referral2"
+        let imageName = "educatedRacoon"
         if let imageURL = Bundle.main.url(forResource: imageName, withExtension: "png"), let attachment = try? UNNotificationAttachment(identifier: imageName, url: imageURL, options: .none) {
             content.attachments = [attachment]
+        } else {
+            print("gopher")
         }
 
-        let modifiedDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())
+        let modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
         
         // Create the trigger as a repeating event.
