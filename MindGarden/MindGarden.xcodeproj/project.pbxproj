@@ -14,6 +14,7 @@
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
+		58491F6E283CA9E60093C61A /* freetrialNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 58491F6D283CA9E60093C61A /* freetrialNotification.png */; };
 		585A4E5E27FC8BB400443F72 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585A4E5D27FC8BB400443F72 /* Buttons.swift */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
 		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
@@ -257,6 +258,7 @@
 		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
 		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		5836FA70281C1DAC001AB151 /* ReminderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
+		58491F6D283CA9E60093C61A /* freetrialNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = freetrialNotification.png; sourceTree = "<group>"; };
 		585A4E5D27FC8BB400443F72 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
 		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
@@ -843,6 +845,7 @@
 		FEB85FC3266C1B75008CDAA4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				58491F6D283CA9E60093C61A /* freetrialNotification.png */,
 				8897F12E283BFF0200F4E158 /* NotificationImages */,
 				FEBF1AB327138608000BF1BD /* Meditations */,
 				FEBF1AB2271385A1000BF1BD /* BackgroundSounds */,
@@ -1276,6 +1279,7 @@
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
 				88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */,
 				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
+				58491F6E283CA9E60093C61A /* freetrialNotification.png in Resources */,
 				88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */,
 				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				88F5CBC027F0E6ED00744D9F /* 30 Second Meditation.mp3 in Resources */,
