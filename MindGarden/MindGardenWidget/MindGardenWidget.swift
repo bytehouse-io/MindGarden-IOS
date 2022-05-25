@@ -69,7 +69,7 @@ struct MindGardenWidgetEntryView : View {
                 Color("darkWhite")
                 switch family {
                 case .systemSmall:
-                    Text("Small")
+                    CurrentStreakWidget(streakNumber: entry.streakNumber)
                 case .systemMedium:
                     if  entry.isPro {
                         MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
@@ -415,7 +415,7 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
-        .supportedFamilies([.systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
@@ -423,6 +423,6 @@ struct MindGardenWidget_Previews: PreviewProvider {
     static var previews: some View {
         MindGardenWidgetEntryView(entry: SimpleEntry(date: Date(), grid: [String: [String:[String:[String:Any]]]]()
                                                      , streakNumber: 1, isPro: true, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
