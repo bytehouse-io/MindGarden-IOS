@@ -225,9 +225,9 @@ struct NotificationHelper {
         content.title = "Your Free trial ends tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
-
-                
-        if let imageURL = Bundle.main.url(forResource: "wavingTurtle.png", withExtension: nil), let attachment = try? UNNotificationAttachment(identifier: "wavingTurtle", url: imageURL, options: .none) {
+        content.categoryIdentifier = "freeTrial"
+        
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "freeTrial", imageName: "wavingTurtle") {
             content.attachments = [attachment]
         }
   
@@ -373,6 +373,30 @@ struct NotificationHelper {
     }
 }
 
+extension UNNotificationAttachment {
 
-
-
+    static func create(identifier: String, image: UIImage, options: [NSObject : AnyObject]?) -> UNNotificationAttachment? {
+        let fileManager = FileManager.default
+        let tmpSubFolderName = ProcessInfo.processInfo.globallyUniqueString
+        let tmpSubFolderURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(tmpSubFolderName, isDirectory: true)
+        do {
+            try fileManager.createDirectory(at: tmpSubFolderURL, withIntermediateDirectories: true, attributes: nil)
+            let imageFileIdentifier = identifier+".png"
+            let fileURL = tmpSubFolderURL.appendingPathComponent(imageFileIdentifier)
+            let imageData = UIImage.pngData(image)
+            try imageData()?.write(to: fileURL)
+            let imageAttachment = try UNNotificationAttachment.init(identifier: imageFileIdentifier, url: fileURL, options: options)
+            return imageAttachment
+        } catch {
+            print("error " + error.localizedDescription)
+        }
+        return nil
+    }
+    
+    static func getAttachment(identifier:String, imageName:String) -> UNNotificationAttachment? {
+        if let image = UIImage(named: imageName),let attachment = UNNotificationAttachment.create(identifier: identifier, image: image, options: nil) {
+                return attachment
+        }
+        return nil
+    }
+}
