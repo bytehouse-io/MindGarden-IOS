@@ -11,6 +11,11 @@
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
 		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
 		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
+		581DE83C283EA6B100452C95 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
+		581DE83D283EA6B500452C95 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
+		581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
+		581DE83F283EA6BF00452C95 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
+		581DE840283EA6C200452C95 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
@@ -40,6 +45,7 @@
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
 		58E21AD2280687DE00F2BC0F /* HomeViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */; };
+		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
 		882738D327E2D75E00F8D4D0 /* first_part.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D227E2D75D00F8D4D0 /* first_part.json */; };
@@ -114,7 +120,6 @@
 		FE48B44E2779599400CA7B63 /* Fonts+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FD5266D4E5B008CDAA4 /* Fonts+Generated.swift */; };
 		FE48B44F277959A400CA7B63 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB85FC4266C1C11008CDAA4 /* Colors.xcassets */; };
 		FE48B4512779618600CA7B63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB6AF9B265D95F700224BFD /* Assets.xcassets */; };
-		FE48B455277976BB00CA7B63 /* Fonts copy in Resources */ = {isa = PBXBuildFile; fileRef = FE48B454277976BB00CA7B63 /* Fonts copy */; };
 		FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8A827276948007117F5 /* NotificationHelper.swift */; };
 		FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4CF8AA27288425007117F5 /* PricingView.swift */; };
 		FE4D80EB26ED4B15002FE291 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4D80EA26ED4B15002FE291 /* LottieView.swift */; };
@@ -288,6 +293,7 @@
 		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
+		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
@@ -361,7 +367,6 @@
 		FE48B44127791B5B00CA7B63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FE48B44327791B5B00CA7B63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE48B45027795F6600CA7B63 /* MindGardenWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MindGardenWidgetExtension.entitlements; sourceTree = "<group>"; };
-		FE48B454277976BB00CA7B63 /* Fonts copy */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Fonts copy"; sourceTree = "<group>"; };
 		FE4CF8A827276948007117F5 /* NotificationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		FE4CF8AA27288425007117F5 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		FE4D80EA26ED4B15002FE291 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -601,6 +606,14 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		58E82A53283E86AC00E224D4 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				58E82A54283E870200E224D4 /* CurrentStreak.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
 		88588048283C03AD007AACC2 /* MindNotificationService */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,7 +669,7 @@
 		FE48B43D27791B5500CA7B63 /* MindGardenWidget */ = {
 			isa = PBXGroup;
 			children = (
-				FE48B454277976BB00CA7B63 /* Fonts copy */,
+				58E82A53283E86AC00E224D4 /* Widgets */,
 				FE48B43E27791B5500CA7B63 /* MindGardenWidget.swift */,
 				FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */,
 				FE48B44127791B5B00CA7B63 /* Assets.xcassets */,
@@ -1248,10 +1261,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				581DE83C283EA6B100452C95 /* Mada-Regular.ttf in Resources */,
 				FE48B44F277959A400CA7B63 /* Colors.xcassets in Resources */,
-				FE48B455277976BB00CA7B63 /* Fonts copy in Resources */,
+				581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */,
 				FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */,
 				FE48B4512779618600CA7B63 /* Assets.xcassets in Resources */,
+				581DE83D283EA6B500452C95 /* Mada-Bold.ttf in Resources */,
+				581DE83F283EA6BF00452C95 /* Mada-Medium.ttf in Resources */,
+				581DE840283EA6C200452C95 /* Mada-SemiBold.ttf in Resources */,
 				FE48B44D2779583500CA7B63 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1540,6 +1557,7 @@
 				FE135BD0277BA75800614A4E /* Util.swift in Sources */,
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
+				58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */,
 				FE135BD1277BC48000614A4E /* Date+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
