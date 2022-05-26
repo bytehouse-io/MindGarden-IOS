@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+//FONTs Used
+// Title: 28, semibold
+// subscript: 12, regular
+
 struct HomeSquare: View {
     @EnvironmentObject var viewRouter: ViewRouter
     
@@ -107,7 +111,7 @@ struct HomeSquare: View {
                     .frame(width: 45, height: 20)
                     .overlay(
                         Text("New")
-                            .font(Font.mada(.semiBold, size: 14))
+                            .font(Font.mada(.semiBold, size: 12))
                             .foregroundColor(.white)
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)

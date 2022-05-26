@@ -222,12 +222,12 @@ struct NotificationHelper {
     static func freeTrial() {
     
         let content = UNMutableNotificationContent()
-        content.title = "Your Free trial ends tomorrow"
+        content.title = "Your Free trial envcds tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = "freeTrial"
         
-        if let attachment = UNNotificationAttachment.getAttachment(identifier: "freeTrial", imageName: "wavingTurtle") {
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "eduRacoon", imageName: "eduRacoon") {
             content.attachments = [attachment]
         }
   
