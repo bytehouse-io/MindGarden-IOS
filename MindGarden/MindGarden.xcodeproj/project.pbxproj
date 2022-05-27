@@ -58,6 +58,7 @@
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 888A81AA283FF31A00E5D225 /* eduRacoon.png */; };
+		888A81AD2841631300E5D225 /* JourneyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A81AC2841631300E5D225 /* JourneyRow.swift */; };
 		8894E73B27FA809F00234466 /* IAPModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894E73A27FA809F00234466 /* IAPModal.swift */; };
 		8897F12B283BEAC100F4E158 /* educatedRacoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8897F12A283BEAC100F4E158 /* educatedRacoon.png */; };
 		88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */ = {isa = PBXBuildFile; productRef = 88A6FABF2814A9B500B88BEF /* Storyly */; };
@@ -307,6 +308,7 @@
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		888A81AA283FF31A00E5D225 /* eduRacoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eduRacoon.png; sourceTree = "<group>"; };
+		888A81AC2841631300E5D225 /* JourneyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyRow.swift; sourceTree = "<group>"; };
 		8894E73A27FA809F00234466 /* IAPModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPModal.swift; sourceTree = "<group>"; };
 		8897F12A283BEAC100F4E158 /* educatedRacoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = educatedRacoon.png; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */,
 				88D4C5D427F63D8B00CBB956 /* Stories.swift */,
 				88588052283C0D41007AACC2 /* ChallengeModal.swift */,
+				888A81AC2841631300E5D225 /* JourneyRow.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1587,6 +1590,7 @@
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
 				58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */,
+				888A81AD2841631300E5D225 /* JourneyRow.swift in Sources */,
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,

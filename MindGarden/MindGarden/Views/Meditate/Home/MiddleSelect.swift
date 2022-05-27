@@ -111,12 +111,14 @@ struct MiddleSelect: View {
                             }
                             .padding(15)
                             .frame(width: g.size.width)
-                            Divider().padding(.bottom)
+                            Divider().padding([.bottom, .horizontal])
+                            
                             VStack {
                                 ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
                                     MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed)
                                 }
                             }
+                            
                             Divider().padding()
                             HStack(spacing: 15) {
                                 Button {
@@ -163,7 +165,7 @@ struct MiddleSelect: View {
                             }
                             .frame(width: g.size.width - 60)
                             .padding([.vertical, .horizontal], 15)
-                            .padding(.bottom, g.size.height * (K.hasNotch() ? 0.2 : 0.35))
+                            .padding(.bottom, g.size.height * (K.hasNotch() ? 0.25 : 0.4))
                         }
                     }
                 }

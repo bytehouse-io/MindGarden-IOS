@@ -93,7 +93,7 @@ struct RecRow: View {
     @Environment(\.presentationMode) var presentationMode
     let isWeekly: Bool
     @Environment(\.sizeCategory) var sizeCategory
-
+    
     var body: some View {
         Button {
             if isWeekly {

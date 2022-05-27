@@ -349,51 +349,19 @@ struct HomeViewScroll: View {
                             .buttonStyle(BonusPress())
                     }
                     //MARK: - New Meds
-                    Text("☀️ New Meditations")
+                    Text("🧭 Your Roadmap")
                         .font(Font.mada(.semiBold, size: 28))
                         .foregroundColor(Clr.black2)
                         .padding(.top, 56)
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     VStack {
-                        RecRow(width: UIScreen.main.bounds.width, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, isWeekly: true)
-                            .padding(.bottom)
-                            .offset(y: -10)
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 15) {
-                                ForEach(model.newMeditations, id: \.self) { meditation in
-                                    Button {} label: {
-                                        HomeSquare(width: width * 0.9, height: height  - (height * 0.15), img: meditation.img, title: meditation.title, id: meditation.id, instructor: meditation.instructor, duration: meditation.duration, imgURL: meditation.imgURL, isNew: meditation.isNew)
-                                            .onTapGesture {
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                model.selectedMeditation = meditation
-                                                Analytics.shared.log(event: .home_tapped_new_meditation)
-                                                model.selectedMeditation = meditation
-                                                if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id) {
-                                                    withAnimation {
-                                                        fromPage = "lockedHome"
-                                                        Analytics.shared.log(event: .home_tapped_locked_meditation)
-                                                        viewRouter.currentPage = .pricing
-                                                    }
-                                                } else {
-                                                    if meditation.type == .course  {
-                                                        withAnimation {
-                                                            viewRouter.currentPage = .middle
-                                                        }
-                                                    } else {
-                                                        withAnimation {
-                                                            showMiddleModal = true
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                    }.buttonStyle(BonusPress())
-                                }
-                            }.frame(height: height * 0.2 + 15)
-                            .padding([.leading, .trailing], 5)
-                        }.frame(width: width * 0.95, height: height * 0.2, alignment: .center)
-                            .offset(x: 20, y: -15)
-                            .padding(.top, 16)
-                    }
+                        ScrollView(showsIndicators: false) {
+                            HStack {
+                                JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
+                                    .padding([.horizontal, .bottom])
+                            }.frame(width: width * 0.9, alignment: .trailing)
+                        }.frame(width: width, height: 400)
+                    }.padding(.bottom)
                     
                     if #available(iOS 14.0, *) {
                         Button { } label: {
