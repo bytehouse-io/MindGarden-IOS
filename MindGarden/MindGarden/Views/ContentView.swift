@@ -119,16 +119,9 @@ struct ContentView: View {
                                             .environmentObject(profileModel)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .learn:
-                                        NavigationView {
-                                        LearnScene()
-                                            .frame(height: geometry.size.height + 10)
-                                            .navigationViewStyle(StackNavigationViewStyle())
-                                            .navigationBarHidden(true)
-                                            .ignoresSafeArea()
-                                            .environmentObject(bonusModel)
-                                        }
+                                        DiscoverScene()
                                     case .categories:
-                                        CategoriesScene(showSearch: .constant(false))
+                                        CategoriesScene(showSearch: .constant(false), isBack: .constant(false))
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .middle:
