@@ -41,7 +41,7 @@ struct NotificationHelper {
                     id = "introNotif"
                     content.title = "🔥 \(UserDefaults.standard.string(forKey: "name") ?? "")! Don't Break Your Streak"
                     if !UserDefaults.standard.bool(forKey: "day1Intro") {
-                        content.title = "💪 \(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 1 of the Intro Course"
+                        content.title = "💪 \(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 1 of the Challenge"
                         content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Join 3756 other members completing the May Challenge"
                     } else if !UserDefaults.standard.bool(forKey: "day2Intro")  {
                         content.body = "\(UserDefaults.standard.string(forKey: "name") ?? "") Start Day 2 and Complete the \(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge"
@@ -222,12 +222,12 @@ struct NotificationHelper {
     static func freeTrial() {
     
         let content = UNMutableNotificationContent()
-        content.title = "Your Free trial ends tomorrow"
+        content.title = "Your Free trial envcds tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = "freeTrial"
         
-        if let attachment = UNNotificationAttachment.getAttachment(identifier: "freeTrial", imageName: "wavingTurtle") {
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "eduRacoon", imageName: "eduRacoon") {
             content.attachments = [attachment]
         }
   

@@ -167,6 +167,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         if isSignUp {
             OneSignal.sendTag("signedUp", value: "true")
         } else {
+            UserDefaults.standard.setValue(true, forKey: "showedChallenge")
             UserDefaults.standard.setValue(true, forKey: "day1")
             UserDefaults.standard.setValue(true, forKey: "day2")
             UserDefaults.standard.setValue(true, forKey: "day3")

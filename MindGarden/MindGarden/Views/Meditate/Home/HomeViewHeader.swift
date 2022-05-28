@@ -165,7 +165,7 @@ struct HomeViewHeader: View {
                                 .padding(.bottom, 10)
                         }
                     }.offset(x: -width * 0.25, y: -10)
-                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.85 : 0.8))
+                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.875 : 0.82))
             }
         }.frame(width: width)
             .offset(y: -height * 0.1)

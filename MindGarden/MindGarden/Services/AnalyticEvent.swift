@@ -149,6 +149,7 @@ enum AnalyticEvent {
     case middle_tapped_row_favorite //
     case middle_tapped_row_unfavorite //
     case middle_tapped_locked_recommended //
+    case middle_tapped_plant_select //
 
     //MARK: - Play
     case screen_load_play //
@@ -559,6 +560,7 @@ extension AnalyticEvent {
         case .middle_tapped_row_favorite: return "middle_tapped_row_favorite"
         case .middle_tapped_row_unfavorite: return "middle_tapped_row_unfavorite"
         case .middle_tapped_locked_recommended: return "middle_tapped_locked_recommended"
+        case .middle_tapped_plant_select: return "middle_tapped_plant_select"
         case .screen_load_play: return "screen_load_play"
         case .play_tapped_back: return "play_tapped_back"
         case .play_tapped_favorite: return "play_tapped_favorite"

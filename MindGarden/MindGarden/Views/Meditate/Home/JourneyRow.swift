@@ -1,0 +1,110 @@
+//
+//  JourneyRow.swift
+//  MindGarden
+//
+//  Created by Dante Kim on 5/27/22.
+//
+
+import SwiftUI
+
+struct JourneyRow: View {
+    let width: CGFloat
+    let meditation: Meditation
+    var meditationModel: MeditationViewModel
+    var viewRouter: ViewRouter
+    @Environment(\.sizeCategory) var sizeCategory
+
+    var body: some View {
+        Button {
+            meditationModel.selectedMeditation = meditation
+            withAnimation {
+                if meditation.type == .course {
+                    viewRouter.currentPage = .middle
+                } else {
+                    viewRouter.currentPage = .play
+                }
+            }
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(Clr.darkWhite)
+                    .cornerRadius(16)
+                    .frame(width: width * 0.825, height: UIScreen.screenHeight * 0.225, alignment: .leading)
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Clr.yellow, lineWidth: 3)
+                    .frame(width: width * 0.825 - 4, height: UIScreen.screenHeight * 0.225 - 4, alignment: .leading)
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                            Text(meditation.title)
+                                .lineLimit(3)
+                                .minimumScaleFactor(0.05)
+                                .foregroundColor(Clr.darkgreen)
+                                .font(Font.mada(.bold, size: 20))
+                            HStack(spacing: 3) {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .foregroundColor(Clr.black2)
+                                    .font(.system(size: 12))
+                                Text(meditation.type.toString())
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.semiBold, size: 12))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                                Circle()
+                                    .fill(Clr.black2)
+                                    .frame(width: 4, height: 4)
+                                    .padding(.horizontal, 4)
+                                Image(systemName: "clock")
+                                    .foregroundColor(Clr.black2)
+                                    .font(.system(size: 12))
+                                Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.semiBold, size: 12))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                            }
+                            HStack(spacing: 3) {
+                                Image(systemName: "person.fill")
+                                    .foregroundColor(Clr.black2)
+                                    .font(.system(size: 12))
+                                Text("Instructor:")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.regular, size: 12))
+                                    .padding(.leading, 4)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                                Text("\(meditation.instructor)")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.semiBold, size: 12))
+                            }
+                        }.frame(width: width * 0.4, height: UIScreen.screenHeight * 0.2, alignment: .leading)
+                            .padding()
+                            .padding(.leading, 10)
+                        if meditation.imgURL != "" {
+                            UrlImageView(urlString: meditation.imgURL)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: width * 0.2, height: UIScreen.screenHeight * 0.2)
+                                .padding()
+                                .offset(x: -20)
+                        } else {
+                            meditation.img
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: width * 0.2, height: UIScreen.screenHeight * 0.2)
+                                .padding()
+                                .offset(x: -20)
+                        }
+
+                }.frame(width: width * 0.825, height: UIScreen.screenHeight * 0.225, alignment: .leading)
+            }
+        }.buttonStyle(BonusPress())
+        .cornerRadius(16)
+        .neoShadow()
+
+    }
+}
+
+struct JourneyRow_Previews: PreviewProvider {
+    static var previews: some View {
+        JourneyRow(width: UIScreen.screenWidth, meditation: Meditation.allMeditations[0], meditationModel: MeditationViewModel(), viewRouter: ViewRouter())
+    }
+}

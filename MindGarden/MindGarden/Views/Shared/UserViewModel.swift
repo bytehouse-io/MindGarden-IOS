@@ -117,25 +117,7 @@ class UserViewModel: ObservableObject {
                         UserDefaults.standard.set(self.name, forKey: "name")
                         tappedSignIn = false
                     }
-                    if let stack = document["referredStack"] as? String {
-                        self.referredStack = stack
-                        let plusIndex = stack.indexInt(of: "+") ?? 0
-                        let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
-                        
-                        if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
-                            showCoinAnimation = true
-                            UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
-                        }
-                        
-                        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") && !ownedPlants.contains(where: { plt in
-                            plt.title == "Venus Fly Trap"
-                        }) {
-                            willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Venus Fly Trap"})
-                            buyPlant(unlockedStrawberry: true)
-                            UserDefaults.standard.setValue(true, forKey: "referPlant")
-                            showPlantAnimation = true
-                        }
-                    }
+        
                     
                     if let strFreeze = document["streakFreeze"] as? Int {
                         self.streakFreeze = strFreeze
@@ -162,6 +144,26 @@ class UserViewModel: ObservableObject {
                                 plant.title == str
                             })
                         })
+                    }
+                    
+                    if let stack = document["referredStack"] as? String {
+                        self.referredStack = stack
+                        let plusIndex = stack.indexInt(of: "+") ?? 0
+                        let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
+                        
+                        if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
+                            showCoinAnimation = true
+                            UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
+                        }
+                        
+                        if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") && !ownedPlants.contains(where: { plt in
+                            plt.title == "Venus Fly Trap"
+                        }) {
+                            willBuyPlant = Plant.badgePlants.first(where: {$0.title == "Venus Fly Trap"})
+                            buyPlant(unlockedStrawberry: true)
+                            UserDefaults.standard.setValue(true, forKey: "referPlant")
+                            showPlantAnimation = true
+                        }
                     }
                     
                     if let completedMeditations = document[K.defaults.completedMeditations] as? [String] {
