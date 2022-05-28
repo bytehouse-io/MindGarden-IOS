@@ -22,26 +22,30 @@ struct QuickStart: View {
                         category = item.title
                         isShowCategory = true
                     } label: {
-                        HStack {
-                            Text(item.name)
-                                .font(Font.mada(.semiBold, size: 18))
-                                .foregroundColor(Clr.black2)
-                                .multilineTextAlignment(.center)
-                                .padding(15)
-                                .padding(.leading,20)
-                            Spacer()
-                            item.image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 40)
-                        }
-                        .frame(width: UIScreen.screenWidth*0.75, height: 70.0, alignment: .center)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(35)
-                        .neoShadow()
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .frame(width: UIScreen.screenWidth*0.75, height: 70.0, alignment: .center)
+                                .cornerRadius(35)
+                                .neoShadow()
+                            HStack {
+                                Text(item.name)
+                                    .font(Font.mada(.semiBold, size: 18))
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.center)
+                                    .padding(15)
+                                    .padding(.leading,20)
+                                Spacer()
+                                item.image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 40)
+                            }
+                            .frame(width: UIScreen.screenWidth*0.75, height: 70.0, alignment: .center)
+                            .cornerRadius(35)
+                        }.padding(.horizontal)
                     }
                     .padding(5)
-                    
                 }
                 Spacer()
                     .frame(height:100)
