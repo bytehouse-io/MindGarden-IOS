@@ -117,7 +117,7 @@ struct Home: View {
                 case .plant:
                     Store(isShop: false)
                 case .search:
-                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch)
+                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false))
                 }
             }
             .navigationBarHidden(true)

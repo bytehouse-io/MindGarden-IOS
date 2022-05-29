@@ -17,12 +17,18 @@ struct CategoriesScene: View {
     @State var searchText: String = ""
     var isSearch: Bool = false
     @Binding var showSearch: Bool
+    @Binding var isBack: Bool
+    let isFromQuickstart: Bool
+    var selectedCategory: QuickStartType
     @State private var tappedMed = false
     @State private var showModal = false
 
-    init(isSearch: Bool = false, showSearch: Binding<Bool>) {
+    init(isSearch: Bool = false, showSearch: Binding<Bool>, isBack: Binding<Bool>, isFromQuickstart: Bool = false, selectedCategory: QuickStartType = .minutes3) {
         self.isSearch = isSearch
         self._showSearch = showSearch
+        self._isBack = isBack
+        self.isFromQuickstart = isFromQuickstart
+        self.selectedCategory = selectedCategory
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -32,29 +38,28 @@ struct CategoriesScene: View {
                 ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 VStack(alignment: .center) {
-                    if !isSearch {
-                        HStack {
-                            backButton
-                            Spacer()
-                            Text("Categories")
-                                .foregroundColor(Clr.black2)
-                                .font(Font.mada(.bold, size: 20))
-                            Spacer()
+                    if !isFromQuickstart {
+                        if !isSearch {
+                            HStack {
+                                backButton
+                                Spacer()
+                                Text("Categories")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.bold, size: 20))
+                                Spacer()
                                 backButton
                                     .opacity(0)
                                     .disabled(true)
-                        }.padding([.horizontal])
-                            .padding(.top, 50)
-                    }
-
-                    if isSearch {
-                        //Search bar
-                        HStack {
-                            backButton.padding()
+                            }.padding([.horizontal])
+                                .padding(.top, 50)
+                        } else {
+                            //Search bar
+                            HStack {
+                                backButton.padding()
                                 HStack {
                                     TextField("Search...", text: $searchText) { startedEditing in
                                         if startedEditing {
-
+                                            
                                         }
                                     }
                                     Spacer()
@@ -67,7 +72,13 @@ struct CategoriesScene: View {
                                 .background(Clr.darkWhite)
                                 .padding(.trailing)
                                 .oldShadow()
-                        }.padding(.top)
+                            }.padding(.top)
+                        }
+                    } else {
+                        HStack {
+                            backButton
+                            Spacer()
+                        }
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
                         if !isSearch {
@@ -85,9 +96,7 @@ struct CategoriesScene: View {
                     }
                     ScrollView(showsIndicators: false) {
                             LazyVGrid(columns: gridItemLayout, content: {
-                                ForEach(!isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
-                                    return meditation.title.lowercased().contains(searchText.lowercased()) || searchText == ""
-                                }), id: \.self) { item in
+                                ForEach(meditations, id: \.self) { item in
                                     HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
                                         .onTapGesture {
                                             didSelectcategory(item: item)
@@ -121,6 +130,7 @@ struct CategoriesScene: View {
                         }.frame(height: 140)
                         .padding(.bottom)
                     }
+                    if isFromQuickstart { Spacer().frame(height:100) }
                     Spacer()
                 }
                 .background(Clr.darkWhite)
@@ -158,20 +168,49 @@ struct CategoriesScene: View {
         }
         .onAppearAnalytics(event: .screen_load_categories)
     }
+    
+    var meditations : [Meditation ] {
+        if isFromQuickstart {
+            return filterMeditation()
+        } else {
+            return !isSearch ? model.selectedMeditations : model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
+                return meditation.title.lowercased().contains(searchText.lowercased()) || searchText == ""
+            })
+        }
+    }
+    
+    private func filterMeditation() -> [Meditation] {
+        return model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
+            switch selectedCategory {
+            case .newMeditations: return meditation.isNew
+            case .minutes3: return meditation.duration.isEqual(to: 180)
+            case .minutes5: return meditation.duration.isEqual(to: 300)
+            case .minutes10: return meditation.duration.isEqual(to: 600)
+            case .minutes20: return meditation.duration.isEqual(to: 1200) || meditation.duration.isEqual(to: 900)
+            case .popular: return !meditation.title.isEmpty
+            case .morning: return !meditation.title.isEmpty
+            case .tired: return !meditation.title.isEmpty
+            }
+        })
+    }
 
     var backButton: some View {
         Button {
-            if isSearch {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                self.presentationMode.wrappedValue.dismiss()
-            } else {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                DispatchQueue.main.async {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                        viewRouter.currentPage = .meditate
+            if !isFromQuickstart {
+                if isSearch {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    self.presentationMode.wrappedValue.dismiss()
+                } else {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    DispatchQueue.main.async {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            viewRouter.currentPage = .meditate
+                        }
                     }
                 }
+            } else {
+                isBack = false
             }
         } label: {
             Image(systemName: "arrow.backward")
@@ -285,7 +324,7 @@ enum Category {
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
-            CategoriesScene(showSearch: .constant(false))
+            CategoriesScene(showSearch: .constant(false), isBack: .constant(false))
         }
     }
 }

@@ -34,7 +34,29 @@ struct ExitButton_Previews: PreviewProvider {
 }
 
 enum buttonType {
-    case lightYellow,darkGreen
+    case lightYellow,darkGreen,simpleWhite
+    
+    var textColor : Color {
+        switch self {
+        case .lightYellow:
+            return Clr.superBlack
+        case .darkGreen:
+            return Clr.superWhite
+        case .simpleWhite:
+            return Clr.superWhite
+        }
+    }
+    
+    var backgroundColor : Color {
+        switch self {
+        case .lightYellow:
+            return Clr.yellow
+        case .darkGreen:
+            return Clr.darkgreen
+        case .simpleWhite:
+            return Clr.darkWhite
+        }
+    }
 }
 
 struct LightButton: View {
@@ -50,7 +72,7 @@ struct LightButton: View {
             } label: {
                 HStack {
                     Text(title)
-                        .foregroundColor(type == .lightYellow ? Clr.superBlack : Clr.superWhite)
+                        .foregroundColor(type.textColor)
                         .font(Font.mada(.bold, size: 22))
                         .padding()
                     if showNextArrow {
@@ -60,7 +82,7 @@ struct LightButton: View {
                     }
                 }
                 .padding()
-                .background(type == .lightYellow ? Clr.yellow : Clr.darkgreen)
+                .background(type.backgroundColor)
             }
             .frame(height: 58, alignment: .center)
             .buttonStyle(BonusPress())
