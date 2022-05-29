@@ -310,7 +310,7 @@ struct HomeViewScroll: View {
                             .padding([.leading, .trailing], 5)
                     }).frame(width: width * 0.9, height: height * 0.2, alignment: .center)
                         .padding(.top, 5)
-                    if !UserDefaults.standard.bool(forKey: "isPro") && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                    if !UserDefaults.standard.bool(forKey: "isPro") {
                         Button {} label: {
                             ZStack {
                                 Rectangle()
@@ -348,11 +348,23 @@ struct HomeViewScroll: View {
                         }.padding(.vertical)
                             .buttonStyle(BonusPress())
                     }
+                    HStack(spacing: 15) {
+                        Text("\(numberOfMeds)")
+                            .font(Font.mada(.bold, size: 36))
+                            .foregroundColor(Clr.black1)
+                        Text("people are meditating \nright now")
+                            .font(Font.mada(.regular, size: 22))
+                            .minimumScaleFactor(0.05)
+                            .lineLimit(2)
+                            .foregroundColor(.gray)
+                    }
+                    .frame(width: width * 0.8, height: height * 0.06)
+                    .padding(30)
                     //MARK: - New Meds
                     Text("🧭 Your Roadmap")
                         .font(Font.mada(.semiBold, size: 28))
                         .foregroundColor(Clr.black2)
-                        .padding(.top, 56)
+                        .padding(.top, 30)
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     VStack {
                         ScrollView(showsIndicators: false) {
@@ -360,7 +372,7 @@ struct HomeViewScroll: View {
                                 JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
                                     .padding([.horizontal, .bottom])
                             }.frame(width: width * 0.9, alignment: .trailing)
-                        }.frame(width: width, height: 400)
+                        }.frame(width: width)
                     }.padding(.bottom)
                     
                     if #available(iOS 14.0, *) {
@@ -388,20 +400,7 @@ struct HomeViewScroll: View {
                         
                     }
                     Spacer()
-                    HStack(spacing: 15) {
-                        Text("\(numberOfMeds)")
-                            .font(Font.mada(.bold, size: 36))
-                            .foregroundColor(Clr.black1)
-                        Text("people are meditating \nright now")
-                            .font(Font.mada(.regular, size: 22))
-                            .minimumScaleFactor(0.05)
-                            .lineLimit(2)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(width: width * 0.8, height: height * 0.06)
-                    .padding(30)
-                    .padding(.bottom,100)
-                }.padding(.bottom, height * 0.23)
+            }.padding(.bottom, height * 0.23)
             }.frame(height: height)
                 .offset(y: -height * 0.23)
         }

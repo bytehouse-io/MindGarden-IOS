@@ -34,10 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Amplitude.instance().trackingSessionEvents = true
         // Initialize SDK
-        Amplitude.instance().initializeApiKey("76399802bdea5c85e4908f0a1b922bda")
         // Set userId
         // Log an event
-
+        
+        //TODO test amplitude match up with revenuecat
         sendLaunch()
         Purchases.logLevel = .debug
         Purchases.automaticAppleSearchAdsAttributionCollection = true
@@ -45,11 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          // OneSignal initialization
          OneSignal.initWithLaunchOptions(launchOptions)
          OneSignal.setAppId("7f964cf0-550e-426f-831e-468b9a02f012")
+        
         Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG")
+        Amplitude.instance().initializeApiKey("76399802bdea5c85e4908f0a1b922bda", userId: Purchases.shared.appUserID)
         Purchases.shared.collectDeviceIdentifiers()
+        
         if let onesignalId = OneSignal.getDeviceState().userId {
                Purchases.shared.setOnesignalID(onesignalId)
         }
+        Purchases.shared.setAttributes(["$amplitudeDeviceId" : Amplitude.instance().deviceId])
 
         // Set the Appsflyer Id
         Purchases.shared.setAppsflyerID(AppsFlyerLib.shared().getAppsFlyerUID())

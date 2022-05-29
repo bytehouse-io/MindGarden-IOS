@@ -141,6 +141,7 @@ public enum Img {
   public static let star = Image("Star")
   public static let treasureChest = Image("Treasure Chest")
   public static let vector = Image("Vector")
+  public static let alarmClock = Image("alarmClock")
   public static let angryFire = Image("angryFire")
   public static let angryPot = Image("angryPot")
   public static let anxiousPot = Image("anxiousPot")

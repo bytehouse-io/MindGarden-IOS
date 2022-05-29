@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 import Foundation
 import UIKit
+import Amplitude
 
 struct Gratitude: View, KeyboardReadable {
     @Binding var shown: Bool
@@ -97,6 +98,9 @@ struct Gratitude: View, KeyboardReadable {
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
                         var num = UserDefaults.standard.integer(forKey: "numGrads")
                         num += 1
+                        let identify = AMPIdentify()
+                            .set("num_gratitudes", value: NSNumber(value: num))
+                        Amplitude.instance().identify(identify ?? AMPIdentify())
                         if num == 30 {
                             userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
                             userModel.buyPlant(unlockedStrawberry: true)

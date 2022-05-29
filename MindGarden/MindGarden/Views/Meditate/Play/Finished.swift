@@ -440,7 +440,11 @@ struct Finished: View {
                 var num = UserDefaults.standard.integer(forKey: "numMeds")
                 num += 1
                 UserDefaults.standard.setValue(num, forKey: "numMeds")
-
+                
+                let identify = AMPIdentify()
+                    .set("meditation_sessions", value: NSNumber(value: num))
+                Amplitude.instance().identify(identify ?? AMPIdentify())
+                
 //                showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
 
                 favorited = model.isFavorited

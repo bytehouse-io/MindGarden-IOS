@@ -165,6 +165,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         }
         
         if isSignUp {
+            let identify = AMPIdentify()
+                .set("sign_up_date", value: NSString(utf8String: dateFormatter.string(from: Date())))
+            Amplitude.instance().identify(identify ?? AMPIdentify())
             OneSignal.sendTag("signedUp", value: "true")
         } else {
             UserDefaults.standard.setValue(true, forKey: "showedChallenge")

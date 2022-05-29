@@ -7,6 +7,8 @@
 
 import SwiftUI
 import OneSignal
+import Amplitude
+
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
     @State var selected: String = ""
@@ -61,6 +63,11 @@ struct ExperienceScene: View {
                                     default:
                                         break
                                     }
+                                    
+                                    let identify = AMPIdentify()
+                                        .set("experience", value: NSString(utf8String: selected))
+                                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                                    
                                     withAnimation(.easeOut(duration: 0.3)) {
                                         DispatchQueue.main.async {
                                             viewRouter.currentPage = .reason
