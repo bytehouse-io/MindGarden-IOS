@@ -17,6 +17,9 @@ struct StreakScene: View {
     var title : String {
         return "\(bonusModel.streakNumber) Day Streak"
     }
+    @State private var img = UIImage()
+    @State private var isSharePresented: Bool = false
+    @State private var showButtons = true
     
     var subTitle : String {
         switch bonusModel.streakNumber {
@@ -58,33 +61,52 @@ struct StreakScene: View {
                 
                 DaysProgressBar()
                 Spacer()
-                Button {} label: {
-                    Capsule()
-                        .fill(Clr.gardenRed)
-                        .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
-                        .overlay(
-                            Text("Continue")
-                                .font(Font.mada(.bold, size: 24))
-                                .foregroundColor(.white)
-                        )
-                        .onTapGesture {
-                            withAnimation {
-                                viewRouter.currentPage = .garden
-                                presentationMode.wrappedValue.dismiss()
-                                let impact = UIImpactFeedbackGenerator(style: .light)
-                                impact.impactOccurred()
-                            }
+                if showButtons {
+                    Button {
+                        showButtons = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            img = takeStreakSceneScreenshot(origin: UIScreen.main.bounds.origin, size: UIScreen.main.bounds.size)
+                            isSharePresented = true
                         }
+                    } label: {
+                        Capsule()
+                            .fill(Clr.gardenRed)
+                            .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
+                            .overlay(
+                                Text("Share")
+                                    .font(Font.mada(.bold, size: 24))
+                                    .foregroundColor(.white)
+                            )
+                    }
+                    .buttonStyle(NeumorphicPress())
+                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
+                    .padding(.top, 50)
+                    Button {
+                        //TODO: implement continue tap event
+                        viewRouter.currentPage = .garden
+                    } label: {
+                        Capsule()
+                            .fill(Clr.gardenRed)
+                            .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
+                            .overlay(
+                                Text("Continue")
+                                    .font(Font.mada(.bold, size: 24))
+                                    .foregroundColor(.white)
+                            )
+                    }
+                    .buttonStyle(NeumorphicPress())
+                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
+                    .padding(.top, 10)
                 }
-                .buttonStyle(NeumorphicPress())
-                .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
-                .padding(.top, 50)
             }
             .offset(y: -145)
         }
-//        .sheet(isPresented: $isSharePresented) {
-//            ReferralView(url: $urlShare2)
-//        }
+        .onChange(of: isSharePresented) { value in
+            showButtons = !value
+        }
+        .sheet(isPresented: $isSharePresented) {
+            ShareView(img:img)
+        }
         .onAppear() {
             if UserDefaults.standard.bool(forKey: "unlockStrawberry") {
                 UserDefaults.standard.setValue(false, forKey: "unlockStrawberry")
@@ -127,5 +149,29 @@ struct StreakScene_Previews: PreviewProvider {
     static var previews: some View {
         StreakScene()
             .environmentObject(BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
+    }
+}
+
+struct ShareView: View {
+    @State var img: UIImage?
+    var body: some View {
+        if let shareImg = img {
+            ActivityViewController(activityItems: [shareImg])
+        }
+    }
+}
+
+extension View {
+    func takeStreakSceneScreenshot(origin: CGPoint, size: CGSize) -> UIImage {
+        let window = UIWindow(frame: CGRect(origin: origin, size: size))
+        let hosting = UIHostingController(rootView: self
+                                            .environmentObject(SceneDelegate.userModel)
+                                            .environmentObject(SceneDelegate.bonusModel)
+                                            .environmentObject(SceneDelegate.gardenModel)
+        )
+        hosting.view.frame = window.frame
+        window.addSubview(hosting.view)
+        window.makeKeyAndVisible()
+        return hosting.view.renderedImage
     }
 }
