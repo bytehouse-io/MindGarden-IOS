@@ -176,9 +176,18 @@ struct Finished: View {
                                     }.offset(y: !isOnboarding ? 15 : -50)
                                 }.padding(.top, ios14 && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" ? 50 : 0)
                             }
+                  
                             HStack(alignment: .center) {
                                 Spacer()
                                 VStack(alignment: .center, spacing: 10) {
+                                    if !UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                        ReminderView()
+                                            .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
+                                            .padding(.top,50)
+                                            .padding()
+                                            .offset(y: !isOnboarding ? 0 : -125)
+                                        Spacer()
+                                    }
                                     VStack {
                                         Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
                                             .font(Font.mada(.regular, size: 20))
@@ -202,14 +211,7 @@ struct Finished: View {
                                 }
                                 Spacer()
                             }.offset(y: !isOnboarding ? 0 : -100)
-                            if !UserDefaults.standard.bool(forKey: "isNotifOn") {
-                                ReminderView()
-                                    .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
-                                    .padding(.top,50)
-                                    .padding()
-                                    .offset(y: !isOnboarding ? 0 : -125)
-                                Spacer()
-                            }
+                        
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
                     HStack {

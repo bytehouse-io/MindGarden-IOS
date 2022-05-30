@@ -368,10 +368,14 @@ struct HomeViewScroll: View {
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     VStack {
                         ScrollView(showsIndicators: false) {
-                            HStack {
-                                JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
-                                    .padding([.horizontal, .bottom])
-                            }.frame(width: width * 0.9, alignment: .trailing)
+                            VStack {
+                                ForEach(Meditation.userMap.1, id: \.self) { medId in
+                                    HStack {
+                                        JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
+                                            .padding([.horizontal, .bottom])
+                                    }.frame(width: width * 0.9, alignment: .trailing)
+                                }
+                            }
                         }.frame(width: width)
                     }.padding(.bottom)
                     

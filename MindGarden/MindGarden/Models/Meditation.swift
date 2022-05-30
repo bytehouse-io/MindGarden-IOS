@@ -86,7 +86,54 @@ struct Meditation: Hashable {
             let finalMeds = Array(retMeds[0..<retMeds.count])
         return finalMeds
     }
-
+    
+    // Roadmap of meditations based on experience chosen during onboarding
+    static var userMap: (Int, [Int]) = {
+        let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
+        let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []
+        let completedInts = completedMeditations.compactMap { Int($0) }
+        let beg1 = [6, 108, 24, 105]
+        let beg2 = [104, 92, 90, 91, 93]
+        let beg3 = [108, 5, 5, 5, 5, 28, 28]
+        let beg4 = [28, 28, 28, 28, 28, 28, 29]
+        let beg5 = [29, 29, 29, 29, 30, 30, 31]
+    
+        let exp1 = [24, 105, 90, 108]
+        let exp2 = [5, 5, 5, 5, 5, 28, 28, 28]
+        let exp3 = [28,28, 28, 28, 28, 28, 28, 29]
+        let exp4 = [29,  29, 29, 29, 29, 29, 29, 30, 30]
+        let exp5 = [30, 30, 30, 30, 31, 31, 32]
+    
+        var lvl = 1
+        let begArr = [beg1, beg2, beg3, beg4, beg5]
+        let expArr = [exp1, exp2, exp3, exp4, exp5]
+        
+        var retArr = begArr[0]
+        
+        for i in 0...4 {
+            switch selected {
+            case "Meditate often":
+                if expArr[i].allSatisfy(completedInts.contains) {
+                    lvl = i
+                    retArr = expArr[i]
+                }
+            case "Have tried to meditate":
+                if begArr[i].allSatisfy(completedInts.contains) {
+                    lvl = i
+                    retArr = begArr[i]
+                }
+            case "Have never meditated":
+                if begArr[i].allSatisfy(completedInts.contains) {
+                    lvl = i
+                    retArr = begArr[i]
+                }
+            default: break
+            }
+        }
+        return (lvl, retArr)
+    }()
+    
+    
     static var allMeditations = [
 //        Meditation(title: "Open-Ended Meditation", description: "Unguided meditation with no time limit, with the option to add a gong sounds every couple of minutes.", belongsTo: "none", category: .unguided, img: Img.starfish, type: .course, id: 1, duration: 0, reward: 0),
 
