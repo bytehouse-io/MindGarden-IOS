@@ -361,23 +361,24 @@ struct HomeViewScroll: View {
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
                     //MARK: - New Meds
-                    Text("🧭 Your Roadmap")
-                        .font(Font.mada(.semiBold, size: 28))
+                    ( Text("🗺 Roadmap Level: ")
                         .foregroundColor(Clr.black2)
+                      + Text("\(Meditation.userMap.0)")
+                        .foregroundColor(Clr.darkgreen))
+                        .font(Font.mada(.semiBold, size: 28))
                         .padding(.top, 30)
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     VStack {
-                        ScrollView(showsIndicators: false) {
-                            VStack {
-                                ForEach(Meditation.userMap.1, id: \.self) { medId in
-                                    HStack {
-                                        JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
-                                            .padding([.horizontal, .bottom])
-                                    }.frame(width: width * 0.9, alignment: .trailing)
-                                }
-                            }
-                        }.frame(width: width)
-                    }.padding(.bottom)
+                        ForEach(Meditation.userMap.1, id: \.self) { medId in
+                            HStack {
+                                // TODO Create circle ui + dotted lines
+                                // If completedMeditations.contains(medId) then it should be checked. 
+                                JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
+                                    .padding([.horizontal, .bottom])
+                            }.frame(width: width * 0.9, alignment: .trailing)
+                        }
+                    }.frame(width: width)
+                        .padding(.bottom)
                     
                     if #available(iOS 14.0, *) {
                         Button { } label: {
