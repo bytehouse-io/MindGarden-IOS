@@ -37,7 +37,7 @@ struct DiscoverScene: View {
                 DiscoverTab(selectedTab: $selectedTab)
                     .padding(.horizontal,30)
                     .frame( height:50)
-                Spacer().frame(height:35)
+                Spacer().frame(height:45)
                 tabView
             }
         }

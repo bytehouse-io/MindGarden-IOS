@@ -25,8 +25,8 @@ struct QuickStart: View {
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
-                                .frame(width: UIScreen.screenWidth*0.75, height: 70.0, alignment: .center)
-                                .cornerRadius(35)
+                                .frame(height: 56.0, alignment: .center)
+                                .cornerRadius(27)
                                 .neoShadow()
                             HStack {
                                 Text(item.name)
@@ -38,12 +38,13 @@ struct QuickStart: View {
                                 Spacer()
                                 item.image
                                     .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 40)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 70.0)
                             }
-                            .frame(width: UIScreen.screenWidth*0.75, height: 70.0, alignment: .center)
-                            .cornerRadius(35)
-                        }.padding(.horizontal)
+                            .frame(height: 56.0, alignment: .center)
+                            .cornerRadius(28)
+                        }
+                        .padding(.horizontal,30)
                     }
                     .padding(5)
                 }

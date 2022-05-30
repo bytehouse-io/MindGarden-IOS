@@ -41,14 +41,14 @@ struct QuickStartMenuItem: Identifiable {
     
     var image: Image {
         switch title {
-        case .newMeditations: return Img.min15
-        case .minutes3: return Img.min15
-        case .minutes5: return Img.min15
-        case .minutes10: return Img.min15
+        case .newMeditations: return Image("")
+        case .minutes3: return Img.min3
+        case .minutes5: return Img.min5
+        case .minutes10: return Img.min10
         case .minutes20: return Img.min15
-        case .popular: return Img.min15
-        case .morning: return Img.min15
-        case .tired: return Img.min15
+        case .popular: return Img.popular
+        case .morning: return Img.morning
+        case .tired: return Img.tired
         }
     }
     
