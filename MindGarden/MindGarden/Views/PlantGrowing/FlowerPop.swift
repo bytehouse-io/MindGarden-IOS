@@ -101,15 +101,6 @@ struct FlowerPop: View {
             }
         }
     }
-    
-    struct ShareView: View {
-        @State var img: UIImage?
-        var body: some View {
-            if let shareImg = img {
-                ActivityViewController(activityItems: [shareImg])
-            }
-        }
-    }
 }
 
 struct FlowerPop_Previews: PreviewProvider {
