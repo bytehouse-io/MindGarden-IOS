@@ -115,8 +115,10 @@ struct LearnScene: View {
                         }
                     }.frame(width: width * 0.85, height: height * 0.3, alignment: .center)
                     .padding(.top, 40)
+                    Spacer()
+                    .frame(height: 60)
                 }.frame(width: width, alignment: .center)
-                .padding(.top, K.hasNotch() ? 75 : 25)
+                .padding(.top, 25)
                 .padding(.bottom, g.size.height * (K.hasNotch() ? 0.1 : 0.25))
                 }.frame(height: height)
             }

@@ -58,7 +58,7 @@ struct DiscoverScene: View {
             case .quickStart:
                 QuickStart()
             case .learn:
-                Clr.darkWhite
+                LearnScene()
             }
         }
     }
