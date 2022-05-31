@@ -16,7 +16,7 @@ struct QuickStart: View {
         } else {
             ScrollView(.vertical, showsIndicators: false) {
                 Spacer()
-                    .frame(height:10)
+                    .frame(height:20)
                 ForEach(quickStartTabList) { item in
                     Button {
                         category = item.title
@@ -30,7 +30,7 @@ struct QuickStart: View {
                                 .neoShadow()
                             HStack {
                                 Text(item.name)
-                                    .font(Font.mada(.semiBold, size: 18))
+                                    .font(Font.mada(.semiBold, size: 16))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
                                     .padding(15)
@@ -39,7 +39,7 @@ struct QuickStart: View {
                                 item.image
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(height: 70.0)
+                                    .frame(height: 56.0)
                             }
                             .frame(height: 56.0, alignment: .center)
                             .cornerRadius(28)

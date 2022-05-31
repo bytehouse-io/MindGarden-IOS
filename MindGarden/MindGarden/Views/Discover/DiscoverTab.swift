@@ -19,10 +19,10 @@ struct DiscoverTab: View {
                 Capsule()
                     .fill(.white.opacity(0.4))
                     .frame(width:UIScreen.screenWidth*0.27)
-                    .padding(.vertical,5)
+                    .padding(.vertical,3)
                 if selectedTab == .quickStart { Spacer() }
                 if selectedTab == .courses { Spacer() }
-            }.padding(.horizontal,5)
+            }.padding(.horizontal,3)
             HStack(alignment:.center) {
                 ForEach(discoverTabList) { item in
                     Button {
@@ -35,7 +35,7 @@ struct DiscoverTab: View {
                         ZStack(alignment:.center) {
                             Text(item.name)
                                 .minimumScaleFactor(0.5)
-                                .font(Font.mada(.semiBold, size: 20))
+                                .font(Font.mada(.medium, size: 16))
                                 .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
                                 .multilineTextAlignment(.center)
                         }
@@ -47,7 +47,11 @@ struct DiscoverTab: View {
             }
             .padding(.vertical,5)
         }
-        .frame(height: 50, alignment: .top)
-        .background( Clr.darkgreen.cornerRadius(40))
+        .frame(height: 36, alignment: .top)
+        .background(
+            Clr.darkgreen
+            .cornerRadius(18)
+                .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
+        )
     }
 }
