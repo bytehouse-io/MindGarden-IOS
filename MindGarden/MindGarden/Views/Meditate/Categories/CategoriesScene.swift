@@ -79,7 +79,7 @@ struct CategoriesScene: View {
                         }
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
-                        if !isSearch {
+                        if isSearch {
                             HStack {
                                 CategoryButton(category: .all, selected: $model.selectedCategory)
                                 CategoryButton(category: .unguided, selected: $model.selectedCategory)
@@ -131,7 +131,7 @@ struct CategoriesScene: View {
                     if isFromQuickstart { Spacer().frame(height:100) }
                     Spacer()
                 }
-                .padding(.top, isFromQuickstart ? 30 : 0)
+                .padding(.top, isFromQuickstart ? 40 : 0)
                 .background(Clr.darkWhite)
                     if showModal {
                         Color.black
@@ -147,18 +147,19 @@ struct CategoriesScene: View {
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
-                HStack {
-                    backButton
-                    Spacer()
-                    Text(QuickStartMenuItem(title: selectedCategory).name)
-                        .foregroundColor(Clr.black2)
-                        .font(Font.mada(.semiBold, size: 20))
-                    Spacer()
-                    backButton.opacity(0).disabled(true)
-                    Spacer()
-                }.frame(width: UIScreen.screenWidth, height: 50)
-                    .padding(.horizontal, 35)
-                    .offset(y: -10)
+                if isFromQuickstart {
+                    HStack {
+                        backButton
+                        Spacer()
+                        Text(QuickStartMenuItem(title: selectedCategory).name)
+                            .foregroundColor(Clr.black2)
+                            .font(Font.mada(.semiBold, size: 20))
+                        Spacer()
+                        backButton.opacity(0).disabled(true)
+                        Spacer()
+                    }.frame(width: UIScreen.screenWidth, height: 50)
+                        .padding(.horizontal, 35)
+                }
             }
         .onAppear {
             DispatchQueue.main.async {

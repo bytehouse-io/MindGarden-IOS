@@ -12,7 +12,7 @@ struct QuickStart: View {
     @State private var category : QuickStartType = .minutes3
     var body: some View {
         if isShowCategory {
-            CategoriesScene(isSearch: true, showSearch: .constant(true), isBack: $isShowCategory, isFromQuickstart: true, selectedCategory:category)
+            CategoriesScene(isSearch: false, showSearch: .constant(true), isBack: $isShowCategory, isFromQuickstart: true, selectedCategory:category)
         } else {
             ScrollView(.vertical, showsIndicators: false) {
                 Spacer()

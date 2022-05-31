@@ -10,6 +10,7 @@ import Lottie
 
 struct DiscoverScene: View {
     @State private var selectedTab: DiscoverTabType = .quickStart
+    @State private var tappedSearch = false
     var body: some View {
         ZStack(alignment:.top) {
             Clr.darkWhite
@@ -31,6 +32,11 @@ struct DiscoverScene: View {
                         Img.discoverSearch
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .onTapGesture {
+                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                impact.impactOccurred()
+                                tappedSearch = true
+                            }
                     }
                     .frame(height:35)
                     .padding(.vertical,5)
@@ -46,7 +52,11 @@ struct DiscoverScene: View {
                 tabView
                     .zIndex(0)
             }
-        }.edgesIgnoringSafeArea(.all)
+        }
+        .sheet(isPresented: $tappedSearch) {
+            CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false))
+        }
+        .edgesIgnoringSafeArea(.all)
     }
     
     var tabView: some View {
