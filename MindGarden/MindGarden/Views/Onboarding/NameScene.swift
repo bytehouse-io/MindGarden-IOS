@@ -32,7 +32,7 @@ struct NameScene: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             viewRouter.progressValue -= 0.1
-                                            viewRouter.currentPage = .notification
+                                            viewRouter.currentPage = .reason
                                         }
                                     }
                                 

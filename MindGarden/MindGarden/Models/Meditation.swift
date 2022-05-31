@@ -86,22 +86,69 @@ struct Meditation: Hashable {
             let finalMeds = Array(retMeds[0..<retMeds.count])
         return finalMeds
     }
-
+    
+    // Roadmap of meditations based on experience chosen during onboarding
+    static var userMap: (Int, [Int]) = {
+        let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
+        let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []
+        let completedInts = completedMeditations.compactMap { Int($0) }
+        let beg1 = [6, 108, 24, 105]
+        let beg2 = [104, 92, 90, 91, 93]
+        let beg3 = [108, 5, 5, 5, 5, 28, 28]
+        let beg4 = [28, 28, 28, 28, 28, 28, 29]
+        let beg5 = [29, 29, 29, 29, 30, 30, 31]
+    
+        let exp1 = [24, 105, 90, 108]
+        let exp2 = [5, 5, 5, 5, 5, 28, 28, 28]
+        let exp3 = [28,28, 28, 28, 28, 28, 28, 29]
+        let exp4 = [29,  29, 29, 29, 29, 29, 29, 30, 30]
+        let exp5 = [30, 30, 30, 30, 31, 31, 32]
+    
+        var lvl = 1
+        let begArr = [beg1, beg2, beg3, beg4, beg5]
+        let expArr = [exp1, exp2, exp3, exp4, exp5]
+        
+        var retArr = begArr[0]
+        
+        for i in 0...4 {
+            switch selected {
+            case "Meditate often":
+                if expArr[i].allSatisfy(completedInts.contains) {
+                    lvl = i
+                    retArr = expArr[i]
+                }
+            case "Have tried to meditate":
+                if begArr[i].allSatisfy(completedInts.contains) {
+                    lvl = i
+                    retArr = begArr[i]
+                }
+            case "Have never meditated":
+                if begArr[i].allSatisfy(completedInts.contains) {
+                    lvl = i
+                    retArr = begArr[i]
+                }
+            default: break
+            }
+        }
+        return (lvl, retArr)
+    }()
+    
+    
     static var allMeditations = [
 //        Meditation(title: "Open-Ended Meditation", description: "Unguided meditation with no time limit, with the option to add a gong sounds every couple of minutes.", belongsTo: "none", category: .unguided, img: Img.starfish, type: .course, id: 1, duration: 0, reward: 0),
 
-        Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.chatBubble, type: .course, id: 2, duration: 0, reward: 0, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 3, duration: 60, reward: 2, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 4, duration: 120, reward: 4, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 5, duration: 300, reward: 6, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "10 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 28, duration: 600, reward: 10, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "15 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 29, duration: 900, reward: 14, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "20 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 30, duration: 1200, reward: 17, url: "", instructor: "None", imgURL: "", isNew: false),
-        Meditation(title: "25 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 31, duration: 1500, reward: 20, url: "", instructor: "None",  imgURL: "", isNew: false),
-        Meditation(title: "30 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 32, duration: 1800, reward: 22, url: "", instructor: "None",  imgURL: "", isNew: false),
-        Meditation(title: "45 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 33, duration: 2700, reward: 25, url: "", instructor: "None",  imgURL: "", isNew: false),
-        Meditation(title: "1 Hour Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 34, duration: 3600, reward: 30, url: "", instructor: "None",  imgURL: "", isNew: false),
-        Meditation(title: "2 Hour Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.daisy3, type: .lesson, id: 35, duration: 7200, reward: 35, url: "", instructor: "None",  imgURL: "", isNew: false),
+        Meditation(title: "Timed Meditation", description: "Timed unguided (no talking) meditation, with the option to turn on background noises such as rain. A bell will signal the end of your session.", belongsTo: "none", category: .unguided, img: Img.alarmClock, type: .course, id: 2, duration: 0, reward: 0, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "1 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 3, duration: 60, reward: 2, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "2 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 4, duration: 120, reward: 4, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "5 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 5, duration: 300, reward: 6, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "10 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 28, duration: 600, reward: 10, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "15 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 29, duration: 900, reward: 14, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "20 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 30, duration: 1200, reward: 17, url: "", instructor: "None", imgURL: "", isNew: false),
+        Meditation(title: "25 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 31, duration: 1500, reward: 20, url: "", instructor: "None",  imgURL: "", isNew: false),
+        Meditation(title: "30 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 32, duration: 1800, reward: 22, url: "", instructor: "None",  imgURL: "", isNew: false),
+        Meditation(title: "45 Minute Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 33, duration: 2700, reward: 25, url: "", instructor: "None",  imgURL: "", isNew: false),
+        Meditation(title: "1 Hour Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 34, duration: 3600, reward: 30, url: "", instructor: "None",  imgURL: "", isNew: false),
+        Meditation(title: "2 Hour Meditation", description: "Timed unguided (no talking) meditation for a fixed period, with the option to turn on background noises such as rain. A bell will signal the end of your session.",  belongsTo: "Timed Meditation", category: .unguided, img: Img.alarmClock, type: .lesson, id: 35, duration: 7200, reward: 35, url: "", instructor: "None",  imgURL: "", isNew: false),
 
         // Beginners Course
         Meditation(title: "Intro to Meditation", description: "Learn how to meditate with founder Bijan, a certified mindfulness instructor. Learn why meditation can drastically improve happiness, focus and so much more.", belongsTo: "none", category: .beginners, img: Img.happySunflower, type: .course, id: 6, duration: 0, reward: 0, url: "1d", instructor: "Bijan",  imgURL: "", isNew: false),

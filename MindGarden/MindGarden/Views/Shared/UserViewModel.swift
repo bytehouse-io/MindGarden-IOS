@@ -168,6 +168,7 @@ class UserViewModel: ObservableObject {
                     
                     if let completedMeditations = document[K.defaults.completedMeditations] as? [String] {
                         self.completedMeditations = completedMeditations
+                        UserDefaults.standard.setValue(completedMeditations, forKey: K.defaults.completedMeditations)
                     }
                     
                     self.updateTimeRemaining()
@@ -219,14 +220,14 @@ class UserViewModel: ObservableObject {
 
     
     func finishedMeditation(id:String){
-        if !self.completedMeditations.contains(id) {
+        let med =  Meditation.allMeditations.first { med in  Int(id) == med.id } ?? Meditation.allMeditations[0]
+        if !self.completedMeditations.contains(id) || med.belongsTo == "Timed Meditation" {
             self.completedMeditations.append(id)
             if let email = Auth.auth().currentUser?.email {
                 self.db.collection(K.userPreferences).document(email).updateData([
                     K.defaults.completedMeditations: self.completedMeditations])
-            } else {
-                UserDefaults.standard.setValue(self.completedMeditations, forKey: K.defaults.completedMeditations)
             }
+            UserDefaults.standard.setValue(self.completedMeditations, forKey: K.defaults.completedMeditations)
         }
     }
     

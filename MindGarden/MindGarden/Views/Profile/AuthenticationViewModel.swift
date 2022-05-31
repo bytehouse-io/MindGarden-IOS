@@ -165,6 +165,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         }
         
         if isSignUp {
+            let identify = AMPIdentify()
+                .set("sign_up_date", value: NSString(utf8String: dateFormatter.string(from: Date())))
+            Amplitude.instance().identify(identify ?? AMPIdentify())
             OneSignal.sendTag("signedUp", value: "true")
         } else {
             UserDefaults.standard.setValue(true, forKey: "showedChallenge")
@@ -449,6 +452,7 @@ extension AuthenticationViewModel {
                 "totalMins": UserDefaults.standard.integer(forKey: "allTimeMinutes"),
                 "gardenGrid": thisGrid,
                 "plants": uniquePlants,
+                "experience": UserDefaults.standard.string(forKey: "experience") ?? "",
                 K.defaults.lastStreakDate: UserDefaults.standard.string(forKey: K.defaults.lastStreakDate) ?? "",
                 "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
                 K.defaults.seven: UserDefaults.standard.integer(forKey: K.defaults.seven),
@@ -486,7 +490,9 @@ extension AuthenticationViewModel {
                     if let isPro = document["isPro"] {
                         UserDefaults.standard.setValue(isPro, forKey: "isPro")
                     }
-              
+                    if let experience = document["experience"] {
+                        UserDefaults.standard.setValue(experience, forKey: "experience")
+                    }
                 }
             }
         }

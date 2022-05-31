@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Amplitude
 
 enum Mood: String {
     case happy
@@ -132,6 +133,9 @@ struct MoodCheck: View {
                             var num = UserDefaults.standard.integer(forKey: "numMoods")
                             num += 1
                             UserDefaults.standard.setValue(num, forKey: "numMoods")
+                            let identify = AMPIdentify()
+                                .set("num_moods", value: NSNumber(value: num))
+                            Amplitude.instance().identify(identify ?? AMPIdentify())
                             if moodSelected != .none {
                                 if notifOn {
                                     showRecs = UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? false : true

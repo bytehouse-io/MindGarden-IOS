@@ -7,6 +7,7 @@
 
 import SwiftUI
 import OneSignal
+import Amplitude
 
 struct NotificationScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -54,7 +55,7 @@ struct NotificationScene: View {
                                             viewRouter.currentPage = .review
                                             tappedTurnOn = false
                                         } else {
-                                            viewRouter.currentPage = .reason
+                                            viewRouter.currentPage = .name
                                         }
                                     }
                                 }
@@ -160,6 +161,9 @@ struct NotificationScene: View {
                                     .foregroundColor(.gray)
                                     .padding()
                                     .onTapGesture {
+                                        let identify = AMPIdentify()
+                                            .set("reminder_set", value: NSNumber(0))
+                                        Amplitude.instance().identify(identify ?? AMPIdentify())
                                         UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
@@ -245,6 +249,10 @@ struct NotificationScene: View {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus  {
             case .authorized:
+                let identify = AMPIdentify()
+                    .set("reminder_set", value: NSNumber(1))
+                Amplitude.instance().identify(identify ?? AMPIdentify())
+
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {

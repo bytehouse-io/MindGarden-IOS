@@ -388,7 +388,7 @@ struct PricingView: View {
                                 yearlyPrice = round(100 * Double(truncating: price))/100
                             } else if name == "io.mindgarden.pro.lifetime" {
                                 lifePrice = round(100 * Double(truncating: price))/100
-                            } else if name == "yearly_pro_14" {
+                            } else if name == "yearly_pro_14" && fiftyOff {
                                 yearlyPrice = round(100 * Double(truncating: price))/100
                             }
                         }
