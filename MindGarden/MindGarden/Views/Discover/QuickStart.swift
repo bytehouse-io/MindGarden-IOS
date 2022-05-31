@@ -19,8 +19,10 @@ struct QuickStart: View {
                     .frame(height:20)
                 ForEach(quickStartTabList) { item in
                     Button {
-                        category = item.title
-                        isShowCategory = true
+                        withAnimation {
+                            category = item.title
+                            isShowCategory = true
+                        }
                     } label: {
                         ZStack {
                             Rectangle()

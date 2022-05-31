@@ -34,9 +34,9 @@ struct DiscoverScene: View {
                     }
                     .frame(height:35)
                     .padding(.vertical,5)
-                    .padding(.horizontal,30)
+                    .padding(.horizontal,40)
                     DiscoverTab(selectedTab: $selectedTab)
-                        .padding(.horizontal,30)
+                        .padding(.horizontal,35)
                         .frame( height:36)
                 }
             }
@@ -46,8 +46,7 @@ struct DiscoverScene: View {
                 tabView
                     .zIndex(0)
             }
-        }
-        .edgesIgnoringSafeArea(.all)
+        }.edgesIgnoringSafeArea(.all)
     }
     
     var tabView: some View {

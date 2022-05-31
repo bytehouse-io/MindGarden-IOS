@@ -220,16 +220,14 @@ class UserViewModel: ObservableObject {
 
     
     func finishedMeditation(id:String){
-        let med =  Meditation.allMeditations.first { med in  Int(id) == med.id } ?? Meditation.allMeditations[0]
-        if !self.completedMeditations.contains(id) || med.belongsTo == "Timed Meditation" {
-            self.completedMeditations.append(id)
-            if let email = Auth.auth().currentUser?.email {
-                self.db.collection(K.userPreferences).document(email).updateData([
-                    K.defaults.completedMeditations: self.completedMeditations])
-            }
-            UserDefaults.standard.setValue(self.completedMeditations, forKey: K.defaults.completedMeditations)
+        self.completedMeditations.append(id)
+        if let email = Auth.auth().currentUser?.email {
+            self.db.collection(K.userPreferences).document(email).updateData([
+                K.defaults.completedMeditations: self.completedMeditations])
         }
+        UserDefaults.standard.setValue(self.completedMeditations, forKey: K.defaults.completedMeditations)
     }
+    
     
     func getCourseCounter(title:String) -> Int {
         return Meditation.allMeditations.filter { $0.belongsTo == title }.filter { self.completedMeditations.contains("\($0.id)") }.count

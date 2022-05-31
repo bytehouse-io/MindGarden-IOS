@@ -38,6 +38,8 @@ struct DiscoverTab: View {
                                 .font(Font.mada(.medium, size: 16))
                                 .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
                                 .multilineTextAlignment(.center)
+                                .padding(.leading, item.name == "Courses" ? 10 : 0)
+                                .padding(.trailing, item.name == "Learn" ? 10 : 0)
                         }
                         .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
                         .frame(maxWidth: .infinity)

@@ -76,8 +76,6 @@ struct CategoriesScene: View {
                         }
                     } else {
                         HStack {
-                            backButton
-                            Spacer()
                         }
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -133,6 +131,7 @@ struct CategoriesScene: View {
                     if isFromQuickstart { Spacer().frame(height:100) }
                     Spacer()
                 }
+                .padding(.top, isFromQuickstart ? 30 : 0)
                 .background(Clr.darkWhite)
                     if showModal {
                         Color.black
@@ -144,11 +143,22 @@ struct CategoriesScene: View {
                         Spacer()
                     }
                 }
-
                     MiddleModal(shown: $showModal)
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
+                HStack {
+                    backButton
+                    Spacer()
+                    Text(QuickStartMenuItem(title: selectedCategory).name)
+                        .foregroundColor(Clr.black2)
+                        .font(Font.mada(.semiBold, size: 20))
+                    Spacer()
+                    backButton.opacity(0).disabled(true)
+                    Spacer()
+                }.frame(width: UIScreen.screenWidth, height: 50)
+                    .padding(.horizontal, 35)
+                    .offset(y: -10)
             }
         .onAppear {
             DispatchQueue.main.async {
@@ -183,13 +193,16 @@ struct CategoriesScene: View {
         return model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
             switch selectedCategory {
             case .newMeditations: return meditation.isNew
-            case .minutes3: return meditation.duration.isEqual(to: 180)
-            case .minutes5: return meditation.duration.isEqual(to: 300)
-            case .minutes10: return meditation.duration.isEqual(to: 600)
-            case .minutes20: return meditation.duration.isEqual(to: 1200) || meditation.duration.isEqual(to: 900)
+            case .minutes3: return meditation.duration.isLess(than: 250) && meditation.type != .course
+            case .minutes5: return meditation.duration <= 400 && meditation.duration >= 250
+            case .minutes10: return meditation.duration <= 700 && meditation.duration >= 500
+            case .minutes20: return meditation.duration >= 1000
             case .popular: return !meditation.title.isEmpty
             case .morning: return !meditation.title.isEmpty
-            case .tired: return !meditation.title.isEmpty
+            case .sleep: return !meditation.title.isEmpty
+            case .anxiety: return !meditation.title.isEmpty
+            case .unguided: return !meditation.title.isEmpty
+            case .courses: return !meditation.title.isEmpty
             }
         })
     }
@@ -197,12 +210,11 @@ struct CategoriesScene: View {
     var backButton: some View {
         Button {
             if !isFromQuickstart {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 if isSearch {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     self.presentationMode.wrappedValue.dismiss()
                 } else {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     DispatchQueue.main.async {
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                             viewRouter.currentPage = .meditate
@@ -210,7 +222,9 @@ struct CategoriesScene: View {
                     }
                 }
             } else {
-                isBack = false
+                withAnimation {
+                    isBack = false
+                }
             }
         } label: {
             Image(systemName: "arrow.backward")

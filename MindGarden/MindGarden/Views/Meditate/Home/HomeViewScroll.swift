@@ -361,13 +361,24 @@ struct HomeViewScroll: View {
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
                     //MARK: - New Meds
-                    ( Text("🗺 Roadmap Level: ")
-                        .foregroundColor(Clr.black2)
-                      + Text("\(Meditation.userMap.0)")
-                        .foregroundColor(Clr.darkgreen))
-                        .font(Font.mada(.semiBold, size: 28))
-                        .padding(.top, 30)
-                        .frame(width: abs(width * 0.825), alignment: .leading)
+                    if Meditation.userMap.0 == 6 {
+                        ( Text("🗺 Roadmap ")
+                            .foregroundColor(Clr.black2)
+                          + Text("Final Level")
+                            .foregroundColor(Clr.darkgreen))
+                            .font(Font.mada(.semiBold, size: 28))
+                            .padding(.top, 30)
+                            .frame(width: abs(width * 0.825), alignment: .leading)
+                    } else {
+                        ( Text("🗺 Roadmap Level: ")
+                            .foregroundColor(Clr.black2)
+                          + Text("\(Meditation.userMap.0)")
+                            .foregroundColor(Clr.darkgreen))
+                            .font(Font.mada(.semiBold, size: 28))
+                            .padding(.top, 30)
+                            .frame(width: abs(width * 0.825), alignment: .leading)
+                    }
+
                     VStack {
                         ForEach(Meditation.userMap.1, id: \.self) { medId in
                             HStack {
