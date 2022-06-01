@@ -112,6 +112,7 @@ struct ContentView: View {
                                                     showItems = false
                                             }
                                             .environmentObject(bonusModel)
+                                            .environmentObject(profileModel)
                                     case .shop:
                                         Store()
                                             .frame(height: geometry.size.height + 10)

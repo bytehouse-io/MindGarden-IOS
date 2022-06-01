@@ -10,6 +10,8 @@ import SwiftUI
 struct Garden: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var profileModel: ProfileViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var isMonth: Bool = true
     @State private var showSingleModal = false
     @State private var day: Int = 0
@@ -20,11 +22,13 @@ struct Garden: View {
     @State private var forceRefresh = false
     @State private var color = Clr.yellow
     @Environment(\.sizeCategory) var sizeCategory
+    @State var activeSheet: Sheet?
     
     @EnvironmentObject var bonusModel: BonusViewModel
     var currentStreak : String {
         return "\(bonusModel.streakNumber)"
     }
+    
     var longestStreak : Int {
         (UserDefaults.standard.integer(forKey: "longestStreak")) ?? 1
     }
@@ -47,13 +51,44 @@ struct Garden: View {
                         //                            MenuButton(title: "Year", isMonth: !isMonth)
                         //                        }
                         //                    }
-                        Text("👨‍🌾 Your MindGarden")
-                            .font(Font.mada(.semiBold, size: 22))
-                            .foregroundColor(Clr.darkgreen)
-                            .padding()
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.05)
-                            .padding(.bottom, -20)
+                        HStack {
+                            Text("👨‍🌾 Your MindGarden")
+                                .font(Font.mada(.semiBold, size: 22))
+                                .foregroundColor(Clr.darkgreen)
+                                .padding()
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                            Spacer()
+                            HStack {
+                                Button {
+                                    Analytics.shared.log(event: .garden_tapped_plant_select)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                    showPlant = true
+                                    activeSheet = .plant
+                                } label: {
+                                    HStack {
+                                        userModel.selectedPlant?.head
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    }
+                                    .frame(height: 25)
+                                }
+                                Image(systemName: "gearshape.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Clr.darkgreen)
+                                    .frame(height: 25)
+                                    .onTapGesture {
+                                        Analytics.shared.log(event: .garden_tapped_settings)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    //                                    showPlant = true
+                                        activeSheet = .profile
+                                    }
+                            }
+                        }.frame(width: gp.size.width * 0.85)
+                        .padding(.bottom, -10)
+                        .offset(x: -10)
+                 
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -447,6 +482,19 @@ struct Garden: View {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                         }
                     }
+                }
+            }
+            .sheet(item: $activeSheet) { item in
+                switch item {
+                case .profile:
+                    ProfileScene(profileModel: profileModel)
+                        .environmentObject(userModel)
+                        .environmentObject(gardenModel)
+                        .environmentObject(viewRouter)
+                case .plant:
+                    Store(isShop: false)
+                case .search:
+                    EmptyView()
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)

@@ -86,6 +86,8 @@ enum AnalyticEvent {
     case garden_tapped_single_next_session //
     case garden_tapped_single_previous_session //
     case screen_load_single
+    case garden_tapped_settings
+    case garden_tapped_plant_select
 
     //MARK: - HOME
     case screen_load_home //
@@ -513,6 +515,8 @@ extension AnalyticEvent {
         case .garden_tapped_single_day: return "garden_previous_month"
         case .garden_tapped_single_next_session: return "garden_tapped_single_next_session"
         case .garden_tapped_single_previous_session: return "garden_tapped_single_previous_session"
+        case .garden_tapped_settings: return "garden_tapped_settings"
+        case .garden_tapped_plant_select: return "garden_tapped_plant_select"
         case .screen_load_home: return "screen_load_home"
         case .home_tapped_plant_select: return "home_tapped_plant_select"
         case .home_tapped_pro: return "home_tapped_pro"

@@ -193,8 +193,8 @@ struct NotificationHelper {
 
     static func addThreeDay() {
         let content = UNMutableNotificationContent()
-        content.title = "👋 Hey, it's been a while and we understand."
-        content.body = "If meditation was that easy, everyone would be doing it. But \(UserDefaults.standard.string(forKey: "name") ?? "") you're different!"
+        content.title = "👋 Hey, it's been a while"
+        content.body = "We understand but if meditation was that easy, everyone would be doing it. But \(UserDefaults.standard.string(forKey: "name") ?? "") you're different!"
         content.sound = UNNotificationSound.default
         
 
