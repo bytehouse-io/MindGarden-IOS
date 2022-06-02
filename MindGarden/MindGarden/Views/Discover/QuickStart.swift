@@ -35,7 +35,7 @@ struct QuickStart: View {
                                     .font(Font.mada(.semiBold, size: 16))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
-                                    .padding(15)
+                                    .padding(.vertical, 15)
                                     .padding(.leading,20)
                                 Spacer()
                                 item.image

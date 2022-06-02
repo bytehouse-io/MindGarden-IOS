@@ -54,7 +54,6 @@ struct MiddleSelect: View {
                                 HStack {
                                     Text("Selected Plant:")
                                     Button {
-                                        Analytics.shared.log(event: .middle_tapped_plant_select)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         showPlant = true
                                     } label: {
@@ -112,7 +111,6 @@ struct MiddleSelect: View {
                             .padding(15)
                             .frame(width: g.size.width)
                             Divider().padding([.bottom, .horizontal])
-                            
                             VStack {
                                 ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
                                     MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed)

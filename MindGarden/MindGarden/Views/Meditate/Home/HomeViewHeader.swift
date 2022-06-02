@@ -41,7 +41,8 @@ struct HomeViewHeader: View {
                 Spacer()
                 VStack {
                     HStack {
-                        Image(systemName: "magnifyingglass")
+                        // TODO if user presses off: speaker.slash.fill icon
+                        Image(systemName: "speaker.wave.2.fill")
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {

@@ -10,6 +10,8 @@ import SwiftUI
 struct Garden: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var profileModel: ProfileViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var isMonth: Bool = true
     @State private var showSingleModal = false
     @State private var day: Int = 0
@@ -20,15 +22,17 @@ struct Garden: View {
     @State private var forceRefresh = false
     @State private var color = Clr.yellow
     @Environment(\.sizeCategory) var sizeCategory
+    @State var activeSheet: Sheet?
     
     @EnvironmentObject var bonusModel: BonusViewModel
     var currentStreak : String {
         return "\(bonusModel.streakNumber)"
     }
+    
     var longestStreak : Int {
         (UserDefaults.standard.integer(forKey: "longestStreak")) ?? 1
     }
-
+    
     var body: some View {
         GeometryReader { gp in
             ScrollView(showsIndicators: false) {
@@ -47,13 +51,44 @@ struct Garden: View {
                         //                            MenuButton(title: "Year", isMonth: !isMonth)
                         //                        }
                         //                    }
-                        Text("👨‍🌾 Your MindGarden")
-                            .font(Font.mada(.semiBold, size: 22))
-                            .foregroundColor(Clr.darkgreen)
-                            .padding()
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.05)
-                            .padding(.bottom, -20)
+                        HStack {
+                            Text("👨‍🌾 Your MindGarden")
+                                .font(Font.mada(.semiBold, size: 22))
+                                .foregroundColor(Clr.darkgreen)
+                                .padding()
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                            Spacer()
+                            HStack {
+                                Button {
+                                    Analytics.shared.log(event: .garden_tapped_plant_select)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                    showPlant = true
+                                    activeSheet = .plant
+                                } label: {
+                                    HStack {
+                                        userModel.selectedPlant?.head
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    }
+                                    .frame(height: 25)
+                                }
+                                Image(systemName: "gearshape.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Clr.darkgreen)
+                                    .frame(height: 25)
+                                    .onTapGesture {
+                                        Analytics.shared.log(event: .garden_tapped_settings)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    //                                    showPlant = true
+                                        activeSheet = .profile
+                                    }
+                            }
+                        }.frame(width: gp.size.width * 0.85)
+                        .padding(.bottom, -10)
+                        .offset(x: -10)
+                 
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -85,10 +120,14 @@ struct Garden: View {
                                                     plantHead
                                                         .padding(3)
                                                         .overlay(
-                                                            Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                .font(Font.mada(.semiBold, size: 8))
-                                                                .foregroundColor(Clr.black2)
-                                                                .padding(.leading)
+                                                            ZStack {
+                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
+                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                        .font(Font.mada(.semiBold, size: 10))
+                                                                        .foregroundColor(Color.black)
+                                                                        .padding(.leading)
+                                                                }
+                                                            }
                                                         )
                                                 }
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.0 != nil { // only mood is nil
@@ -104,10 +143,14 @@ struct Garden: View {
                                                     plantHead
                                                         .padding(3)
                                                         .overlay(
-                                                            Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                .font(Font.mada(.semiBold, size: 10))
-                                                                .foregroundColor(Clr.black2)
-                                                                .padding(.leading)
+                                                            ZStack {
+                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
+                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                        .font(Font.mada(.semiBold, size: 10))
+                                                                        .foregroundColor(Color.black)
+                                                                        .padding(.leading)
+                                                                }
+                                                            }
                                                         )
                                                 }
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
@@ -116,10 +159,14 @@ struct Garden: View {
                                                     .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
                                                     .border(.white, width: 1)
                                                     .overlay(
-                                                        Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                            .font(Font.mada(.semiBold, size: 10))
-                                                            .foregroundColor(Clr.black2)
-                                                            .padding(.leading)
+                                                        ZStack {
+                                                            if UserDefaults.standard.bool(forKey: "tileDates") {
+                                                                Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                    .font(Font.mada(.semiBold, size: 10))
+                                                                    .foregroundColor(Color.black)
+                                                                    .padding(.leading)
+                                                            }
+                                                        }
                                                     )
                                             } else { //both are nil
                                                 ZStack {
@@ -129,10 +176,14 @@ struct Garden: View {
                                                         .border(.white, width: 1)
                                                         .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
                                                         .overlay(
-                                                            Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                .font(Font.mada(.semiBold, size: 10))
-                                                                .foregroundColor(Clr.black2)
-                                                                .padding(.leading)
+                                                            ZStack {
+                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
+                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                        .font(Font.mada(.semiBold, size: 10))
+                                                                        .foregroundColor(Color.black)
+                                                                        .padding(.leading)
+                                                                }
+                                                            }
                                                         )
                                                 }
                                             }
@@ -264,7 +315,7 @@ struct Garden: View {
                                             .padding(.trailing)
                                         }
                                     }.frame(height:150)
-                                    .padding(.top,5)
+                                        .padding(.top,5)
                                 }
                                 .padding(.vertical)
                                 .padding(.trailing,5)
@@ -291,7 +342,7 @@ struct Garden: View {
                                 .frame(width:UIScreen.screenWidth*0.165, height: UIScreen.screenHeight * 0.15)
                             }
                         }.frame(width:UIScreen.screenWidth*0.85)
-                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                            .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants:")
                                 .foregroundColor(Clr.black2)
@@ -327,10 +378,10 @@ struct Garden: View {
                                 }
                             }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: 150)
                         }.padding(.vertical, 15)
-                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                            .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                     }.padding(.horizontal, 25)
-                    .padding(.vertical, 15)
-                    .padding(.top, 30)
+                        .padding(.vertical, 15)
+                        .padding(.top, 30)
                     if isOnboarding && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ){
                         VStack(spacing: 0) {
                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
@@ -366,7 +417,7 @@ struct Garden: View {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                                         Analytics.shared.log(event: .onboarding_finished_calendar)
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
-                                                   
+                                                        
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                                         UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
                                                         tileOpacity = 0.2
@@ -384,7 +435,7 @@ struct Garden: View {
                                     .fill(Clr.yellow)
                                     .frame(width: 40, height: 20)
                                     .rotationEffect(.radians(.pi))
-                    
+                                
                             }
                         }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -150 : -75)
                     }
@@ -433,6 +484,19 @@ struct Garden: View {
                     }
                 }
             }
+            .sheet(item: $activeSheet) { item in
+                switch item {
+                case .profile:
+                    ProfileScene(profileModel: profileModel)
+                        .environmentObject(userModel)
+                        .environmentObject(gardenModel)
+                        .environmentObject(viewRouter)
+                case .plant:
+                    Store(isShop: false)
+                case .search:
+                    EmptyView()
+                }
+            }
             .onAppearAnalytics(event: .screen_load_garden)
         }
     }
@@ -453,12 +517,12 @@ struct Garden: View {
 struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-
+        
         path.move(to: CGPoint(x: rect.midX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-
+        
         return path
     }
 }
@@ -479,7 +543,7 @@ struct MoodImage: View {
     var isStressed: Bool {
         return mood == .stressed
     }
-
+    
     var body: some View {
         HStack(spacing: 5) {
             Mood.getMoodImage(mood: mood)
@@ -502,7 +566,7 @@ struct MoodImage: View {
 struct MenuButton: View {
     var title: String
     var isMonth: Bool
-
+    
     var body: some View {
         ZStack {
             Capsule()
@@ -518,7 +582,7 @@ struct MenuButton: View {
 
 struct OperatorButton: View {
     let imgName: String
-
+    
     var body: some View {
         Image(systemName: imgName)
             .resizable()
@@ -534,7 +598,7 @@ struct FavoritePlant: View {
     let title: String
     let count: Int
     let img: Image
-
+    
     var body: some View {
         VStack(spacing: 0) {
             img
@@ -542,7 +606,7 @@ struct FavoritePlant: View {
                 .aspectRatio(contentMode: .fit)
                 .padding(8)
                 .overlay(RoundedRectangle(cornerRadius: 15)
-                            .stroke(Clr.darkgreen))
+                    .stroke(Clr.darkgreen))
             HStack {
                 Text("\(title)")
                     .font(Font.mada(.regular, size: 12))
@@ -552,6 +616,6 @@ struct FavoritePlant: View {
                     .font(Font.mada(.bold, size: 16))
             }.padding(.top, 8)
         }.frame(width: 70, height: 120)
-        .padding(10)
+            .padding(10)
     }
 }

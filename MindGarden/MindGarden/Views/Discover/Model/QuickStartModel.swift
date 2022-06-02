@@ -12,11 +12,11 @@ enum QuickStartType: String {
 }
 
 var quickStartTabList = [
-    QuickStartMenuItem(title: .newMeditations),
     QuickStartMenuItem(title: .minutes3),
     QuickStartMenuItem(title: .minutes5),
     QuickStartMenuItem(title: .minutes10),
     QuickStartMenuItem(title: .minutes20),
+    QuickStartMenuItem(title: .newMeditations),
     QuickStartMenuItem(title: .courses),
     QuickStartMenuItem(title: .unguided),
     QuickStartMenuItem(title: .popular),
@@ -47,7 +47,7 @@ struct QuickStartMenuItem: Identifiable {
     
     var image: Image {
         switch title {
-        case .newMeditations: return Image("")
+        case .newMeditations: return Img.newMeds
         case .minutes3: return Img.min3
         case .minutes5: return Img.min5
         case .minutes10: return Img.min10
@@ -55,9 +55,9 @@ struct QuickStartMenuItem: Identifiable {
         case .popular: return Img.popular
         case .morning: return Img.morning
         case .anxiety: return Img.tired
-        case .unguided: return Img.alarmClock
-        case .sleep: return Img.moon
-        case .courses: return Img.educatedRacoon
+        case .unguided: return Img.unguided
+        case .sleep: return Img.sleep
+        case .courses: return Img.courses
         }
     }
     

@@ -31,6 +31,7 @@ struct ProfileScene: View {
     @ObservedObject var profileModel: ProfileViewModel
     @State private var selection: settings = .settings
     @State private var showNotification = false
+    @State private var showGarden = false
     @State private var isSignedIn = true
     @State private var tappedSignedIn = false
     @State private var showMailView = false
@@ -95,10 +96,11 @@ struct ProfileScene: View {
                                     }.background(Clr.darkWhite).frame(height: 50)
                                         .cornerRadius(12)
                                         .neoShadow()
-                                    if showNotification && selection == .settings {
+                                    if showNotification || showGarden && selection == .settings {
                                         Button {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             showNotification = false
+                                            showGarden = false
                                         } label: {
                                             Capsule()
                                                 .fill(Clr.darkWhite)
@@ -135,7 +137,7 @@ struct ProfileScene: View {
                                                             showNotif = true
                                                         }
                                                     }, showNotif: $showNotif, showMindful: $showMindful)
-                                                        .frame(height: 40)
+                                                    .frame(height: 40)
                                                     Divider()
                                                     Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
                                                         withAnimation {
@@ -143,9 +145,43 @@ struct ProfileScene: View {
                                                             showMindful = true
                                                         }
                                                     }, showNotif: $showNotif, showMindful: $showMindful)
-                                                        .frame(height: 40)
+                                                    .frame(height: 40)
                                                 }.padding()
                                             }.frame(width: width * 0.75, height: 80)
+                                                .transition(.slide)
+                                                .animation(.default)
+                                        } else if showGarden  {
+                                            Text("Garden Settings")
+                                                .font(Font.mada(.regular, size: 20))
+                                                .foregroundColor(Color.gray)
+                                                .frame(width: width * 0.7, height: 20, alignment: .leading)
+                                                .padding(.bottom, 30)
+                                                .padding(.top, 20)
+                                            ZStack {
+                                                Rectangle()
+                                                    .fill(Clr.darkWhite)
+                                                    .cornerRadius(12)
+                                                    .neoShadow()
+                                                VStack {
+                                                    Row(title: "Dates on Tile", img: Image(systemName: "bell.fill"), swtch: true, action: {
+                                                        withAnimation {
+//                                                            showNotif = true
+                                                        }
+                                                    }, showNotif: $showNotif, showMindful: $showMindful)
+                                                    .frame(height: 40)
+                                                    .padding()
+//                                                    Divider()
+                                                    
+                                                    //TODO turn on/off Vines
+//                                                    Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
+//                                                        withAnimation {
+//                                                            UserDefaults.standard.setValue(true, forKey: "mindful")
+//                                                            showMindful = true
+//                                                        }
+//                                                    }, showNotif: $showNotif, showMindful: $showMindful)
+//                                                    .frame(height: 40)
+                                                }
+                                            }.frame(width: width * 0.75, height: 60)
                                                 .transition(.slide)
                                                 .animation(.default)
                                         } else {
@@ -176,6 +212,11 @@ struct ProfileScene: View {
                                                             Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
                                                                 showNotification = true
                                                                 Analytics.shared.log(event: .profile_tapped_notifications)
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                            Row(title: "Garden", img: Image(systemName: "calendar"), action: {
+                                                                showGarden = true
+                                                                Analytics.shared.log(event: .profile_tapped_garden)
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             Divider()
@@ -215,7 +256,7 @@ struct ProfileScene: View {
                                                                     .frame(height: 40)
                                                             }
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 200 : 240) + (Auth.auth().currentUser?.email != nil ? 65 : 0))
+                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 230 : 270) + (Auth.auth().currentUser?.email != nil ? 65 : 0))
 
                                                     Text("I want to help")
                                                         .font(Font.mada(.regular, size: 20))
@@ -305,7 +346,7 @@ struct ProfileScene: View {
                                  
                                     } else {
                                         Spacer()
-                                        if selection == .settings && !showNotification {
+                                        if selection == .settings {
                                             if let _ = Auth.auth().currentUser?.email {} else {
                                                 Text("Save your progress")
                                                     .foregroundColor(Clr.black2).font(Font.mada(.semiBold, size: 20))
@@ -635,7 +676,7 @@ struct ProfileScene: View {
                             .foregroundColor(title == "Unlock Pro" ? Clr.brightGreen : Clr.black1)
                     
                         Spacer()
-                        if title == "Notifications" {
+                        if title == "Notifications" || title == "Garden" {
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.gray)
                         } else if swtch {
@@ -658,13 +699,22 @@ struct ProfileScene: View {
                                 } else {
                                     Toggle("", isOn: $notifOn)
                                         .onChange(of: notifOn) { val in
-                                            UserDefaults.standard.setValue(val, forKey: "mindful")
-                                            if val {
-                                                Analytics.shared.log(event: .profile_tapped_toggle_on_mindful)
-                                                showMindful = true
-                                            } else { //turned off
-                                                NotificationHelper.deleteMindfulNotifs()
-                                                Analytics.shared.log(event: .profile_tapped_toggle_off_mindful)
+                                            if title == "Dates on Tile" {
+                                                UserDefaults.standard.setValue(val, forKey: "tileDates")
+                                                if val {
+                                                    Analytics.shared.log(event: .profile_tapped_garden_date_on)
+                                                } else { //turned off
+                                                    Analytics.shared.log(event: .profile_tapped_garden_date_off)
+                                                }
+                                            } else {
+                                                UserDefaults.standard.setValue(val, forKey: "mindful")
+                                                if val {
+                                                    Analytics.shared.log(event: .profile_tapped_toggle_on_mindful)
+                                                    showMindful = true
+                                                } else { //turned off
+                                                    NotificationHelper.deleteMindfulNotifs()
+                                                    Analytics.shared.log(event: .profile_tapped_toggle_off_mindful)
+                                                }
                                             }
                                         }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
                                         .frame(width: UIScreen.main.bounds.width * 0.1)
@@ -678,7 +728,11 @@ struct ProfileScene: View {
                 if title == "Meditation Reminders" {
                     notifOn = UserDefaults.standard.bool(forKey: "notifOn")
                 } else {
-                    notifOn = UserDefaults.standard.bool(forKey: "mindful")
+                    if title == "Dates on Tile" {
+                        notifOn = UserDefaults.standard.bool(forKey: "tileDates")
+                    } else {
+                        notifOn = UserDefaults.standard.bool(forKey: "mindful")
+                    }
                 }
             }
         }

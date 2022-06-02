@@ -86,6 +86,8 @@ enum AnalyticEvent {
     case garden_tapped_single_next_session //
     case garden_tapped_single_previous_session //
     case screen_load_single
+    case garden_tapped_settings
+    case garden_tapped_plant_select
 
     //MARK: - HOME
     case screen_load_home //
@@ -265,7 +267,10 @@ enum AnalyticEvent {
     case profile_tapped_rate //
     case profile_tapped_create_account //
     case profile_tapped_add_widget //
-    case profile_tapped_delete_account // 
+    case profile_tapped_delete_account //
+    case profile_tapped_garden //
+    case profile_tapped_garden_date_on //
+    case profile_tapped_garden_date_off // 
     //MARK: - Categories
     case screen_load_categories //
     case categories_tapped_unguided //
@@ -510,6 +515,8 @@ extension AnalyticEvent {
         case .garden_tapped_single_day: return "garden_previous_month"
         case .garden_tapped_single_next_session: return "garden_tapped_single_next_session"
         case .garden_tapped_single_previous_session: return "garden_tapped_single_previous_session"
+        case .garden_tapped_settings: return "garden_tapped_settings"
+        case .garden_tapped_plant_select: return "garden_tapped_plant_select"
         case .screen_load_home: return "screen_load_home"
         case .home_tapped_plant_select: return "home_tapped_plant_select"
         case .home_tapped_pro: return "home_tapped_pro"
@@ -656,6 +663,9 @@ extension AnalyticEvent {
         case .profile_tapped_create_account: return "profile_tapped_create_account"
         case .profile_tapped_add_widget: return "profile_tapped_add_widget"
         case .profile_tapped_delete_account: return "profile_tapped_delete_account"
+        case .profile_tapped_garden: return "profile_tapped_garden"
+        case .profile_tapped_garden_date_on: return "profile_tapped_garden_date_on"
+        case .profile_tapped_garden_date_off: return "profile_tapped_garden_date_off"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"
