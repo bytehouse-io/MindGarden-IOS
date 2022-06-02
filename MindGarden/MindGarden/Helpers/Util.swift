@@ -36,6 +36,7 @@ struct K {
         static var onboarding = "onboarding"
         static var referred = "referred"
         static var completedMeditations = "completedMeditations"
+        static var userCoinCollectedLevel = "userCoinCollectedLevel"
     }
     
     struct ScreenSize

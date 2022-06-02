@@ -30,6 +30,7 @@ class UserViewModel: ObservableObject {
     @Published var completedMeditations: [String] = []
     @Published var show50Off = false
     @Published var referredCoins: Int = 0
+    @Published var userCoinCollectedLevel: Int = 0
     private var validationCancellables: Set<AnyCancellable> = []
 
     var name: String = ""
@@ -171,6 +172,11 @@ class UserViewModel: ObservableObject {
                         UserDefaults.standard.setValue(completedMeditations, forKey: K.defaults.completedMeditations)
                     }
                     
+                    if let level = document[K.defaults.userCoinCollectedLevel] as? Int {
+                        self.userCoinCollectedLevel = level
+                        UserDefaults.standard.setValue(level, forKey: K.defaults.userCoinCollectedLevel)
+                    }
+                    
                     self.updateTimeRemaining()
                 }
             }
@@ -204,6 +210,10 @@ class UserViewModel: ObservableObject {
             }
             if let completedMeditations = UserDefaults.standard.value(forKey: K.defaults.completedMeditations) as? [String] {
                 self.completedMeditations = completedMeditations
+            }
+            
+            if let level = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int {
+                self.userCoinCollectedLevel = level
             }
             
             self.streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
@@ -379,6 +389,25 @@ class UserViewModel: ObservableObject {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
                     print("Succesfully saved user model")
+                }
+            }
+        }
+    }
+    
+    func updateCoins(plusCoins: Int) {
+        coins += plusCoins
+        userCoinCollectedLevel += 1
+        UserDefaults.standard.setValue(coins, forKey: K.defaults.coins)
+        UserDefaults.standard.setValue(userCoinCollectedLevel, forKey: K.defaults.userCoinCollectedLevel)
+        if let email = Auth.auth().currentUser?.email {
+            self.db.collection(K.userPreferences).document(email).updateData([
+                K.defaults.coins:coins,
+                K.defaults.userCoinCollectedLevel:userCoinCollectedLevel
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved coin")
                 }
             }
         }

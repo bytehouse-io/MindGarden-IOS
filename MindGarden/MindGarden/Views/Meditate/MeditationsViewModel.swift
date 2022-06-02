@@ -38,6 +38,9 @@ class MeditationViewModel: ObservableObject {
     var timer: Timer = Timer()
     var forwardCounter = 0
     var shouldStreakUpdate = false
+    
+    @Published var roadMaplevel: Int = 1
+    @Published var roadMapArr: [Int] = []
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
@@ -321,5 +324,64 @@ class MeditationViewModel: ObservableObject {
             shouldStreakUpdate = true
         }
         return reward
+    }
+    
+    // Roadmap of meditations based on experience chosen during onboarding
+    func getUserMap() {
+        let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
+        let completedInts = completedMeditation
+        
+        let beg1 = [6, 3, 9, 107, 82]
+        let beg2 = [105, 80, 80, 80, 104, 108, 92, 90]
+        let beg3 = [91, 93, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5]
+        let beg4 = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 28]
+        let beg5 = [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 29]
+        let beg6 = [29, 29, 29, 29, 29, 29, 30, 30]
+    
+        let exp1 = [24, 105, 90, 90, 108]
+        let exp2 = [92, 5, 5, 5, 5, 5, 5, 5, 5]
+        let exp3 = [28, 28, 28, 28, 28, 28, 28, 28, 28]
+        let exp4 = [28, 28, 28, 28, 28, 29, 29, 29, 29]
+        let exp5 = [29, 29, 29, 29, 29, 29, 29, 30, 30]
+        let exp6 = [30, 30, 30, 30, 31, 31, 32]
+    
+        let userCoinCollectedLevel = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int ?? 0
+        let begArr = [beg1, beg2, beg3, beg4, beg5, beg6]
+        let expArr = [exp1, exp2, exp3, exp4, exp5, exp6]
+        roadMapArr = begArr[0]
+        for i in 0...userCoinCollectedLevel {
+            switch selected {
+            case "Meditate often":
+                if expArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i {
+                    roadMaplevel = i + 2
+                    roadMapArr = expArr[i+1]
+                } else {
+                    roadMaplevel = i + 1
+                    roadMapArr = expArr[i]
+                }
+            case "Have tried to meditate":
+                if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i {
+                    roadMaplevel = i + 2
+                    roadMapArr = begArr[i+1]
+                } else {
+                    roadMaplevel = i + 1
+                    roadMapArr = begArr[i]
+                }
+            case "Have never meditated":
+                if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i  {
+                    roadMaplevel = i + 2
+                    roadMapArr = begArr[i+1]
+                } else {
+                    roadMaplevel = i + 1
+                    roadMapArr = begArr[i]
+                }
+            default: break
+            }
+        }
+    }
+    
+    var completedMeditation: [Int] {
+        let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []
+        return completedMeditations.compactMap { Int($0) }
     }
 }

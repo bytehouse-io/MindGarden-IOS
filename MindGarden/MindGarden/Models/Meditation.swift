@@ -87,56 +87,6 @@ struct Meditation: Hashable {
         return finalMeds
     }
     
-    // Roadmap of meditations based on experience chosen during onboarding
-    static var userMap: (Int, [Int]) = {
-        let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
-        let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []
-        let completedInts = completedMeditations.compactMap { Int($0) }
-        
-        let beg1 = [6, 107, 107, 107, 82]
-        let beg2 = [105, 80, 80, 80, 104, 108, 92, 90]
-        let beg3 = [91, 93, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5]
-        let beg4 = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 28]
-        let beg5 = [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 29]
-        let beg6 = [29, 29, 29, 29, 29, 29, 30, 30]
-    
-        let exp1 = [24, 105, 90, 90, 108]
-        let exp2 = [92, 5, 5, 5, 5, 5, 5, 5, 5]
-        let exp3 = [28, 28, 28, 28, 28, 28, 28, 28, 28]
-        let exp4 = [28, 28, 28, 28, 28, 29, 29, 29, 29]
-        let exp5 = [29, 29, 29, 29, 29, 29, 29, 30, 30]
-        let exp6 = [30, 30, 30, 30, 31, 31, 32]
-    
-        var lvl = 1
-        let begArr = [beg1, beg2, beg3, beg4, beg5, beg6]
-        let expArr = [exp1, exp2, exp3, exp4, exp5, exp6]
-        
-        var retArr = begArr[0]
-        
-        for i in 0...5 {
-            switch selected {
-            case "Meditate often":
-                if expArr[i].allSatisfy(completedInts.contains) {
-                    lvl = i + 1
-                    retArr = expArr[i]
-                }
-            case "Have tried to meditate":
-                if begArr[i].allSatisfy(completedInts.contains) {
-                    lvl = i + 1
-                    retArr = begArr[i]
-                }
-            case "Have never meditated":
-                if begArr[i].allSatisfy(completedInts.contains) {
-                    lvl = i + 1
-                    retArr = begArr[i]
-                }
-            default: break
-            }
-        }
-        return (lvl, retArr)
-    }()
-    
-    
     static var allMeditations = [
 //        Meditation(title: "Open-Ended Meditation", description: "Unguided meditation with no time limit, with the option to add a gong sounds every couple of minutes.", belongsTo: "none", category: .unguided, img: Img.starfish, type: .course, id: 1, duration: 0, reward: 0),
 
