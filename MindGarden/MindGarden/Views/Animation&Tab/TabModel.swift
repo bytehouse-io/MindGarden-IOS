@@ -11,13 +11,13 @@ enum TabType: String {
     case garden
     case meditate
     case shop
-    case learn
+    case search
 }
 
 var tabList = [
     TabMenuItem(image: Img.plantIcon, tabName: .garden, color: .white),
     TabMenuItem(image: Img.meditateIcon, tabName: .meditate, color: .white),
-    TabMenuItem(image: Img.pencilIcon, tabName: .learn, color: .white),
+    TabMenuItem(image: Img.search, tabName: .search, color: .white),
     TabMenuItem(image: Img.shopIcon, tabName: .shop, color: .white)
 ]
 
@@ -32,7 +32,7 @@ struct TabMenuItem: Identifiable {
         case .garden: return "Garden"
         case .meditate: return "Meditate"
         case .shop: return "Shop"
-        case .learn: return "Learn"
+        case .search: return "Search"
         }
     }
 }

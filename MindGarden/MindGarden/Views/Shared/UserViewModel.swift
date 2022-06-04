@@ -30,9 +30,9 @@ class UserViewModel: ObservableObject {
     @Published var completedMeditations: [String] = []
     @Published var show50Off = false
     @Published var referredCoins: Int = 0
-    private var validationCancellables: Set<AnyCancellable> = []
+    @Published var name: String = ""
 
-    var name: String = ""
+    private var validationCancellables: Set<AnyCancellable> = []
     var joinDate: String = ""
     var greeting: String = ""
     var referredStack: String = ""
@@ -256,30 +256,31 @@ class UserViewModel: ObservableObject {
     }
 
     func checkIfPro() {
-        Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
-            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-                buyBonsai()
-                UserDefaults.standard.setValue(true, forKey: "isPro")
-                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
-                WidgetCenter.shared.reloadAllTimelines()
-            } else {
-                if UserDefaults.standard.bool(forKey: "freeTrial") && !UserDefaults.standard.bool(forKey: "freeTrialTo50"){
-                    // cancelled free trial
-                    show50Off = true
+    Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
+        if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
+            UserDefaults.standard.setValue(true, forKey: "isPro")
+            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+            WidgetCenter.shared.reloadAllTimelines()
+        } else {
+            if UserDefaults.standard.bool(forKey: "freeTrial") && !UserDefaults.standard.bool(forKey: "freeTrialTo50"){
+                // cancelled free trial
+                show50Off = true
+            }
+            
+            if !UserDefaults.standard.bool(forKey: "promoCode") {
+                UserDefaults.standard.setValue(false, forKey: "isPro")
+                if referredStack != "" {
+                    let plusIndex = referredStack.indexInt(of: "+") ?? 0
+                    if dateFormatter.date(from: referredStack.substring(to: plusIndex)) ?? Date() > Date() {
+                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                    } else {
+                        UserDefaults.standard.setValue(false, forKey: "isPro")
+                    }
                 }
                 
-                if !UserDefaults.standard.bool(forKey: "promoCode") {
-                    UserDefaults.standard.setValue(false, forKey: "isPro")
-                    if referredStack != "" {
-                        let plusIndex = referredStack.indexInt(of: "+") ?? 0
-                        if dateFormatter.date(from: referredStack.substring(to: plusIndex)) ?? Date() > Date() {
-                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                        } else {
-                            UserDefaults.standard.setValue(false, forKey: "isPro")
-                        }
-                    }
-                    UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
-                    WidgetCenter.shared.reloadAllTimelines()
+                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                WidgetCenter.shared.reloadAllTimelines()
+            
 //                    if let email = Auth.auth().currentUser?.email {
 //                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
 //                            "isPro": isPro,
@@ -291,11 +292,9 @@ class UserViewModel: ObservableObject {
 //                            }
 //                        }
 //                    }
-                } else {
-                    buyBonsai()
-                }
             }
         }
+    }
     }
 
 

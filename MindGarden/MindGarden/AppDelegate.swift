@@ -14,9 +14,10 @@ import FirebaseDynamicLinks
 import Amplitude
 import OneSignal
 import Paywall
+import WidgetKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     @objc func sendLaunch() {
         AppsFlyerLib.shared().start()
     }
@@ -69,6 +70,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.beginReceivingRemoteControlEvents()
         UNUserNotificationCenter.current().delegate = self
+        
+        // Add state change listener for Firebase Authentication
+        Purchases.shared.delegate = self
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if let uid = user?.email {
+                // identify Purchases SDK with new Firebase user
+                Purchases.shared.logIn(uid, { (info, created, error) in
+                    if let e = error {
+                        print("Sign in error: \(e.localizedDescription)")
+                    } else {
+                        print("User \(uid) signed in")
+                    }
+                })
+            }
+        }
         
         return true
     }

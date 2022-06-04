@@ -468,6 +468,7 @@ extension AuthenticationViewModel {
                     UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("432hz", forKey: "sound")
                     self.userModel.getSelectedPlant()
+                    self.userModel.name = UserDefaults.standard.string(forKey: "name") ?? ""
                 }
             }
         }
@@ -478,6 +479,9 @@ extension AuthenticationViewModel {
     }
 
     func getData() {
+        UserDefaults.standard.setValue(["Bijan 21", "Quote 21", "Tale 21"], forKey: "oldSegments")
+        UserDefaults.standard.setValue(["Bijan 21", "Quote 21", "Tale 21"], forKey: "storySegments")
+        UserDefaults.standard.setValue(true, forKey: "signedIn")
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
@@ -487,11 +491,21 @@ extension AuthenticationViewModel {
                     if let joinDate = document[K.defaults.joinDate] {
                         UserDefaults.standard.setValue(joinDate, forKey: K.defaults.joinDate)
                     }
+                    
                     if let isPro = document["isPro"] {
                         UserDefaults.standard.setValue(isPro, forKey: "isPro")
                     }
+                    
                     if let experience = document["experience"] {
                         UserDefaults.standard.setValue(experience, forKey: "experience")
+                    }
+                    if let stack = document["referredStack"] as? String {
+                        let plusIndex = stack.indexInt(of: "+") ?? 0
+                        let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
+                        
+                        if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
+                            UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
+                        }
                     }
                 }
             }

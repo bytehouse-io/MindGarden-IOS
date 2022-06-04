@@ -14,6 +14,7 @@ var tappedSignIn = false
 struct OnboardingScene: View {
     @State private var index = 0
     @EnvironmentObject var viewRouter: ViewRouter
+    
     init() {
         if #available(iOS 14.0, *) {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Clr.gardenGreen)
@@ -23,7 +24,7 @@ struct OnboardingScene: View {
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
     let titles = ["Meditation You'll Actually Stick With.", "Visualize Your Progress", "Collect all flowers, fruits and trees!"]
-    let subtitles = ["Get 1% happier, calmer & more focused everyday by hitting the mental gym 💪", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
+    let subtitles = ["Get 1% happier, calmer & more focused everyday by growing your MindGarden 🌱", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
     let images = [Img.coloredPots, Img.gardenCalender, Img.packets]
     var body: some View {
         NavigationView {
@@ -151,7 +152,7 @@ struct OnboardingScene: View {
                                         .font(Font.mada(.bold, size: 20))
                                 )
                         }.frame(height: 50)
-                            .padding([.horizontal, .bottom])
+                            .padding()
                         .buttonStyle(BonusPress())
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_sign_in)
@@ -161,16 +162,12 @@ struct OnboardingScene: View {
                                 viewRouter.currentPage = .authentication
                             }
                         } label: {
-                            Capsule()
-                                .fill(Clr.darkWhite)
-                                .overlay(
-                                    Text("Already have an account")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 20))
-                                        .shadow(radius: 0)
-                                )
-                        }.frame(height: 50)
-                            .padding([.bottom, .horizontal])
+                            Text("Already have an account")
+                                .underline()
+                                .font(Font.mada(.regular, size: 18))
+                                .foregroundColor(.gray)
+                        }.frame(height: 30)
+                            .padding()
                         .buttonStyle(BonusPress())
                         Spacer()
                     }

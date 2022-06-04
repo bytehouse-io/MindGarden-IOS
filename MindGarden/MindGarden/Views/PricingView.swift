@@ -508,8 +508,6 @@ struct PricingView: View {
                     }
                 }
             }
-        } else {
-            viewRouter.currentPage = .meditate
         }
     }
     

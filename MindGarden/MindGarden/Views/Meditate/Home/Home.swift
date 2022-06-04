@@ -17,7 +17,7 @@ import Paywall
 var launchedApp = false
 
 enum Sheet: Identifiable {
-    case profile, plant, search
+    case profile, plant, search, streak
     var id: Int {
         hashValue
     }
@@ -118,6 +118,8 @@ struct Home: View {
                     Store(isShop: false)
                 case .search:
                     CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false))
+                case .streak:
+                    StreakScene()
                 }
             }
             .navigationBarHidden(true)
@@ -138,12 +140,13 @@ struct Home: View {
             viewRouter.currentPage = .middle
         }
         .onAppear {
+//            activeSheet = .streak
             if !UserDefaults.standard.bool(forKey: "tappedFeature") && !UserDefaults.standard.bool(forKey: "day1Intro") {
                 onboardingTime = true
             } else {
                 onboardingTime = false
             }
-
+            print(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done", UserDefaults.standard.bool(forKey: "firstStory"), UserDefaults.standard.bool(forKey: "review"), "butal", UserDefaults.standard.bool(forKey: "signedIn"))
             if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
                 storylyViewProgrammatic.resume()

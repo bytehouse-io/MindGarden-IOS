@@ -51,7 +51,7 @@ struct HomeTabView: View {
                     viewRouter.currentPage = .meditate
                 case .shop:
                     viewRouter.currentPage = .shop
-                case .learn:
+                case .search:
                     viewRouter.currentPage = .learn
                 }
             }

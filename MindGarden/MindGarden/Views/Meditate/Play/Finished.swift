@@ -210,7 +210,7 @@ struct Finished: View {
                                     }.frame(width: g.size.width * 0.85, height: g.size.height/2.25)
                                 }
                                 Spacer()
-                            }.offset(y: !isOnboarding ? 0 : -100)
+                            }.offset(y: !isOnboarding ? -50 : -100)
                         
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)

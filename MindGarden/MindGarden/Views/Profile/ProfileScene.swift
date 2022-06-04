@@ -475,6 +475,8 @@ struct ProfileScene: View {
                 if mindfulNotifs {
                     showNotification = true
                     mindfulNotifs = false
+                } else if gardenSettings {
+                    showGarden = true
                 }
             }
 

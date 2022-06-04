@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 
 struct DiscoverScene: View {
+    @EnvironmentObject var bonusModel: BonusViewModel
     @State private var selectedTab: DiscoverTabType = .quickStart
     @State private var tappedSearch = false
     var body: some View {
@@ -68,6 +69,7 @@ struct DiscoverScene: View {
                 QuickStart()
             case .learn:
                 LearnScene()
+                    .environmentObject(bonusModel)
             }
         }
     }

@@ -109,17 +109,20 @@ struct PurchaseModal: View {
                             Img.seed
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height: g.size.width * 0.025)
+                                .frame(height: g.size.width * 0.04)
+                                .offset(y: 15)
                             Image(systemName: "arrow.right")
                             userModel.willBuyPlant?.one
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height: g.size.width * 0.16)
+                                .frame(height: g.size.width * 0.10)
+                                .offset(y: 15)
                             Image(systemName: "arrow.right")
                             userModel.willBuyPlant?.two
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height: g.size.width * 0.18)
+                                .frame(height: g.size.width * 0.13)
+                                .offset(y: 10)
                             Image(systemName: "arrow.right")
                             userModel.willBuyPlant?.coverImage
                                 .resizable() 
@@ -139,6 +142,7 @@ struct PurchaseModal: View {
                             .foregroundColor(Clr.black2)
                             .padding(.bottom, -10)
                         }
+                        
                         if userModel.willBuyPlant?.title == "Real Tree" {
                             Text("💰 MindGarden will donate one tree per purchase.")
                                 .font(Font.mada(.medium, size: 20))
@@ -152,6 +156,7 @@ struct PurchaseModal: View {
                                 .frame(width: g.size.width * 0.7, alignment: .leading)
                                 .padding(.top)
                         }
+                        
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {

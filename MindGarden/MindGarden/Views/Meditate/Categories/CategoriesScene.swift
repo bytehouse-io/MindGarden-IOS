@@ -199,11 +199,11 @@ struct CategoriesScene: View {
             case .minutes10: return meditation.duration <= 700 && meditation.duration >= 500
             case .minutes20: return meditation.duration >= 1000
             case .popular: return !meditation.title.isEmpty
-            case .morning: return !meditation.title.isEmpty
-            case .sleep: return !meditation.title.isEmpty
-            case .anxiety: return !meditation.title.isEmpty
-            case .unguided: return !meditation.title.isEmpty
-            case .courses: return !meditation.title.isEmpty
+            case .morning: return meditation.category == .sleep
+            case .sleep: return meditation.category == .sleep
+            case .anxiety: return meditation.category == .anxiety
+            case .unguided: return meditation.category == .unguided
+            case .courses: return meditation.type == .course
             }
         })
     }

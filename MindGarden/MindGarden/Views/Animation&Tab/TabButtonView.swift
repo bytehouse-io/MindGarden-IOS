@@ -53,7 +53,7 @@ struct TabButtonView: View {
             HStack {
                 if selectedTab == .shop { Spacer() }
                 if selectedTab == .meditate { Spacer() }
-                if selectedTab == .learn {
+                if selectedTab == .search {
                     Spacer()
                     Spacer()
                     Spacer()
@@ -70,7 +70,7 @@ struct TabButtonView: View {
                     Spacer()
                     Spacer()
                 }
-                if selectedTab == .learn { Spacer() }
+                if selectedTab == .search { Spacer() }
             }
                 .padding(.horizontal, 5)
         )

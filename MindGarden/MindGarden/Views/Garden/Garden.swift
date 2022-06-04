@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+var gardenSettings = false
+
 struct Garden: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -81,7 +84,7 @@ struct Garden: View {
                                     .onTapGesture {
                                         Analytics.shared.log(event: .garden_tapped_settings)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-    //                                    showPlant = true
+                                        gardenSettings = true
                                         activeSheet = .profile
                                     }
                             }
@@ -109,15 +112,16 @@ struct Garden: View {
                                             if gardenModel.monthTiles[row]?[currentDate]?.0 != nil && gardenModel.monthTiles[row]?[currentDate]?.1 != nil {
                                                 // mood & plant both exist
                                                 // first tile in onboarding
-                                                let plantHead = gardenModel.monthTiles[row]?[currentDate]?.0?.head
+                                                let plantHead = gardenModel.monthTiles[row]?[currentDate]?.0?.head.resizable().aspectRatio(contentMode: .fit)
                                                 ZStack {
                                                     Rectangle()
                                                         .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
-                                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                         .opacity(isOnboarding ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
+//                                                        .resizable()
+//                                                        .aspectRatio(contentMode: .fit)
                                                         .padding(3)
                                                         .overlay(
                                                             ZStack {
@@ -129,18 +133,21 @@ struct Garden: View {
                                                                 }
                                                             }
                                                         )
-                                                }
+                                                }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.0 != nil { // only mood is nil
                                                 ZStack {
                                                     let plant = gardenModel.monthTiles[row]?[currentDate]?.0
-                                                    let plantHead = plant?.head
+                                                    let plantHead = gardenModel.monthTiles[row]?[currentDate]?.0?.head
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
                                                     Rectangle()
                                                         .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue : Clr.calenderSquare)
-                                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                         .opacity(isOnboarding ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
+//                                                        .resizable()
+//                                                        .aspectRatio(contentMode: .fit)
                                                         .padding(3)
                                                         .overlay(
                                                             ZStack {
@@ -152,7 +159,7 @@ struct Garden: View {
                                                                 }
                                                             }
                                                         )
-                                                }
+                                                }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
                                                 Rectangle()
                                                     .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
@@ -276,12 +283,12 @@ struct Garden: View {
                                             .cornerRadius(15)
                                             .neoShadow()
                                         HStack {
-                                            Img.fire
+                                            Img.streak
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .padding()
                                                 .padding(.trailing,0)
-                                                .frame(width: 80)
+                                                .frame(width: 100)
                                                 .offset(x: 5)
                                             VStack(spacing: 20) {
                                                 RoundedRectangle(cornerRadius: 15)
@@ -494,6 +501,8 @@ struct Garden: View {
                 case .plant:
                     Store(isShop: false)
                 case .search:
+                    EmptyView()
+                case .streak:
                     EmptyView()
                 }
             }

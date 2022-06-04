@@ -43,44 +43,44 @@ struct StreakScene: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                Spacer()
                 ZStack {
-                    LottieAnimationView(filename: "fire", loopMode: .playOnce, isPlaying: .constant(true))
+                    LottieAnimationView(filename: "flame 1", loopMode: .playOnce, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
                         .opacity(timeRemaining <= 0 ? 0 : 1)
-                    LottieAnimationView(filename: "second_part_loop", loopMode: .loop, isPlaying: .constant(true))
+                    LottieAnimationView(filename: "flame 2", loopMode: .loop, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
                         .opacity(timeRemaining <= 0 ? 1 : 0)
-                }
+                }.offset(y: 75)
                 Spacer()
                 Text(title)
                     .streakTitleStyle()
+                    .offset(y: 25)
                 Text(subTitle)
                     .streakBodyStyle()
                     .frame(width: UIScreen.main.bounds.width * 0.9, height: 150)
-                    .offset(y: -25)
-                
                 DaysProgressBar()
                 Spacer()
                 if showButtons {
-                    Button {
-                        showButtons = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            img = takeStreakSceneScreenshot(origin: UIScreen.main.bounds.origin, size: UIScreen.main.bounds.size)
-                            isSharePresented = true
-                        }
-                    } label: {
-                        Capsule()
-                            .fill(Clr.gardenRed)
-                            .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
-                            .overlay(
-                                Text("Share")
-                                    .font(Font.mada(.bold, size: 24))
-                                    .foregroundColor(.white)
-                            )
-                    }
-                    .buttonStyle(NeumorphicPress())
-                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
-                    .padding(.top, 50)
+//                    Button {
+//                        showButtons = false
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                            img = takeStreakSceneScreenshot(origin: UIScreen.main.bounds.origin, size: UIScreen.main.bounds.size)
+//                            isSharePresented = true
+//                        }
+//                    } label: {
+//                        Capsule()
+//                            .fill(Clr.gardenRed)
+//                            .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
+//                            .overlay(
+//                                Text("Share")
+//                                    .font(Font.mada(.bold, size: 24))
+//                                    .foregroundColor(.white)
+//                            )
+//                    }
+//                    .buttonStyle(NeumorphicPress())
+//                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
+//                    .padding(.top, 50)
                     Button {
                         //TODO: implement continue tap event
                         viewRouter.currentPage = .garden
@@ -96,7 +96,7 @@ struct StreakScene: View {
                     }
                     .buttonStyle(NeumorphicPress())
                     .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
-                    .padding(.top, 10)
+                    .padding(.top, 40)
                 }
             }
             .offset(y: -145)

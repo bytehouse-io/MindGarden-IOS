@@ -249,9 +249,6 @@ struct Authentication: View {
                 if !tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_onboarding_signup)
                 } else if !tappedSignOut {
-                    UserDefaults.standard.setValue(["Bijan 21", "Quote 21", "Tale 21"], forKey: "oldSegments")
-                    UserDefaults.standard.setValue(["Bijan 21", "Quote 21", "Tale 21"], forKey: "storySegments")
-                    UserDefaults.standard.setValue(true, forKey: "signedIn")
                     Analytics.shared.log(event: .screen_load_onboarding_signin)
                 } else if tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_signup)
