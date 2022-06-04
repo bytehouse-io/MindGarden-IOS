@@ -14,6 +14,9 @@ import FirebaseDynamicLinks
 import Amplitude
 import OneSignal
 import Paywall
+import AVFoundation
+
+var player: AVAudioPlayer?
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        playSound(soundName: "background")
         // Override point for customization after application launch.
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
@@ -73,6 +77,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func playSound(soundName: String) {
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            player?.volume = 0.5
+            
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
 
 
     // MARK: UISceneSession Lifecycle

@@ -121,6 +121,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .learn:
                                         DiscoverScene()
+                                            .environmentObject(bonusModel)
                                     case .categories:
                                         CategoriesScene(showSearch: .constant(false), isBack: .constant(false))
                                             .frame(height: geometry.size.height + 10)
