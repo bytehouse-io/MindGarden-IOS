@@ -52,7 +52,7 @@ class MeditationViewModel: ObservableObject {
     init() {
         $selectedCategory
             .sink { [unowned self] value in
-                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed()
+                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed().unique()
                 } else {
                     self.selectedMeditations = Meditation.allMeditations.filter { med in
                         if value == .courses && (med.title == "Intro to Meditation" || med.title == "The Basics Course" ) {
@@ -60,7 +60,7 @@ class MeditationViewModel: ObservableObject {
                         } else {
                             return med.category == value && med.type != .lesson
                         }
-                    }
+                    }.unique()
                 }
             }
             .store(in: &validationCancellables)
@@ -68,7 +68,7 @@ class MeditationViewModel: ObservableObject {
         $selectedMeditation
             .sink { [unowned self] value in 
                 if value?.type == .course {
-                    selectedMeditations = Meditation.allMeditations.filter { med in med.belongsTo == value?.title }.sorted(by: { med1, med2 in med1.id < med2.id  })
+                    selectedMeditations = Meditation.allMeditations.filter { med in med.belongsTo == value?.title }.sorted(by: { med1, med2 in med1.id < med2.id  }).unique()
                 }
                 secondsRemaining = value?.duration ?? 0
                 totalTime = secondsRemaining
@@ -383,5 +383,13 @@ class MeditationViewModel: ObservableObject {
     var completedMeditation: [Int] {
         let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []
         return completedMeditations.compactMap { Int($0) }
+    }
+}
+
+
+extension Sequence where Iterator.Element: Hashable {
+    func unique() -> [Iterator.Element] {
+        var seen: Set<Iterator.Element> = []
+        return filter { seen.insert($0).inserted }
     }
 }
