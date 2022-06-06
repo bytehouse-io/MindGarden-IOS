@@ -78,25 +78,25 @@ struct NotificationHelper {
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
-        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
-            if hour < 18 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
-            } else if hour > 20 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
-            } else {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            }
-        } else {
-            if hour < 11 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 30, to: Date())
-            } else if hour < 16 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
-            } else if hour < 20 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
-            } else {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
-            }
-        }
+//        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+//            if hour < 18 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+//            } else if hour > 20 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
+//            } else {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+//            }
+//        } else {
+//            if hour < 11 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 30, to: Date())
+//            } else if hour < 16 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
+//            } else if hour < 20 {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
+//            } else {
+//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
+//            }
+//        }
        
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
@@ -144,6 +144,7 @@ struct NotificationHelper {
     }
     
     static func addOnboarding() {
+        
         let content = UNMutableNotificationContent()
         content.title = ""
         content.body = ""
@@ -152,6 +153,9 @@ struct NotificationHelper {
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .hour, value: 6, to: Date())
         
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "educatedRacoon", imageName: "educatedRacoon") {
+            content.attachments = [attachment]
+        }
         // 1 = 1 AM
         // 10 = 10AM
         // 14 = 2PM
@@ -163,11 +167,11 @@ struct NotificationHelper {
         } else if hour > 18 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
             content.title = "Finish Onboarding"
-            content.body = "🌱 Start your first session & unlock a free Cherry Blossom (limited time)"
+            content.body = "You're almost there! 🌱 Join 3458 others and start your first session"
         } else {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            content.title = "Finish Onboarding"
-            content.body = "🌱 Start your first session & unlock a free Cherry Blossom (limited time)"
+            content.title = "Finish Onboarding Gardener"
+            content.body = "You're almost there!  🌱 Start your first session"
         }
      
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
@@ -195,7 +199,9 @@ struct NotificationHelper {
         content.body = "We understand but if meditation was that easy, everyone would be doing it. But \(UserDefaults.standard.string(forKey: "name") ?? "") you're different!"
         content.sound = UNNotificationSound.default
         
-
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "wavingTurtle", imageName: "wavingTurtle") {
+            content.attachments = [attachment]
+        }
 
         let modifiedDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
@@ -256,7 +262,11 @@ struct NotificationHelper {
         content.title = title
         content.body = body
         content.sound = UNNotificationSound.default
-
+        
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "wavingTurtle", imageName: "wavingTurtle") {
+            content.attachments = [attachment]
+        }
+        
         let modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 

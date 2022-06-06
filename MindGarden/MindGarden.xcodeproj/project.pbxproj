@@ -58,8 +58,6 @@
 		882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D427E2D76E00F8D4D0 /* second_part_loop.json */; };
 		882E62C8284A5E4E00E8BC09 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 882E62C7284A5E4C00E8BC09 /* background.wav */; };
 		88588042283C0293007AACC2 /* wavingTurtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 88588041283C0293007AACC2 /* wavingTurtle.png */; };
-		8858804A283C03AD007AACC2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588049283C03AD007AACC2 /* NotificationService.swift */; };
-		8858804E283C03AD007AACC2 /* MindNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88588047283C03AD007AACC2 /* MindNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588052283C0D41007AACC2 /* ChallengeModal.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
@@ -77,7 +75,6 @@
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
 		88C39D40283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
 		88C39D41283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
-		88C39D42283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
@@ -223,13 +220,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8858804C283C03AD007AACC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FEB6AF8A265D95F500224BFD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 88588046283C03AD007AACC2;
-			remoteInfo = MindNotificationService;
-		};
 		FE48B44627791B5B00CA7B63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FEB6AF8A265D95F500224BFD /* Project object */;
@@ -261,7 +251,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed App Extensions */,
-				8858804E283C03AD007AACC2 /* MindNotificationService.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,9 +306,6 @@
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
 		882E62C7284A5E4C00E8BC09 /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background.wav; sourceTree = "<group>"; };
 		88588041283C0293007AACC2 /* wavingTurtle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wavingTurtle.png; sourceTree = "<group>"; };
-		88588047283C03AD007AACC2 /* MindNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MindNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		88588049283C03AD007AACC2 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		8858804B283C03AD007AACC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88588052283C0D41007AACC2 /* ChallengeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModal.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
@@ -477,13 +463,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		88588044283C03AD007AACC2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FE39A0A427711644007A3E82 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -656,15 +635,6 @@
 			path = Widgets;
 			sourceTree = "<group>";
 		};
-		88588048283C03AD007AACC2 /* MindNotificationService */ = {
-			isa = PBXGroup;
-			children = (
-				88588049283C03AD007AACC2 /* NotificationService.swift */,
-				8858804B283C03AD007AACC2 /* Info.plist */,
-			);
-			path = MindNotificationService;
-			sourceTree = "<group>";
-		};
 		8876A60427C03C2A00A9622F /* Learn */ = {
 			isa = PBXGroup;
 			children = (
@@ -806,7 +776,6 @@
 				FEB6AFB6265D95F700224BFD /* MindGardenUITests */,
 				FE39A0A827711644007A3E82 /* OneSignalNotificationServiceExtension */,
 				FE48B43D27791B5500CA7B63 /* MindGardenWidget */,
-				88588048283C03AD007AACC2 /* MindNotificationService */,
 				FEB6AF93265D95F500224BFD /* Products */,
 				3A7661D503EA9E2EFD32F645 /* Pods */,
 				31146EA5291805B3B30F837A /* Frameworks */,
@@ -821,7 +790,6 @@
 				FEB6AFB3265D95F700224BFD /* MindGardenUITests.xctest */,
 				FE39A0A727711644007A3E82 /* OneSignalNotificationServiceExtension.appex */,
 				FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */,
-				88588047283C03AD007AACC2 /* MindNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1106,23 +1074,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		88588046283C03AD007AACC2 /* MindNotificationService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8858804F283C03AD007AACC2 /* Build configuration list for PBXNativeTarget "MindNotificationService" */;
-			buildPhases = (
-				88588043283C03AD007AACC2 /* Sources */,
-				88588044283C03AD007AACC2 /* Frameworks */,
-				88588045283C03AD007AACC2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MindNotificationService;
-			productName = MindNotificationService;
-			productReference = 88588047283C03AD007AACC2 /* MindNotificationService.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		FE39A0A627711644007A3E82 /* OneSignalNotificationServiceExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE39A0B227711644007A3E82 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
@@ -1178,7 +1129,6 @@
 			);
 			dependencies = (
 				FE48B44727791B5B00CA7B63 /* PBXTargetDependency */,
-				8858804D283C03AD007AACC2 /* PBXTargetDependency */,
 			);
 			name = MindGarden;
 			packageProductDependencies = (
@@ -1239,9 +1189,6 @@
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
-					88588046283C03AD007AACC2 = {
-						CreatedOnToolsVersion = 13.3.1;
-					};
 					FE39A0A627711644007A3E82 = {
 						CreatedOnToolsVersion = 13.1;
 					};
@@ -1284,20 +1231,11 @@
 				FEB6AFB2265D95F700224BFD /* MindGardenUITests */,
 				FE39A0A627711644007A3E82 /* OneSignalNotificationServiceExtension */,
 				FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */,
-				88588046283C03AD007AACC2 /* MindNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		88588045283C03AD007AACC2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88C39D42283D460F004D42EC /* educatedRacoon.svg in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FE39A0A527711644007A3E82 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1585,14 +1523,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		88588043283C03AD007AACC2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8858804A283C03AD007AACC2 /* NotificationService.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		FE39A0A327711644007A3E82 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1760,11 +1690,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8858804D283C03AD007AACC2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 88588046283C03AD007AACC2 /* MindNotificationService */;
-			targetProxy = 8858804C283C03AD007AACC2 /* PBXContainerItemProxy */;
-		};
 		FE48B44727791B5B00CA7B63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FE48B43727791B5500CA7B63 /* MindGardenWidgetExtension */;
@@ -1794,67 +1719,13 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		88588050283C03AD007AACC2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M5757NXZKD;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MindNotificationService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MindNotificationService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindNotificationService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		88588051283C03AD007AACC2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M5757NXZKD;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MindNotificationService/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MindNotificationService;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindNotificationService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		FE39A0B027711644007A3E82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1866,7 +1737,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1882,7 +1753,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
@@ -1894,7 +1765,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1912,7 +1783,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1924,7 +1795,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1942,7 +1813,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = MindGardenWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MindGardenWidget/Info.plist;
@@ -1954,7 +1825,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -2090,7 +1961,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 51;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -2101,7 +1972,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2119,7 +1990,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 51;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -2130,7 +2001,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.50;
+				MARKETING_VERSION = 1.51;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -2229,15 +2100,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8858804F283C03AD007AACC2 /* Build configuration list for PBXNativeTarget "MindNotificationService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88588050283C03AD007AACC2 /* Debug */,
-				88588051283C03AD007AACC2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		FE39A0B227711644007A3E82 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
