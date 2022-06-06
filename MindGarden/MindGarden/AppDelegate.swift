@@ -87,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
             player?.volume = 0.5
+            player?.numberOfLoops = -1
             
             guard let player = player else { return }
             

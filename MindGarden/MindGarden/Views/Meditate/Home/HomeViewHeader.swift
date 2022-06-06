@@ -19,7 +19,7 @@ struct HomeViewHeader: View {
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @State var challengeOn = false
-    @State var Speaker = true
+    @State var isSpeakerOn = true
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd, yyyy"
@@ -43,7 +43,7 @@ struct HomeViewHeader: View {
                 VStack {
                     HStack {
                         // TODO if user presses off: speaker.slash.fill icon
-                        Image(systemName: Speaker ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                        Image(systemName: isSpeakerOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
@@ -54,11 +54,11 @@ struct HomeViewHeader: View {
                                     if player.isPlaying {
                                         player.pause()
                                         UserDefaults.standard.setValue(false, forKey: "isPlayMusic")
-                                        Speaker = false
+                                        isSpeakerOn = false
                                     } else {
                                         player.play()
                                         UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
-                                        Speaker = true
+                                        isSpeakerOn = true
                                     }
                                 }
 //                                showSearch = true
