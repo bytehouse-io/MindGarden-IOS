@@ -97,7 +97,7 @@ enum AnalyticEvent {
     case home_tapped_plant_select //
     case home_selected_plant //
     case home_tapped_categories //
-    case home_tapped_search //
+    case home_tapped_sound //
     case home_tapped_profile //
     case home_tapped_recents //
     case home_tapped_favorites //
@@ -535,7 +535,7 @@ extension AnalyticEvent {
         case .home_tapped_pro: return "home_tapped_pro"
         case .home_selected_plant: return "home_selected_plant"
         case .home_tapped_categories: return "home_tapped_categories"
-        case .home_tapped_search: return "home_tapped_search"
+        case .home_tapped_sound: return "home_tapped_sound"
         case .home_tapped_profile: return "home_tapped_profile"
         case .home_tapped_recents: return "home_tapped_recents"
         case .home_tapped_favorites: return "home_tapped_favorites"

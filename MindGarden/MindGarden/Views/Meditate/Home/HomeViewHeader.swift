@@ -47,7 +47,7 @@ struct HomeViewHeader: View {
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
-                                Analytics.shared.log(event: .home_tapped_search)
+                                Analytics.shared.log(event: .home_tapped_sound)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 
                                 if let player = player {
