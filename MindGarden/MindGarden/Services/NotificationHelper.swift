@@ -17,11 +17,10 @@ struct NotificationHelper {
     
     static func addOneDay() {
         var content = UNMutableNotificationContent()
-//
-//        if let imageURL = Bundle.main.url(forResource: "wavingTurtle", withExtension: "png") {
-//            let attachment = try! UNNotificationAttachment(identifier: "wavingTurtle", url: imageURL, options: .none)
-//            content.attachments = [attachment]
-//        }
+        if let attachment = UNNotificationAttachment.getAttachment(identifier: "wavingTurtle", imageName: "wavingTurtle") {
+            content.attachments = [attachment]
+        }
+        
         let formatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd, yyyy"
@@ -69,7 +68,6 @@ struct NotificationHelper {
 
         
    
-            
         // 1 = 1 AM
         // 10 = 10AM
         // 14 = 2PM
@@ -80,25 +78,25 @@ struct NotificationHelper {
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
-//        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
-//            if hour < 18 {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
-//            } else if hour > 20 {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
-//            } else {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-//            }
-//        } else {
-//            if hour < 11 {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 30, to: Date())
-//            } else if hour < 16 {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
-//            } else if hour < 20 {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
-//            } else {
-//                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
-//            }
-//        }
+        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+            if hour < 18 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+            } else if hour > 20 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
+            } else {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+            }
+        } else {
+            if hour < 11 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 30, to: Date())
+            } else if hour < 16 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 26, to: Date())
+            } else if hour < 20 {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
+            } else {
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
+            }
+        }
        
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
@@ -222,7 +220,7 @@ struct NotificationHelper {
     static func freeTrial() {
     
         let content = UNMutableNotificationContent()
-        content.title = "Your Free trial envcds tomorrow"
+        content.title = "Your Free trial ends tomorrow"
         content.body = "👨‍🌾 Users who go pro are 4x more likely to make meditation a habit"
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = "freeTrial"
@@ -266,7 +264,7 @@ struct NotificationHelper {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         // Create the request
-        let uuidString = UUID().uuidString
+        let uuidString = title
         let request = UNNotificationRequest(identifier: uuidString,
                     content: content, trigger: trigger)
         // Schedule the request with the system.

@@ -8,8 +8,10 @@
 import SwiftUI
 import Lottie
 
+var learnNotif = false
 struct DiscoverScene: View {
     @EnvironmentObject var bonusModel: BonusViewModel
+    @EnvironmentObject var userModel: UserViewModel
     @State private var selectedTab: DiscoverTabType = .quickStart
     @State private var tappedSearch = false
     var body: some View {
@@ -34,6 +36,7 @@ struct DiscoverScene: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .onTapGesture {
+                                Analytics.shared.log(event: .discover_tapped_search)
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 tappedSearch = true
@@ -44,7 +47,7 @@ struct DiscoverScene: View {
                     .padding(.horizontal,40)
                     DiscoverTab(selectedTab: $selectedTab)
                         .padding(.horizontal,35)
-                        .frame( height:36)
+                        .frame(height:36)
                 }
             }
             .zIndex(1)
@@ -58,13 +61,20 @@ struct DiscoverScene: View {
             CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false))
         }
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            if learnNotif {
+                selectedTab = .learn
+                learnNotif = false
+            }
+        }
+        .onAppearAnalytics(event: .screen_load_discover)
     }
     
     var tabView: some View {
         return Group {
             switch selectedTab {
-            case .courses:
-                Clr.darkWhite
+            case .journey:
+                JourneyScene(userModel: userModel)
             case .quickStart:
                 QuickStart()
             case .learn:

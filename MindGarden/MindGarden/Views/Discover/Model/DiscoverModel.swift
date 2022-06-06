@@ -8,11 +8,11 @@
 import SwiftUI
 
 enum DiscoverTabType: String {
-    case courses,quickStart,learn
+    case journey,quickStart,learn
 }
 
 var discoverTabList = [
-    DiscoverMenuItem(tabName: .courses),
+    DiscoverMenuItem(tabName: .journey),
     DiscoverMenuItem(tabName: .quickStart),
     DiscoverMenuItem(tabName: .learn)
 ]
@@ -23,7 +23,7 @@ struct DiscoverMenuItem: Identifiable {
     
     var name: String {
         switch self.tabName {
-        case .courses: return "Courses"
+        case .journey: return "Journey"
         case .quickStart: return "Quick Start"
         case .learn: return "Learn"
         }

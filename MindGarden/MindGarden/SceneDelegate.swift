@@ -27,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
         return formatter
     }()
+    var playOnActive = false
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -38,7 +39,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
-        NotificationHelper.addOneDay()
         if launchNum == 0 {
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 if accepted {
@@ -121,11 +121,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Analytics.shared.log(event: .sceneDidBecomeActive)
         SceneDelegate.bonusModel.updateBonus()
         SceneDelegate.userModel.updateSelf()
+
+        if let player = player, playOnActive {
+            player.play()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        if let player = player, player.isPlaying {
+            player.pause()
+            playOnActive = true
+        } else {
+            playOnActive = false
+        }
+        
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
@@ -135,7 +146,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
         }
-        
+
         if UserDefaults.standard.bool(forKey: "reddit") && !UserDefaults.standard.bool(forKey: "redditOne") {
             SceneDelegate.userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
                 p.title == "Apples"
@@ -152,7 +163,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.  
+        // to restore the scene back to its current state.
+        if let player = player, player.isPlaying {
+            player.pause()
+        }
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {

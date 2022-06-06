@@ -49,18 +49,20 @@ struct JourneyRow: View {
                                     .font(Font.mada(.semiBold, size: 12))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
-                                Circle()
-                                    .fill(Clr.black2)
-                                    .frame(width: 4, height: 4)
-                                    .padding(.horizontal, 4)
-                                Image(systemName: "clock")
-                                    .foregroundColor(Clr.black2)
-                                    .font(.system(size: 12))
-                                Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.semiBold, size: 12))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
+                                if Int(meditation.duration) != 0 {
+                                    Circle()
+                                        .fill(Clr.black2)
+                                        .frame(width: 4, height: 4)
+                                        .padding(.horizontal, 4)
+                                    Image(systemName: "clock")
+                                        .foregroundColor(Clr.black2)
+                                        .font(.system(size: 12))
+                                    Text((Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.mada(.semiBold, size: 12))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
+                                }
                             }
                             HStack(spacing: 3) {
                                 Image(systemName: "person.fill")
@@ -82,16 +84,16 @@ struct JourneyRow: View {
                         if meditation.imgURL != "" {
                             UrlImageView(urlString: meditation.imgURL)
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.2, height: UIScreen.screenHeight * 0.2)
+                                .frame(width: width * 0.25, height: UIScreen.screenHeight * 0.2)
                                 .padding()
-                                .offset(x: -20)
+                                .offset(x: -30)
                         } else {
                             meditation.img
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.2, height: UIScreen.screenHeight * 0.2)
+                                .frame(width: width * 0.25, height: UIScreen.screenHeight * 0.2)
                                 .padding()
-                                .offset(x: -20)
+                                .offset(x: -30)
                         }
 
                 }.frame(width: width * 0.825, height: UIScreen.screenHeight * 0.225, alignment: .leading)

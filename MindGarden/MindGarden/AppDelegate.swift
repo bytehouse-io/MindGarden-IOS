@@ -15,6 +15,9 @@ import Amplitude
 import OneSignal
 import Paywall
 import WidgetKit
+import AVFoundation
+
+var player: AVAudioPlayer?
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
@@ -23,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        playSound(soundName: "background")
         // Override point for customization after application launch.
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
@@ -89,6 +93,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         return true
     }
     
+    func playSound(soundName: String) {
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            player?.volume = 0.5
+            
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
 
 
     // MARK: UISceneSession Lifecycle
@@ -200,18 +223,26 @@ extension AppDelegate: AppsFlyerLibDelegate{
 
 extension AppDelegate: UNUserNotificationCenterDelegate{
   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-      print(response.notification.request.identifier, "j,ion")
       if response.notification.request.identifier == "oneDay" {
-          Analytics.shared.log(event: .notification_oneDay_reminder)
+          Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
       }  else if response.notification.request.identifier == "introNotif"  {
           NotificationCenter.default.post(name: Notification.Name("intro"), object: nil)
-          Analytics.shared.log(event: .notification_oneDay_reminder)
+          Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
       } else if response.notification.request.identifier == "threeDay" {
-          Analytics.shared.log(event: .notification_threeDay_reminder)
+          Analytics.shared.log(event: .notification_tapped_threeDay_reminder)
       } else if response.notification.request.identifier == "streakNotStarted" {
-          Analytics.shared.log(event: .notification_streakNotStarted)
+          Analytics.shared.log(event: .notification_tapped_streakNotStarted)
       } else if response.notification.request.identifier == "onboardingNotif" {
-          Analytics.shared.log(event: .notification_onboarding)
+          Analytics.shared.log(event: .notification_tapped_onboarding)
+      } else if response.notification.request.identifier == "⚙️ Widget has been unlocked" {
+          Analytics.shared.log(event: .notification_tapped_widget)
+          NotificationCenter.default.post(name: Notification.Name("widget"), object: nil)
+      } else if response.notification.request.identifier == "🛍 Your Store Page has been unlocked!" {
+          Analytics.shared.log(event: .notification_tapped_store)
+          NotificationCenter.default.post(name: Notification.Name("store"), object: nil)
+      } else if response.notification.request.identifier == "🔑 Learn Page has unlocked!" {
+          Analytics.shared.log(event: .notification_tapped_learn)
+          NotificationCenter.default.post(name: Notification.Name("learn"), object: nil)
       }
     completionHandler()
   }

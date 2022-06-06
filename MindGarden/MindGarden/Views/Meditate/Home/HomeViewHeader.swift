@@ -19,6 +19,7 @@ struct HomeViewHeader: View {
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @State var challengeOn = false
+    @State var Speaker = true
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd, yyyy"
@@ -42,15 +43,27 @@ struct HomeViewHeader: View {
                 VStack {
                     HStack {
                         // TODO if user presses off: speaker.slash.fill icon
-                        Image(systemName: "speaker.wave.2.fill")
+                        Image(systemName: Speaker ? "speaker.wave.2.fill" : "speaker.slash.fill")
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
                                 Analytics.shared.log(event: .home_tapped_search)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                showSearch = true
-                                searchScreen = true
-                                activeSheet = .search
+                                
+                                if let player = player {
+                                    if player.isPlaying {
+                                        player.pause()
+                                        UserDefaults.standard.setValue(false, forKey: "isPlayMusic")
+                                        Speaker = false
+                                    } else {
+                                        player.play()
+                                        UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
+                                        Speaker = true
+                                    }
+                                }
+//                                showSearch = true
+//                                searchScreen = true
+//                                activeSheet = .search
                             }
                         Image(systemName: "person.fill")
                             .foregroundColor(Clr.darkgreen)
@@ -60,7 +73,7 @@ struct HomeViewHeader: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 activeSheet = .profile
                             }
-                    }.offset(x: 15, y: -25)
+                    }.offset(x: 30, y: -25)
                     
                     HStack{
                         Spacer()
@@ -161,12 +174,13 @@ struct HomeViewHeader: View {
                                             withAnimation { showIAP.toggle() }
                                         }
                                 }
-                            }.padding(.trailing, 20)
+                            }.padding(.trailing, 25)
                                 .padding(.top, -10)
                                 .padding(.bottom, 10)
                         }
                     }.offset(x: -width * 0.25, y: -10)
-                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.875 : 0.82))
+                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.92 : 0.84))
+                .padding(.trailing, 40)
             }
         }.frame(width: width)
             .offset(y: -height * 0.1)

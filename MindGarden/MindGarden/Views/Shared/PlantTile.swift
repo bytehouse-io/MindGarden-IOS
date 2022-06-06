@@ -33,7 +33,9 @@ struct PlantTile: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: width * 0.30, height: height * 0.18)
                         .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
-                        .opacity(isOwned ? 0.4 : 1) :
+                        .opacity(isOwned ? 0.4 : 1)
+                        .offset(x: -5, y: -5)
+                    :
                     plant.coverImage
                         .renderingMode(.original)
                         .resizable()
@@ -41,6 +43,7 @@ struct PlantTile: View {
                         .frame(width: width * 0.30, height: height * 0.18)
                         .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
                         .opacity(1)
+                        .offset(x: 0, y: 0)
                    )
                         : plant.coverImage
                         .renderingMode(.original)
@@ -49,6 +52,7 @@ struct PlantTile: View {
                         .frame(width: width * 0.30, height: height * 0.18)
                         .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
                         .opacity(1)
+                        .offset(x: 0, y: 0)
                     Text(plant.title)
                         .font(Font.mada(.bold, size: 20))
                         .foregroundColor(Clr.black1)
@@ -123,6 +127,6 @@ struct PlantTile: View {
 
 struct PlantTile_Previews: PreviewProvider {
     static var previews: some View {
-        PlantTile(width: 300, height: 700, plant: Plant(title: "Red Tulip", price: 90, selected: false, description: "Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.redTulipHead, badge: Img.redTulipsBadge), isShop: false)
+        PlantTile(width: 300, height: 700, plant: Plant(title: "Red Tulip", price: 90, selected: false, description: "Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.daisyHead, badge: Img.redTulipsBadge), isShop: false)
     }
 }

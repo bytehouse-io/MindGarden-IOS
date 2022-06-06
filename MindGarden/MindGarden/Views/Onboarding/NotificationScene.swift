@@ -287,7 +287,7 @@ struct NotificationScene: View {
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
                 }
                 UserDefaults.standard.setValue(true, forKey: "remindersOn")
-                NotificationHelper.addUnlockedFeature(title: "🔓 Your Learn Page has been unlocked!", body: "We recommend starting with Understanding Mindfulness")
+                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
                 DispatchQueue.main.async {
                     if fromSettings {
                         presentationMode.wrappedValue.dismiss()

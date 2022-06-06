@@ -190,8 +190,8 @@
             filePath = "MindGarden/Services/NotificationHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
             landmarkName = "create(identifier:image:options:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,9 +206,9 @@
             filePath = "MindGarden/Views/Shared/UserViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "checkIfPro()"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
+            landmarkName = "buyBonsai()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

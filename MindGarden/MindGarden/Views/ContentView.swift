@@ -122,6 +122,7 @@ struct ContentView: View {
                                     case .learn:
                                         DiscoverScene()
                                             .environmentObject(bonusModel)
+                                            .environmentObject(userModel)
                                     case .categories:
                                         CategoriesScene(showSearch: .constant(false), isBack: .constant(false))
                                             .frame(height: geometry.size.height + 10)
@@ -423,10 +424,20 @@ struct ContentView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.garden)) { _ in
+            selectedTab = .garden
             viewRouter.currentPage = .garden
         }
-
-
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("store")))
+        { _ in
+            selectedTab = .shop
+            viewRouter.currentPage = .shop
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("learn")))
+        { _ in
+            learnNotif = true
+            selectedTab = .search
+            viewRouter.currentPage = .learn
+        }
     }
     ///Ashvin : Show popup with animation method
 

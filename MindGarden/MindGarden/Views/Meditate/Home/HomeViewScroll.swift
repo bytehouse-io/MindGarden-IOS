@@ -169,20 +169,20 @@ struct HomeViewScroll: View {
                                             Image(systemName: "play.fill")
                                                 .foregroundColor(.white)
                                                 .font(.system(size: K.isPad() ? 50 : 26))
-                                        }.offset(x: 35, y: K.isPad() ? 45 : 25)
+                                        }.offset(x: 20, y: K.isPad() ? 45 : 25)
                                             .padding([.top, .leading])
                                             .zIndex(100)
                                         if model.featuredMeditation?.imgURL != "" {
                                             UrlImageView(urlString: model.featuredMeditation?.imgURL)
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: height * 0.2)
-                                                .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
+                                                .frame(width: UIScreen.main.bounds.width * 0.80 * 0.4, height: height * 0.2)
+                                                .offset(x:  -35, y: K.isPad() ? -40 : -25)
                                         } else {
                                             (model.featuredMeditation?.img ?? Img.daisy3)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: UIScreen.main.bounds.width * 0.80 * 0.5, height: height * 0.2)
-                                                .offset(x: K.isPad() ? -150 : -25, y: K.isPad() ? -40 : -25)
+                                                .frame(width: UIScreen.main.bounds.width * 0.80 * 0.4, height: height * 0.2)
+                                                .offset(x:  -35, y: K.isPad() ? -40 : -25)
                                         }
                                         
                                     }.padding([.top, .bottom, .trailing])
@@ -360,37 +360,7 @@ struct HomeViewScroll: View {
                     }
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
-                    //MARK: - New Meds
-                    if Meditation.userMap.0 == 6 {
-                        ( Text("🗺 Roadmap ")
-                            .foregroundColor(Clr.black2)
-                          + Text("Final Level")
-                            .foregroundColor(Clr.darkgreen))
-                            .font(Font.mada(.semiBold, size: 28))
-                            .padding(.top, 30)
-                            .frame(width: abs(width * 0.825), alignment: .leading)
-                    } else {
-                        ( Text("🗺 Roadmap Level: ")
-                            .foregroundColor(Clr.black2)
-                          + Text("\(Meditation.userMap.0)")
-                            .foregroundColor(Clr.darkgreen))
-                            .font(Font.mada(.semiBold, size: 28))
-                            .padding(.top, 30)
-                            .frame(width: abs(width * 0.825), alignment: .leading)
-                    }
-
-                    VStack {
-                        ForEach(Meditation.userMap.1, id: \.self) { medId in
-                            HStack {
-                                // TODO Create circle ui + dotted lines
-                                // If completedMeditations.contains(medId) then it should be checked. 
-                                JourneyRow(width: width * 0.9, meditation: model.weeklyMeditation ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
-                                    .padding([.horizontal, .bottom])
-                            }.frame(width: width * 0.9, alignment: .trailing)
-                        }
-                    }.frame(width: width)
-                        .padding(.bottom)
-                    
+                    JourneyScene(userModel: userModel)
                     if #available(iOS 14.0, *) {
                         Button { } label: {
                             HStack {

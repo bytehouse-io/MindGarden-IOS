@@ -48,11 +48,14 @@ enum AnalyticEvent {
     case notification_success //
     case notification_tapped_skip //
     case notification_go_to_settings //
-    case notification_intro_reminder //
-    case notification_oneDay_reminder //
-    case notification_threeDay_reminder //
-    case notification_streakNotStarted //
-    case notification_onboarding //
+    case notification_tapped_intro_reminder //
+    case notification_tapped_oneDay_reminder //
+    case notification_tapped_threeDay_reminder //
+    case notification_tapped_streakNotStarted //
+    case notification_tapped_onboarding //
+    case notification_tapped_widget //
+    case notification_tapped_store
+    case notification_tapped_learn //
     // home + garden
     case onboarding_finished_mood //
     case onboarding_finished_gratitude //
@@ -140,6 +143,7 @@ enum AnalyticEvent {
     case store_bought_real_tree //
     case notification_success_store //
     case notification_settings_store //
+    
 
     //MARK: - Middle
     case screen_load_middle //
@@ -179,6 +183,12 @@ enum AnalyticEvent {
     case finished_tapped_gratitude //
     case finished_tapped_mood //
     case finished_set_reminder //
+    
+    //MARK: - Discover
+    case screen_load_discover
+    case screen_load_journey
+    case discover_tapped_search
+    
     
     //MARK: - Learn
     case screen_load_learn //
@@ -291,6 +301,7 @@ enum AnalyticEvent {
     case tabs_tapped_store //
     case tabs_tapped_profile //
     case tabs_tapped_plus //
+    case tabs_tapped_search //
     //plus
     case plus_tapped_mood //
     case plus_tapped_mood_to_pricing
@@ -383,6 +394,8 @@ extension AnalyticEvent {
             return .tabs_tapped_store
         case "Profile":
             return .tabs_tapped_profile
+        case "Search":
+            return .tabs_tapped_search
         default:
             return .tabs_tapped_meditate
         }
@@ -683,6 +696,7 @@ extension AnalyticEvent {
         case .tabs_tapped_store: return "tabs_tapped_store"
         case .tabs_tapped_profile: return "tabs_tapped_profile"
         case .tabs_tapped_plus: return "tabs_tapped_plus"
+        case .tabs_tapped_search: return "tabs_tapped_search"
         case .plus_tapped_mood: return "plus_tapped_mood"
         case .mood_toggle_recs_on: return "mood_toggle_recs_on"
         case .mood_toggle_recs_off: return "mood_toggle_recs_off"
@@ -712,11 +726,14 @@ extension AnalyticEvent {
         case .screen_load_learn: return "screen_load_learn"
         case .notification_success_learn: return "notification_success_learn"
         case .notification_settings_learn: return "notification_settings_learn"
-        case .notification_intro_reminder: return "notification_intro_reminder"
-        case .notification_oneDay_reminder: return "notification_oneDay_reminder"
-        case .notification_threeDay_reminder: return "notification_threeDay_reminder"
-        case .notification_streakNotStarted: return "notification_streakNotStarted"
-        case .notification_onboarding: return "notification_onboarding"
+        case .notification_tapped_intro_reminder: return "notification_tapped_intro_reminder"
+        case .notification_tapped_oneDay_reminder: return "notification_tapped_oneDay_reminder"
+        case .notification_tapped_threeDay_reminder: return "notification_tapped_threeDay_reminder"
+        case .notification_tapped_streakNotStarted: return "notification_tapped_streakNotStarted"
+        case .notification_tapped_onboarding: return "notification_tapped_onboarding"
+        case .notification_tapped_widget: return "notification_tapped_widget"
+        case .notification_tapped_store: return "notification_tapped_store"
+        case .notification_tapped_learn: return "notification_tapped_learn"
         case .learn_tapped_meditation_course: return "learn_tapped_meditation_course"
         case .learn_finished_meditation_course: return "learn_finished_meditation_course"
         
@@ -739,7 +756,11 @@ extension AnalyticEvent {
         case .story_swipe_trees_future: return "story_swipe_trees_future"
         case .store_tapped_real_tree: return "store_tapped_real_tree"
         case .store_bought_real_tree: return "store_bought_real_tree"
-        case .no_thanks_50: return "case no_thanks_50"
+        case .no_thanks_50: return "no_thanks_50"
+        
+        case .screen_load_discover: return "screen_load_discover"
+        case .screen_load_journey: return "screen_load_journey"
+        case .discover_tapped_search: return "discover_tapped_search"
         }
     }
 }

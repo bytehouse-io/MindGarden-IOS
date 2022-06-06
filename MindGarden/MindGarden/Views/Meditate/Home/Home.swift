@@ -146,15 +146,12 @@ struct Home: View {
             } else {
                 onboardingTime = false
             }
-            print(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done", UserDefaults.standard.bool(forKey: "firstStory"), UserDefaults.standard.bool(forKey: "review"), "butal", UserDefaults.standard.bool(forKey: "signedIn"))
             if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
                 storylyViewProgrammatic.resume()
                 UserDefaults.standard.setValue(true, forKey: "firstStory")
             }
     
-
-            
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {

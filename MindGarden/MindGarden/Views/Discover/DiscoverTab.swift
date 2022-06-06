@@ -21,7 +21,7 @@ struct DiscoverTab: View {
                     .frame(width:UIScreen.screenWidth*0.27)
                     .padding(.vertical,3)
                 if selectedTab == .quickStart { Spacer() }
-                if selectedTab == .courses { Spacer() }
+                if selectedTab == .journey { Spacer() }
             }.padding(.horizontal,3)
             HStack(alignment:.center) {
                 ForEach(discoverTabList) { item in
@@ -29,6 +29,9 @@ struct DiscoverTab: View {
                         DispatchQueue.main.async {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 selectedTab = item.tabName
+                                if selectedTab == .journey {
+                                    Analytics.shared.log(event: .screen_load_journey)
+                                }
                             }
                         }
                     } label: {

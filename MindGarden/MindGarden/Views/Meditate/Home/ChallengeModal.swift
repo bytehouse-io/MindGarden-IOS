@@ -85,7 +85,7 @@ struct ChallengeModal: View {
                             }
                         }.frame(width: width * 0.75, height: g.size.height * 0.18)
                    
-                        Img.cherryPacket
+                        Img.cherryBlossomPacket
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height:  g.size.height * 0.35)
