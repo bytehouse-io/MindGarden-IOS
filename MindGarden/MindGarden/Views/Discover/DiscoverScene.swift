@@ -10,8 +10,8 @@ import Lottie
 
 var learnNotif = false
 struct DiscoverScene: View {
-    @EnvironmentObject var bonusModel: BonusViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     @State private var selectedTab: DiscoverTabType = .quickStart
     @State private var tappedSearch = false
     var body: some View {
@@ -74,7 +74,12 @@ struct DiscoverScene: View {
         return Group {
             switch selectedTab {
             case .journey:
-                JourneyScene(userModel: userModel)
+                ZStack {
+                    ScrollView {
+                        JourneyScene(userModel: userModel)
+                        Spacer().frame(height:120)
+                    }
+                }
             case .quickStart:
                 QuickStart()
             case .learn:
