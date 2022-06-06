@@ -23,7 +23,7 @@ struct DiscoverMenuItem: Identifiable {
     
     var name: String {
         switch self.tabName {
-        case .courses: return "Courses"
+        case .courses: return "Journey"
         case .quickStart: return "Quick Start"
         case .learn: return "Learn"
         }

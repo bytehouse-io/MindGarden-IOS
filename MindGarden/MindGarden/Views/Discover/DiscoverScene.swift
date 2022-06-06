@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 
 struct DiscoverScene: View {
+    @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
     @State private var selectedTab: DiscoverTabType = .quickStart
     @State private var tappedSearch = false
@@ -64,7 +65,12 @@ struct DiscoverScene: View {
         return Group {
             switch selectedTab {
             case .courses:
-                Clr.darkWhite
+                ZStack {
+                    ScrollView {
+                        JourneyScene(userModel: userModel)
+                        Spacer().frame(height:120)
+                    }
+                }
             case .quickStart:
                 QuickStart()
             case .learn:
