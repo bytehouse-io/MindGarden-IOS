@@ -185,7 +185,7 @@ struct Finished: View {
                                             .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
                                             .padding(.top,50)
                                             .padding()
-                                            .offset(y: !isOnboarding ? 0 : -125)
+                                            .offset(y: !isOnboarding ? -25 : -125)
                                         Spacer()
                                     }
                                     VStack {
