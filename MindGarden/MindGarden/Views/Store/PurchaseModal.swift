@@ -203,7 +203,6 @@ struct PurchaseModal: View {
                                 default:
                                     meditateModel.selectedMeditation = meditateModel.featuredMeditation
                                     withAnimation {
-                                        
                                         if meditateModel.featuredMeditation?.type == .course {
                                             viewRouter.currentPage = .middle
                                         } else {
