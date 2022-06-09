@@ -185,6 +185,7 @@ struct HomeViewHeader: View {
         }.frame(width: width)
             .offset(y: -height * 0.1)
             .onAppear {
+                isSpeakerOn = UserDefaults.standard.bool(forKey: "isPlayMusic")
                 if let challengeDate = UserDefaults.standard.string(forKey: "challengeDate") {
                     if challengeDate != "" {
                         if (Date() - (formatter.date(from: challengeDate) ?? Date()) < 30000) && !UserDefaults.standard.bool(forKey: "day7"){

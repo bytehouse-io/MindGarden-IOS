@@ -102,12 +102,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
             
             /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
-            player?.volume = 0.5
+            player?.volume = 0.4
             player?.numberOfLoops = -1
             
             guard let player = player else { return }
-            
-            player.play()
+            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                player.play()
+            }
             
         } catch let error {
             print(error.localizedDescription)

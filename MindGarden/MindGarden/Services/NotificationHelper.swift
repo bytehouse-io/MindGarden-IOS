@@ -119,7 +119,7 @@ struct NotificationHelper {
         let content = notif
         if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
             if UserDefaults.standard.integer(forKey: "longestStreak") > 1 {
-                if let attachment = UNNotificationAttachment.getAttachment(identifier: "fireFox", imageName: "fireFox") {
+                if let attachment = UNNotificationAttachment.getAttachment(identifier: "firefox", imageName: "firefox") {
                     content.attachments = [attachment]
                 }
                 content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"

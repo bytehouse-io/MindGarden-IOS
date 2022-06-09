@@ -61,7 +61,7 @@
 		88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588052283C0D41007AACC2 /* ChallengeModal.swift */; };
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
-		88661F892852817B0052B9B0 /* fireFox.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88661F882852817B0052B9B0 /* fireFox.svg */; };
+		88661F8B28528DA50052B9B0 /* firefox.png in Resources */ = {isa = PBXBuildFile; fileRef = 88661F8A28528DA50052B9B0 /* firefox.png */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		8884A994284A75E200B0B315 /* flame.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A993284A75E200B0B315 /* flame.json */; };
 		8884A996284BDBBC00B0B315 /* flame 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A995284BDBBC00B0B315 /* flame 1.json */; };
@@ -310,7 +310,7 @@
 		88588052283C0D41007AACC2 /* ChallengeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModal.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
-		88661F882852817B0052B9B0 /* fireFox.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fireFox.svg; sourceTree = "<group>"; };
+		88661F8A28528DA50052B9B0 /* firefox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefox.png; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		8884A993284A75E200B0B315 /* flame.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flame.json; sourceTree = "<group>"; };
 		8884A995284BDBBC00B0B315 /* flame 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "flame 1.json"; sourceTree = "<group>"; };
@@ -649,7 +649,6 @@
 		8897F12E283BFF0200F4E158 /* NotificationImages */ = {
 			isa = PBXGroup;
 			children = (
-				88661F882852817B0052B9B0 /* fireFox.svg */,
 				88588041283C0293007AACC2 /* wavingTurtle.png */,
 				8897F12A283BEAC100F4E158 /* educatedRacoon.png */,
 			);
@@ -883,6 +882,7 @@
 			isa = PBXGroup;
 			children = (
 				58491F6D283CA9E60093C61A /* freeTrialNotification.png */,
+				88661F8A28528DA50052B9B0 /* firefox.png */,
 				888A81AA283FF31A00E5D225 /* eduRacoon.png */,
 				88C39D3F283D460F004D42EC /* educatedRacoon.svg */,
 				8897F12E283BFF0200F4E158 /* NotificationImages */,
@@ -1268,6 +1268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C39D40283D460F004D42EC /* educatedRacoon.svg in Resources */,
+				88661F8B28528DA50052B9B0 /* firefox.png in Resources */,
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
@@ -1296,7 +1297,6 @@
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				88588042283C0293007AACC2 /* wavingTurtle.png in Resources */,
 				8884A996284BDBBC00B0B315 /* flame 1.json in Resources */,
-				88661F892852817B0052B9B0 /* fireFox.svg in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
