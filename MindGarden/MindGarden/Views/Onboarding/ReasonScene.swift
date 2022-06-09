@@ -51,7 +51,6 @@ struct ReasonScene: View {
                                 var arr = [String]()
                                 selected.forEach { item in
                                     arr.append(item.title)
-                                    OneSignal.sendTag(item.tag, value: "true")
                                     Analytics.shared.log(event: item.event)
                                 }
                                 let stringRepresentation = arr.joined(separator: " | ")

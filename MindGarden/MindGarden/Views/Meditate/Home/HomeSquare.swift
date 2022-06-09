@@ -8,7 +8,7 @@
 import SwiftUI
 
 //FONTs Used
-// Title: 28, semibold
+// Title: 16, semibold
 // subscript: 12, regular
 
 struct HomeSquare: View {
@@ -36,7 +36,7 @@ struct HomeSquare: View {
                                 Spacer()
                                 Text(title)
                                     .frame(width: width * 0.225, alignment: .leading)
-                                    .font(Font.mada(.semiBold, size: K.isPad() ? 28 : K.isSmall() ? 16 : 16))
+                                    .font(Font.mada(.semiBold, size: K.isPad() ? 28 : 16))
                                     .foregroundColor(Clr.black2)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(3)

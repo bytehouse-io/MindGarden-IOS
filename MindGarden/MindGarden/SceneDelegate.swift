@@ -124,7 +124,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         SceneDelegate.userModel.updateSelf()
 
         if let player = player, playOnActive {
-            player.play()
+            if UserDefaults.standard.bool(forKey: "isPlayActive") {
+                player.play()
+            }
         }
     }
 

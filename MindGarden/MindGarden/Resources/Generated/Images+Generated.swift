@@ -180,6 +180,7 @@ public enum Img {
   public static let discoverSearch = Image("discoverSearch")
   public static let educatedRacoon = Image("educatedRacoon")
   public static let eggs = Image("eggs")
+  public static let feather = Image("feather")
   public static let fire = Image("fire")
   public static let flower = Image("flower")
   public static let foxStudy = Image("foxStudy")

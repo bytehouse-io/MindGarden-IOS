@@ -249,6 +249,7 @@ struct CategoriesScene: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
                 fromPage = "lockedMeditation"
+                Analytics.shared.log(event: .pricing_from_locked)
                 Analytics.shared.log(event: .categories_tapped_locked_meditation)
                 if isSearch {
                     presentationMode.wrappedValue.dismiss()
