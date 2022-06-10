@@ -185,7 +185,7 @@ struct Finished: View {
                                             .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
                                             .padding(.top,50)
                                             .padding()
-                                            .offset(y: !isOnboarding ? -25 : -125)
+                                            .offset(y: !isOnboarding ? -25 : -100)
                                         Spacer()
                                     }
                                     VStack {
@@ -210,7 +210,7 @@ struct Finished: View {
                                     }.frame(width: g.size.width * 0.85, height: g.size.height/2.25)
                                 }
                                 Spacer()
-                            }.offset(y: !isOnboarding ? -50 : -100)
+                            }.offset(y: !isOnboarding ? -50 : -75)
                         
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
@@ -389,16 +389,6 @@ struct Finished: View {
             .onDisappear {
                 model.playImage = Img.seed
                 model.lastSeconds = false
-            }
-            .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
-            { _ in }
-    
-            .onAppear {
-                DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        ios14 = false
-                    }
-                }
                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
                     NotificationHelper.addOneDay()
@@ -407,7 +397,22 @@ struct Finished: View {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
                     NotificationHelper.addThreeDay()
                 }
-                
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
+            { _ in }
+    
+            .onAppear {
+                if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                    if let player = player {
+                        player.play()
+                    }
+                }
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        ios14 = false
+                    }
+                }
+              
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
                     if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 6 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
@@ -420,9 +425,11 @@ struct Finished: View {
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
                 let dur = model.selectedMeditation?.duration ?? 0
-                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
-                    userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
-                }
+//                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
+//                }
+//
+                 userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3

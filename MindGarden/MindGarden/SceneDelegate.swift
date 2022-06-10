@@ -69,7 +69,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Analytics.shared.log(event: .launchedApp)
 
         let medModel = MeditationViewModel()
-
+        medModel.getUserMap()
+        
         let profileModel = ProfileViewModel()
         let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
         medModel.updateSelf()

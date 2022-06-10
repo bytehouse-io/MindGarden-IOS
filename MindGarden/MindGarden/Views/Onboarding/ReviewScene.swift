@@ -13,7 +13,9 @@ var onboardingTime = false
 struct ReviewScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var experience: (Image, String) =  (Img.moon, "")
-    @State private var aim = (Img.redTulips3, "")
+    @State private var aim = (Img.redTulips3, "gook")
+    @State private var aim2 = (Img.redTulips3, "")
+    @State private var aim3 = (Img.redTulips3, "")
     @State private var notifications = ""
     var displayedTime: DateFormatter {
         let formatter = DateFormatter()
@@ -21,7 +23,7 @@ struct ReviewScene: View {
         return formatter
     }
     @State private var showPaywall = false
-
+    
     var body: some View {
         ZStack {
             GeometryReader { g in
@@ -29,7 +31,7 @@ struct ReviewScene: View {
                 let height = g.size.height
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack(spacing: -10) {
+                    VStack(spacing: 0) {
                         HStack {
                             Img.topBranch.padding(.leading, -20)
                             Spacer()
@@ -45,26 +47,56 @@ struct ReviewScene: View {
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(14)
-                                .frame(width: width * 0.75, height: width * 0.22)
+                                .frame(width: width * 0.75, height: width * (arr.count == 1 ? 0.22 : arr.count == 2 ? 0.4 : arr.count == 3 ? 0.55 : 0.5))
                                 .neoShadow()
-                            HStack(spacing: -10){
-                                aim.0
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.2, height: width * 0.2)
-                                    .padding()
-                                VStack(alignment: .leading) {
-                                    Text("Your aim is to")
-                                        .foregroundColor(.gray)
-                                        .font(Font.mada(.regular, size: 20))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                    Text("\(aim.1)")
-                                        .foregroundColor(Clr.black1)
-                                        .font(Font.mada(.semiBold, size: 22))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                }.frame(width: width * 0.5, alignment: .leading)
+                            VStack(alignment: .leading, spacing: -15){
+                                HStack {
+                                    aim.0
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * 0.15, height: width * 0.15)
+                                        .padding(10)
+                                    VStack(alignment: .leading) {
+                                        Text("Your aim is to")
+                                            .foregroundColor(.gray)
+                                            .font(Font.mada(.regular, size: 20))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.05)
+                                        Text("\(aim.1)")
+                                            .foregroundColor(Clr.black1)
+                                            .font(Font.mada(.semiBold, size: 20))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.05)
+                                    }.frame(width: width * 0.5, alignment: .leading)
+                                }
+                                if arr.count > 1 {
+                                    HStack {
+                                        aim2.0
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: width * (arr.count == 1 ? 0.2 : 0.15), height: width * (arr.count == 1 ? 0.2 : 0.15))
+                                            .padding(10)
+                                        Text("\(aim2.1)")
+                                            .foregroundColor(Clr.black1)
+                                            .font(Font.mada(.semiBold, size: 20))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.05)
+                                    }
+                                }
+                                if arr.count > 2 {
+                                    HStack {
+                                        aim3.0
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: width * (arr.count == 1 ? 0.2 : 0.15), height: width * (arr.count == 1 ? 0.2 : 0.15))
+                                            .padding(10)
+                                        Text("\(aim3.1)")
+                                            .foregroundColor(Clr.black1)
+                                            .font(Font.mada(.semiBold, size: 20))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.05)
+                                    }
+                                }
                             }
                         }
                         ZStack {
@@ -139,6 +171,7 @@ struct ReviewScene: View {
                                     }
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
+                            
                         }
                         Spacer()
                         Button {
@@ -234,17 +267,25 @@ struct ReviewScene: View {
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
             .onAppear {
-                if UserDefaults.standard.string(forKey: "reason") != nil {
-                    switch UserDefaults.standard.string(forKey: "reason") {
+                for (idx,str) in arr.enumerated() {
+                    switch str {
                         case "Sleep better":
-                            aim = (Img.moon, "Sleep better")
+                            if idx == 0 { aim = (Img.moon, "Sleep better") }
+                            else if idx == 1 { aim2 = (Img.moon, "Sleep better") }
+                            else if idx == 2 { aim3 = (Img.moon, "Sleep better") }
                         case "Get more focused":
-                            aim = (Img.target, "Increase focus")
+                            if idx == 0 {  aim = (Img.target, "Increase focus") }
+                            else if idx == 1 { aim2 = (Img.target, "Increase focus") }
+                            else if idx == 2 { aim3 = (Img.target, "Increase focus") }
                         case "Managing Stress & Anxiety":
-                            aim = (Img.moon, "Control anxiety")
+                            if idx == 0 {  aim = (Img.heart, "Control anxiety") }
+                            else if idx == 1 { aim2 = (Img.heart, "Control anxiety") }
+                            else if idx == 2 { aim3 = (Img.heart, "Control anxiety") }
                         case "Just trying it out":
-                            aim = (Img.magnifyingGlass, "Try it out")
-                            default: break
+                            if idx == 0 {  aim = (Img.heart, "Control anxiety") }
+                            else if idx == 1 { aim2 = (Img.heart, "Control anxiety") }
+                            else if idx == 2 { aim3 = (Img.heart, "Control anxiety") }
+                        default: break
                     }
                 }
 

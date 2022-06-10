@@ -74,7 +74,7 @@ struct HomeViewHeader: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 activeSheet = .profile
                             }
-                    }.offset(x: 25, y: -25)
+                    }.offset(x: 22, y: -25)
                     
                     HStack{
                         Spacer()
@@ -84,7 +84,7 @@ struct HomeViewHeader: View {
                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
-                                .padding(.trailing, 27)
+                                .padding(.trailing, 20)
                             HStack {
                                 if challengeOn {
                                     Capsule()

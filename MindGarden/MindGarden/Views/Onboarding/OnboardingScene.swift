@@ -92,7 +92,7 @@ struct OnboardingScene: View {
                                             images[index]
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: width * 0.6 , height: height * (index == 0 ? 0.2 : 0.38))
+                                                .frame(width: width * 0.6 , height: height * (index == 0 ? 0.25 : 0.38))
                                                 .padding()
                                                 .neoShadow()
                                             Spacer()

@@ -267,6 +267,7 @@ public enum Img {
   public static let morning = Image("morning")
   public static let tired = Image("tired")
   public static let realTree = Image("realTree")
+  public static let redChest = Image("redChest")
   public static let referral2 = Image("referral2")
   public static let referral3 = Image("referral3")
   public static let sadPot = Image("sadPot")

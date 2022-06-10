@@ -9,6 +9,7 @@ import SwiftUI
 import OneSignal
 import Amplitude
 
+var arr = [String]()
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ReasonScene: View {
     @State var selected: [ReasonItem] = []
@@ -48,7 +49,6 @@ struct ReasonScene: View {
                             Button {
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                var arr = [String]()
                                 selected.forEach { item in
                                     arr.append(item.title)
                                     Analytics.shared.log(event: item.event)

@@ -45,7 +45,7 @@ struct PricingView: View {
                         ScrollView(showsIndicators: false) {
                             ZStack {
                                 if fiftyOff {
-                                    Img.treasureChest
+                                    Img.greenChest
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: width * 0.5, height: height * 0.2)
