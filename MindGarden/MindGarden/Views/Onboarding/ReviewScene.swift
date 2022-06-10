@@ -282,9 +282,9 @@ struct ReviewScene: View {
                             else if idx == 1 { aim2 = (Img.heart, "Control anxiety") }
                             else if idx == 2 { aim3 = (Img.heart, "Control anxiety") }
                         case "Just trying it out":
-                            if idx == 0 {  aim = (Img.heart, "Control anxiety") }
-                            else if idx == 1 { aim2 = (Img.heart, "Control anxiety") }
-                            else if idx == 2 { aim3 = (Img.heart, "Control anxiety") }
+                            if idx == 0 {  aim = (Img.magnifyingGlass, "Just trying it out") }
+                            else if idx == 1 { aim2 = (Img.magnifyingGlass, "Just trying it out") }
+                            else if idx == 2 { aim3 = (Img.magnifyingGlass, "Just trying it out") }
                         default: break
                     }
                 }

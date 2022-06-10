@@ -27,16 +27,17 @@ struct ReferralItem: Identifiable {
     var image: Image {
         switch self.tabName {
         case .ref1: return Img.venusBadge
-        case .ref2: return Img.referral2
+        case .ref2: return Img.redChest
         case .ref3: return Img.referral3
         }
     }
+    
     
     var title : String {
         switch self.tabName {
         case .ref1: return "Your 1st Friend Invited"
         case .ref2: return "Every Friend Invited = +50 free coins"
-        case .ref3: return "5 Friends = Limited Edition Sticker Packer"
+        case .ref3: return "5 Friends = Limited Edition Sticker Pack"
         }
     }
     
@@ -44,7 +45,7 @@ struct ReferralItem: Identifiable {
         switch self.tabName {
         case .ref1: return "Unlock a rare venus fly trap when you invite your first friend"
         case .ref2: return "In order for a referral to go through, your friend must create an account"
-        case .ref3: return "Email us a screenshot team@mindgarden.io, and we'll mail you stickers for free!"
+        case .ref3: return "Email us a screenshot team@mindgarden.io, and we'll mail you our pack for free!"
         }
     }
 }
