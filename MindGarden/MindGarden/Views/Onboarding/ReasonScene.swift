@@ -125,7 +125,7 @@ struct ReasonScene: View {
                     if selected.count >= 3 {
                         selected.removeFirst()
                     }
-                    
+                    selected = Array(Set(selected))
                     selected.append(reason)
                     
                     if reason.title == "Sleep better" {

@@ -57,7 +57,7 @@ struct JourneyScene: View {
                         .padding([.horizontal, .bottom])
                 }.frame(width: width * 0.9, alignment: .trailing)
             }
-            let isAward = Set(model.roadMapArr).isSubset(of: Set(model.completedMeditation))
+            let isAward = model.roadMapArr.allSatisfy(model.completedMeditation.contains)
             Text("Level Completion Award")
                 .foregroundColor(Clr.black2)
                 .font(Font.mada(.medium, size: 12))

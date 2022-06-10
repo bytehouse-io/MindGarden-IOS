@@ -202,6 +202,7 @@ struct ProfileScene: View {
                                                                 Row(title: "Unlock Pro", img: Image(systemName: "heart.fill"), action: {
                                                                     Analytics.shared.log(event: .profile_tapped_goPro)
                                                                     withAnimation {
+                                                                        Analytics.shared.log(event: .pricing_from_profile)
                                                                         fromPage = "profile"
                                                                         viewRouter.currentPage = .pricing
                                                                     }

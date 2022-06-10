@@ -48,7 +48,8 @@ struct PricingView: View {
                                     Img.greenChest
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: width * 0.5, height: height * 0.2)
+                                        .frame(width: width * 0.35, height: height * 0.15)
+                                        .padding()
                                 } else {
                                     Img.sun2
                                         .resizable()

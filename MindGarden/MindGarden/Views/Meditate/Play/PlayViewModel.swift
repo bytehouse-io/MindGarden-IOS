@@ -92,7 +92,6 @@ extension MeditationViewModel {
                         
                         if UserDefaults.standard.bool(forKey: "day7") {
                             UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
-                            UserDefaults.standard.setValue(true, forKey: "unlockStrawberry")
                             getFeaturedMeditation()
                         }
                         

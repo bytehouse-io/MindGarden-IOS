@@ -30,7 +30,7 @@ struct Meditation: Hashable {
     }
 
     static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105]
-
+    static var popularMeditations = [77, 92, 89, 105, 108, 104, 90, 85, 24]
     func returnEventName() -> String {
         return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "x").replacingOccurrences(of: "-", with: "")
             .replacingOccurrences(of: ",", with: "_")
@@ -126,7 +126,7 @@ struct Meditation: Hashable {
         // Singles
         Meditation(title: "30 Second Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "none", category: .all, img: Img.strawberryMilk, type: .single, id: 22, duration: 29, reward: 1, url: "", instructor: "Bijan",  imgURL: "", isNew: false),
         Meditation(title: "Basic Guided Meditation", description: "A 5 minute guided meditation to help you start or end the day in a mindful matter.", belongsTo: "none", category: .beginners, img: Img.starfish, type: .single, id: 23, duration: 310, reward: 5, url: "https://mcdn.podbean.com/mf/web/8cuz7s/Basic_Guided_Meditationbwagl.mp3", instructor: "Andrew",  imgURL: "", isNew: false),
-        Meditation(title: "Semi-Guided Meditation", description: "A 10 minute semi-guided meditation for more advanced meditators looking to start or end their day present, focused, and calm.", belongsTo: "none", category: .beginners, img: Img.bonfire, type: .single, id: 24, duration: 607, reward: 10, url: "https://mcdn.podbean.com/mf/web/56xviu/Semi-Guided_Meditation6qqb0.mp3", instructor: "Andrew",  imgURL: "", isNew: false),
+        Meditation(title: "Semi-Guided Meditation", description: "A 10 minute semi-guided meditation for more advanced meditators looking to start or end their day present, focused, and calm.", belongsTo: "none", category: .beginners, img: Img.feather, type: .single, id: 24, duration: 607, reward: 10, url: "https://mcdn.podbean.com/mf/web/56xviu/Semi-Guided_Meditation6qqb0.mp3", instructor: "Andrew",  imgURL: "", isNew: false),
         Meditation(title: "Meditation for Focus", description: "A simple 5 minute guided meditation to help you calm your mind, and enter a relaxed focused state.", belongsTo: "none", category: .focus, img: Img.magnifyingGlass, type: .single, id: 25, duration: 315, reward: 5, url: "https://mcdn.podbean.com/mf/web/7d2g5m/Meditation_for_Focus8fetr.mp3", instructor: "Andrew",  imgURL: "", isNew: false),
         Meditation(title: "Body Scan", description: "A short guided meditation to help you tune into your body, reconnect to your physical self and notice any sensations without any judgement. ", belongsTo: "none", category: .all, img: Img.heart, type: .single, id: 26, duration: 345, reward: 5, url: "https://mcdn.podbean.com/mf/web/3dqhaz/Body_Scanairn6.mp3", instructor: "Andrew",  imgURL: "", isNew: false),
         Meditation(title: "Better Faster Sleep", description: "A 5 minute guided meditation to help you relax, let go and fall into a deep restful sleep.", belongsTo: "none", category: .sleep, img: Img.moon, type: .single, id: 27, duration: 335, reward: 5, url: "https://mcdn.podbean.com/mf/web/n283c3/Better_Faster_Sleep9pxwf.mp3", instructor: "Andrew",  imgURL: "", isNew: false),

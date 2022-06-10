@@ -198,7 +198,7 @@ struct CategoriesScene: View {
             case .minutes5: return meditation.duration <= 400 && meditation.duration >= 250
             case .minutes10: return meditation.duration <= 700 && meditation.duration >= 500
             case .minutes20: return meditation.duration >= 1000
-            case .popular: return !meditation.title.isEmpty
+            case .popular: return Meditation.popularMeditations.contains(meditation.id)
             case .morning: return meditation.category == .sleep
             case .sleep: return meditation.category == .sleep
             case .anxiety: return meditation.category == .anxiety

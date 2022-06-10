@@ -457,7 +457,6 @@ struct Finished: View {
                     .set("meditation_sessions", value: NSNumber(value: num))
                 Amplitude.instance().identify(identify ?? AMPIdentify())
                 
-//                showUnlockedModal = UserDefaults.standard.bool(forKey: "unlockStrawberry") && !UserDefaults.standard.bool(forKey: "strawberryUnlocked")
 
                 favorited = model.isFavorited
                 // onboarding

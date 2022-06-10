@@ -116,6 +116,7 @@ struct ChallengeModal: View {
                                 )
                                 .frame(width: g.size.width * 0.75, height: g.size.height * 0.065)
                         }.buttonStyle(NeumorphicPress())
+                        .offset(y: -20)
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))
