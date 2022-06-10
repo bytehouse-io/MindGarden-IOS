@@ -8,7 +8,24 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
-    @Published var currentPage: Page =  UserDefaults.standard.bool(forKey: K.defaults.loggedIn) ? .meditate : UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review") ? .meditate : .onboarding
+    @Published var currentPage: Page = {
+        if UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
+            return .meditate
+        } else if UserDefaults.standard.bool(forKey: "review") {
+            return .meditate
+        } else {
+            switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
+            case "done": return .meditate
+            case "signedUp": return .meditate
+            case "mood": return .meditate
+            case "gratitude": return .meditate
+            case "meditate": return .garden
+            case "stats": return .garden
+            case "calendar": return .garden
+            default: return .onboarding
+            }
+        }
+    }()
     @Published var progressValue: Float = 0.3
 }
 

@@ -36,10 +36,11 @@ struct JourneyScene: View {
         }
         
         VStack {
-            ForEach(model.roadMapArr, id: \.self) {  item in
+            ForEach(model.roadMapArr.indices) { idx in
                 HStack(spacing: 10) {
+                    let item = model.roadMapArr[idx]
                     let index = model.roadMapArr.firstIndex(of: item)
-                    let isPlayed = model.completedMeditation.contains(where: { $0 == item })
+                    let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
                     VStack(spacing:5) {
                         DottedLine()
                             .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))

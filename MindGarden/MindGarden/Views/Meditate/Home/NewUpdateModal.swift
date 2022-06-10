@@ -34,9 +34,9 @@ struct NewUpdateModal: View {
                                 .frame(height: g.size.height * 0.1)
                             Spacer()
                         }.padding([.horizontal, .top])
-                            .frame(width: g.size.width * 0.85 * 0.9)
+                         .frame(width: g.size.width * 0.85 * 0.9)
                     
-                        Img.treasureChest
+                        Img.greenChest
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .cornerRadius(26)

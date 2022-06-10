@@ -42,7 +42,7 @@ struct ChallengeModal: View {
                             }
                             Text("💪 \(Date().getMonthName(month: (Date().get(.month)))) Challenge")
                                 .multilineTextAlignment(.center)
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.mada(.bold, size: 20))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.1)
                                 .minimumScaleFactor(0.5)
@@ -88,9 +88,8 @@ struct ChallengeModal: View {
                         Img.cherryBlossomPacket
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height:  g.size.height * 0.35)
-                            .padding()
-                            .shadow(radius: 10)
+                            .frame(height:  g.size.height * 0.3)
+                            .padding(50)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
@@ -117,7 +116,6 @@ struct ChallengeModal: View {
                                 )
                                 .frame(width: g.size.width * 0.75, height: g.size.height * 0.065)
                         }.buttonStyle(NeumorphicPress())
-                            .padding(.top)
                         Spacer()
                     }
                     .font(Font.mada(.regular, size: 18))

@@ -227,6 +227,36 @@ class UserViewModel: ObservableObject {
         })
     }
 
+    func shouldBeChecked(id: Int, roadMapArr: [Int], idx: Int) -> Bool {
+        let meditation = Meditation.allMeditations.first { med in med.id == id } ?? Meditation.allMeditations[0]
+        let dups = Dictionary(grouping: roadMapArr, by: {$0}).filter { $1.count > 1 }.keys
+        
+        if meditation.type == .course {
+            var entireCourse = Meditation.allMeditations.filter { med in med.belongsTo == meditation.title }
+            entireCourse = entireCourse.sorted { med1, med2 in med1.id < med2.id }
+            if completedMeditations.contains(String(entireCourse[entireCourse.count - 1].id)) {
+                return true
+            }
+        }
+        
+        if dups.contains(meditation.id) { // is a repeat meditaiton
+            var comMedCount = completedMeditations.filter { med in Int(med) == meditation.id}.count
+            let startingIdx = roadMapArr.firstIndex(of: id) ?? 0
+            let endingIdx = roadMapArr.lastIndex(of: id) ?? 0
+            // [2,3,3,3] [4, 3, 3] comMedCount = 2, idx = 2, id = 3, end - start = 2 + 1 = 3
+
+            for indx in startingIdx...endingIdx {
+                if comMedCount == 0 { return false } else {
+                    if idx == indx {
+                        return true
+                    } else {
+                        comMedCount -= 1
+                    }
+                }
+            }
+        }
+        return false
+    }
     
     func finishedMeditation(id:String){
         self.completedMeditations.append(id)

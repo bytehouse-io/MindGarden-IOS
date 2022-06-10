@@ -184,8 +184,8 @@ struct PurchaseModal: View {
                                     }
                                 case "👨‍🌾 Become a pro user":
                                     if !UserDefaults.standard.bool(forKey: "isPro") {
-                                        Analytics.shared.log(event: .store_tapped_go_pro)
                                         withAnimation {
+                                            Analytics.shared.log(event: .pricing_from_store)
                                             fromPage = "store"
                                             viewRouter.currentPage = .pricing
                                         }

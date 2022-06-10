@@ -26,6 +26,7 @@ struct DiscoverTab: View {
             HStack(alignment:.center) {
                 ForEach(discoverTabList) { item in
                     Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         DispatchQueue.main.async {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 selectedTab = item.tabName

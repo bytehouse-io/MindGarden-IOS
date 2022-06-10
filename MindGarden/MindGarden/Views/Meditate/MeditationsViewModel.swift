@@ -331,8 +331,7 @@ class MeditationViewModel: ObservableObject {
         let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
         let completedInts = completedMeditation
         
-//        let beg1 = [6, 107, 107, 82, 82]
-        let beg1 = [105, 80, 80, 80, 104, 108, 92, 90]
+        let beg1 = [6, 107, 107, 82, 82]
         let beg2 = [105, 80, 80, 80, 104, 108, 92, 90]
         let beg3 = [91, 93, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5]
         let beg4 = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 28]

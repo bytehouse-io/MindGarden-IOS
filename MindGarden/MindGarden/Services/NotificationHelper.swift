@@ -97,7 +97,7 @@ struct NotificationHelper {
 //                modifiedDate = Calendar.current.date(byAdding: .hour, value: 18, to: Date())
 //            }
 //        }
-       
+//
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
 
         // Create the trigger as a repeating event.
@@ -119,6 +119,9 @@ struct NotificationHelper {
         let content = notif
         if UserDefaults.standard.integer(forKey: "numMeds") >= 1 {
             if UserDefaults.standard.integer(forKey: "longestStreak") > 1 {
+                if let attachment = UNNotificationAttachment.getAttachment(identifier: "firefox", imageName: "firefox") {
+                    content.attachments = [attachment]
+                }
                 content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
                 switch UserDefaults.standard.string(forKey: "reason") {
                 case "Sleep better":
@@ -133,10 +136,16 @@ struct NotificationHelper {
                     content.body = "Tend to your garden by meditating."
                 }
             } else {
+                if let attachment = UNNotificationAttachment.getAttachment(identifier: "educatedRacoon", imageName: "educatedRacoon") {
+                    content.attachments = [attachment]
+                }
                 content.title = "\(UserDefaults.standard.string(forKey: "name") ?? ""), start your meditation journey today"
                 content.body = "😔 We get it, meditation is hard but anything worth doing is."
             }
         } else {
+            if let attachment = UNNotificationAttachment.getAttachment(identifier: "educatedRacoon", imageName: "educatedRacoon") {
+                content.attachments = [attachment]
+            }
             content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? "") start your first session"
             content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
         }

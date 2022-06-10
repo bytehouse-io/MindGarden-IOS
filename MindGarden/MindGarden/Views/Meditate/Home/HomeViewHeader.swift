@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// FONTs: greeting: 24, bold, streak, tree,coins: 20
 struct HomeViewHeader: View {
     @State var greeting : String
     @State var name : String
@@ -73,18 +74,17 @@ struct HomeViewHeader: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 activeSheet = .profile
                             }
-                    }.offset(x: 30, y: -25)
+                    }.offset(x: 22, y: -25)
                     
                     HStack{
                         Spacer()
                         VStack(alignment: .trailing) {
                             Text("\(greeting), \(name)")
-                                .font(Font.mada(.bold, size: 25))
+                                .font(Font.mada(.bold, size: 24))
                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
-                                .fontWeight(.bold)
-                                .padding(.trailing, 20)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
+                                .padding(.trailing, 20)
                             HStack {
                                 if challengeOn {
                                     Capsule()
@@ -112,7 +112,7 @@ struct HomeViewHeader: View {
                                             .frame(height: 25)
                                             .shadow(radius: 4)
                                         Text("\(userModel.streakFreeze)")
-                                            .font(Font.mada(.semiBold, size: 22))
+                                            .font(Font.mada(.semiBold, size: 20))
                                             .foregroundColor(Clr.darkgreen)
                                             .frame(height: 30, alignment: .bottom)
                                     }.offset(x: -7)
@@ -125,7 +125,7 @@ struct HomeViewHeader: View {
                                             .frame(height: 35)
                                             .shadow(radius: 4)
                                         Text("\(userModel.plantedTrees.count)")
-                                            .font(Font.mada(.semiBold, size: 22))
+                                            .font(Font.mada(.semiBold, size: 20))
                                             .foregroundColor(Clr.darkgreen)
                                             .frame(height: 30, alignment: .bottom)
                                             .offset(x: -5)
@@ -150,7 +150,7 @@ struct HomeViewHeader: View {
 //                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black1)
 //                                        .font(Font.mada(.medium, size: 21))
                                     Text("\(streakNumber)")
-                                        .font(Font.mada(.semiBold, size: 22))
+                                        .font(Font.mada(.semiBold, size: 20))
                                         .foregroundColor(Clr.darkgreen)
                                 }.frame(height: 30, alignment: .bottom)
                                     .offset(x: -5)
@@ -180,11 +180,12 @@ struct HomeViewHeader: View {
                         }
                     }.offset(x: -width * 0.25, y: -10)
                 }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.92 : 0.84))
-                .padding(.trailing, 40)
+                .padding(.trailing, K.isBig() ? 0 : 25)
             }
         }.frame(width: width)
             .offset(y: -height * 0.1)
             .onAppear {
+                isSpeakerOn = UserDefaults.standard.bool(forKey: "isPlayMusic")
                 if let challengeDate = UserDefaults.standard.string(forKey: "challengeDate") {
                     if challengeDate != "" {
                         if (Date() - (formatter.date(from: challengeDate) ?? Date()) < 30000) && !UserDefaults.standard.bool(forKey: "day7"){

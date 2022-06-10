@@ -191,8 +191,8 @@ struct Home: View {
                     userModel.show50Off = false
                     UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")
                 }
-                //r                coins = userModel.coins
-                //             self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
+                // coins = userModel.coins
+                // self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
         
         }

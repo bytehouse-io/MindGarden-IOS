@@ -335,6 +335,11 @@ enum AnalyticEvent {
     case monthly_started_from_superwall
     case screen_load_50pricing
     case modal_50_not_now
+    case pricing_from_home
+    case pricing_from_locked
+    case pricing_from_profile
+    case pricing_from_store
+    
     
     //Stories
     case story_notification_swipe
@@ -720,6 +725,10 @@ extension AnalyticEvent {
         case .play_tapped_sound_beach: return "play_tapped_sound_beach"
         case .seventh_time_coming_back: return "seventh_time_coming_back"
         case .screen_load_pricing: return "screen_load_pricing"
+        case .pricing_from_home: return "pricing_from_home"
+        case .pricing_from_locked: return "pricing_from_locked"
+        case .pricing_from_profile: return "pricing_from_profile"
+        case .pricing_from_store: return "pricing_from_store"
         case .screen_load_review: return "screen_load_review"
         case .review_tapped_tutorial: return "review_tapped_tutorial"
         case .review_tapped_explore: return "review_tapped_explore"

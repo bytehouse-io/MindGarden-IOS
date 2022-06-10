@@ -327,18 +327,19 @@ struct HomeViewScroll: View {
                                     Spacer()
                                     VStack(alignment: .leading) {
                                         Spacer()
-                                        Text("Start Free Trial")
+                                        Text("Start Your Free Trial")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.mada(.bold, size: 20))
                                         Text("Invest in your mental health, focus, and happiness 💚")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.medium, size: 14))
+                                            .font(Font.mada(.medium, size: 12))
                                         Spacer()
                                     }.frame(width: width * 0.5)
                                     Spacer()
                                 }
                             }.frame(width: width * 0.85, height: height * (K.isSmall() ? 0.15 : 0.125), alignment: .center)
                                 .onTapGesture {
+                                    Analytics.shared.log(event: .pricing_from_home)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         fromPage = "home"

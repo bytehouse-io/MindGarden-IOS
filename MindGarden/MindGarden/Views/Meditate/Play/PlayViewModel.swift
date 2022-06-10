@@ -80,13 +80,10 @@ extension MeditationViewModel {
                             UserDefaults.standard.setValue(true, forKey: "day4Intro")
                         case 11:
                             UserDefaults.standard.setValue(true, forKey: "day5Intro")
-                            OneSignal.sendTag("day5", value: "true")
                         case 12:
                             UserDefaults.standard.setValue(true, forKey: "day6Intro")
-                            OneSignal.sendTag("day6", value: "true")
                         case 13:
                             UserDefaults.standard.setValue(true, forKey: "day7")
-                            OneSignal.sendTag("day7", value: "true")
                             UserDefaults.standard.setValue(true, forKey: "unlockedCherry")
                         case 101:
                             UserDefaults.standard.setValue(true, forKey: "10days")
