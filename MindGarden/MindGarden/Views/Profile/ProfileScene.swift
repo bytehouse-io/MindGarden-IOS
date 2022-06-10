@@ -52,6 +52,10 @@ struct ProfileScene: View {
     
     @State private var isSharePresented: Bool = false
     @State private var urlShare2 = URL(string: "https://mindgarden.io")
+    
+    @State private var showFeedbackOption = false
+    @State private var showFeedbackSheet = false
+    @State private var selectedFeedback:FeedbackType = .happy
 
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -61,6 +65,7 @@ struct ProfileScene: View {
 
     var body: some View {
         LoadingView(isShowing: $showSpinner) {
+            ZStack {
             VStack {
                 if #available(iOS 14.0, *) {
                     NavigationView {
@@ -291,9 +296,7 @@ struct ProfileScene: View {
                                                             Divider()
                                                             Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
                                                                 Analytics.shared.log(event: .profile_tapped_feedback)
-                                                                if let url = URL(string: "https://tally.so/r/3EB1Bw") {
-                                                                    UIApplication.shared.open(url)
-                                                                }
+                                                                showFeedbackOption = true
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                         }.padding()
@@ -433,6 +436,9 @@ struct ProfileScene: View {
                     .sheet(isPresented: $isSharePresented) {
                         ReferralView(url: $urlShare2)
                     }
+                    .sheet(isPresented: $showFeedbackSheet) {
+                        LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback)
+                    }
                     .fullScreenCover(isPresented: $showNotif) {
                         NotificationScene(fromSettings: true)
                     }
@@ -464,6 +470,52 @@ struct ProfileScene: View {
                     .onAppearAnalytics(event: .screen_load_profile)
                 } else {
                     // Fallback on earlier versions
+                }
+            }
+                if showFeedbackOption {
+                    VisualEffectView(effect: UIBlurEffect(style: .dark))
+                        .ignoresSafeArea()
+                        .opacity(0.5)
+                        .onTapGesture {
+                            showFeedbackOption = false
+                        }
+                    VStack {
+                        Text("Happy")
+                            .font(Font.mada(.regular, size: 25))
+                            .foregroundColor(Clr.black2)
+                            .frame(height:25)
+                            .onTapGesture {
+                                selectedFeedback = .happy
+                                showFeedbackSheet = true
+                            }
+                            .padding()
+                        Divider().padding(.horizontal)
+                        Text("Confused")
+                            .font(Font.mada(.regular, size: 25))
+                            .foregroundColor(Clr.black2)
+                            .frame(height:25)
+                            .onTapGesture {
+                                selectedFeedback = .confused
+                                showFeedbackSheet = true
+                            }
+                            .padding()
+                        Divider().padding(.horizontal)
+                        Text("Unhappy")
+                            .font(Font.mada(.regular, size: 25))
+                            .foregroundColor(Clr.black2)
+                            .frame(height:25)
+                            .onTapGesture {
+                                selectedFeedback = .unhappy
+                                showFeedbackSheet = true
+                            }
+                            .padding()
+                    }
+                    .background(
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .cornerRadius(10)
+                            .padding(.horizontal,30)
+                    )
                 }
             }
         }.onAppear {

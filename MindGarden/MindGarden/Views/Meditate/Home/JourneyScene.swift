@@ -41,13 +41,21 @@ struct JourneyScene: View {
                     let item = model.roadMapArr[idx]
                     let index = model.roadMapArr.firstIndex(of: item)
                     let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
+                    let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
                     VStack(spacing:5) {
                         DottedLine()
                             .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
                             .opacity((index == 0) ? 0 : 0.5)
                             .frame(width:2)
-                        Image(systemName: "checkmark.seal.fill")
-                            .foregroundColor(isPlayed ? Clr.darkgreen : Clr.lightGray)
+                        if isLocked {
+                            Img.lockIcon
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20)
+                        } else {
+                            Image(systemName: "checkmark.seal.fill")
+                                .foregroundColor(isPlayed ? Clr.darkgreen : Clr.lightGray)
+                        }
                         DottedLine()
                             .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
                             .opacity((index == model.roadMapArr.count - 1) ? 0 : 0.5)
@@ -55,6 +63,8 @@ struct JourneyScene: View {
                     }
                     JourneyRow(width: width * 0.85, meditation: Meditation.allMeditations.first { $0.id == item } ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
                         .padding([.horizontal, .bottom])
+                        .opacity(isLocked ? 0.5 : 1.0)
+                        .disabled(isLocked)
                 }.frame(width: width * 0.9, alignment: .trailing)
             }
             let isAward = model.roadMapArr.allSatisfy(model.completedMeditation.contains)
