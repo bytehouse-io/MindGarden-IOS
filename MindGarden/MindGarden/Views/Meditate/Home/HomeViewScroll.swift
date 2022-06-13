@@ -389,7 +389,7 @@ struct HomeViewScroll: View {
                         
                     }
                     Spacer()
-            }.padding(.bottom, height * 0.23)
+            }.padding(.bottom, height * 0.30)
             }.frame(height: height)
                 .offset(y: -height * 0.23)
         }
