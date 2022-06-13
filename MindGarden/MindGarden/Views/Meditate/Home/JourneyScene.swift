@@ -10,6 +10,7 @@ import SwiftUI
 struct JourneyScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var journeyModel: JourneyModel
     @State var userModel: UserViewModel
     
     let width = UIScreen.screenWidth
@@ -37,15 +38,14 @@ struct JourneyScene: View {
         
         VStack {
             ForEach(model.roadMapArr.indices) { idx in
+                let item = model.roadMapArr[idx]
+                let isPlayed = journeyModel.allJourneys.contains { $0.medid == item && $0.level == model.roadMaplevel && $0.index == idx }
+                let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
                 HStack(spacing: 10) {
-                    let item = model.roadMapArr[idx]
-                    let index = model.roadMapArr.firstIndex(of: item)
-                    let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
-                    let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
                     VStack(spacing:5) {
                         DottedLine()
                             .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                            .opacity((index == 0) ? 0 : 0.5)
+                            .opacity((idx == 0) ? 0 : 0.5)
                             .frame(width:2)
                         if isLocked {
                             Img.lockIcon
@@ -58,16 +58,17 @@ struct JourneyScene: View {
                         }
                         DottedLine()
                             .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                            .opacity((index == model.roadMapArr.count - 1) ? 0 : 0.5)
+                            .opacity((idx == model.roadMapArr.count - 1) ? 0 : 0.5)
                             .frame(width:2)
                     }
-                    JourneyRow(width: width * 0.85, meditation: Meditation.allMeditations.first { $0.id == item } ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
+                    JourneyRow(width: width * 0.85, meditation: Meditation.allMeditations.first { $0.id == item } ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter, journey: Journey(level: model.roadMaplevel, medid: item, index: idx))
+                        .environmentObject(journeyModel)
                         .padding([.horizontal, .bottom])
                         .opacity(isLocked ? 0.5 : 1.0)
                         .disabled(isLocked)
                 }.frame(width: width * 0.9, alignment: .trailing)
             }
-            let isAward = Set(model.roadMapArr).isSubset(of: Set(model.completedMeditation))
+            let isAward = checkAllFinished()
             Text("Level Completion Award")
                 .foregroundColor(Clr.black2)
                 .font(Font.mada(.medium, size: 12))
@@ -102,6 +103,16 @@ struct JourneyScene: View {
             .onAppear(){
                 model.getUserMap()
         }
+    }
+    
+    private func checkAllFinished() -> Bool {
+        for idx in 0...model.roadMapArr.count-1 {
+            let item = model.roadMapArr[idx]
+            if !journeyModel.allJourneys.contains(where: { $0.medid == item && $0.level == model.roadMaplevel && $0.index == idx }) {
+                return false
+            }
+        }
+        return true
     }
 }
 

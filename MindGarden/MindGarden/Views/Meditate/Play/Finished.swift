@@ -18,6 +18,7 @@ struct Finished: View {
     var model: MeditationViewModel
     var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var journeyModel: JourneyModel
     var gardenModel: GardenViewModel
     @State private var sharedImage: UIImage?
     @State private var shotting = true
@@ -399,8 +400,10 @@ struct Finished: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
-            { _ in }
-    
+        { _ in }
+        .onDisappear() {
+            journeyModel.currentJouney = nil
+        }
             .onAppear {
                 if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                     if let player = player {
@@ -425,10 +428,12 @@ struct Finished: View {
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
                 let dur = model.selectedMeditation?.duration ?? 0
-//                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
-//                }
-//
-                 userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
+                    userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                   if journeyModel.currentJouney?.medid == model.selectedMeditation?.id, let journeyObj = journeyModel.currentJouney {
+                       journeyModel.addJourney(journey: journeyObj)
+                   }
+                }
 
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeViewScroll: View {
+    @EnvironmentObject var journeyModel: JourneyModel
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @State var gardenModel: GardenViewModel
@@ -362,6 +363,7 @@ struct HomeViewScroll: View {
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
                     JourneyScene(userModel: userModel)
+                        .environmentObject(journeyModel)
                     if #available(iOS 14.0, *) {
                         Button { } label: {
                             HStack {

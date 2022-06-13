@@ -12,6 +12,7 @@ import Network
 
 
 struct ContentView: View {
+    @EnvironmentObject var journeyModel: JourneyModel
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -91,6 +92,7 @@ struct ContentView: View {
                                                 .navigationViewStyle(StackNavigationViewStyle())
                                     case .meditate:
                                         Home()
+                                            .environmentObject(journeyModel)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
@@ -159,6 +161,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height + 160)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
+                                            .environmentObject(journeyModel)
                                     case .authentication:
                                         Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
                                             .frame(height: geometry.size.height)

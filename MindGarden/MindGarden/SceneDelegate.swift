@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static let userModel = UserViewModel()
     static let gardenModel = GardenViewModel()
     static let bonusModel = BonusViewModel(userModel: userModel, gardenModel: gardenModel)
+    static let journeyModel = JourneyModel()
     let router = ViewRouter()
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -76,6 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         medModel.updateSelf()
         SceneDelegate.userModel.updateSelf()
         SceneDelegate.gardenModel.updateSelf()
+        SceneDelegate.journeyModel.getAllJourney()
         FirebaseAPI.fetchMeditations(meditationModel: medModel)
         FirebaseAPI.fetchCourses()
 
@@ -92,7 +94,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                             .environmentObject(router)
                                             .environmentObject(medModel)
                                             .environmentObject(SceneDelegate.userModel)
-                                            .environmentObject(SceneDelegate.gardenModel))
+                                            .environmentObject(SceneDelegate.gardenModel)
+                                            .environmentObject(SceneDelegate.journeyModel))
         
         
         if let windowScene = scene as? UIWindowScene {

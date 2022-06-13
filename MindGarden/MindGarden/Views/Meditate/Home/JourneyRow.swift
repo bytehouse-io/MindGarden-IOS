@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct JourneyRow: View {
+    @EnvironmentObject var journeyModel: JourneyModel
+    
     let width: CGFloat
     let meditation: Meditation
     var meditationModel: MeditationViewModel
     var viewRouter: ViewRouter
+    let journey:Journey
     @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         Button {
             meditationModel.selectedMeditation = meditation
+            journeyModel.currentJouney = journey
             withAnimation {
                 if meditation.type == .course {
                     viewRouter.currentPage = .middle
@@ -107,6 +111,6 @@ struct JourneyRow: View {
 
 struct JourneyRow_Previews: PreviewProvider {
     static var previews: some View {
-        JourneyRow(width: UIScreen.screenWidth, meditation: Meditation.allMeditations[0], meditationModel: MeditationViewModel(), viewRouter: ViewRouter())
+        JourneyRow(width: UIScreen.screenWidth, meditation: Meditation.allMeditations[0], meditationModel: MeditationViewModel(), viewRouter: ViewRouter(), journey: Journey(level: 0, medid: 0, index: 0))
     }
 }

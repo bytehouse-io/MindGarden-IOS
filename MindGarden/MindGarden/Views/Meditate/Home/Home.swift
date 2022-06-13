@@ -25,6 +25,7 @@ enum Sheet: Identifiable {
 var searchScreen = false
 
 struct Home: View {
+    @EnvironmentObject var journeyModel: JourneyModel
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -62,6 +63,7 @@ struct Home: View {
                         //MARK: - scroll view
                         HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, userModel: userModel)
                             .padding(.top, -20)
+                            .environmentObject(journeyModel)
                     }
                     if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase || showChallenge {
                         Color.black
