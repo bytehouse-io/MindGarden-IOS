@@ -59,7 +59,7 @@ struct Home: View {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 GeometryReader { g in
                     VStack {
-                        HomeViewHeader(greeting: userModel.greeting, name: userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP, showPurchase: $showPurchase)
+                        HomeViewHeader(greeting: $userModel.greeting, name: $userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP, showPurchase: $showPurchase)
                         //MARK: - scroll view
                         HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, userModel: userModel)
                             .padding(.top, -20)
