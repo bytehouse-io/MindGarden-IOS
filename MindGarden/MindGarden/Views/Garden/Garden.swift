@@ -33,8 +33,10 @@ struct Garden: View {
     }
     
     var longestStreak : Int {
-        (UserDefaults.standard.integer(forKey: "longestStreak")) ?? 1
+        (UserDefaults.standard.value(forKey: "longestStreak")) as? Int ?? 1
     }
+    @State private var playEntryAnimation = false
+    private let animation = Animation.interpolatingSpring(stiffness: 50, damping: 26)
     
     var body: some View {
         GeometryReader { gp in
@@ -267,6 +269,9 @@ struct Garden: View {
                         .background(Clr.darkWhite)
                         .cornerRadius(20)
                         .neoShadow()
+                        .offset(y: playEntryAnimation ? 0 : 200)
+                        .animation(animation.delay(0.1), value: playEntryAnimation)
+                            .padding(5)
                         
                         HStack(spacing: 15) {
                             HStack(spacing: 10) {
@@ -326,6 +331,8 @@ struct Garden: View {
                                 }
                                 .padding(.vertical)
                                 .padding(.trailing,5)
+                                .offset(x: playEntryAnimation ? 0 : -400)
+                                .animation(animation.delay(0.4), value: playEntryAnimation)
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
@@ -347,6 +354,8 @@ struct Garden: View {
                                 .padding()
                                 .neoShadow()
                                 .frame(width:UIScreen.screenWidth*0.165, height: UIScreen.screenHeight * 0.15)
+                                .offset(x: playEntryAnimation ? 0 : 400)
+                                .animation(animation.delay(0.2), value: playEntryAnimation)
                             }
                         }.frame(width:UIScreen.screenWidth*0.85)
                             .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
@@ -386,6 +395,8 @@ struct Garden: View {
                             }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: 150)
                         }.padding(.vertical, 15)
                             .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                            .offset(y: playEntryAnimation ? 0 : 400)
+                            .animation(animation.delay(0.4), value: playEntryAnimation)
                     }.padding(.horizontal, 25)
                         .padding(.vertical, 15)
                         .padding(.top, 30)
@@ -480,6 +491,9 @@ struct Garden: View {
                     .navigationViewStyle(StackNavigationViewStyle())
             }.onAppear {
                 DispatchQueue.main.async {
+                    withAnimation {
+                        playEntryAnimation = true
+                    }
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                         if UserDefaults.standard.integer(forKey: "numMeds") > 0 {

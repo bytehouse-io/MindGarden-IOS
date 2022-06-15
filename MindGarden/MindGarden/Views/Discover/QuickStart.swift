@@ -10,6 +10,7 @@ import SwiftUI
 struct QuickStart: View {
     @State private var isShowCategory = false
     @State private var category : QuickStartType = .minutes3
+    @State private var playEntryAnimation = false
     var body: some View {
         if isShowCategory {
             CategoriesScene(isSearch: false, showSearch: .constant(true), isBack: $isShowCategory, isFromQuickstart: true, selectedCategory:category)
@@ -48,10 +49,16 @@ struct QuickStart: View {
                         }
                         .padding(.horizontal,30)
                     }
-                    .padding(5)
+                    .offset(y: playEntryAnimation ? 0 : 100)
+                    .animation(.spring().delay(item.delay), value: playEntryAnimation)
+                        .padding(5)
                 }
                 Spacer()
                     .frame(height:100)
+            }.onAppear {
+                withAnimation {
+                    playEntryAnimation = true
+                }
             }
         }
     }
