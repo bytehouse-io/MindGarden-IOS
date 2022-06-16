@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct JourneyRow: View {
+    
     let width: CGFloat
     let meditation: Meditation
     var meditationModel: MeditationViewModel

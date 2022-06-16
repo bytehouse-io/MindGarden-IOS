@@ -11,6 +11,7 @@ import Foundation
 
 struct K {
     static var userPreferences = "userPreferences"
+    static var journey = "Journey"
 
     struct defaults {
         static var favorites = "favorited"
@@ -37,6 +38,7 @@ struct K {
         static var referred = "referred"
         static var completedMeditations = "completedMeditations"
         static var userCoinCollectedLevel = "userCoinCollectedLevel"
+        static var journeys = "journeys"
     }
     
     struct ScreenSize

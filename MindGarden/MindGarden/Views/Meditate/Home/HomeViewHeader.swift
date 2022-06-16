@@ -9,8 +9,8 @@ import SwiftUI
 
 // FONTs: greeting: 24, bold, streak, tree,coins: 20
 struct HomeViewHeader: View {
-    @State var greeting : String
-    @State var name : String
+    @Binding var greeting : String
+    @Binding var name : String
     @Binding var streakNumber : Int
     @Binding var showSearch : Bool
     @Binding var activeSheet : Sheet?
@@ -199,6 +199,6 @@ struct HomeViewHeader: View {
 
 struct HomeViewHeader_Previews: PreviewProvider {
     static var previews: some View {
-        HomeViewHeader(greeting: "", name: "", streakNumber: .constant(0), showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true), showPurchase: .constant(false))
+        HomeViewHeader(greeting: .constant(""), name: .constant(""), streakNumber: .constant(0), showSearch: .constant(true), activeSheet: .constant(.profile), showIAP: .constant(true), showPurchase: .constant(false))
     }
 }

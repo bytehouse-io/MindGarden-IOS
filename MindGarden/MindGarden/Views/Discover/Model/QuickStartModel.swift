@@ -78,4 +78,20 @@ struct QuickStartMenuItem: Identifiable {
         }
     }
     
+    var delay: Double {
+        switch title {
+        case .newMeditations: return 0.4
+        case .minutes3: return 0.0
+        case .minutes5: return 0.1
+        case .minutes10: return 0.2
+        case .minutes20: return 0.3
+        case .popular: return 0.7
+        case .morning: return 0.8
+        case .unguided: return 0.6
+        case .anxiety: return 1.0
+        case .sleep: return 0.9
+        case .courses: return 0.5
+        }
+    }
+    
 }

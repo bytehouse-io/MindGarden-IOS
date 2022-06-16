@@ -399,8 +399,7 @@ struct Finished: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
-            { _ in }
-    
+        { _ in }
             .onAppear {
                 if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                     if let player = player {
@@ -429,7 +428,6 @@ struct Finished: View {
                 if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
                     userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
                 }
-
 
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {
