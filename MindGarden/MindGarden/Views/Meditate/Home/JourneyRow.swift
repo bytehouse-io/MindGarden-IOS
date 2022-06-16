@@ -13,15 +13,28 @@ struct JourneyRow: View {
     var meditationModel: MeditationViewModel
     var viewRouter: ViewRouter
     @Environment(\.sizeCategory) var sizeCategory
+    @State var isLocked = false
 
     var body: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             meditationModel.selectedMeditation = meditation
             withAnimation {
-                if meditation.type == .course {
-                    viewRouter.currentPage = .middle
+                if isLocked {
+                    if viewRouter.currentPage == .learn {
+                        fromPage = "discover"
+                    } else {
+                        fromPage = "home"
+                    }
+                    viewRouter.currentPage = .pricing
                 } else {
-                    viewRouter.currentPage = .play
+                    withAnimation {
+                        if meditation.type == .course {
+                            viewRouter.currentPage = .middle
+                        } else {
+                            viewRouter.currentPage = .play
+                        }
+                    }
                 }
             }
         } label: {
@@ -101,6 +114,9 @@ struct JourneyRow: View {
         }.buttonStyle(BonusPress())
         .cornerRadius(16)
         .neoShadow()
+        .onAppear {
+            isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id)
+        }
 
     }
 }

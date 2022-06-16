@@ -331,6 +331,7 @@ enum AnalyticEvent {
     //pricing
     case screen_load_pricing
     case screen_load_superwall
+    case screen_load_14pricing
     case yearly_started_from_superwall
     case monthly_started_from_superwall
     case screen_load_50pricing
@@ -339,7 +340,7 @@ enum AnalyticEvent {
     case pricing_from_locked
     case pricing_from_profile
     case pricing_from_store
-    
+    case user_from_influencer
     
     //Stories
     case story_notification_swipe
@@ -725,6 +726,7 @@ extension AnalyticEvent {
         case .play_tapped_sound_beach: return "play_tapped_sound_beach"
         case .seventh_time_coming_back: return "seventh_time_coming_back"
         case .screen_load_pricing: return "screen_load_pricing"
+        case .screen_load_14pricing: return "screen_load_14pricing"
         case .pricing_from_home: return "pricing_from_home"
         case .pricing_from_locked: return "pricing_from_locked"
         case .pricing_from_profile: return "pricing_from_profile"
@@ -770,6 +772,7 @@ extension AnalyticEvent {
         case .screen_load_discover: return "screen_load_discover"
         case .screen_load_journey: return "screen_load_journey"
         case .discover_tapped_search: return "discover_tapped_search"
+        case .user_from_influencer: return "user_from_influencerscr"
         }
     }
 }

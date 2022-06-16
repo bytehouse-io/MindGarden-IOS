@@ -11,96 +11,134 @@ struct JourneyScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @State var userModel: UserViewModel
-    
+    @State var isAward = false
     let width = UIScreen.screenWidth
     let height = UIScreen.screenHeight - 100
     
     var body: some View {
-        //MARK: - New Meds
-        if model.roadMaplevel == 6 {
-            ( Text("🗺 Roadmap ")
-                .foregroundColor(Clr.black2)
-              + Text("Final Level")
-                .foregroundColor(Clr.darkgreen))
-                .font(Font.mada(.semiBold, size: 28))
-                .padding(.top, 30)
-                .frame(width: abs(width * 0.825), alignment: .leading)
-        } else {
-            ( Text("🗺 Roadmap Level: ")
-                .foregroundColor(Clr.black2)
-              + Text("\(model.roadMaplevel)")
-                .foregroundColor(Clr.darkgreen))
-                .font(Font.mada(.semiBold, size: 28))
-                .padding(.top, 30)
-                .frame(width: abs(width * 0.825), alignment: .leading)
-        }
-        
         VStack {
-            ForEach(model.roadMapArr.indices) { idx in
-                HStack(spacing: 10) {
-                    let item = model.roadMapArr[idx]
-                    let index = model.roadMapArr.firstIndex(of: item)
-                    let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
-                    let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
-                    VStack(spacing:5) {
-                        DottedLine()
-                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                            .opacity((index == 0) ? 0 : 0.5)
-                            .frame(width:2)
-                        if isLocked {
-                            Img.lockIcon
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20)
-                        } else {
-                            Image(systemName: "checkmark.seal.fill")
-                                .foregroundColor(isPlayed ? Clr.darkgreen : Clr.lightGray)
-                        }
-                        DottedLine()
-                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                            .opacity((index == model.roadMapArr.count - 1) ? 0 : 0.5)
-                            .frame(width:2)
+            
+            if userModel.journeyFinished {
+                Text("✅ Journey Complete!")
+                    .foregroundColor(Clr.black2)
+                    .font(Font.mada(.semiBold, size: 28))
+                    .padding(.top, 30)
+                    .frame(width: abs(width * 0.825), alignment: .leading)
+                VStack {
+                    LottieView(fileName: "sloth")
+                        .offset(x: -50)
+                }.frame(width: 100, height: 100)
+                Text("Only 1% complete the roadmap.\nKeep it up!")
+                    .font(Font.mada(.medium, size: 20))
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 60)
+                    .frame(width: abs(width * 0.825), alignment: .center)
+            } else {
+                VStack {
+                    if model.roadMaplevel == 6 {
+                        ( Text("🗺 Roadmap ")
+                            .foregroundColor(Clr.black2)
+                          + Text("Final Level")
+                            .foregroundColor(Clr.darkgreen))
+                        .font(Font.mada(.semiBold, size: 28))
+                        .padding(.top, 30)
+                        .frame(width: abs(width * 0.825), alignment: .leading)
+                    } else {
+                        ( Text("🗺 Roadmap Level: ")
+                            .foregroundColor(Clr.black2)
+                          + Text("\(model.roadMaplevel)")
+                            .foregroundColor(Clr.darkgreen))
+                        .font(Font.mada(.semiBold, size: 28))
+                        .padding(.top, 30)
+                        .frame(width: abs(width * 0.825), alignment: .leading)
                     }
-                    JourneyRow(width: width * 0.85, meditation: Meditation.allMeditations.first { $0.id == item } ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
-                        .padding([.horizontal, .bottom])
-                        .opacity(isLocked ? 0.5 : 1.0)
-                        .disabled(isLocked)
-                }.frame(width: width * 0.9, alignment: .trailing)
-            }
-            let isAward = model.roadMapArr.allSatisfy(model.completedMeditation.contains)
-            Text("Level Completion Award")
-                .foregroundColor(Clr.black2)
-                .font(Font.mada(.medium, size: 12))
-            Button {
-                if model.roadMaplevel < 6 && isAward {
-                    userModel.updateCoins(plusCoins: 100)
-                    model.getUserMap()
-                    MGAudio.sharedInstance.stopSound()
-                    MGAudio.sharedInstance.playSound(soundFileName: "plantUnlock.mp3")
-                }
-            } label: {
-                HStack {
-                    Img.tripleCoins
-                        .resizable()
-                        .foregroundColor(Color.black)
-                        .font(.system(size: 28, weight: .bold))
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width:30)
-                    Text("100")
+                    ForEach(model.roadMapArr.indices) { idx in
+                        if idx != model.roadMapArr.count {
+                            HStack(spacing: 10) {
+                                let item = model.roadMapArr[idx]
+                                let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
+                                let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
+                                VStack(spacing:5) {
+                                    DottedLine()
+                                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                                        .opacity((idx == 0) ? 0 : 0.5)
+                                        .frame(width:2)
+                                    if isLocked {
+                                        Img.lockIcon
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 20)
+                                    } else {
+                                        Image(systemName: "checkmark.seal.fill")
+                                            .foregroundColor(isPlayed ? Clr.darkgreen : Clr.lightGray)
+                                    }
+                                    DottedLine()
+                                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                                        .opacity((idx == model.roadMapArr.count - 1) ? 0 : 0.5)
+                                        .frame(width:2)
+                                }
+                                JourneyRow(width: width * 0.85, meditation: Meditation.allMeditations.first { $0.id == item } ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
+                                    .padding([.horizontal, .bottom])
+                                    .opacity(isLocked ? 0.5 : 1.0)
+                            }.frame(width: width * 0.9, alignment: .trailing)
+                            
+                        }
+                    }
+                    
+                    Text("Level Completion Award")
                         .foregroundColor(Clr.black2)
-                        .font(Font.mada(.bold, size: 22))
-                        .padding(5)
+                        .font(Font.mada(.medium, size: 12))
+                    Button {
+                        if model.roadMaplevel <= 6 && isAward {
+                            userModel.updateCoins(plusCoins: 100)
+                            if model.roadMaplevel == 6 {
+                                userModel.finishedJourney()
+                            } else {
+                                model.getUserMap()
+                                isAward = false
+                            }
+                            MGAudio.sharedInstance.stopSound()
+                            MGAudio.sharedInstance.playSound(soundFileName: "plantUnlock.mp3")
+                        }
+                    } label: {
+                        HStack {
+                            Img.tripleCoins
+                                .resizable()
+                                .foregroundColor(Color.black)
+                                .font(.system(size: 28, weight: .bold))
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width:30)
+                            Text(model.roadMaplevel < 2 ? "100" : model.roadMaplevel > 4 ? "150" : "125")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.mada(.bold, size: 22))
+                                .padding(5)
+                        }
+                        .padding()
+                        .background(Clr.yellow)
+                    }.opacity(isAward ? 1.0 : 0.4)
+                        .frame(height: 44, alignment: .center)
+                        .buttonStyle(BonusPress())
+                        .cornerRadius(15)
+                        .neoShadow()
+                }.frame(width: width)
+            }
+        }.onAppear(){
+            model.getUserMap()
+            let completedMeditations = userModel.completedMeditations
+            model.roadMapArr.forEach { id in
+                let startingIdx = model.roadMapArr.firstIndex(of: id) ?? 0
+                let endingIdx = model.roadMapArr.lastIndex(of: id) ?? 0
+                let comMedCount = completedMeditations.filter { med in (med) == String(id)}.count
+                if !completedMeditations.contains(String(id)) {
+                    isAward = false
+                    return
+                } else if comMedCount < endingIdx - startingIdx + 1 {
+                    isAward = false
+                    return
+                } else {
+                    isAward = true
                 }
-                .padding()
-                .background(Clr.yellow)
-            }.opacity(isAward ? 1.0 : 0.4)
-                .frame(height: 44, alignment: .center)
-                .buttonStyle(BonusPress())
-                .cornerRadius(15)
-                .neoShadow()
-        }.frame(width: width)
-            .onAppear(){
-                model.getUserMap()
+            }
         }
     }
 }

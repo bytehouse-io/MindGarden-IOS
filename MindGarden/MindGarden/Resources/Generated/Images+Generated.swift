@@ -57,6 +57,7 @@ public enum Img {
   public static let cherryBlossom3 = Image("cherryBlossom3")
   public static let cherryBlossomBadge = Image("cherryBlossomBadge")
   public static let cherryBlossomPacket = Image("cherryBlossomPacket")
+  public static let cherryBlossomsHead = Image("cherryBlossomsHead")
   public static let christmas1 = Image("christmas1")
   public static let christmas2 = Image("christmas2")
   public static let christmas3 = Image("christmas3")

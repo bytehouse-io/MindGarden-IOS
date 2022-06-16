@@ -32,6 +32,7 @@ class UserViewModel: ObservableObject {
     @Published var referredCoins: Int = 0
     @Published var name: String = ""
     @Published var userCoinCollectedLevel: Int = 0
+    @Published var journeyFinished = false
     private var validationCancellables: Set<AnyCancellable> = []
     var joinDate: String = ""
     var greeting: String = ""
@@ -137,6 +138,9 @@ class UserViewModel: ObservableObject {
                     if let refCoins = document["lastReferred"] as? Int {
                         self.referredCoins = refCoins
                     }
+                    if let fbJourney = document["finishedJourney"] as? Bool {
+                        self.journeyFinished = fbJourney
+                    }
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.allPlants.filter({ plant in
@@ -214,6 +218,9 @@ class UserViewModel: ObservableObject {
             if let level = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int {
                 self.userCoinCollectedLevel = level
             }
+            if let finJourney = UserDefaults.standard.value(forKey: "finishedJourney") as? Bool {
+                self.journeyFinished = finJourney
+            }
             
             self.streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
             
@@ -254,8 +261,28 @@ class UserViewModel: ObservableObject {
                     }
                 }
             }
-        }
+        } else if completedMeditations.contains(String(meditation.id)) {
+            return true
+        } 
         return false
+    }
+    
+    func finishedJourney() {
+        journeyFinished = true
+        if let email = Auth.auth().currentUser?.email {
+            //Read Data from firebase, for syncing
+            self.db.collection(K.userPreferences).document(email).updateData([
+                "finishedJourney": true,
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved meditations")
+                }
+            }
+        } else {
+            UserDefaults.standard.setValue(true, forKey: "finishedJourney")
+        }
     }
     
     func finishedMeditation(id:String){

@@ -29,7 +29,7 @@ struct Meditation: Hashable {
         return lhs.id == rhs.id
     }
 
-    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105]
+    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105, 82, 107,14, 104, 108, 88, 92]
     static var popularMeditations = [77, 92, 89, 105, 108, 104, 90, 85, 24]
     func returnEventName() -> String {
         return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "x").replacingOccurrences(of: "-", with: "")
@@ -105,7 +105,7 @@ struct Meditation: Hashable {
 
         // Beginners Course
         Meditation(title: "Intro to Meditation", description: "Learn how to meditate with founder Bijan, a certified mindfulness instructor. Learn why meditation can drastically improve happiness, focus and so much more.", belongsTo: "none", category: .beginners, img: Img.happySunflower, type: .course, id: 6, duration: 0, reward: 0, url: "", instructor: "Bijan",  imgURL: "", isNew: false),
-        Meditation(title: "What is Meditation?", description: "Learn why millions of people around the world use this daily practice.", belongsTo: "Intro to Meditation", category: .courses, img: Img.happySunflower, type: .lesson, id: 7, duration: 428, reward: 8, url: "https://mcdn.podbean.com/mf/web/g84ptk/Day_1_Intro_to_Meditation_Finalbscsp.mp3", instructor: "Bijan",  imgURL: "", isNew: false),
+        Meditation(title: "What is Meditation?", description: "Learn why millions of people around the world use this daily practice.", belongsTo: "Intro to Meditation", category: .courses, img: Img.happySunflower, type: .lesson, id: 7, duration: 422, reward: 8, url: "https://mcdn.podbean.com/mf/web/g84ptk/Day_1_Intro_to_Meditation_Finalbscsp.mp3", instructor: "Bijan",  imgURL: "", isNew: false),
         Meditation(title: "Keep it Simple", description: "Learn how to create an anchor that can help ground you during your most busy and stormy seasons.", belongsTo: "Intro to Meditation", category: .courses, img: Img.happySunflower, type: .lesson, id: 8, duration: 324, reward: 8, url: "https://mcdn.podbean.com/mf/web/fc676u/Day_2_Intro_to_Meditation_Final6fn82.mp3", instructor: "Bijan", imgURL: "", isNew: false),
         Meditation(title: "Handling Our Thoughts & Emotions", description: "", belongsTo: "Intro to Meditation", category: .courses, img: Img.happySunflower, type: .lesson, id: 9, duration: 383, reward: 8, url: "https://mcdn.podbean.com/mf/web/qripk5/day_3_intro_to_meditation_final93cb2.mp3", instructor: "Bijan",  imgURL: "", isNew: false),
         Meditation(title: "Acceptance", description: "Learn how meditating can help you think and observe much more clearly.", belongsTo: "Intro to Meditation", category: .courses, img: Img.happySunflower, type: .lesson, id: 10, duration: 312, reward: 8, url: "https://mcdn.podbean.com/mf/web/eirruy/Day_4_intro_to_meditation_finalb1uko.mp3", instructor: "Bijan",  imgURL: "", isNew: false),

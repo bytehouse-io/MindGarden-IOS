@@ -253,6 +253,7 @@ struct Authentication: View {
                 } else if tappedSignOut && isSignUp {
                     Analytics.shared.log(event: .screen_load_signup)
                 }
+
                 if !tappedSignIn {
                     viewModel.falseAppleId = false
                 }

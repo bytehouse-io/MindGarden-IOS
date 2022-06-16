@@ -24,14 +24,14 @@ struct OnboardingScene: View {
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
     let titles = ["Meditation You'll Actually Stick With.", "Visualize Your Progress", "Collect all flowers, fruits and trees!"]
-    let subtitles = ["Get 1% happier, calmer & more focused everyday by growing your MindGarden 🌱", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
+    let subtitles = ["Get 1% happier, calmer & more focused everyday by growing your MindGarden 🌱", "Create your own  beautiful MindGarden by meditating everyday.", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
     let images = [Img.coloredPots, Img.gardenCalender, Img.packets]
     var body: some View {
         NavigationView {
             GeometryReader { g in
                 let height = g.size.height
                 let width = g.size.height
-                let screenWidth = UIScreen.screenWidth
+//                let screenWidth = UIScreen.screenWidth
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
 //                    ZStack {
@@ -115,7 +115,7 @@ struct OnboardingScene: View {
                                             Spacer()
                                             Spacer()
                                         }
-                                    }.offset(y: index == 0 ? 0 : -20)
+                                    }
                             }
                             .onChange(of: index, perform: { _ in
 //                                if index == 0 {

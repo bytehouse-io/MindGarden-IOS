@@ -139,12 +139,12 @@ struct CategoriesScene: View {
                             .edgesIgnoringSafeArea(.all)
                             .onTapGesture {
                                 showModal.toggle()
-                            }
+                            }.offset(y: -50)
                         Spacer()
                     }
                 }
                     MiddleModal(shown: $showModal)
-                        .offset(y: showModal ? 0 : g.size.height)
+                    .offset(y: showModal ? 0 + (isFromQuickstart ? -65 : 0) : g.size.height )
                         .edgesIgnoringSafeArea(.top)
                         .animation(.default, value: showModal)
                 if isFromQuickstart {
@@ -263,6 +263,11 @@ struct CategoriesScene: View {
                     presentationMode.wrappedValue.dismiss()
                 } else {
                     if model.selectedMeditation?.type == .course {
+                        if viewRouter.currentPage == .learn {
+                            middleToSearch = QuickStartMenuItem(title: selectedCategory).name
+                        } else {
+                            middleToSearch = ""
+                        }
                         viewRouter.currentPage = .middle
                     } else {
                         showModal = true

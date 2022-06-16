@@ -74,7 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         
         application.beginReceivingRemoteControlEvents()
         UNUserNotificationCenter.current().delegate = self
-        
         // Add state change listener for Firebase Authentication
         Purchases.shared.delegate = self
         Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -194,6 +193,12 @@ extension AppDelegate: AppsFlyerLibDelegate{
                 if let sourceID = installData["media_source"],
                    let campaign = installData["campaign"] {
                     print("This is a Non-Organic install. Media source: \(sourceID)  Campaign: \(campaign)")
+                    if "\(sourceID)" == "influencer" {
+                        fromInfluencer = "\(campaign)"
+                        let identify = AMPIdentify()
+                            .set("influencer", value: NSString(utf8String: "\(campaign)"))
+                        Amplitude.instance().identify(identify ?? AMPIdentify())
+                    }
                 }
             } else {
                 print("This is an organic install.")
@@ -211,11 +216,11 @@ extension AppDelegate: AppsFlyerLibDelegate{
     }
     //Handle Deep Link
     func onAppOpenAttribution(_ attributionData: [AnyHashable : Any]) {
-        //Handle Deep Link Data
-//        print("onAppOpenAttribution data:")
-//        for (key, value) in attributionData {
-//            print(key, ":",value)
-//        }
+//        Handle Deep Link Data
+        print("onAppOpenAttribution data:")
+        for (key, value) in attributionData {
+            print(key, ":",value)
+        }
     }
     func onAppOpenAttributionFailure(_ error: Error) {
         print(error)

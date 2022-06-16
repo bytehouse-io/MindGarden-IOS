@@ -210,7 +210,7 @@ struct Finished: View {
                                     }.frame(width: g.size.width * 0.85, height: g.size.height/2.25)
                                 }
                                 Spacer()
-                            }.offset(y: !isOnboarding ? -50 : -75)
+                            }.offset(y: !isOnboarding ? -20 : -75)
                         
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
@@ -312,7 +312,7 @@ struct Finished: View {
                         }
                     ) {
                         VStack {
-                            Text("Save Your Progress?")
+                            Text("Sign up & Save Your Progress?")
                                 .font(Font.mada(.bold, size: 32))
                                 .foregroundColor(Clr.darkgreen)
                             Text("📝")
@@ -407,6 +407,7 @@ struct Finished: View {
                         player.play()
                     }
                 }
+                
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         ios14 = false
@@ -425,10 +426,10 @@ struct Finished: View {
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
                 let dur = model.selectedMeditation?.duration ?? 0
-//                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
-//                }
-//
-                 userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
+                    userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                }
+
 
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {

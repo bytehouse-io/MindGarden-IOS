@@ -16,6 +16,7 @@ import OneSignal
 
 var fromPage = ""
 var userWentPro = false
+var fromInfluencer = ""
 
 struct PricingView: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -79,6 +80,7 @@ struct PricingView: View {
                                             case "lockedHome": viewRouter.currentPage = .meditate
                                             case "middle": viewRouter.currentPage = .middle
                                             case "widget": viewRouter.currentPage = .meditate
+                                            case "discover": viewRouter.currentPage = .learn
                                             default: viewRouter.currentPage = .meditate
                                             }
                                         }
@@ -104,9 +106,9 @@ struct PricingView: View {
                             }.frame(width: g.size.width)
                             .padding(.bottom, -25)
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text(fiftyOff ? "💎 Claim my 50% off for " : "🍏 Unlock ") + Text("MindGarden Pro").foregroundColor(Clr.brightGreen)
+                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : "🍏 Unlock ") + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
                              +
-                             Text(fiftyOff ? " (limited time)" : " & get 1% happier everyday"))
+                             Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a free trial for you!" : " & get 1% happier everyday"))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
@@ -378,6 +380,8 @@ struct PricingView: View {
                                 } else {
                                     if product.productIdentifier == "io.mindgarden.pro.yearly" {
                                         trialLength = period.numberOfUnits
+                                    } else if product.productIdentifier == "io.mindgarden.pro.yearly14" && fromInfluencer != "" {
+                                        trialLength = period.numberOfUnits
                                     }
                                 }
                               }
@@ -391,12 +395,14 @@ struct PricingView: View {
                                 lifePrice = round(100 * Double(truncating: price))/100
                             } else if name == "yearly_pro_14" && fiftyOff {
                                 yearlyPrice = round(100 * Double(truncating: price))/100
+                            } else if name == "io.mindgarden.pro.yearly14" && fromInfluencer != "" {
+                                yearlyPrice = round(100 * Double(truncating: price))/100
                             }
                         }
                     }
                 }
             }
-            .onAppearAnalytics(event: fiftyOff ? .screen_load_50pricing : .screen_load_pricing)
+            .onAppearAnalytics(event: fiftyOff ? .screen_load_50pricing : fromInfluencer != "" ?  .screen_load_14pricing : .screen_load_pricing)
     }
 
     private func unlockPro() {
@@ -413,6 +419,13 @@ struct PricingView: View {
                 price = yearlyPrice
                 event2 = "Yearly50" + event2
                 event3 += "yearly50"
+            } else if fromInfluencer != "" {
+                package = packagesAvailableForPurchase.last { (package) -> Bool in
+                    return package.product.productIdentifier == "io.mindgarden.pro.yearly14"
+                }!
+                price = yearlyPrice
+                event2 = "Yearly14" + event2
+                event3 += "yearly14"
             } else {
                 package = packagesAvailableForPurchase.last { (package) -> Bool in
                     return package.product.productIdentifier == "io.mindgarden.pro.yearly"
@@ -601,7 +614,7 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "\(trialLength == 1 ? "7 day\nfree trial" : trialLength == 2 ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "3 day\nfree trial")" : "day\nfree trial" )
+                                Text(title == "Yearly" ? "\(trialLength == 7 ? "7 day\nfree trial" : trialLength == 14 ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "7 day\nfree trial")" : "day\nfree trial" )
                                     .foregroundColor(Color.black.opacity(0.8))
                                     .font(Font.mada(.bold, size: 12))
                                     .multilineTextAlignment(.center)

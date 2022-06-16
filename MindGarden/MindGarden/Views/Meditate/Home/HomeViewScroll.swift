@@ -362,31 +362,31 @@ struct HomeViewScroll: View {
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
                     JourneyScene(userModel: userModel)
-                    if #available(iOS 14.0, *) {
-                        Button { } label: {
-                            HStack {
-                                Text("See All Meditations")
-                                    .foregroundColor(.black)
-                                    .font(Font.mada(.semiBold, size: 20))
-                            }.frame(width: width * 0.85, height: height/14)
-                                .background(Clr.yellow)
-                                .cornerRadius(25)
-                                .onTapGesture {
-                                    withAnimation {
-                                        UserDefaults.standard.setValue(true, forKey: "allMeditations")
-                                        Analytics.shared.log(event: .home_tapped_categories)
-                                        let impact = UIImpactFeedbackGenerator(style: .light)
-                                        impact.impactOccurred()
-                                        viewRouter.currentPage = .categories
-                                    }
-                                }
-                        }.padding(.top, 24)
-                            .oldShadow()
-                    } else {
-                        // Fallback on earlier versions
-                        
-                    }
-                    Spacer()
+//                    if #available(iOS 14.0, *) {
+//                        Button { } label: {
+//                            HStack {
+//                                Text("See All Meditations")
+//                                    .foregroundColor(.black)
+//                                    .font(Font.mada(.semiBold, size: 20))
+//                            }.frame(width: width * 0.85, height: height/14)
+//                                .background(Clr.yellow)
+//                                .cornerRadius(25)
+//                                .onTapGesture {
+//                                    withAnimation {
+//                                        UserDefaults.standard.setValue(true, forKey: "allMeditations")
+//                                        Analytics.shared.log(event: .home_tapped_categories)
+//                                        let impact = UIImpactFeedbackGenerator(style: .light)
+//                                        impact.impactOccurred()
+//                                        viewRouter.currentPage = .categories
+//                                    }
+//                                }
+//                        }.padding(.top, 24)
+//                            .oldShadow()
+//                    } else {
+//                        // Fallback on earlier versions
+//
+//                    }
+                    Spacer().frame(height:80)
             }.padding(.bottom, height * 0.23)
             }.frame(height: height)
                 .offset(y: -height * 0.23)

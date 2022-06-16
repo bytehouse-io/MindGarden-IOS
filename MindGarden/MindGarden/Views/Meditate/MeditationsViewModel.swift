@@ -301,7 +301,7 @@ class MeditationViewModel: ObservableObject {
         if ((forwardCounter > 2 && duration <= 120) || (forwardCounter > 6) || (selectedMeditation?.id == 22 && forwardCounter >= 1)) {
             reward = 0
             forwardCounter = 0
-            shouldStreakUpdate = true
+            shouldStreakUpdate = false
         } else if selectedMeditation?.duration == -1 {
             switch secondsRemaining {
             case 0...59:
@@ -332,17 +332,17 @@ class MeditationViewModel: ObservableObject {
         let completedInts = completedMeditation
         
         let beg1 = [6, 107, 107, 82, 82]
-        let beg2 = [105, 80, 80, 80, 104, 108, 92, 90]
-        let beg3 = [91, 93, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5]
-        let beg4 = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 28]
-        let beg5 = [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 29]
+        let beg2 = [105, 80, 80, 80, 104, 108, 92]
+        let beg3 = [90, 91, 93, 109, 4, 4, 4]
+        let beg4 = [5, 5, 5, 5, 5, 5, 5, 5, 5]
+        let beg5 = [28, 28, 28, 28, 28, 28, 28, 28, 28]
         let beg6 = [29, 29, 29, 29, 29, 29, 30, 30]
     
         let exp1 = [24, 105, 90, 90, 108]
         let exp2 = [92, 5, 5, 5, 5, 5, 5, 5, 5]
         let exp3 = [28, 28, 28, 28, 28, 28, 28, 28, 28]
-        let exp4 = [28, 28, 28, 28, 28, 29, 29, 29, 29]
-        let exp5 = [29, 29, 29, 29, 29, 29, 29, 30, 30]
+        let exp4 = [58, 58, 58, 58, 58,58,  58,  58,  58, 58]
+        let exp5 = [29, 29, 29, 29, 29, 29, 29, 29, 29]
         let exp6 = [30, 30, 30, 30, 31, 31, 32]
     
         let userCoinCollectedLevel = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int ?? 0

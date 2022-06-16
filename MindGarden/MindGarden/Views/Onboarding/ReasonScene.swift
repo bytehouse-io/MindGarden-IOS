@@ -119,14 +119,16 @@ struct ReasonScene: View {
                                 UserDefaults.standard.setValue("Just trying it out", forKey: "reason")
                             }
                         }
+                        selected = Array(Set(selected))
+                        return
                     }
                     
-                    selected = Array(Set(selected))
 
                     if selected.count >= 3 {
                         selected.removeFirst()
                     }
                     
+                    selected = Array(Set(selected))
                     selected.append(reason)
                
                     if reason.title == "Sleep better" {

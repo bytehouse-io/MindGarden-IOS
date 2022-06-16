@@ -93,6 +93,7 @@ struct NewUpdateModal: View {
                             withAnimation {
                                 shown = false
                                 UserDefaults.standard.setValue(true, forKey: "14DayModal")
+                                fromInfluencer = ""
                                 fiftyOff = true
                                 viewRouter.currentPage = .pricing
                             }

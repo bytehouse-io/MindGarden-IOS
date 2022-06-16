@@ -29,6 +29,23 @@ struct QuickStartMenuItem: Identifiable {
     var id = UUID()
     var title: QuickStartType
     
+    static func getName(str: String) -> QuickStartType {
+        switch str {
+        case  "New Meditations": return .newMeditations
+        case "3 Minutes": return .minutes3
+        case "5 Minutes": return .minutes5
+        case "10 Minutes": return .minutes10
+        case "15-20 Minutes": return .minutes20
+        case "Popular": return .popular
+        case "Morning": return .morning
+        case "Unguided/timed": return .unguided
+        case "Anxiety/Stress": return .anxiety
+        case "Night/Sleep": return .sleep
+        case "Courses": return .courses
+        default: return .minutes3
+        }
+    }
+    
     var name: String {
         switch title {
         case .newMeditations: return "New Meditations"

@@ -16,7 +16,7 @@ import SwiftUI
 //HomeSquares
 //Title: 28, semibold
 //subscript: 12, regular
-
+var middleToSearch = ""
 struct MiddleSelect: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
@@ -113,7 +113,7 @@ struct MiddleSelect: View {
                             Divider().padding([.bottom, .horizontal])
                             VStack {
                                 ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { (idx,meditation) in
-                                    MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && gardenModel.medIds.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed)
+                                    MiddleRow(width: g.size.width/1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: ((meditation.type == .lesson || meditation.type == .single_and_lesson) && userModel.completedMeditations.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation"), tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed)
                                 }
                             }
                             
@@ -182,7 +182,7 @@ struct MiddleSelect: View {
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
             model.checkIfFavorited()
-            if let id =  model.selectedMeditations.lastIndex(where: { ($0.type == .lesson || $0.type == .single_and_lesson) && gardenModel.medIds.contains(String($0.id)) && $0.belongsTo != "Timed Meditation" && $0.belongsTo != "Open-ended Meditation"}) {
+            if let id =  model.selectedMeditations.lastIndex(where: { ($0.type == .lesson || $0.type == .single_and_lesson) && userModel.completedMeditations.contains(String($0.id)) && $0.belongsTo != "Timed Meditation" && $0.belongsTo != "Open-ended Meditation"}) {
                 lastPlayed = id
             }
         }
@@ -194,7 +194,11 @@ struct MiddleSelect: View {
             Analytics.shared.log(event: .middle_tapped_back)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
-                viewRouter.currentPage = .meditate
+                if middleToSearch != "" {
+                    viewRouter.currentPage = .learn
+                } else {
+                    viewRouter.currentPage = .meditate
+                }
             }
         } label: {
             Image(systemName: "arrow.backward")

@@ -38,6 +38,8 @@ struct PlantGrowing: View {
             }
             if let selectedPlant = plant?.id, (Plant.badgePlants.first(where: { $0.id == selectedPlant }) != nil) {
                 isTransit = true
+                UserDefaults.standard.setValue(plant?.title, forKey: K.defaults.selectedPlant)
+                userModel.selectedPlant = plant
             } else {
                 DispatchQueue.main.async {
                     MGAudio.sharedInstance.stopSound()

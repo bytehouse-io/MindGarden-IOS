@@ -442,6 +442,10 @@ extension AuthenticationViewModel {
         if let plantArr = UserDefaults.standard.array(forKey: K.defaults.plants) as? [String]{
              uniquePlants = Array<String>(Set(plantArr))
         }
+        var compMeds = [""]
+        if let comMeds = UserDefaults.standard.array(forKey: K.defaults.completedMeditations)  as? [String] {
+            compMeds = comMeds
+        }
         
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
@@ -452,6 +456,7 @@ extension AuthenticationViewModel {
                 "totalMins": UserDefaults.standard.integer(forKey: "allTimeMinutes"),
                 "gardenGrid": thisGrid,
                 "plants": uniquePlants,
+                "completedMeditations": compMeds,
                 "experience": UserDefaults.standard.string(forKey: "experience") ?? "",
                 K.defaults.lastStreakDate: UserDefaults.standard.string(forKey: K.defaults.lastStreakDate) ?? "",
                 "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
@@ -479,8 +484,9 @@ extension AuthenticationViewModel {
     }
 
     func getData() {
-        UserDefaults.standard.setValue(["Bijan 21", "Quote 21", "Tale 21"], forKey: "oldSegments")
-        UserDefaults.standard.setValue(["Bijan 21", "Quote 21", "Tale 21"], forKey: "storySegments")
+        UserDefaults.standard.setValue(true, forKey: "day7")
+        UserDefaults.standard.setValue(["Bijan 10", "Quote 10", "Tale 10"], forKey: "oldSegments")
+        UserDefaults.standard.setValue(["Bijan 10", "Quote 10", "Tale 10"], forKey: "storySegments")
         UserDefaults.standard.setValue(true, forKey: "signedIn")
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
@@ -488,6 +494,7 @@ extension AuthenticationViewModel {
                     if let name = document[K.defaults.name] {
                         UserDefaults.standard.setValue(name, forKey: K.defaults.name)
                     }
+                    
                     if let joinDate = document[K.defaults.joinDate] {
                         UserDefaults.standard.setValue(joinDate, forKey: K.defaults.joinDate)
                     }

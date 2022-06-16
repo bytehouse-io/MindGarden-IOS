@@ -252,19 +252,19 @@ struct NotificationScene: View {
                 let identify = AMPIdentify()
                     .set("reminder_set", value: NSNumber(1))
                 Amplitude.instance().identify(identify ?? AMPIdentify())
-
+                
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
+                
                 if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
                     NotificationHelper.addThreeDay()
                 }
                 if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
                     NotificationHelper.addOnboarding()
                 }
-                NotificationHelper.freeTrial()
 
                 if fromSettings && UserDefaults.standard.bool(forKey: "freeTrial")  {
                     NotificationHelper.freeTrial()

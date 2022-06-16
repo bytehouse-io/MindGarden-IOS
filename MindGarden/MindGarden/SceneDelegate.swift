@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        // This delegate does not imply the connecting scene or session are new (seef `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 
@@ -41,6 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         NotificationHelper.addOneDay()
         if launchNum == 0 {
+            UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 if accepted {
                     Analytics.shared.log(event: .onboarding_notification_on)
@@ -118,7 +119,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-        numberOfMeds = Int.random(in: 785..<811)
+        numberOfMeds = Int.random(in: 1085..<1111)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)
         SceneDelegate.bonusModel.updateBonus()
