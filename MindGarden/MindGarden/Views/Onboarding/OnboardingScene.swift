@@ -23,15 +23,12 @@ struct OnboardingScene: View {
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
-    let titles = ["Meditation You'll Actually Stick With.", "Visualize Your Progress", "Collect all flowers, fruits and trees!"]
-    let subtitles = ["Get 1% happier, calmer & more focused everyday by growing your MindGarden 🌱", "Create your own  beautiful MindGarden by meditating everyday.", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
-    let images = [Img.coloredPots, Img.gardenCalender, Img.packets]
+    let title = "Not magic."
+    let subtitles = "Meditation is hard. But playing a gardening game is easy & fun."
     var body: some View {
         NavigationView {
             GeometryReader { g in
-                let height = g.size.height
                 let width = g.size.height
-//                let screenWidth = UIScreen.screenWidth
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
 //                    ZStack {
@@ -84,53 +81,63 @@ struct OnboardingScene: View {
 //                            .rotationEffect(Angle(degrees: 20))
 //                            .position(x: screenWidth - 20, y: height/1.3)
 //                    }
-                    VStack(alignment: .center) {
-                        if #available(iOS 14.0, *) {
-                            TabView(selection: $index) {
-                                ForEach((0..<3), id: \.self) { index in
-                                    VStack {
-                                            images[index]
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: width * 0.6 , height: height * (index == 0 ? 0.25 : 0.38))
-                                                .padding()
-                                                .neoShadow()
-                                            Spacer()
-                                            VStack(alignment: .leading) {
-                                                Text(titles[index])
-                                                    .font(Font.mada(.bold, size: 38))
-                                                    .minimumScaleFactor(0.05)
-                                                    .lineSpacing(0)
-                                                    .padding(.bottom, 5)
-                                                    .foregroundColor(Clr.darkgreen)
-                                                Text(subtitles[index])
-                                                    .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.medium, size: 20))
-                                                    .foregroundColor(Clr.black1)
-                                                    .lineSpacing(10)                                             }
-                                            .multilineTextAlignment(.leading)
-                                            .offset(y: -20)
-                                            .padding(10)
-                                            .frame(width: width * (K.isSmall() ? 0.6 : 0.5))
-                                            Spacer()
-                                            Spacer()
-                                        }
-                                    }
-                            }
-                            .onChange(of: index, perform: { _ in
-//                                if index == 0 {
-//                                    viewRouter.progressValue = 0.3
-//                                } else if index == 1{
-//                                    viewRouter.progressValue = 0.4
-//                                } else {
-//                                    viewRouter.progressValue = 0.5
-//                                }
-                            })
-                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .frame(width: width * (K.isSmall() ? 0.65 : 0.55), height: height * (0.75), alignment: .center)
-                        } else {
-                            // Fallback on earlier versions
+                    VStack {
+                        HStack(alignment:.top) {
+                            Img.onBoardingSeedPacket
+                            Spacer()
+                            Img.onBoardingCalender
+                                .neoShadow()
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
                         }
+                        Spacer()
+                        HStack(alignment:.bottom) {
+                            Img.onBoardingFlower
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+                            Spacer()
+                            Img.onBoardingAppleSeed
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    .ignoresSafeArea()
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Spacer()
+                        VStack {
+                            VStack(alignment:.leading) {
+                                Text(title)
+                                    .font(Font.mada(.bold, size: 38))
+                                    .padding(.horizontal)
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.leading)
+                                Group {
+                                    Text("Just")
+                                        .foregroundColor(Clr.black2) +
+                                    Text(" Gamification")
+                                        .foregroundColor(Clr.brightGreen)
+                                }
+                                .font(Font.mada(.bold, size: 38))
+                                    .padding(.horizontal)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.bottom,10)
+                                Text(subtitles)
+                                    .font(Font.mada(.semiBold, size: 20))
+                                    .foregroundColor(Clr.black1)
+                                    .lineSpacing(10)
+                                    .padding(.horizontal)
+                                    .multilineTextAlignment(.leading)
+                            }.padding()
+                            Img.coloredPots
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: width * 0.4)
+                                .padding()
+                                .neoShadow()
+                        }
+                        .padding()
+                        
                         Button {
                             Analytics.shared.log(event: .onboarding_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -147,11 +154,11 @@ struct OnboardingScene: View {
                             Capsule()
                                 .fill(Clr.yellow)
                                 .overlay(
-                                    Text("Start Growing 👉🏻")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 20))
+                                    Text("Start Growing 👉")
+                                        .foregroundColor(.black)
+                                        .font(Font.mada(.semiBold, size: 20))
                                 )
-                        }.frame(height: 50)
+                        }.frame(width:UIScreen.screenWidth*0.8, height: 50)
                             .padding()
                         .buttonStyle(BonusPress())
                         Button {
@@ -164,14 +171,13 @@ struct OnboardingScene: View {
                         } label: {
                             Text("Already have an account")
                                 .underline()
-                                .font(Font.mada(.regular, size: 18))
+                                .font(Font.mada(.semiBold, size: 18))
                                 .foregroundColor(.gray)
                         }.frame(height: 30)
-                            .padding()
+                            .padding([.horizontal,.bottom])
                         .buttonStyle(BonusPress())
                         Spacer()
                     }
-//                    .offset(y: K.isPad() ? 0 : g.size.height * -0.45)
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)

@@ -13,6 +13,7 @@ import Firebase
 import Foundation
 import OneSignal
 import Storyly
+import AVFoundation
 
 var numberOfMeds = 0
 var storylyViewProgrammatic = StorylyView()
@@ -42,6 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         NotificationHelper.addOneDay()
         if launchNum == 0 {
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
+            playSound(soundName: "background")
             OneSignal.promptForPushNotifications(userResponse: { accepted in
                 if accepted {
                     Analytics.shared.log(event: .onboarding_notification_on)
@@ -288,5 +290,27 @@ extension SceneDelegate {
         // Process the data
         print(pathComponents, "pathComponents")
         print(queryParams, "queryParams")
+    }
+    
+    func playSound(soundName: String) {
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+            /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            player?.volume = 0.4
+            player?.numberOfLoops = -1
+            
+            guard let player = player else { return }
+            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                player.play()
+            }
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 }
