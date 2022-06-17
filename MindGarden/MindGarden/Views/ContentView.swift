@@ -82,9 +82,9 @@ struct ContentView: View {
                                 if #available(iOS 14.0, *) {
                                     switch viewRouter.currentPage {
                                     case .onboarding:
-                                            OnboardingScene()
-                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
-                                                .navigationViewStyle(StackNavigationViewStyle())
+                                        OnboardingScene()
+//                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
+//                                                .navigationViewStyle(StackNavigationViewStyle())
                                     case .experience:
                                             ExperienceScene()
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
@@ -191,8 +191,7 @@ struct ContentView: View {
                                     // Fallback on earlier versions
                                 }
                                 
-                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .onboarding
-                                                || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
+                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
                                         ZStack(alignment: .leading) {
                                             Rectangle().frame(width: geometry.size.width - 50 , height: 20)
                                                 .opacity(0.3)
