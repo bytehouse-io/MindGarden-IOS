@@ -143,30 +143,30 @@ struct CategoriesScene: View {
                                 DispatchQueue.main.async {
                                     showModal.toggle()
                                 }
-                            }.offset(y: -50)
-                    }
-                    Spacer()
-                    if showModal {
-                        MiddleModal(shown: $showModal)
-                        .offset(y: showModal ? 0 + (isFromQuickstart ? -65 : 0) : g.size.height )
-                            .edgesIgnoringSafeArea(.top)
-                            .animation(.default, value: showModal).offset(y: isFromQuickstart ? -80 : 0)
-                    }
-                    if isFromQuickstart {
-                        HStack {
-                            backButton
-                            Spacer()
-                            Text(QuickStartMenuItem(title: selectedCategory).name)
-                                .foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: 20))
-                            Spacer()
-                            backButton.opacity(0).disabled(true)
-                            Spacer()
-                        }.frame(width: UIScreen.screenWidth, height: 50)
-                            .padding(.horizontal, 35)
-                    }
+                            }
+                        Spacer()
                     }
                 }
+                if showModal {
+                    MiddleModal(shown: $showModal)
+                        .offset(y: showModal ? 0 : g.size.height)
+                        .edgesIgnoringSafeArea(.top)
+                        .animation(.default, value: showModal).offset(y: isFromQuickstart ? -80 : 0)
+                }
+                if isFromQuickstart {
+                    HStack {
+                        backButton
+                        Spacer()
+                        Text(QuickStartMenuItem(title: selectedCategory).name)
+                            .foregroundColor(Clr.black2)
+                            .font(Font.mada(.semiBold, size: 20))
+                        Spacer()
+                        backButton.opacity(0).disabled(true)
+                        Spacer()
+                    }.frame(width: UIScreen.screenWidth, height: 50)
+                        .padding(.horizontal, 35)
+                }
+            }
         .onAppear {
             DispatchQueue.main.async {
                 model.selectedCategory = .all
@@ -186,7 +186,6 @@ struct CategoriesScene: View {
         .onAppearAnalytics(event: .screen_load_categories)
     }
     
-    
     var meditations : [Meditation ] {
         if isFromQuickstart {
             return filterMeditation()
@@ -197,7 +196,7 @@ struct CategoriesScene: View {
         }
     }
     
-    func filterMeditation() -> [Meditation] {
+    private func filterMeditation() -> [Meditation] {
         return model.selectedMeditations.filter({ (meditation: Meditation) -> Bool in
             switch selectedCategory {
             case .newMeditations: return meditation.isNew
@@ -205,8 +204,8 @@ struct CategoriesScene: View {
             case .minutes5: return meditation.duration <= 400 && meditation.duration >= 250
             case .minutes10: return meditation.duration <= 700 && meditation.duration >= 500
             case .minutes20: return meditation.duration >= 1000
-            case .popular: return Meditation.popularMeditations.contains(meditation.id)
-            case .morning: return meditation.category == .growth
+            case .popular: return !meditation.title.isEmpty
+            case .morning: return meditation.category == .sleep
             case .sleep: return meditation.category == .sleep
             case .anxiety: return meditation.category == .anxiety
             case .unguided: return meditation.category == .unguided
@@ -251,7 +250,7 @@ struct CategoriesScene: View {
         }
     }
     
-     func didSelectcategory(item: Meditation){
+    private func didSelectcategory(item: Meditation){
         withAnimation {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
@@ -270,11 +269,6 @@ struct CategoriesScene: View {
                     presentationMode.wrappedValue.dismiss()
                 } else {
                     if model.selectedMeditation?.type == .course {
-                        if viewRouter.currentPage == .learn {
-                            middleToSearch = QuickStartMenuItem(title: selectedCategory).name
-                        } else {
-                            middleToSearch = ""
-                        }
                         viewRouter.currentPage = .middle
                     } else {
                         DispatchQueue.main.async {
