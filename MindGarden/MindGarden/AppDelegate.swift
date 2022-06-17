@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaults.standard.set(true, forKey: "isPlayMusic")
         playSound(soundName: "background")
         // Override point for customization after application launch.
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
