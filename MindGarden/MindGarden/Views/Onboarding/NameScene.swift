@@ -22,7 +22,12 @@ struct NameScene: View {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack(spacing: -5) {
                             HStack {
-                                Img.topBranch.padding(.leading, -20)
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(x: -10, y: -10)
                                 Spacer()
                                 Image(systemName: "arrow.backward")
                                     .font(.system(size: 22))
@@ -73,7 +78,7 @@ struct NameScene: View {
                                     DispatchQueue.main.async {
                                         if !name.isEmpty {
                                             UserDefaults.standard.set(name, forKey: "name")
-                                            viewRouter.progressValue += 0.15
+                                            viewRouter.progressValue += 0.2
                                             viewRouter.currentPage = .notification
                                             userModel.name = name
                                         }
@@ -81,7 +86,7 @@ struct NameScene: View {
                                 }
                             } label: {
                                 Capsule()
-                                    .fill(Clr.yellow)
+                                    .fill(Clr.darkWhite)
                                     .overlay(
                                         Text("Continue")
                                             .foregroundColor(Clr.darkgreen)
@@ -90,6 +95,7 @@ struct NameScene: View {
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
+                                .offset(y: 100)
                         }.frame(width: width * 0.9)
                             .padding(.bottom, g.size.height * 0.15)
                     }

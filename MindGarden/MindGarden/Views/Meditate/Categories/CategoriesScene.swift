@@ -97,7 +97,9 @@ struct CategoriesScene: View {
                                 ForEach(meditations, id: \.self) { item in
                                     HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
                                         .onTapGesture {
-                                            didSelectcategory(item: item)
+                                            withAnimation {
+                                                didSelectcategory(item: item)
+                                            }
                                         }
                                         .neoShadow()
                                         .padding(.vertical, 8)
@@ -269,10 +271,17 @@ struct CategoriesScene: View {
                     presentationMode.wrappedValue.dismiss()
                 } else {
                     if model.selectedMeditation?.type == .course {
+                        if viewRouter.currentPage == .learn {
+                            middleToSearch = QuickStartMenuItem(title: selectedCategory).name
+                        } else {
+                            middleToSearch = ""
+                        }
                         viewRouter.currentPage = .middle
                     } else {
                         DispatchQueue.main.async {
-                            showModal = true
+                            withAnimation {
+                                showModal = true
+                            }
                         }
                     }
                 }

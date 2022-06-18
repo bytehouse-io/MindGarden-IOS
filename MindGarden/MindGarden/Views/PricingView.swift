@@ -52,7 +52,7 @@ struct PricingView: View {
                                         .frame(width: width * 0.35, height: height * 0.15)
                                         .padding()
                                 } else {
-                                    Img.sun2
+                                    Img.newSun
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: width * 0.7, height: height * 0.2)
@@ -614,7 +614,7 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "\(trialLength == 7 ? "7 day\nfree trial" : trialLength == 14 ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "7 day\nfree trial")" : "day\nfree trial" )
+                                Text(title == "Yearly" ? "\(trialLength == 7 ? "7 day\nfree trial" : trialLength == 14 ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "14 day\nfree trial")" : "day\nfree trial" )
                                     .foregroundColor(Color.black.opacity(0.8))
                                     .font(Font.mada(.bold, size: 12))
                                     .multilineTextAlignment(.center)

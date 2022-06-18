@@ -41,18 +41,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         NotificationHelper.addOneDay()
+        fromInfluencer = "creative_explained"
         if launchNum == 0 {
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             playSound(soundName: "background")
-            OneSignal.promptForPushNotifications(userResponse: { accepted in
-                if accepted {
-                    Analytics.shared.log(event: .onboarding_notification_on)
-                    NotificationHelper.addOneDay()
-                    NotificationHelper.addThreeDay()
-                } else {
-                    Analytics.shared.log(event: .onboarding_notification_off)
-                }
-            })
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"] , forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")

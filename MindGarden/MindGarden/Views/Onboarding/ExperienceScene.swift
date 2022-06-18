@@ -31,7 +31,12 @@ struct ExperienceScene: View {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
                             HStack {
-                                Img.topBranch.padding(.leading, -20)
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
                                 Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
@@ -46,6 +51,7 @@ struct ExperienceScene: View {
                             SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
+                            Spacer()
                             Button {
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -71,7 +77,7 @@ struct ExperienceScene: View {
                                     withAnimation(.easeOut(duration: 0.3)) {
                                         DispatchQueue.main.async {
                                             viewRouter.currentPage = .reason
-                                            viewRouter.progressValue += 0.15
+                                            viewRouter.progressValue += 0.2
                                         }
                                     }
                                 } //TODO gray out button if not selected
@@ -86,6 +92,8 @@ struct ExperienceScene: View {
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
+                                .offset(y: 35)
+                            
                             Spacer()
                         }
                 }

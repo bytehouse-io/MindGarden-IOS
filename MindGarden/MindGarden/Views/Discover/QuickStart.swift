@@ -21,7 +21,6 @@ struct QuickStart: View {
                         .frame(height:20)
                     ForEach(quickStartTabList) { item in
                         Button {
-                            
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 category = item.title
@@ -53,16 +52,20 @@ struct QuickStart: View {
                             .padding(.horizontal,30)
                         }
                         .padding(5)
-                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .offset(y: playEntryAnimation ? 0 : 75)
                         .animation(.spring().delay(item.delay), value: playEntryAnimation)
                             .padding(5)
                     }
-                }
+                }.padding(.bottom, 100)
                 Spacer()
-                    .frame(height:100)
+                    .frame(height:200)
             }
         }.onAppear {
             withAnimation {
+                if middleToSearch != "" {
+                    category = QuickStartMenuItem.getName(str: middleToSearch)
+                    isShowCategory = true
+                }
                 playEntryAnimation = true
             }
         }

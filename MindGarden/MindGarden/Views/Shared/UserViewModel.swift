@@ -141,6 +141,9 @@ class UserViewModel: ObservableObject {
                     if let fbJourney = document["finishedJourney"] as? Bool {
                         self.journeyFinished = fbJourney
                     }
+                    if let longestStreak = document["longestStreak"] as? Int {
+                        UserDefaults.standard.setValue(longestStreak, forKey: "longestStreak")
+                    }
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.allPlants.filter({ plant in

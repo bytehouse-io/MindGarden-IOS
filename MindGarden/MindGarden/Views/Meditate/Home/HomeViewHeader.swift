@@ -39,7 +39,11 @@ struct HomeViewHeader: View {
                 .oldShadow()
                 .offset(x: -10)
             HStack {
-                Img.topBranch.offset(x: 40,  y: height * -0.1)
+                Img.topBranch
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.screenWidth * 0.6)
+                    .offset(x: 40,  y: height * -0.1)
                 Spacer()
                 VStack {
                     HStack {

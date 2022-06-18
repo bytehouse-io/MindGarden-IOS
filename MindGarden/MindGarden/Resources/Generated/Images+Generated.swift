@@ -4,7 +4,6 @@ import SwiftUI
 
 /// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
 public enum Img {
-  public static let house = Image("House")
   public static let iceFlower = Image("Ice Flower")
   public static let angry = Image("angry")
   public static let happy = Image("happy")
@@ -57,7 +56,6 @@ public enum Img {
   public static let cherryBlossom2 = Image("cherryBlossom2")
   public static let cherryBlossom3 = Image("cherryBlossom3")
   public static let cherryBlossomBadge = Image("cherryBlossomBadge")
-  public static let cherryBlossomPacket = Image("cherryBlossomPacket")
   public static let cherryBlossomsHead = Image("cherryBlossomsHead")
   public static let christmas1 = Image("christmas1")
   public static let christmas2 = Image("christmas2")
@@ -173,6 +171,7 @@ public enum Img {
   public static let candle = Image("candle")
   public static let cando = Image("cando")
   public static let chatBubble = Image("chatBubble")
+  public static let cherryBlossomPacket = Image("cherryBlossomPacket")
   public static let cloud = Image("cloud")
   public static let coffee = Image("coffee")
   public static let coin = Image("coin")
@@ -197,6 +196,7 @@ public enum Img {
   public static let happyPot = Image("happyPot")
   public static let happySunflower = Image("happySunflower")
   public static let heart = Image("heart")
+  public static let house = Image("house")
   public static let icecream = Image("icecream")
   public static let alpha = Image("alpha")
   public static let beach = Image("beach")
@@ -238,6 +238,7 @@ public enum Img {
   public static let morningBackground = Image("morningBackground")
   public static let morningSun = Image("morningSun")
   public static let newMeds = Image("newMeds")
+  public static let newSun = Image("newSun")
   public static let okayPot = Image("okayPot")
   public static let calendarRacoon = Image("calendarRacoon")
   public static let completeRacoon = Image("completeRacoon")
@@ -293,7 +294,6 @@ public enum Img {
   public static let stress = Image("stress")
   public static let stressedPot = Image("stressedPot")
   public static let sun = Image("sun")
-  public static let sun2 = Image("sun2")
   public static let sunglasses = Image("sunglasses")
   public static let sunshinechest = Image("sunshinechest")
   public static let sunshinepotion = Image("sunshinepotion")

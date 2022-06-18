@@ -39,7 +39,12 @@ struct NotificationScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(spacing: -5) {
                         HStack {
-                            Img.topBranch.padding(.leading, -20)
+                            Img.topBranch
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: UIScreen.screenWidth * 0.6)
+                                .padding(.leading, -20)
+                                .offset(y: -10)
                             Spacer()
                             Image(systemName: "arrow.backward")
                                 .font(.system(size: 22))
@@ -48,7 +53,7 @@ struct NotificationScene: View {
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        viewRouter.progressValue -= 0.1
+                                        viewRouter.progressValue -= 0.25
                                         if fromSettings {
                                             presentationMode.wrappedValue.dismiss()
                                         } else if tappedTurnOn {
@@ -172,7 +177,7 @@ struct NotificationScene: View {
                                                     if tappedTurnOn {
                                                         viewRouter.currentPage = .review
                                                     } else {
-                                                        viewRouter.progressValue += 0.3
+                                                        viewRouter.progressValue = 1.0
                                                         viewRouter.currentPage = .review
                                                     }
                                                 }
@@ -293,7 +298,7 @@ struct NotificationScene: View {
                         presentationMode.wrappedValue.dismiss()
                     } else {
                         if !tappedTurnOn {
-                            viewRouter.progressValue += 0.3
+                            viewRouter.progressValue += 0.25
                         }
                         viewRouter.currentPage = .review
                     }

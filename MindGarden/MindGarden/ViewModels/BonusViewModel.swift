@@ -342,7 +342,8 @@ class BonusViewModel: ObservableObject {
             }
             self.streak = String(self.streakNumber) + "+" + lastStreakDate
             self.db.collection(K.userPreferences).document(email).updateData([
-                "streak": String(self.streakNumber) + "+" + lastStreakDate
+                "streak": String(self.streakNumber) + "+" + lastStreakDate,
+                "longestStreak": UserDefaults.standard.integer(forKey: "longestStreak")
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")

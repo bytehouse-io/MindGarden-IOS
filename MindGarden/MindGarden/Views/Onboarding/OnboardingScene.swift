@@ -24,69 +24,20 @@ struct OnboardingScene: View {
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
     let title = "Not magic."
-    let subtitles = "Meditation is hard. But playing a gardening game is easy & fun."
+    let subtitles = "Meditate. Journal. Grow. Thrive with MindGarden & have fun."
     var body: some View {
         NavigationView {
             GeometryReader { g in
                 let width = g.size.height
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-//                    ZStack {
-//                        Img.sunflower3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: 45))
-//                            .position(x: -10, y: -10)
-//                        Img.strawberry3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: 90))
-//                            .position(x: screenWidth/2 - 10, y: -65)
-//                        Img.lavender3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: 20))
-//                            .position(x: screenWidth, y: -50)
-//                        Img.cherryBlossoms3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 80)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: screenWidth + 15, y: height/5)
-//                        Img.blueberry3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: 0, y: height/3)
-//                        Img.rose3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: screenWidth + 20, y: height/2)
-//                        Img.bonsai3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 120)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: 15, y: height/1.3)
-//                        Img.lily3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 90)
-//                            .rotationEffect(Angle(degrees: 20))
-//                            .position(x: screenWidth - 20, y: height/1.3)
-//                    }
                     VStack {
                         HStack(alignment:.top) {
                             Img.onBoardingSeedPacket
                             Spacer()
                             Img.onBoardingCalender
                                 .neoShadow()
+                                .offset(x: 25, y: -25)
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
                         }
@@ -122,6 +73,8 @@ struct OnboardingScene: View {
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom,10)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
                                 Text(subtitles)
                                     .font(Font.mada(.semiBold, size: 20))
                                     .foregroundColor(Clr.black1)
@@ -143,7 +96,7 @@ struct OnboardingScene: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation(.easeOut(duration: 0.4)) {
                                 DispatchQueue.main.async {
-                                    viewRouter.progressValue = 0.4
+                                    viewRouter.progressValue = 0.2
                                     viewRouter.currentPage = .experience
                                 }
                             }
@@ -155,7 +108,7 @@ struct OnboardingScene: View {
                                 .fill(Clr.yellow)
                                 .overlay(
                                     Text("Start Growing 👉")
-                                        .foregroundColor(.black)
+                                        .foregroundColor(Clr.darkgreen)
                                         .font(Font.mada(.semiBold, size: 20))
                                 )
                         }.frame(width:UIScreen.screenWidth*0.8, height: 50)
