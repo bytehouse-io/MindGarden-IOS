@@ -9,9 +9,9 @@ import SwiftUI
 import FirebaseDynamicLinks
 import Firebase
 
-enum FeedbackType: String {
+enum FeedbackType: String, CaseIterable {
     case happy,confused,unhappy
-    
+    var id: String { return self.rawValue }
     var title : String {
         switch self {
         case .happy:
@@ -25,14 +25,15 @@ enum FeedbackType: String {
 }
 
 struct LeaveFeedback: View {
-    
+    @EnvironmentObject var viewRouter: ViewRouter
     var userModel: UserViewModel
     @Binding var selectedFeedback:FeedbackType
     
     @State private var isSharePresented: Bool = false
     @State private var urlShare2 = URL(string: "https://mindgarden.io")
-    @Environment(\.presentationMode) var presentationMode
+//    @Environment(\.presentationMode) var presentationMode
     
+    @Binding var showFeedbackSheet : Bool
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
@@ -43,17 +44,20 @@ struct LeaveFeedback: View {
         ZStack {
             Clr.darkWhite
             VStack {
+                Spacer()
+                    .frame(height:60)
                 HStack {
                     Button {
-                        presentationMode.wrappedValue.dismiss()
+                        showFeedbackSheet = false
                     } label: {
                         ZStack {
-                            Image(systemName: "xmark")
-                                .foregroundColor(.gray)
-                                .frame(width: 50, height: 50)
+                            Image(systemName: "arrow.backward")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Clr.darkgreen)
                                 .padding()
-                         
-                        }.frame(width: 50, height: 50)
+                                .frame(width: 60)
+                        }
                         .cornerRadius(25)
                     }
                     .buttonStyle(NeumorphicPress())
@@ -72,7 +76,7 @@ struct LeaveFeedback: View {
                     .font(Font.mada(.regular, size: 18))
                     .foregroundColor(Clr.black2)
                     .padding()
-                VStack {
+                VStack(alignment:.center) {
                     switch selectedFeedback {
                     case .happy:
                         writeReview
@@ -103,10 +107,11 @@ struct LeaveFeedback: View {
                 Spacer()
             }
         }
-        .ignoresSafeArea()
         .sheet(isPresented: $isSharePresented) {
             ReferralView(url: $urlShare2)
         }
+        .transition(.move(edge: .trailing))
+        .ignoresSafeArea()
     }
     
     var writeReview: some View {
@@ -115,11 +120,15 @@ struct LeaveFeedback: View {
                 UIApplication.shared.open(url)
             }
         } label: {
-            HStack {
+            HStack(alignment:.center) {
                 Image(systemName: "doc.on.clipboard")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 20)
                     .foregroundColor(Clr.darkgreen)
+                    .padding(.trailing)
                 Text("Write a Review")
-                    .font(Font.mada(.medium, size: 25))
+                    .font(Font.mada(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -132,9 +141,13 @@ struct LeaveFeedback: View {
         } label: {
             HStack {
                 Image(systemName: "envelope.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20)
                     .foregroundColor(Clr.darkgreen)
+                    .padding(.trailing)
                 Text("Contact Mindgarden Team")
-                    .font(Font.mada(.medium, size: 25))
+                    .font(Font.mada(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -144,13 +157,19 @@ struct LeaveFeedback: View {
     
     var inviteFriend: some View {
         Button {
-            sendInvite()
+            DispatchQueue.main.async {
+                sendInvite()
+            }
         } label: {
             HStack {
                 Image(systemName: "arrowshape.turn.up.right.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 20)
                     .foregroundColor(Clr.darkgreen)
+                    .padding(.trailing)
                 Text("Invite a Firend")
-                    .font(Font.mada(.medium, size: 25))
+                    .font(Font.mada(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -163,9 +182,13 @@ struct LeaveFeedback: View {
         } label: {
             HStack {
                 Image(systemName: "questionmark.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 20)
                     .foregroundColor(Clr.darkgreen)
-                Text("Getting Started Guid")
-                    .font(Font.mada(.medium, size: 25))
+                    .padding(.trailing)
+                Text("Getting Started Guide")
+                    .font(Font.mada(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -175,6 +198,7 @@ struct LeaveFeedback: View {
     
     func sendInvite() {
         guard let uid = Auth.auth().currentUser?.email else {
+            viewRouter.currentPage = .authentication
             return
         }
         
@@ -209,6 +233,6 @@ struct LeaveFeedback: View {
 
 struct LeaveFeedback_Previews: PreviewProvider {
     static var previews: some View {
-        LeaveFeedback(userModel: UserViewModel(), selectedFeedback: .constant(.happy))
+        LeaveFeedback(userModel: UserViewModel(), selectedFeedback: .constant(.happy), showFeedbackSheet: .constant(true))
     }
 }
