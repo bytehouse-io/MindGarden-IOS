@@ -296,7 +296,9 @@ struct ProfileScene: View {
                                                             Divider()
                                                             Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
                                                                 Analytics.shared.log(event: .profile_tapped_feedback)
-                                                                showFeedbackOption = true
+                                                                withAnimation(.spring()) {
+                                                                    showFeedbackOption = true
+                                                                }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                         }.padding()
@@ -436,9 +438,6 @@ struct ProfileScene: View {
                     .sheet(isPresented: $isSharePresented) {
                         ReferralView(url: $urlShare2)
                     }
-                    .sheet(isPresented: $showFeedbackSheet) {
-                        LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback)
-                    }
                     .fullScreenCover(isPresented: $showNotif) {
                         NotificationScene(fromSettings: true)
                     }
@@ -477,46 +476,48 @@ struct ProfileScene: View {
                         .ignoresSafeArea()
                         .opacity(0.5)
                         .onTapGesture {
-                            showFeedbackOption = false
+                            withAnimation(.spring()) {
+                                showFeedbackOption = false
+                            }
                         }
                     VStack {
-                        Text("Happy")
-                            .font(Font.mada(.regular, size: 25))
-                            .foregroundColor(Clr.black2)
-                            .frame(height:25)
-                            .onTapGesture {
-                                selectedFeedback = .happy
-                                showFeedbackSheet = true
+                        Spacer()
+                        VStack {
+                            ForEach(FeedbackType.allCases, id: \.id) { item in
+                                Text(item.id.capitalized)
+                                    .font(Font.mada(.regular, size: 25))
+                                    .foregroundColor(Clr.black2)
+                                    .frame(height:25)
+                                    .onTapGesture {
+                                        selectedFeedback = item
+                                        withAnimation(.spring()) {
+                                            showFeedbackSheet = true
+                                            showFeedbackOption = false
+                                        }
+                                    }
+                                    .padding()
+                                if item == .happy || item == .confused {
+                                    Divider().padding(.horizontal)
+                                }
                             }
-                            .padding()
-                        Divider().padding(.horizontal)
-                        Text("Confused")
-                            .font(Font.mada(.regular, size: 25))
-                            .foregroundColor(Clr.black2)
-                            .frame(height:25)
-                            .onTapGesture {
-                                selectedFeedback = .confused
-                                showFeedbackSheet = true
-                            }
-                            .padding()
-                        Divider().padding(.horizontal)
-                        Text("Unhappy")
-                            .font(Font.mada(.regular, size: 25))
-                            .foregroundColor(Clr.black2)
-                            .frame(height:25)
-                            .onTapGesture {
-                                selectedFeedback = .unhappy
-                                showFeedbackSheet = true
-                            }
-                            .padding()
-                    }
-                    .background(
-                        Rectangle()
-                            .fill(Clr.darkWhite)
-                            .cornerRadius(10)
-                            .padding(.horizontal,30)
-                    )
+                            Spacer()
+                                .frame(height:30)
+                        }
+                        .ignoresSafeArea()
+                        .background(
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                        )
+                    }.offset(y:showFeedbackOption ? 0 : 300)
+                        .transition(.move(edge: .bottom))
+                        .animation(.spring())
+                        .ignoresSafeArea()
                 }
+                
+                if showFeedbackSheet {
+                    LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback, showFeedbackSheet: $showFeedbackSheet)
+                }
+                
             }
         }.onAppear {
             //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
