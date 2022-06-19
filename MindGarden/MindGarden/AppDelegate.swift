@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaults.standard.set(true, forKey: "isPlayMusic")
         playSound(soundName: "background")
         // Override point for customization after application launch.
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
@@ -102,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
             
             /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
-            player?.volume = 0.4
+            player?.volume = 0.04
             player?.numberOfLoops = -1
             
             guard let player = player else { return }

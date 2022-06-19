@@ -129,7 +129,7 @@ struct ReviewScene: View {
                                         .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
-                        }
+                        }.padding(.top, 15)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)

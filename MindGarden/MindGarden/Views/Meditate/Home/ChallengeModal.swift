@@ -61,10 +61,6 @@ struct ChallengeModal: View {
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(Clr.darkgreen, lineWidth: 3)
                             HStack(spacing: 5) {
-                                Img.educatedRacoon
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: width  * 0.175)
                                 VStack(alignment: .leading){
                                     HStack {
                                         Text("Complete the Intro to Meditation Course before ")
@@ -79,7 +75,6 @@ struct ChallengeModal: View {
                                         + Text("Cherry Blossom")
                                             .font(Font.mada(.bold, size: 18))
                                             .foregroundColor(Clr.cherryPink)
-
                                     } .multilineTextAlignment(.leading)
                                 }
                             }

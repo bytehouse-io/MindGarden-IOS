@@ -298,6 +298,7 @@ public enum Img {
   public static let sunshinechest = Image("sunshinechest")
   public static let sunshinepotion = Image("sunshinepotion")
   public static let target = Image("target")
+  public static let tiktokIcon = Image("tiktokIcon")
   public static let topBranch = Image("topBranch")
   public static let tree = Image("tree")
   public static let treeBadge = Image("treeBadge")

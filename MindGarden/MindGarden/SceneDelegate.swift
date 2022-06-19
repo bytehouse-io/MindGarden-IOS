@@ -41,7 +41,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         NotificationHelper.addOneDay()
-        fromInfluencer = "creative_explained"
         if launchNum == 0 {
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             playSound(soundName: "background")
@@ -293,7 +292,7 @@ extension SceneDelegate {
             
             /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
-            player?.volume = 0.4
+            player?.volume = 0.04
             player?.numberOfLoops = -1
             
             guard let player = player else { return }
