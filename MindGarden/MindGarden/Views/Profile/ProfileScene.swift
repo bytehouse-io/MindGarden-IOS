@@ -452,7 +452,7 @@ struct ProfileScene: View {
                         Alert(
                             title: Text("Are you sure?"),
                             message: Text("All data will be deleted"),
-                            primaryButton: .destructive(Text("Destructive"), action: {
+                            primaryButton: .destructive(Text("Yes"), action: {
                                 Analytics.shared.log(event: .profile_tapped_delete_account)
                                 profileModel.signOut()
                                 OneSignal.sendTag("deleted", value: "true")

@@ -79,7 +79,7 @@ struct NameScene: View {
                                         if !name.isEmpty {
                                             UserDefaults.standard.set(name, forKey: "name")
                                             viewRouter.progressValue += 0.2
-                                            viewRouter.currentPage = .notification
+                                            viewRouter.currentPage = .review
                                             userModel.name = name
                                         }
                                     }

@@ -9,6 +9,7 @@ import SwiftUI
 import Paywall
 import OneSignal
 import Purchases
+import Amplitude
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -134,6 +135,13 @@ struct OnboardingScene: View {
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
+            .onAppear {
+                if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
+                    let identify = AMPIdentify()
+                        .set("abTest1.53", value: NSNumber(value: num))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                }
+            }
     }
 }
 

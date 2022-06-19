@@ -205,10 +205,10 @@ struct Authentication: View {
                     .edgesIgnoringSafeArea(.bottom)
                     .navigationBarTitle("", displayMode: .inline)
                     .navigationBarItems(leading:
-                                        Img.topBranch
+                                            Img.topBranch
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(width: UIScreen.screenWidth * 0.6)
+                                            .frame(width: UIScreen.screenWidth * 0.6, height: 250)
                                             .padding(.leading, -20)
                                             .offset(y: -10)
                                             .opacity(focusedText ? 0.1 : 1),

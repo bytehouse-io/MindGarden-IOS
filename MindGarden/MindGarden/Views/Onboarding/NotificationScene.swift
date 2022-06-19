@@ -148,7 +148,14 @@ struct NotificationScene: View {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                        promptNotification()
+                                    OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                        if accepted {
+                                            Analytics.shared.log(event: .onboarding_notification_on)
+                                            promptNotification()
+                                        } else {
+                                            promptNotification()
+                                        }
+                                    })
                                 }
                             } label: {
                                 Capsule()
@@ -277,7 +284,7 @@ struct NotificationScene: View {
                 
                 UserDefaults.standard.setValue(dateTime, forKey: "notif")
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
-                
+
                 if frequency == "Everyday" {
                     for i in 1...7 {
                         let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
@@ -291,8 +298,7 @@ struct NotificationScene: View {
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
                 }
-                UserDefaults.standard.setValue(true, forKey: "remindersOn")
-                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+             
                 DispatchQueue.main.async {
                     if fromSettings {
                         presentationMode.wrappedValue.dismiss()

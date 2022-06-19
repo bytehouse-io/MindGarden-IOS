@@ -30,8 +30,8 @@
             filePath = "MindGarden/Views/Meditate/Play/Finished.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "389"
-            endingLineNumber = "389"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>

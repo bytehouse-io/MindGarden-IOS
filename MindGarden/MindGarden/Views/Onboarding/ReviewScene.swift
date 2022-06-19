@@ -316,7 +316,7 @@ struct ReviewScene: View {
                 }
                 }
                 if UserDefaults.standard.value(forKey: K.defaults.meditationReminder) != nil {
-                    notifications = "On for \(displayedTime.string(for: UserDefaults.standard.value(forKey: K.defaults.meditationReminder)) ?? "")"
+                    notifications = "On"
                 } else {
                     notifications = "Off"
                 }

@@ -11,11 +11,11 @@ import Amplitude
 
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
-    @State var selected: String = ""
+    @State private var selected: String = ""
+    @State private var showNotification = true
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -101,10 +101,38 @@ struct ExperienceScene: View {
         }.onDisappear {
             meditationModel.getFeaturedMeditation()
         }
+        .alert(isPresented: $showNotification) {
+                Alert(
+                    title: Text("You'll need to turn on Push"),
+                    message: Text("In order to fully experience MindGarden you'll need to turn on notifications"),
+                    primaryButton: Alert.Button.default(Text("Not now"), action: {
+                        Analytics.shared.log(event: .experience_tapped_not_now)
+                    }),
+                    secondaryButton: .default(Text("Ok"), action: {
+                        Analytics.shared.log(event: .experience_tapped_okay_push)
+                        promptNotif()
+                    })
+                )
+        }
         .transition(.move(edge: .trailing))
         .onAppear {
             Analytics.shared.log(event: .screen_load_experience)
         }
+    }
+    
+    private func promptNotif() {
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+            if accepted {
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                Analytics.shared.log(event: .onboarding_notification_on)
+                NotificationHelper.addOneDay()
+                NotificationHelper.addThreeDay()
+                NotificationHelper.addOnboarding()
+                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+            } else {
+                Analytics.shared.log(event: .onboarding_notification_off)
+            }
+        })
     }
 
     struct SelectionRow: View {

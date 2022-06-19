@@ -263,9 +263,9 @@ struct Finished: View {
                                     Analytics.shared.log(event: .finished_tapped_finished)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        if UserDefaults.standard.integer(forKey: "numMeds") == 1 || UserDefaults.standard.bool(forKey: "review") {
-                                            if Auth.auth().currentUser == nil {
-                                                saveProgress.toggle()
+                                        if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
+                                            if UserDefaults.standard.bool(forKey: "review") {
+                                                viewRouter.currentPage = .garden
                                             } else {
                                                 if updatedStreak && model.shouldStreakUpdate {
                                                     showStreak.toggle()
@@ -355,17 +355,7 @@ struct Finished: View {
                                 .onTapGesture {
                                     withAnimation {
                                         saveProgress.toggle()
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" ||  UserDefaults.standard.bool(forKey: "review") {
-                                            if updatedStreak {
-                                                showStreak = true
-                                                updatedStreak = false
-                                            } else {
-                                                viewRouter.currentPage = .garden
-                                            }
-                                        } else {
-                                            viewRouter.currentPage = .garden
-                                        }
+                               
                                     }
                                 }
                         }.frame(width: g.size.width * 0.8, alignment: .center)
