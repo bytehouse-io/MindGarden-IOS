@@ -301,6 +301,8 @@ struct ContentView: View {
                                             default: EmptyView()
                                             }
                                         }
+                                        .offset(x:userModel.showCoinAnimation ? -300 : 0)
+                                        .animation(.spring(), value: userModel.showCoinAnimation)
                                         .frame(width: 200)
                                         .position(x: 50, y: geometry.size.height/1.35)
                                     }
