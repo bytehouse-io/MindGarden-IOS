@@ -31,7 +31,12 @@ struct ReasonScene: View {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
                             HStack {
-                                Img.topBranch.padding(.leading, -20)
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
                                 Spacer()
                             }
                             Text("What brings you to MindGarden?")
@@ -71,7 +76,7 @@ struct ReasonScene: View {
                                     
                                     withAnimation(.easeOut(duration: 0.5)) {
                                         DispatchQueue.main.async {
-                                            viewRouter.progressValue += 0.1
+                                            viewRouter.progressValue += 0.2
                                             viewRouter.currentPage = .name
                                         }
                                     }

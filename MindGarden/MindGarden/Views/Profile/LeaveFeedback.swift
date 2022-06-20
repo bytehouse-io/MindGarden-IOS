@@ -6,20 +6,32 @@
 //
 
 import SwiftUI
+import StoreKit
 import FirebaseDynamicLinks
 import Firebase
+import MessageUI
 
 enum FeedbackType: String, CaseIterable {
-    case happy,confused,unhappy
+    case helpMindGarden,bugReport,subscription
     var id: String { return self.rawValue }
-    var title : String {
+    var title: String {
         switch self {
-        case .happy:
-            return "We'd love to know how we can make mindgarden even better and would really appriciate if you left review on the app store."
-        case .confused:
-            return "if you'er unsure about how to use mindgarden, why not visit the help center or contact the mind garden team."
-        case .unhappy:
-            return "We'e love to know we can make mind garden even better, and make your experience with mind garden a happy one."
+        case .helpMindGarden:
+            return "😊 Help us improve"
+        case .bugReport:
+            return "🐞 Report a Bug"
+        case .subscription:
+            return "🙋‍♂️ Subscription Help"
+        }
+    }
+    var description : String {
+        switch self {
+        case .helpMindGarden:
+            return "Thank you for supporting our small team of 4, everything here genuinely helps us keep building!"
+        case .bugReport:
+            return "Please describe in detail how the bug occured. Thank you for your patience & help :)"
+        case .subscription:
+            return "All revenue goes into supporting the building of MindGarden, and the livlihood of our small team of 4"
         }
     }
 }
@@ -28,7 +40,9 @@ struct LeaveFeedback: View {
     @EnvironmentObject var viewRouter: ViewRouter
     var userModel: UserViewModel
     @Binding var selectedFeedback:FeedbackType
-    
+    @State private var subjectLine = "" 
+    @State private var showMailView = false
+    @State private var mailNeedsSetup = false
     @State private var isSharePresented: Bool = false
     @State private var urlShare2 = URL(string: "https://mindgarden.io")
 //    @Environment(\.presentationMode) var presentationMode
@@ -39,6 +53,7 @@ struct LeaveFeedback: View {
         dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
         return dateFormatter
     }()
+    var subscriptionTuples = [("I have a question about my subscription (Please don’t change subject line)", "Question about Subscription"), ("Pro features did not unlock, even though I purchased a subscription (Please don’t change subject line)", "Pro features didn't unlock"), ("I’d like to cancel my subscription or trial (Please don’t change subject line)","I want to cancel my subscription"), ("I’d like a refund on my subscription. (Don’t Change Subject Line)", "I want a refund")]
     
     var body: some View {
         ZStack {
@@ -62,37 +77,44 @@ struct LeaveFeedback: View {
                     }
                     .buttonStyle(NeumorphicPress())
                     Spacer()
-                }
+                }.frame(width:UIScreen.screenWidth*0.85)
+
                 Spacer()
             }
             VStack {
                 Spacer()
                     .frame(height:100)
-                Text("Leave Feedback")
+                Text(selectedFeedback.title)
                     .font(Font.mada(.bold, size: 30))
                     .foregroundColor(Clr.darkgreen)
-                
-                Text(selectedFeedback.title)
+                    .frame(width:UIScreen.screenWidth*0.8, alignment: .leading)
+                    .padding(.top)
+                Text(selectedFeedback.description)
                     .font(Font.mada(.regular, size: 18))
                     .foregroundColor(Clr.black2)
-                    .padding()
+                    .frame(width:UIScreen.screenWidth*0.8, alignment: .leading)
+                    .padding(.bottom)
                 VStack(alignment:.center) {
                     switch selectedFeedback {
-                    case .happy:
-                        writeReview
+                    case .helpMindGarden:
+                        requestFeature
                         Divider()
                             .padding(.horizontal)
                         contactTeam
+                        Divider()
+                            .padding(.horizontal)
+                        rateTheApp
                         Divider()
                             .padding(.horizontal)
                         inviteFriend
-                    case .confused:
-                        gettingStartedGuid
+                    case .bugReport:
+                        contactTeam
                         Divider()
                             .padding(.horizontal)
-                        contactTeam
-                    case .unhappy:
-                        contactTeam
+                    case .subscription:
+                        ForEach(0..<4, id: \.self) { num in
+                            subscriptionContact(title: subscriptionTuples[num].1, subject: subscriptionTuples[num].0, subjectLine: $subjectLine, showMailView: $showMailView, mailNeedsSetup: $mailNeedsSetup)
+                        }
                     }
                 }
                 .frame(width:UIScreen.screenWidth*0.85)
@@ -112,22 +134,29 @@ struct LeaveFeedback: View {
         }
         .transition(.move(edge: .trailing))
         .ignoresSafeArea()
+        .alert(isPresented: $mailNeedsSetup) {
+            Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io, subject should be title of button pressed. Thank you."))
+        }
+        .sheet(isPresented: $showMailView) {
+            MailView(subject: $subjectLine)
+        }
     }
     
-    var writeReview: some View {
+    var requestFeature: some View {
         Button {
-            if let url = URL(string: "https://tally.so/r/3EB1Bw") {
+            Analytics.shared.log(event: .profile_tapped_roadmap)
+            if let url = URL(string: "https://mindgarden.upvoty.com/") {
                 UIApplication.shared.open(url)
             }
         } label: {
             HStack(alignment:.center) {
-                Image(systemName: "doc.on.clipboard")
+                Image(systemName: "hand.raised.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 20)
+                    .frame(width: 25, height: 25)
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
-                Text("Write a Review")
+                Text("Request a Feature")
                     .font(Font.mada(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
@@ -138,15 +167,77 @@ struct LeaveFeedback: View {
     
     var contactTeam: some View {
         Button {
+            if selectedFeedback == .bugReport {
+                subjectLine = "I’d like to report a Bug (Please don’t change Subject Line)"
+            } else if selectedFeedback == .helpMindGarden {
+                subjectLine = "Feedback for the team! (Please don’t change subject line)"
+            }
+            if MFMailComposeViewController.canSendMail() {
+                showMailView = true
+            } else {
+                mailNeedsSetup = true
+            }
         } label: {
             HStack {
                 Image(systemName: "envelope.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 20)
+                    .frame(width: 25, height: 20)
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
-                Text("Contact Mindgarden Team")
+                Text(selectedFeedback == .bugReport ? "Report a Bug" : "Give Feedback (We Read Each One)")
+                    .font(Font.mada(.medium, size: 16))
+                    .foregroundColor(Clr.black2)
+                Spacer()
+            }
+        }
+        .padding()
+    }
+    
+    struct subscriptionContact: View {
+        var title, subject: String
+        @Binding var subjectLine: String
+        @Binding var showMailView: Bool
+        @Binding var mailNeedsSetup: Bool
+
+        var body: some View {
+            Button {
+                subjectLine = subject
+                if MFMailComposeViewController.canSendMail() {
+                    showMailView = true
+                } else {
+                    mailNeedsSetup = true
+                }
+            } label: {
+                HStack {
+                    Image(systemName: "envelope.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Clr.darkgreen)
+                        .padding(.trailing)
+                    Text(title)
+                        .font(Font.mada(.medium, size: 16))
+                        .foregroundColor(Clr.black2)
+                    Spacer()
+                }
+            }
+            .padding()
+        }
+    }
+    
+    var rateTheApp: some View {
+        Button {
+           rateFunc()
+        } label: {
+            HStack {
+                Image(systemName: "star.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Clr.darkgreen)
+                    .padding(.trailing)
+                Text("Rate the app")
                     .font(Font.mada(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
@@ -158,7 +249,9 @@ struct LeaveFeedback: View {
     var inviteFriend: some View {
         Button {
             DispatchQueue.main.async {
-                sendInvite()
+                withAnimation {
+                    sendInvite()
+                }
             }
         } label: {
             HStack {
@@ -194,6 +287,14 @@ struct LeaveFeedback: View {
             }
         }
         .padding()
+    }
+    
+    private func rateFunc() {
+        Analytics.shared.log(event: .profile_tapped_rate)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+            UserDefaults.standard.setValue(true, forKey: "tappedRate")
+        }
     }
     
     func sendInvite() {
@@ -233,6 +334,6 @@ struct LeaveFeedback: View {
 
 struct LeaveFeedback_Previews: PreviewProvider {
     static var previews: some View {
-        LeaveFeedback(userModel: UserViewModel(), selectedFeedback: .constant(.happy), showFeedbackSheet: .constant(true))
+        LeaveFeedback(userModel: UserViewModel(), selectedFeedback: .constant(.helpMindGarden), showFeedbackSheet: .constant(true))
     }
 }

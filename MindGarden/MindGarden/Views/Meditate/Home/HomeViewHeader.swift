@@ -39,7 +39,12 @@ struct HomeViewHeader: View {
                 .oldShadow()
                 .offset(x: -10)
             HStack {
-                Img.topBranch.offset(x: 40,  y: height * -0.1)
+                Img.topBranch
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: UIScreen.screenWidth * 0.6)
+                    .offset(x: 55,  y: height * -0.12)
+                    .opacity(0.9)
                 Spacer()
                 VStack {
                     HStack {
@@ -74,7 +79,7 @@ struct HomeViewHeader: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 activeSheet = .profile
                             }
-                    }.offset(x: 22, y: -25)
+                    }.offset(x: 30, y: -25)
                     
                     HStack{
                         Spacer()
@@ -104,19 +109,19 @@ struct HomeViewHeader: View {
                                             }
                                         }
                                 }
-                                if userModel.streakFreeze > 0 {
-                                    HStack {
-                                        Img.iceFlower
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 25)
-                                            .shadow(radius: 4)
-                                        Text("\(userModel.streakFreeze)")
-                                            .font(Font.mada(.semiBold, size: 20))
-                                            .foregroundColor(Clr.darkgreen)
-                                            .frame(height: 30, alignment: .bottom)
-                                    }.offset(x: -7)
-                                }
+//                                if userModel.streakFreeze > 0 {
+//                                    HStack {
+//                                        Img.iceFlower
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .frame(height: 25)
+//                                            .shadow(radius: 4)
+//                                        Text("\(userModel.streakFreeze)")
+//                                            .font(Font.mada(.semiBold, size: 20))
+//                                            .foregroundColor(Clr.darkgreen)
+//                                            .frame(height: 30, alignment: .bottom)
+//                                    }.offset(x: -7)
+//                                }
                              
                                     HStack {
                                         Img.leaf
@@ -155,16 +160,13 @@ struct HomeViewHeader: View {
                                 }.frame(height: 30, alignment: .bottom)
                                     .offset(x: -5)
                                 if !UserDefaults.standard.bool(forKey: "day4") {
-                                     HStack {
-                                        Img.coin
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 25)
-                                            .shadow(radius: 4)
-                                        Text("\(userModel.coins)")
-                                            .font(Font.mada(.semiBold, size: 20))
-                                            .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                     }.frame(height: 30, alignment: .bottom)
+                                    PlusCoins(coins: $userModel.coins)
+                                        .onTapGesture {
+                                            UserDefaults.standard.setValue(true, forKey: "plusCoins")
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            Analytics.shared.log(event: .home_tapped_IAP)
+                                            withAnimation { showIAP.toggle() }
+                                        }
                                 } else {
                                     PlusCoins(coins: $userModel.coins)
                                         .onTapGesture {
@@ -179,8 +181,8 @@ struct HomeViewHeader: View {
                                 .padding(.bottom, 10)
                         }
                     }.offset(x: -width * 0.25, y: -10)
-                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.92 : 0.84))
-                .padding(.trailing, K.isBig() ? 0 : 25)
+                }.frame(width: width * (userModel.streakFreeze > 0 || challengeOn ? 0.9 : 0.9))
+                .padding(.trailing, K.isBig() ? 50 : 25)
             }
         }.frame(width: width)
             .offset(y: -height * 0.1)

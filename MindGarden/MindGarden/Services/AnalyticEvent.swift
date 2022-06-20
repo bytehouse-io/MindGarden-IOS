@@ -24,6 +24,8 @@ enum AnalyticEvent {
     case experience_tapped_some //
     case experience_tapped_alot //
     case experience_tapped_continue //
+    case experience_tapped_okay_push //
+    case experience_tapped_not_now // 
 
     //MARK: - Reason
     case screen_load_reason
@@ -340,6 +342,10 @@ enum AnalyticEvent {
     case pricing_from_locked
     case pricing_from_profile
     case pricing_from_store
+    case pricing_tapped_notif_ok
+    case pricing_tapped_notif_not_now
+    case pricing_notif_accepted
+    case pricing_notif_denied
     case user_from_influencer
     
     //Stories
@@ -492,6 +498,8 @@ extension AnalyticEvent {
         case .experience_tapped_some: return "experience_tapped_some"
         case .experience_tapped_alot: return "experience_tapped_alot"
         case .experience_tapped_continue: return "experience_tapped_continue"
+        case .experience_tapped_okay_push: return "experience_tapped_okay_push"
+        case .experience_tapped_not_now: return "experience_tapped_not_now"
         case .screen_load_reason: return "screen_load_reason"
         case .reason_tapped_sleep: return "reason_tapped_sleep"
         case .reason_tapped_focus: return "reason_tapped_focus"
@@ -731,6 +739,10 @@ extension AnalyticEvent {
         case .pricing_from_locked: return "pricing_from_locked"
         case .pricing_from_profile: return "pricing_from_profile"
         case .pricing_from_store: return "pricing_from_store"
+        case .pricing_tapped_notif_ok: return "pricing_tapped_notif_ok"
+        case .pricing_tapped_notif_not_now: return "pricing_tapped_notif_not_now"
+        case .pricing_notif_accepted: return "pricing_notif_accepted"
+        case .pricing_notif_denied: return "pricing_notif_denied"
         case .screen_load_review: return "screen_load_review"
         case .review_tapped_tutorial: return "review_tapped_tutorial"
         case .review_tapped_explore: return "review_tapped_explore"

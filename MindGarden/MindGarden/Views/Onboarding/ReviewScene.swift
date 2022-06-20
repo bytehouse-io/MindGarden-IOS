@@ -33,7 +33,12 @@ struct ReviewScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(spacing: 0) {
                         HStack {
-                            Img.topBranch.padding(.leading, -20)
+                            Img.topBranch
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: UIScreen.screenWidth * 0.6)
+                                .padding(.leading, -20)
+                                .offset(y: -10)
                             Spacer()
                         }.edgesIgnoringSafeArea(.all)
                         Spacer()
@@ -109,7 +114,7 @@ struct ReviewScene: View {
                                 experience.0
                                     .resizable() 
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.2, height: width * 0.2)
+                                    .frame(width: width * 0.175, height: width * 0.175)
                                     .padding()
                                 VStack(alignment: .leading) {
                                     Text("Your experience level")
@@ -124,7 +129,7 @@ struct ReviewScene: View {
                                         .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
-                        }
+                        }.padding(.top, 15)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -236,7 +241,7 @@ struct ReviewScene: View {
                             UserDefaults.standard.setValue(true, forKey: "review")
                             withAnimation(.easeOut(duration: 0.3)) {
                                 DispatchQueue.main.async {
-                                    viewRouter.progressValue += 0.15
+                                    viewRouter.progressValue = 1
                                     if fromInfluencer != "" {
                                         Analytics.shared.log(event: .user_from_influencer)
                                         viewRouter.currentPage = .pricing
@@ -311,7 +316,7 @@ struct ReviewScene: View {
                 }
                 }
                 if UserDefaults.standard.value(forKey: K.defaults.meditationReminder) != nil {
-                    notifications = "On for \(displayedTime.string(for: UserDefaults.standard.value(forKey: K.defaults.meditationReminder)) ?? "")"
+                    notifications = "On"
                 } else {
                     notifications = "Off"
                 }

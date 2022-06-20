@@ -11,11 +11,11 @@ import Amplitude
 
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
-    @State var selected: String = ""
+    @State private var selected: String = ""
+    @State private var showNotification = true
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -31,7 +31,12 @@ struct ExperienceScene: View {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
                             HStack {
-                                Img.topBranch.padding(.leading, -20)
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
                                 Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
@@ -46,6 +51,7 @@ struct ExperienceScene: View {
                             SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
                             SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
+                            Spacer()
                             Button {
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -71,7 +77,7 @@ struct ExperienceScene: View {
                                     withAnimation(.easeOut(duration: 0.3)) {
                                         DispatchQueue.main.async {
                                             viewRouter.currentPage = .reason
-                                            viewRouter.progressValue += 0.15
+                                            viewRouter.progressValue += 0.2
                                         }
                                     }
                                 } //TODO gray out button if not selected
@@ -86,6 +92,8 @@ struct ExperienceScene: View {
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
+                                .offset(y: 35)
+                            
                             Spacer()
                         }
                 }
@@ -93,10 +101,38 @@ struct ExperienceScene: View {
         }.onDisappear {
             meditationModel.getFeaturedMeditation()
         }
+        .alert(isPresented: $showNotification) {
+                Alert(
+                    title: Text("You'll need to turn on Push"),
+                    message: Text("In order to fully experience MindGarden you'll need to turn on notifications"),
+                    primaryButton: Alert.Button.default(Text("Not now"), action: {
+                        Analytics.shared.log(event: .experience_tapped_not_now)
+                    }),
+                    secondaryButton: .default(Text("Ok"), action: {
+                        Analytics.shared.log(event: .experience_tapped_okay_push)
+                        promptNotif()
+                    })
+                )
+        }
         .transition(.move(edge: .trailing))
         .onAppear {
             Analytics.shared.log(event: .screen_load_experience)
         }
+    }
+    
+    private func promptNotif() {
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+            if accepted {
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                Analytics.shared.log(event: .onboarding_notification_on)
+                NotificationHelper.addOneDay()
+                NotificationHelper.addThreeDay()
+                NotificationHelper.addOnboarding()
+                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+            } else {
+                Analytics.shared.log(event: .onboarding_notification_off)
+            }
+        })
     }
 
     struct SelectionRow: View {

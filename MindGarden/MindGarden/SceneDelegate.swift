@@ -42,17 +42,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         NotificationHelper.addOneDay()
         if launchNum == 0 {
+            let randomInt = Int.random(in: 0..<2)
+            UserDefaults.standard.setValue(randomInt, forKey: "abTest")
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             playSound(soundName: "background")
-            OneSignal.promptForPushNotifications(userResponse: { accepted in
-                if accepted {
-                    Analytics.shared.log(event: .onboarding_notification_on)
-                    NotificationHelper.addOneDay()
-                    NotificationHelper.addThreeDay()
-                } else {
-                    Analytics.shared.log(event: .onboarding_notification_off)
-                }
-            })
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"] , forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
@@ -68,6 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(true, forKey: "newUser")
             UserDefaults.standard.setValue(1, forKey: "launchNumber")
         }
+        
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
         Analytics.shared.log(event: .launchedApp)
 
@@ -301,7 +295,7 @@ extension SceneDelegate {
             
             /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
-            player?.volume = 0.4
+            player?.volume = 0.04
             player?.numberOfLoops = -1
             
             guard let player = player else { return }

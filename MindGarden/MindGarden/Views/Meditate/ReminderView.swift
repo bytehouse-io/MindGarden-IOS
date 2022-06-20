@@ -73,7 +73,6 @@ struct ReminderView: View {
                                                     if UserDefaults.standard.bool(forKey: "freeTrial")  {
                                                         NotificationHelper.freeTrial()
                                                     }
-                                                    
                                                     promptNotification()
                                                 } else {
                                                     isToggled = false

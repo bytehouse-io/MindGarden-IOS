@@ -28,6 +28,7 @@ struct Garden: View {
     @State var activeSheet: Sheet?
     
     @EnvironmentObject var bonusModel: BonusViewModel
+    @Environment(\.colorScheme) var colorScheme
     var currentStreak : String {
         return "\(bonusModel.streakNumber)"
     }
@@ -93,7 +94,13 @@ struct Garden: View {
                         }.frame(width: gp.size.width * 0.85)
                         .padding(.bottom, -10)
                         .offset(x: -10)
-                 
+                        
+
+                        Text("Calendar/Garden")
+                            .foregroundColor(Clr.black2)
+                            .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
+                            .offset(x: UIScreen.screenWidth * -0.25 + 10, y: playEntryAnimation ? 10 : 400)
+                            .animation(animation.delay(0.4), value: playEntryAnimation)
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -135,6 +142,8 @@ struct Garden: View {
                                                                 }
                                                             }
                                                         )
+                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.0 != nil { // only mood is nil
                                                 ZStack {
@@ -226,7 +235,7 @@ struct Garden: View {
                                 
                                 HStack {
                                     Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
-                                        .font(Font.mada(.semiBold, size: 20))
+                                        .font(Font.mada(.regular, size: 20))
                                         .foregroundColor(Clr.black2)
                                         .padding(.leading)
                                     Spacer()
@@ -273,6 +282,11 @@ struct Garden: View {
                         .animation(animation.delay(0.1), value: playEntryAnimation)
                             .padding(5)
                         
+                        Text("Monthly Stats")
+                            .foregroundColor(Clr.black2)
+                            .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
+                            .offset(x: playEntryAnimation ? UIScreen.screenWidth * -0.25 - 10 : -400, y: 25)
+                            .animation(animation.delay(0.4), value: playEntryAnimation)
                         HStack(spacing: 15) {
                             HStack(spacing: 10) {
                                 VStack {
@@ -302,10 +316,10 @@ struct Garden: View {
                                                     .overlay(
                                                         VStack {
                                                             Text("Current Streak")
-                                                                .foregroundColor(Clr.black2)
+                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
                                                                 .font(Font.mada(.regular, size: 12))
                                                             Text(currentStreak)
-                                                                .foregroundColor(Clr.black2)
+                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
                                                     )
@@ -315,10 +329,10 @@ struct Garden: View {
                                                     .overlay(
                                                         VStack {
                                                             Text("Longest Streak")
-                                                                .foregroundColor(Clr.black2)
+                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
                                                                 .font(Font.mada(.regular, size: 12))
                                                             Text("\(UserDefaults.standard.integer(forKey: "longestStreak"))")
-                                                                .foregroundColor(Clr.black2)
+                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
                                                                 .font(Font.mada(.bold, size: 20))
                                                         }
                                                     )
@@ -360,7 +374,7 @@ struct Garden: View {
                         }.frame(width:UIScreen.screenWidth*0.85)
                             .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("Favorite Plants:")
+                            Text("Favorite Plants")
                                 .foregroundColor(Clr.black2)
                                 .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
                                 .padding(.leading, gp.size.width * 0.075 - 25)
@@ -375,7 +389,7 @@ struct Garden: View {
                                     if topThreePlants.isEmpty {
                                         Text("You have no favorite plants")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.semiBold, size: 20))
+                                            .font(Font.mada(.regular, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                             .padding()
@@ -455,7 +469,7 @@ struct Garden: View {
                                     .rotationEffect(.radians(.pi))
                                 
                             }
-                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -150 : -75)
+                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -125 : -75)
                     }
                     if UserDefaults.standard.integer(forKey: "numMeds") > 0 {
                         switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
@@ -464,13 +478,13 @@ struct Garden: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 125)
-                                .position(x: gp.size.width/2, y: gp.size.height/1.5)
+                                .position(x: gp.size.width/2, y: gp.size.height/1.25)
                         case "calendar":
                             Img.statRacoon
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 125)
-                                .position(x: gp.size.width/2, y: gp.size.height/3.5)
+                                .position(x: gp.size.width/2, y: gp.size.height/3)
                         case "stats":
                             Img.calendarRacoon
                                 .resizable()

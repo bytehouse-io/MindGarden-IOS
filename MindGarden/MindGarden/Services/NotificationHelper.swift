@@ -243,8 +243,8 @@ struct NotificationHelper {
         if let attachment = UNNotificationAttachment.getAttachment(identifier: "eduRacoon", imageName: "eduRacoon") {
             content.attachments = [attachment]
         }
-  
-        let modifiedDate = Calendar.current.date(byAdding: .day, value: 4, to: Date())
+       
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: fromInfluencer == "" ? 4 : 11, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
         
         // Create the trigger as a repeating event.

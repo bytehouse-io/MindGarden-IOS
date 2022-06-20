@@ -99,23 +99,26 @@ struct MoodCheck: View {
                         .frame(width: g.size.width * 0.8, alignment: .center)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
-                        HStack {
-                            Text("Recommendations ")
-                                    .font(Font.mada(.semiBold, size: K.isPad() ? 36 : 20))
-                                    .foregroundColor(Clr.black1)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.5)
-                            Toggle("", isOn: $notifOn)
-                                .onChange(of: notifOn) { val in
-                                    UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
-                                    if val {
-                                        Analytics.shared.log(event: .mood_toggle_recs_on)
-                                    } else { //turned off
-                                        Analytics.shared.log(event: .mood_toggle_recs_off)
-                                    }
-                                }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-                                .frame(width: g.size.width * 0.08, height: 10)
-                        } .frame(width: g.size.width * 0.8, alignment: .center)
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                            HStack {
+                                Text("Recommendations ")
+                                        .font(Font.mada(.semiBold, size: K.isPad() ? 36 : 20))
+                                        .foregroundColor(Clr.black1)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.5)
+                                Toggle("", isOn: $notifOn)
+                                    .onChange(of: notifOn) { val in
+                                        UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
+                                        if val {
+                                            Analytics.shared.log(event: .mood_toggle_recs_on)
+                                        } else { //turned off
+                                            Analytics.shared.log(event: .mood_toggle_recs_off)
+                                        }
+                                    }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+                                    .frame(width: g.size.width * 0.08, height: 10)
+                            } .frame(width: g.size.width * 0.8, alignment: .center)
+                        }
+                    
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(Clr.darkWhite)
@@ -258,7 +261,7 @@ struct DoneCancel: View {
             } label: {
                 Text("Done")
                     .foregroundColor(.white)
-                    .font(Font.mada(.semiBold, size: 22))
+                    .font(Font.mada(.semiBold, size: 20))
             }
             .frame(width:  width * 0.3, height: min(height/6, 40))
             .background(Clr.brightGreen)
@@ -277,7 +280,7 @@ struct DoneCancel: View {
             } label: {
                 Text("Cancel")
                     .foregroundColor(.white)
-                    .font(Font.mada(.semiBold, size: 22))
+                    .font(Font.mada(.semiBold, size: 20))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
             }

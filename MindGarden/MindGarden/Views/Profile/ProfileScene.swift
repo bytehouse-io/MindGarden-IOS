@@ -55,8 +55,8 @@ struct ProfileScene: View {
     
     @State private var showFeedbackOption = false
     @State private var showFeedbackSheet = false
-    @State private var selectedFeedback:FeedbackType = .happy
-
+    @State private var selectedFeedback:FeedbackType = .helpMindGarden
+    
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
@@ -196,7 +196,7 @@ struct ProfileScene: View {
                                                         .font(Font.mada(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
                                                         .frame(width: width * 0.7, height: 20, alignment: .leading)
-                                                        .padding(.bottom, 30)
+                                                        .padding(.bottom, 15)
                                                     ZStack {
                                                         Rectangle()
                                                             .fill(Clr.darkWhite)
@@ -226,16 +226,12 @@ struct ProfileScene: View {
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             Divider()
-                                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
-                                                                Analytics.shared.log(event: .profile_tapped_email)
-                                                                if MFMailComposeViewController.canSendMail() {
-                                                                    showMailView = true
-                                                                } else {
-                                                                    mailNeedsSetup = true
-                                                                }
-                                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                                .frame(height: 40)
-                                                            Divider()
+//                                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
+//                                                                Analytics.shared.log(event: .profile_tapped_email)
+//
+//                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+//                                                                .frame(height: 40)
+//                                                            Divider()
                                                             Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
                                                                 Analytics.shared.log(event: .profile_tapped_restore)
                                                                 Purchases.shared.restoreTransactions { (purchaserInfo, error) in
@@ -245,6 +241,14 @@ struct ProfileScene: View {
                                                                     } else {
                                                                         UserDefaults.standard.setValue(false, forKey: "isPro")
                                                                     }
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_feedback)
+                                                                withAnimation(.spring()) {
+                                                                    showFeedbackOption = true
                                                                 }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
@@ -262,13 +266,13 @@ struct ProfileScene: View {
                                                                     .frame(height: 40)
                                                             }
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 230 : 270) + (Auth.auth().currentUser?.email != nil ? 65 : 0))
+                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 260 : 300) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
 
                                                     Text("I want to help")
                                                         .font(Font.mada(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
                                                         .frame(width: width * 0.7, height: 20, alignment: .leading)
-                                                        .padding(.bottom, 30)
+                                                        .padding(.bottom, 15)
                                                         .padding(.top, 50)
                                                     ZStack {
                                                         Rectangle()
@@ -293,21 +297,13 @@ struct ProfileScene: View {
                                                                 }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
-                                                            Divider()
-                                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
-                                                                Analytics.shared.log(event: .profile_tapped_feedback)
-                                                                withAnimation(.spring()) {
-                                                                    showFeedbackOption = true
-                                                                }
-                                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                                .frame(height: 40)
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: 190)
+                                                    }.frame(width: width * 0.75, height: 170)
                                                     Text("Stay up to date")
                                                         .font(Font.mada(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
                                                         .frame(width: width * 0.7, height: 20, alignment: .leading)
-                                                        .padding(.bottom, 30)
+                                                        .padding(.bottom, 45)
                                                         .padding(.top, 50)
                                                     ZStack {
                                                         Rectangle()
@@ -324,15 +320,22 @@ struct ProfileScene: View {
                                                             }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
                                                                 .frame(height: K.isSmall() ? 30 : 40)
                                                             Divider()
-                                                            Row(title: "Daily Motivation", img: Img.instaIcon, action: {
+                                                            Row(title: "Daily Inspiration", img: Img.instaIcon, action: {
                                                                 Analytics.shared.log(event: .profile_tapped_instagram)
                                                                 if let url = URL(string: "https://www.instagram.com/mindgardn/") {
                                                                     UIApplication.shared.open(url)
                                                                 }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: K.isSmall() ? 30 : 40)
+                                                            Row(title: "Talking to Strangers", img: Img.tiktokIcon, action: {
+                                                                Analytics.shared.log(event: .profile_tapped_instagram)
+                                                                if let url = URL(string: "https://www.tiktok.com/@mindgardn?lang=en") {
+                                                                    UIApplication.shared.open(url)
+                                                                }
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: K.isSmall() ? 30 : 40)
                                                         }.padding()
-                                                    }.frame(width: width * 0.8, height: 70)
+                                                    }.frame(width: width * 0.8, height: 100)
                                                 } .frame(width: width * 0.8)
                                                 .padding(.bottom)
                                             }
@@ -432,9 +435,7 @@ struct ProfileScene: View {
                         //                    UITableView.appearance().isScrollEnabled = false
                         profileModel.update(userModel: userModel, gardenModel: gardenModel)
                     }
-                    .sheet(isPresented: $showMailView) {
-                        MailView()
-                    }
+               
                     .sheet(isPresented: $isSharePresented) {
                         ReferralView(url: $urlShare2)
                     }
@@ -444,9 +445,6 @@ struct ProfileScene: View {
                     .fullScreenCover(isPresented: $showMindful) {
                         MindfulScene()
                     }
-                    .alert(isPresented: $mailNeedsSetup) {
-                        Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io thank you."))
-                    }
                     .alert(isPresented: $restorePurchase) {
                         Alert(title: Text("Success!"), message: Text("You've restored MindGarden Pro"))
                     }
@@ -454,7 +452,7 @@ struct ProfileScene: View {
                         Alert(
                             title: Text("Are you sure?"),
                             message: Text("All data will be deleted"),
-                            primaryButton: .destructive(Text("Destructive"), action: {
+                            primaryButton: .destructive(Text("Yes"), action: {
                                 Analytics.shared.log(event: .profile_tapped_delete_account)
                                 profileModel.signOut()
                                 OneSignal.sendTag("deleted", value: "true")
@@ -483,9 +481,10 @@ struct ProfileScene: View {
                     VStack {
                         Spacer()
                         VStack {
+                            Spacer().frame(height: 10)
                             ForEach(FeedbackType.allCases, id: \.id) { item in
-                                Text(item.id.capitalized)
-                                    .font(Font.mada(.regular, size: 25))
+                                Text(item.title)
+                                    .font(Font.mada(.regular, size: 20))
                                     .foregroundColor(Clr.black2)
                                     .frame(height:25)
                                     .onTapGesture {
@@ -496,17 +495,18 @@ struct ProfileScene: View {
                                         }
                                     }
                                     .padding()
-                                if item == .happy || item == .confused {
+                                if item == .helpMindGarden || item == .bugReport {
                                     Divider().padding(.horizontal)
                                 }
                             }
                             Spacer()
-                                .frame(height:30)
+                                .frame(height: 30)
                         }
                         .ignoresSafeArea()
                         .background(
                             Rectangle()
                                 .fill(Clr.darkWhite)
+                                .cornerRadius(14)
                         )
                     }.offset(y:showFeedbackOption ? 0 : 300)
                         .transition(.move(edge: .bottom))

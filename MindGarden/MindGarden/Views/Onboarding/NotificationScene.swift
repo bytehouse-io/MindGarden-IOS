@@ -39,7 +39,12 @@ struct NotificationScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(spacing: -5) {
                         HStack {
-                            Img.topBranch.padding(.leading, -20)
+                            Img.topBranch
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: UIScreen.screenWidth * 0.6)
+                                .padding(.leading, -20)
+                                .offset(y: -10)
                             Spacer()
                             Image(systemName: "arrow.backward")
                                 .font(.system(size: 22))
@@ -48,7 +53,7 @@ struct NotificationScene: View {
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        viewRouter.progressValue -= 0.1
+                                        viewRouter.progressValue -= 0.25
                                         if fromSettings {
                                             presentationMode.wrappedValue.dismiss()
                                         } else if tappedTurnOn {
@@ -143,7 +148,14 @@ struct NotificationScene: View {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                        promptNotification()
+                                    OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                        if accepted {
+                                            Analytics.shared.log(event: .onboarding_notification_on)
+                                            promptNotification()
+                                        } else {
+                                            promptNotification()
+                                        }
+                                    })
                                 }
                             } label: {
                                 Capsule()
@@ -172,7 +184,7 @@ struct NotificationScene: View {
                                                     if tappedTurnOn {
                                                         viewRouter.currentPage = .review
                                                     } else {
-                                                        viewRouter.progressValue += 0.3
+                                                        viewRouter.progressValue = 1.0
                                                         viewRouter.currentPage = .review
                                                     }
                                                 }
@@ -272,7 +284,7 @@ struct NotificationScene: View {
                 
                 UserDefaults.standard.setValue(dateTime, forKey: "notif")
                 UserDefaults.standard.setValue(true, forKey: "notifOn")
-                
+
                 if frequency == "Everyday" {
                     for i in 1...7 {
                         let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
@@ -286,14 +298,13 @@ struct NotificationScene: View {
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
                     NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
                 }
-                UserDefaults.standard.setValue(true, forKey: "remindersOn")
-                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+             
                 DispatchQueue.main.async {
                     if fromSettings {
                         presentationMode.wrappedValue.dismiss()
                     } else {
                         if !tappedTurnOn {
-                            viewRouter.progressValue += 0.3
+                            viewRouter.progressValue += 0.25
                         }
                         viewRouter.currentPage = .review
                     }
