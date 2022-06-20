@@ -242,7 +242,7 @@ struct SingleDay: View {
                                 }
                             }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
-                    .offset(y: -15)
+                    .offset(y: -25)
                     .padding()
                 }.offset(y: g.size.height * 0.1)
             }

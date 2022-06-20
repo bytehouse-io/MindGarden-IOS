@@ -18,6 +18,7 @@ import Paywall
 
 var tappedRefer = false
 var mindfulNotifs = false
+var tappedSignOut = false
 enum settings {
     case referrals
     case settings
@@ -56,7 +57,6 @@ struct ProfileScene: View {
     @State private var showFeedbackOption = false
     @State private var showFeedbackSheet = false
     @State private var selectedFeedback:FeedbackType = .helpMindGarden
-    
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
@@ -368,6 +368,7 @@ struct ProfileScene: View {
                                                 if let _ = Auth.auth().currentUser?.email {
                                                     Analytics.shared.log(event: .profile_tapped_logout)
                                                     presentationMode.wrappedValue.dismiss()
+                                                    tappedSignOut = true
                                                     profileModel.signOut()
                                                     // if user signs out -> send them to meditate page
                                                     withAnimation {
@@ -377,6 +378,7 @@ struct ProfileScene: View {
                                                     Analytics.shared.log(event: .profile_tapped_create_account)
                                                     presentationMode.wrappedValue.dismiss()
                                                     withAnimation {
+                                                        fromPage = "profile"
                                                         viewRouter.currentPage = .authentication
                                                     }
                                                 }
@@ -547,6 +549,8 @@ struct ProfileScene: View {
                 refDate =  userModel.referredStack.substring(to: plusIndex)
                 numRefs = Int(userModel.referredStack.substring(from: plusIndex + 1)) ?? 0
             }
+        }.onDisappear {
+            gardenSettings = false
         }
     }
     struct JourneyPage: View {

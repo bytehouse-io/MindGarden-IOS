@@ -19,15 +19,19 @@ struct Authentication: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @State private var alertError = false
     @State private var showForgotAlert = false
-    @EnvironmentObject var viewModel: AuthenticationViewModel
+    @ObservedObject var viewModel: AuthenticationViewModel
     @State private var isEmailValid = true
     @State private var isPasswordValid = true
     @State private var signUpDisabled = true
     @State private var focusedText = false
 
+    init(viewModel: AuthenticationViewModel) {
+        self.viewModel = viewModel
+    }
+    
+
     var body: some View {
             NavigationView {
-                LoadingView(isShowing: $viewModel.isLoading) {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack(spacing: 0)  {
@@ -46,7 +50,6 @@ struct Authentication: View {
                                         focusedText = focused
                                     }
                                 })
-                                    .disableAutocorrection(true)
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
@@ -115,7 +118,9 @@ struct Authentication: View {
                                 }
                                 self.signUpDisabled = false
                             }
+               
                         VStack {
+                        
                             if viewModel.isSignUp {
                                 HStack {
                                     CheckBoxView(checked: $viewModel.checked)
@@ -223,6 +228,9 @@ struct Authentication: View {
             }
 
             .onAppear {
+                DispatchQueue.main.async {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 //                viewModel.isLoading = true
                 if viewModel.isSignUp {
                     Analytics.shared.log(event: .screen_load_onboarding_signup)
@@ -234,13 +242,12 @@ struct Authentication: View {
                 }
             }
         }
-    }
 }
 
 
 //MARK: - preview
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
-        Authentication()
+        Authentication(viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
     }
 }

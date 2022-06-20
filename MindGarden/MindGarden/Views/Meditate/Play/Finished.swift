@@ -101,7 +101,7 @@ struct Finished: View {
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(height: 25)
-                                                Text("\(reward)!")
+                                                Text("+\(reward)!")
                                                     .font(Font.mada(.bold, size: 24))
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)

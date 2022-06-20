@@ -54,6 +54,7 @@ struct OnboardingScene: View {
 //                                .aspectRatio(contentMode: .fit)
                             Spacer()
                             Img.onBoardingAppleSeed
+                                .offset(x: 10)
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
                         }
@@ -125,8 +126,10 @@ struct OnboardingScene: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             tappedSignIn = true
                             withAnimation {
+                                fromPage = "onboarding"
+                                tappedSignOut = true
                                 authModel.isSignUp = false
-                                showAuth = true
+                                viewRouter.currentPage = .authentication
                             }
                         } label: {
                             Text("Already have an account")
@@ -149,11 +152,14 @@ struct OnboardingScene: View {
                 }
             }
             .sheet(isPresented: $showAuth) {
-                Authentication()
-                    .environmentObject(authModel)
-                    .environmentObject(medModel)
-                    .environmentObject(userModel)
-                    .environmentObject(gardenModel)
+                if tappedSignOut {
+                    
+                } else {
+                    Authentication(viewModel: authModel)
+                        .environmentObject(medModel)
+                        .environmentObject(userModel)
+                        .environmentObject(gardenModel)
+                }
             }
     }
     

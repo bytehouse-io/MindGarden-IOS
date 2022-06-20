@@ -165,6 +165,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height)
                                             .ignoresSafeArea()
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .environmentObject(profileModel)
 //                                            .environmentObject(bonusModel)
                                     case .notification:
                                         NotificationScene()
