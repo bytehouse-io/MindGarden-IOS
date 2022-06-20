@@ -83,6 +83,7 @@ struct ContentView: View {
                                     switch viewRouter.currentPage {
                                     case .onboarding:
                                         OnboardingScene()
+                                            .environmentObject(authModel)
 //                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
 //                                                .navigationViewStyle(StackNavigationViewStyle())
                                     case .experience:
@@ -160,11 +161,11 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
                                     case .authentication:
-                                        Authentication(isSignUp: !tappedSignIn, viewModel: authModel)
+                                        NewAuthentication(viewModel: authModel)
                                             .frame(height: geometry.size.height)
                                             .ignoresSafeArea()
                                             .navigationViewStyle(StackNavigationViewStyle())
-                                            .environmentObject(bonusModel)
+//                                            .environmentObject(bonusModel)
                                     case .notification:
                                         NotificationScene()
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))

@@ -207,12 +207,12 @@ struct SingleDay: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
+                                fromPage = "singleIntro"
                                 showOnboardingModal = false
                                 Analytics.shared.log(event: .onboarding_finished_single_course)
                                 UserDefaults.standard.setValue(false, forKey: "introLink")
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                viewRouter.currentPage = .middle
+                                viewRouter.currentPage = .authentication
                             }
                         } label: {
                             Capsule()
@@ -235,8 +235,10 @@ struct SingleDay: View {
                             .padding(.top, 25)
                             .onTapGesture {
                                 withAnimation {
+                                    fromPage = "single"
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showOnboardingModal = false
+                                    viewRouter.currentPage = .authentication
                                 }
                             }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
@@ -245,6 +247,8 @@ struct SingleDay: View {
                 }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
+            showOnboardingModal = true
+
             UserDefaults.standard.setValue(true, forKey: "singleTile")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 if !UserDefaults.standard.bool(forKey: "day1Intro") {

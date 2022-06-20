@@ -123,7 +123,7 @@ struct ExperienceScene: View {
     private func promptNotif() {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             if accepted {
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+
                 Analytics.shared.log(event: .onboarding_notification_on)
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()

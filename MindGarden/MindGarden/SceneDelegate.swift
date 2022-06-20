@@ -91,7 +91,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                             .environmentObject(SceneDelegate.userModel)
                                             .environmentObject(SceneDelegate.gardenModel))
         
-        
+//        NewAuthentication(viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter())).environmentObject(ViewRouter())
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = rootHost

@@ -15,7 +15,12 @@ var tappedSignIn = false
 struct OnboardingScene: View {
     @State private var index = 0
     @EnvironmentObject var viewRouter: ViewRouter
-    
+    @EnvironmentObject var authModel: AuthenticationViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
+
+    @State private var showAuth = false
     init() {
         if #available(iOS 14.0, *) {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Clr.gardenGreen)
@@ -120,7 +125,8 @@ struct OnboardingScene: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             tappedSignIn = true
                             withAnimation {
-                                viewRouter.currentPage = .authentication
+                                authModel.isSignUp = false
+                                showAuth = true
                             }
                         } label: {
                             Text("Already have an account")
@@ -142,7 +148,15 @@ struct OnboardingScene: View {
                     Amplitude.instance().identify(identify ?? AMPIdentify())
                 }
             }
+            .sheet(isPresented: $showAuth) {
+                Authentication()
+                    .environmentObject(authModel)
+                    .environmentObject(medModel)
+                    .environmentObject(userModel)
+                    .environmentObject(gardenModel)
+            }
     }
+    
 }
 
 struct OnboardingScene_Previews: PreviewProvider {

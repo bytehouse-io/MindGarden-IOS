@@ -26,7 +26,6 @@ struct Finished: View {
     @State private var favorited = false
     @State private var showUnlockedModal = false
     @State private var reward : Int = 0
-    @State private var saveProgress = false
     @State private var hideConfetti = false
     @State private var showStreak = false
     @State private var ios14 = true
@@ -292,7 +291,7 @@ struct Finished: View {
                     .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
                     .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? ios14 ? 7 : 9 : 4))
-                    if showUnlockedModal || saveProgress {
+                    if showUnlockedModal {
                         Color.black
                             .opacity(0.55)
                             .edgesIgnoringSafeArea(.all)
@@ -302,65 +301,6 @@ struct Finished: View {
 //                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
 //                        .offset(y: showUnlockedModal ? 0 : g.size.height)
 //                        .animation(.default, value: showUnlockedModal)
-                    BottomSheet(
-                        isOpen: self.$saveProgress,
-                        maxHeight: g.size.height * (K.isSmall() ? 0.85 : 0.7),
-                        minHeight: 0.1,
-                        trigger: {
-//                            fromPage = "onboarding2"
-//                            viewRouter.currentPage = .pricing
-                        }
-                    ) {
-                        VStack {
-                            Text("Sign up & Save Your Progress?")
-                                .font(Font.mada(.bold, size: 32))
-                                .foregroundColor(Clr.darkgreen)
-                            Text("📝")
-                                .font(Font.mada(.bold, size: K.isSmall() ? 64 : 80))
-                                .padding(.bottom, -10)
-                                .padding(.top, 5)
-//                            Text("")
-//                                .font(Font.mada(.medium, size: 20))
-//                                .foregroundColor(Clr.black2)
-//                                .multilineTextAlignment(.center)
-//                                .frame(height: 50)
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .finished_save_progress)
-                                    fromOnboarding = true
-                                    viewRouter.currentPage = .authentication
-                                    UserDefaults.standard.setValue(true, forKey: "saveProgress")
-                                }
-                            } label: {
-                                Capsule()
-                                    .fill(Clr.darkgreen)
-                                    .overlay(
-                                        Text("Yes, save my progress")
-                                            .font(Font.mada(.bold, size: 20))
-                                             .foregroundColor(.white)
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.5)
-                                    )
-                                    
-                            }.buttonStyle(NeumorphicPress())
-                             .frame(height: 45)
-                             .padding(.top, 35)
-                             .padding(.bottom, 20)
-                            Text("Not Now")
-                                .font(Font.mada(.semiBold, size: 20))
-                                .foregroundColor(Color.gray)
-                                .underline()
-                                .onTapGesture {
-                                    withAnimation {
-                                        saveProgress.toggle()
-                               
-                                    }
-                                }
-                        }.frame(width: g.size.width * 0.8, alignment: .center)
-                        .padding()
-                    }.offset(y: g.size.height * 0.1)
                 }
             }
             .fullScreenCover(isPresented: $showStreak, content: {

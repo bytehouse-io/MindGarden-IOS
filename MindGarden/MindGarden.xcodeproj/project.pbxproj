@@ -67,6 +67,7 @@
 		8884A994284A75E200B0B315 /* flame.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A993284A75E200B0B315 /* flame.json */; };
 		8884A996284BDBBC00B0B315 /* flame 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A995284BDBBC00B0B315 /* flame 1.json */; };
 		8884A998284BDBCA00B0B315 /* flame 2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A997284BDBCA00B0B315 /* flame 2.json */; };
+		888653E4285F8D2C00E2C4C0 /* NewAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888653E3285F8D2B00E2C4C0 /* NewAuthentication.swift */; };
 		888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 888A81AA283FF31A00E5D225 /* eduRacoon.png */; };
 		888A81AD2841631300E5D225 /* JourneyRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888A81AC2841631300E5D225 /* JourneyRow.swift */; };
 		8894E73B27FA809F00234466 /* IAPModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894E73A27FA809F00234466 /* IAPModal.swift */; };
@@ -317,6 +318,7 @@
 		8884A993284A75E200B0B315 /* flame.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flame.json; sourceTree = "<group>"; };
 		8884A995284BDBBC00B0B315 /* flame 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "flame 1.json"; sourceTree = "<group>"; };
 		8884A997284BDBCA00B0B315 /* flame 2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "flame 2.json"; sourceTree = "<group>"; };
+		888653E3285F8D2B00E2C4C0 /* NewAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAuthentication.swift; sourceTree = "<group>"; };
 		888A81AA283FF31A00E5D225 /* eduRacoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eduRacoon.png; sourceTree = "<group>"; };
 		888A81AC2841631300E5D225 /* JourneyRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyRow.swift; sourceTree = "<group>"; };
 		8894E73A27FA809F00234466 /* IAPModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPModal.swift; sourceTree = "<group>"; };
@@ -648,6 +650,14 @@
 			path = Learn;
 			sourceTree = "<group>";
 		};
+		888653E2285F8D1B00E2C4C0 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				888653E3285F8D2B00E2C4C0 /* NewAuthentication.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		8897F12E283BFF0200F4E158 /* NotificationImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,6 +935,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				888653E2285F8D1B00E2C4C0 /* Auth */,
 				586E7DA228409E39007E0695 /* Discover */,
 				58C8BE2A280498D400075FD2 /* Sound */,
 				584FAC6127FC2BCC001445D6 /* Buttons */,
@@ -1568,6 +1579,7 @@
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */,
 				88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */,
+				888653E4285F8D2C00E2C4C0 /* NewAuthentication.swift in Sources */,
 				8894E73B27FA809F00234466 /* IAPModal.swift in Sources */,
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,

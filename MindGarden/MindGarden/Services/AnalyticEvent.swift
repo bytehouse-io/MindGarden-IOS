@@ -81,6 +81,9 @@ enum AnalyticEvent {
     case authentication_tapped_apple //
     case authentication_tapped_forgot_password //
     case authentication_signuped_newsletter //
+    case screen_load_newAuthenticaion // 
+    case authentication_tapped_signup_email //
+    case tapped_already_have_account //
 
     //MARK: - Garden
     case screen_load_garden //
@@ -530,12 +533,15 @@ extension AnalyticEvent {
         case .onboarding_came_from_referral: return "onboarding_came_from_referral"
         case .screen_load_signup: return "screen_load_signup"
         case .screen_load_signin: return "screen_load_signin"
+        case .screen_load_newAuthenticaion: return "screen_load_newAuthenticaion"
+        case .authentication_tapped_signup_email: return "authentication_tapped_signup_email"
         case .authentication_signin_successful: return "authentication_signin_successful"
         case .authentication_signup_successful: return "authentication_signup_successful"
         case .authentication_tapped_google: return "authentication_tapped_google"
         case .authentication_tapped_apple:  return "authentication_tapped_apple"
         case .authentication_tapped_forgot_password: return "authentication_tapped_forgot_password"
         case .authentication_signuped_newsletter: return "authentication_signuped_newsletter"
+        case .tapped_already_have_account: return "tapped_already_have_account"
         case .screen_load_garden: return "screen_load_garden"
         case .garden_next_month: return "garden_next_month"
         case .garden_previous_month: return "garden_previous_month"
