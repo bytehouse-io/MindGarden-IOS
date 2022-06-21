@@ -94,4 +94,11 @@ class MGAudio: NSObject, AVAudioPlayerDelegate {
         }
     }
     
+    func playBubbleSound(){
+        DispatchQueue.main.async {
+            MGAudio.sharedInstance.stopSound()
+            MGAudio.sharedInstance.playSound(soundFileName: "waterdrops.mp3")
+        }
+    }
+    
 }

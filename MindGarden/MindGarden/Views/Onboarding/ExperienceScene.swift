@@ -53,6 +53,7 @@ struct ExperienceScene: View {
                             SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
                             Spacer()
                             Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
@@ -144,6 +145,7 @@ struct ExperienceScene: View {
 
         var body: some View {
             Button {
+                MGAudio.sharedInstance.playBubbleSound()
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     selected = title

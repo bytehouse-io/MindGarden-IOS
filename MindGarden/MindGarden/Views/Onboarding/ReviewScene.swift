@@ -155,6 +155,7 @@ struct ReviewScene: View {
                                             .font(Font.mada(.semiBold, size: 22))
                                         if notifications == "Off" {
                                             Button {
+                                                MGAudio.sharedInstance.playBubbleSound()
                                                 withAnimation {
                                                     tappedTurnOn = true
                                                     viewRouter.currentPage = .notification
@@ -180,6 +181,7 @@ struct ReviewScene: View {
                         }
                         Spacer()
                         Button {
+                            MGAudio.sharedInstance.playBubbleSound()
                             onboardingTime = false
                             Analytics.shared.log(event: .review_tapped_tutorial)
                        
@@ -228,7 +230,7 @@ struct ReviewScene: View {
                         }.padding()
                         .buttonStyle(NeumorphicPress())
                         Button {
-                         
+                            MGAudio.sharedInstance.playBubbleSound()
                             onboardingTime = true
                             if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])

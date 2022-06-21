@@ -330,4 +330,10 @@ extension Date {
         let today = Date()
         return calendar.date(byAdding: .day, value: (7 * week), to: today)
     }
+    
+    func getdateAfterdays(days:Int) -> Date? {
+        let calendar = Calendar.current
+        let today = Date()
+        return calendar.date(byAdding: .day, value: days, to: today)
+    }
 }

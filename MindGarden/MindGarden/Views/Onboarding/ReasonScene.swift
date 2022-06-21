@@ -52,6 +52,10 @@ struct ReasonScene: View {
                                 SelectionRow(width: width, height: height, reason: reason, selected: $selected)
                             }
                             Button {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                    MGAudio.sharedInstance.stopSound()
+                                    MGAudio.sharedInstance.playSound(soundFileName: "waterdrops.mp3")
+                                }
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 selected.forEach { item in
@@ -111,6 +115,7 @@ struct ReasonScene: View {
 
         var body: some View {
             Button {
+                MGAudio.sharedInstance.playBubbleSound()
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     if selected.contains(where: { $0.id == reason.id }) {

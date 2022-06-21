@@ -68,6 +68,7 @@ struct PricingView: View {
                                     .padding(.bottom, 50)
                                     .opacity(0.5)
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             switch fromPage {
@@ -126,8 +127,11 @@ struct PricingView: View {
 //                            }.buttonStyle(NeumorphicPress())
 //                                .frame(width: width * 0.8, height: height * 0.08)
 //                                .padding(5)
+                            
+                            FreeTrialView(trialLength: $trialLength)
 
                             Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Yearly"
@@ -154,6 +158,7 @@ struct PricingView: View {
                                 .padding(5)
 
                             Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Monthly"
@@ -241,6 +246,7 @@ struct PricingView: View {
                                                         .neoShadow())
                                 }
                                 Button {
+                                    MGAudio.sharedInstance.playBubbleSound()
                                     guard let url = URL(string: "https://tally.so/r/3xRxkn") else { return }
                                      UIApplication.shared.open(url)
                                 } label: {
@@ -263,6 +269,7 @@ struct PricingView: View {
                                     .multilineTextAlignment(.leading)
                                     .frame(width: width * 0.8, alignment: .leading)
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         withAnimation {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             question1.toggle()
@@ -283,6 +290,7 @@ struct PricingView: View {
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         withAnimation {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             question2.toggle()
@@ -303,6 +311,7 @@ struct PricingView: View {
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         withAnimation {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             question3.toggle()
@@ -321,6 +330,7 @@ struct PricingView: View {
                         Spacer()
                         VStack {
                             Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 unlockPro()
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             } label: {
@@ -338,6 +348,7 @@ struct PricingView: View {
                                     .foregroundColor(.gray)
                                     .font(Font.mada(.regular, size: 14))
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         if let url = URL(string: "https://www.termsfeed.com/live/5201dab0-a62c-484f-b24f-858f2c69e581") {
                                             UIApplication.shared.open(url)
                                         }
@@ -347,6 +358,7 @@ struct PricingView: View {
                                     .foregroundColor(.gray)
                                     .font(Font.mada(.regular, size: 14))
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         if let url = URL(string: "https:/mindgarden.io/terms-of-use") {
                                             UIApplication.shared.open(url)
                                         }

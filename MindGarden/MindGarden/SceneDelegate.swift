@@ -103,6 +103,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let userActivity = connectionOptions.userActivities.first {
                   processUserActivity(userActivity)
             }
+        
+        setNotificationStatus()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -126,6 +128,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 player.play()
             }
         }
+        setNotificationStatus()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -229,6 +232,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         self.router.currentPage = .authentication
           }
       }
+    }
+    
+    private func setNotificationStatus() {
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { permission in
+            switch permission.authorizationStatus  {
+            case .authorized:
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+            case .denied:
+                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+            case .notDetermined:
+                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+            default:
+                print("Unknow Status")
+            }
+        })
     }
 }
 
