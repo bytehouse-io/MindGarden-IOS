@@ -18,6 +18,14 @@ struct FreeTrialView: View {
     var body: some View {
         ZStack {
             VStack {
+                VStack {
+                    Text("How your free trial works")
+                        .font(Font.mada(.bold, size: 22))
+                        .foregroundColor(Clr.black2)
+                        .multilineTextAlignment(.leading)
+                        .padding(5)
+                        .padding(.top,10)
+                }
                 HStack {
                     
                     ZStack {
@@ -68,6 +76,7 @@ struct FreeTrialView: View {
                     }
                         
                     VStack(alignment:.leading) {
+                        let maxDay = (trialLength == 7 || trialLength == 1 ) ? 7 : 14
                         VStack(alignment:.leading) {
                             Text("Today")
                                 .font(Font.mada(.bold, size: 20))
@@ -80,7 +89,7 @@ struct FreeTrialView: View {
                         }
                         .padding(5)
                         VStack(alignment:.leading) {
-                            Text(trialLength <= 7 ? "Day 5" : "Day 12")
+                            Text(maxDay == 7 ? "Day 5" : "Day 12")
                                 .font(Font.mada(.bold, size: 20))
                                 .foregroundColor(Clr.black2)
                             Text("We'll remind you with a notification that your trial is ending.")
@@ -91,10 +100,10 @@ struct FreeTrialView: View {
                         }
                         .padding(5)
                         VStack(alignment:.leading) {
-                            Text(trialLength <= 7 ? "Day 7" : "Day 14")
+                            Text( maxDay == 7 ? "Day 7" : "Day 14")
                                 .font(Font.mada(.bold, size: 20))
                                 .foregroundColor(Clr.black2)
-                            Text("You will be charged on \((Date().getdateAfterdays(days: trialLength)?.toString(withFormat: "MMM dd")) ?? ""), cancel anytime before.")
+                            Text("You will be charged on \((Date().getdateAfterdays(days: maxDay)?.toString(withFormat: "MMM dd")) ?? ""), cancel anytime before.")
                                 .lineLimit(2)
                                 .font(Font.mada(.regular, size: 16))
                                 .foregroundColor(Clr.black2)
