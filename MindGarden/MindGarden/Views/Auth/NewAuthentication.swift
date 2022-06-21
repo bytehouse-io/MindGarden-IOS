@@ -23,255 +23,212 @@ struct NewAuthentication: View {
     @State private var signUpDisabled = true
     @State private var focusedText = false
     @State private var showForgotAlert = false
-
+    
     init(viewModel: AuthenticationViewModel) {
         self.viewModel = viewModel
         self.viewModel.isSignUp = true
     }
     var body: some View {
-        ZStack {
-            Clr.darkWhite.edgesIgnoringSafeArea(.all)
-            VStack(spacing: 15) {
-                HStack {
-                    Img.topBranch
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: UIScreen.screenWidth * 0.6)
-                        .padding(.leading, -20)
+        NavigationView {
+            
+            ZStack {
+                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+            
+                VStack(spacing: 15) {
+                    
+                    Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign in" : "Create a profile to save your progress")
+                        .foregroundColor(Clr.black2)
+                        .font(Font.mada(.semiBold, size: 28))
+                        .multilineTextAlignment(.center)
+                        .frame(width: UIScreen.screenWidth * 0.8)
                     Spacer()
-                    ZStack {
-                        Image(systemName: "xmark")
+                    if !showFields {
+                        Img.signUpImage
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 20)
-                            .foregroundColor(.gray)
-                            .padding(.bottom, 50)
-                            .opacity(0.5)
-                            .offset(x: -40, y: 40)
-                            .onTapGesture {
+                            .frame(width: UIScreen.screenWidth * 0.75, height: 125)
+                    } else {
+                        if showFields && !tappedSignOut {
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if tappedRefer {
-                                        viewRouter.currentPage = .meditate
-                                    } else {
-                                        if fromPage == "profile" {
-                                            viewRouter.currentPage = .meditate
-                                        } else if fromPage == "singleIntro" {
-                                            medModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                            viewRouter.currentPage = .middle
-                                        } else if fromPage == "onboarding" {
-                                            viewRouter.currentPage = .onboarding
-                                        } else {
-                                            viewRouter.currentPage = .garden
+                                    showFields = false
+                                }
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.darkWhite)
+                                    .padding(.horizontal)
+                                    .overlay(
+                                        Text("Go Back")
+                                            .font(Font.mada(.semiBold, size: 20))
+                                            .foregroundColor(Clr.darkgreen)
+                                    )
+                                    .frame(width: UIScreen.screenWidth * 0.35, height: 30)
+                            }
+                            .buttonStyle(NeumorphicPress())
+                        }
+                        VStack(spacing: 0) {
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(Clr.darkWhite)
+                                    .neoShadow()
+                                    .padding(20)
+                                HStack {
+                                    TextField("Email", text: $viewModel.email, onEditingChanged: { focused in
+                                        withAnimation {
+                                                                            focusedText = focused
                                         }
-                                    }
+                                    })
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.mada(.bold, size: 20))
+                                    .padding(.leading, 40)
+                                    .padding(.trailing, 60)
+                                    Image(systemName: isEmailValid ? "xmark" : "checkmark")
+                                        .foregroundColor(isEmailValid ? Color.red : Clr.brightGreen)
+                                        .offset(x: -40)
+                                        .onReceive(viewModel.validatedEmail) {
+                                            self.isEmailValid = $0 == "invalid"
+                                        }
                                 }
                             }
+                            .frame(width: UIScreen.screenWidth * 0.9, height: 100)
+                            .frame(height: 100)
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(Clr.darkWhite)
+                                    .neoShadow()
+                                    .padding(.horizontal, 20)
+                                HStack {
+                                    SecureField("Password (6+ characters)", text: $viewModel.password)
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.mada(.bold, size: 20))
+                                        .padding(.leading, 40)
+                                        .padding(.trailing, 60)
+                                        .disableAutocorrection(true)
+                                    Image(systemName: isPasswordValid ? "xmark" : "checkmark")
+                                        .foregroundColor(isPasswordValid ? Color.red : Clr.brightGreen)
+                                        .offset(x: -40)
+                                        .onReceive(viewModel.validatedPassword) {
+                                            self.isPasswordValid = $0 == "invalid"
+                                        }
+                                }
+                            }
+                            .frame(width: UIScreen.screenWidth * 0.9, height: 60)
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                //                            viewModel.isLoading = true
+                                if viewModel.isSignUp {
+                                    viewModel.signUp()
+                                } else {
+                                    viewModel.signIn()
+                                }
+                            } label: {
+                                ZStack(alignment: .center) {
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
+                                        .neoShadow()
+                                    Text(viewModel.isSignUp ? "Register" : "Login")
+                                        .foregroundColor(Color.white)
+                                        .font(Font.mada(.bold, size: 20))
+                                        .padding()
+                                }
+                                .padding(20)
+                                .frame(width: UIScreen.screenWidth * 0.9, height: 100)
+                                .disabled(true)
+                            }.disabled(signUpDisabled)
+                                .onReceive(viewModel.validatedCredentials) {
+                                    guard let credentials = $0 else {
+                                        self.signUpDisabled = true
+                                        return
+                                    }
+                                    let (_, validPassword) = credentials
+                                    guard validPassword != "invalid"  else {
+                                        self.signUpDisabled = true
+                                        return
+                                    }
+                                    self.signUpDisabled = false
+                                }
+                        }.padding(.bottom, -30)
+                        //                    if viewModel.isSignUp {
+                        //                        HStack {
+                        //                            CheckBoxView(checked: $viewModel.checked)
+                        //                                .frame(height: 45)
+                        //                            Text("Sign me up for the MindGarden Newsletter 🗞")
+                        //                                .font(Font.mada(.medium, size: 18))
+                        //                                .foregroundColor(Clr.black2)
+                        //                                .lineLimit(2)
+                        //                                .minimumScaleFactor(0.5)
+                        //                        }.frame(height: 60)
+                        //                            .padding(.horizontal, 20)
+                        //                    }
+                        if !viewModel.isSignUp {
+                            Text("Forgot Password?")
+                                .font(Font.mada(.medium, size: 18))
+                                .foregroundColor(.blue)
+                                .underline()
+                                .padding(.top, 20)
+                                .onTapGesture {
+                                    Analytics.shared.log(event: .authentication_tapped_forgot_password)
+                                    showForgotAlert = true
+                                }
+                        }
                     }
-                }.frame(width: UIScreen.screenWidth)
-                .padding(.top, -40)
-                Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign in" : "Create a profile to save your progress")
-                    .foregroundColor(Clr.black2)
-                    .font(Font.mada(.semiBold, size: 28))
-                    .multilineTextAlignment(.center)
-                    .frame(width: UIScreen.screenWidth * 0.8)
-                Spacer()
-                if !showFields {
-                    Img.signUpImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: UIScreen.screenWidth * 0.65)
-                        .padding()
-                } else {
-                    if showFields && !tappedSignOut {
+                    Spacer()
+                    if !showFields  {
                         Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                showFields = false
+                                Analytics.shared.log(event: .authentication_tapped_signup_email)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                viewModel.isSignUp = true
+                                showFields = true
                             }
                         } label: {
                             Capsule()
                                 .fill(Clr.darkWhite)
-                                .padding(.horizontal)
                                 .overlay(
-                                    Text("Go Back")
-                                        .font(Font.mada(.semiBold, size: 20))
-                                        .foregroundColor(Clr.darkgreen)
+                                    HStack(spacing: 15) {
+                                        Image(systemName: "envelope.fill")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 20)
+                                            .foregroundColor(Clr.darkgreen)
+                                        Text("Sign up with Email")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(Font.mada(.bold, size: 18))
+                                    }.offset(x: -20)
                                 )
-                                .frame(width: UIScreen.screenWidth * 0.35, height: 30)
-                        }
-                        .buttonStyle(NeumorphicPress())
+                        }.frame(height: 60)
+                            .padding(.top, 20)
+                            .buttonStyle(NeumorphicPress())
+                            .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
                     }
-                    VStack(spacing: 0) {
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Clr.darkWhite)
-                                .neoShadow()
-                                .padding(20)
-                            HStack {
-                                TextField("Email", text: $viewModel.email, onEditingChanged: { focused in
-                                    withAnimation {
-        //                                focusedText = focused
-                                    }
-                                })
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 20))
-                                    .padding(.leading, 40)
-                                    .padding(.trailing, 60)
-                                Image(systemName: isEmailValid ? "xmark" : "checkmark")
-                                    .foregroundColor(isEmailValid ? Color.red : Clr.brightGreen)
-                                    .offset(x: -40)
-                                    .onReceive(viewModel.validatedEmail) {
-                                        self.isEmailValid = $0 == "invalid"
-                                    }
-                            }
-                        }
-                        .frame(width: UIScreen.screenWidth * 0.9, height: 100)
+                    
+                    viewModel
+                        .siwa
+                        .padding(20)
                         .frame(height: 100)
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Clr.darkWhite)
-                                .neoShadow()
-                                .padding(.horizontal, 20)
-                            HStack {
-                                SecureField("Password (6+ characters)", text: $viewModel.password)
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 20))
-                                    .padding(.leading, 40)
-                                    .padding(.trailing, 60)
-                                    .disableAutocorrection(true)
-                                Image(systemName: isPasswordValid ? "xmark" : "checkmark")
-                                    .foregroundColor(isPasswordValid ? Color.red : Clr.brightGreen)
-                                    .offset(x: -40)
-                                    .onReceive(viewModel.validatedPassword) {
-                                        self.isPasswordValid = $0 == "invalid"
-                                    }
-                            }
+                        .oldShadow()
+                        .disabled(viewModel.falseAppleId)
+                        .frame(width: UIScreen.screenWidth * 0.9, height: K.isPad() ? 250 : 70)
+                    VStack {
+                        if showFields && viewModel.isSignUp == false {
+                            Img.siwg
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        } else {
+                            Img.suwg
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
                         }
-                        .frame(width: UIScreen.screenWidth * 0.9, height: 60)
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-    //                            viewModel.isLoading = true
-                            if viewModel.isSignUp {
-                                viewModel.signUp()
-                            } else {
-                                viewModel.signIn()
-                            }
-                        } label: {
-                            ZStack(alignment: .center) {
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
-                                    .neoShadow()
-                                Text(viewModel.isSignUp ? "Register" : "Login")
-                                    .foregroundColor(Color.white)
-                                    .font(Font.mada(.bold, size: 20))
-                                    .padding()
-                            }
-                            .padding(20)
-                            .frame(width: UIScreen.screenWidth * 0.9, height: 100)
-                            .disabled(true)
-                        }.disabled(signUpDisabled)
-                        .onReceive(viewModel.validatedCredentials) {
-                                guard let credentials = $0 else {
-                                    self.signUpDisabled = true
-                                    return
-                                }
-                                let (_, validPassword) = credentials
-                                guard validPassword != "invalid"  else {
-                                    self.signUpDisabled = true
-                                    return
-                                }
-                                self.signUpDisabled = false
-                            }
-                    }.padding(.bottom, -30)
-//                    if viewModel.isSignUp {
-//                        HStack {
-//                            CheckBoxView(checked: $viewModel.checked)
-//                                .frame(height: 45)
-//                            Text("Sign me up for the MindGarden Newsletter 🗞")
-//                                .font(Font.mada(.medium, size: 18))
-//                                .foregroundColor(Clr.black2)
-//                                .lineLimit(2)
-//                                .minimumScaleFactor(0.5)
-//                        }.frame(height: 60)
-//                            .padding(.horizontal, 20)
-//                    }
-                    if !viewModel.isSignUp {
-                        Text("Forgot Password?")
-                            .font(Font.mada(.medium, size: 18))
-                            .foregroundColor(.blue)
-                            .underline()
-                            .padding(20)
-                            .onTapGesture {
-                                Analytics.shared.log(event: .authentication_tapped_forgot_password)
-                                showForgotAlert = true
-                            }
-                    }
-                }
-      
-                Spacer()
-                Spacer()
-                if !showFields  {
-                    Button {
-                        withAnimation {
-                            Analytics.shared.log(event: .authentication_tapped_signup_email)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            viewModel.isSignUp = true
-                            showFields = true
-                        }
-                    } label: {
-                        Capsule()
-                            .fill(Clr.darkWhite)
-                            .overlay(
-                                HStack(spacing: 15) {
-                                    Image(systemName: "envelope.fill")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20)
-                                        .foregroundColor(Clr.darkgreen)
-                                    Text("Sign up with Email")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 18))
-                                }.offset(x: -20)
-                            )
-                    }.frame(height: 60)
-                        .padding(.top, 20)
-                        .buttonStyle(NeumorphicPress())
-                        .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
-                }
-                
-                viewModel
-                    .siwa
-                    .padding(20)
-                    .frame(height: 100)
-                    .oldShadow()
-                    .disabled(viewModel.falseAppleId)
-                    .frame(width: UIScreen.screenWidth * 0.9, height: K.isPad() ? 250 : 70)
-                VStack {
-                    if showFields && viewModel.isSignUp == false {
-                        Img.siwg
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                    } else {
-                        Img.suwg
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    }
-                }.padding(20)
-                    .frame(width: UIScreen.screenWidth * 0.9, height: K.isPad() ? 250 : 70)
-                    .neoShadow()
-                    .onTapGesture {
-                        Analytics.shared.log(event: .authentication_tapped_google)
-                        viewModel.signInWithGoogle()
-                    }
-                if !tappedSignOut {
-                    Text(!viewModel.isSignUp && showFields ? "Create an account" : "Already have an account")
-                        .underline()
-                        .font(Font.mada(.semiBold, size: 18))
-                        .foregroundColor(.gray)
-                    frame(height: 30)
-                        .padding()
+                    }.padding(20)
+                        .frame(width: UIScreen.screenWidth * 0.9, height: K.isPad() ? 250 : 70)
+                        .neoShadow()
                         .onTapGesture {
+                            Analytics.shared.log(event: .authentication_tapped_google)
+                            viewModel.signInWithGoogle()
+                        }
+                    if !tappedSignOut && !showFields {
+                        Button {
                             Analytics.shared.log(event: .tapped_already_have_account)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
@@ -284,10 +241,65 @@ struct NewAuthentication: View {
                                     showFields = true
                                 }
                             }
+                            
+                        } label: {
+                            VStack {
+                                Text(!viewModel.isSignUp && showFields ? "Create an account" : "Already have an account")
+                                    .font(Font.mada(.semiBold, size: 20))
+                                    .foregroundColor(.gray)
+                                    .underline()
+                            }
+                        }.frame(width: 200, alignment: .center)
+                        .padding(.top, 10)
+                    }
+                }.padding(.top, 75)
+            }
+            .edgesIgnoringSafeArea(.bottom)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarItems(leading:
+                                    Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6, height: 250)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
+                                    .opacity(focusedText ? 0.1 : 1),
+                                trailing:     Button {
+                print("gang affiliated")
+                withAnimation {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    if tappedRefer {
+                        viewRouter.currentPage = .meditate
+                    } else {
+                        if fromPage == "profile" {
+                            viewRouter.currentPage = .meditate
+                        } else if fromPage == "singleIntro" {
+                            medModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
+                            viewRouter.currentPage = .middle
+                        } else if fromPage == "onboarding" {
+                            viewRouter.currentPage = .onboarding
+                        } else {
+                            viewRouter.currentPage = .garden
+                        }
                     }
                 }
-            }
+            }label: {
+                ZStack {
+                    Circle()
+                        .fill(Clr.darkWhite)
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.gray)
+                        .opacity(0.5)
+                        .frame(width: 20, height: 20)
+                }
+            }.frame(width: 40, height: 40)
+                .buttonStyle(BonusPress())
+            )
+            .navigationBarBackButtonHidden(true)
         }
+        
         .alert(isPresented: $viewModel.alertError) {
             Alert(title: Text("Something went wrong"), message:
                     Text(viewModel.alertMessage)
@@ -314,7 +326,7 @@ struct NewAuthentication: View {
             }
         }
         .transition(.opacity)
-
+        
     }
 }
 

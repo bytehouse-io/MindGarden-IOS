@@ -78,91 +78,92 @@ struct MindGardenWidgetEntryView : View {
                     }
                  
                 case .systemLarge:
-                    ZStack {
-                        if entry.isPro {
-                        VStack(spacing: 5) {
-                            MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)
-                            HStack {
-                                ZStack {
-                                    Rectangle()
-                                        .fill(Color("darkWhite"))
-                                        .cornerRadius(14)
-                                        .neoShadow()
-                                        HStack {
-                                            Image(systemName: "clock")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .foregroundColor(Color("darkgreen"))
-                                                .frame(width: 25)
-                                            Text("Total\nTime")
-                                                .foregroundColor(Color("black2"))
-                                                .font(Font.mada(.regular, size: 12))
-                                            Text("\(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)") mins")
-                                                .foregroundColor(Color("darkgreen"))
-                                                .font(Font.mada(.bold, size: 14))
-                                        }
-                                }.frame(width: width * 0.435, height: height * 0.15)
-                                ZStack {
-                                        Rectangle()
-                                            .fill(Color("darkWhite"))
-                                            .cornerRadius(14)
-                                            .neoShadow()
-                                        HStack {
-                                            Image(systemName: "number")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 25)
-                                                .foregroundColor(Color("darkgreen"))
-                                            Text("Total\nSess")
-                                                .foregroundColor(Color("black2"))
-                                                .font(Font.mada(.regular, size: 12))
-                                            Text("\(totalSess) sess")
-                                                .foregroundColor(Color("darkgreen"))
-                                                .font(Font.mada(.bold, size: 14))
-                                        }
-                                    }.frame(width: width * 0.435, height: height * 0.15)
-                            }
-
-                            ZStack {
-                                Link(destination: URL(string: "garden://io.bytehouse.mindgarden")!)  {
-                                    Rectangle()
-                                        .fill(Color("yellow"))
-                                        .cornerRadius(14)
-                                        .frame(width: width * 0.875)
-                                        .opacity(0.8)
-                                        .neoShadow()
-                                    VStack(alignment: .center) {
-                                        Spacer()
-                                        ZStack {
-                                            if !plants.isEmpty {
-                                                HStack {
-                                                    //                                        Text(plants[0].title)
-                                                    //                                            .font(Font.mada(.bold, size: 40))
-                                                    ForEach(0..<min(plants.count, 5)) { idx in
-//                                                        let xPos = Int.random(in: -25...25)
-                                                        Image(plants[idx].title)
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .frame(width: 40, height: height * 0.35)
-                                                    }
-                                                }.frame(width: width * 0.80, height: height)
-                                                    .padding()
-                                            }
-                                        }
-                                    }.frame(width: width, height: height * 0.2)
-
-                                }.frame(width: width * 0.85, height: height * 0.25)
-                                    .padding(.vertical)
-                            }
-                            Text("🧘 Your last 5 sessions")
-                                .foregroundColor(Color("black2"))
-                                .font(Font.mada(.regular, size: 10))
-                                .offset(x: 90, y: -15)
-                        }
-                        } else {
-                            GoProPage
-                        }
-                    }
+                    EmptyView()
+//                    ZStack {
+//                        if entry.is Pro {
+//                        VStack(spacing: 5) {
+//                            MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)
+//                            HStack {
+//                                ZStack {
+//                                    Rectangle()
+//                                        .fill(Color("darkWhite"))
+//                                        .cornerRadius(14)
+//                                        .neoShadow()
+//                                        HStack {
+//                                            Image(systemName: "clock")
+//                                                .resizable()
+//                                                .aspectRatio(contentMode: .fit)
+//                                                .foregroundColor(Color("darkgreen"))
+//                                                .frame(width: 25)
+//                                            Text("Total\nTime")
+//                                                .foregroundColor(Color("black2"))
+//                                                .font(Font.mada(.regular, size: 12))
+//                                            Text("\(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)") mins")
+//                                                .foregroundColor(Color("darkgreen"))
+//                                                .font(Font.mada(.bold, size: 14))
+//                                        }
+//                                }.frame(width: width * 0.435, height: height * 0.15)
+//                                ZStack {
+//                                        Rectangle()
+//                                            .fill(Color("darkWhite"))
+//                                            .cornerRadius(14)
+//                                            .neoShadow()
+//                                        HStack {
+//                                            Image(systemName: "number")
+//                                                .resizable()
+//                                                .aspectRatio(contentMode: .fit)
+//                                                .frame(width: 25)
+//                                                .foregroundColor(Color("darkgreen"))
+//                                            Text("Total\nSess")
+//                                                .foregroundColor(Color("black2"))
+//                                                .font(Font.mada(.regular, size: 12))
+//                                            Text("\(totalSess) sess")
+//                                                .foregroundColor(Color("darkgreen"))
+//                                                .font(Font.mada(.bold, size: 14))
+//                                        }
+//                                    }.frame(width: width * 0.435, height: height * 0.15)
+//                            }
+//
+//                            ZStack {
+//                                Link(destination: URL(string: "garden://io.bytehouse.mindgarden")!)  {
+//                                    Rectangle()
+//                                        .fill(Color("yellow"))
+//                                        .cornerRadius(14)
+//                                        .frame(width: width * 0.875)
+//                                        .opacity(0.8)
+//                                        .neoShadow()
+//                                    VStack(alignment: .center) {
+//                                        Spacer()
+//                                        ZStack {
+//                                            if !plants.isEmpty {
+//                                                HStack {
+//                                                    //                                        Text(plants[0].title)
+//                                                    //                                            .font(Font.mada(.bold, size: 40))
+//                                                    ForEach(0..<min(plants.count, 5)) { idx in
+////                                                        let xPos = Int.random(in: -25...25)
+//                                                        Image(plants[idx].title)
+//                                                            .resizable()
+//                                                            .aspectRatio(contentMode: .fit)
+//                                                            .frame(width: 40, height: height * 0.35)
+//                                                    }
+//                                                }.frame(width: width * 0.80, height: height)
+//                                                    .padding()
+//                                            }
+//                                        }
+//                                    }.frame(width: width, height: height * 0.2)
+//
+//                                }.frame(width: width * 0.85, height: height * 0.25)
+//                                    .padding(.vertical)
+//                            }
+//                            Text("🧘 Your last 5 sessions")
+//                                .foregroundColor(Color("black2"))
+//                                .font(Font.mada(.regular, size: 10))
+//                                .offset(x: 90, y: -15)
+//                        }
+//                        } else {
+//                            GoProPage
+//                        }
+//                    }
 
                 default:
                     Text("Some other WidgetFamily in the future.")
@@ -242,10 +243,10 @@ struct MindGardenWidgetEntryView : View {
                             .foregroundColor(Color.white)
                             .offset(y: 5)
                         HStack(spacing: 5) {
-                             Image("streak")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.05)
+//                             Image("streak")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: width * 0.05)
                             Text("Streak:")
                                 .font(Font.mada(.regular, size: 14))
                                 .foregroundColor(Color.white)
@@ -255,10 +256,10 @@ struct MindGardenWidgetEntryView : View {
                                 .foregroundColor(Color.white)
                         }.frame(width: width * 0.39, alignment: .leading)
                         HStack(spacing: 5) {
-                            Image("hands")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.05)
+//                            Image("hands")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: width * 0.05)
                             Text("Gratitudes:")
                                 .font(Font.mada(.regular, size: 14))
                                 .foregroundColor(Color.white)
@@ -268,11 +269,15 @@ struct MindGardenWidgetEntryView : View {
                                 .foregroundColor(Color.white)
                         }.frame(width: width * 0.39, alignment: .leading)
                         HStack(spacing: 10) {
-                            SingleMood(mood: .happy, count: moods[.happy] ?? 0)
-                            SingleMood(mood: .okay, count: moods[.okay] ?? 0)
-                            SingleMood(mood: .stressed, count: moods[.stressed] ?? 0)
-                            SingleMood(mood: .angry, count: moods[.angry] ?? 0)
-                            SingleMood(mood: .sad, count: moods[.sad] ?? 0)
+                            Image("pots")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                            
+//                            SingleMood(mood: .happy, count: moods[.happy] ?? 0)
+//                            SingleMood(mood: .okay, count: moods[.okay] ?? 0)
+//                            SingleMood(mood: .stressed, count: moods[.stressed] ?? 0)
+//                            SingleMood(mood: .angry, count: moods[.angry] ?? 0)
+//                            SingleMood(mood: .sad, count: moods[.sad] ?? 0)
                         }.frame(height: height * 0.25)
                         .padding(.horizontal, 8)
                         .offset(y: -2)

@@ -122,7 +122,8 @@ enum AnalyticEvent {
     case home_claim_daily //
     case home_claim_seven //
     case home_claim_thirty //
-    case home_tapped_IAP
+    case home_tapped_IAP //
+    case home_tapped_journey_med
     
     // IAP
     case IAP_tapped_freeze
@@ -192,6 +193,7 @@ enum AnalyticEvent {
     //MARK: - Discover
     case screen_load_discover
     case screen_load_journey
+    case discover_tapped_journey_med
     case discover_tapped_search
     
     
@@ -790,7 +792,9 @@ extension AnalyticEvent {
         case .screen_load_discover: return "screen_load_discover"
         case .screen_load_journey: return "screen_load_journey"
         case .discover_tapped_search: return "discover_tapped_search"
-        case .user_from_influencer: return "user_from_influencerscr"
+        case .user_from_influencer: return "user_from_influencer"
+        case .discover_tapped_journey_med: return "discover_tapped_journey_med"
+        case .home_tapped_journey_med: "home_tapped_journey_med"
         }
     }
 }

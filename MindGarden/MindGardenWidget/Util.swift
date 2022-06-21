@@ -11,21 +11,21 @@ struct K {
     static func getMoodImage(mood: Mood) -> Image {
         switch mood {
         case .happy:
-            return Image("happy")
+            return Image("happyPot")
         case .sad:
-            return Image("sad")
+            return Image("sadPot")
         case .angry:
-            return Image("angry")
+            return Image("angryPot")
         case .okay:
-            return Image("okay")
+            return Image("okayPot")
         case .stressed:
-            return Image("stressed")
+            return Image("stressedPot")
         default:
-            return Image("okay")
+            return Image("okayPot")
         }
     }
 
-    static let plantImages = ["White Daisy":"daisy3", "Red Tulip":"redTulips3", "Cactus":"cactus3", "Blueberry":"blueberry3", "Monstera":"monstera3", "Daffodil":"daffodil3", "Rose":"rose3", "Lavender":"lavender3", "Sunflower":"sunflower3", "Lily of the Valley":"lilyValley3", "Lily":"lily3",  "Strawberry":"strawberry3", "Aloe":"aloe3", "Camellia":"camellia3", "Cherry Blossoms":"cherryBlossoms3", "Red Mushroom":"redMushroom3", "Bonsai Tree":"bonsai3", "Venus Fly Trap":"venus3", "Christmas Tree":"christmas3", "Apples":"apple3", "Lemons": "lemon3", "Ice Flower": "Ice Flower"]
+    static let plantImages = ["White Daisy":"daisy3", "Red Tulip":"redTulips3", "Cactus":"cactus3", "Blueberry":"blueberry3", "Monstera":"monstera3", "Daffodil":"daffodil3", "Rose":"rose3", "Lavender":"lavender3", "Sunflower":"sunflower3", "Lily of the Valley":"lilyValley3", "Lily":"lily3",  "Strawberry":"strawberry3", "Aloe":"aloe3", "Camellia":"camellia3", "Cherry Blossoms":"cherryBlossoms3", "Red Mushroom":"redMushroom3", "Bonsai Tree":"bonsai3", "Venus Fly Trap":"venus3", "Christmas Tree":"christmas3", "Apples":"apple3", "Lemons": "lemon3", "Ice Flower": "Ice Flower", "Avocados": "avocado3"]
 
 
 
