@@ -18,6 +18,7 @@
 		581DE83F283EA6BF00452C95 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
 		581DE840283EA6C200452C95 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
 		5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5822E586286186C000DB0AFC /* waterdrops.mp3 */; };
+		5822E58B286216C300DB0AFC /* NewAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822E58A286216C200DB0AFC /* NewAuthentication.swift */; };
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
@@ -270,6 +271,7 @@
 		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
 		5810EB622847971800DD4D25 /* JourneyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyScene.swift; sourceTree = "<group>"; };
 		5822E586286186C000DB0AFC /* waterdrops.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = waterdrops.mp3; sourceTree = "<group>"; };
+		5822E58A286216C200DB0AFC /* NewAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAuthentication.swift; sourceTree = "<group>"; };
 		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
 		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		5836FA70281C1DAC001AB151 /* ReminderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
@@ -559,6 +561,14 @@
 			children = (
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		5822E589286216C200DB0AFC /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				5822E58A286216C200DB0AFC /* NewAuthentication.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		582B302C27EF3D960026DD16 /* ShareStreak */ = {
@@ -936,6 +946,7 @@
 		FEB85FCA266C1C69008CDAA4 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5822E589286216C200DB0AFC /* Auth */,
 				5822E5882861F35C00DB0AFC /* Alert */,
 				586E7DA228409E39007E0695 /* Discover */,
 				58C8BE2A280498D400075FD2 /* Sound */,
@@ -1605,6 +1616,7 @@
 				FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */,
 				88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */,
 				FE1CA3CC27B219590074C497 /* FirebaseAPI.swift in Sources */,
+				5822E58B286216C300DB0AFC /* NewAuthentication.swift in Sources */,
 				58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */,
 				FEB85FD9266D4E5B008CDAA4 /* Images+Generated.swift in Sources */,
 				FEAA837D2695447300E4C62F /* ProfileScene.swift in Sources */,
