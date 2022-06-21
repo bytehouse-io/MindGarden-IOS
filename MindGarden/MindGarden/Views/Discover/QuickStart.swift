@@ -25,6 +25,7 @@ struct QuickStart: View {
                             withAnimation {
                                 category = item.title
                                 isShowCategory = true
+                                middleToSearch = item.name
                             }
                         } label: {
                             ZStack {

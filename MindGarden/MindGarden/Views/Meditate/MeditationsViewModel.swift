@@ -52,7 +52,30 @@ class MeditationViewModel: ObservableObject {
     init() {
         $selectedCategory
             .sink { [unowned self] value in
-                if value == .all { self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed().unique()
+                if value == .all {
+                    if middleToSearch != "" {
+                        let category = QuickStartMenuItem.getName(str: middleToSearch)
+                        // show timed meditations on discover search page
+                        if category == .minutes3 || category == .minutes5 || category == .minutes10  || category == .minutes20 {
+                            self.selectedMeditations =  Meditation.allMeditations.filter {
+                                if $0.belongsTo == "Timed Meditation" {
+                                    return true
+                                } else {
+                                    return $0.type != .lesson
+                                }
+                            }.reversed().unique()
+                            for (idx, med) in self.selectedMeditations.enumerated() {
+                                if med.belongsTo == "Timed Meditation" {
+                                    selectedMeditations.remove(at: idx)
+                                    selectedMeditations.insert(med, at: 0)
+                                }
+                            }
+                        } else {
+                            self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed().unique()
+                        }
+                    } else {
+                        self.selectedMeditations =  Meditation.allMeditations.filter { $0.type != .lesson }.reversed().unique()
+                    }
                 } else {
                     self.selectedMeditations = Meditation.allMeditations.filter { med in
                         if value == .courses && (med.title == "Intro to Meditation" || med.title == "The Basics Course" ) {
@@ -60,7 +83,7 @@ class MeditationViewModel: ObservableObject {
                         } else {
                             return med.category == value && med.type != .lesson
                         }
-                    }.unique()
+                    }
                 }
             }
             .store(in: &validationCancellables)

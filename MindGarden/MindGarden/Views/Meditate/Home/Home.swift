@@ -140,6 +140,7 @@ struct Home: View {
             viewRouter.currentPage = .middle
         }
         .onAppear {
+            tappedSignOut = false
 //            activeSheet = .streak
             if !UserDefaults.standard.bool(forKey: "tappedFeature") && !UserDefaults.standard.bool(forKey: "day1Intro") {
                 onboardingTime = true

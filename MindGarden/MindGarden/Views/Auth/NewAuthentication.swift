@@ -50,6 +50,7 @@ struct NewAuthentication: View {
                             .offset(x: -40, y: 40)
                             .onTapGesture {
                                 withAnimation {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if tappedRefer {
                                         viewRouter.currentPage = .meditate
                                     } else {
@@ -61,16 +62,14 @@ struct NewAuthentication: View {
                                         } else if fromPage == "onboarding" {
                                             viewRouter.currentPage = .onboarding
                                         } else {
-                                            withAnimation {
-                                                viewRouter.currentPage = .garden
-                                            }
+                                            viewRouter.currentPage = .garden
                                         }
                                     }
                                 }
                             }
                     }
                 }.frame(width: UIScreen.screenWidth)
-
+                .padding(.top, -40)
                 Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign in" : "Create a profile to save your progress")
                     .foregroundColor(Clr.black2)
                     .font(Font.mada(.semiBold, size: 28))
@@ -185,30 +184,29 @@ struct NewAuthentication: View {
                                 self.signUpDisabled = false
                             }
                     }.padding(.bottom, -30)
-                    if viewModel.isSignUp {
-                        HStack {
-                            CheckBoxView(checked: $viewModel.checked)
-                                .frame(height: 45)
-                            Text("Sign me up for the MindGarden Newsletter 🗞")
-                                .font(Font.mada(.medium, size: 18))
-                                .foregroundColor(Clr.black2)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.5)
-                        }.frame(height: 60)
-                            .padding(.horizontal, 20)
-                    }
+//                    if viewModel.isSignUp {
+//                        HStack {
+//                            CheckBoxView(checked: $viewModel.checked)
+//                                .frame(height: 45)
+//                            Text("Sign me up for the MindGarden Newsletter 🗞")
+//                                .font(Font.mada(.medium, size: 18))
+//                                .foregroundColor(Clr.black2)
+//                                .lineLimit(2)
+//                                .minimumScaleFactor(0.5)
+//                        }.frame(height: 60)
+//                            .padding(.horizontal, 20)
+//                    }
                     if !viewModel.isSignUp {
                         Text("Forgot Password?")
                             .font(Font.mada(.medium, size: 18))
                             .foregroundColor(.blue)
                             .underline()
-                            .padding(5)
+                            .padding(20)
                             .onTapGesture {
                                 Analytics.shared.log(event: .authentication_tapped_forgot_password)
                                 showForgotAlert = true
                             }
                     }
-                    Divider().padding(.bottom, 15)
                 }
       
                 Spacer()
@@ -267,27 +265,26 @@ struct NewAuthentication: View {
                         viewModel.signInWithGoogle()
                     }
                 if !tappedSignOut {
-                    Button {
-                        Analytics.shared.log(event: .tapped_already_have_account)
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        withAnimation {
-                            if !viewModel.isSignUp && showFields {
-                                showFields = false
-                                viewModel.isSignUp = true
-                            } else {
-                                tappedSignIn = true
-                                viewModel.isSignUp = false
-                                showFields = true
+                    Text(!viewModel.isSignUp && showFields ? "Create an account" : "Already have an account")
+                        .underline()
+                        .font(Font.mada(.semiBold, size: 18))
+                        .foregroundColor(.gray)
+                    frame(height: 30)
+                        .padding()
+                        .onTapGesture {
+                            Analytics.shared.log(event: .tapped_already_have_account)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                if !viewModel.isSignUp && showFields {
+                                    showFields = false
+                                    viewModel.isSignUp = true
+                                } else {
+                                    tappedSignIn = true
+                                    viewModel.isSignUp = false
+                                    showFields = true
+                                }
                             }
-                        }
-                    } label: {
-                        Text(!viewModel.isSignUp && showFields ? "Create an account" : "Already have an account")
-                            .underline()
-                            .font(Font.mada(.semiBold, size: 18))
-                            .foregroundColor(.gray)
-                    }.frame(height: 30)
-                    .padding()
-                    .buttonStyle(BonusPress())
+                    }
                 }
             }
         }

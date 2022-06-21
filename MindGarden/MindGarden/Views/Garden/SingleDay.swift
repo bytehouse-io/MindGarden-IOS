@@ -228,19 +228,20 @@ struct SingleDay: View {
                         }.buttonStyle(NeumorphicPress())
                          .frame(height: 45)
                          .padding(.top, 25)
-                        Text("Not Now")
-                            .font(Font.mada(.semiBold, size: 22))
-                            .foregroundColor(Color.gray)
-                            .underline()
-                            .padding(.top, 25)
-                            .onTapGesture {
-                                withAnimation {
-                                    fromPage = "single"
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    showOnboardingModal = false
-                                    viewRouter.currentPage = .authentication
-                                }
+                        Button {
+                            withAnimation {
+                                fromPage = "single"
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                showOnboardingModal = false
+                                viewRouter.currentPage = .authentication
                             }
+                        } label: {
+                            Text("Not Now")
+                                .font(Font.mada(.semiBold, size: 22))
+                                .foregroundColor(Color.gray)
+                                .underline()
+                                .padding(.top, 25)
+                        }   
                     }.frame(width: g.size.width * 0.85, alignment: .center)
                     .offset(y: -25)
                     .padding()
