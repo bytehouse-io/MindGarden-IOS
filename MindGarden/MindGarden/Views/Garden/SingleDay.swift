@@ -207,12 +207,12 @@ struct SingleDay: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
+                                fromPage = "singleIntro"
                                 showOnboardingModal = false
                                 Analytics.shared.log(event: .onboarding_finished_single_course)
                                 UserDefaults.standard.setValue(false, forKey: "introLink")
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                viewRouter.currentPage = .middle
+                                viewRouter.currentPage = .authentication
                             }
                         } label: {
                             Capsule()
@@ -228,23 +228,28 @@ struct SingleDay: View {
                         }.buttonStyle(NeumorphicPress())
                          .frame(height: 45)
                          .padding(.top, 25)
-                        Text("Not Now")
-                            .font(Font.mada(.semiBold, size: 22))
-                            .foregroundColor(Color.gray)
-                            .underline()
-                            .padding(.top, 25)
-                            .onTapGesture {
-                                withAnimation {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    showOnboardingModal = false
-                                }
+                        Button {
+                            withAnimation {
+                                fromPage = "single"
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                showOnboardingModal = false
+                                viewRouter.currentPage = .authentication
                             }
+                        } label: {
+                            Text("Not Now")
+                                .font(Font.mada(.semiBold, size: 22))
+                                .foregroundColor(Color.gray)
+                                .underline()
+                                .padding(.top, 25)
+                        }   
                     }.frame(width: g.size.width * 0.85, alignment: .center)
-                    .offset(y: -15)
+                    .offset(y: -25)
                     .padding()
                 }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
+            showOnboardingModal = true
+
             UserDefaults.standard.setValue(true, forKey: "singleTile")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 if !UserDefaults.standard.bool(forKey: "day1Intro") {

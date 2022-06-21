@@ -15,7 +15,12 @@ var tappedSignIn = false
 struct OnboardingScene: View {
     @State private var index = 0
     @EnvironmentObject var viewRouter: ViewRouter
-    
+    @EnvironmentObject var authModel: AuthenticationViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
+
+    @State private var showAuth = false
     init() {
         if #available(iOS 14.0, *) {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Clr.gardenGreen)
@@ -49,6 +54,7 @@ struct OnboardingScene: View {
 //                                .aspectRatio(contentMode: .fit)
                             Spacer()
                             Img.onBoardingAppleSeed
+                                .offset(x: 10)
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
                         }
@@ -122,6 +128,9 @@ struct OnboardingScene: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             tappedSignIn = true
                             withAnimation {
+                                fromPage = "onboarding"
+                                tappedSignOut = true
+                                authModel.isSignUp = false
                                 viewRouter.currentPage = .authentication
                             }
                         } label: {
@@ -144,7 +153,18 @@ struct OnboardingScene: View {
                     Amplitude.instance().identify(identify ?? AMPIdentify())
                 }
             }
+            .sheet(isPresented: $showAuth) {
+                if tappedSignOut {
+                    
+                } else {
+                    Authentication(viewModel: authModel)
+                        .environmentObject(medModel)
+                        .environmentObject(userModel)
+                        .environmentObject(gardenModel)
+                }
+            }
     }
+    
 }
 
 struct OnboardingScene_Previews: PreviewProvider {

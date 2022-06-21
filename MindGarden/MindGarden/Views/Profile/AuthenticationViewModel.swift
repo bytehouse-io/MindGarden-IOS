@@ -28,10 +28,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var alertError: Bool = false
     @Published var alertMessage: String = "Please try again using a different email or method"
     @Published var isLoading: Bool = false
-    @Published var isSignUp: Bool = false
+    @Published var isSignUp: Bool = true
     @Published var falseAppleId: Bool = false
     @Published var checked = true
-    @Published var showStreak = false
     
     var currentNonce: String?
     var googleIsNew: Bool = true
@@ -54,6 +53,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             if #available(iOS 14.0, *) {
                 SignInWithAppleButton(
                     //Request
+                    isSignUp ? .signUp : .signIn,
                     onRequest: { [self] request in
                         Analytics.shared.log(event: .authentication_tapped_apple)
                         request.requestedScopes = [.fullName, .email]
@@ -184,15 +184,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
             if fromOnboarding {
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review") {
-                    if updatedStreak {
-                        showStreak = true
-                    } else {
-                        viewRouter.currentPage = .garden
-                    }
-                } else {
-                    viewRouter.currentPage = .garden
-                }
+                viewRouter.currentPage = .garden
                 fromOnboarding = false
             } else {
                 viewRouter.currentPage = .meditate

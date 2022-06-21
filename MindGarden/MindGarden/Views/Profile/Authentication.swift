@@ -12,12 +12,11 @@ import Paywall
 
 var fromOnboarding = false
 struct Authentication: View {
-    @State var isSignUp: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    @EnvironmentObject var bonusModel: BonusViewModel
     @State private var alertError = false
     @State private var showForgotAlert = false
     @ObservedObject var viewModel: AuthenticationViewModel
@@ -25,22 +24,18 @@ struct Authentication: View {
     @State private var isPasswordValid = true
     @State private var signUpDisabled = true
     @State private var focusedText = false
-    var tappedSignOut: Bool = false
 
-    init(isSignUp: Bool, viewModel: AuthenticationViewModel) {
-        self.isSignUp = isSignUp
+    init(viewModel: AuthenticationViewModel) {
         self.viewModel = viewModel
-        viewModel.isSignUp = isSignUp
-        tappedSignOut = UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done"
     }
+    
 
     var body: some View {
             NavigationView {
-                LoadingView(isShowing: $viewModel.isLoading) {
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack(spacing: 0)  {
-                        Text(isSignUp ?  tappedRefer ? "Sign Up to Refer" : "Sign Up." : "Sign In.")
+                        Text(viewModel.isSignUp ? "Sign Up." : "Sign In.")
                             .foregroundColor(Clr.black2)
                             .font(Font.mada(.bold, size: 32))
                             .padding()
@@ -55,7 +50,6 @@ struct Authentication: View {
                                         focusedText = focused
                                     }
                                 })
-                                    .disableAutocorrection(true)
                                     .foregroundColor(Clr.black2)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding(.leading, 40)
@@ -93,7 +87,7 @@ struct Authentication: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
 //                            viewModel.isLoading = true
-                            if isSignUp {
+                            if viewModel.isSignUp {
                                 viewModel.signUp()
                             } else {
                                 viewModel.signIn()
@@ -103,7 +97,7 @@ struct Authentication: View {
                                 RoundedRectangle(cornerRadius: 24)
                                     .fill(signUpDisabled ? Color.gray.opacity(0.5) : Clr.brightGreen)
                                     .neoShadow()
-                                Text(isSignUp ? "Register" : "Login")
+                                Text(viewModel.isSignUp ? "Register" : "Login")
                                     .foregroundColor(Color.white)
                                     .font(Font.mada(.bold, size: 20))
                                     .padding()
@@ -124,8 +118,10 @@ struct Authentication: View {
                                 }
                                 self.signUpDisabled = false
                             }
+               
                         VStack {
-                            if isSignUp {
+                        
+                            if viewModel.isSignUp {
                                 HStack {
                                     CheckBoxView(checked: $viewModel.checked)
                                         .frame(height: 45)
@@ -137,7 +133,7 @@ struct Authentication: View {
                                 }.frame(height: 60)
                                     .padding(.horizontal, 20)
                             }
-                            if !isSignUp {
+                            if !viewModel.isSignUp {
                                 Text("Forgot Password?")
                                     .font(Font.mada(.medium, size: 18))
                                     .foregroundColor(.blue)
@@ -154,7 +150,7 @@ struct Authentication: View {
                             .siwa
                             .padding(20)
                             .padding(.horizontal, 20)
-                            .frame(height: 100)
+                                .frame(height: 100)
                             .oldShadow()
                             .disabled(viewModel.falseAppleId)
                         Img.siwg
@@ -167,25 +163,24 @@ struct Authentication: View {
                                 Analytics.shared.log(event: .authentication_tapped_google)
                                 viewModel.signInWithGoogle()
                             }
-                        Button {
-                            if isSignUp && tappedSignOut {
-                                Analytics.shared.log(event: .screen_load_signin)
-                            }
-                            self.isSignUp.toggle()
-                            viewModel.isSignUp = self.isSignUp
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        } label: {
-                            Capsule()
-                                .fill(Clr.darkWhite)
-                                .overlay(
-                                    Text(isSignUp ? "Already have an account" : "Sign up for an account")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 18))
-                                )
-                        }.frame(height: 50)
-                            .padding(.horizontal, 40)
-                            .padding(.top, 20)
-                            .buttonStyle(NeumorphicPress())
+//                        Button {
+//                            if !isSignUp {
+//                            }
+//                            self.isSignUp.toggle()
+//                            viewModel.isSignUp = self.isSignUp
+//                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                        } label: {
+//                            Capsule()
+//                                .fill(Clr.darkWhite)
+//                                .overlay(
+//                                    Text(isSignUp ? "Already have an account" : "Sign up for an account")
+//                                        .foregroundColor(Clr.darkgreen)
+//                                        .font(Font.mada(.bold, size: 18))
+//                                )
+//                        }.frame(height: 50)
+//                            .padding(.horizontal, 40)
+//                            .padding(.top, 20)
+//                            .buttonStyle(NeumorphicPress())
                         
                         Spacer()
                     }
@@ -218,60 +213,41 @@ struct Authentication: View {
                                             .edgesIgnoringSafeArea(.all)
                                             .padding()
                                             .onTapGesture {
-                        withAnimation {
-                            if tappedSignIn {
-                                tappedSignIn = false
-                                viewRouter.currentPage = .onboarding
-                            } else {
-                                if fromOnboarding {
-                                    if updatedStreak {
-                                        viewRouter.currentPage = .finished
-                                    } else {
-                                        viewRouter.currentPage = .garden
-                                    }
-                                } else {
-                                    viewRouter.currentPage = .meditate
-                                }
-                            }
-                        }
-                    })
+                                                withAnimation {
+                                                    presentationMode.wrappedValue.dismiss()
+                                                }
+                                            })
                     .navigationBarBackButtonHidden(true)
                 }
             }.onDisappear {
-                if tappedSignIn || tappedSignOut {
+                if tappedSignIn {
                     userModel.updateSelf()
                     gardenModel.updateSelf()
                     medModel.updateSelf()
-                    bonusModel.updateBonus()
                 }
             }
-            .fullScreenCover(isPresented: $viewModel.showStreak, content: {
-                StreakScene()
-                    .environmentObject(bonusModel)
-                    .background(Clr.darkWhite)
-            })
-            .onAppear {
-                //                viewModel.isLoading = true
-                if !tappedSignOut && isSignUp {
-                    Analytics.shared.log(event: .screen_load_onboarding_signup)
-                } else if !tappedSignOut {
-                    Analytics.shared.log(event: .screen_load_onboarding_signin)
-                } else if tappedSignOut && isSignUp {
-                    Analytics.shared.log(event: .screen_load_signup)
-                }
 
+            .onAppear {
+                DispatchQueue.main.async {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+                //                viewModel.isLoading = true
+                if viewModel.isSignUp {
+                    Analytics.shared.log(event: .screen_load_onboarding_signup)
+                } else {
+                    Analytics.shared.log(event: .screen_load_onboarding_signin)
+                }
                 if !tappedSignIn {
                     viewModel.falseAppleId = false
                 }
             }
         }
-    }
 }
 
 
 //MARK: - preview
 struct Register_Previews: PreviewProvider {
     static var previews: some View {
-        Authentication(isSignUp: false, viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
+        Authentication(viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter()))
     }
 }
