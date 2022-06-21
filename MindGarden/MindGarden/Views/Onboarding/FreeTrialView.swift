@@ -1,0 +1,200 @@
+//
+//  FreeTrialView.swift
+//  MindGarden
+//
+//  Created by Vishal Davara on 20/06/22.
+//
+
+import SwiftUI
+import OneSignal
+
+
+struct FreeTrialView: View {
+    
+    @State private var isReminderOn : Bool = false
+    @State private var showAlert = false
+    @Binding var trialLength: Int
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                VStack {
+                    Text("How your free trial works")
+                        .font(Font.mada(.bold, size: 22))
+                        .foregroundColor(Clr.black2)
+                        .multilineTextAlignment(.leading)
+                        .padding(5)
+                }
+                HStack {
+                    
+                    ZStack {
+                        VStack {
+                            Spacer()
+                            RoundedRectangle(cornerRadius: 0)
+                                .fill(
+                                    .linearGradient(
+                                        colors: [
+                                            Clr.yellow,
+                                            Clr.yellow.opacity(0.8),Clr.yellow.opacity(0.8),.white.opacity(0.1)],
+                                        startPoint: .top,
+                                        endPoint: .bottom)
+                                )
+                                .frame(width: 30,height:50)
+                        }
+                        Capsule()
+                            .fill(Clr.darkgreen)
+                            .frame(width: 30)
+                            .overlay(
+                                VStack {
+                                    Spacer()
+                                        .frame(height:10)
+                                    Image(systemName: "lock.open.fill")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width:18)
+                                        .foregroundColor(.white)
+                                        .padding(3)
+                                    Spacer()
+                                    Image(systemName: "bell.fill")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width:16)
+                                        .foregroundColor(.white)
+                                        .padding(3)
+                                    Spacer()
+                                    Image(systemName: "star.fill")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width:18)
+                                        .foregroundColor(.white)
+                                        .padding(3)
+                                    Spacer()
+                                        .frame(height:10)
+                                }
+                            ).padding(.bottom,40)
+                    }
+                        
+                    VStack(alignment:.leading) {
+                        VStack(alignment:.leading) {
+                            Text("Today")
+                                .font(Font.mada(.bold, size: 20))
+                                .foregroundColor(Clr.black2)
+                            Text("Get instant access and see how it change you life.")
+                                .lineLimit(2)
+                                .font(Font.mada(.regular, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .multilineTextAlignment(.leading)
+                        }
+                        .padding(5)
+                        VStack(alignment:.leading) {
+                            Text(trialLength <= 7 ? "Day 5" : "Day 12")
+                                .font(Font.mada(.bold, size: 20))
+                                .foregroundColor(Clr.black2)
+                            Text("We'll remind you with a notification that your trial is ending.")
+                                .lineLimit(2)
+                                .font(Font.mada(.regular, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .multilineTextAlignment(.leading)
+                        }
+                        .padding(5)
+                        VStack(alignment:.leading) {
+                            Text(trialLength <= 7 ? "Day 7" : "Day 14")
+                                .font(Font.mada(.bold, size: 20))
+                                .foregroundColor(Clr.black2)
+                            Text("You will be charged on \((Date().getdateAfterdays(days: trialLength)?.toString(withFormat: "MMM dd")) ?? ""), cancel anytime before.")
+                                .lineLimit(2)
+                                .font(Font.mada(.regular, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .multilineTextAlignment(.leading)
+                        }
+                        .padding(5)
+                    }
+                }
+                .padding(.horizontal,30)
+                ZStack {
+                    Clr.darkWhite
+                        .cornerRadius(30)
+                        .neoShadow()
+                    HStack {
+                        Toggle("Remind me when the trial ends", isOn: $isReminderOn)
+                            .onChange(of: isReminderOn) { val in
+                                if val {
+                                    if UserDefaults.standard.bool(forKey: "isNotifOn") == true {
+                                        MGAudio.sharedInstance.playBubbleSound()
+                                        NotificationHelper.freeTrial()
+                                    } else {
+                                        showAlert = true
+                                    }
+                                }
+                            }
+                            .font(Font.mada(.medium, size: 16))
+                            .foregroundColor(Clr.black2)
+                    }
+                    .padding()
+                }
+                .padding()
+                .padding(.horizontal,20)
+                
+            }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("You'll need to turn on Push"),
+                message: Text("In order to fully experience MindGarden you'll need to turn on notifications"),
+                primaryButton: Alert.Button.default(Text("Not now"), action: {
+                    withAnimation {
+                        isReminderOn = false
+                    }
+                    Analytics.shared.log(event: .experience_tapped_not_now)
+                }),
+                secondaryButton: .default(Text("Ok"), action: {
+                    Analytics.shared.log(event: .experience_tapped_okay_push)
+                    promptNotif()
+                })
+            )
+        }
+    }
+    
+    func promptNotif() {
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+            if accepted {
+                Analytics.shared.log(event: .pricing_notif_accepted)
+                NotificationHelper.addOneDay()
+                NotificationHelper.addThreeDay()
+                NotificationHelper.addOnboarding()
+                NotificationHelper.freeTrial()
+                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+            } else {
+                Analytics.shared.log(event: .pricing_notif_denied)
+                let current = UNUserNotificationCenter.current()
+                current.getNotificationSettings(completionHandler: { permission in
+                    switch permission.authorizationStatus  {
+                    case .authorized:
+                        withAnimation {
+                            isReminderOn = true
+                        }
+                    case .denied:
+                        isReminderOn = false
+                        Analytics.shared.log(event: .notification_go_to_settings)
+                        DispatchQueue.main.async {
+                            if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                                UIApplication.shared.open(appSettings)
+                            }
+                        }
+                    case .notDetermined:
+                        isReminderOn = false
+                        UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                        Analytics.shared.log(event: .notification_go_to_settings)
+                        DispatchQueue.main.async {
+                            if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                                UIApplication.shared.open(appSettings)
+                            }
+                        }
+                    default:
+                        print("Unknow Status")
+                    }
+                })
+            }
+        })
+    }
+}

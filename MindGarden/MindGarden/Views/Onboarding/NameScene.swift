@@ -34,6 +34,7 @@ struct NameScene: View {
                                     .foregroundColor(Clr.darkgreen)
                                     .padding()
                                     .onTapGesture {
+                                        MGAudio.sharedInstance.playBubbleSound()
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             viewRouter.progressValue -= 0.1
@@ -72,6 +73,7 @@ struct NameScene: View {
                             }.frame(height: 80)
                             Spacer()
                             Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 Analytics.shared.log(event: .name_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation(.easeOut(duration: 0.3)) {

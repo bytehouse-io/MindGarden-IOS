@@ -93,6 +93,7 @@ struct OnboardingScene: View {
                         .padding()
                         
                         Button {
+                            MGAudio.sharedInstance.playBubbleSound()
                             Analytics.shared.log(event: .onboarding_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation(.easeOut(duration: 0.4)) {
@@ -116,6 +117,7 @@ struct OnboardingScene: View {
                             .padding()
                         .buttonStyle(BonusPress())
                         Button {
+                            MGAudio.sharedInstance.playBubbleSound()
                             Analytics.shared.log(event: .onboarding_tapped_sign_in)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             tappedSignIn = true
