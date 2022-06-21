@@ -31,6 +31,7 @@ struct ContentView: View {
     var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
     @State var hasConnection = false
+    @State var playAnim = false
     
     @State var selectedTab: TabType = .meditate
 
@@ -302,10 +303,17 @@ struct ContentView: View {
                                             default: EmptyView()
                                             }
                                         }
-                                        .offset(x:userModel.showCoinAnimation ? -300 : 0)
+                                        .offset(x:(playAnim ? 0 : -300))
                                         .animation(.spring(), value: userModel.showCoinAnimation)
                                         .frame(width: 200)
                                         .position(x: 50, y: geometry.size.height/1.35)
+                                        .onAppear() {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                                withAnimation(.spring()) {
+                                                    playAnim = true
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)

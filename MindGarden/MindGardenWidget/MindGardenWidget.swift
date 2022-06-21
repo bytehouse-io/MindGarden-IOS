@@ -69,17 +69,24 @@ struct MindGardenWidgetEntryView : View {
                 Color("darkWhite")
                 switch family {
                 case .systemSmall:
-                    CurrentStreakWidget(streakNumber: entry.streakNumber)
+                    Text("We're working hard on creating a brand new small widget! Thank you for your patience.\n-MindGarden Team")
+                        .font(Font.mada(.semiBold, size: 24))
+                        .foregroundColor(Color("darkgreen"))
                 case .systemMedium:
-                    if  entry.isPro {
-                        MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
-                    } else {
-                        GoProPage
-                    }
+                    Text("We're working hard on creating a brand new medium widget! Thank you for your patience. \n-MindGarden Team")
+                        .font(Font.mada(.semiBold, size: 24))
+                        .foregroundColor(Color("darkgreen"))
+//                    if  entry.isPro {
+//                        MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
+//                    } else {
+//                        GoProPage
+//                    }
                  
                 case .systemLarge:
-                    EmptyView()
-//                    ZStack {
+                    Text("We're working hard on creating a brand new large widget! Thank you for your patience. \n-MindGarden Team")
+                        .font(Font.mada(.semiBold, size: 24))
+                        .foregroundColor(Color("darkgreen"))
+                    //                    ZStack {
 //                        if entry.is Pro {
 //                        VStack(spacing: 5) {
 //                            MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)

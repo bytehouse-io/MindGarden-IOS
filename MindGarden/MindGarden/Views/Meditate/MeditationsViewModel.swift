@@ -13,6 +13,7 @@ import FirebaseFirestore
 import OneSignal
 import Amplitude
 
+var medSearch = false
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Meditation] = []
@@ -53,7 +54,7 @@ class MeditationViewModel: ObservableObject {
         $selectedCategory
             .sink { [unowned self] value in
                 if value == .all {
-                    if middleToSearch != "" {
+                    if middleToSearch != "" && !medSearch {
                         let category = QuickStartMenuItem.getName(str: middleToSearch)
                         // show timed meditations on discover search page
                         if category == .minutes3 || category == .minutes5 || category == .minutes10  || category == .minutes20 {

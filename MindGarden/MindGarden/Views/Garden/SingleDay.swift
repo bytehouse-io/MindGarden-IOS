@@ -241,18 +241,17 @@ struct SingleDay: View {
                                 .foregroundColor(Color.gray)
                                 .underline()
                                 .padding(.top, 25)
-                        }   
+                        }
                     }.frame(width: g.size.width * 0.85, alignment: .center)
                     .offset(y: -25)
                     .padding()
                 }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
-            showOnboardingModal = true
-
             UserDefaults.standard.setValue(true, forKey: "singleTile")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 if !UserDefaults.standard.bool(forKey: "day1Intro") {
+                    
                     showOnboardingModal = true
                 }
 

@@ -41,6 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         NotificationHelper.addOneDay()
+        fromInfluencer = "Brandon"
         if launchNum == 0 {
             let randomInt = Int.random(in: 0..<2)
             UserDefaults.standard.setValue(randomInt, forKey: "abTest")

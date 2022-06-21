@@ -244,7 +244,7 @@ struct NotificationHelper {
             content.attachments = [attachment]
         }
        
-        let modifiedDate = Calendar.current.date(byAdding: .day, value: fromInfluencer == "" ? 4 : 11, to: Date())
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: fromInfluencer == "" ? 5 : 12, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
         
         // Create the trigger as a repeating event.

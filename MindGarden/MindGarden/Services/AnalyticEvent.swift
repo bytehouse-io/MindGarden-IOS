@@ -794,7 +794,7 @@ extension AnalyticEvent {
         case .discover_tapped_search: return "discover_tapped_search"
         case .user_from_influencer: return "user_from_influencer"
         case .discover_tapped_journey_med: return "discover_tapped_journey_med"
-        case .home_tapped_journey_med: "home_tapped_journey_med"
+        case .home_tapped_journey_med: return "home_tapped_journey_med"
         }
     }
 }

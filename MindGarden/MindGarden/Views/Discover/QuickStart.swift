@@ -18,14 +18,14 @@ struct QuickStart: View {
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     Spacer()
-                        .frame(height:20)
+                        .frame(height:15)
                     ForEach(quickStartTabList) { item in
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 category = item.title
-                                isShowCategory = true
                                 middleToSearch = item.name
+                                isShowCategory = true
                             }
                         } label: {
                             ZStack {
@@ -66,8 +66,9 @@ struct QuickStart: View {
                 if middleToSearch != "" {
                     category = QuickStartMenuItem.getName(str: middleToSearch)
                     isShowCategory = true
+                } else {
+                    playEntryAnimation = true
                 }
-                playEntryAnimation = true
             }
         }
     }

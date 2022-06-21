@@ -39,6 +39,7 @@ struct DiscoverScene: View {
                                 Analytics.shared.log(event: .discover_tapped_search)
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
+                                medSearch = true
                                 tappedSearch = true
                             }
                     }

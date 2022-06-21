@@ -109,7 +109,7 @@ struct PricingView: View {
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
                             (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : "🍏 Unlock ") + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
                              +
-                             Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a free trial for you!" : " & get 1% happier everyday"))
+                             Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\nHow your free trial works:" : " & get 1% happier everyday"))
                                 .font(Font.mada(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
@@ -127,9 +127,13 @@ struct PricingView: View {
 //                            }.buttonStyle(NeumorphicPress())
 //                                .frame(width: width * 0.8, height: height * 0.08)
 //                                .padding(5)
-                            
-                            FreeTrialView(trialLength: $trialLength)
-
+                            if selectedBox != "Monthly" {
+                                VStack {
+                                    FreeTrialView(trialLength: $trialLength)
+                                        .padding(.vertical, 25)
+                                }
+                            }
+        
                             Button {
                                 MGAudio.sharedInstance.playBubbleSound()
                                 let impact = UIImpactFeedbackGenerator(style: .light)
@@ -158,12 +162,13 @@ struct PricingView: View {
                                 .padding(5)
 
                             Button {
-                                MGAudio.sharedInstance.playBubbleSound()
-                                let impact = UIImpactFeedbackGenerator(style: .light)
-                                impact.impactOccurred()
-                                selectedBox = "Monthly"
-                                unlockPro()
-
+                                withAnimation {
+                                    MGAudio.sharedInstance.playBubbleSound()
+                                    let impact = UIImpactFeedbackGenerator(style: .light)
+                                    impact.impactOccurred()
+                                    selectedBox = "Monthly"
+                                    unlockPro()
+                                }
                             } label: {
                                 PricingBox(title: "Monthly", price: monthlyPrice, selected: $selectedBox, trialLength: $trialLength)
                             }.buttonStyle(NeumorphicPress())

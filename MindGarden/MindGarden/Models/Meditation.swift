@@ -29,7 +29,7 @@ struct Meditation: Hashable {
         return lhs.id == rhs.id
     }
 
-    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105, 82, 107,14, 104, 108, 88, 92]
+    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105, 82, 107,14, 104, 108, 88, 92, 26, 75, 80, 83]
     static var popularMeditations = [77, 92, 89, 105, 108, 104, 90, 85, 24]
     func returnEventName() -> String {
         return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "x").replacingOccurrences(of: "-", with: "")

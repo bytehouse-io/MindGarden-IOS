@@ -19,6 +19,7 @@ struct TabButtonView: View {
                     if !isOnboarding || UserDefaults.standard.bool(forKey: "review") {
                         DispatchQueue.main.async {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                middleToSearch = ""
                                 selectedTab = item.tabName
                                 color = item.color
                             }

@@ -176,6 +176,7 @@ struct CategoriesScene: View {
         }
         .transition(.move(edge: .bottom))
         .onDisappear {
+            medSearch = false
             searchScreen = false
             if tappedMed {
                 if model.selectedMeditation?.type == .course {
@@ -220,6 +221,8 @@ struct CategoriesScene: View {
         Button {
             if !isFromQuickstart {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                middleToSearch = ""
+                medSearch = false
                 if isSearch {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     self.presentationMode.wrappedValue.dismiss()
@@ -256,12 +259,10 @@ struct CategoriesScene: View {
         withAnimation {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
-                fromPage = "lockedMeditation"
+                fromPage = "discover"
                 Analytics.shared.log(event: .pricing_from_locked)
                 Analytics.shared.log(event: .categories_tapped_locked_meditation)
-                if isSearch {
-                    presentationMode.wrappedValue.dismiss()
-                }
+                presentationMode.wrappedValue.dismiss()
                 viewRouter.currentPage = .pricing
             } else {
                 Analytics.shared.log(event: .categories_tapped_meditation)
