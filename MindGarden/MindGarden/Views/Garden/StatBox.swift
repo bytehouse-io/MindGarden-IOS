@@ -31,10 +31,11 @@ struct StatBox: View {
                         .frame(width: 20)
                     Text(value)
                         .font(Font.mada(.bold, size: 16))
-                        .minimumScaleFactor(0.05)
+                        .minimumScaleFactor(0.7)
                         .foregroundColor(Clr.black2)
                 }
                 .padding(.bottom,10)
+                .padding(.horizontal, 5)
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }

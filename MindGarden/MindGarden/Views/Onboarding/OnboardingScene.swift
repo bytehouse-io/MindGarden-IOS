@@ -60,13 +60,13 @@ struct OnboardingScene: View {
                         }
                     }
                     .ignoresSafeArea()
-                    VStack(alignment: .center) {
+                    VStack(alignment: .center,spacing:0) {
                         Spacer()
                         Spacer()
-                        VStack {
+                        VStack(spacing:0) {
                             VStack(alignment:.leading) {
                                 Text(title)
-                                    .font(Font.mada(.bold, size: 38))
+                                    .font(Font.mada(.bold, size: 32))
                                     .padding(.horizontal)
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
@@ -76,7 +76,7 @@ struct OnboardingScene: View {
                                     Text(" Gamification")
                                         .foregroundColor(Clr.brightGreen)
                                 }
-                                .font(Font.mada(.bold, size: 38))
+                                .font(Font.mada(.bold, size: 32))
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom,10)
@@ -96,7 +96,7 @@ struct OnboardingScene: View {
                                 .padding()
                                 .neoShadow()
                         }
-                        .padding()
+                        .padding(.horizontal)
                         
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()

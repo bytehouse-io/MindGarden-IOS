@@ -293,7 +293,7 @@ struct Garden: View {
                                     HStack {
                                         StatBox(label: "Gratitudes", img: Img.hands, value: "\(gardenModel.gratitudes)")
                                         StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                                        StatBox(label: "Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60)))")
+                                        StatBox(label: "Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60), isNewLine: true))")
                                     }
                                     .frame(height:60)
                                     ZStack {
