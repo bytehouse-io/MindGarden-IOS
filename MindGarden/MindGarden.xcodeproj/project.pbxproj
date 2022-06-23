@@ -22,6 +22,7 @@
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
+		58375DBF28633F6900D2EFEF /* CircleLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58375DBE28633F6900D2EFEF /* CircleLoading.swift */; };
 		584837152851B93900900C80 /* LeaveFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584837142851B93900900C80 /* LeaveFeedback.swift */; };
 		58491F6E283CA9E60093C61A /* freeTrialNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = 58491F6D283CA9E60093C61A /* freeTrialNotification.png */; };
 		585A4E5E27FC8BB400443F72 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585A4E5D27FC8BB400443F72 /* Buttons.swift */; };
@@ -276,6 +277,7 @@
 		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
 		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		5836FA70281C1DAC001AB151 /* ReminderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
+		58375DBE28633F6900D2EFEF /* CircleLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLoading.swift; sourceTree = "<group>"; };
 		584837142851B93900900C80 /* LeaveFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveFeedback.swift; sourceTree = "<group>"; };
 		58491F6D283CA9E60093C61A /* freeTrialNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = freeTrialNotification.png; sourceTree = "<group>"; };
 		585A4E5D27FC8BB400443F72 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 		5822E5882861F35C00DB0AFC /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				58375DBE28633F6900D2EFEF /* CircleLoading.swift */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -1607,6 +1610,7 @@
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
 				58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */,
+				58375DBF28633F6900D2EFEF /* CircleLoading.swift in Sources */,
 				888A81AD2841631300E5D225 /* JourneyRow.swift in Sources */,
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
