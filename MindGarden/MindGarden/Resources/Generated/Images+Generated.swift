@@ -173,6 +173,7 @@ public enum Img {
   public static let cando = Image("cando")
   public static let chatBubble = Image("chatBubble")
   public static let cherryBlossomPacket = Image("cherryBlossomPacket")
+  public static let circle = Image("circle")
   public static let cloud = Image("cloud")
   public static let coffee = Image("coffee")
   public static let coin = Image("coin")
