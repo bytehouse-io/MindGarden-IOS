@@ -10,6 +10,7 @@ import Paywall
 import OneSignal
 import Purchases
 import Amplitude
+import AppTrackingTransparency
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -39,7 +40,8 @@ struct OnboardingScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack {
                         HStack(alignment:.top) {
-                            Img.onBoardingSeedPacket
+                            Img.onboardingCamelia
+                                .offset(x: -60, y: -60)
                             Spacer()
                             Img.onBoardingCalender
                                 .neoShadow()
@@ -53,8 +55,8 @@ struct OnboardingScene: View {
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
                             Spacer()
-                            Img.onBoardingAppleSeed
-                                .offset(x: 10)
+                            Img.onboardingApple
+                                .offset(x: 40, y: 100)
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
                         }
@@ -147,6 +149,19 @@ struct OnboardingScene: View {
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
             .onAppear {
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    DispatchQueue.main.async {
+                        switch status {
+                        case .authorized:
+                            Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                        case .denied:
+                            Analytics.shared.log(event: .onboarding_tapped_denied_att)
+                        default:
+                            Analytics.shared.log(event: .onboarding_tapped_denied_att)
+
+                        }
+                    }
+                }
                 if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
                     let identify = AMPIdentify()
                         .set("abTest1.53", value: NSNumber(value: num))

@@ -18,16 +18,7 @@ struct FreeTrialView: View {
     var body: some View {
         ZStack {
             VStack {
-                VStack {
-                    Text("How your free trial works")
-                        .font(Font.mada(.bold, size: 22))
-                        .foregroundColor(Clr.black2)
-                        .multilineTextAlignment(.leading)
-                        .padding(5)
-                        .padding(.top,10)
-                }
                 HStack {
-                    
                     ZStack {
                         VStack {
                             Spacer()
@@ -118,7 +109,7 @@ struct FreeTrialView: View {
                         .cornerRadius(30)
                         .neoShadow()
                     HStack {
-                        Toggle("Remind me when my trial ends", isOn: $isReminderOn)
+                        Toggle(" Remind me when my trial ends", isOn: $isReminderOn)
                             .onChange(of: isReminderOn) { val in
                                 if val {
                                     if UserDefaults.standard.bool(forKey: "isNotifOn") == true {
@@ -129,13 +120,13 @@ struct FreeTrialView: View {
                                     }
                                 }
                             }
-                            .font(Font.mada(.medium, size: 16))
+                            .font(Font.mada(.medium, size: 14))
                             .foregroundColor(Clr.black2)
                     }
                     .padding()
                 }
                 .padding()
-                .padding(.horizontal,20)
+                .padding(.horizontal,30)
                 
             }
         }

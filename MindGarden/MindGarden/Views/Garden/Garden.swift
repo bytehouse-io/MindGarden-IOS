@@ -170,6 +170,8 @@ struct Garden: View {
                                                                 }
                                                             }
                                                         )
+                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
                                                 Rectangle()

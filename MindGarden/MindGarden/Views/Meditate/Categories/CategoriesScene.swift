@@ -213,6 +213,7 @@ struct CategoriesScene: View {
             case .anxiety: return meditation.category == .anxiety
             case .unguided: return meditation.category == .unguided
             case .courses: return meditation.type == .course
+            case .focus: return meditation.category == .focus
             }
         })
     }

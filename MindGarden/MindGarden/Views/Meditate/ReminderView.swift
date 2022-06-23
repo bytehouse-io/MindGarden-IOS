@@ -61,7 +61,6 @@ struct ReminderView: View {
                                 Toggle("", isOn: $isToggled)
                                     .onChange(of: isToggled) { val in
                                     if val {
-                                        Analytics.shared.log(event: .finished_set_reminder)
                                         if !UserDefaults.standard.bool(forKey: "showedNotif") {
                                             OneSignal.promptForPushNotifications(userResponse: { accepted in
                                                 if accepted {

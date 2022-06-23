@@ -76,6 +76,7 @@ struct ChallengeModal: View {
                                             .font(Font.mada(.bold, size: 18))
                                             .foregroundColor(Clr.cherryPink)
                                     } .multilineTextAlignment(.leading)
+                                    .padding()
                                 }
                             }
                         }.frame(width: width * 0.75, height: g.size.height * 0.18)

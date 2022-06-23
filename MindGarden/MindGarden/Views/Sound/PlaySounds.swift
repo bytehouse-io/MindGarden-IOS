@@ -17,12 +17,12 @@ class MGAudio: NSObject, AVAudioPlayerDelegate {
     var duplicatePlayers: [AVAudioPlayer] = []
     
     func playSound(soundFileName: String) {
-        
         if let bundle = Bundle.main.path(forResource: soundFileName, ofType: nil) {
             let soundFileNameURL = URL(fileURLWithPath: bundle)
             
             if let player = players[soundFileNameURL] { //player for sound has been found
-                player.volume = 0.4
+            
+                    player.volume = 0.4
                 if !player.isPlaying { //player is not in use, so use that one
                     player.prepareToPlay()
                     player.play()
@@ -46,8 +46,13 @@ class MGAudio: NSObject, AVAudioPlayerDelegate {
                 }
             } else { //player has not been found, create a new player with the URL if possible
                 do {
+                  
                     let player = try AVAudioPlayer(contentsOf: soundFileNameURL)
-                    player.volume = 0.4
+                    if soundFileName == "waterdrops.mp3" {
+                        player.volume = 0.07
+                    } else {
+                        player.volume = 0.4
+                    }
                     players[soundFileNameURL] = player
                     player.prepareToPlay()
                     player.play()
@@ -97,6 +102,7 @@ class MGAudio: NSObject, AVAudioPlayerDelegate {
     func playBubbleSound(){
         DispatchQueue.main.async {
             MGAudio.sharedInstance.stopSound()
+            
             MGAudio.sharedInstance.playSound(soundFileName: "waterdrops.mp3")
         }
     }

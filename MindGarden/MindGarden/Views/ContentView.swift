@@ -308,7 +308,7 @@ struct ContentView: View {
                                         .frame(width: 200)
                                         .position(x: 50, y: geometry.size.height/1.35)
                                         .onAppear() {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                                 withAnimation(.spring()) {
                                                     playAnim = true
                                                 }

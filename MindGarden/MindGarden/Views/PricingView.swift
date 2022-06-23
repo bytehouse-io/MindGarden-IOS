@@ -631,7 +631,7 @@ struct PricingView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Clr.yellow)
                             .overlay(
-                                Text(title == "Yearly" ? "\(trialLength == 7 ? "7 day\nfree trial" : trialLength == 14 ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "14 day\nfree trial")" : "day\nfree trial" )
+                                Text(title == "Yearly" ? "\((trialLength == 7 || trialLength == 1) ? "7 day\nfree trial" : (trialLength == 14 || trialLength == 2) ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "14 day\nfree trial")" : "day\nfree trial" )
                                     .foregroundColor(Color.black.opacity(0.8))
                                     .font(Font.mada(.bold, size: 12))
                                     .multilineTextAlignment(.center)

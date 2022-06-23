@@ -16,6 +16,7 @@ import OneSignal
 import Paywall
 import WidgetKit
 import AVFoundation
+import AppTrackingTransparency
 
 var player: AVAudioPlayer?
 
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         playSound(soundName: "background")
         // Override point for customization after application launch.
+        
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
@@ -92,6 +94,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+           if #available(iOS 14, *) {
+               ATTrackingManager.requestTrackingAuthorization { status in
+                   switch status {
+                       case .authorized:
+                           print("enable tracking")
+                       case .denied:
+                           print("disable tracking")
+                       default:
+                           print("disable tracking")
+                   }
+               }
+           }
+       }
+    
     func playSound(soundName: String) {
         guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
         
@@ -101,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
             
             /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
-            player?.volume = 0.04
+            player?.volume = 0.1
             player?.numberOfLoops = -1
             
             guard let player = player else { return }
@@ -239,7 +256,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
           Analytics.shared.log(event: .notification_tapped_threeDay_reminder)
       } else if response.notification.request.identifier == "streakNotStarted" {
           Analytics.shared.log(event: .notification_tapped_streakNotStarted)
-      } else if response.notification.request.identifier == "onboardingNotif" {
+      } else if response.notification.request.identifier == "finishOnboarding" {
           Analytics.shared.log(event: .notification_tapped_onboarding)
       } else if response.notification.request.identifier == "⚙️ Widget has been unlocked" {
           Analytics.shared.log(event: .notification_tapped_widget)

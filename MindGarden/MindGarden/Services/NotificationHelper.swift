@@ -28,7 +28,7 @@ struct NotificationHelper {
         }()
         var id = "oneDay"
         if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
-            id = "onboardingNotif"
+            id = "streakNotStarted"
             if UserDefaults.standard.integer(forKey: "longestStreak") <= 1 {
                 id = "streakNotStarted"
             }
@@ -175,12 +175,12 @@ struct NotificationHelper {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
         } else if hour > 18 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
-            content.title = "Finish Onboarding"
-            content.body = "You're almost there! 🌱 Join 3458 others and start your first session"
+            content.title = "Finish Onboarding Gardener"
+            content.body = "You're almost there! 🌱 Join 3458 others growing their gardens and start your first session"
         } else {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            content.title = "Finish Onboarding Gardener"
-            content.body = "You're almost there!  🌱 Start your first session"
+            content.title = "Finish Onboarding Gardener!"
+            content.body = "You're almost there! 🌱 Join 3458 others growing their gardens and start your first session"
         }
      
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())
@@ -189,7 +189,7 @@ struct NotificationHelper {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         // Create the request
-        let uuidString = UUID().uuidString
+        let uuidString = "finishOnboarding"
         let request = UNNotificationRequest(identifier: uuidString,
                     content: content, trigger: trigger)
         UserDefaults.standard.setValue(uuidString, forKey: "onboardingNotif")
@@ -240,9 +240,6 @@ struct NotificationHelper {
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = "freeTrial"
         
-        if let attachment = UNNotificationAttachment.getAttachment(identifier: "eduRacoon", imageName: "eduRacoon") {
-            content.attachments = [attachment]
-        }
        
         let modifiedDate = Calendar.current.date(byAdding: .day, value: fromInfluencer == "" ? 5 : 12, to: Date())
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())

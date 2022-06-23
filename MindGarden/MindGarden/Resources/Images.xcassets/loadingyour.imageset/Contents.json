@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group 208@3x.png",
+      "filename" : "loadingyour.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "loadingyourdadrk.pdf",
       "idiom" : "universal"
     }
   ],

@@ -229,6 +229,7 @@ struct SingleDay: View {
                          .frame(height: 45)
                          .padding(.top, 25)
                         Button {
+                            
                             withAnimation {
                                 fromPage = "single"
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -248,6 +249,7 @@ struct SingleDay: View {
                 }.offset(y: g.size.height * 0.1)
             }
         }.onAppear {
+            Analytics.shared.log(event: .screen_load_single)
             UserDefaults.standard.setValue(true, forKey: "singleTile")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" {
                 if !UserDefaults.standard.bool(forKey: "day1Intro") {

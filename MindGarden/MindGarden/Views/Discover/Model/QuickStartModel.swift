@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum QuickStartType: String {
-    case newMeditations,minutes3,minutes5,minutes10,minutes20,popular,morning,anxiety,unguided,courses, sleep
+    case newMeditations,minutes3,minutes5,minutes10,minutes20,popular,morning,anxiety,unguided,courses, sleep, focus
 }
 
 var quickStartTabList = [
@@ -20,6 +20,7 @@ var quickStartTabList = [
     QuickStartMenuItem(title: .courses),
     QuickStartMenuItem(title: .unguided),
     QuickStartMenuItem(title: .popular),
+    QuickStartMenuItem(title: .focus),
     QuickStartMenuItem(title: .morning),
     QuickStartMenuItem(title: .sleep),
     QuickStartMenuItem(title: .anxiety),
@@ -42,6 +43,7 @@ struct QuickStartMenuItem: Identifiable {
         case "Anxiety/Stress": return .anxiety
         case "Night/Sleep": return .sleep
         case "Courses": return .courses
+        case "Focus Training": return .focus
         default: return .minutes3
         }
     }
@@ -59,6 +61,7 @@ struct QuickStartMenuItem: Identifiable {
         case .anxiety: return "Anxiety/Stress"
         case .sleep: return "Night/Sleep"
         case .courses: return "Courses"
+        case .focus: return "Focus Training"
         }
     }
     
@@ -75,6 +78,7 @@ struct QuickStartMenuItem: Identifiable {
         case .unguided: return Img.unguided
         case .sleep: return Img.sleep
         case .courses: return Img.courses
+        case .focus: return Img.focus
         }
     }
     
@@ -91,6 +95,7 @@ struct QuickStartMenuItem: Identifiable {
         case .anxiety: return 1.0
         case .sleep: return 0.9
         case .courses: return 0.5
+        case .focus: return 0.75
         }
     }
     

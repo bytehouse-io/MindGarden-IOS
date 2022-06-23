@@ -143,12 +143,16 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Share Your Progress</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Help us improve MindGarden + reach more people</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mada-Regular.ttf</string>

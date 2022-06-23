@@ -40,7 +40,7 @@ struct NewAuthentication: View {
                         .foregroundColor(Clr.black2)
                         .font(Font.mada(.semiBold, size: 28))
                         .multilineTextAlignment(.center)
-                        .frame(width: UIScreen.screenWidth * 0.8)
+                        .frame(width: UIScreen.screenWidth * 0.8, height: 150)
                     Spacer()
                     if !showFields {
                         Img.signUpImage
@@ -202,45 +202,54 @@ struct NewAuthentication: View {
                             .buttonStyle(NeumorphicPress())
                             .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
                     }
-                    
-                    viewModel
-                        .siwa
-                        .padding(20)
-                        .frame(height: 100)
-                        .oldShadow()
-                        .disabled(viewModel.falseAppleId)
-                        .frame(width: UIScreen.screenWidth * 0.9, height: K.isPad() ? 250 : 70)
                     VStack {
                         if showFields && viewModel.isSignUp == false {
-                            Img.siwg
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
+                            viewModel.siwa
                         } else {
-                            Img.suwg
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
+                            viewModel.suwa
                         }
-                    }.padding(20)
-                        .frame(width: UIScreen.screenWidth * 0.9, height: K.isPad() ? 250 : 70)
-                        .neoShadow()
-                        .onTapGesture {
-                            Analytics.shared.log(event: .authentication_tapped_google)
-                            viewModel.signInWithGoogle()
-                        }
+                    }
+                    .frame(height: 70)
+                        .oldShadow()
+                        .disabled(viewModel.falseAppleId)
+                        .frame(width: UIScreen.screenWidth * 0.8)
+                        .padding(20)
+                    Button {
+                        Analytics.shared.log(event: .authentication_tapped_google)
+                        viewModel.signInWithGoogle()
+
+                    } label: {
+                        VStack {
+                            if showFields && viewModel.isSignUp == false {
+                                Img.siwg
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                            } else {
+                                Img.suwg
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                            }
+                        }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70)
+                        .oldShadow()
+                    }
+                    
                     if !tappedSignOut && !showFields {
                         Button {
                             Analytics.shared.log(event: .tapped_already_have_account)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
                                 if !viewModel.isSignUp && showFields {
-                                    showFields = false
-                                    viewModel.isSignUp = true
+                                    withAnimation {
+                                        showFields = false
+                                        viewModel.isSignUp = true
+                                    }
                                 } else {
-                                    tappedSignIn = true
-                                    viewModel.isSignUp = false
-                                    showFields = true
+                                    withAnimation {
+                                        tappedSignIn = true
+                                        viewModel.isSignUp = false
+                                        showFields = true
+                                    }                             
                                 }
-                            }
+                            
                             
                         } label: {
                             VStack {
@@ -249,7 +258,7 @@ struct NewAuthentication: View {
                                     .foregroundColor(.gray)
                                     .underline()
                             }
-                        }.frame(width: 200, alignment: .center)
+                        }.frame(width: 250, alignment: .center)
                         .padding(.top, 10)
                     }
                 }.padding(.top, 75)
@@ -265,9 +274,9 @@ struct NewAuthentication: View {
                                     .offset(y: -10)
                                     .opacity(focusedText ? 0.1 : 1),
                                 trailing:     Button {
-                print("gang affiliated")
                 withAnimation {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    Analytics.shared.log(event: .newAuthentication_tapped_x)
                     if tappedRefer {
                         viewRouter.currentPage = .meditate
                     } else {

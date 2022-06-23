@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "launcher.svg",
+      "filename" : "sunnyLauncher.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "light"
         }
       ],
-      "filename" : "launcher-2.svg",
+      "filename" : "sunnyLauncher-1.svg",
       "idiom" : "universal"
     },
     {
@@ -21,7 +21,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "night.png",
+      "filename" : "darkLauncher.pdf",
       "idiom" : "universal"
     },
     {
@@ -31,7 +31,7 @@
           "value" : "high"
         }
       ],
-      "filename" : "launcher-1.svg",
+      "filename" : "sunnyLauncher-3.svg",
       "idiom" : "universal"
     },
     {
@@ -45,7 +45,7 @@
           "value" : "high"
         }
       ],
-      "filename" : "launcher-3.svg",
+      "filename" : "sunnyLauncher-2.svg",
       "idiom" : "universal"
     },
     {
@@ -59,7 +59,7 @@
           "value" : "high"
         }
       ],
-      "filename" : "night-1.png",
+      "filename" : "darkLauncher-1.pdf",
       "idiom" : "universal"
     }
   ],

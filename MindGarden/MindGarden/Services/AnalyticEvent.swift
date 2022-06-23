@@ -17,6 +17,8 @@ enum AnalyticEvent {
     case onboarding_notification_off
     case onboarding_tapped_continue //
     case onboarding_tapped_sign_in //
+    case onboarding_tapped_allowed_att
+    case onboarding_tapped_denied_att
 
     //experience
     case screen_load_experience //
@@ -81,7 +83,8 @@ enum AnalyticEvent {
     case authentication_tapped_apple //
     case authentication_tapped_forgot_password //
     case authentication_signuped_newsletter //
-    case screen_load_newAuthenticaion // 
+    case screen_load_newAuthenticaion //
+    case newAuthentication_tapped_x
     case authentication_tapped_signup_email //
     case tapped_already_have_account //
 
@@ -498,6 +501,8 @@ extension AnalyticEvent {
         case .screen_load_onboarding: return "screen_load_onboarding"
         case .onboarding_tapped_continue: return "onboarding_tapped_continue"
         case .onboarding_tapped_sign_in: return "onboarding_tapped_sign_in"
+        case .onboarding_tapped_allowed_att: return "onboarding_tapped_allowed_att"
+        case .onboarding_tapped_denied_att: return "onboarding_tapped_denied_att"
         case .screen_load_experience: return "screen_load_experience"
         case .experience_tapped_none: return "experience_tapped_none"
         case .experience_tapped_some: return "experience_tapped_some"
@@ -536,6 +541,7 @@ extension AnalyticEvent {
         case .screen_load_signup: return "screen_load_signup"
         case .screen_load_signin: return "screen_load_signin"
         case .screen_load_newAuthenticaion: return "screen_load_newAuthenticaion"
+        case .newAuthentication_tapped_x: return "newAuthentication_tapped_x"
         case .authentication_tapped_signup_email: return "authentication_tapped_signup_email"
         case .authentication_signin_successful: return "authentication_signin_successful"
         case .authentication_signup_successful: return "authentication_signup_successful"
@@ -547,7 +553,7 @@ extension AnalyticEvent {
         case .screen_load_garden: return "screen_load_garden"
         case .garden_next_month: return "garden_next_month"
         case .garden_previous_month: return "garden_previous_month"
-        case .garden_tapped_single_day: return "garden_previous_month"
+        case .garden_tapped_single_day: return "garden_tapped_single_day"
         case .garden_tapped_single_next_session: return "garden_tapped_single_next_session"
         case .garden_tapped_single_previous_session: return "garden_tapped_single_previous_session"
         case .garden_tapped_settings: return "garden_tapped_settings"

@@ -274,11 +274,16 @@ struct Finished: View {
                                                 }
                                             }
                                         } else {
-                                            if updatedStreak && model.shouldStreakUpdate {
-                                                showStreak.toggle()
-                                                updatedStreak = false
+                                            if Auth.auth().currentUser?.email == nil && UserDefaults.standard.integer(forKey: "numMeds") >= 3 {
+                                                fromPage = "garden"
+                                                viewRouter.currentPage = .authentication
                                             } else {
-                                                viewRouter.currentPage = .garden
+                                                if updatedStreak && model.shouldStreakUpdate {
+                                                    showStreak.toggle()
+                                                    updatedStreak = false
+                                                } else {
+                                                    viewRouter.currentPage = .garden
+                                                }
                                             }
                                         }
                                     }

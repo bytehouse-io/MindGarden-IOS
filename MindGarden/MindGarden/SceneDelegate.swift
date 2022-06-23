@@ -14,6 +14,7 @@ import Foundation
 import OneSignal
 import Storyly
 import AVFoundation
+import AppTrackingTransparency
 
 var numberOfMeds = 0
 var storylyViewProgrammatic = StorylyView()
@@ -40,8 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
 //        UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
-        NotificationHelper.addOneDay()
-        fromInfluencer = "Brandon"
+        Analytics.shared.log(event: .launchedApp)
         if launchNum == 0 {
             let randomInt = Int.random(in: 0..<2)
             UserDefaults.standard.setValue(randomInt, forKey: "abTest")
@@ -64,7 +64,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
-        Analytics.shared.log(event: .launchedApp)
 
         let medModel = MeditationViewModel()
         medModel.getUserMap()
@@ -118,6 +117,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+
+
         numberOfMeds = Int.random(in: 1085..<1111)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)

@@ -69,23 +69,27 @@ struct MindGardenWidgetEntryView : View {
                 Color("darkWhite")
                 switch family {
                 case .systemSmall:
-                    Text("We're working hard on creating a brand new small widget! Thank you for your patience.\n-MindGarden Team")
-                        .font(Font.mada(.semiBold, size: 24))
+                    Text("🛠 We're working hard on creating a brand new small widget! \n-MindGarden Team")
+                        .font(Font.mada(.semiBold, size: 14))
                         .foregroundColor(Color("darkgreen"))
+                        .frame(width: 150)
                 case .systemMedium:
-                    Text("We're working hard on creating a brand new medium widget! Thank you for your patience. \n-MindGarden Team")
-                        .font(Font.mada(.semiBold, size: 24))
+                    Text("🛠 We're working hard on creating a brand new medium widget! Thank you for your patience. \n-MindGarden Team")
+                        .font(Font.mada(.semiBold, size: 16))
                         .foregroundColor(Color("darkgreen"))
+                        .frame(width: 200)
 //                    if  entry.isPro {
 //                        MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
 //                    } else {
 //                        GoProPage
 //                    }
+                    
                  
                 case .systemLarge:
-                    Text("We're working hard on creating a brand new large widget! Thank you for your patience. \n-MindGarden Team")
+                    Text("🛠 We're working hard on creating a brand new large widget! Thank you for your patience. \n-MindGarden Team")
                         .font(Font.mada(.semiBold, size: 24))
                         .foregroundColor(Color("darkgreen"))
+                        .frame(width: 300)
                     //                    ZStack {
 //                        if entry.is Pro {
 //                        VStack(spacing: 5) {

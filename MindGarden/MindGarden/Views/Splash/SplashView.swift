@@ -26,6 +26,8 @@ struct SplashView: View {
                 Img.loadingyour
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .padding(.horizontal)
+                    .offset(y: 15)
             }.frame(width: 280,height:100)
             .offset(y: -50)
         }.onAppear() {

@@ -22,6 +22,7 @@ import CryptoKit
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
     @ObservedObject var userModel: UserViewModel
+    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var forgotEmail: String = ""
@@ -31,7 +32,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var isSignUp: Bool = true
     @Published var falseAppleId: Bool = false
     @Published var checked = true
-    
+    @Published
     var currentNonce: String?
     var googleIsNew: Bool = true
     let db = Firestore.firestore()
@@ -47,13 +48,114 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         dateFormatter.dateFormat = "MMM d, yyyy"
         return dateFormatter
     }()
+    var suwa: some View {
+        return SignInWithAppleButton(
+            //Request
+            .signUp,
+            onRequest: { [self] request in
+                Analytics.shared.log(event: .authentication_tapped_apple)
+                request.requestedScopes = [.fullName, .email]
+                let nonce = randomNonceString()
+                currentNonce = nonce
+                request.nonce = sha256(nonce)
+            },
 
-    var siwa: some View {
+            //Completion
+            onCompletion: { [self] result in
+                isLoading = false
+                switch result {
+                case .success(let authResults):
+                    switch authResults.credential {
+                    case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                        guard let nonce = currentNonce else {
+                            alertError = true
+                            alertMessage = "Please try again using a different email or method"
+                            return
+                        }
+                        guard let appleIDToken = appleIDCredential.identityToken else {
+                            alertError = true
+                            return
+                        }
+                        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                            print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                            return
+                        }
+                        let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString,rawNonce: nonce)
+
+                        // User already signed in with this appleId once
+
+                        if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId")  { // new user
+                            if !isSignUp { // login
+                                alertError = true
+                                alertMessage = "Email is not associated with account, please try using a different sign in method"
+                                UserDefaults.standard.set(true, forKey: "falseAppleId")
+                                isLoading = false
+                                falseAppleId = true
+                                return
+                            } else { // sign up
+                                Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
+                                    if (error != nil) {
+                                        alertError = true
+                                        alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                        isLoading = false
+                                        return
+                                    }
+                                    //User never used this appleid before
+                                    createUser()
+                                    withAnimation {
+                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+                                        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                        if !fromOnboarding {
+                                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                        }
+                                        goToHome()
+                                    }
+                                })
+                            }
+                        } else { // used this id before
+                            if isSignUp {
+                                alertError = true
+                                alertMessage = "Please use the login page"
+                                isLoading = false
+                                return
+                            } else { // login
+                                Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                    if (error != nil) {
+                                        alertError = true
+                                        alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                        isLoading = false
+                                        print(error?.localizedDescription ?? "high roe")
+                                        return
+                                }
+
+                                    withAnimation {
+                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+                                        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                        if !fromOnboarding {
+                                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                        }
+                                        goToHome()
+                                    }
+                                })
+                            }
+                            return
+                        }
+                    default:
+                        break
+
+                    }
+                default:
+                    break
+                }
+            }
+        )
+    }
+     var siwa: some View {
         return Group {
             if #available(iOS 14.0, *) {
                 SignInWithAppleButton(
                     //Request
-                    isSignUp ? .signUp : .signIn,
+                    .signIn,
                     onRequest: { [self] request in
                         Analytics.shared.log(event: .authentication_tapped_apple)
                         request.requestedScopes = [.fullName, .email]
