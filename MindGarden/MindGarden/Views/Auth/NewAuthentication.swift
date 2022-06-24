@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct NewAuthentication: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -43,10 +44,10 @@ struct NewAuthentication: View {
                         .frame(width: UIScreen.screenWidth * 0.8, height: 150)
                     Spacer()
                     if !showFields {
-                        Img.signUpImage
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: UIScreen.screenWidth * 0.75, height: 125)
+                        LottieView(fileName: "turtle_meditating")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: UIScreen.screenWidth * 0.75, height: 125)
                     } else {
                         if showFields && !tappedSignOut {
                             Button {
@@ -149,6 +150,7 @@ struct NewAuthentication: View {
                                     self.signUpDisabled = false
                                 }
                         }.padding(.bottom, -30)
+                            .padding(.top, tappedSignIn ? -60 : 0)
                         //                    if viewModel.isSignUp {
                         //                        HStack {
                         //                            CheckBoxView(checked: $viewModel.checked)

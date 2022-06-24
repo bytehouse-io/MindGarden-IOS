@@ -91,6 +91,7 @@ struct OnboardingScene: View {
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                             }.padding()
+                            .offset(y: -25)
                             Img.coloredPots
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -142,6 +143,7 @@ struct OnboardingScene: View {
                                 .foregroundColor(.gray)
                         }.frame(height: 30)
                             .padding([.horizontal,.bottom])
+                            .offset(y: 25)
                         .buttonStyle(BonusPress())
                         Spacer()
                     }
