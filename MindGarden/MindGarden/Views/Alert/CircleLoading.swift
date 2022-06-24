@@ -29,52 +29,63 @@ struct CircleLoadingView<Content>: View where Content: View {
     @State private var playanim = false
     @State private var percentage = 0
     var body: some View {
+        GeometryReader { geometry in
             ZStack {
                 self.content()
                     .disabled(self.isShowing)
-                Circle().fill(.white)
-                    .frame(width:100)
-                Img.circle
-                    .resizable()
-                    .frame(width:120,height:115)
-                    .foregroundColor(.white.opacity(0.4))
-                    .rotationEffect(Angle(degrees: playanim ? 360 : 0 ))
-                    .animation(.linear(duration: 6).repeatForever(autoreverses: false))
-                    .offset(y:-10)
-                Img.circle
-                    .resizable()
-                    .frame(width:110,height:110)
-                    .foregroundColor(.white.opacity(0.4))
-                    .rotationEffect(Angle(degrees: playanim ? 360 : 0 ))
-                    .animation(.linear(duration: 6).repeatForever(autoreverses: false))
-                    .offset(y:10)
-                Img.circle
-                    .resizable()
-                    .frame(width:120,height:115)
-                    .foregroundColor(.white.opacity(0.4))
-                    .rotationEffect(Angle(degrees: playanim ? -360 : 0 ))
-                    .animation(.linear(duration: 5).repeatForever(autoreverses: false))
-                    .offset(x:5)
-                Img.circle
-                    .resizable()
-                    .frame(width:125,height:110)
-                    .foregroundColor(.white.opacity(0.4))
-                    .rotationEffect(Angle(degrees: playanim ? -360 : 0 ))
-                    .animation(.linear(duration:4).repeatForever(autoreverses: false))
-                    .offset(x:-5)
-            Text("  \(percentage)%  ")
-                .foregroundColor(Clr.black2)
-                .minimumScaleFactor(0.5)
-                .font(Font.mada(.bold, size: 16))
-                .animation(.linear(duration: 5))
+                Group {
+                    Circle().fill(.white)
+                        .frame(width:100)
+                    Img.circle
+                        .resizable()
+                        .frame(width:120,height:115)
+                        .foregroundColor(.white.opacity(0.4))
+                        .rotationEffect(Angle(degrees: playanim ? 360 : 0 ))
+                        .animation(.linear(duration: 6).repeatForever(autoreverses: false))
+                        .offset(y:-10)
+                    Img.circle
+                        .resizable()
+                        .frame(width:110,height:110)
+                        .foregroundColor(.white.opacity(0.4))
+                        .rotationEffect(Angle(degrees: playanim ? 360 : 0 ))
+                        .animation(.linear(duration: 6).repeatForever(autoreverses: false))
+                        .offset(y:10)
+                    Img.circle
+                        .resizable()
+                        .frame(width:120,height:115)
+                        .foregroundColor(.white.opacity(0.4))
+                        .rotationEffect(Angle(degrees: playanim ? -360 : 0 ))
+                        .animation(.linear(duration: 5).repeatForever(autoreverses: false))
+                        .offset(x:5)
+                    Img.circle
+                        .resizable()
+                        .frame(width:125,height:110)
+                        .foregroundColor(.white.opacity(0.4))
+                        .rotationEffect(Angle(degrees: playanim ? -360 : 0 ))
+                        .animation(.linear(duration:4).repeatForever(autoreverses: false))
+                        .offset(x:-5)
+                    Text("  \(percentage)%  ")
+                        .foregroundColor(Clr.black2)
+                        .minimumScaleFactor(0.5)
+                        .font(Font.mada(.bold, size: 16))
+                        .animation(.linear(duration: 5))
+                }
+                .opacity(self.isShowing ? 1 : 0)
             }
-            .opacity(self.isShowing ? 1 : 0)
+            
             .onAppear() {
                 withAnimation {
                     playanim = true
                 }
-                addNumberWithRollingAnimation()
+                if isShowing { addNumberWithRollingAnimation() }
             }
+            .onChange(of: isShowing) { val in
+                if val {
+                    percentage = 0
+                    addNumberWithRollingAnimation()
+                }
+            }
+        }
     }
     
     private func addNumberWithRollingAnimation() {
