@@ -135,25 +135,25 @@ struct CategoriesScene: View {
                 }
                 .padding(.top, isFromQuickstart ? 40 : 0)
                 .background(Clr.darkWhite)
-                    if showModal {
-                        Color.black
-                            .offset(y: -100)
-                            .frame( height: UIScreen.screenHeight*1.2)
-                            .opacity(0.3)
-                            .edgesIgnoringSafeArea(.all)
-                            .onTapGesture {
+                }
+                if showModal {
+                    Color.black
+                        .offset(y: -100)
+                        .frame( height: UIScreen.screenHeight*1.2)
+                        .opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            withAnimation {
                                 DispatchQueue.main.async {
                                     showModal.toggle()
                                 }
                             }
-                        Spacer()
-                    }
-                }
-                if showModal {
+                        }
                     MiddleModal(shown: $showModal)
                         .offset(y: showModal ? 0 : g.size.height)
                         .edgesIgnoringSafeArea(.top)
-                        .animation(.default, value: showModal).offset(y: isFromQuickstart ? -80 : 0)
+                        .animation(.default, value: showModal).offset(y: showModal ? (isFromQuickstart ? -80 : 0) : -600)
+                        .transition(.move(edge: .bottom))
                 }
                 if isFromQuickstart {
                     HStack {
