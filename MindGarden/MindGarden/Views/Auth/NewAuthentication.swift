@@ -44,10 +44,11 @@ struct NewAuthentication: View {
                         .frame(width: UIScreen.screenWidth * 0.8, height: 150)
                     Spacer()
                     if !showFields {
-                        LottieView(fileName: "turtle_meditating")
+                        HStack {
+                            LottieView(fileName: "turtle_meditating")
+                        }.frame(width: UIScreen.screenWidth, height: 125, alignment: .center)
 //                            .resizable()
 //                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: UIScreen.screenWidth * 0.75, height: 125)
                     } else {
                         if showFields && !tappedSignOut {
                             Button {

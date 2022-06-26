@@ -90,6 +90,7 @@
 		88D4C5DD27FA4DF100CBB956 /* PlusCoins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5DC27FA4DF100CBB956 /* PlusCoins.swift */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
 		88E3D32028661DA700B71809 /* turtle_meditating.json in Resources */ = {isa = PBXBuildFile; fileRef = 88E3D31F28661DA700B71809 /* turtle_meditating.json */; };
+		88E3D3222866261C00B71809 /* LoadingIllusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3D3212866261C00B71809 /* LoadingIllusion.swift */; };
 		88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */; };
 		88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB127DFBE8F0060FD8E /* piano1.mp3 */; };
 		88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB227DFBE8F0060FD8E /* beta.mp3 */; };
@@ -344,6 +345,7 @@
 		88D4C5DC27FA4DF100CBB956 /* PlusCoins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusCoins.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		88E3D31F28661DA700B71809 /* turtle_meditating.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtle_meditating.json; path = ../../../../../../Downloads/turtle_meditating.json; sourceTree = "<group>"; };
+		88E3D3212866261C00B71809 /* LoadingIllusion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIllusion.swift; sourceTree = "<group>"; };
 		88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432hz.mp3; sourceTree = "<group>"; };
 		88F36AB127DFBE8F0060FD8E /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano1.mp3; sourceTree = "<group>"; };
 		88F36AB227DFBE8F0060FD8E /* beta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beta.mp3; sourceTree = "<group>"; };
@@ -1014,6 +1016,7 @@
 				FEF976E6275EE36700D1715C /* ReviewScene.swift */,
 				58EB9CA22813274A00B0788F /* ReasonModel.swift */,
 				58F5F04A2860D7E000207D92 /* FreeTrialView.swift */,
+				88E3D3212866261C00B71809 /* LoadingIllusion.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1622,6 +1625,7 @@
 				FE7938592787691E00773B23 /* WidgetModal.swift in Sources */,
 				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
+				88E3D3222866261C00B71809 /* LoadingIllusion.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
 				88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */,
 				58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */,
