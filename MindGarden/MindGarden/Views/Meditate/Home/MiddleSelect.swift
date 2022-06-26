@@ -208,16 +208,12 @@ struct MiddleSelect: View {
     }
     
     var heart: some View {
-        Button {
+        LikeButton(isLiked: model.isFavorited) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if let med = model.selectedMeditation {
                 Analytics.shared.log(event: .middle_tapped_favorite)
                 model.favorite(selectMeditation: med)
             }
-        } label: {
-            Image(systemName: model.isFavorited ? "heart.fill" : "heart")
-                .font(.system(size: 26))
-                .foregroundColor(model.isFavorited ? .red : .gray)
         }
     }
     
@@ -275,15 +271,13 @@ struct MiddleSelect: View {
                             .font(.system(size: 20))
                             .padding(.trailing, 15)
                     }
-                    Image(systemName: isFavorited ? "heart.fill" : "heart")
-                        .foregroundColor(isFavorited ? Color.red : Color.gray)
-                        .font(.system(size: 20))
-                        .onTapGesture {
-                            Analytics.shared.log(event: .middle_tapped_row_favorite)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            model.favorite(selectMeditation: meditation)
-                            isFavorited.toggle()
-                        }
+                    
+                    LikeButton(isLiked: isFavorited, size:25.0) {
+                        Analytics.shared.log(event: .middle_tapped_row_favorite)
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        model.favorite(selectMeditation: meditation)
+                        isFavorited.toggle()
+                    }
                 }
             }
             .padding(5)
