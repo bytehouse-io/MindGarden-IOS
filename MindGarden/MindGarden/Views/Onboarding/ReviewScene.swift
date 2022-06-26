@@ -17,6 +17,7 @@ struct ReviewScene: View {
     @State private var aim2 = (Img.redTulips3, "")
     @State private var aim3 = (Img.redTulips3, "")
     @State private var notifications = ""
+    @State private var showLoading = true
     var displayedTime: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
@@ -280,6 +281,10 @@ struct ReviewScene: View {
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $showLoading)  {
+            LoadingIllusion()
+                .frame(height: UIScreen.screenHeight + 50)
         }
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
