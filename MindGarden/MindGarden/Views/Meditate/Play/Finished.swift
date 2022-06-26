@@ -214,19 +214,14 @@ struct Finished: View {
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
                     HStack {
-                        Image(systemName: favorited ? "heart.fill" : "heart")
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundColor(favorited ? Color.red : Clr.black1)
-                            .padding()
-                            .padding(.leading)
-                            .onTapGesture {
-                                Analytics.shared.log(event: .finished_tapped_favorite)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                if let med = model.selectedMeditation {
-                                    model.favorite(selectMeditation: med)
-                                }
-                                favorited.toggle()
+                        LikeButton(isLiked: favorited, size:25.0) {
+                            Analytics.shared.log(event: .finished_tapped_favorite)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            if let med = model.selectedMeditation {
+                                model.favorite(selectMeditation: med)
                             }
+                            favorited.toggle()
+                        }
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(Clr.black1)

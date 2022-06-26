@@ -12,6 +12,7 @@
 		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
 		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
 		5810EB632847971800DD4D25 /* JourneyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5810EB622847971800DD4D25 /* JourneyScene.swift */; };
+		581DB7A328682D350049448F /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DB7A228682D350049448F /* LikeButton.swift */; };
 		581DE83C283EA6B100452C95 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
 		581DE83D283EA6B500452C95 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
 		581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
@@ -54,6 +55,7 @@
 		58D5C0F427FB675A00454937 /* background.json in Resources */ = {isa = PBXBuildFile; fileRef = 58D5C0F327FB675A00454937 /* background.json */; };
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
+		58DEE5AC2867390400A04CA2 /* MeditationPlayAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */; };
 		58E21AD2280687DE00F2BC0F /* HomeViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */; };
 		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
@@ -274,6 +276,7 @@
 		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
 		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
 		5810EB622847971800DD4D25 /* JourneyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyScene.swift; sourceTree = "<group>"; };
+		581DB7A228682D350049448F /* LikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikeButton.swift; path = ../../../../../Desktop/LikeButton.swift; sourceTree = "<group>"; };
 		5822E586286186C000DB0AFC /* waterdrops.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = waterdrops.mp3; sourceTree = "<group>"; };
 		5822E58A286216C200DB0AFC /* NewAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAuthentication.swift; sourceTree = "<group>"; };
 		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
@@ -311,6 +314,7 @@
 		58D5C0F327FB675A00454937 /* background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = background.json; sourceTree = "<group>"; };
 		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
+		58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationPlayAnimation.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
 		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
@@ -344,8 +348,11 @@
 		88D4C5DA27FA468C00CBB956 /* sloth.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sloth.json; sourceTree = "<group>"; };
 		88D4C5DC27FA4DF100CBB956 /* PlusCoins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusCoins.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		88E3D31F28661DA700B71809 /* turtle_meditating.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtle_meditating.json; path = ../../../../../../Downloads/turtle_meditating.json; sourceTree = "<group>"; };
 		88E3D3212866261C00B71809 /* LoadingIllusion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIllusion.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> fba177d47440709b99914bd5efb92d554f07ca85
 		88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432hz.mp3; sourceTree = "<group>"; };
 		88F36AB127DFBE8F0060FD8E /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano1.mp3; sourceTree = "<group>"; };
 		88F36AB227DFBE8F0060FD8E /* beta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beta.mp3; sourceTree = "<group>"; };
@@ -622,6 +629,7 @@
 		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
 			isa = PBXGroup;
 			children = (
+				581DB7A228682D350049448F /* LikeButton.swift */,
 				58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */,
 				58C4A51F27CE764700856913 /* UrlImageView.swift */,
 				58A9EE8127C779E200254AC2 /* PlusMenuView.swift */,
@@ -634,6 +642,7 @@
 				58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */,
 				58F171A527E45A93008D380E /* WiggleModifier.swift */,
 				58D90A9727E70DA4008C4E1C /* ViewTransition.swift */,
+				58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */,
 			);
 			path = "Animation&Tab";
 			sourceTree = "<group>";
@@ -740,7 +749,6 @@
 				8884A995284BDBBC00B0B315 /* flame 1.json */,
 				8884A997284BDBCA00B0B315 /* flame 2.json */,
 				88D4C5D827FA468700CBB956 /* yogi.json */,
-				88E3D31F28661DA700B71809 /* turtle_meditating.json */,
 				8862586A27C4369D0093D18C /* check2.json */,
 				88D4C5DA27FA468C00CBB956 /* sloth.json */,
 				FED7437327A734E700435D0A /* coins.json */,
@@ -1336,7 +1344,6 @@
 				882738D327E2D75E00F8D4D0 /* first_part.json in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
 				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
-				88E3D32028661DA700B71809 /* turtle_meditating.json in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				88588042283C0293007AACC2 /* wavingTurtle.png in Resources */,
 				8884A996284BDBBC00B0B315 /* flame 1.json in Resources */,
@@ -1612,7 +1619,9 @@
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
+				58DEE5AC2867390400A04CA2 /* MeditationPlayAnimation.swift in Sources */,
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
+				581DB7A328682D350049448F /* LikeButton.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
