@@ -9,26 +9,63 @@ import SwiftUI
 
 struct MeditationPlayAnimation : View {
     
-    @State private var bgAnimation: Bool = false
+    @State private var bgAnimation = false
+    @State private var fadeAnimation = false
+    @State private var isBally = false
+    @State private var title = "Belly"
+    
+    @State var meditateTimer: Timer?
+    
+    @State var time = 3.0
+    @State var size = 300.0
     
     var body: some View {
         ZStack {
-            Clr.darkgreen
+            Circle()
+                .frame(width:size)
+                .foregroundColor(Clr.brightGreen)
             
-            CustomShape(radius: 50 )
-                .fill(Color.purple)
+            Circle()
+                .stroke(lineWidth:isBally ? 5 : size/2)
+                .fill(Clr.yellow)
+                .frame(width:size/2)
                 .clipShape(Circle())
-                .frame(width: 100, height: 100)
-                .scaleEffect(bgAnimation ? 2.2 : 0)
-            
-//            Circle()
-//                .stroke(lineWidth: 20.0)
-//                .frame(width:100)
-//                .foregroundColor(Clr.superLightGray)
-        }.onAppear() {
-            withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5).repeatForever()) {
-                bgAnimation = true
+                .frame(width: size/2, height: size/2)
+                .scaleEffect(bgAnimation ? 2 : 1)
+                .opacity(fadeAnimation ? 0 : 1)
+            ZStack {
+                Circle()
+                    .frame(width:size/2)
+                    .foregroundColor(Clr.darkgreen)
+                Text(title)
+                    .font(Font.mada(.bold, size: 20))
+                    .foregroundColor(.white)
+                    .minimumScaleFactor(0.1)
             }
+            
+        }.onAppear() {
+            meditateTimer = Timer.scheduledTimer(withTimeInterval: time, repeats: true) { timer in
+                if title == "Chest" {
+                    title = "Exhale"
+                } else {
+                    title =  "Belly"
+                    isBally = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + time/2) {
+                        title =  "Chest"
+                        isBally = false
+                        fadeAnimation = true
+                        withAnimation(.spring()) {
+                            fadeAnimation = false
+                        }
+                    }
+                }
+                withAnimation(.linear(duration: time)) {
+                    bgAnimation.toggle()
+                }
+            }
+            
+        }.onDisappear() {
+            meditateTimer?.invalidate()
         }
     }
 }
