@@ -348,11 +348,8 @@
 		88D4C5DA27FA468C00CBB956 /* sloth.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sloth.json; sourceTree = "<group>"; };
 		88D4C5DC27FA4DF100CBB956 /* PlusCoins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusCoins.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		88E3D31F28661DA700B71809 /* turtle_meditating.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtle_meditating.json; path = ../../../../../../Downloads/turtle_meditating.json; sourceTree = "<group>"; };
 		88E3D3212866261C00B71809 /* LoadingIllusion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIllusion.swift; sourceTree = "<group>"; };
-=======
->>>>>>> fba177d47440709b99914bd5efb92d554f07ca85
 		88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432hz.mp3; sourceTree = "<group>"; };
 		88F36AB127DFBE8F0060FD8E /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano1.mp3; sourceTree = "<group>"; };
 		88F36AB227DFBE8F0060FD8E /* beta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beta.mp3; sourceTree = "<group>"; };
