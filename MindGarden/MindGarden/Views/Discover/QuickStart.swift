@@ -36,7 +36,7 @@ struct QuickStart: View {
                                     .neoShadow()
                                 HStack {
                                     Text(item.name)
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.center)
                                         .padding(.vertical, 15)

@@ -33,7 +33,7 @@ struct TabButtonView: View {
                             .frame(width: 44, height: 29)
                         Text(item.name())
                             .minimumScaleFactor(0.5)
-                            .font(Font.mada(.semiBold, size: 12))
+                            .font(Font.fredoka(.semiBold, size: 12))
                             .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
                             .padding(.top, 8)
                     }

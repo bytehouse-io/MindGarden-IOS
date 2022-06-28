@@ -62,15 +62,15 @@ struct IAPModal: View {
                                     }.position(x: 30, y: 25)
                                 }
                                 Text("Potion Shop")
-                                        .font(Font.mada(.bold, size: 24))
+                                        .font(Font.fredoka(.bold, size: 24))
                                         .foregroundColor(Clr.black1)
                                 if userModel.streakFreeze > 0 {
                                     Text("You have \(userModel.streakFreeze) streak freeze" + "\(userModel.streakFreeze == 1 ? " " : "s ")" + "equipped")
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.freezeBlue)
                                 } else {
                                     Text("Purchases will activate immediately")
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black1)
                                         .opacity(0.8)
                                 }
@@ -290,7 +290,7 @@ struct IAPModal: View {
                         if (type == .potion && userModel.isPotion) || (type == .chest && userModel.isChest) {
                             Text("\(userModel.timeRemaining.stringFromTimeInterval())")
                                 .foregroundColor(Clr.darkgreen)
-                                .font(Font.mada(.medium, size: 16))
+                                .font(Font.fredoka(.medium, size: 16))
                                 .minimumScaleFactor(0.05)
                                 .lineLimit(1)
                                 
@@ -302,7 +302,7 @@ struct IAPModal: View {
                                 .opacity(isEnabled ? 1.0 : 0.5)
                             Text("\(price,  specifier: "%.2f")")
                                 .foregroundColor(Clr.darkgreen)
-                                .font(Font.mada(.medium, size: 16))
+                                .font(Font.fredoka(.medium, size: 16))
                                 .opacity(isEnabled ? 1.0 : 0.5)
                         }
                     })
@@ -316,11 +316,11 @@ struct IAPModal: View {
                         HStack {
                             Text(title)
                                 .foregroundColor(title == "Freeze Streak (2x)" ? Clr.freezeBlue : Clr.sunshine)
-                                .font(Font.mada(.bold, size: K.isSmall() ? 16 : 18))
+                                .font(Font.fredoka(.bold, size: K.isSmall() ? 16 : 18))
                         }
                         Text(subtitle)
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.medium, size: 14))
+                            .font(Font.fredoka(.medium, size: 14))
                             .lineLimit(2)
                             .minimumScaleFactor(0.05)
                     }.frame(width: width * 0.5)

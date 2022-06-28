@@ -43,7 +43,7 @@ struct CourseScene: View {
                 let width = g.size.width
                 VStack {
                     Text("💯 Great Job!")
-                        .font(Font.mada(.bold, size: 40))
+                        .font(Font.fredoka(.bold, size: 40))
                         .foregroundColor(Clr.darkgreen)
                         .offset(x: 65, y: UIScreen.main.bounds.height * 0.55)
                     HStack {
@@ -59,7 +59,7 @@ struct CourseScene: View {
                             .fill(Clr.yellow)
                             .overlay(
                                 Text("Done")
-                                    .font(Font.mada(.bold, size: 22))
+                                    .font(Font.fredoka(.bold, size: 22))
                                     .foregroundColor(.black)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.5)
@@ -79,7 +79,7 @@ struct CourseScene: View {
                         Text("\(course.title)")
                             .foregroundColor(Clr.black2)
                             .lineLimit(2)
-                            .font(Font.mada(.bold, size: 20))
+                            .font(Font.fredoka(.bold, size: 20))
                             .frame(width: width - 125, height: 50, alignment: .center)
                         Spacer()
                         Button {} label: {
@@ -237,7 +237,7 @@ struct FeaturedItem: View {
         VStack(alignment: .center, spacing: 8) {
             if slide.topText != "" {
                 Text(slide.topText)
-                    .font(Font.mada(.semiBold, size: 18))
+                    .font(Font.fredoka(.semiBold, size: 18))
                     .lineLimit(sizeCategory > .large ? 4 : 8)
                     .frame(width:  UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.17, alignment: .center)
                     .padding(.horizontal)
@@ -257,7 +257,7 @@ struct FeaturedItem: View {
             Spacer()
             if slide.bottomText != "" {
                 Text(slide.bottomText)
-                    .font(Font.mada(.semiBold, size: 18))
+                    .font(Font.fredoka(.semiBold, size: 18))
                     .lineLimit(sizeCategory > .large ? 4 : 8)
                     .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.185, alignment: .center)
                     .minimumScaleFactor(0.5)

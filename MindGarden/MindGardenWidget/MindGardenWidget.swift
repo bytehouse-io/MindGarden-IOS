@@ -70,12 +70,12 @@ struct MindGardenWidgetEntryView : View {
                 switch family {
                 case .systemSmall:
                     Text("🛠 We're working hard on creating a brand new small widget! \n-MindGarden Team")
-                        .font(Font.mada(.semiBold, size: 14))
+                        .font(Font.fredoka(.semiBold, size: 14))
                         .foregroundColor(Color("darkgreen"))
                         .frame(width: 150)
                 case .systemMedium:
                     Text("🛠 We're working hard on creating a brand new medium widget! Thank you for your patience. \n-MindGarden Team")
-                        .font(Font.mada(.semiBold, size: 16))
+                        .font(Font.fredoka(.semiBold, size: 16))
                         .foregroundColor(Color("darkgreen"))
                         .frame(width: 200)
 //                    if  entry.isPro {
@@ -87,7 +87,7 @@ struct MindGardenWidgetEntryView : View {
                  
                 case .systemLarge:
                     Text("🛠 We're working hard on creating a brand new large widget! Thank you for your patience. \n-MindGarden Team")
-                        .font(Font.mada(.semiBold, size: 24))
+                        .font(Font.fredoka(.semiBold, size: 24))
                         .foregroundColor(Color("darkgreen"))
                         .frame(width: 300)
                     //                    ZStack {
@@ -108,10 +108,10 @@ struct MindGardenWidgetEntryView : View {
 //                                                .frame(width: 25)
 //                                            Text("Total\nTime")
 //                                                .foregroundColor(Color("black2"))
-//                                                .font(Font.mada(.regular, size: 12))
+//                                                .font(Font.fredoka(.regular, size: 12))
 //                                            Text("\(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)") mins")
 //                                                .foregroundColor(Color("darkgreen"))
-//                                                .font(Font.mada(.bold, size: 14))
+//                                                .font(Font.fredoka(.bold, size: 14))
 //                                        }
 //                                }.frame(width: width * 0.435, height: height * 0.15)
 //                                ZStack {
@@ -127,10 +127,10 @@ struct MindGardenWidgetEntryView : View {
 //                                                .foregroundColor(Color("darkgreen"))
 //                                            Text("Total\nSess")
 //                                                .foregroundColor(Color("black2"))
-//                                                .font(Font.mada(.regular, size: 12))
+//                                                .font(Font.fredoka(.regular, size: 12))
 //                                            Text("\(totalSess) sess")
 //                                                .foregroundColor(Color("darkgreen"))
-//                                                .font(Font.mada(.bold, size: 14))
+//                                                .font(Font.fredoka(.bold, size: 14))
 //                                        }
 //                                    }.frame(width: width * 0.435, height: height * 0.15)
 //                            }
@@ -149,7 +149,7 @@ struct MindGardenWidgetEntryView : View {
 //                                            if !plants.isEmpty {
 //                                                HStack {
 //                                                    //                                        Text(plants[0].title)
-//                                                    //                                            .font(Font.mada(.bold, size: 40))
+//                                                    //                                            .font(Font.fredoka(.bold, size: 40))
 //                                                    ForEach(0..<min(plants.count, 5)) { idx in
 ////                                                        let xPos = Int.random(in: -25...25)
 //                                                        Image(plants[idx].title)
@@ -168,7 +168,7 @@ struct MindGardenWidgetEntryView : View {
 //                            }
 //                            Text("🧘 Your last 5 sessions")
 //                                .foregroundColor(Color("black2"))
-//                                .font(Font.mada(.regular, size: 10))
+//                                .font(Font.fredoka(.regular, size: 10))
 //                                .offset(x: 90, y: -15)
 //                        }
 //                        } else {
@@ -197,14 +197,14 @@ struct MindGardenWidgetEntryView : View {
             VStack {
                 Spacer()
                 Text("This is a pro only feature")
-                    .font(Font.mada(.bold, size: 18))
+                    .font(Font.fredoka(.bold, size: 18))
                     .foregroundColor(Color("superBlack"))
                 Link(destination: URL(string: "pro://io.bytehouse.mindgarden")!)  {
                     Capsule()
                         .fill(Color("darkgreen"))
                         .overlay(Text("👨‍🌾 Go Pro!")
                                     .foregroundColor(.white)
-                                    .font(Font.mada(.bold, size: 14)))
+                                    .font(Font.fredoka(.bold, size: 14)))
                         .frame(width: 125, height: 35)
                         .padding(.top, 5)
                         .neoShadow()
@@ -250,7 +250,7 @@ struct MindGardenWidgetEntryView : View {
                         .shadow(radius: 5)
                     VStack {
                         Text("\(Date().getMonthName(month: Date().get(.month)))")
-                            .font(Font.mada(.bold, size: 14))
+                            .font(Font.fredoka(.bold, size: 14))
                             .foregroundColor(Color.white)
                             .offset(y: 5)
                         HStack(spacing: 5) {
@@ -259,11 +259,11 @@ struct MindGardenWidgetEntryView : View {
 //                                .aspectRatio(contentMode: .fit)
 //                                .frame(width: width * 0.05)
                             Text("Streak:")
-                                .font(Font.mada(.regular, size: 14))
+                                .font(Font.fredoka(.regular, size: 14))
                                 .foregroundColor(Color.white)
                             Spacer()
                             Text("\(streak)")
-                                .font(Font.mada(.bold, size: 16))
+                                .font(Font.fredoka(.bold, size: 16))
                                 .foregroundColor(Color.white)
                         }.frame(width: width * 0.39, alignment: .leading)
                         HStack(spacing: 5) {
@@ -272,11 +272,11 @@ struct MindGardenWidgetEntryView : View {
 //                                .aspectRatio(contentMode: .fit)
 //                                .frame(width: width * 0.05)
                             Text("Gratitudes:")
-                                .font(Font.mada(.regular, size: 14))
+                                .font(Font.fredoka(.regular, size: 14))
                                 .foregroundColor(Color.white)
                             Spacer()
                             Text("\(gratitudes)")
-                                .font(Font.mada(.bold, size: 16))
+                                .font(Font.fredoka(.bold, size: 16))
                                 .foregroundColor(Color.white)
                         }.frame(width: width * 0.39, alignment: .leading)
                         HStack(spacing: 10) {
@@ -381,7 +381,7 @@ struct MindGardenWidgetEntryView : View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 Text("\(count)")
-                    .font(Font.mada(.bold, size: 12))
+                    .font(Font.fredoka(.bold, size: 12))
                     .foregroundColor(Color.white)
             }
 
@@ -399,7 +399,7 @@ struct MindGardenWidgetEntryView : View {
                     .fill(Color("darkWhite"))
                 HStack(spacing: -5) {
                     Text(title)
-                        .font(Font.mada(.medium, size: 16))
+                        .font(Font.fredoka(.medium, size: 16))
                         .minimumScaleFactor(0.5)
                         .foregroundColor(Color("darkgreen"))
                         .frame(width: width * 0.3, alignment: .leading)

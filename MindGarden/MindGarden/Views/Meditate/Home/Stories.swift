@@ -20,7 +20,7 @@ struct Stories: UIViewRepresentable {
             storylyViewProgrammatic.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
         storylyViewProgrammatic.storyGroupIconBorderColorNotSeen = [UIColor.systemGreen, UIColor.systemYellow]
-        storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "Mada-Medium", size: 12)!
+        storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "fredoka-Medium", size: 12)!
         storylyViewProgrammatic.storyGroupTextColor = UIColor.systemGray
 
         storylyViewProgrammatic.storyGroupSize = "small"

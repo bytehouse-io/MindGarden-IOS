@@ -86,12 +86,12 @@ struct LeaveFeedback: View {
                 Spacer()
                     .frame(height:100)
                 Text(selectedFeedback.title)
-                    .font(Font.mada(.bold, size: 30))
+                    .font(Font.fredoka(.bold, size: 30))
                     .foregroundColor(Clr.darkgreen)
                     .frame(width:UIScreen.screenWidth*0.8, alignment: .leading)
                     .padding(.top)
                 Text(selectedFeedback.description)
-                    .font(Font.mada(.regular, size: 18))
+                    .font(Font.fredoka(.regular, size: 18))
                     .foregroundColor(Clr.black2)
                     .frame(width:UIScreen.screenWidth*0.8, alignment: .leading)
                     .padding(.bottom)
@@ -157,7 +157,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Request a Feature")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -186,7 +186,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text(selectedFeedback == .bugReport ? "Report a Bug" : "Give Feedback (We Read Each One)")
-                    .font(Font.mada(.medium, size: 16))
+                    .font(Font.fredoka(.medium, size: 16))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -217,7 +217,7 @@ struct LeaveFeedback: View {
                         .foregroundColor(Clr.darkgreen)
                         .padding(.trailing)
                     Text(title)
-                        .font(Font.mada(.medium, size: 16))
+                        .font(Font.fredoka(.medium, size: 16))
                         .foregroundColor(Clr.black2)
                     Spacer()
                 }
@@ -238,7 +238,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Rate the app")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -262,7 +262,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Invite a Firend")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -281,7 +281,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Getting Started Guide")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }

@@ -21,7 +21,7 @@ struct SaveProgressModal: View {
                         HStack {
                             Spacer()
                             Text("✍️  Save Your Progress?")
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.12)
                             Spacer()
@@ -40,7 +40,7 @@ struct SaveProgressModal: View {
                                 .fill(Clr.brightGreen)
                                 .overlay(
                                     Text("Yes")
-                                        .font(Font.mada(.semiBold, size: 20))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
@@ -64,7 +64,7 @@ struct SaveProgressModal: View {
                                 .fill(Color.gray)
                                 .overlay(
                                     Text("Not Now")
-                                        .font(Font.mada(.semiBold, size: 20))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
@@ -74,7 +74,7 @@ struct SaveProgressModal: View {
                         .padding([.horizontal, .bottom])
                         Spacer()
                     }
-                    .font(Font.mada(.regular, size: 18))                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.35, alignment: .center)
+                    .font(Font.fredoka(.regular, size: 18))                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.35, alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()

@@ -64,7 +64,7 @@ struct HomeViewScroll: View {
                                                 .frame(width: 17)
                                                 .neoShadow()
                                             Text("Daily Bonus")
-                                                .font(Font.mada(.regular, size: 16))
+                                                .font(Font.fredoka(.regular, size: 16))
                                                 .foregroundColor(.black)
                                                 .font(.footnote)
                                                 .lineLimit(1)
@@ -81,14 +81,14 @@ struct HomeViewScroll: View {
                                                 Circle().frame(height: 16)
                                                     .foregroundColor(Clr.redGradientBottom)
                                                 Text("\(totalBonuses)")
-                                                    .font(Font.mada(.bold, size: 12))
+                                                    .font(Font.fredoka(.bold, size: 12))
                                                     .foregroundColor(.white)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.005)
                                                     .frame(width: 10)
                                             }.frame(width: 15)
                                             Text("Daily Bonus")
-                                                .font(Font.mada(.regular, size: 16))
+                                                .font(Font.fredoka(.regular, size: 16))
                                                 .foregroundColor(.black)
                                                 .font(.footnote)
                                                 .lineLimit(1)
@@ -115,7 +115,7 @@ struct HomeViewScroll: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                     Text("Plant Select")
-                                        .font(Font.mada(.regular, size: 16))
+                                        .font(Font.fredoka(.regular, size: 16))
                                         .foregroundColor(.black)
                                         .font(.footnote)
                                         .lineLimit(1)
@@ -140,12 +140,12 @@ struct HomeViewScroll: View {
                                 HStack(alignment: .top) {
                                     VStack(alignment: .leading) {
                                         Text("Featured")
-                                            .font(Font.mada(.regular, size: K.isPad() ? 30 : 18))
+                                            .font(Font.fredoka(.regular, size: K.isPad() ? 30 : 18))
                                             .foregroundColor(Clr.black1)
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                         Text("\(model.featuredMeditation?.title ?? "")")
-                                            .font(Font.mada(.bold, size: K.isPad() ? 40 : 26))
+                                            .font(Font.fredoka(.bold, size: K.isPad() ? 40 : 26))
                                             .foregroundColor(Clr.black1)
                                             .lineLimit(3)
                                             .minimumScaleFactor(0.05)
@@ -153,7 +153,7 @@ struct HomeViewScroll: View {
                                             let count = Meditation.allMeditations.filter { $0.belongsTo.lowercased() == model.featuredMeditation?.title.lowercased() }.count
                                             if let meditationTitle = model.featuredMeditation?.title {
                                                 Text("Day \(userModel.getCourseCounter(title:meditationTitle) + 1) of \(count)")
-                                                    .font(Font.mada(.regular, size: K.isPad() ? 26 : 16))
+                                                    .font(Font.fredoka(.regular, size: K.isPad() ? 26 : 16))
                                                     .foregroundColor(Color.gray)
                                             }
                                         }
@@ -219,7 +219,7 @@ struct HomeViewScroll: View {
                                 } label: {
                                     Text("Recent")
                                         .foregroundColor(isRecent ? Clr.darkgreen : Clr.black2)
-                                        .font(Font.mada(.regular, size:  sizeCategory > .large ? 14 : 20))
+                                        .font(Font.fredoka(.regular, size:  sizeCategory > .large ? 14 : 20))
                                 }
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -232,7 +232,7 @@ struct HomeViewScroll: View {
                                 } label: {
                                     Text("Favorites")
                                         .foregroundColor(isRecent ? Clr.black2 : Clr.darkgreen)
-                                        .font(Font.mada(.regular, size: sizeCategory > .large ? 14 : 20))
+                                        .font(Font.fredoka(.regular, size: sizeCategory > .large ? 14 : 20))
                                 }
                             }
                             Rectangle().frame(width: isRecent ? CGFloat(45) : 65.0, height: 1.5)
@@ -245,7 +245,7 @@ struct HomeViewScroll: View {
                         //                                        Button { } label: {
                         //                                            HStack {
                         //                                                Text("💚 Go Pro!")
-                        //                                                    .font(Font.mada(.semiBold, size: 14))
+                        //                                                    .font(Font.fredoka(.semiBold, size: 14))
                         //                                                    .foregroundColor(Clr.darkgreen)
                         //                                                    .font(.footnote)
                         //                                                    .lineLimit(1)
@@ -273,13 +273,13 @@ struct HomeViewScroll: View {
                             if model.favoritedMeditations.isEmpty && !isRecent {
                                 Spacer()
                                 Text("No Favorited Meditations")
-                                    .font(Font.mada(.semiBold, size: 20))
+                                    .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(Color.gray)
                                 Spacer()
                             } else if gardenModel.recentMeditations.isEmpty && isRecent {
                                 Spacer()
                                 Text("No Recent Meditations")
-                                    .font(Font.mada(.semiBold, size: 20))
+                                    .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(Color.gray)
                                 Spacer()
                             } else {
@@ -329,10 +329,10 @@ struct HomeViewScroll: View {
                                         Spacer()
                                         Text("Start Your Free Trial")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                         Text("Invest in your mental health, focus, and happiness 💚")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.medium, size: 12))
+                                            .font(Font.fredoka(.medium, size: 12))
                                         Spacer()
                                     }.frame(width: width * 0.5)
                                     Spacer()
@@ -351,10 +351,10 @@ struct HomeViewScroll: View {
                     }
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")
-                            .font(Font.mada(.bold, size: 36))
+                            .font(Font.fredoka(.bold, size: 36))
                             .foregroundColor(Clr.black1)
                         Text("people are meditating \nright now")
-                            .font(Font.mada(.regular, size: 22))
+                            .font(Font.fredoka(.regular, size: 22))
                             .minimumScaleFactor(0.05)
                             .lineLimit(2)
                             .foregroundColor(.gray)
@@ -367,7 +367,7 @@ struct HomeViewScroll: View {
 //                            HStack {
 //                                Text("See All Meditations")
 //                                    .foregroundColor(.black)
-//                                    .font(Font.mada(.semiBold, size: 20))
+//                                    .font(Font.fredoka(.semiBold, size: 20))
 //                            }.frame(width: width * 0.85, height: height/14)
 //                                .background(Clr.yellow)
 //                                .cornerRadius(25)

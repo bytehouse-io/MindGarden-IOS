@@ -44,13 +44,13 @@ struct Gratitude: View, KeyboardReadable {
                                         if !openPrompts {
                                             Text("Prompts")
                                                 .foregroundColor(.black)
-                                                    .font(Font.mada(.semiBold, size: 16))
+                                                    .font(Font.fredoka(.semiBold, size: 16))
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.5)
                                         } else {
                                             Image(systemName: "xmark")
                                                 .foregroundColor(.white)
-                                                .font(Font.mada(.semiBold, size: 18))
+                                                .font(Font.fredoka(.semiBold, size: 18))
                                         }
 
                                     }
@@ -61,25 +61,25 @@ struct Gratitude: View, KeyboardReadable {
                     if openPrompts {
                         VStack(alignment: .leading) {
                             Text("1. What’s something that you’re looking forward to?")
-                                .font(Font.mada(.regular, size: 20))
+                                .font(Font.fredoka(.regular, size: 20))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
                                 .padding(.vertical, 5)
                                 .fixedSize(horizontal: false, vertical: true)
                             Text("2. What’s a simple pleasure that you’re grateful for? (the breeze, coffee, your phone")
-                                .font(Font.mada(.regular, size: 20))
+                                .font(Font.fredoka(.regular, size: 20))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
                                 .padding(.vertical, 5)
                                 .fixedSize(horizontal: false, vertical: true)
                             Text("3. What’s something about your body or health that you’re grateful for?")
-                                .font(Font.mada(.regular, size: 20))
+                                .font(Font.fredoka(.regular, size: 20))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
                                 .padding(.vertical, 5)
                                 .fixedSize(horizontal: false, vertical: true)
                             Text("4. What mistake or failure are you grateful for?")
-                                .font(Font.mada(.regular, size: 20))
+                                .font(Font.fredoka(.regular, size: 20))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.5)
                                 .padding(.vertical, 5)
@@ -90,7 +90,7 @@ struct Gratitude: View, KeyboardReadable {
                     // TODO move this back to bottom
 
                     Text("What are you thankful for today?")
-                        .font(Font.mada(.bold, size: 20))
+                        .font(Font.fredoka(.bold, size: 20))
                         .frame(width: g.size.width * 0.85)
                         .foregroundColor(Clr.black1)
                         .offset(y: -10)

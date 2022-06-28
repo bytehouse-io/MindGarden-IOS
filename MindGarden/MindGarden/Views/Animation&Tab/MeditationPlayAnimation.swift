@@ -40,7 +40,7 @@ struct MeditationPlayAnimation : View {
                     .frame(width:size/2)
                     .foregroundColor(Clr.darkgreen)
                 Text(title)
-                    .font(Font.mada(.bold, size: 20))
+                    .font(Font.fredoka(.bold, size: 20))
                     .foregroundColor(.white)
                     .minimumScaleFactor(0.1)
             }

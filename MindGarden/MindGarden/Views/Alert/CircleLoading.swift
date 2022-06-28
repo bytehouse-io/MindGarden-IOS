@@ -67,7 +67,7 @@ struct CircleLoadingView<Content>: View where Content: View {
                     Text("  \(percentage)%  ")
                         .foregroundColor(Clr.black2)
                         .minimumScaleFactor(0.5)
-                        .font(Font.mada(.bold, size: 16))
+                        .font(Font.fredoka(.bold, size: 16))
                         .animation(.linear(duration: 5))
                 }
                 .opacity(self.isShowing ? 1 : 0)

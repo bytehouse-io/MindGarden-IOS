@@ -94,7 +94,7 @@ struct MoodCheck: View {
                     VStack(alignment: .center, spacing: 10) {
                     Spacer()
                     Text("How are we feeling today?")
-                            .font(Font.mada(.bold, size: K.isPad() ? 40 : 24))
+                            .font(Font.fredoka(.bold, size: K.isPad() ? 40 : 24))
                         .foregroundColor(Clr.black1)
                         .frame(width: g.size.width * 0.8, alignment: .center)
                         .lineLimit(1)
@@ -102,7 +102,7 @@ struct MoodCheck: View {
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                             HStack {
                                 Text("Recommendations ")
-                                        .font(Font.mada(.semiBold, size: K.isPad() ? 36 : 20))
+                                        .font(Font.fredoka(.semiBold, size: K.isPad() ? 36 : 20))
                                         .foregroundColor(Clr.black1)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
@@ -222,7 +222,7 @@ struct SingleMood: View {
                         }
                     }.opacity(moodSelected == mood ? 0.3 : 1)
                 Text(mood.title)
-                    .font(Font.mada(.semiBold, size: 14))
+                    .font(Font.fredoka(.semiBold, size: 14))
                     .foregroundColor(.gray)
                     .minimumScaleFactor(0.05)
                     .lineLimit(1)
@@ -261,7 +261,7 @@ struct DoneCancel: View {
             } label: {
                 Text("Done")
                     .foregroundColor(.white)
-                    .font(Font.mada(.semiBold, size: 20))
+                    .font(Font.fredoka(.semiBold, size: 20))
             }
             .frame(width:  width * 0.3, height: min(height/6, 40))
             .background(Clr.brightGreen)
@@ -280,7 +280,7 @@ struct DoneCancel: View {
             } label: {
                 Text("Cancel")
                     .foregroundColor(.white)
-                    .font(Font.mada(.semiBold, size: 20))
+                    .font(Font.fredoka(.semiBold, size: 20))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
             }

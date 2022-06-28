@@ -37,7 +37,7 @@ struct Authentication: View {
                     VStack(spacing: 0)  {
                         Text(viewModel.isSignUp ? "Sign Up." : "Sign In.")
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.bold, size: 32))
+                            .font(Font.fredoka(.bold, size: 32))
                             .padding()
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 24)
@@ -51,7 +51,7 @@ struct Authentication: View {
                                     }
                                 })
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .padding(.leading, 40)
                                     .padding(.trailing, 60)
                                 Image(systemName: isEmailValid ? "xmark" : "checkmark")
@@ -71,7 +71,7 @@ struct Authentication: View {
                             HStack {
                                 SecureField("Password (6+ characters)", text: $viewModel.password)
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .padding(.leading, 40)
                                     .padding(.trailing, 60)
                                     .disableAutocorrection(true)
@@ -99,7 +99,7 @@ struct Authentication: View {
                                     .neoShadow()
                                 Text(viewModel.isSignUp ? "Register" : "Login")
                                     .foregroundColor(Color.white)
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .padding()
                             }
                             .padding(20)
@@ -126,7 +126,7 @@ struct Authentication: View {
                                     CheckBoxView(checked: $viewModel.checked)
                                         .frame(height: 45)
                                     Text("Sign me up for the MindGarden Newsletter 🗞")
-                                        .font(Font.mada(.medium, size: 18))
+                                        .font(Font.fredoka(.medium, size: 18))
                                         .foregroundColor(Clr.black2)
                                         .lineLimit(2)
                                         .minimumScaleFactor(0.5)
@@ -135,7 +135,7 @@ struct Authentication: View {
                             }
                             if !viewModel.isSignUp {
                                 Text("Forgot Password?")
-                                    .font(Font.mada(.medium, size: 18))
+                                    .font(Font.fredoka(.medium, size: 18))
                                     .foregroundColor(.blue)
                                     .underline()
                                     .padding(5)
@@ -175,7 +175,7 @@ struct Authentication: View {
 //                                .overlay(
 //                                    Text(isSignUp ? "Already have an account" : "Sign up for an account")
 //                                        .foregroundColor(Clr.darkgreen)
-//                                        .font(Font.mada(.bold, size: 18))
+//                                        .font(Font.fredoka(.bold, size: 18))
 //                                )
 //                        }.frame(height: 50)
 //                            .padding(.horizontal, 40)

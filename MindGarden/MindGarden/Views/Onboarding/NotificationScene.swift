@@ -69,7 +69,7 @@ struct NotificationScene: View {
                         }
                         VStack {
                             Text("🔔 Set a Reminder")
-                                .font(Font.mada(.semiBold, size: 28))
+                                .font(Font.fredoka(.semiBold, size: 28))
                                 .foregroundColor(Clr.black1)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(1)
@@ -77,13 +77,13 @@ struct NotificationScene: View {
                                 .offset(y: -20)
                             (Text("Users who set a reminder are")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.mada(.medium, size: 20))
+                                .font(Font.fredoka(.medium, size: 20))
                              + Text(" 4x more likely ")
                                 .foregroundColor(Clr.darkgreen)
-                                .font(Font.mada(.bold, size: 20))
+                                .font(Font.fredoka(.bold, size: 20))
                              + Text("to stick with meditation")
                                         .foregroundColor(Clr.black2)
-                                        .font(Font.mada(.medium, size: 20)))
+                                        .font(Font.fredoka(.medium, size: 20)))
                                 .multilineTextAlignment(.center)
                                 .frame(height: 50)
                                 .offset(y: -20)
@@ -102,7 +102,7 @@ struct NotificationScene: View {
                                     .overlay(
                                         HStack {
                                             Text("\(displayedTime)")
-                                                .font(Font.mada(.bold, size: 40))
+                                                .font(Font.fredoka(.bold, size: 40))
                                                 .foregroundColor(.black)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
@@ -125,7 +125,7 @@ struct NotificationScene: View {
                                     .overlay(
                                         HStack {
                                             Text("\(frequency)")
-                                                .font(Font.mada(.bold, size: 26))
+                                                .font(Font.fredoka(.bold, size: 26))
                                                 .foregroundColor(.black)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
@@ -163,7 +163,7 @@ struct NotificationScene: View {
                                     .overlay(
                                         Text(fromSettings ? "Turn On" : "Continue")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                     )
                             }.frame(height: 50)
                                 .padding(5)
@@ -369,7 +369,7 @@ struct BottomSheetView<Content: View>: View {
                 )
             Spacer()
             Text("Done")
-                .font(Font.mada(.bold, size: 18))
+                .font(Font.fredoka(.bold, size: 18))
                 .foregroundColor(Clr.darkgreen)
                 .onTapGesture {
                     Analytics.shared.log(event: .notification_tapped_done)

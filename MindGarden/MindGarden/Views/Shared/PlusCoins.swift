@@ -23,7 +23,7 @@ struct PlusCoins: View {
                     .fill(Clr.darkWhite)
                     .neoShadow()
                 Text("\(coins)")
-                    .font(Font.mada(.semiBold, size: coins >= 1000 ? 18 : 20))
+                    .font(Font.fredoka(.semiBold, size: coins >= 1000 ? 18 : 20))
                     .foregroundColor(Clr.black2)
             }.frame(width: 80, height: 20)
             Circle()

@@ -26,12 +26,12 @@ struct LoadingIllusion: View {
                 HStack {
                     VStack(alignment:.leading) {
                         Text("Title")
-                            .font(Font.mada(.bold, size: 30))
+                            .font(Font.fredoka(.bold, size: 30))
                             .foregroundColor(Clr.darkWhite)
                         if index >= 0 {
                             ForEach(0...index, id: \.self) { idx in
                                 Text(topics[idx])
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .foregroundColor( idx == index ? .white : Clr.lightGray.opacity(0.5))
                             }
                         }

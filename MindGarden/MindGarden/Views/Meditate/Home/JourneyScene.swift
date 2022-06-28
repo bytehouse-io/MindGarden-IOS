@@ -21,7 +21,7 @@ struct JourneyScene: View {
             if userModel.journeyFinished {
                 Text("✅ Journey Complete!")
                     .foregroundColor(Clr.black2)
-                    .font(Font.mada(.semiBold, size: 28))
+                    .font(Font.fredoka(.semiBold, size: 28))
                     .padding(.top, 30)
                     .frame(width: abs(width * 0.825), alignment: .leading)
                 VStack {
@@ -29,7 +29,7 @@ struct JourneyScene: View {
                         .offset(x: -50)
                 }.frame(width: 100, height: 100)
                 Text("Only 1% complete the roadmap.\nKeep it up!")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .multilineTextAlignment(.center)
                     .padding(.top, 60)
                     .frame(width: abs(width * 0.825), alignment: .center)
@@ -40,7 +40,7 @@ struct JourneyScene: View {
                             .foregroundColor(Clr.black2)
                           + Text("Final Level")
                             .foregroundColor(Clr.darkgreen))
-                        .font(Font.mada(.semiBold, size: 28))
+                        .font(Font.fredoka(.semiBold, size: 28))
                         .padding(.top, 30)
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     } else {
@@ -48,7 +48,7 @@ struct JourneyScene: View {
                             .foregroundColor(Clr.black2)
                           + Text("\(model.roadMaplevel)")
                             .foregroundColor(Clr.darkgreen))
-                        .font(Font.mada(.semiBold, size: 28))
+                        .font(Font.fredoka(.semiBold, size: 28))
                         .padding(.top, 30)
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     }
@@ -87,7 +87,7 @@ struct JourneyScene: View {
                     
                     Text("Level Completion Award")
                         .foregroundColor(Clr.black2)
-                        .font(Font.mada(.medium, size: 12))
+                        .font(Font.fredoka(.medium, size: 12))
                     Button {
                         if model.roadMaplevel <= 6 && isAward {
                             userModel.updateCoins(plusCoins: 100)
@@ -110,7 +110,7 @@ struct JourneyScene: View {
                                 .frame(width:30)
                             Text(model.roadMaplevel < 2 ? "100" : model.roadMaplevel > 4 ? "150" : "125")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.mada(.bold, size: 22))
+                                .font(Font.fredoka(.bold, size: 22))
                                 .padding(5)
                         }
                         .padding()

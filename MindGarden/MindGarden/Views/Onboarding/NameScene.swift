@@ -53,7 +53,7 @@ struct NameScene: View {
                                     .neoShadow()
                                 VStack {
                                     Text("What's your name?")
-                                        .font(Font.mada(.bold, size: 26))
+                                        .font(Font.fredoka(.bold, size: 26))
                                         .foregroundColor(Clr.darkgreen)
                                         .multilineTextAlignment(.center)
                                         .frame(width: width * 0.55, height: 60)
@@ -92,7 +92,7 @@ struct NameScene: View {
                                     .overlay(
                                         Text("Continue")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                     )
                             }.frame(height: 50)
                                 .padding()

@@ -39,7 +39,7 @@ struct NewAuthentication: View {
                     
                     Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign in" : "Create a profile to save your progress")
                         .foregroundColor(Clr.black2)
-                        .font(Font.mada(.semiBold, size: 28))
+                        .font(Font.fredoka(.semiBold, size: 28))
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.screenWidth * 0.8, height: 150)
                     Spacer()
@@ -62,7 +62,7 @@ struct NewAuthentication: View {
                                     .padding(.horizontal)
                                     .overlay(
                                         Text("Go Back")
-                                            .font(Font.mada(.semiBold, size: 20))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                             .foregroundColor(Clr.darkgreen)
                                     )
                                     .frame(width: UIScreen.screenWidth * 0.35, height: 30)
@@ -82,7 +82,7 @@ struct NewAuthentication: View {
                                         }
                                     })
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .padding(.leading, 40)
                                     .padding(.trailing, 60)
                                     Image(systemName: isEmailValid ? "xmark" : "checkmark")
@@ -103,7 +103,7 @@ struct NewAuthentication: View {
                                 HStack {
                                     SecureField("Password (6+ characters)", text: $viewModel.password)
                                         .foregroundColor(Clr.black2)
-                                        .font(Font.mada(.bold, size: 20))
+                                        .font(Font.fredoka(.bold, size: 20))
                                         .padding(.leading, 40)
                                         .padding(.trailing, 60)
                                         .disableAutocorrection(true)
@@ -131,7 +131,7 @@ struct NewAuthentication: View {
                                         .neoShadow()
                                     Text(viewModel.isSignUp ? "Register" : "Login")
                                         .foregroundColor(Color.white)
-                                        .font(Font.mada(.bold, size: 20))
+                                        .font(Font.fredoka(.bold, size: 20))
                                         .padding()
                                 }
                                 .padding(20)
@@ -157,7 +157,7 @@ struct NewAuthentication: View {
                         //                            CheckBoxView(checked: $viewModel.checked)
                         //                                .frame(height: 45)
                         //                            Text("Sign me up for the MindGarden Newsletter 🗞")
-                        //                                .font(Font.mada(.medium, size: 18))
+                        //                                .font(Font.fredoka(.medium, size: 18))
                         //                                .foregroundColor(Clr.black2)
                         //                                .lineLimit(2)
                         //                                .minimumScaleFactor(0.5)
@@ -166,7 +166,7 @@ struct NewAuthentication: View {
                         //                    }
                         if !viewModel.isSignUp {
                             Text("Forgot Password?")
-                                .font(Font.mada(.medium, size: 18))
+                                .font(Font.fredoka(.medium, size: 18))
                                 .foregroundColor(.blue)
                                 .underline()
                                 .padding(.top, 20)
@@ -197,7 +197,7 @@ struct NewAuthentication: View {
                                             .foregroundColor(Clr.darkgreen)
                                         Text("Sign up with Email")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 18))
+                                            .font(Font.fredoka(.bold, size: 18))
                                     }.offset(x: -20)
                                 )
                         }.frame(height: 60)
@@ -257,7 +257,7 @@ struct NewAuthentication: View {
                         } label: {
                             VStack {
                                 Text(!viewModel.isSignUp && showFields ? "Create an account" : "Already have an account")
-                                    .font(Font.mada(.semiBold, size: 20))
+                                    .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(.gray)
                                     .underline()
                             }

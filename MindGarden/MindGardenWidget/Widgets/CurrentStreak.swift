@@ -22,7 +22,7 @@ struct CurrentStreakWidget : View {
                             Spacer()
                             Text("\(streakNumber)")
                                 .foregroundColor(Color("textNumber"))
-                                .font(Font.mada(.bold, size: 32))
+                                .font(Font.fredoka(.bold, size: 32))
                                 .padding(.bottom,0)
                         }.padding(0)
                         Image("smallWidget")
@@ -35,7 +35,7 @@ struct CurrentStreakWidget : View {
                     HStack {
                         Text("Days")
                             .foregroundColor(Color("black2"))
-                            .font(Font.mada(.bold, size: 32))
+                            .font(Font.fredoka(.bold, size: 32))
                         Spacer()
                         Image("fire")
                             .resizable()

@@ -30,7 +30,7 @@ struct DaysProgressBar: View {
                         Text("\(gardenModel.lastFive[index].0)")
                             .foregroundColor(index == gardenModel.lastFive.count - 1 ? Clr.redGradientBottom : Clr.black2)
                             .frame(width:44)
-                            .font(Font.mada(index == gardenModel.lastFive.count - 1 ? .bold : .medium, size: 20))
+                            .font(Font.fredoka(index == gardenModel.lastFive.count - 1 ? .bold : .medium, size: 20))
                         ZStack {
                             Rectangle()
                                 .fill(getColor(index: index))

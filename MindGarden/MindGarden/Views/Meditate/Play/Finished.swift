@@ -74,20 +74,20 @@ struct Finished: View {
                                 HStack(alignment: .center) {
                                     VStack {
                                         Text("Minutes Meditated")
-                                            .font(Font.mada(.semiBold, size: 28))
+                                            .font(Font.fredoka(.semiBold, size: 28))
                                             .foregroundColor(.white)
                                             .onTapGesture {
                                                 withAnimation {
                                                     viewRouter.currentPage  = .garden
                                                 }
                                             }
-                                            .font(Font.mada(.bold, size: 70))
+                                            .font(Font.fredoka(.bold, size: 70))
                                             .foregroundColor(.white)
                                             .animation(.easeInOut(duration: 1.5))
                                             .opacity(animateViews ? 0 : 1)
                                             .offset(x: animateViews ? 500 : 0)
                                         Text(String(minsMed))
-                                            .font(Font.mada(.bold, size: 70))
+                                            .font(Font.fredoka(.bold, size: 70))
                                             .foregroundColor(.white)
                                             .animation(.easeInOut(duration: 1.5))
                                             .opacity(animateViews ? 0 : 1)
@@ -95,14 +95,14 @@ struct Finished: View {
                                         VStack {
                                             HStack {
                                                 Text("You received:")
-                                                    .font(Font.mada(.semiBold, size: 24))
+                                                    .font(Font.fredoka(.semiBold, size: 24))
                                                     .foregroundColor(.white)
                                                 Img.coin
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(height: 25)
                                                 Text("+\(reward)!")
-                                                    .font(Font.mada(.bold, size: 24))
+                                                    .font(Font.fredoka(.bold, size: 24))
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)
                                                 if userModel.isPotion || userModel.isChest {
@@ -121,7 +121,7 @@ struct Finished: View {
                                                             Img.happy.padding([.top, .leading, .bottom])
                                                             Text("Log Mood")
                                                                 .foregroundColor(.black)
-                                                                .font(Font.mada(.semiBold, size: 16))
+                                                                .font(Font.fredoka(.semiBold, size: 16))
                                                                 .padding(.trailing)
                                                                 .lineLimit(1)
                                                                 .minimumScaleFactor(0.05)
@@ -148,7 +148,7 @@ struct Finished: View {
                                                                 .padding(.vertical, 5)
                                                             Text("Gratitude")
                                                                 .foregroundColor(.black)
-                                                                .font(Font.mada(.semiBold, size: 16))
+                                                                .font(Font.fredoka(.semiBold, size: 16))
                                                                 .padding(.trailing)
                                                                 .lineLimit(1)
                                                                 .minimumScaleFactor(0.05)
@@ -189,11 +189,11 @@ struct Finished: View {
                                     }
                                     VStack {
                                         Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
-                                            .font(Font.mada(.regular, size: 20))
+                                            .font(Font.fredoka(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
                                         Text("With patience and mindfulness you were able to grow \(userModel.modTitle())!")
-                                            .font(Font.mada(.bold, size: 22))
+                                            .font(Font.fredoka(.bold, size: 22))
                                             .lineLimit(2)
                                             .minimumScaleFactor(0.05)
                                             .multilineTextAlignment(.center)
@@ -246,7 +246,7 @@ struct Finished: View {
                                     HStack {
                                         Text("Finished")
                                             .foregroundColor(Color.black)
-                                            .font(Font.mada(.bold, size: 22))
+                                            .font(Font.fredoka(.bold, size: 22))
                                         Image(systemName: "arrow.right")
                                             .foregroundColor(Color.black)
                                             .font(.system(size: 22, weight: .bold))

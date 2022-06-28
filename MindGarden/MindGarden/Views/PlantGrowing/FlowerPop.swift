@@ -36,7 +36,7 @@ struct FlowerPop: View {
                         .frame(height: 75, alignment: .center)
                     Text(userModel.willBuyPlant?.title == "Real Tree" ? "🌍 Planet Earth \nThanks You!": "New!\n\(userModel.willBuyPlant?.title ?? "Red Tulips")")
                         .frame(width: g.size.width, alignment: .center)
-                        .font(.mada(.bold, size: 40))
+                        .font(.fredoka(.bold, size: 40))
                         .foregroundColor(Clr.black1)
                         .multilineTextAlignment(.center)
                     if userModel.willBuyPlant?.title == "Real Tree" {
@@ -54,7 +54,7 @@ struct FlowerPop: View {
                                 HStack {
                                     Text("Continue")
                                         .foregroundColor(.black)
-                                        .font(Font.mada(.bold, size: 24))
+                                        .font(Font.fredoka(.bold, size: 24))
                                 }.frame(width: g.size.width * 0.50, height: 60)
                                     .background(Clr.yellow)
                                     .cornerRadius(25)

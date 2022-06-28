@@ -36,7 +36,7 @@ struct HomeSquare: View {
                                 Spacer()
                                 Text(title)
                                     .frame(width: width * 0.225, alignment: .leading)
-                                    .font(Font.mada(.semiBold, size: K.isPad() ? 28 : 16))
+                                    .font(Font.fredoka(.semiBold, size: K.isPad() ? 28 : 16))
                                     .foregroundColor(Clr.black2)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(3)
@@ -48,7 +48,7 @@ struct HomeSquare: View {
                                     Text("Meditation")
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
-                                        .font(Font.mada(.regular, size: 12))
+                                        .font(Font.fredoka(.regular, size: 12))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                 }
@@ -106,7 +106,7 @@ struct HomeSquare: View {
                         .frame(width: 45, height: 20)
                         .overlay(
                             Text("New")
-                                .font(Font.mada(.semiBold, size: 12))
+                                .font(Font.fredoka(.semiBold, size: 12))
                                 .foregroundColor(.white)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)

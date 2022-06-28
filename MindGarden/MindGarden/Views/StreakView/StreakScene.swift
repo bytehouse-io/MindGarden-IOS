@@ -74,7 +74,7 @@ struct StreakScene: View {
 //                            .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
 //                            .overlay(
 //                                Text("Share")
-//                                    .font(Font.mada(.bold, size: 24))
+//                                    .font(Font.fredoka(.bold, size: 24))
 //                                    .foregroundColor(.white)
 //                            )
 //                    }
@@ -90,7 +90,7 @@ struct StreakScene: View {
                             .frame(width: UIScreen.main.bounds.width * 0.85 , height: 58)
                             .overlay(
                                 Text("Continue")
-                                    .font(Font.mada(.bold, size: 24))
+                                    .font(Font.fredoka(.bold, size: 24))
                                     .foregroundColor(.white)
                             )
                     }

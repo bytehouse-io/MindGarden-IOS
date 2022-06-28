@@ -68,7 +68,7 @@ struct OnboardingScene: View {
                         VStack(spacing:0) {
                             VStack(alignment:.leading) {
                                 Text(title)
-                                    .font(Font.mada(.bold, size: 32))
+                                    .font(Font.fredoka(.bold, size: 32))
                                     .padding(.horizontal)
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
@@ -78,14 +78,14 @@ struct OnboardingScene: View {
                                     Text(" Gamification")
                                         .foregroundColor(Clr.brightGreen)
                                 }
-                                .font(Font.mada(.bold, size: 32))
+                                .font(Font.fredoka(.bold, size: 32))
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom,10)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                                 Text(subtitles)
-                                    .font(Font.mada(.semiBold, size: 20))
+                                    .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(Clr.black1)
                                     .lineSpacing(10)
                                     .padding(.horizontal)
@@ -120,7 +120,7 @@ struct OnboardingScene: View {
                                 .overlay(
                                     Text("Start Growing 👉")
                                         .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.semiBold, size: 20))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                 )
                         }.frame(width:UIScreen.screenWidth*0.8, height: 50)
                             .padding()
@@ -139,7 +139,7 @@ struct OnboardingScene: View {
                         } label: {
                             Text("Already have an account")
                                 .underline()
-                                .font(Font.mada(.semiBold, size: 18))
+                                .font(Font.fredoka(.semiBold, size: 18))
                                 .foregroundColor(.gray)
                         }.frame(height: 30)
                             .padding([.horizontal,.bottom])
