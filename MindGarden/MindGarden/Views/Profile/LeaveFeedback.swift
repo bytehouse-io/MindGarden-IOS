@@ -45,7 +45,6 @@ struct LeaveFeedback: View {
     @State private var mailNeedsSetup = false
     @State private var isSharePresented: Bool = false
     @State private var urlShare2 = URL(string: "https://mindgarden.io")
-//    @Environment(\.presentationMode) var presentationMode
     
     @Binding var showFeedbackSheet : Bool
     var dateFormatter: DateFormatter = {
@@ -63,7 +62,9 @@ struct LeaveFeedback: View {
                     .frame(height:60)
                 HStack {
                     Button {
-                        showFeedbackSheet = false
+                        withAnimation(.spring()) {
+                            showFeedbackSheet = false
+                        }
                     } label: {
                         ZStack {
                             Image(systemName: "arrow.backward")
@@ -132,7 +133,6 @@ struct LeaveFeedback: View {
         .sheet(isPresented: $isSharePresented) {
             ReferralView(url: $urlShare2)
         }
-        .transition(.move(edge: .trailing))
         .ignoresSafeArea()
         .alert(isPresented: $mailNeedsSetup) {
             Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io, subject should be title of button pressed. Thank you."))

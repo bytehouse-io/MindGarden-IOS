@@ -297,8 +297,14 @@ struct ProfileScene: View {
                                                                 }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_feedback)
+                                                                showFeedbackOption = true
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: 170)
+                                                    }.frame(width: width * 0.75, height: 230)
                                                     Text("Stay up to date")
                                                         .font(Font.mada(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
@@ -471,55 +477,52 @@ struct ProfileScene: View {
                     // Fallback on earlier versions
                 }
             }
-                if showFeedbackOption {
-                    VisualEffectView(effect: UIBlurEffect(style: .dark))
+                VisualEffectView(effect: UIBlurEffect(style: .dark))
                         .ignoresSafeArea()
-                        .opacity(0.5)
+                        .opacity(showFeedbackOption ? 0.5 : 0.0)
                         .onTapGesture {
                             withAnimation(.spring()) {
                                 showFeedbackOption = false
                             }
                         }
+                VStack {
+                    Spacer()
                     VStack {
-                        Spacer()
-                        VStack {
-                            Spacer().frame(height: 10)
-                            ForEach(FeedbackType.allCases, id: \.id) { item in
-                                Text(item.title)
-                                    .font(Font.mada(.regular, size: 20))
-                                    .foregroundColor(Clr.black2)
-                                    .frame(height:25)
-                                    .onTapGesture {
-                                        selectedFeedback = item
-                                        withAnimation(.spring()) {
-                                            showFeedbackSheet = true
-                                            showFeedbackOption = false
-                                        }
+                        Spacer().frame(height: 10)
+                        ForEach(FeedbackType.allCases, id: \.id) { item in
+                            Text(item.title)
+                                .font(Font.mada(.regular, size: 20))
+                                .foregroundColor(Clr.black2)
+                                .frame(height:25)
+                                .onTapGesture {
+                                    selectedFeedback = item
+                                    withAnimation(.spring()) {
+                                        showFeedbackSheet = true
+                                        showFeedbackOption = false
                                     }
-                                    .padding()
-                                if item == .helpMindGarden || item == .bugReport {
-                                    Divider().padding(.horizontal)
                                 }
+                                .padding()
+                            if item == .helpMindGarden || item == .bugReport {
+                                Divider().padding(.horizontal)
                             }
-                            Spacer()
-                                .frame(height: 30)
                         }
-                        .ignoresSafeArea()
-                        .background(
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(14)
-                        )
-                    }.offset(y:showFeedbackOption ? 0 : 300)
-                        .transition(.move(edge: .bottom))
-                        .animation(.spring())
-                        .ignoresSafeArea()
+                        Spacer()
+                            .frame(height: 30)
+                    }
+                    .ignoresSafeArea()
+                    .background(
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .cornerRadius(14)
+                    )
                 }
+                    .offset(y:showFeedbackOption ? 0 : 600)
+                    .transition(.move(edge: .bottom))
+                    .animation(.spring())
+                    .ignoresSafeArea()
                 
-                if showFeedbackSheet {
-                    LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback, showFeedbackSheet: $showFeedbackSheet)
-                }
-                
+                    LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback, showFeedbackSheet: $showFeedbackSheet).offset(x:(showFeedbackSheet && !showFeedbackOption) ? 0 : UIScreen.screenWidth*1.1 )
+                        .transition(.move(edge: .trailing))
             }
         }.onAppear {
             //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
