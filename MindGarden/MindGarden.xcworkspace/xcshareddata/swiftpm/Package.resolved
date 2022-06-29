@@ -1,0 +1,50 @@
+{
+  "pins" : [
+    {
+      "identity" : "asn1swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tikhop/ASN1Swift",
+      "state" : {
+        "revision" : "b53bee03a942623db25afc5bfb80227b2cb3b425",
+        "version" : "1.2.4"
+      }
+    },
+    {
+      "identity" : "onesignal-xcframework",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OneSignal/OneSignal-XCFramework",
+      "state" : {
+        "revision" : "f3b2ae02a073d247345b88bf04dd5ab1ca37abb4",
+        "version" : "3.10.0"
+      }
+    },
+    {
+      "identity" : "paywall-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/superwall-me/paywall-ios",
+      "state" : {
+        "revision" : "52bdb74ecc398f13acabf6b5a73ec6f2652623c5",
+        "version" : "2.2.7"
+      }
+    },
+    {
+      "identity" : "storyly-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Netvent/storyly-ios",
+      "state" : {
+        "revision" : "04b2892389e07478fde30892c801c938ceaedbfb",
+        "version" : "1.19.4"
+      }
+    },
+    {
+      "identity" : "tpinappreceipt",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tikhop/TPInAppReceipt.git",
+      "state" : {
+        "revision" : "2b9946f8fe2dd74ed87dfcb5dbedc3be06c5ccab",
+        "version" : "3.3.3"
+      }
+    }
+  ],
+  "version" : 2
+}

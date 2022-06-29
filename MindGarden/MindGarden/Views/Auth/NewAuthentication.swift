@@ -42,10 +42,12 @@ struct NewAuthentication: View {
                         .font(Font.mada(.semiBold, size: 28))
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.screenWidth * 0.8, height: 150)
+                        .offset(y: -45)
                     Spacer()
                     if !showFields {
                         HStack {
-                            LottieView(fileName: "turtle_meditating")
+                            LottieView(fileName: "turtle")
+                                .offset(x: 75, y: -95)
                         }.frame(width: UIScreen.screenWidth, height: 125, alignment: .center)
 //                            .resizable()
 //                            .aspectRatio(contentMode: .fit)
@@ -212,11 +214,11 @@ struct NewAuthentication: View {
                             viewModel.suwa
                         }
                     }
-                    .frame(height: 70)
+                    .frame(height: 60)
                         .oldShadow()
                         .disabled(viewModel.falseAppleId)
                         .frame(width: UIScreen.screenWidth * 0.8)
-                        .padding(20)
+                        .padding(10)
                     Button {
                         Analytics.shared.log(event: .authentication_tapped_google)
                         viewModel.signInWithGoogle()
@@ -232,7 +234,7 @@ struct NewAuthentication: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                             }
-                        }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70)
+                        }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 60)
                         .oldShadow()
                     }
                     

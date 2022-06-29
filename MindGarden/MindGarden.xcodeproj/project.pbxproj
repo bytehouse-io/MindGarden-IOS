@@ -12,7 +12,6 @@
 		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
 		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
 		5810EB632847971800DD4D25 /* JourneyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5810EB622847971800DD4D25 /* JourneyScene.swift */; };
-		581DB7A328682D350049448F /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DB7A228682D350049448F /* LikeButton.swift */; };
 		581DE83C283EA6B100452C95 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
 		581DE83D283EA6B500452C95 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
 		581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
@@ -69,6 +68,7 @@
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		88661F8B28528DA50052B9B0 /* firefox.png in Resources */ = {isa = PBXBuildFile; fileRef = 88661F8A28528DA50052B9B0 /* firefox.png */; };
+		8871EF9A2868D5BE00E28616 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871EF992868D5BE00E28616 /* LikeButton.swift */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C578528637EA300CCE5F2 /* AppTrackingTransparency.framework */; };
 		8884A994284A75E200B0B315 /* flame.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A993284A75E200B0B315 /* flame.json */; };
@@ -82,6 +82,7 @@
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
+		88B6ACB2286A516900A1E042 /* turtle.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B6ACB1286A516900A1E042 /* turtle.json */; };
 		88C39D40283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
 		88C39D41283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
@@ -91,7 +92,6 @@
 		88D4C5DB27FA468C00CBB956 /* sloth.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D4C5DA27FA468C00CBB956 /* sloth.json */; };
 		88D4C5DD27FA4DF100CBB956 /* PlusCoins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5DC27FA4DF100CBB956 /* PlusCoins.swift */; };
 		88DE15FF27C71546005BB894 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DE15FE27C71546005BB894 /* BottomSheet.swift */; };
-		88E3D32028661DA700B71809 /* turtle_meditating.json in Resources */ = {isa = PBXBuildFile; fileRef = 88E3D31F28661DA700B71809 /* turtle_meditating.json */; };
 		88E3D3222866261C00B71809 /* LoadingIllusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E3D3212866261C00B71809 /* LoadingIllusion.swift */; };
 		88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */; };
 		88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB127DFBE8F0060FD8E /* piano1.mp3 */; };
@@ -276,7 +276,6 @@
 		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
 		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
 		5810EB622847971800DD4D25 /* JourneyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyScene.swift; sourceTree = "<group>"; };
-		581DB7A228682D350049448F /* LikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikeButton.swift; path = ../../../../../Desktop/LikeButton.swift; sourceTree = "<group>"; };
 		5822E586286186C000DB0AFC /* waterdrops.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = waterdrops.mp3; sourceTree = "<group>"; };
 		5822E58A286216C200DB0AFC /* NewAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAuthentication.swift; sourceTree = "<group>"; };
 		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
@@ -328,6 +327,7 @@
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		88661F8A28528DA50052B9B0 /* firefox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefox.png; sourceTree = "<group>"; };
+		8871EF992868D5BE00E28616 /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		887C578528637EA300CCE5F2 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		8884A993284A75E200B0B315 /* flame.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = flame.json; sourceTree = "<group>"; };
@@ -340,6 +340,7 @@
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
+		88B6ACB1286A516900A1E042 /* turtle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtle.json; path = ../../../../../../Downloads/turtle.json; sourceTree = "<group>"; };
 		88C39D3F283D460F004D42EC /* educatedRacoon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = educatedRacoon.svg; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
@@ -348,7 +349,6 @@
 		88D4C5DA27FA468C00CBB956 /* sloth.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sloth.json; sourceTree = "<group>"; };
 		88D4C5DC27FA4DF100CBB956 /* PlusCoins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusCoins.swift; sourceTree = "<group>"; };
 		88DE15FE27C71546005BB894 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
-		88E3D31F28661DA700B71809 /* turtle_meditating.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtle_meditating.json; path = ../../../../../../Downloads/turtle_meditating.json; sourceTree = "<group>"; };
 		88E3D3212866261C00B71809 /* LoadingIllusion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIllusion.swift; sourceTree = "<group>"; };
 		88F36AB027DFBE8E0060FD8E /* 432hz.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 432hz.mp3; sourceTree = "<group>"; };
 		88F36AB127DFBE8F0060FD8E /* piano1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano1.mp3; sourceTree = "<group>"; };
@@ -626,7 +626,6 @@
 		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
 			isa = PBXGroup;
 			children = (
-				581DB7A228682D350049448F /* LikeButton.swift */,
 				58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */,
 				58C4A51F27CE764700856913 /* UrlImageView.swift */,
 				58A9EE8127C779E200254AC2 /* PlusMenuView.swift */,
@@ -640,6 +639,7 @@
 				58F171A527E45A93008D380E /* WiggleModifier.swift */,
 				58D90A9727E70DA4008C4E1C /* ViewTransition.swift */,
 				58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */,
+				8871EF992868D5BE00E28616 /* LikeButton.swift */,
 			);
 			path = "Animation&Tab";
 			sourceTree = "<group>";
@@ -739,6 +739,7 @@
 			isa = PBXGroup;
 			children = (
 				58D5C0F327FB675A00454937 /* background.json */,
+				88B6ACB1286A516900A1E042 /* turtle.json */,
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
 				882738D227E2D75D00F8D4D0 /* first_part.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
@@ -1320,6 +1321,7 @@
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
 				888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */,
 				58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */,
+				88B6ACB2286A516900A1E042 /* turtle.json in Resources */,
 				58D5C0F427FB675A00454937 /* background.json in Resources */,
 				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
 				58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */,
@@ -1618,7 +1620,6 @@
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
 				58DEE5AC2867390400A04CA2 /* MeditationPlayAnimation.swift in Sources */,
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
-				581DB7A328682D350049448F /* LikeButton.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
@@ -1719,6 +1720,7 @@
 				FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */,
 				FE98160026E559E000A4992D /* NotificationScene.swift in Sources */,
 				FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */,
+				8871EF9A2868D5BE00E28616 /* LikeButton.swift in Sources */,
 				585A4E5E27FC8BB400443F72 /* Buttons.swift in Sources */,
 				FE683F37269E47D1009A66DF /* LoadingView.swift in Sources */,
 				FEA7FBE426B0DF5A0073C62D /* Plant.swift in Sources */,
