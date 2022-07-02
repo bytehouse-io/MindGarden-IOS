@@ -27,6 +27,17 @@ class Helper: NSObject {
 
 extension View {
 
+    func darkShadow() -> some View {
+        self.modifier(DarkShadowViewModifier())
+    }
+    
+    func roundedCapsule(color:Color = Clr.yellow) -> some View {
+        self
+            .padding(8)
+            .background(Capsule().fill(color).darkShadow())
+            .overlay(Capsule().stroke(.black, lineWidth: 1))
+    }
+    
     func plusPopupStyle(size:CGSize, scale:CGFloat) -> some View {
         self.frame(width: size.width/2, height: size.width/2)
             .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)

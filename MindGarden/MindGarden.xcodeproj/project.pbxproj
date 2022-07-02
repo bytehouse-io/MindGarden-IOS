@@ -27,6 +27,7 @@
 		586E7DA82841DCC7007E0695 /* QuickStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DA72841DCC7007E0695 /* QuickStart.swift */; };
 		586E7DAB2841DF40007E0695 /* DiscoverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DAA2841DF40007E0695 /* DiscoverModel.swift */; };
 		586E7DAD2841DF8B007E0695 /* QuickStartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DAC2841DF8B007E0695 /* QuickStartModel.swift */; };
+		586F856C287026D400C34460 /* HomeViewDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F856B287026D400C34460 /* HomeViewDashboard.swift */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
 		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
 		58A9EE7D27C749C500254AC2 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7727C749C500254AC2 /* common.swift */; };
@@ -278,6 +279,7 @@
 		586E7DA72841DCC7007E0695 /* QuickStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStart.swift; sourceTree = "<group>"; };
 		586E7DAA2841DF40007E0695 /* DiscoverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverModel.swift; sourceTree = "<group>"; };
 		586E7DAC2841DF8B007E0695 /* QuickStartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartModel.swift; sourceTree = "<group>"; };
+		586F856B287026D400C34460 /* HomeViewDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDashboard.swift; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
 		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
 		58A9EE7727C749C500254AC2 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 			isa = PBXGroup;
 			children = (
 				58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */,
+				586F856B287026D400C34460 /* HomeViewDashboard.swift */,
 				58C052E12805DF3E007B4D2B /* HomeViewHeader.swift */,
 				FEB85FF426744085008CDAA4 /* Home.swift */,
 				FE4E9E632676AE54002BC758 /* HomeSquare.swift */,
@@ -1671,6 +1674,7 @@
 				88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */,
 				FEB85FF526744085008CDAA4 /* Home.swift in Sources */,
 				586E7DA62840E5E6007E0695 /* DiscoverTab.swift in Sources */,
+				586F856C287026D400C34460 /* HomeViewDashboard.swift in Sources */,
 				5810EB632847971800DD4D25 /* JourneyScene.swift in Sources */,
 				58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */,
 				FE9B408426A66D0E000DF00C /* MiddleSelect.swift in Sources */,
