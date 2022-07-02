@@ -57,12 +57,8 @@ struct Home: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 GeometryReader { g in
-                    VStack {
-                        HomeViewHeader(greeting: $userModel.greeting, name: $userModel.name, streakNumber: $bonusModel.streakNumber, showSearch: $showSearch, activeSheet: $activeSheet, showIAP: $showIAP, showPurchase: $showPurchase)
-                        //MARK: - scroll view
-                        HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, userModel: userModel)
-                            .padding(.top, -20)
-                    }
+                    HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel)
+                        .padding(.top, -20)
                     if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase || showChallenge {
                         Color.black
                             .opacity(0.3)

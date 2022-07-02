@@ -16,6 +16,7 @@ struct HomeViewScroll: View {
     @Binding var activeSheet: Sheet?
     @Binding var totalBonuses: Int
     @Binding var attempts : Int
+    @Binding var showIAP : Bool
     @State var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
     
@@ -31,6 +32,7 @@ struct HomeViewScroll: View {
             //MARK: - scroll view
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
+                    HomeViewDashboard(greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP,coin:userModel.coins, streakNumber: bonusModel.streakNumber)
                     VStack {
                         ZStack {
                             Rectangle()
@@ -389,7 +391,6 @@ struct HomeViewScroll: View {
                     Spacer().frame(height:80)
             }.padding(.bottom, height * 0.23)
             }.frame(height: height)
-                .offset(y: -height * 0.23)
         }
     }
 }
