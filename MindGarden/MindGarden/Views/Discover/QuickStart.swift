@@ -34,9 +34,12 @@ struct QuickStart: View {
                                     .frame(height: 56.0, alignment: .center)
                                     .cornerRadius(27)
                                     .neoShadow()
+                                RoundedRectangle(cornerRadius: 27)
+                                    .stroke(Color.black, lineWidth: 1)
+                                    .frame(height: 56.0, alignment: .center)
                                 HStack {
                                     Text(item.name)
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.center)
                                         .padding(.vertical, 15)

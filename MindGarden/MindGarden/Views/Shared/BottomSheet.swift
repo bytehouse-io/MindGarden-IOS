@@ -27,7 +27,7 @@ struct BottomSheet<Content: View>: View {
                 )
             Spacer()
             Text("Done")
-                .font(Font.mada(.bold, size: 18))
+                .font(Font.fredoka(.bold, size: 18))
                 .padding(.horizontal)
                 .opacity(0)
         }

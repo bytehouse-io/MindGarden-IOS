@@ -69,7 +69,7 @@ struct Store: View {
                                     .padding(.leading)
                             }
                             Text("🌻 Plant Select" )
-                                .font(Font.mada(.bold, size: 32))
+                                .font(Font.fredoka(.bold, size: 32))
                                 .minimumScaleFactor(0.005)
                                 .lineLimit(1)
                                 .multilineTextAlignment(.center)
@@ -95,7 +95,7 @@ struct Store: View {
                             HStack {
                                 if isShop {
                                     Text(!isStore ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
-                                        .font(Font.mada(.bold, size: 32))
+                                        .font(Font.fredoka(.bold, size: 32))
                                         .minimumScaleFactor(0.005)
                                         .lineLimit(2)
                                         .multilineTextAlignment(.center)
@@ -154,7 +154,7 @@ struct Store: View {
                                     .frame(height: 25)
                                     .padding(5)
                                 Text(String(userModel.coins))
-                                    .font(Font.mada(.semiBold, size: 24))
+                                    .font(Font.fredoka(.semiBold, size: 24))
                                     .foregroundColor(Clr.black1)
                             }.padding(.bottom, -10)
                             if isShop && !isStore {
@@ -222,7 +222,7 @@ struct Store: View {
                             .overlay(
                                 VStack {
                                     Text("🎖 Badges are plants that must be earned.\n🪴 Store plants can be bought with coins.")
-                                        .font(Font.mada(.medium, size: 20))
+                                        .font(Font.fredoka(.medium, size: 20))
                                         .lineLimit(4)
                                         .minimumScaleFactor(0.05)
                                         .multilineTextAlignment(.center)
@@ -230,7 +230,7 @@ struct Store: View {
                                         .foregroundColor(Color.black)
                                     Text("Got it")
                                         .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 22))
+                                        .font(Font.fredoka(.bold, size: 22))
                                         .onTapGesture {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
@@ -261,12 +261,12 @@ struct Store: View {
                                     .foregroundColor(Clr.darkgreen) +
                                  Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
                                     .foregroundColor(Clr.black2))
-                                    .font(Font.mada(.semiBold, size: 22))
+                                    .font(Font.fredoka(.semiBold, size: 22))
                                     .multilineTextAlignment(.center)
                             } else {
                                 (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
                                  + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
-                                    .font(Font.mada(.semiBold, size: 22))
+                                    .font(Font.fredoka(.semiBold, size: 22))
                                     .multilineTextAlignment(.center)
                             }
 
@@ -305,7 +305,7 @@ struct Store: View {
                                     Capsule()
                                         .fill(Clr.yellow)
                                         .frame(width: UIScreen.main.bounds.width/2, height: 40)
-                                        .overlay(Text("Be Notified").font(Font.mada(.bold, size: 22))
+                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
                                                     .multilineTextAlignment(.center)
                                                     .foregroundColor(.black)
                                         )
@@ -421,13 +421,13 @@ struct Store: View {
                         VStack(alignment: .center, spacing: 0) {
                             Text("Successfully Unlocked!")
                                 .foregroundColor(Clr.black1)
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.center)
                                 .padding(.vertical)
                             Text("Go to the home screen and press the select plant button to equip your new plant")
-                                .font(Font.mada(.medium, size: 18))
+                                .font(Font.fredoka(.medium, size: 18))
                                 .foregroundColor(Clr.black2.opacity(0.7))
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
@@ -443,7 +443,7 @@ struct Store: View {
                                 }
                             } label: {
                                 Text("Got it")
-                                    .font(Font.mada(.bold, size: 18))
+                                    .font(Font.fredoka(.bold, size: 18))
                                     .foregroundColor(.white)
                                     .frame(width: g.size.width/3, height: 40)
                                     .background(Clr.darkgreen)
@@ -477,7 +477,7 @@ struct Store: View {
                     .frame(width: 100, height: 35)
                     .neoShadow()
                 Text(title)
-                    .font(Font.mada(.regular, size: 16))
+                    .font(Font.fredoka(.regular, size: 16))
                     .foregroundColor(isStore ? .white : Clr.black1)
             }
         }

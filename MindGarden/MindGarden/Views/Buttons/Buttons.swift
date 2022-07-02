@@ -73,7 +73,7 @@ struct LightButton: View {
                 HStack {
                     Text(title)
                         .foregroundColor(type.textColor)
-                        .font(Font.mada(.bold, size: 22))
+                        .font(Font.fredoka(.bold, size: 22))
                         .padding()
                     if showNextArrow {
                         Image(systemName: "arrow.right")

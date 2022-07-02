@@ -17,6 +17,7 @@
 		581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
 		581DE83F283EA6BF00452C95 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
 		581DE840283EA6C200452C95 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
+		581DB7A328682D350049448F /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DB7A228682D350049448F /* LikeButton.swift */; };
 		5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5822E586286186C000DB0AFC /* waterdrops.mp3 */; };
 		5822E58B286216C300DB0AFC /* NewAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822E58A286216C200DB0AFC /* NewAuthentication.swift */; };
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
@@ -101,6 +102,11 @@
 		88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB527DFBE900060FD8E /* alpha.mp3 */; };
 		88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB627DFBE900060FD8E /* music.mp3 */; };
 		88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F36AB727DFBE900060FD8E /* piano2.mp3 */; };
+		88F4BF85286B6ED6000C6E0B /* Fredoka-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */; };
+		88F4BF86286B6ED6000C6E0B /* Fredoka-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF81286B6ED5000C6E0B /* Fredoka-SemiBold.ttf */; };
+		88F4BF87286B6ED6000C6E0B /* Fredoka-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */; };
+		88F4BF88286B6ED6000C6E0B /* Fredoka-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF83286B6ED5000C6E0B /* Fredoka-Regular.ttf */; };
+		88F4BF89286B6ED6000C6E0B /* Fredoka-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */; };
 		88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBD27F0E6DA00744D9F /* bell.mp3 */; };
 		88F5CBC027F0E6ED00744D9F /* 30 Second Meditation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */; };
 		88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBC127F2244A00744D9F /* theta.mp3 */; };
@@ -145,21 +151,6 @@
 		FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */ = {isa = PBXBuildFile; fileRef = FE4D80EC26ED4E36002FE291 /* side-arrow.json */; };
 		FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE4E9E632676AE54002BC758 /* HomeSquare.swift */; };
 		FE6289B426754A1200007889 /* ShadowViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6289B326754A1200007889 /* ShadowViewModifier.swift */; };
-		FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
-		FE6289B726754B5200007889 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
-		FE6289B826754B5200007889 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
-		FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
-		FE6289BE26754C6100007889 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
-		FE6289BF26754C6100007889 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
-		FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
-		FE6289C126754C6100007889 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
-		FE6289C226754C6100007889 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
-		FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
-		FE6289C426754C6100007889 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
-		FE6289C526754C6100007889 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
-		FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
-		FE6289C726754C6100007889 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
-		FE6289C826754C6100007889 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
 		FE647DCE277AAD22008901AD /* Widget+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE647DCD277AAD22008901AD /* Widget+Extensions.swift */; };
 		FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE683F34269CCF6E009A66DF /* ButtonModifier.swift */; };
 		FE683F37269E47D1009A66DF /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE683F36269E47D0009A66DF /* LoadingView.swift */; };
@@ -358,6 +349,11 @@
 		88F36AB527DFBE900060FD8E /* alpha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alpha.mp3; sourceTree = "<group>"; };
 		88F36AB627DFBE900060FD8E /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		88F36AB727DFBE900060FD8E /* piano2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano2.mp3; sourceTree = "<group>"; };
+		88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fredoka-Bold.ttf"; sourceTree = "<group>"; };
+		88F4BF81286B6ED5000C6E0B /* Fredoka-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fredoka-SemiBold.ttf"; sourceTree = "<group>"; };
+		88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fredoka-Medium.ttf"; sourceTree = "<group>"; };
+		88F4BF83286B6ED5000C6E0B /* Fredoka-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fredoka-Regular.ttf"; sourceTree = "<group>"; };
+		88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fredoka-Light.ttf"; sourceTree = "<group>"; };
 		88F5CBBD27F0E6DA00744D9F /* bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bell.mp3; sourceTree = "<group>"; };
 		88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
 		88F5CBC127F2244A00744D9F /* theta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theta.mp3; sourceTree = "<group>"; };
@@ -403,11 +399,6 @@
 		FE4D80EC26ED4E36002FE291 /* side-arrow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "side-arrow.json"; sourceTree = "<group>"; };
 		FE4E9E632676AE54002BC758 /* HomeSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSquare.swift; sourceTree = "<group>"; };
 		FE6289B326754A1200007889 /* ShadowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewModifier.swift; sourceTree = "<group>"; };
-		FE6289B526754B5200007889 /* Mada-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Regular.ttf"; sourceTree = "<group>"; };
-		FE6289B926754C6100007889 /* Mada-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-SemiBold.ttf"; sourceTree = "<group>"; };
-		FE6289BA26754C6100007889 /* Mada-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Bold.ttf"; sourceTree = "<group>"; };
-		FE6289BB26754C6100007889 /* Mada-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Light.ttf"; sourceTree = "<group>"; };
-		FE6289BC26754C6100007889 /* Mada-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mada-Medium.ttf"; sourceTree = "<group>"; };
 		FE647DCD277AAD22008901AD /* Widget+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Widget+Extensions.swift"; sourceTree = "<group>"; };
 		FE683F34269CCF6E009A66DF /* ButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifier.swift; sourceTree = "<group>"; };
 		FE683F36269E47D0009A66DF /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -888,11 +879,11 @@
 		FEB85FBE266C19A4008CDAA4 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				FE6289B526754B5200007889 /* Mada-Regular.ttf */,
-				FE6289BA26754C6100007889 /* Mada-Bold.ttf */,
-				FE6289BB26754C6100007889 /* Mada-Light.ttf */,
-				FE6289BC26754C6100007889 /* Mada-Medium.ttf */,
-				FE6289B926754C6100007889 /* Mada-SemiBold.ttf */,
+				88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */,
+				88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */,
+				88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */,
+				88F4BF83286B6ED5000C6E0B /* Fredoka-Regular.ttf */,
+				88F4BF81286B6ED5000C6E0B /* Fredoka-SemiBold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -1298,14 +1289,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				581DE83C283EA6B100452C95 /* Mada-Regular.ttf in Resources */,
 				FE48B44F277959A400CA7B63 /* Colors.xcassets in Resources */,
-				581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */,
 				FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */,
 				FE48B4512779618600CA7B63 /* Assets.xcassets in Resources */,
-				581DE83D283EA6B500452C95 /* Mada-Bold.ttf in Resources */,
-				581DE83F283EA6BF00452C95 /* Mada-Medium.ttf in Resources */,
-				581DE840283EA6C200452C95 /* Mada-SemiBold.ttf in Resources */,
 				FE48B44D2779583500CA7B63 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1315,11 +1301,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				88C39D40283D460F004D42EC /* educatedRacoon.svg in Resources */,
+				88F4BF88286B6ED6000C6E0B /* Fredoka-Regular.ttf in Resources */,
+				88F4BF89286B6ED6000C6E0B /* Fredoka-Light.ttf in Resources */,
 				88661F8B28528DA50052B9B0 /* firefox.png in Resources */,
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
 				888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */,
+				88F4BF85286B6ED6000C6E0B /* Fredoka-Bold.ttf in Resources */,
 				58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */,
 				88B6ACB2286A516900A1E042 /* turtle.json in Resources */,
 				58D5C0F427FB675A00454937 /* background.json in Resources */,
@@ -1327,7 +1316,6 @@
 				58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
 				5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */,
-				FE6289C026754C6100007889 /* Mada-Bold.ttf in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				88D4C5DB27FA468C00CBB956 /* sloth.json in Resources */,
 				8884A998284BDBCA00B0B315 /* flame 2.json in Resources */,
@@ -1343,17 +1331,17 @@
 				882738D327E2D75E00F8D4D0 /* first_part.json in Resources */,
 				FEB85FC5266C1C11008CDAA4 /* Colors.xcassets in Resources */,
 				88F36ABE27DFBE900060FD8E /* alpha.mp3 in Resources */,
+				88F4BF87286B6ED6000C6E0B /* Fredoka-Medium.ttf in Resources */,
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				88588042283C0293007AACC2 /* wavingTurtle.png in Resources */,
+				88F4BF86286B6ED6000C6E0B /* Fredoka-SemiBold.ttf in Resources */,
 				8884A996284BDBBC00B0B315 /* flame 1.json in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */,
 				FE09DA2326F53BD00018099F /* confetti.json in Resources */,
 				88F36ABA27DFBE900060FD8E /* piano1.mp3 in Resources */,
-				FE6289BD26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
 				58491F6E283CA9E60093C61A /* freeTrialNotification.png in Resources */,
 				88F36ABF27DFBE900060FD8E /* music.mp3 in Resources */,
-				FE6289C326754C6100007889 /* Mada-Light.ttf in Resources */,
 				88F5CBC027F0E6ED00744D9F /* 30 Second Meditation.mp3 in Resources */,
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				8884A994284A75E200B0B315 /* flame.json in Resources */,
@@ -1362,10 +1350,8 @@
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
 				88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */,
 				8897F12B283BEAC100F4E158 /* educatedRacoon.png in Resources */,
-				FE6289B626754B5200007889 /* Mada-Regular.ttf in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				88F36ABD27DFBE900060FD8E /* guitar.mp3 in Resources */,
-				FE6289C626754C6100007889 /* Mada-Medium.ttf in Resources */,
 				FEB85FD2266D41BF008CDAA4 /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1374,11 +1360,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE6289BE26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
-				FE6289C726754C6100007889 /* Mada-Medium.ttf in Resources */,
-				FE6289B726754B5200007889 /* Mada-Regular.ttf in Resources */,
-				FE6289C426754C6100007889 /* Mada-Light.ttf in Resources */,
-				FE6289C126754C6100007889 /* Mada-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1386,11 +1367,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE6289BF26754C6100007889 /* Mada-SemiBold.ttf in Resources */,
-				FE6289C826754C6100007889 /* Mada-Medium.ttf in Resources */,
-				FE6289B826754B5200007889 /* Mada-Regular.ttf in Resources */,
-				FE6289C526754C6100007889 /* Mada-Light.ttf in Resources */,
-				FE6289C226754C6100007889 /* Mada-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

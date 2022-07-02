@@ -45,7 +45,7 @@ struct CategoriesScene: View {
                                 Spacer()
                                 Text("Categories")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                 Spacer()
                                 backButton
                                     .opacity(0)
@@ -107,7 +107,7 @@ struct CategoriesScene: View {
                             })
                         VStack {
                             Text("Want a specific meditation?")
-                                .font(Font.mada(.semiBold, size: 18))
+                                .font(Font.fredoka(.semiBold, size: 18))
                                 .foregroundColor(Clr.black2)
                             Button {
                                 Analytics.shared.log(event: .categories_tapped_request)
@@ -122,7 +122,7 @@ struct CategoriesScene: View {
                                 HStack {
                                     Text("Post a Request")
                                         .foregroundColor(.black)
-                                        .font(Font.mada(.semiBold, size: 20))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                 }.frame(width: g.size.width * 0.65, height: 50)
                                 .background(Clr.yellow)
                                 .cornerRadius(25)
@@ -161,7 +161,7 @@ struct CategoriesScene: View {
                         Spacer()
                         Text(QuickStartMenuItem(title: selectedCategory).name)
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.semiBold, size: 20))
+                            .font(Font.fredoka(.semiBold, size: 20))
                         Spacer()
                         backButton.opacity(0).disabled(true)
                         Spacer()
@@ -305,7 +305,7 @@ struct CategoriesScene: View {
             } label: {
                 HStack {
                     Text(category.value)
-                        .font(Font.mada(selected == category ? .bold : .regular, size: 16))
+                        .font(Font.fredoka(selected == category ? .bold : .regular, size: 16))
                         .foregroundColor(selected == category ? .black : Clr.black2)
                         .font(.footnote)
                         .padding(.horizontal)

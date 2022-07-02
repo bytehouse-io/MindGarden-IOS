@@ -107,14 +107,14 @@ struct SingleDay: View {
                             } else {
                                 Text("No sessions for \nthis day :(")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 30))
+                                    .font(Font.fredoka(.bold, size: 30))
                                     .offset(y: -65)
                                     .multilineTextAlignment(.center)
                             }
                         }.padding(.bottom, -95)
                         Text("Stats For the Day: ")
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.semiBold, size: 26))
+                            .font(Font.fredoka(.semiBold, size: 26))
                             .padding(.leading, g.size.width * 0.1)
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
@@ -130,7 +130,7 @@ struct SingleDay: View {
                                     VStack(spacing: -5) {
                                         Text("Moods:")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.regular, size: 16))
+                                            .font(Font.fredoka(.regular, size: 16))
                                             .padding(5)
                                         HStack(spacing: 0) {
                                             ForEach(self.moods ?? ["none"], id: \.self) { mood in
@@ -155,13 +155,13 @@ struct SingleDay: View {
                                 VStack(spacing: 5){
                                     Text("Gratitude: ")
                                         .foregroundColor(Clr.black2)
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                     ScrollView(showsIndicators: false) {
                                         ForEach(self.gratitudes ?? ["No gratitude written this day"], id: \.self) { gratitude in
                                             Text(gratitude)
                                                 .fixedSize(horizontal: false, vertical: true)
                                                 .foregroundColor(Clr.black2)
-                                                .font(Font.mada(.regular, size: 14))
+                                                .font(Font.fredoka(.regular, size: 14))
                                                 .padding(10)
                                             Divider()
                                         }
@@ -196,11 +196,11 @@ struct SingleDay: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 200)
                         Text("Tutorial Complete!")
-                            .font(Font.mada(.bold, size: 32))
+                            .font(Font.fredoka(.bold, size: 32))
                             .foregroundColor(Clr.darkgreen)
                             .padding(.bottom, -5)
                         Text("Kick start your journey by taking our intro to meditation course")
-                            .font(Font.mada(.medium, size: 20))
+                            .font(Font.fredoka(.medium, size: 20))
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
                             .frame(height: 50)
@@ -219,7 +219,7 @@ struct SingleDay: View {
                                 .fill(Clr.darkgreen)
                                 .overlay(
                                     Text("Start Day 1 of Course")
-                                        .font(Font.mada(.bold, size: 18))
+                                        .font(Font.fredoka(.bold, size: 18))
                                          .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
@@ -238,7 +238,7 @@ struct SingleDay: View {
                             }
                         } label: {
                             Text("Not Now")
-                                .font(Font.mada(.semiBold, size: 22))
+                                .font(Font.fredoka(.semiBold, size: 22))
                                 .foregroundColor(Color.gray)
                                 .underline()
                                 .padding(.top, 25)
@@ -304,13 +304,13 @@ struct SingleDay: View {
             Spacer()
             VStack(alignment: .trailing) {
                 Text("\(Date().getMonthName(month: String(month))) \(day), \(String(year))")
-                    .font(Font.mada(.semiBold, size: 26))
+                    .font(Font.fredoka(.semiBold, size: 26))
                 Text("\(plant?.title ?? "" )")
-                    .font(Font.mada(.bold, size: 38))
+                    .font(Font.fredoka(.bold, size: 38))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 Text("Minutes Meditated: \(minutesMeditated/60 == 0 && minutesMeditated != 0 ? "0.5" : "\(minutesMeditated/60)")")
-                    .font(Font.mada(.semiBold, size: 18))
+                    .font(Font.fredoka(.semiBold, size: 18))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
             }

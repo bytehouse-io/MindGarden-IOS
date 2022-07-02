@@ -21,6 +21,8 @@ struct MeditationPlayAnimation : View {
     
     var body: some View {
         ZStack {
+            AnimatedBackground().edgesIgnoringSafeArea(.all)
+                        .blur(radius: 50)
             Circle()
                 .frame(width:size)
                 .foregroundColor(Clr.brightGreen)
@@ -38,7 +40,7 @@ struct MeditationPlayAnimation : View {
                     .frame(width:size/2)
                     .foregroundColor(Clr.darkgreen)
                 Text(title)
-                    .font(Font.mada(.bold, size: 20))
+                    .font(Font.fredoka(.bold, size: 20))
                     .foregroundColor(.white)
                     .minimumScaleFactor(0.1)
             }
@@ -67,5 +69,28 @@ struct MeditationPlayAnimation : View {
         }.onDisappear() {
             meditateTimer?.invalidate()
         }
+    }
+}
+
+
+struct AnimatedBackground: View {
+    @State var start = UnitPoint(x: 0, y: -2)
+    @State var end = UnitPoint(x: 4, y: 0)
+    @State var duration = 6.0
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
+    let colors = [Clr.brightGreen, Clr.yellow, Clr.darkgreen]
+    
+    var body: some View {
+        
+        LinearGradient(gradient: Gradient(colors: colors), startPoint: start, endPoint: end)
+            .animation(Animation.easeInOut(duration: duration).repeatForever())
+            .onReceive(timer, perform: { _ in
+                
+                self.start = UnitPoint(x: 4, y: 0)
+                self.end = UnitPoint(x: 0, y: 2)
+                self.start = UnitPoint(x: -4, y: 20)
+                self.start = UnitPoint(x: 4, y: 0)
+            })
     }
 }

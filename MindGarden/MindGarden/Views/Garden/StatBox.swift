@@ -20,7 +20,7 @@ struct StatBox: View {
                 .neoShadow()
             VStack(alignment:.center, spacing:5){
                 Text(label)
-                    .font(Font.mada(.regular, size: 12))
+                    .font(Font.fredoka(.regular, size: 12))
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 5)
                     .padding(.top,10)
@@ -30,7 +30,7 @@ struct StatBox: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20)
                     Text(value)
-                        .font(Font.mada(.bold, size: 16))
+                        .font(Font.fredoka(.bold, size: 16))
                         .minimumScaleFactor(0.7)
                         .foregroundColor(Clr.black2)
                 }

@@ -44,7 +44,7 @@ struct ReviewScene: View {
                         }.edgesIgnoringSafeArea(.all)
                         Spacer()
                         Text("So, to recap \(UserDefaults.standard.string( forKey: "name") ?? "")")
-                            .font(Font.mada(.bold, size: 30))
+                            .font(Font.fredoka(.bold, size: 30))
                             .foregroundColor(Clr.black2)
                             .padding()
                             .lineLimit(1)
@@ -65,12 +65,12 @@ struct ReviewScene: View {
                                     VStack(alignment: .leading) {
                                         Text("Your aim is to")
                                             .foregroundColor(.gray)
-                                            .font(Font.mada(.regular, size: 20))
+                                            .font(Font.fredoka(.regular, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                         Text("\(aim.1)")
                                             .foregroundColor(Clr.black1)
-                                            .font(Font.mada(.semiBold, size: 20))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                     }.frame(width: width * 0.5, alignment: .leading)
@@ -84,7 +84,7 @@ struct ReviewScene: View {
                                             .padding(10)
                                         Text("\(aim2.1)")
                                             .foregroundColor(Clr.black1)
-                                            .font(Font.mada(.semiBold, size: 20))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                     }
@@ -98,7 +98,7 @@ struct ReviewScene: View {
                                             .padding(10)
                                         Text("\(aim3.1)")
                                             .foregroundColor(Clr.black1)
-                                            .font(Font.mada(.semiBold, size: 20))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                     }
@@ -120,12 +120,12 @@ struct ReviewScene: View {
                                 VStack(alignment: .leading) {
                                     Text("Your experience level")
                                         .foregroundColor(.gray)
-                                        .font(Font.mada(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 20))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                     Text("\(experience.1)")
                                         .foregroundColor(Clr.black1)
-                                        .font(Font.mada(.semiBold, size: 22))
+                                        .font(Font.fredoka(.semiBold, size: 22))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
@@ -147,13 +147,13 @@ struct ReviewScene: View {
                                 VStack(alignment: .leading, spacing: 0) {
                                     Text("Your notifcations are")
                                         .foregroundColor(.gray)
-                                        .font(Font.mada(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 20))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                     HStack {
                                         Text("\(notifications)")
                                             .foregroundColor(Clr.black1)
-                                            .font(Font.mada(.semiBold, size: 22))
+                                            .font(Font.fredoka(.semiBold, size: 22))
                                         if notifications == "Off" {
                                             Button {
                                                 MGAudio.sharedInstance.playBubbleSound()
@@ -222,7 +222,7 @@ struct ReviewScene: View {
                             HStack {
                                 Text("MindGarden Tutorial  👉🏻")
                                     .foregroundColor(Clr.darkgreen)
-                                    .font(Font.mada(.semiBold, size: 18))
+                                    .font(Font.fredoka(.semiBold, size: 18))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                             }.frame(width: g.size.width * 0.75, height: g.size.height/16)
@@ -274,7 +274,7 @@ struct ReviewScene: View {
                         } label: {
                                 Text("Skip (Not Recommended)")
                                     .underline()
-                                    .font(Font.mada(.regular, size: 18))
+                                    .font(Font.fredoka(.regular, size: 18))
                                     .foregroundColor(.gray)
                                     .padding(.top, 35)
                         }
@@ -282,10 +282,10 @@ struct ReviewScene: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showLoading)  {
+        /*.fullScreenCover(isPresented: $showLoading)  {
             LoadingIllusion()
                 .frame(height: UIScreen.screenHeight + 50)
-        }
+        }*/
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
             .onAppear {

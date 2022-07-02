@@ -114,7 +114,7 @@ struct Play: View {
                             }
                             Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
                                 .foregroundColor(Clr.black1)
-                                .font(Font.mada(.bold, size: 60))
+                                .font(Font.fredoka(.bold, size: 60))
                                 .padding(.horizontal)
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
@@ -523,7 +523,7 @@ struct Play: View {
                             HStack {
                                 Spacer()
                                 Text("🔔 New: change background sounds")
-                                    .font(Font.mada(.bold, size: 28))
+                                    .font(Font.fredoka(.bold, size: 28))
                                     .foregroundColor(Clr.black2)
                                     .frame(height: g.size.height * 0.06)
                                 Spacer()
@@ -544,7 +544,7 @@ struct Play: View {
                                     .fill(Clr.brightGreen)
                                     .overlay(
                                         Text("Got it!")
-                                            .font(Font.mada(.bold, size: 18))
+                                            .font(Font.fredoka(.bold, size: 18))
                                             .foregroundColor(.white)
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.5)
@@ -554,7 +554,7 @@ struct Play: View {
                                 .padding()
                             Spacer()
                         }
-                        .font(Font.mada(.regular, size: 18))
+                        .font(Font.fredoka(.regular, size: 18))
                         .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.60 : 0.65), alignment: .center)
                         .minimumScaleFactor(0.05)
                         .background(Clr.darkWhite)
@@ -588,7 +588,7 @@ struct Play: View {
                         VStack(alignment: .center, spacing: 15) {
                             Text("Ambient Sounds")
                                 .foregroundColor(Clr.black1)
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.center)
@@ -621,7 +621,7 @@ struct Play: View {
                                 .padding(.top)
                             Text("Bell Volume")
                                 .foregroundColor(Clr.black1)
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.center)
@@ -641,7 +641,7 @@ struct Play: View {
                                 UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
                             } label: {
                                 Text("Done")
-                                    .font(Font.mada(.bold, size: 18))
+                                    .font(Font.fredoka(.bold, size: 18))
                                     .foregroundColor(Color.black)
                                     .frame(width: g.size.width/3, height: 35)
                                     .background(Clr.yellow)

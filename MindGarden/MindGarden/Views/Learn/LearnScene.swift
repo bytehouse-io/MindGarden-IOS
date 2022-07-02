@@ -41,13 +41,13 @@ struct LearnScene: View {
                                 .frame(width: width * 0.3)
                             VStack(alignment: .leading){
                                 Text("The Library")
-                                    .font(Font.mada(.bold, size: 32))
+                                    .font(Font.fredoka(.bold, size: 32))
                                     .foregroundColor(Clr.black1)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.5)
                                     .offset(x: -3)
                                 Text("Master your mind with our science backed mini-courses")
-                                    .font(Font.mada(.medium, size: 14))
+                                    .font(Font.fredoka(.medium, size: 14))
                                     .foregroundColor(Clr.black1)
                                     .lineLimit(2)
                                     .minimumScaleFactor(0.5)
@@ -67,7 +67,7 @@ struct LearnScene: View {
                             .cornerRadius(20, corners: [.topLeft, .bottomRight, .topRight])
                             .overlay(
                                 Text("Learning Mindfulness")
-                                    .font(Font.mada(.semiBold, size: 16))
+                                    .font(Font.fredoka(.semiBold, size: 16))
                                     .foregroundColor(.white)
                                     .minimumScaleFactor(0.5)
                                     .lineLimit(1)
@@ -98,7 +98,7 @@ struct LearnScene: View {
                             .cornerRadius(20, corners: [.topLeft, .bottomRight, .topRight])
                             .overlay(
                                 Text("Building Life Skills")
-                                    .font(Font.mada(.semiBold, size:  16))
+                                    .font(Font.fredoka(.semiBold, size:  16))
                                     .foregroundColor(.black)
                                     .minimumScaleFactor(0.5)
                                     .lineLimit(1)
@@ -136,7 +136,7 @@ struct LearnScene: View {
                                 .foregroundColor(Clr.darkgreen) +
                              Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
                                 .foregroundColor(Clr.black2))
-                                .font(Font.mada(.semiBold, size: 22))
+                                .font(Font.fredoka(.semiBold, size: 22))
                                 .multilineTextAlignment(.center)
                             if !isNotifOn {
                                 Button {
@@ -168,7 +168,7 @@ struct LearnScene: View {
                                     Capsule()
                                         .fill(Clr.yellow)
                                         .frame(width: UIScreen.main.bounds.width/2, height: 40)
-                                        .overlay(Text("Be Notified").font(Font.mada(.bold, size: 22))
+                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
                                                     .multilineTextAlignment(.center)
                                                     .foregroundColor(.black)
                                         )
@@ -263,7 +263,7 @@ struct LearnScene: View {
                                 .cornerRadius(20, corners: [.topRight, .topLeft])
                                 .frame(width: width * 0.5, height: height * 0.13)
 //                                  Text("The Power of Gratitude")
-//                                                            .font(Font.mada(.semiBold, size: 16))
+//                                                            .font(Font.fredoka(.semiBold, size: 16))
 //                                                            .foregroundColor(Clr.black2)
 //                                                            .padding(.leading, 10)
                             Spacer()
@@ -275,7 +275,7 @@ struct LearnScene: View {
                                     .frame(width: 12)
                                     .padding([.leading, .top], 10)
                                 Text("\(course.duration) mins")
-                                    .font(Font.mada(.medium, size: 14))
+                                    .font(Font.fredoka(.medium, size: 14))
                                     .foregroundColor(.gray)
                                     .padding([.top, .trailing], 10)
                                 if completedCourses.contains(where: {$0 == course.id}) {
@@ -284,7 +284,7 @@ struct LearnScene: View {
                                         .overlay(
                                             HStack {
                                                 Text("Completed")
-                                                    .font(Font.mada(.semiBold, size: 10))
+                                                    .font(Font.fredoka(.semiBold, size: 10))
                                                     .minimumScaleFactor(0.05)
                                                     .lineLimit(1)
                                                     .foregroundColor(.black)
@@ -300,7 +300,7 @@ struct LearnScene: View {
                             .offset(y: -4)
                   
                             Text("\(course.description)")
-                                .font(Font.mada(.medium, size: 12))
+                                .font(Font.fredoka(.medium, size: 12))
                                 .foregroundColor(Clr.black1)
                                 .padding(.horizontal, 10)
                                 .lineLimit(2)

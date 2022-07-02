@@ -50,7 +50,7 @@ struct PlusMenuView: View {
                         .foregroundColor(Clr.darkgreen)
                         .padding(title == "Meditate" ? 5 : 3)
                     Text(title)
-                        .font(Font.mada(.medium, size: 20))
+                        .font(Font.fredoka(.medium, size: 20))
                         .minimumScaleFactor(0.5)
                         .foregroundColor(Clr.darkgreen)
                         .frame(width: UIScreen.main.bounds.width * 0.3)

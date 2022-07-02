@@ -51,13 +51,13 @@ extension View {
     
     func streakTitleStyle() -> some View {
         self
-            .font(Font.mada(.bold, size: 32))
+            .font(Font.fredoka(.bold, size: 32))
             .foregroundColor(Clr.gardenRed)
     }
     
     func streakBodyStyle() -> some View {
         self
-            .font(Font.mada(.regular, size: 24))
+            .font(Font.fredoka(.regular, size: 24))
             .multilineTextAlignment(.center)
             .minimumScaleFactor(0.05)
             .lineLimit(2)
@@ -68,13 +68,13 @@ extension View {
         self
             .foregroundColor(Clr.blackShadow)
             .frame(width:44)
-            .font(Font.mada(.medium, size: 20))
+            .font(Font.fredoka(.medium, size: 20))
     }
     func currentDayStyle() -> some View {
         self
             .foregroundColor(Clr.redGradientBottom)
             .frame(width:44)
-            .font(Font.mada(.bold, size: 20))
+            .font(Font.fredoka(.bold, size: 20))
     }
 }
 

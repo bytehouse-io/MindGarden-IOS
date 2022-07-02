@@ -24,20 +24,20 @@ struct OnboardingModal: View {
                         VStack(spacing: 10) {
                             if isUnlocked {
                                 Text("🍓 Congrats, you just unlocked the strawberry plant!")
-                                    .font(Font.mada(.semiBold, size: 26))
+                                    .font(Font.fredoka(.semiBold, size: 26))
                                     .foregroundColor(Color.black)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)
                             } else {
                                 Text("1️⃣ This is Your Overview for a Single Day")
-                                    .font(Font.mada(.semiBold, size: 24))
+                                    .font(Font.fredoka(.semiBold, size: 24))
                                     .foregroundColor(Clr.black2)
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)
-                                (Text("🎉 That's it for the tutorial! Complete the intro to meditation course to unlock a free strawberry plant for a ")                                    .font(Font.mada(.semiBold, size: 18))
-                                 + Text("limited time")                                    .font(Font.mada(.bold, size: 18)))
+                                (Text("🎉 That's it for the tutorial! Complete the intro to meditation course to unlock a free strawberry plant for a ")                                    .font(Font.fredoka(.semiBold, size: 18))
+                                 + Text("limited time")                                    .font(Font.fredoka(.bold, size: 18)))
                                     .foregroundColor(Clr.black2)
                                     .lineLimit(4)
                                     .multilineTextAlignment(.center)
@@ -62,7 +62,7 @@ struct OnboardingModal: View {
                                             .fill(Clr.brightGreen)
                                             .overlay(
                                                 Text("Got it!")
-                                                    .font(Font.mada(.bold, size: 18))
+                                                    .font(Font.fredoka(.bold, size: 18))
                                                     .foregroundColor(.white)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.5)
@@ -82,7 +82,7 @@ struct OnboardingModal: View {
                                             .fill(Color.gray)
                                             .overlay(
                                                 Text("Not now")
-                                                    .font(Font.mada(.bold, size: 18))
+                                                    .font(Font.fredoka(.bold, size: 18))
                                                     .foregroundColor(.white)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.5)
@@ -104,7 +104,7 @@ struct OnboardingModal: View {
                                             .fill(Clr.brightGreen)
                                             .overlay(
                                                 Text("Go to course!")
-                                                    .font(Font.mada(.bold, size: 18))
+                                                    .font(Font.fredoka(.bold, size: 18))
                                                     .foregroundColor(.white)
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.5)

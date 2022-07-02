@@ -64,7 +64,7 @@ public enum Clr {
   public static let orange = Color("orange")
   /// **Universal - Any**: `#E170A2` with alpha: `1.000`
   public static let purple = Color("purple")
-  /// **Universal - Any**: `#414127` with alpha: `1.000`
+  /// **Universal - Any**: `#2323D2` with alpha: `1.000`
   public static let redGradientBottom = Color("redGradientBottom")
   /// **Universal - Any**: `#F6F2F2` with alpha: `1.000`
   ///

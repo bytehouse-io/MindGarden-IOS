@@ -110,7 +110,7 @@ struct PricingView: View {
                             (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : "🍏 Unlock ") + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
                              +
                              Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\nHow your free trial works:" : " & get 1% happier everyday"))
-                                .font(Font.mada(.bold, size: 22))
+                                .font(Font.fredoka(.bold, size: 22))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: width * 0.78, alignment: .leading)
@@ -148,7 +148,7 @@ struct PricingView: View {
                                         .overlay(
                                             Text("Most Popular")
                                                 .foregroundColor(Color.black.opacity(0.8))
-                                                .font(Font.mada(.bold, size: 12))
+                                                .font(Font.fredoka(.bold, size: 12))
                                                 .multilineTextAlignment(.center)
                                                 .minimumScaleFactor(0.05)
                                                 .lineLimit(1)
@@ -181,7 +181,7 @@ struct PricingView: View {
                                                 if item.1 == "😔" {
                                                     Text("\(item.0)")
                                                         .foregroundColor(Clr.black2)
-                                                        .font(Font.mada(.bold, size: 16))
+                                                        .font(Font.fredoka(.bold, size: 16))
                                                         .frame(width: width * 0.3, alignment: .center)
                                                         .lineLimit(2)
                                                         .minimumScaleFactor(0.05)
@@ -190,7 +190,7 @@ struct PricingView: View {
                                                 } else {
                                                     Text("\(item.0)")
                                                         .foregroundColor(Clr.darkgreen)
-                                                        .font(Font.mada(.semiBold, size: 16))
+                                                        .font(Font.fredoka(.semiBold, size: 16))
                                                         .frame(width: width * 0.25, alignment: .leading)
                                                         .lineLimit(2)
                                                         .minimumScaleFactor(0.05)
@@ -198,16 +198,16 @@ struct PricingView: View {
                                                 }
                                                 Divider()
                                                 Text("\(item.1)")
-                                                    .font(Font.mada(.regular, size: item.1 == "😔" || item.1 == "🔒" ? 32 : 18))
+                                                    .font(Font.fredoka(.regular, size: item.1 == "😔" || item.1 == "🔒" ? 32 : 18))
                                                     .frame(width: width * 0.175)
                                                 Divider()
                                                 if item.2 == "Infinite" {
                                                     Text("∞")
-                                                        .font(Font.mada(.regular, size: 36))
+                                                        .font(Font.fredoka(.regular, size: 36))
                                                         .frame(width: width * 0.175)
                                                 } else {
                                                     Text("\(item.2)")
-                                                        .font(Font.mada(.regular, size: item.2 == "🤩" ? 32 : 32))
+                                                        .font(Font.fredoka(.regular, size: item.2 == "🤩" ? 32 : 32))
                                                         .frame(width: width * 0.175)
                                                 }
                                             }
@@ -224,7 +224,7 @@ struct PricingView: View {
              
                             if !ios14 {
                                 Text("Don't just take it from us\n⭐️⭐️⭐️⭐️⭐️")
-                                    .font(Font.mada(.bold, size: 22))
+                                    .font(Font.fredoka(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
                                     .padding(.top)
@@ -234,7 +234,7 @@ struct PricingView: View {
                             }
                             VStack {
                                 Text("👨‍🌾 Invest in MindGarden,\nhelp build these features & support mental health")
-                                    .font(Font.mada(.bold, size: 22))
+                                    .font(Font.fredoka(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
                                     .frame(width: width * 0.8)
@@ -263,13 +263,13 @@ struct PricingView: View {
                             }.padding(.top, 20)
                             VStack {
                                 Text("🙋‍♂️ Frequent Asked Questions")
-                                    .font(Font.mada(.bold, size: 22))
+                                    .font(Font.fredoka(.bold, size: 22))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.center)
                                     .padding(.vertical)
                                     .padding(.top, 10)
                                 Text("\(question1 ? "🔽" : "▶️") How does the pro plan help me?")
-                                    .font(Font.mada(.bold, size: 18))
+                                    .font(Font.fredoka(.bold, size: 18))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
                                     .frame(width: width * 0.8, alignment: .leading)
@@ -282,7 +282,7 @@ struct PricingView: View {
                                     }
                                 if question1 {
                                     Text("Pro users are 72% more likely to stick with meditation vs non pro users. You have no limits for moods, gratitudes, and meditations. You feel invested, so you make sure to use the app daily.")
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.leading)
                                         .frame(width: width * 0.8, alignment: .leading)
@@ -290,7 +290,7 @@ struct PricingView: View {
                                 }
                                 Divider()
                                 Text("\(question2 ? "🔽" : "▶️") How do app subscriptions work?")
-                                    .font(Font.mada(.bold, size: 18))
+                                    .font(Font.fredoka(.bold, size: 18))
                                     .frame(width: width * 0.8, alignment: .leading)
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
@@ -303,7 +303,7 @@ struct PricingView: View {
                                     }
                                 if question2 {
                                     Text("With a subscription you pay access to pro features that last for either a month or a year. Yearly plans have a 7 day free trial where you won't be billed until the trial is over. Lifetime plans are paid once and last forever.")
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.leading)
                                         .frame(width: width * 0.8, alignment: .leading)
@@ -311,7 +311,7 @@ struct PricingView: View {
                                 }
                                 Divider()
                                 Text("\(question3 ? "🔽" : "▶️") How do I cancel my subscription?")
-                                    .font(Font.mada(.bold, size: 18))
+                                    .font(Font.fredoka(.bold, size: 18))
                                     .frame(width: width * 0.8, alignment: .leading)
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
@@ -324,7 +324,7 @@ struct PricingView: View {
                                     }
                                 if question3 {
                                     Text("You can easily cancel your subscription by going to the Settings App of your iphone and after selecting your apple ID, select subscriptions and simply click on MindGarden.")
-                                        .font(Font.mada(.semiBold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.leading)
                                         .frame(width: width * 0.8, alignment: .leading)
@@ -342,7 +342,7 @@ struct PricingView: View {
                                 HStack {
                                     Text(selectedBox == "Yearly" ? fiftyOff ? "👨‍🌾 Unlock MindGarden Pro" : "👨‍🌾 Start your free trial" : "👨‍🌾 Unlock MindGarden Pro")
                                         .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 18))
+                                        .font(Font.fredoka(.bold, size: 18))
                                 }.frame(width: g.size.width * 0.825, height: 50)
                                 .background(Clr.yellow)
                                 .cornerRadius(25)
@@ -351,7 +351,7 @@ struct PricingView: View {
                             HStack {
                                 Text("Privacy Policy")
                                     .foregroundColor(.gray)
-                                    .font(Font.mada(.regular, size: 14))
+                                    .font(Font.fredoka(.regular, size: 14))
                                     .onTapGesture {
                                         MGAudio.sharedInstance.playBubbleSound()
                                         if let url = URL(string: "https://www.termsfeed.com/live/5201dab0-a62c-484f-b24f-858f2c69e581") {
@@ -361,7 +361,7 @@ struct PricingView: View {
                                 Spacer()
                                 Text("Terms of Service")
                                     .foregroundColor(.gray)
-                                    .font(Font.mada(.regular, size: 14))
+                                    .font(Font.fredoka(.regular, size: 14))
                                     .onTapGesture {
                                         MGAudio.sharedInstance.playBubbleSound()
                                         if let url = URL(string: "https:/mindgarden.io/terms-of-use") {
@@ -602,7 +602,7 @@ struct PricingView: View {
                     VStack(alignment: .leading, spacing: -2){
                     Text("\(title)")
                         .foregroundColor(selected == title ? .white : Clr.darkgreen)
-                        .font(Font.mada(.semiBold, size: 20))
+                        .font(Font.fredoka(.semiBold, size: 20))
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
@@ -611,14 +611,14 @@ struct PricingView: View {
                                 (Text(Locale.current.currencySymbol ?? "$") + Text("\(price * 2 + 0.01, specifier: "%.2f")"))
                                     .strikethrough(color: Color("lightGray"))
                                     .foregroundColor(Color("lightGray"))
-                                    .font(Font.mada(.regular, size: 16))
+                                    .font(Font.fredoka(.regular, size: 16))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                                     .multilineTextAlignment(.leading)
                             }
                             (Text(Locale.current.currencySymbol ?? "$") + Text("\(price, specifier: "%.2f")"))
                                 .foregroundColor(selected == title ? .white : Clr.darkgreen)
-                                .font(Font.mada(.regular, size: 16))
+                                .font(Font.fredoka(.regular, size: 16))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .multilineTextAlignment(.leading)
@@ -633,7 +633,7 @@ struct PricingView: View {
                             .overlay(
                                 Text(title == "Yearly" ? "\((trialLength == 7 || trialLength == 1) ? "7 day\nfree trial" : (trialLength == 14 || trialLength == 2) ? "14 day\nfree trial" :  trialLength == 0 ? "50%\nOFF" : "14 day\nfree trial")" : "day\nfree trial" )
                                     .foregroundColor(Color.black.opacity(0.8))
-                                    .font(Font.mada(.bold, size: 12))
+                                    .font(Font.fredoka(.bold, size: 12))
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(2)
@@ -646,7 +646,7 @@ struct PricingView: View {
                     (Text((Locale.current.currencySymbol ?? "($")) + Text(title == "Yearly" ? "\(((round(100 * (price/12))/100) - 0.01), specifier: "%.2f")" : title == "Monthly" ? "\(price, specifier: "%.2f")" : "0.00") + Text(title == "Monthly" ? "/mo" : "/mo")
                        )
                             .foregroundColor(selected == title ? .white : Clr.black2)
-                            .font(Font.mada(.bold, size: 20))
+                            .font(Font.fredoka(.bold, size: 20))
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                     }.padding(.trailing)

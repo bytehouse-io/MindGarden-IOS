@@ -42,7 +42,7 @@ struct ChallengeModal: View {
                             }
                             Text("💪 \(Date().getMonthName(month: (Date().get(.month)))) Challenge")
                                 .multilineTextAlignment(.center)
-                                .font(Font.mada(.bold, size: 20))
+                                .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.1)
                                 .minimumScaleFactor(0.5)
@@ -64,16 +64,16 @@ struct ChallengeModal: View {
                                 VStack(alignment: .leading){
                                     HStack {
                                         Text("Complete the Intro to Meditation Course before ")
-                                            .font(Font.mada(.semiBold, size: 18))
+                                            .font(Font.fredoka(.semiBold, size: 18))
                                             .foregroundColor(Clr.black2)
                                         + Text(challengeDate)
-                                            .font(Font.mada(.semiBold, size: 18))
+                                            .font(Font.fredoka(.semiBold, size: 18))
                                             .foregroundColor(Clr.brightGreen)
                                        +  Text(" and unlock a limited edition ")
-                                            .font(Font.mada(.semiBold, size: 18))
+                                            .font(Font.fredoka(.semiBold, size: 18))
                                             .foregroundColor(Clr.black2)
                                         + Text("Cherry Blossom")
-                                            .font(Font.mada(.bold, size: 18))
+                                            .font(Font.fredoka(.bold, size: 18))
                                             .foregroundColor(Clr.cherryPink)
                                     } .multilineTextAlignment(.leading)
                                     .padding()
@@ -105,7 +105,7 @@ struct ChallengeModal: View {
                                 .fill(Clr.yellow)
                                 .overlay(
                                     Text("Accept Challenge!")
-                                        .font(Font.mada(.bold, size: 18))
+                                        .font(Font.fredoka(.bold, size: 18))
                                         .foregroundColor(Clr.darkgreen)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
@@ -115,7 +115,7 @@ struct ChallengeModal: View {
                         .offset(y: -20)
                         Spacer()
                     }
-                    .font(Font.mada(.regular, size: 18))
+                    .font(Font.fredoka(.regular, size: 18))
                     .frame(width: g.size.width * 0.85, height: g.size.height * 0.8, alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)

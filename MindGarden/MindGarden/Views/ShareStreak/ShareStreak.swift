@@ -26,7 +26,7 @@ struct ShareStreak: View {
             Clr.darkWhite
                 .ignoresSafeArea()
             Text(title)
-                .font(.mada(.bold, size: 20))
+                .font(.fredoka(.bold, size: 20))
                 .foregroundColor(Clr.black1)
                 .padding(.top,20)
             HStack {
@@ -54,7 +54,7 @@ struct ShareStreak: View {
                                         .frame(width: 20, height: 20, alignment: .center)
                                         .padding()
                                     Text(item.name)
-                                        .font(.mada(.semiBold,size: 16))
+                                        .font(.fredoka(.semiBold,size: 16))
                                         .foregroundColor(Clr.superBlack)
                                     Spacer()
                                 }

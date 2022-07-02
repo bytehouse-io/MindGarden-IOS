@@ -26,7 +26,7 @@ struct ShowRecsScene: View {
                             HStack {
                                 Text("Based on your mood")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.bold, size: 26))
+                                    .font(Font.fredoka(.bold, size: 26))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                                 Mood.getMoodImage(mood: mood)
@@ -36,7 +36,7 @@ struct ShowRecsScene: View {
                             }.frame(width: abs(width * 0.8), alignment: .leading)
                             Text("We recommend these: ")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.mada(.regular, size: 22))
+                                .font(Font.fredoka(.regular, size: 22))
                                 .frame(width: abs(width * 0.79), alignment: .leading)
                         }
                         if K.isSmall() {
@@ -73,7 +73,7 @@ struct ShowRecsScene: View {
                             HStack {
                                 Text("Not Now")
                                     .foregroundColor(.black)
-                                    .font(Font.mada(.semiBold, size: 20))
+                                    .font(Font.fredoka(.semiBold, size: 20))
                             }.frame(width: g.size.width * 0.40, height: 40, alignment: .center)
                             .background(Clr.yellow)
                             .cornerRadius(25)
@@ -121,7 +121,7 @@ struct RecRow: View {
                 if isWeekly {
                     Text("Weekly Planting \(Date.weekOfMonth()) (\(Date.fullMonthName()))")
                         .foregroundColor(Color.gray)
-                        .font(Font.mada(.semiBold, size: 16))
+                        .font(Font.fredoka(.semiBold, size: 16))
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .frame(width: abs(UIScreen.main.bounds.width), alignment: .leading)
@@ -134,14 +134,14 @@ struct RecRow: View {
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
                                 .foregroundColor(Clr.darkgreen)
-                                .font(Font.mada(.bold, size: 18))
+                                .font(Font.fredoka(.bold, size: 18))
                             HStack(spacing: 3) {
                                 Image(systemName: "speaker.wave.2.fill")
                                     .foregroundColor(Clr.black2)
                                     .font(.system(size: 12))
                                 Text(meditation.type.toString())
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.semiBold, size: 12))
+                                    .font(Font.fredoka(.semiBold, size: 12))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                                 Circle()
@@ -153,7 +153,7 @@ struct RecRow: View {
                                     .font(.system(size: 12))
                                 Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.semiBold, size: 12))
+                                    .font(Font.fredoka(.semiBold, size: 12))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                             }
@@ -163,13 +163,13 @@ struct RecRow: View {
                                     .font(.system(size: 12))
                                 Text("Instructor:")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.regular, size: 12))
+                                    .font(Font.fredoka(.regular, size: 12))
                                     .padding(.leading, 4)
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                                 Text("\(meditation.instructor)")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.semiBold, size: 12))
+                                    .font(Font.fredoka(.semiBold, size: 12))
                             }
                         }.frame(width: width * 0.4, alignment: .leading)
                             .padding()

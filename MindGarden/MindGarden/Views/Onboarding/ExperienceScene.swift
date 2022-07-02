@@ -40,7 +40,7 @@ struct ExperienceScene: View {
                                 Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
@@ -88,7 +88,7 @@ struct ExperienceScene: View {
                                     .overlay(
                                         Text("Continue")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                     )
                             }.frame(height: 50)
                                 .padding()
@@ -164,7 +164,7 @@ struct ExperienceScene: View {
 
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.mada(.bold, size: 24, relativeTo: .subheadline))
+                            .font(Font.fredoka(.bold, size: 24, relativeTo: .subheadline))
                             .foregroundColor(selected == title ? colorScheme == .dark ? Color.black : Clr.black1 : Clr.black1)
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)

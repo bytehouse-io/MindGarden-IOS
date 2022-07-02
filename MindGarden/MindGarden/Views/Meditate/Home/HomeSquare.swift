@@ -30,27 +30,26 @@ struct HomeSquare: View {
                     .border(Clr.darkWhite)
                     .cornerRadius(25)
                     .frame(width: width * 0.41, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .center)
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.black, lineWidth: 1)
+                    .frame(width: width * 0.41, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .center)
                     .overlay(
                         HStack(alignment: .center) {
                             VStack(alignment: .leading, spacing: -2) {
                                 Spacer()
                                 Text(title)
                                     .frame(width: width * 0.225, alignment: .leading)
-                                    .font(Font.mada(.semiBold, size: K.isPad() ? 28 : 16))
+                                    .font(Font.fredoka(.semiBold, size: 16))
                                     .foregroundColor(Clr.black2)
-                                    .minimumScaleFactor(0.05)
-                                    .lineLimit(3)
+//                                    .minimumScaleFactor(0.05)
+//                                    .lineLimit(3)
                                 HStack(spacing: 4) {
                                     Image(systemName: "speaker.wave.2.fill")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
                                     Text("Meditation")
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                        .font(Font.mada(.regular, size: 12))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
+                                        .font(Font.fredoka(.regular, size: 12))
                                 }
                                 .padding(.top, 10)
                                 .foregroundColor(Clr.lightTextGray)
@@ -106,7 +105,7 @@ struct HomeSquare: View {
                         .frame(width: 45, height: 20)
                         .overlay(
                             Text("New")
-                                .font(Font.mada(.semiBold, size: 12))
+                                .font(Font.fredoka(.semiBold, size: 12))
                                 .foregroundColor(.white)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)

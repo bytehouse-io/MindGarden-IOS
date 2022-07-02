@@ -9,11 +9,11 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Mada-Regular.ttf</string>
-		<string>Mada-Bold.ttf</string>
-		<string>Mada-Light.ttf</string>
-		<string>Mada-Medium.ttf</string>
-		<string>Mada-SemiBold.ttf</string>
+		<string>Fredoka-Regular.ttf</string>
+		<string>Fredoka-Medium.ttf</string>
+		<string>Fredoka-Light.ttf</string>
+		<string>Fredoka-SemiBold.ttf</string>
+		<string>Fredoka-Bold.ttf</string>
 	</array>
 </dict>
 </plist>

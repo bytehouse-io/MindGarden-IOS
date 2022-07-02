@@ -112,7 +112,7 @@ struct ProfileScene: View {
                                                 .padding(.horizontal)
                                                 .overlay(
                                                     Text("Go Back")
-                                                        .font(Font.mada(.semiBold, size: 20))
+                                                        .font(Font.fredoka(.semiBold, size: 20))
                                                         .foregroundColor(Clr.darkgreen)
                                                 )
                                                 .frame(width: width * 0.35, height: 30)
@@ -124,7 +124,7 @@ struct ProfileScene: View {
                                     if selection == .settings {
                                         if showNotification {
                                             Text("Notifications")
-                                                .font(Font.mada(.regular, size: 20))
+                                                .font(Font.fredoka(.regular, size: 20))
                                                 .foregroundColor(Color.gray)
                                                 .frame(width: width * 0.7, height: 20, alignment: .leading)
                                                 .padding(.bottom, 30)
@@ -157,7 +157,7 @@ struct ProfileScene: View {
                                                 .animation(.default)
                                         } else if showGarden  {
                                             Text("Garden Settings")
-                                                .font(Font.mada(.regular, size: 20))
+                                                .font(Font.fredoka(.regular, size: 20))
                                                 .foregroundColor(Color.gray)
                                                 .frame(width: width * 0.7, height: 20, alignment: .leading)
                                                 .padding(.bottom, 30)
@@ -193,7 +193,7 @@ struct ProfileScene: View {
                                             ScrollView(.vertical, showsIndicators: false) {
                                                 VStack {
                                                     Text("Settings")
-                                                        .font(Font.mada(.regular, size: 20))
+                                                        .font(Font.fredoka(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
                                                         .frame(width: width * 0.7, height: 20, alignment: .leading)
                                                         .padding(.bottom, 15)
@@ -269,7 +269,7 @@ struct ProfileScene: View {
                                                     }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 260 : 300) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
 
                                                     Text("I want to help")
-                                                        .font(Font.mada(.regular, size: 20))
+                                                        .font(Font.fredoka(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
                                                         .frame(width: width * 0.7, height: 20, alignment: .leading)
                                                         .padding(.bottom, 15)
@@ -297,10 +297,16 @@ struct ProfileScene: View {
                                                                 }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
+                                                            Divider()
+                                                            Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
+                                                                Analytics.shared.log(event: .profile_tapped_feedback)
+                                                                showFeedbackOption = true
+                                                            }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: 170)
+                                                    }.frame(width: width * 0.75, height: 230)
                                                     Text("Stay up to date")
-                                                        .font(Font.mada(.regular, size: 20))
+                                                        .font(Font.fredoka(.regular, size: 20))
                                                         .foregroundColor(Color.gray)
                                                         .frame(width: width * 0.7, height: 20, alignment: .leading)
                                                         .padding(.bottom, 45)
@@ -358,7 +364,7 @@ struct ProfileScene: View {
                                         if selection == .settings {
                                             if let _ = Auth.auth().currentUser?.email {} else {
                                                 Text("Save your progress")
-                                                    .foregroundColor(Clr.black2).font(Font.mada(.semiBold, size: 20))
+                                                    .foregroundColor(Clr.black2).font(Font.fredoka(.semiBold, size: 20))
                                                     .padding(.top, K.isSmall() ? 0 : 15)
                                                     .padding(.bottom, -10)
                                             }
@@ -388,13 +394,13 @@ struct ProfileScene: View {
                                                     Capsule()
                                                         .fill(Clr.redGradientBottom)
                                                         .neoShadow()
-                                                        .overlay(Text("Sign Out").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                                        .overlay(Text("Sign Out").foregroundColor(.white).font(Font.fredoka(.bold, size: 24)))
                                                 } else {
                                                     Capsule()
                                                         .fill(Clr.darkgreen)
                                                         .neoShadow()
                                                         .overlay(
-                                                            Text("Create an account").foregroundColor(.white).font(Font.mada(.bold, size: 24)))
+                                                            Text("Create an account").foregroundColor(.white).font(Font.fredoka(.bold, size: 24)))
                                                         .lineLimit(1)
                                                         .minimumScaleFactor(0.05)
                                                 }
@@ -471,55 +477,52 @@ struct ProfileScene: View {
                     // Fallback on earlier versions
                 }
             }
-                if showFeedbackOption {
-                    VisualEffectView(effect: UIBlurEffect(style: .dark))
+                VisualEffectView(effect: UIBlurEffect(style: .dark))
                         .ignoresSafeArea()
-                        .opacity(0.5)
+                        .opacity(showFeedbackOption ? 0.5 : 0.0)
                         .onTapGesture {
                             withAnimation(.spring()) {
                                 showFeedbackOption = false
                             }
                         }
+                VStack {
+                    Spacer()
                     VStack {
-                        Spacer()
-                        VStack {
-                            Spacer().frame(height: 10)
-                            ForEach(FeedbackType.allCases, id: \.id) { item in
-                                Text(item.title)
-                                    .font(Font.mada(.regular, size: 20))
-                                    .foregroundColor(Clr.black2)
-                                    .frame(height:25)
-                                    .onTapGesture {
-                                        selectedFeedback = item
-                                        withAnimation(.spring()) {
-                                            showFeedbackSheet = true
-                                            showFeedbackOption = false
-                                        }
+                        Spacer().frame(height: 10)
+                        ForEach(FeedbackType.allCases, id: \.id) { item in
+                            Text(item.title)
+                                .font(Font.fredoka(.regular, size: 20))
+                                .foregroundColor(Clr.black2)
+                                .frame(height:25)
+                                .onTapGesture {
+                                    selectedFeedback = item
+                                    withAnimation(.spring()) {
+                                        showFeedbackSheet = true
+                                        showFeedbackOption = false
                                     }
-                                    .padding()
-                                if item == .helpMindGarden || item == .bugReport {
-                                    Divider().padding(.horizontal)
                                 }
+                                .padding()
+                            if item == .helpMindGarden || item == .bugReport {
+                                Divider().padding(.horizontal)
                             }
-                            Spacer()
-                                .frame(height: 30)
                         }
-                        .ignoresSafeArea()
-                        .background(
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(14)
-                        )
-                    }.offset(y:showFeedbackOption ? 0 : 300)
-                        .transition(.move(edge: .bottom))
-                        .animation(.spring())
-                        .ignoresSafeArea()
+                        Spacer()
+                            .frame(height: 30)
+                    }
+                    .ignoresSafeArea()
+                    .background(
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .cornerRadius(14)
+                    )
                 }
+                    .offset(y:showFeedbackOption ? 0 : 600)
+                    .transition(.move(edge: .bottom))
+                    .animation(.spring())
+                    .ignoresSafeArea()
                 
-                if showFeedbackSheet {
-                    LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback, showFeedbackSheet: $showFeedbackSheet)
-                }
-                
+                    LeaveFeedback(userModel: userModel, selectedFeedback: $selectedFeedback, showFeedbackSheet: $showFeedbackSheet).offset(x:(showFeedbackSheet && !showFeedbackOption) ? 0 : UIScreen.screenWidth*1.1 )
+                        .transition(.move(edge: .trailing))
             }
         }.onAppear {
             //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
@@ -587,14 +590,14 @@ struct ProfileScene: View {
                                 .aspectRatio(contentMode: .fit)
                                 .foregroundColor(.black)
                             Text("Your journey began")
-                                .font(Font.mada(.regular, size: 18))
+                                .font(Font.fredoka(.regular, size: 18))
                                 .foregroundColor(.black)
                                 .padding(.top, 3)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                         }.frame(width: width * 0.75, height: 25, alignment: .leading)
                         Text("\(profileModel.signUpDate)")
-                            .font(Font.mada(.bold, size: 34))
+                            .font(Font.fredoka(.bold, size: 34))
                             .foregroundColor(Clr.darkgreen)
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
@@ -605,7 +608,7 @@ struct ProfileScene: View {
                     .padding()
                 Text(response)
                     .foregroundColor(Clr.darkgreen)
-                    .font(Font.mada(.semiBold, size: 16))
+                    .font(Font.fredoka(.semiBold, size: 16))
                     .frame(width: width * 0.75, alignment: .center)
                 HStack {
                     TextField("Enter promo code", text: $text)
@@ -641,7 +644,7 @@ struct ProfileScene: View {
                                 .fill(Clr.yellow)
                                 .cornerRadius(12)
                             Text("Submit")
-                                .font(Font.mada(.semiBold, size: 16))
+                                .font(Font.fredoka(.semiBold, size: 16))
                                 .foregroundColor(.black)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
@@ -732,7 +735,7 @@ struct ProfileScene: View {
                             .offset(x: -10)
                             .foregroundColor(Clr.darkgreen)
                         Text(title)
-                            .font(Font.mada(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 14 : 20))
+                            .font(Font.fredoka(.medium, size: title == "Meditation Reminders" || title == "Mindful Reminders" ? 14 : 20))
                             .foregroundColor(title == "Unlock Pro" ? Clr.brightGreen : Clr.black1)
                     
                         Spacer()
@@ -825,7 +828,7 @@ struct SelectionButton: View {
             } label: {
                 HStack(alignment: .top) {
                     Text(type == .settings ?  "Settings" : type == .referrals ? "Referrals" : "Journey")
-                        .font(Font.mada(.bold, size: 18))
+                        .font(Font.fredoka(.bold, size: 18))
                         .foregroundColor(selection == type ? Clr.brightGreen : Clr.black1)
                         .padding(.top, 10)
                 }

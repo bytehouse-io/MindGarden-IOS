@@ -16,7 +16,7 @@ struct ReminderView: View {
     var body: some View {
         VStack {
             Text(reminderTitle)
-                .font(Font.mada(.bold, size: 20))
+                .font(Font.fredoka(.bold, size: 20))
                 .foregroundColor(Clr.black2)
             ZStack {
                 Rectangle()
@@ -56,7 +56,7 @@ struct ReminderView: View {
                         HStack {
                             if let timeInterval = TimeInterval(time) {
                                 Text(timeInterval.secondsToHourMinFormat() ?? "")
-                                    .font(Font.mada(.bold, size: 20))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .foregroundColor(Clr.black2)
                                 Toggle("", isOn: $isToggled)
                                     .onChange(of: isToggled) { val in

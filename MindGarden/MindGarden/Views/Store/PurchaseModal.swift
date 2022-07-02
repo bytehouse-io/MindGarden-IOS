@@ -42,7 +42,7 @@ struct PurchaseModal: View {
                             }
                             Spacer()
                             Text((userModel.willBuyPlant?.title == "Real Tree" ? "Plant a " : "") + (userModel.willBuyPlant?.title ?? ""))
-                                .font(Font.mada(.bold, size: userModel.willBuyPlant?.title == "Real Tree" ? 26 : 30))
+                                .font(Font.fredoka(.bold, size: userModel.willBuyPlant?.title == "Real Tree" ? 26 : 30))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .foregroundColor(Clr.black1)
@@ -77,10 +77,10 @@ struct PurchaseModal: View {
                         if userModel.willBuyPlant?.title == "Real Tree" {
                             HStack(spacing: 5) {
                                 Text("\(userModel.willBuyPlant?.description ?? "")")
-                                    .font(Font.mada(.semiBold, size: 18))
+                                    .font(Font.fredoka(.semiBold, size: 18))
                                     .foregroundColor(Clr.black1)
                                 + Text(" Learn More")
-                                    .font(Font.mada(.bold, size: 18))
+                                    .font(Font.fredoka(.bold, size: 18))
                                     .foregroundColor(Clr.darkgreen)
                             }.padding(.horizontal, 20)
                             .minimumScaleFactor(0.05)
@@ -93,7 +93,7 @@ struct PurchaseModal: View {
                         } else {
                             HStack(spacing: 5) {
                                 Text("\(userModel.willBuyPlant?.description ?? "")")
-                                    .font(Font.mada(.semiBold, size: 20))
+                                    .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(Clr.black1)
                         
                             }.padding(.horizontal, 40)
@@ -138,19 +138,19 @@ struct PurchaseModal: View {
                                 default: Text("")
                                 }
                             }
-                            .font(Font.mada(.semiBold, size: 18))
+                            .font(Font.fredoka(.semiBold, size: 18))
                             .foregroundColor(Clr.black2)
                             .padding(.bottom, -10)
                         }
                         
                         if userModel.willBuyPlant?.title == "Real Tree" {
                             Text("💰 MindGarden will donate one tree per purchase.")
-                                .font(Font.mada(.medium, size: 20))
+                                .font(Font.fredoka(.medium, size: 20))
                                 .foregroundColor(Clr.lightTextGray)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: g.size.width * 0.7)
                             Text("🌱 You have planted: \(userModel.plantedTrees.count) trees")
-                                .font(Font.mada(.semiBold, size: 22))
+                                .font(Font.fredoka(.semiBold, size: 22))
                                 .foregroundColor(Clr.darkgreen)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: g.size.width * 0.7, alignment: .leading)
@@ -227,7 +227,7 @@ struct PurchaseModal: View {
                                 .overlay(HStack{
                                     if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                                         Text("\(Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] ?? "" )")
-                                            .font(Font.mada(.bold, size: 18))
+                                            .font(Font.fredoka(.bold, size: 18))
                                             .foregroundColor(Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? .white : Clr.black1)
                                     } else {
                                         Img.coin
@@ -236,7 +236,7 @@ struct PurchaseModal: View {
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: g.size.width * 0.05, height: g.size.width * 0.05)
                                         Text("\(userModel.willBuyPlant?.price ?? 0)")
-                                            .font(Font.mada(.bold, size: Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 18 : 20))
+                                            .font(Font.fredoka(.bold, size: Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 18 : 20))
                                             .foregroundColor( Clr.black1)
                                     }
                                 })

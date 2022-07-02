@@ -59,7 +59,7 @@ struct Garden: View {
                         //                    }
                         HStack {
                             Text("👨‍🌾 Your MindGarden")
-                                .font(Font.mada(.semiBold, size: 22))
+                                .font(Font.fredoka(.semiBold, size: 22))
                                 .foregroundColor(Clr.darkgreen)
                                 .padding()
                                 .lineLimit(1)
@@ -98,7 +98,7 @@ struct Garden: View {
 
                         Text("Calendar/Garden")
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
+                            .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
                             .offset(x: UIScreen.screenWidth * -0.25 + 10, y: playEntryAnimation ? 10 : 400)
                             .animation(animation.delay(0.4), value: playEntryAnimation)
                         ZStack(alignment: .center) {
@@ -136,7 +136,7 @@ struct Garden: View {
                                                             ZStack {
                                                                 if UserDefaults.standard.bool(forKey: "tileDates") {
                                                                     Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.mada(.semiBold, size: 10))
+                                                                        .font(Font.fredoka(.semiBold, size: 10))
                                                                         .foregroundColor(Color.black)
                                                                         .padding(.leading)
                                                                 }
@@ -164,7 +164,7 @@ struct Garden: View {
                                                             ZStack {
                                                                 if UserDefaults.standard.bool(forKey: "tileDates") {
                                                                     Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.mada(.semiBold, size: 10))
+                                                                        .font(Font.fredoka(.semiBold, size: 10))
                                                                         .foregroundColor(Color.black)
                                                                         .padding(.leading)
                                                                 }
@@ -182,7 +182,7 @@ struct Garden: View {
                                                         ZStack {
                                                             if UserDefaults.standard.bool(forKey: "tileDates") {
                                                                 Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                    .font(Font.mada(.semiBold, size: 10))
+                                                                    .font(Font.fredoka(.semiBold, size: 10))
                                                                     .foregroundColor(Color.black)
                                                                     .padding(.leading)
                                                             }
@@ -199,7 +199,7 @@ struct Garden: View {
                                                             ZStack {
                                                                 if UserDefaults.standard.bool(forKey: "tileDates") {
                                                                     Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.mada(.semiBold, size: 10))
+                                                                        .font(Font.fredoka(.semiBold, size: 10))
                                                                         .foregroundColor(Color.black)
                                                                         .padding(.leading)
                                                                 }
@@ -237,7 +237,7 @@ struct Garden: View {
                                 
                                 HStack {
                                     Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
-                                        .font(Font.mada(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 20))
                                         .foregroundColor(Clr.black2)
                                         .padding(.leading)
                                     Spacer()
@@ -286,7 +286,7 @@ struct Garden: View {
                         
                         Text("Monthly Stats")
                             .foregroundColor(Clr.black2)
-                            .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
+                            .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
                             .offset(x: playEntryAnimation ? UIScreen.screenWidth * -0.25 - 10 : -400, y: 25)
                             .animation(animation.delay(0.4), value: playEntryAnimation)
                         HStack(spacing: 15) {
@@ -319,10 +319,10 @@ struct Garden: View {
                                                         VStack {
                                                             Text("Current Streak")
                                                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.mada(.regular, size: 12))
+                                                                .font(Font.fredoka(.regular, size: 12))
                                                             Text(currentStreak)
                                                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.mada(.bold, size: 20))
+                                                                .font(Font.fredoka(.bold, size: 20))
                                                         }
                                                     )
                                                 RoundedRectangle(cornerRadius: 15)
@@ -332,10 +332,10 @@ struct Garden: View {
                                                         VStack {
                                                             Text("Longest Streak")
                                                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.mada(.regular, size: 12))
+                                                                .font(Font.fredoka(.regular, size: 12))
                                                             Text("\(UserDefaults.standard.integer(forKey: "longestStreak"))")
                                                                 .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.mada(.bold, size: 20))
+                                                                .font(Font.fredoka(.bold, size: 20))
                                                         }
                                                     )
                                             }
@@ -357,7 +357,7 @@ struct Garden: View {
                                     VStack(spacing:5) {
                                         Text("Moods")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.regular, size: 12))
+                                            .font(Font.fredoka(.regular, size: 12))
                                             .padding(0)
                                         MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
                                         MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
@@ -378,7 +378,7 @@ struct Garden: View {
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.mada(.semiBold, size: forceRefresh ? 20 : 20.1))
+                                .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
                                 .padding(.leading, gp.size.width * 0.075 - 25)
                             ZStack {
                                 Rectangle()
@@ -391,7 +391,7 @@ struct Garden: View {
                                     if topThreePlants.isEmpty {
                                         Text("You have no favorite plants")
                                             .foregroundColor(Clr.black2)
-                                            .font(Font.mada(.regular, size: 20))
+                                            .font(Font.fredoka(.regular, size: 20))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.05)
                                             .padding()
@@ -429,7 +429,7 @@ struct Garden: View {
                                 .overlay(
                                     VStack {
                                         Text(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate"  ? "📅 This is your calendar view of the month (color of the tile = your mood)" : "📊 These are your monthly statistics")
-                                            .font(Font.mada(.semiBold, size: 18))
+                                            .font(Font.fredoka(.semiBold, size: 18))
                                             .lineLimit(3)
                                             .minimumScaleFactor(0.05)
                                             .multilineTextAlignment(.center)
@@ -438,7 +438,7 @@ struct Garden: View {
                                         Text("Got it")
                                             .foregroundColor(Color.white)
                                             .colorMultiply(self.color)
-                                            .font(Font.mada(.bold, size: 18))
+                                            .font(Font.fredoka(.bold, size: 18))
                                             .onAppear {
                                                 withAnimation {
                                                     self.color = Clr.darkgreen
@@ -613,7 +613,7 @@ struct MenuButton: View {
                 .frame(width: 100, height: 35)
                 .neoShadow()
             Text(title)
-                .font(Font.mada(.regular, size: 16))
+                .font(Font.fredoka(.regular, size: 16))
                 .foregroundColor(isMonth ? .white : Clr.black1)
         }
     }
@@ -621,7 +621,7 @@ struct MenuButton: View {
 
 struct OperatorButton: View {
     let imgName: String
-    
+        
     var body: some View {
         Image(systemName: imgName)
             .resizable()
@@ -648,11 +648,11 @@ struct FavoritePlant: View {
                     .stroke(Clr.darkgreen))
             HStack {
                 Text("\(title)")
-                    .font(Font.mada(.regular, size: 12))
+                    .font(Font.fredoka(.regular, size: 12))
                     .lineLimit(2)
                     .minimumScaleFactor(0.05)
                 Text("\(count)").bold()
-                    .font(Font.mada(.bold, size: 16))
+                    .font(Font.fredoka(.bold, size: 16))
             }.padding(.top, 8)
         }.frame(width: 70, height: 120)
             .padding(10)

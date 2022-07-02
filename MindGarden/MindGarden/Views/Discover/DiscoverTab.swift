@@ -39,7 +39,7 @@ struct DiscoverTab: View {
                         ZStack(alignment:.center) {
                             Text(item.name)
                                 .minimumScaleFactor(0.5)
-                                .font(Font.mada(.medium, size: 16))
+                                .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
                                 .multilineTextAlignment(.center)
                                 .padding(.leading, item.name == "Courses" ? 10 : 0)

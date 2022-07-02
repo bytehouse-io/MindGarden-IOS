@@ -29,7 +29,7 @@ struct NewUpdateModal: View {
 //                                .frame(height: g.size.height * 0.1)
                             Text("💎 You've Earned a 50% Pro Chest")
                                 .multilineTextAlignment(.center) 
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.black2)
                                 .frame(height: g.size.height * 0.1)
                             Spacer()
@@ -45,7 +45,7 @@ struct NewUpdateModal: View {
                         HStack {
                             Text("Just for coming back, we're offering you 50% off MindGarden Pro. This is one time offer!")
                         }.multilineTextAlignment(.center)
-                        .font(Font.mada(.semiBold, size: 18))
+                        .font(Font.fredoka(.semiBold, size: 18))
                         .foregroundColor(Clr.black2)
                         .frame(width: g.size.width * 0.85 * 0.8)
                         .padding(.bottom, 10)
@@ -62,7 +62,7 @@ struct NewUpdateModal: View {
 //                                    .bold()
 //                                + Text(" of pro!")
 //                            }.multilineTextAlignment(.leading)
-//                                .font(Font.mada(.regular, size: 20))
+//                                .font(Font.fredoka(.regular, size: 20))
 //                        }.padding(.top, 10)
 //                        .foregroundColor(Clr.black2)
 //                        .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
@@ -102,7 +102,7 @@ struct NewUpdateModal: View {
                                 .fill(Clr.darkgreen)
                                 .overlay(
                                     Text("Claim my 50% off")
-                                        .font(Font.mada(.bold, size: 18))
+                                        .font(Font.fredoka(.bold, size: 18))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
@@ -119,11 +119,11 @@ struct NewUpdateModal: View {
                         } label: {
                                 Text("No Thanks")
                                     .foregroundColor(Color.gray)
-                                    .font(Font.mada(.regular, size: 20))
+                                    .font(Font.fredoka(.regular, size: 20))
                         }
                         .padding(20)
                     }
-                    .font(Font.mada(.regular, size: 18))
+                    .font(Font.fredoka(.regular, size: 18))
                     .frame(width: g.size.width * 0.85, height: g.size.height * 0.66, alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)

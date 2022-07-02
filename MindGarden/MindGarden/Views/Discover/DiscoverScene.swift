@@ -28,7 +28,7 @@ struct DiscoverScene: View {
                     HStack {
                         Text("Discover")
                             .minimumScaleFactor(0.5)
-                            .font(Font.mada(.bold, size: 32))
+                            .font(Font.fredoka(.bold, size: 32))
                             .foregroundColor(Clr.darkgreen)
                             .multilineTextAlignment(.center)
                         Spacer()

@@ -54,7 +54,7 @@ struct PlantTile: View {
                         .opacity(1)
                         .offset(x: 0, y: 0)
                     Text(plant.title)
-                        .font(Font.mada(.bold, size: 20))
+                        .font(Font.fredoka(.bold, size: 20))
                         .foregroundColor(Clr.black1)
                         .opacity(isOwned ? 0.4 : 1)
                         .lineLimit(1)
@@ -64,7 +64,7 @@ struct PlantTile: View {
                     if isShop {
                         if isOwned && !isBadge {
                             Text("Bought")
-                                .font(Font.mada(.bold, size: 20))
+                                .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .opacity(0.4)
                         } else {
@@ -86,7 +86,7 @@ struct PlantTile: View {
                                 }
 
                                 Text(isBadge ? Plant.badgeDict[plant.price] ?? "" : String(plant.price))
-                                    .font(Font.mada(.semiBold, size: isBadge ? 16 : 20))
+                                    .font(Font.fredoka(.semiBold, size: isBadge ? 16 : 20))
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.trailing)
                                     .padding(.leading, 5)
@@ -100,7 +100,7 @@ struct PlantTile: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 30)
                                     Text("\(userModel.plantedTrees.count)")
-                                        .font(Font.mada(.semiBold, size: isBadge ? 16 : 20))
+                                        .font(Font.fredoka(.semiBold, size: isBadge ? 16 : 20))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.trailing)
                                         .offset(x: -3)
@@ -112,7 +112,7 @@ struct PlantTile: View {
                         Capsule()
                             .fill(plant == userModel.selectedPlant  ? Clr.yellow : Clr.darkgreen)
                             .overlay(Text(plant == userModel.selectedPlant ? "Selected" : "Select")
-                                        .font(Font.mada(.semiBold, size: 18))
+                                        .font(Font.fredoka(.semiBold, size: 18))
                                         .foregroundColor(plant == userModel.selectedPlant ? .black : .white)
                                         .padding()
                             )

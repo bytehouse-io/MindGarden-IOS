@@ -45,7 +45,6 @@ struct LeaveFeedback: View {
     @State private var mailNeedsSetup = false
     @State private var isSharePresented: Bool = false
     @State private var urlShare2 = URL(string: "https://mindgarden.io")
-//    @Environment(\.presentationMode) var presentationMode
     
     @Binding var showFeedbackSheet : Bool
     var dateFormatter: DateFormatter = {
@@ -63,7 +62,9 @@ struct LeaveFeedback: View {
                     .frame(height:60)
                 HStack {
                     Button {
-                        showFeedbackSheet = false
+                        withAnimation(.spring()) {
+                            showFeedbackSheet = false
+                        }
                     } label: {
                         ZStack {
                             Image(systemName: "arrow.backward")
@@ -85,12 +86,12 @@ struct LeaveFeedback: View {
                 Spacer()
                     .frame(height:100)
                 Text(selectedFeedback.title)
-                    .font(Font.mada(.bold, size: 30))
+                    .font(Font.fredoka(.bold, size: 30))
                     .foregroundColor(Clr.darkgreen)
                     .frame(width:UIScreen.screenWidth*0.8, alignment: .leading)
                     .padding(.top)
                 Text(selectedFeedback.description)
-                    .font(Font.mada(.regular, size: 18))
+                    .font(Font.fredoka(.regular, size: 18))
                     .foregroundColor(Clr.black2)
                     .frame(width:UIScreen.screenWidth*0.8, alignment: .leading)
                     .padding(.bottom)
@@ -132,7 +133,6 @@ struct LeaveFeedback: View {
         .sheet(isPresented: $isSharePresented) {
             ReferralView(url: $urlShare2)
         }
-        .transition(.move(edge: .trailing))
         .ignoresSafeArea()
         .alert(isPresented: $mailNeedsSetup) {
             Alert(title: Text("Your mail is not setup"), message: Text("Please try manually emailing team@mindgarden.io, subject should be title of button pressed. Thank you."))
@@ -157,7 +157,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Request a Feature")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -186,7 +186,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text(selectedFeedback == .bugReport ? "Report a Bug" : "Give Feedback (We Read Each One)")
-                    .font(Font.mada(.medium, size: 16))
+                    .font(Font.fredoka(.medium, size: 16))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -217,7 +217,7 @@ struct LeaveFeedback: View {
                         .foregroundColor(Clr.darkgreen)
                         .padding(.trailing)
                     Text(title)
-                        .font(Font.mada(.medium, size: 16))
+                        .font(Font.fredoka(.medium, size: 16))
                         .foregroundColor(Clr.black2)
                     Spacer()
                 }
@@ -238,7 +238,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Rate the app")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -262,7 +262,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Invite a Firend")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }
@@ -281,7 +281,7 @@ struct LeaveFeedback: View {
                     .foregroundColor(Clr.darkgreen)
                     .padding(.trailing)
                 Text("Getting Started Guide")
-                    .font(Font.mada(.medium, size: 20))
+                    .font(Font.fredoka(.medium, size: 20))
                     .foregroundColor(Clr.black2)
                 Spacer()
             }

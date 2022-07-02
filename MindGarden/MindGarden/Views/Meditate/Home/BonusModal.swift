@@ -42,7 +42,7 @@ struct BonusModal: View {
                             }.position(x: 30, y: 35)
                             HStack(alignment: .center) {
                                 Text("Daily Bonus")
-                                    .font(Font.mada(.bold, size: 30))
+                                    .font(Font.fredoka(.bold, size: 30))
                                     .foregroundColor(Clr.black1)
                                     .padding()
                             }.padding(.bottom, -5)
@@ -68,7 +68,7 @@ struct BonusModal: View {
                         Spacer()
                         if !K.isIpod() {
                             Text("Streaks")
-                                .font(Font.mada(.bold, size: 30))
+                                .font(Font.fredoka(.bold, size: 30))
                                 .foregroundColor(Clr.black1)
                                 .frame(alignment: .center)
                                 .padding(.bottom, 5)
@@ -89,7 +89,7 @@ struct BonusModal: View {
                                 .padding()
                                 VStack(spacing: -5) {
                                     Text("7 days")
-                                        .font(Font.mada(.bold, size: 20))
+                                        .font(Font.fredoka(.bold, size: 20))
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.center)
                                     Button {
@@ -110,7 +110,7 @@ struct BonusModal: View {
                                     }.buttonStyle(BonusPress())
 
                                     Text("30 days")
-                                        .font(Font.mada(.bold, size: 20))
+                                        .font(Font.fredoka(.bold, size: 20))
                                         .foregroundColor(Clr.black1)
                                         .multilineTextAlignment(.center)
                                         .padding(.top)
@@ -180,7 +180,7 @@ struct BonusModal: View {
                     if progress >= 1.0 && !K.isIpod() {
                         Text("CLAIM!")
                             .foregroundColor(Clr.black1)
-                            .font(Font.mada(.bold, size: 16))
+                            .font(Font.fredoka(.bold, size: 16))
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                     } else {
@@ -194,7 +194,7 @@ struct BonusModal: View {
                         .frame(width: width * 0.06)
                     Text(weekly ? "30" : "100")
                         .foregroundColor(Clr.black1)
-                        .font(Font.mada(.semiBold, size: 16))
+                        .font(Font.fredoka(.semiBold, size: 16))
                     Spacer()
                 }.padding()
                 .frame(alignment: .center)
@@ -225,7 +225,7 @@ struct BonusModal: View {
                             .frame(width: width * 0.07)
                         Text("5")
                             .foregroundColor(Clr.black1)
-                            .font(Font.mada(.semiBold, size: 24))
+                            .font(Font.fredoka(.semiBold, size: 24))
                             .minimumScaleFactor(0.5)
                             .padding(.trailing)
                         Capsule()
@@ -237,7 +237,7 @@ struct BonusModal: View {
                                             .foregroundColor(.white)
                                     } else {
                                         Text("CLAIM")
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                             .foregroundColor(.white)
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.5)
@@ -250,7 +250,7 @@ struct BonusModal: View {
                     } else {
                         Text("\(bonusModel.dailyInterval.stringFromTimeInterval())")
                             .foregroundColor(Clr.darkgreen)
-                            .font(Font.mada(.bold, size: 30))
+                            .font(Font.fredoka(.bold, size: 30))
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
                             .padding(.trailing)

@@ -40,7 +40,7 @@ struct ReasonScene: View {
                                 Spacer()
                             }
                             Text("What brings you to MindGarden?")
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
@@ -91,7 +91,7 @@ struct ReasonScene: View {
                                     .overlay(
                                         Text("Continue")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                     )
                             }.frame(height: 50)
                                 .padding()
@@ -165,7 +165,7 @@ struct ReasonScene: View {
                         .padding(.vertical, 8)
                     HStack(spacing: 50) {
                         Text(reason.title)
-                            .font(Font.mada(.bold, size: K.isSmall() ? 18 : 20))
+                            .font(Font.fredoka(.bold, size: K.isSmall() ? 18 : 20))
                             .foregroundColor(selected.contains(where: { $0.id == reason.id }) ? (colorScheme == .dark ? Color.black : Clr.black1 ): Clr.black1)
                             .padding()
                             .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
