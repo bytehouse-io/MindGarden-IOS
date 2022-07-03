@@ -4,6 +4,22 @@ import SwiftUI
 
 /// Cases to reference for safely initializing colors, like so: `Clr.Fill.primary`
 public enum Clr {
+  /// **Universal - Any**: `#DDE9B4` with alpha: `1.000`
+  public static let calmPrimary = Color("calmPrimary")
+  /// **Universal - Any**: `#BED567` with alpha: `1.000`
+  public static let calmsSecondary = Color("calmsSecondary")
+  /// **Universal - Any**: `#A9F3FF` with alpha: `1.000`
+  public static let energyPrimary = Color("energyPrimary")
+  /// **Universal - Any**: `#02E1FF` with alpha: `1.000`
+  public static let energySecondary = Color("energySecondary")
+  /// **Universal - Any**: `#A3B1FD` with alpha: `1.000`
+  public static let healthPrimary = Color("healthPrimary")
+  /// **Universal - Any**: `#4260F2` with alpha: `1.000`
+  public static let healthSecondary = Color("healthSecondary")
+  /// **Universal - Any**: `#7C482A` with alpha: `1.000`
+  public static let sleepPrimary = Color("sleepPrimary")
+  /// **Universal - Any**: `#D2713D` with alpha: `1.000`
+  public static let sleepSecondary = Color("sleepSecondary")
   /// **Universal - Any**: `#535353` with alpha: `1.000`
   ///
   /// **Universal - Dark**: `#F5F5F5` with alpha: `1.000`

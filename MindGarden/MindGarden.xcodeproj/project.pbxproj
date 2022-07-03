@@ -12,12 +12,6 @@
 		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
 		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
 		5810EB632847971800DD4D25 /* JourneyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5810EB622847971800DD4D25 /* JourneyScene.swift */; };
-		581DE83C283EA6B100452C95 /* Mada-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B526754B5200007889 /* Mada-Regular.ttf */; };
-		581DE83D283EA6B500452C95 /* Mada-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BA26754C6100007889 /* Mada-Bold.ttf */; };
-		581DE83E283EA6BB00452C95 /* Mada-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BB26754C6100007889 /* Mada-Light.ttf */; };
-		581DE83F283EA6BF00452C95 /* Mada-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289BC26754C6100007889 /* Mada-Medium.ttf */; };
-		581DE840283EA6C200452C95 /* Mada-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6289B926754C6100007889 /* Mada-SemiBold.ttf */; };
-		581DB7A328682D350049448F /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581DB7A228682D350049448F /* LikeButton.swift */; };
 		5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5822E586286186C000DB0AFC /* waterdrops.mp3 */; };
 		5822E58B286216C300DB0AFC /* NewAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822E58A286216C200DB0AFC /* NewAuthentication.swift */; };
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
@@ -59,7 +53,7 @@
 		58D6FB4F286D6199003EA6A7 /* PromptsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4E286D6199003EA6A7 /* PromptsModel.swift */; };
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
-		58DEE5AC2867390400A04CA2 /* MeditationPlayAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */; };
+		58DEE5AC2867390400A04CA2 /* BreathWorkAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */; };
 		58E21AD2280687DE00F2BC0F /* HomeViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */; };
 		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
@@ -88,6 +82,8 @@
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
 		88A7D91C27C0A522001A53DE /* OutlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91B27C0A522001A53DE /* OutlineModifier.swift */; };
 		88B6ACB2286A516900A1E042 /* turtle.json in Resources */ = {isa = PBXBuildFile; fileRef = 88B6ACB1286A516900A1E042 /* turtle.json */; };
+		88B6ACB42870F2A400A1E042 /* Breathwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6ACB32870F2A400A1E042 /* Breathwork.swift */; };
+		88B6ACB62871125400A1E042 /* BreathMiddle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6ACB52871125400A1E042 /* BreathMiddle.swift */; };
 		88C39D40283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
 		88C39D41283D460F004D42EC /* educatedRacoon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 88C39D3F283D460F004D42EC /* educatedRacoon.svg */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
@@ -312,7 +308,7 @@
 		58D6FB4E286D6199003EA6A7 /* PromptsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsModel.swift; sourceTree = "<group>"; };
 		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
-		58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationPlayAnimation.swift; sourceTree = "<group>"; };
+		58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathWorkAnimation.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
 		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
@@ -340,6 +336,8 @@
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
 		88B6ACB1286A516900A1E042 /* turtle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtle.json; path = ../../../../../../Downloads/turtle.json; sourceTree = "<group>"; };
+		88B6ACB32870F2A400A1E042 /* Breathwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breathwork.swift; sourceTree = "<group>"; };
+		88B6ACB52871125400A1E042 /* BreathMiddle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathMiddle.swift; sourceTree = "<group>"; };
 		88C39D3F283D460F004D42EC /* educatedRacoon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = educatedRacoon.svg; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
@@ -637,7 +635,7 @@
 				58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */,
 				58F171A527E45A93008D380E /* WiggleModifier.swift */,
 				58D90A9727E70DA4008C4E1C /* ViewTransition.swift */,
-				58DEE5AB2867390400A04CA2 /* MeditationPlayAnimation.swift */,
+				58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */,
 				8871EF992868D5BE00E28616 /* LikeButton.swift */,
 			);
 			path = "Animation&Tab";
@@ -782,6 +780,7 @@
 				88588052283C0D41007AACC2 /* ChallengeModal.swift */,
 				888A81AC2841631300E5D225 /* JourneyRow.swift */,
 				5810EB622847971800DD4D25 /* JourneyScene.swift */,
+				88B6ACB52871125400A1E042 /* BreathMiddle.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -988,7 +987,9 @@
 				8876A60427C03C2A00A9622F /* Learn */,
 				FE11F0B42691071500E1E71A /* Profile */,
 				FEA592C9267E6077006558A2 /* Garden */,
+				FEC5B008267D2ABE00BC8D8C /* Play */,
 				FEBA7E702677D65000758E58 /* Store */,
+				FE4E9E622676AE39002BC758 /* Home */,
 				FEB85FF326744070008CDAA4 /* Meditate */,
 				FEB85FE826710B20008CDAA4 /* Preview */,
 				FEB85FE1266D9122008CDAA4 /* Shared */,
@@ -1018,6 +1019,7 @@
 				88F7528827CABD50004E86D4 /* PaywallManager.swift */,
 				88D4C5D627F6439A00CBB956 /* StorylyManager.swift */,
 				58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */,
+				88B6ACB32870F2A400A1E042 /* Breathwork.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1071,8 +1073,6 @@
 				5836FA70281C1DAC001AB151 /* ReminderView.swift */,
 				FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */,
 				FE683F3A269FC531009A66DF /* Categories */,
-				FEC5B008267D2ABE00BC8D8C /* Play */,
-				FE4E9E622676AE39002BC758 /* Home */,
 			);
 			path = Meditate;
 			sourceTree = "<group>";
@@ -1615,7 +1615,7 @@
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
-				58DEE5AC2867390400A04CA2 /* MeditationPlayAnimation.swift in Sources */,
+				58DEE5AC2867390400A04CA2 /* BreathWorkAnimation.swift in Sources */,
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
@@ -1704,6 +1704,7 @@
 				FE683F3C269FC550009A66DF /* CategoriesScene.swift in Sources */,
 				58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */,
 				FEB2E3C8270F9AC700F5C23C /* AnalyticEvent.swift in Sources */,
+				88B6ACB62871125400A1E042 /* BreathMiddle.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
 				FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */,
@@ -1713,6 +1714,7 @@
 				58F5F04B2860D7E000207D92 /* FreeTrialView.swift in Sources */,
 				58BAD4DD2818FCE5005BBB9A /* ReferralScene.swift in Sources */,
 				FEB85FD8266D4E5B008CDAA4 /* Fonts+Generated.swift in Sources */,
+				88B6ACB42870F2A400A1E042 /* Breathwork.swift in Sources */,
 				FEBF22CC26DECA93002572E2 /* ProfileViewModel.swift in Sources */,
 				88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */,
 				FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */,

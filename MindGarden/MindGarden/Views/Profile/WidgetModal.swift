@@ -33,7 +33,7 @@ struct WidgetModal: View {
                             .frame(width: g.size.width * 0.85 * 0.8, alignment: .leading)
                             .padding(.bottom, 10)
                         HStack {
-                            Text("2. Tap the '+' buttoon in the top left corner")
+                            Text("2. Tap the '+' button in the top left corner")
                         }.multilineTextAlignment(.leading)
                             .font(Font.fredoka(.regular, size: 20))
                             .foregroundColor(Clr.black2)

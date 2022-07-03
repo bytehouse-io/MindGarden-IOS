@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MeditationPlayAnimation : View {
+struct BreathWorkAnimation : View {
     
     @State private var bgAnimation = false
     @State private var fadeAnimation = false
