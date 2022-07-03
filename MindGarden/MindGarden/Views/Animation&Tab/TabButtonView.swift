@@ -12,70 +12,103 @@ struct TabButtonView: View {
     @State var color: Color = .white
     @Binding var isOnboarding: Bool
     
+    @State var tag = 2
+    
     var body: some View {
-        HStack {
-            ForEach(tabList) { item in
-                Button {
-                    if !isOnboarding || UserDefaults.standard.bool(forKey: "review") {
-                        DispatchQueue.main.async {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                middleToSearch = ""
-                                selectedTab = item.tabName
-                                color = item.color
+        ZStack(alignment:.center) {
+            HStack {
+                ForEach(tabList) { item in
+                    Button {
+                        if !isOnboarding || UserDefaults.standard.bool(forKey: "review") {
+                            DispatchQueue.main.async {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                    self.tag = item.index
+                                    middleToSearch = ""
+                                    selectedTab = item.tabName
+                                    color = item.color
+                                }
                             }
                         }
+                    } label: {
+                        VStack(spacing: 0) {
+                            item.image
+                                .resizable()
+                                .renderingMode(.template)
+                                .font(.body.bold()).aspectRatio(contentMode: .fit)
+                                .frame(height: 22)
+                            Text(item.name())
+                                .minimumScaleFactor(0.5)
+                                .font(Font.fredoka(.semiBold, size: 10))
+                                .foregroundColor(selectedTab == item.tabName ? .black : .white)
+                                .padding(.top, 5)
+                        }
+                        .foregroundColor(selectedTab == item.tabName ? .black : .white)
+                        .frame(maxWidth: .infinity)
                     }
-                } label: {
-                    VStack(spacing: 0) {
-                        item.image
-                            .renderingMode(.template)
-                            .font(.body.bold())
-                            .frame(width: 44, height: 29)
-                        Text(item.name())
-                            .minimumScaleFactor(0.5)
-                            .font(Font.fredoka(.semiBold, size: 12))
-                            .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
-                            .padding(.top, 8)
+                    .background(PositionReader(tag: item.index))
+                    if item.tabName == .meditate {
+                        Spacer().frame(maxWidth: .infinity)
                     }
-                    .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
-                    .frame(maxWidth: .infinity)
-                }
-                if item.tabName == .meditate {
-                    Spacer().frame(maxWidth: .infinity)
                 }
             }
+            .backgroundPreferenceValue(Positions.self) { preferences in
+                GeometryReader { proxy in
+                    Capsule().fill(Clr.yellow).overlay(Capsule().stroke(.black, lineWidth: 1)).frame(width: 70, height: 50).position( self.getPosition(proxy: proxy, tag: self.tag, preferences: preferences))
+                }
+            }
+            
         }
-        
-        .padding(.horizontal, 8)
-        .padding(.top, 14)
-        .frame(height: 88, alignment: .top)
-        .background( Clr.darkgreen.cornerRadius(40, corners: [.topLeft, .topRight]))
-        .overlay(
-            HStack {
-                if selectedTab == .shop { Spacer() }
-                if selectedTab == .meditate { Spacer() }
-                if selectedTab == .search {
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                }
-                Rectangle()
-                    .fill(color)
-                    .frame(width: 45, height: 5)
-                    .cornerRadius(3)
-                    .frame(width: 88)
-                    .frame(maxHeight: .infinity, alignment: .top)
-                if selectedTab == .garden { Spacer() }
-                if selectedTab == .meditate {
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                }
-                if selectedTab == .search { Spacer() }
-            }
-                .padding(.horizontal, 5)
+        .frame(height: 50, alignment: .center)
+        .padding(8)
+        .background(
+            Capsule()
+                .fill(Clr.brightGreen)
+                .shadow(color:Clr.darkShadow.opacity(0.5), radius: 3 , x: 3, y: 3)
         )
-        .frame(maxHeight: .infinity, alignment: .bottom)
-        .ignoresSafeArea()
+        .overlay(
+            Capsule()
+                .stroke(.black, lineWidth: 1)
+        )
+        .onAppear(){
+            switch selectedTab {
+            case .garden:
+                tag = 1
+            case .meditate:
+                tag = 2
+            case .shop:
+                tag = 3
+            case .search:
+                tag = 4
+            }
+            
+        }
+    }
+    
+    func getPosition(proxy: GeometryProxy, tag: Int, preferences: [PositionData])->CGPoint {
+        let p = preferences.filter({ (p) -> Bool in
+            p.id == tag
+        })[0]
+        return proxy[p.center]
+    }
+}
+
+
+struct PositionData: Identifiable {
+    let id: Int
+    let center: Anchor<CGPoint>
+}
+struct Positions: PreferenceKey {
+    static var defaultValue: [PositionData] = []
+    static func reduce(value: inout [PositionData], nextValue: () -> [PositionData]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+
+struct PositionReader: View {
+    let tag: Int
+    var body: some View {
+        Color.clear.anchorPreference(key: Positions.self, value: .center) { (anchor)  in
+                [PositionData(id: self.tag, center: anchor)]
+        }
     }
 }

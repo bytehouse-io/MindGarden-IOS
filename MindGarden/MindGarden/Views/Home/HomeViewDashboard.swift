@@ -48,7 +48,7 @@ struct HomeViewDashboard: View {
                                 .foregroundColor(.black)
                             Text("\(coin)")
                                 .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(Clr.black2)
+                                .foregroundColor(.black)
                         }
                         .frame(height:height)
                         .roundedCapsule()
@@ -69,7 +69,8 @@ struct HomeViewDashboard: View {
                                 .foregroundColor(.black)
                             Text("plant select")
                                 .font(Font.fredoka(.regular, size: 12))
-                                .foregroundColor(Clr.black2)
+                                .minimumScaleFactor(0.05)
+                                .foregroundColor(.black)
                            
                         }
                         .frame(height:height)

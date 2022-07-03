@@ -498,6 +498,7 @@ struct Garden: View {
                     }
                     // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
+                Spacer().frame(height:80)
             }.fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
             }

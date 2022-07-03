@@ -44,6 +44,7 @@
 		58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 58C8BE2D28049A1E00075FD2 /* fire_ignite.mp3 */; };
 		58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */ = {isa = PBXBuildFile; fileRef = 58C8BE2F2804AAAE00075FD2 /* seedPacket.wav */; };
 		58C8BE322804AACA00075FD2 /* plantUnlock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 58C8BE312804AACA00075FD2 /* plantUnlock.mp3 */; };
+		58CB600D28717B5A007A64D9 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CB600C28717B5A007A64D9 /* LikeButton.swift */; };
 		58D4F03927EAE9C400451081 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D4F03827EAE9C400451081 /* ActivityViewController.swift */; };
 		58D5C0F127FB672500454937 /* FlowerPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0EF27FB672500454937 /* FlowerPop.swift */; };
 		58D5C0F227FB672500454937 /* PlantGrowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0F027FB672500454937 /* PlantGrowing.swift */; };
@@ -299,6 +300,7 @@
 		58C8BE2D28049A1E00075FD2 /* fire_ignite.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fire_ignite.mp3; sourceTree = "<group>"; };
 		58C8BE2F2804AAAE00075FD2 /* seedPacket.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = seedPacket.wav; sourceTree = "<group>"; };
 		58C8BE312804AACA00075FD2 /* plantUnlock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = plantUnlock.mp3; sourceTree = "<group>"; };
+		58CB600C28717B5A007A64D9 /* LikeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		58D4F03827EAE9C400451081 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		58D5C0EF27FB672500454937 /* FlowerPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowerPop.swift; sourceTree = "<group>"; };
 		58D5C0F027FB672500454937 /* PlantGrowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantGrowing.swift; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		58A9EE7427C749C500254AC2 /* Animation&Tab */ = {
 			isa = PBXGroup;
 			children = (
+				58CB600C28717B5A007A64D9 /* LikeButton.swift */,
 				58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */,
 				58C4A51F27CE764700856913 /* UrlImageView.swift */,
 				58A9EE8127C779E200254AC2 /* PlusMenuView.swift */,
@@ -1676,6 +1679,7 @@
 				58C4A52027CE764700856913 /* UrlImageView.swift in Sources */,
 				FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */,
 				58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */,
+				58CB600D28717B5A007A64D9 /* LikeButton.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
 				88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */,
 				586E7DA428409F42007E0695 /* DiscoverScene.swift in Sources */,
