@@ -45,7 +45,7 @@ extension View {
     }
     
     func plusButtonStyle(scale:CGFloat) -> some View {
-        self.frame(width: 55, height: 55)
+        self.frame(width: 45, height: 45)
             .overlay(Image(systemName: "plus")
                         .foregroundColor(Clr.darkgreen)
                         .font(Font.title.weight(.semibold))

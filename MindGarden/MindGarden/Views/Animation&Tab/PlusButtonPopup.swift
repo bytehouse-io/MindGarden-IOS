@@ -12,7 +12,7 @@ struct PlusButtonPopup: View {
     @Binding var selectedOption : PlusMenuType
     @Binding var isOnboarding: Bool
     
-    private let buttonRadius : CGFloat = 15.0
+    private let buttonRadius : CGFloat = 12.0
     private let popupRadius : CGFloat = 20.0
             
     var body: some View {
@@ -34,6 +34,7 @@ struct PlusButtonPopup: View {
                             .fill(Clr.superWhite)
                             .shadow(color:.black.opacity(0.25), radius: 4, x: 4, y: 4)
                             .plusButtonStyle(scale: scale)
+                            .overlay(RoundedRectangle(cornerRadius: buttonRadius).stroke(.black, lineWidth: 1))
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                 if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
@@ -48,7 +49,7 @@ struct PlusButtonPopup: View {
                             }
                     }
                     Spacer()
-                        .frame(height:42)
+                        .frame(height:32)
                 }
             }
             .ignoresSafeArea()

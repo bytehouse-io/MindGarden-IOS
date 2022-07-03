@@ -35,6 +35,16 @@ struct TabMenuItem: Identifiable {
         case .search: return "Search"
         }
     }
+    
+    var index: Int {
+        switch self.tabName {
+        case .garden: return 1
+        case .meditate: return 2
+        case .shop: return 3
+        case .search: return 4
+        }
+    }
+    
 }
 
 
