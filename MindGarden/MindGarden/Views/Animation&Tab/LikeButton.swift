@@ -34,7 +34,7 @@ struct LikeButton : View {
     var body: some View {
         Image(systemName: isLiked ? "suit.heart.fill" : "suit.heart")
             .font(.system(size: size))
-            .foregroundColor(isLiked ? .red : .gray)
+            .foregroundColor(isLiked ? .red : .red)
             .scaleEffect(startAnimation && !isLiked ? 0 : 1)
             .background(
                 ZStack{

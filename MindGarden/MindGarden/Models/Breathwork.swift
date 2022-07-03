@@ -18,6 +18,7 @@ struct Breathwork: Hashable {
     let id: Int
     let instructor: String
     let isNew: Bool
+    let recommendedUse: [String]
     let tip: String
 
     func hash(into hasher: inout Hasher) {
@@ -29,7 +30,7 @@ struct Breathwork: Hashable {
     }
     
     static var breathworks: [Breathwork] = [
-        Breathwork(title: "Waking Up", sequence: [(6, "i"),(0, "h"),(2, "e")], duration: 8,  color: .energy, description: "Waking up was designed to increase energy, alertness, and to start the day ", category: .all, img: Img.sun, id: 0, instructor: "none", isNew: false, tip: "")
+        Breathwork(title: "Waking Up", sequence: [(6, "i"),(0, "h"),(2, "e")], duration: 8,  color: .energy, description: "Waking up was designed to increase energy, alertness, and to start the day ", category: .all, img: Img.sun, id: 0, instructor: "none", isNew: false, recommendedUse: ["Anytime", "When Tired"], tip: "Place your hand on your stomach and imagine 'pumping' that region as you exhale")
     ]
 }
 

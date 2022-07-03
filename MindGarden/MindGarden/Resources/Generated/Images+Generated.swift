@@ -315,6 +315,7 @@ public enum Img {
   public static let turtleLetter = Image("turtleLetter")
   public static let tutorialImage = Image("tutorialImage")
   public static let utensils = Image("utensils")
+  public static let volcano = Image("volcano")
   public static let wateredPot = Image("wateredPot")
   public static let wateringPot = Image("wateringPot")
   public static let watermelon = Image("watermelon")

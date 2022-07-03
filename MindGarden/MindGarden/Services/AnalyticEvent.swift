@@ -304,6 +304,16 @@ enum AnalyticEvent {
     case categories_tapped_confidence //
     case categories_tapped_request //
     case categories_tapped_locked_meditation //
+    
+    //MARK: - Breathwrk
+    case breathwrk_middle_favorited
+    case breathwrk_middle_duration_1
+    case breathwrk_middle_duration_3
+    case breathwrk_middle_duration_5
+    case breathwrk_middle_duration_10
+    case breathwrk_middle_tapped_back
+    case breathwrk_middle_tapped_settings
+    case screen_load_breathwrk_middle
 
     //MARK: - tabs + plus
     case tabs_tapped_meditate //
@@ -498,6 +508,17 @@ extension AnalyticEvent {
         switch self {
         case .sceneDidBecomeActive: return "sceneDidBecomeActive"
         case .launchedApp: return "launchedApp"
+            
+        case .breathwrk_middle_favorited: return "breathwrk_middle_favorited"
+        case .breathwrk_middle_duration_1: return "breathwrk_middle_duration_1"
+        case .breathwrk_middle_duration_3: return "breathwrk_middle_duration_3"
+        case .breathwrk_middle_duration_5: return "breathwrk_middle_duration_5"
+        case .breathwrk_middle_duration_10: return "breathwrk_middle_duration_10"
+        case .breathwrk_middle_tapped_back: return "breathwrk_middle_tapped_back"
+        case .breathwrk_middle_tapped_settings: return "breathwrk_middle_tapped_settings"
+        case .screen_load_breathwrk_middle: return "screen_load_breathwrk_middle"
+            
+            
         case .screen_load_onboarding: return "screen_load_onboarding"
         case .onboarding_tapped_continue: return "onboarding_tapped_continue"
         case .onboarding_tapped_sign_in: return "onboarding_tapped_sign_in"
