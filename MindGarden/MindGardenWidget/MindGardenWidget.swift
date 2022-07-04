@@ -69,10 +69,23 @@ struct MindGardenWidgetEntryView : View {
                 Color("darkWhite")
                 switch family {
                 case .systemSmall:
-                    Text("🛠 We're working hard on creating a brand new small widget! \n-MindGarden Team")
-                        .font(Font.fredoka(.semiBold, size: 14))
-                        .foregroundColor(Color("darkgreen"))
-                        .frame(width: 150)
+                    ZStack {
+//                        for familyName in UIFont.familyNames {
+//                            print("\n-- \(familyName) \n")
+//                            for fontName in UIFont.fontNames(forFamilyName: familyName) {
+//                                print(fontName)
+//                            }
+//                        }
+                        Image("smallWidgetBackground")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                        Text("32")
+                            .font(Font.fredoka(.bold, size: 28))
+                            .foregroundColor(Color.white)
+                            .frame(width: 150)
+                            .offset(x: -40, y: -50)
+                    }
+                    
                 case .systemMedium:
                     Text("🛠 We're working hard on creating a brand new medium widget! Thank you for your patience. \n-MindGarden Team")
                         .font(Font.fredoka(.semiBold, size: 16))
