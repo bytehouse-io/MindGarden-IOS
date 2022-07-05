@@ -14,6 +14,10 @@ enum Mood: String {
     case sad
     case angry
     case stressed
+    case veryGood
+    case good
+    case bad
+    case veryBad
     case none
 
     var title: String {
@@ -23,6 +27,10 @@ enum Mood: String {
         case .sad: return "sad"
         case .angry: return "angry"
         case .stressed: return "stressed"
+        case .veryGood: return "veryGood"
+        case .good: return "good"
+        case .bad: return "bad"
+        case .veryBad: return "veryBad"
         case .none: return "none"
         }
     }
@@ -53,6 +61,10 @@ enum Mood: String {
         case .sad: return Clr.gardenBlue
         case .angry: return Clr.gardenRed
         case .stressed: return Clr.purple
+        case .veryGood: return Clr.veryGood
+        case .good: return Clr.good
+        case .bad: return Clr.bad
+        case .veryBad: return Clr.veryBad
         case .none: return Clr.dirtBrown
         }
     }
@@ -68,6 +80,10 @@ enum Mood: String {
             return Image("okayPot")
         case .stressed:
             return Image("stressedPot")
+        case .bad: return Image("badPot")
+        case .veryBad: return Image("veryBadPot")
+        case .good: return Image("goodPot")
+        case .veryGood: return Image("veryGoodPot")
         default:
             return Image("okay")
         }
@@ -94,7 +110,7 @@ struct MoodCheck: View {
                     VStack(alignment: .center, spacing: 10) {
                     Spacer()
                     Text("How are we feeling today?")
-                            .font(Font.fredoka(.bold, size: K.isPad() ? 40 : 24))
+                            .font(Font.fredoka(.semiBold, size: K.isPad() ? 40 : 24))
                         .foregroundColor(Clr.black1)
                         .frame(width: g.size.width * 0.8, alignment: .center)
                         .lineLimit(1)
@@ -125,11 +141,11 @@ struct MoodCheck: View {
                             .cornerRadius(12)
                             .neoShadow()
                         HStack {
-                            SingleMood(moodSelected: $moodSelected, mood: .happy)
+                            SingleMood(moodSelected: $moodSelected, mood: .veryBad)
+                            SingleMood(moodSelected: $moodSelected, mood: .bad)
                             SingleMood(moodSelected: $moodSelected, mood: .okay)
-                            SingleMood(moodSelected: $moodSelected, mood: .angry)
-                            SingleMood(moodSelected: $moodSelected, mood: .stressed)
-                            SingleMood(moodSelected: $moodSelected, mood: .sad)
+                            SingleMood(moodSelected: $moodSelected, mood: .good)
+                            SingleMood(moodSelected: $moodSelected, mood: .veryGood)
                         }.padding(.horizontal, 10)
                     }.frame(width: g.size.width * 0.9, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
                         DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
@@ -213,6 +229,10 @@ struct SingleMood: View {
                         case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
                         case .okay: Analytics.shared.log(event: .mood_tapped_okay)
                         case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                        case .bad: Analytics.shared.log(event: .mood_tapped_bad)
+                        case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
+                        case .good: Analytics.shared.log(event: .mood_tapped_good)
+                        case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
                         case .none: Analytics.shared.log(event: .mood_tapped_cancel)
                         }
                         if moodSelected == mood {
@@ -221,11 +241,11 @@ struct SingleMood: View {
                             moodSelected = mood
                         }
                     }.opacity(moodSelected == mood ? 0.3 : 1)
-                Text(mood.title)
-                    .font(Font.fredoka(.semiBold, size: 14))
-                    .foregroundColor(.gray)
-                    .minimumScaleFactor(0.05)
-                    .lineLimit(1)
+//                Text(mood.title)
+//                    .font(Font.fredoka(.semiBold, size: 14))
+//                    .foregroundColor(.gray)
+//                    .minimumScaleFactor(0.05)
+//                    .lineLimit(1)
             }
             if moodSelected == mood {
                 Image(systemName: "checkmark")

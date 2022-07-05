@@ -59,7 +59,7 @@ struct Meditation: Hashable {
             retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
         }
         switch selectedMood {
-        case .stressed:
+        case .stressed, .veryBad:
             retMeds += allMeditations.filter { med in
                 med.id == 46 || med.id == 38 || med.id == 51 || med.id == 25  || med.id == 36 || med.id == 24
             }
@@ -67,7 +67,7 @@ struct Meditation: Hashable {
             retMeds += allMeditations.filter { med in
                 med.id == 24 || med.id == 42 || med.id == 25 || med.id == 15 || med.id == 50
             }
-        case .okay, .happy:
+        case .okay, .happy, .good, .veryGood:
             if Calendar.current.component( .hour, from:Date() ) < 18 { // daytime meds only
                 retMeds += allMeditations.filter { med in med.id == 53  || med.id == 49}
             } else {
@@ -76,7 +76,7 @@ struct Meditation: Hashable {
             retMeds += allMeditations.filter { med in med.id == 25  || med.id == 50 // affirmations
             || med.id == 20 || med.id == 21 || med.id == 16 || med.id == 40 || med.id == 17
             }
-        case .sad:
+        case .sad, .bad:
             retMeds += allMeditations.filter { med in
                 med.id == 52 || med.id == 40 || med.id == 42 || med.id == 21 || med.id == 50 // affirmations
                 || med.id == 51 || med.id == 21 || med.id == 15  || med.id == 36
