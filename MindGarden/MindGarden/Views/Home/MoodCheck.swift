@@ -8,7 +8,7 @@
 import SwiftUI
 import Amplitude
 
-enum Mood: String {
+enum Mood: String, CaseIterable {
     case happy
     case okay
     case sad
@@ -20,6 +20,8 @@ enum Mood: String {
     case veryBad
     case none
 
+    var id: String { return self.rawValue }
+    
     var title: String {
         switch self {
         case .happy: return "happy"
@@ -27,10 +29,10 @@ enum Mood: String {
         case .sad: return "sad"
         case .angry: return "angry"
         case .stressed: return "stressed"
-        case .veryGood: return "veryGood"
+        case .veryGood: return "very Good"
         case .good: return "good"
         case .bad: return "bad"
-        case .veryBad: return "veryBad"
+        case .veryBad: return "very Bad"
         case .none: return "none"
         }
     }
@@ -55,12 +57,13 @@ enum Mood: String {
     }
     var options: [String] {
         switch self {
+        case .happy: return ["😃 Excited","😊 Happy","🎨 Inspired","💪 Confident","🌱 Hopeful","💚 Loved","👏 Proud","🙏 Grateful","☀️ Joyful"]
         case .veryGood: return ["😃 Excited", "😊 happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
         case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 happy", "🎨 Inspired"]
         case .okay: return ["😐 Fine", "🥱 Bored", "🙃 Unsure", "🏃 Busy", "😌 Calm", "🤨 Confused", "😠 Frustrated", "😴 Tired", "✈️ Distant"]
         case .bad: return ["😰 anxious", "😩 stressed", "🏎️ Impatient", "😤 Frustrated", "😒 annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
         case .veryBad: return ["😰 anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
-        default: return [""]
+        default: return []
         }
     }
 
@@ -98,6 +101,31 @@ enum Mood: String {
             return Image("okay")
         }
     }
+    
+    var moodImage: Image {
+            switch self {
+            case .happy:
+                return Image("happyPot")
+            case .sad:
+                return Image("sadPot")
+            case .angry:
+                return Image("angryPot")
+            case .okay:
+                return Image("okayPot")
+            case .stressed:
+                return Image("stressedPot")
+            case .veryGood:
+                return Image("veryGoodPot")
+            case .good:
+                return Image("goodPot")
+            case .bad:
+                return Image("badPot")
+            case .veryBad:
+                return Image("veryBadPot")
+            case .none:
+                return Image("okay")
+            }
+        }
 }
 struct MoodCheck: View {
     @Binding var shown: Bool

@@ -12,6 +12,7 @@ import Foundation
 struct K {
     static var userPreferences = "userPreferences"
     static var journey = "Journey"
+    static var mood = "mood"
 
     struct defaults {
         static var favorites = "favorited"

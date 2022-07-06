@@ -17,7 +17,7 @@ import Paywall
 var launchedApp = false
 
 enum Sheet: Identifiable {
-    case profile, plant, search, streak
+    case profile, plant, search, streak, mood
     var id: Int {
         hashValue
     }
@@ -31,7 +31,7 @@ struct Home: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
-    @State private var showModal = false
+    @State private var showModal:Bool = false
     @State private var showSearch = false
     @State private var showUpdateModal = false
     @State private var showMiddleModal = false
@@ -46,6 +46,8 @@ struct Home: View {
     @State private var showAlert = false
     @State private var alertMsg = ""
     @State private var showChallenge = false
+    @State private var showMoodElaborate = true
+    @State private var selectedMood: Mood = .happy
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -57,7 +59,7 @@ struct Home: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 GeometryReader { g in
-                    HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel)
+                    HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel, selectedMood: $selectedMood)
                         .padding(.top, -20)
                     if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase || showChallenge {
                         Color.black
@@ -116,6 +118,8 @@ struct Home: View {
                     CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false))
                 case .streak:
                     StreakScene()
+                case .mood:
+                    MoodElaborate(selectedMood:selectedMood)
                 }
             }
             .navigationBarHidden(true)

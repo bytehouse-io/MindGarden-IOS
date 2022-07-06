@@ -535,6 +535,8 @@ struct Garden: View {
                     EmptyView()
                 case .streak:
                     EmptyView()
+                case .mood:
+                    EmptyView()
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)
