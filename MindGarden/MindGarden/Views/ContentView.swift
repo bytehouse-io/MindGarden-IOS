@@ -317,7 +317,7 @@ struct ContentView: View {
                                     }
                                 }
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)
-                                    .frame(width: geometry.size.width, height: geometry.size.height * 0.45)
+                                    .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(12)
                                     .offset(y: addMood ?( geometry.size.height/(K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)

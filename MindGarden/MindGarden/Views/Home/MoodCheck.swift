@@ -146,73 +146,75 @@ struct MoodCheck: View {
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center, spacing: 10) {
-                    Spacer()
-                    Text("How are we feeling today?")
-                            .font(Font.fredoka(.semiBold, size: K.isPad() ? 40 : 24))
-                        .foregroundColor(Clr.black1)
-                        .frame(width: g.size.width * 0.8, alignment: .center)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                            HStack {
-                                Text("Recommendations ")
-                                        .font(Font.fredoka(.semiBold, size: K.isPad() ? 36 : 20))
-                                        .foregroundColor(Clr.black1)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.5)
-                                Toggle("", isOn: $notifOn)
-                                    .onChange(of: notifOn) { val in
-                                        UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
-                                        if val {
-                                            Analytics.shared.log(event: .mood_toggle_recs_on)
-                                        } else { //turned off
-                                            Analytics.shared.log(event: .mood_toggle_recs_off)
-                                        }
-                                    }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-                                    .frame(width: g.size.width * 0.08, height: 10)
-                            } .frame(width: g.size.width * 0.8, alignment: .center)
-                        }
+                        HStack {
+                            Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
+                                .font(Font.fredoka(.medium, size: 20))
+                                .foregroundColor(Clr.black2)
+                                .padding(.top, 35)
+                            Spacer()
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(Clr.black1)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 12, height:12)
+                                .background(
+                                    Rectangle()
+                                        .fill(Clr.darkWhite)
+                                        .frame(width:30,height:30)
+                                        .cornerRadius(17)
+                                        .neoShadow()
+                                ).onTapGesture {
+                                    withAnimation { shown.toggle() }
+                                }.offset(x: -5, y: 5)
+                        }.frame(width: g.size.width * 0.85, alignment: .leading)
+     
+                        Text("How are you feeling right now?")
+                            .font(Font.fredoka(.semiBold, size: K.isPad() ? 40 : 28))
+                            .foregroundColor(Clr.brightGreen)
+                            .frame(width: g.size.width * 0.85, alignment: .leading)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                            .padding(.bottom, 15)
+//                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+//                            HStack {
+//                                Text("Recommendations ")
+//                                        .font(Font.fredoka(.semiBold, size: K.isPad() ? 36 : 20))
+//                                        .foregroundColor(Clr.black1)
+//                                        .lineLimit(1)
+//                                        .minimumScaleFactor(0.5)
+//                                Toggle("", isOn: $notifOn)
+//                                    .onChange(of: notifOn) { val in
+//                                        UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
+//                                        if val {
+//                                            Analytics.shared.log(event: .mood_toggle_recs_on)
+//                                        } else { //turned off
+//                                            Analytics.shared.log(event: .mood_toggle_recs_off)
+//                                        }
+//                                    }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+//                                    .frame(width: g.size.width * 0.08, height: 10)
+//                            } .frame(width: g.size.width * 0.8, alignment: .center)
+//                        }
                     
                     ZStack(alignment: .center) {
                         Rectangle()
-                            .fill(Clr.darkWhite)
-                            .cornerRadius(12)
+                            .fill(Clr.yellow)
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 14)
                             .neoShadow()
                         HStack {
-                            SingleMood(moodSelected: $moodSelected, mood: .veryBad)
-                            SingleMood(moodSelected: $moodSelected, mood: .bad)
-                            SingleMood(moodSelected: $moodSelected, mood: .okay)
-                            SingleMood(moodSelected: $moodSelected, mood: .good)
-                            SingleMood(moodSelected: $moodSelected, mood: .veryGood)
+                            SingleMood(moodSelected: $moodSelected, mood: .veryBad, save: save)
+                            SingleMood(moodSelected: $moodSelected, mood: .bad, save: save)
+                            SingleMood(moodSelected: $moodSelected, mood: .okay, save: save)
+                            SingleMood(moodSelected: $moodSelected, mood: .good, save: save)
+                            SingleMood(moodSelected: $moodSelected, mood: .veryGood, save: save)
                         }.padding(.horizontal, 10)
-                    }.frame(width: g.size.width * 0.9, height: g.size.height/(K.isPad() ? 3.5 : 3), alignment: .center)
-                        DoneCancel(showPrompt: .constant(false),shown: $shown, width: g.size.width, height: g.size.height, mood: true, save: {
-                            var num = UserDefaults.standard.integer(forKey: "numMoods")
-                            num += 1
-                            UserDefaults.standard.setValue(num, forKey: "numMoods")
-                            let identify = AMPIdentify()
-                                .set("num_moods", value: NSNumber(value: num))
-                            Amplitude.instance().identify(identify ?? AMPIdentify())
-                            if moodSelected != .none {
-                                if notifOn {
-                                    showRecs = UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? false : true
-                                } else {
-                                    showRecs = false
-                                }
-                                Analytics.shared.log(event: .mood_tapped_done)
-                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
-                                    UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
-                                    showPopupWithAnimation {}
-                                }
-                                gardenModel.save(key: "moods", saveValue: moodSelected.title, coins: userModel.coins)
-                            }
-                        }, moodSelected: moodSelected,showRecs: $showRecs).padding(.bottom)
-    
+                    }.frame(width: g.size.width * 0.9, height: g.size.height/(K.isPad() ? 3.5 : 3.5), alignment: .center)
                         Spacer()
                         if K.isPad() {
                             Spacer()
                         }
                     }
+                    Spacer()
                     Spacer()
                 }
         }.onAppear {
@@ -221,6 +223,25 @@ struct MoodCheck: View {
     }
 
     ///Ashvin : Show popup with animation method
+    func save() {
+        var num = UserDefaults.standard.integer(forKey: "numMoods")
+        num += 1
+        UserDefaults.standard.setValue(num, forKey: "numMoods")
+        let identify = AMPIdentify()
+            .set("num_moods", value: NSNumber(value: num))
+        Amplitude.instance().identify(identify ?? AMPIdentify())
+        if moodSelected != .none {
+            Analytics.shared.log(event: .mood_tapped_done)
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
+                showPopupWithAnimation {}
+            }
+            gardenModel.save(key: "moods", saveValue: moodSelected.title, coins: userModel.coins)
+        }
+        withAnimation {
+            shown = false
+        }
+    }
 
         private func showPopupWithAnimation(completion: @escaping () -> ()) {
             withAnimation(.easeIn(duration:0.14)){
@@ -251,34 +272,40 @@ struct MoodCheck_Previews: PreviewProvider {
 struct SingleMood: View {
     @Binding var moodSelected: Mood
     var mood: Mood
+    var save: () -> ()
 
     var body: some View {
         ZStack {
             VStack(spacing: 2) {
-                Mood.getMoodImage(mood: mood)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(5)
-                    .onTapGesture {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        switch mood {
-                        case .angry: Analytics.shared.log(event: .mood_tapped_angry)
-                        case .sad: Analytics.shared.log(event: .mood_tapped_sad)
-                        case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
-                        case .okay: Analytics.shared.log(event: .mood_tapped_okay)
-                        case .happy: Analytics.shared.log(event: .mood_tapped_happy)
-                        case .bad: Analytics.shared.log(event: .mood_tapped_bad)
-                        case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
-                        case .good: Analytics.shared.log(event: .mood_tapped_good)
-                        case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
-                        case .none: Analytics.shared.log(event: .mood_tapped_cancel)
-                        }
-                        if moodSelected == mood {
-                            moodSelected = .none
-                        } else {
-                            moodSelected = mood
-                        }
-                    }.opacity(moodSelected == mood ? 0.3 : 1)
+                Button {
+                    print("jermain")
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    switch mood {
+                    case .angry: Analytics.shared.log(event: .mood_tapped_angry)
+                    case .sad: Analytics.shared.log(event: .mood_tapped_sad)
+                    case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
+                    case .okay: Analytics.shared.log(event: .mood_tapped_okay)
+                    case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                    case .bad: Analytics.shared.log(event: .mood_tapped_bad)
+                    case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
+                    case .good: Analytics.shared.log(event: .mood_tapped_good)
+                    case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
+                    case .none: Analytics.shared.log(event: .mood_tapped_cancel)
+                    }
+                    if moodSelected == mood {
+                        moodSelected = .none
+                    } else {
+                        moodSelected = mood
+                    }
+                    save()
+                    moodSelected = .none
+                } label: {
+                    Mood.getMoodImage(mood: mood)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(5)
+                        .opacity(moodSelected == mood ? 0.3 : 1)
+                }
 //                Text(mood.title)
 //                    .font(Font.fredoka(.semiBold, size: 14))
 //                    .foregroundColor(.gray)
