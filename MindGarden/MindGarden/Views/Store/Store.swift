@@ -20,6 +20,7 @@ struct Store: View {
     @State private var showTip = false
     @State private var currentHightlight: Int = -1
     @State private var isNotifOn = false
+    @State private var tabType:TopTabType = .badge
     
     @Environment(\.presentationMode) var presentationMode
 
@@ -29,30 +30,33 @@ struct Store: View {
             GeometryReader { g in
                 VStack {
                     if isShop {
-                        HStack(spacing: 25) {
-                            Spacer()
-                            Button {
-                                Analytics.shared.log(event: .store_tapped_store_option)
-                                withAnimation {
-                                    isStore = true
-                                }
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            } label: {
-                                MenuButton(title: "Store", isStore: isStore)
-                            }
-                            Button {
-                                Analytics.shared.log(event: .store_tapped_badges_option)
-                                withAnimation {
-                                    isStore = false
-                                }
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            } label: {
-                                MenuButton(title: "Badges", isStore: !isStore)
-                            }
-                            Spacer()
-                        }
-                        .padding(.top, 35)
-                        .zIndex(currentHightlight == 0 ? 50 : -4)
+                        StoreTab(selectedTab: $tabType)
+                            .frame(width: g.size.width * 0.85)
+                            .padding(.top, 35)
+//                        HStack(spacing: 25) {
+//                            Spacer()
+//                            Button {
+//                                Analytics.shared.log(event: .store_tapped_store_option)
+//                                withAnimation {
+//                                    isStore = true
+//                                }
+//                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                            } label: {
+//                                MenuButton(title: "Store", isStore: isStore)
+//                            }
+//                            Button {
+//                                Analytics.shared.log(event: .store_tapped_badges_option)
+//                                withAnimation {
+//                                    isStore = false
+//                                }
+//                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                            } label: {
+//                                MenuButton(title: "Badges", isStore: !isStore)
+//                            }
+//                            Spacer()
+//                        }
+//                        .padding(.top, 35)
+//                        .zIndex(currentHightlight == 0 ? 50 : -4)
                     } else {
                         HStack {
                             Spacer()
@@ -94,7 +98,7 @@ struct Store: View {
                         VStack(alignment: .leading, spacing: -10) {
                             HStack {
                                 if isShop {
-                                    Text(!isStore ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
+                                    Text(!(tabType == .store) ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
                                         .font(Font.fredoka(.bold, size: 32))
                                         .minimumScaleFactor(0.005)
                                         .lineLimit(2)
@@ -104,7 +108,7 @@ struct Store: View {
                                         .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                                 }
                             }
-                            if isShop && !isStore {
+                            if isShop && !(tabType == .store) {
                                 ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
                                     Button {
                                         Analytics.shared.log(event: .store_tapped_badge_tile)
@@ -157,7 +161,7 @@ struct Store: View {
                                     .font(Font.fredoka(.semiBold, size: 24))
                                     .foregroundColor(Clr.black1)
                             }.padding(.bottom, -10)
-                            if isShop && !isStore {
+                            if isShop && !(tabType == .store) {
                                 ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count/2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
                                     Button {
                                         Analytics.shared.log(event: .store_tapped_badge_tile)
@@ -246,74 +250,74 @@ struct Store: View {
                 }
                 
                 if !UserDefaults.standard.bool(forKey: "day2") && isShop {
-                    Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
-                        .frame(height: UIScreen.screenHeight)
+//                    Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+//                        .frame(height: UIScreen.screenHeight)
 
-                    ZStack {
-                        Rectangle()
-                            .fill(Clr.darkWhite)
-                            .cornerRadius(20)
-                        VStack {
-                            if UserDefaults.standard.bool(forKey: "day1") {
-                                (Text("🔐 This page will\nunlock in ")
-                                    .foregroundColor(Clr.black2) +
-                                 Text(bonusModel.progressiveInterval)
-                                    .foregroundColor(Clr.darkgreen) +
-                                 Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
-                                    .foregroundColor(Clr.black2))
-                                    .font(Font.fredoka(.semiBold, size: 22))
-                                    .multilineTextAlignment(.center)
-                            } else {
-                                (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
-                                 + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
-                                    .font(Font.fredoka(.semiBold, size: 22))
-                                    .multilineTextAlignment(.center)
-                            }
-
-                            if !isNotifOn {
-                                Button {
-                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
-                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
-                                            if accepted {
-                                                Analytics.shared.log(event: .notification_success_learn)
-                                                NotificationHelper.addOneDay()
-                                                NotificationHelper.addThreeDay()
-                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
-                                                    NotificationHelper.freeTrial()
-                                                }
-                                                UserDefaults.standard.setValue(true, forKey: "mindful")
-//                                                NotificationHelper.createMindfulNotifs()
-                                                isNotifOn = true
-                                                if UserDefaults.standard.bool(forKey: "day1") {
-                                                    NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
-                                                } else {
-                                                    NotificationHelper.addUnlockedFeature(title: "🔓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
-                                                }
-                                            }
-                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
-                                        })
-                                    } else {
-                                        promptNotif()
-                                        if UserDefaults.standard.bool(forKey: "day1") {
-                                            NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
-                                        } else {
-                                            NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
-                                        }
-                                    }
-
-                                } label: {
-                                    Capsule()
-                                        .fill(Clr.yellow)
-                                        .frame(width: UIScreen.main.bounds.width/2, height: 40)
-                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
-                                                    .multilineTextAlignment(.center)
-                                                    .foregroundColor(.black)
-                                        )
-                                }.buttonStyle(NeumorphicPress())
-                            }
-                      }
-                    }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
-                      .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+//                    ZStack {
+//                        Rectangle()
+//                            .fill(Clr.darkWhite)
+//                            .cornerRadius(20)
+//                        VStack {
+//                            if UserDefaults.standard.bool(forKey: "day1") {
+//                                (Text("🔐 This page will\nunlock in ")
+//                                    .foregroundColor(Clr.black2) +
+//                                 Text(bonusModel.progressiveInterval)
+//                                    .foregroundColor(Clr.darkgreen) +
+//                                 Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
+//                                    .foregroundColor(Clr.black2))
+//                                    .font(Font.fredoka(.semiBold, size: 22))
+//                                    .multilineTextAlignment(.center)
+//                            } else {
+//                                (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
+//                                 + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
+//                                    .font(Font.fredoka(.semiBold, size: 22))
+//                                    .multilineTextAlignment(.center)
+//                            }
+//
+//                            if !isNotifOn {
+//                                Button {
+//                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
+//                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
+//                                            if accepted {
+//                                                Analytics.shared.log(event: .notification_success_learn)
+//                                                NotificationHelper.addOneDay()
+//                                                NotificationHelper.addThreeDay()
+//                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
+//                                                    NotificationHelper.freeTrial()
+//                                                }
+//                                                UserDefaults.standard.setValue(true, forKey: "mindful")
+////                                                NotificationHelper.createMindfulNotifs()
+//                                                isNotifOn = true
+//                                                if UserDefaults.standard.bool(forKey: "day1") {
+//                                                    NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
+//                                                } else {
+//                                                    NotificationHelper.addUnlockedFeature(title: "🔓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+//                                                }
+//                                            }
+//                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
+//                                        })
+//                                    } else {
+//                                        promptNotif()
+//                                        if UserDefaults.standard.bool(forKey: "day1") {
+//                                            NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
+//                                        } else {
+//                                            NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+//                                        }
+//                                    }
+//
+//                                } label: {
+//                                    Capsule()
+//                                        .fill(Clr.yellow)
+//                                        .frame(width: UIScreen.main.bounds.width/2, height: 40)
+//                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
+//                                                    .multilineTextAlignment(.center)
+//                                                    .foregroundColor(.black)
+//                                        )
+//                                }.buttonStyle(NeumorphicPress())
+//                            }
+//                      }
+//                    }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
+//                      .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
                 }
 
                 if showModal || confirmModal {

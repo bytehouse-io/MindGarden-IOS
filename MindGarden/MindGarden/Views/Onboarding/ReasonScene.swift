@@ -36,18 +36,17 @@ struct ReasonScene: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: UIScreen.screenWidth * 0.6)
                                     .padding(.leading, -20)
-                                    .offset(y: -10)
+                                    .offset(x: -20, y: -35)
                                 Spacer()
                             }
                             Text("What brings you to MindGarden?")
-                                .font(Font.fredoka(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 28))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
-                                .padding(.top, 20)
+                                .padding(.vertical, 20)
                                 .padding(.horizontal)
                                 .frame(height: 50)
-                                .padding(.bottom, 30)
                             ForEach(reasonList) { reason in
                                 SelectionRow(width: width, height: height, reason: reason, selected: $selected)
                             }
@@ -56,7 +55,7 @@ struct ReasonScene: View {
                                     MGAudio.sharedInstance.stopSound()
                                     MGAudio.sharedInstance.playSound(soundFileName: "waterdrops.mp3")
                                 }
-                                Analytics.shared.log(event: .experience_tapped_continue)
+                                Analytics.shared.log(event: .reason_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 selected.forEach { item in
                                     arr.append(item.title)
@@ -86,18 +85,18 @@ struct ReasonScene: View {
                                     }
                                 } //TODO gray out button if not selected
                             } label: {
-                                Capsule()
-                                    .fill(Clr.darkWhite)
+                                Rectangle()
+                                    .fill(Clr.yellow)
                                     .overlay(
-                                        Text("Continue")
+                                        Text("Continue 👉")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
-                                    )
-                            }.frame(height: 50)
-                                .padding()
+                                    ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
+                            }.frame( height: 50)
+                                .padding(.top, 30)
                                 .buttonStyle(NeumorphicPress())
-                            Spacer()
-                        }
+                                .padding(.horizontal)
+                        }.frame(width: width * 0.9)
                 }
             }
         }.onDisappear {
@@ -156,17 +155,16 @@ struct ReasonScene: View {
             } label: {
                 ZStack {
                     Rectangle()
-                        .fill(selected.contains(where: { $0.id == reason.id }) ? Clr.yellow : Clr.darkWhite)
-                        .cornerRadius(15)
+                        .fill(selected.contains(where: { $0.id == reason.id }) ? Clr.brightGreen : Clr.darkWhite)
+                        .cornerRadius(20)
                         .frame(height: height * (K.isSmall() ? 0.11 : 0.125))
-                        .overlay(RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Clr.darkgreen, lineWidth: selected.contains(where: { $0.id == reason.id }) ? 3 : 0))
+                        .addBorder(.black, width: 1.5, cornerRadius: 20)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
                     HStack(spacing: 50) {
                         Text(reason.title)
-                            .font(Font.fredoka(.bold, size: K.isSmall() ? 18 : 20))
-                            .foregroundColor(selected.contains(where: { $0.id == reason.id }) ? (colorScheme == .dark ? Color.black : Clr.black1 ): Clr.black1)
+                            .font(Font.fredoka(.semiBold, size: K.isSmall() ? 18 : 20))
+                            .foregroundColor(selected.contains(where: { $0.id == reason.id }) ? .white : Clr.black2)
                             .padding()
                             .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
                             .lineLimit(2)
@@ -175,6 +173,7 @@ struct ReasonScene: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.15)
+                            .offset(x: -20)
                     }
                 }
             }.buttonStyle(NeumorphicPress())

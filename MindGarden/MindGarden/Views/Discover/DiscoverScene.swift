@@ -12,7 +12,7 @@ var learnNotif = false
 struct DiscoverScene: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
-    @State private var selectedTab: DiscoverTabType = .quickStart
+    @State private var selectedTab: TopTabType = .quickStart
     @State private var tappedSearch = false
     var body: some View {
         ZStack(alignment:.top) {
@@ -86,6 +86,7 @@ struct DiscoverScene: View {
             case .learn:
                 LearnScene()
                     .environmentObject(bonusModel)
+            default: EmptyView()
             }
         }
     }

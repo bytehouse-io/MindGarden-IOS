@@ -27,7 +27,7 @@ struct NameScene: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: UIScreen.screenWidth * 0.6)
                                     .padding(.leading, -20)
-                                    .offset(x: -10, y: -10)
+                                    .offset(x: -20, y: -10)
                                 Spacer()
                                 Image(systemName: "arrow.backward")
                                     .font(.system(size: 22))
@@ -87,13 +87,13 @@ struct NameScene: View {
                                     }
                                 }
                             } label: {
-                                Capsule()
-                                    .fill(Clr.darkWhite)
+                                Rectangle()
+                                    .fill(Clr.yellow)
                                     .overlay(
-                                        Text("Continue")
+                                        Text("Continue 👉")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
-                                    )
+                                    ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())

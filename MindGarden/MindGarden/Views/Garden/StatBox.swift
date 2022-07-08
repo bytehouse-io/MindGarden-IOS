@@ -15,8 +15,8 @@ struct StatBox: View {
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                .fill(Clr.darkWhite)
-                .cornerRadius(15)
+                .fill(Clr.yellow)
+                .addBorder(.black, width: 1.5, cornerRadius: 14)
                 .neoShadow()
             VStack(alignment:.center, spacing:5){
                 Text(label)

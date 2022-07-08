@@ -36,11 +36,11 @@ struct ExperienceScene: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: UIScreen.screenWidth * 0.6)
                                     .padding(.leading, -20)
-                                    .offset(y: -10)
+                                    .offset(x: -20, y: -10)
                                 Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
-                                .font(Font.fredoka(.bold, size: 24))
+                                .font(Font.fredoka(.semiBold, size: 28))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
@@ -83,20 +83,19 @@ struct ExperienceScene: View {
                                     }
                                 } //TODO gray out button if not selected
                             } label: {
-                                Capsule()
-                                    .fill(Clr.darkWhite)
+                                Rectangle()
+                                    .fill(Clr.yellow)
                                     .overlay(
-                                        Text("Continue")
+                                        Text("Continue 👉")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
-                                    )
+                                    ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
                                 .offset(y: 35)
-                            
                             Spacer()
-                        }
+                        }.frame(width: width * 0.9)
                 }
             }
         }.onDisappear {
@@ -154,18 +153,17 @@ struct ExperienceScene: View {
             } label: {
                 ZStack {
                     Rectangle()
-                        .fill(selected == title ? Clr.yellow : Clr.darkWhite)
-                        .cornerRadius(15)
+                        .fill(selected == title ? Clr.brightGreen : Clr.darkWhite)
+                        .cornerRadius(20)
                         .frame(height: height * 0.15)
-                        .overlay(RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Clr.darkgreen, lineWidth: selected == title ? 3 : 0))
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 20)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
 
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.fredoka(.bold, size: 24, relativeTo: .subheadline))
-                            .foregroundColor(selected == title ? colorScheme == .dark ? Color.black : Clr.black1 : Clr.black1)
+                            .font(Font.fredoka(.semiBold, size: 24, relativeTo: .subheadline))
+                            .foregroundColor(selected == title ?  Color.white : Clr.black2)
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)
                             .lineLimit(2)
@@ -173,7 +171,8 @@ struct ExperienceScene: View {
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: width * 0.15)
+                            .frame(width: width * 0.15, height: height * 0.125)
+                            .offset(x: -20)
                     }
                 }
             }.buttonStyle(NeumorphicPress())

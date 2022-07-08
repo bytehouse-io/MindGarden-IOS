@@ -60,7 +60,7 @@ struct Garden: View {
                         HStack {
                             Text("👨‍🌾 Your MindGarden")
                                 .font(Font.fredoka(.semiBold, size: 22))
-                                .foregroundColor(Clr.darkgreen)
+                                .foregroundColor(Clr.brightGreen)
                                 .padding()
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
@@ -82,7 +82,7 @@ struct Garden: View {
                                 Image(systemName: "gearshape.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Clr.darkgreen)
+                                    .foregroundColor(Clr.brightGreen)
                                     .frame(height: 25)
                                     .onTapGesture {
                                         Analytics.shared.log(event: .garden_tapped_settings)
@@ -104,7 +104,7 @@ struct Garden: View {
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Clr.darkWhite)
-                                .padding(5)
+//                                .addBorder(Clr.brightGreen, width: 1.5, cornerRadius: 20)
                             VStack(spacing:0) {
                                 GridStack(rows: Date.needsExtraRow(month: gardenModel.selectedMonth, year: gardenModel.selectedYear) ? 6 : 5, columns: 7) { row, col in
                                     ZStack {
@@ -231,7 +231,7 @@ struct Garden: View {
                                         }
                                     }
                                 }
-                                .padding(15)
+                                .padding(3)
                                 .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
                                 .zIndex(-1000)
                                 
@@ -301,7 +301,7 @@ struct Garden: View {
                                     ZStack {
                                         Rectangle()
                                             .fill(Clr.darkWhite)
-                                            .cornerRadius(15)
+                                            .addBorder(.black, width: 1.5, cornerRadius: 14)
                                             .neoShadow()
                                         HStack {
                                             Img.streak
@@ -312,7 +312,7 @@ struct Garden: View {
                                                 .frame(width: 100)
                                                 .offset(x: 5)
                                             VStack(spacing: 20) {
-                                                RoundedRectangle(cornerRadius: 15)
+                                                RoundedRectangle(cornerRadius: 14)
                                                     .stroke(Clr.dirtBrown, lineWidth: 2)
                                                     .background(Clr.calenderSquare.cornerRadius(15))
                                                     .overlay(
@@ -325,7 +325,7 @@ struct Garden: View {
                                                                 .font(Font.fredoka(.bold, size: 20))
                                                         }
                                                     )
-                                                RoundedRectangle(cornerRadius: 15)
+                                                RoundedRectangle(cornerRadius: 14)
                                                     .stroke(Clr.dirtBrown, lineWidth: 2)
                                                     .background(Clr.calenderSquare.cornerRadius(15))
                                                     .overlay(
@@ -352,7 +352,7 @@ struct Garden: View {
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
-                                        .cornerRadius(10)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 14)
                                         .neoShadow()
                                     VStack(spacing:5) {
                                         Text("Moods")
@@ -383,7 +383,7 @@ struct Garden: View {
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
-                                    .cornerRadius(15)
+                                    .addBorder(.black, width: 1.5, cornerRadius: 14)
                                     .neoShadow()
                                     .frame(maxWidth: gp.size.width * 0.85)
                                 HStack(spacing: 20){
@@ -409,7 +409,7 @@ struct Garden: View {
                                     Spacer()
                                 }
                             }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: 150)
-                        }.padding(.vertical, 15)
+                        }.padding(.top, 15)
                             .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                             .offset(y: playEntryAnimation ? 0 : 400)
                             .animation(animation.delay(0.4), value: playEntryAnimation)
@@ -647,7 +647,7 @@ struct FavoritePlant: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(8)
-                .overlay(RoundedRectangle(cornerRadius: 15)
+                .overlay(RoundedRectangle(cornerRadius: 14)
                     .stroke(Clr.darkgreen))
             HStack {
                 Text("\(title)")

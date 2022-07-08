@@ -7,25 +7,34 @@
 
 import SwiftUI
 
-enum DiscoverTabType: String {
-    case journey,quickStart,learn
+enum TopTabType: String {
+    case journey,quickStart, learn, store, badge, realTree
 }
 
 var discoverTabList = [
-    DiscoverMenuItem(tabName: .journey),
-    DiscoverMenuItem(tabName: .quickStart),
-    DiscoverMenuItem(tabName: .learn)
+    MenuItem(tabName: .journey),
+    MenuItem(tabName: .quickStart),
+    MenuItem(tabName: .learn)
+]
+var storeTabList = [
+    MenuItem(tabName: .store),
+    MenuItem(tabName: .badge),
+    MenuItem(tabName: .realTree)
 ]
 
-struct DiscoverMenuItem: Identifiable {
+
+struct MenuItem: Identifiable {
     var id = UUID()
-    var tabName: DiscoverTabType
+    var tabName: TopTabType
     
     var name: String {
         switch self.tabName {
         case .journey: return "Journey"
         case .quickStart: return "Quick Start"
         case .learn: return "Learn"
+        case .store: return "Store"
+        case .badge: return "Badge"
+        case .realTree: return "Real Tree"
         }
     }
 }

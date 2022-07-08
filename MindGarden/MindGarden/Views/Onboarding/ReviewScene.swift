@@ -50,10 +50,12 @@ struct ReviewScene: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                         ZStack {
+                            
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(14)
                                 .frame(width: width * 0.75, height: width * (arr.count == 1 ? 0.22 : arr.count == 2 ? 0.4 : arr.count == 3 ? 0.55 : 0.5))
+                            
                                 .neoShadow()
                             VStack(alignment: .leading, spacing: -15){
                                 HStack {
@@ -219,15 +221,14 @@ struct ReviewScene: View {
                                 }
                             }
                         } label: {
-                            HStack {
-                                Text("MindGarden Tutorial  👉🏻")
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(Font.fredoka(.semiBold, size: 18))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
-                            }.frame(width: g.size.width * 0.75, height: g.size.height/16)
-                            .background(Clr.yellow)
-                            .cornerRadius(25)
+                            Rectangle()
+                                .fill(Clr.yellow)
+                                .overlay(
+                                    Text("MindGarden Tutorial 👉")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.fredoka(.bold, size: 20))
+                                ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
+                                .frame(width: width * 0.75, height: 50)
                         }.padding()
                         .buttonStyle(NeumorphicPress())
                         Button {

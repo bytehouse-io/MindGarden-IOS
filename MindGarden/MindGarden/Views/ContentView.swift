@@ -195,7 +195,8 @@ struct ContentView: View {
                                 
                                 if viewRouter.currentPage == .notification || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
                                         ZStack(alignment: .leading) {
-                                            Rectangle().frame(width: geometry.size.width - 50 , height: 20)
+                                            Rectangle()
+                                                .frame(width: geometry.size.width * 0.8 , height: 20)
                                                 .opacity(0.3)
                                                 .foregroundColor(Clr.darkWhite)
                                             Rectangle().frame(width:progressWidth, height: 20)
@@ -215,7 +216,7 @@ struct ContentView: View {
                                                     self.goShinny = false
                                                     let duration = progressWidth * 0.005
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + duration/2 ) {
-                                                        progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50)
+                                                        progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width * 0.8), geometry.size.width * 0.8)
                                                     }
                                                     withAnimation(.easeOut(duration: duration)){
                                                         self.goShinny = true
@@ -223,7 +224,7 @@ struct ContentView: View {
                                                     }
                                                 }
                                                 .onAppear {
-                                                    progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width - 50), geometry.size.width - 50)
+                                                    progressWidth = min(CGFloat(viewRouter.progressValue) * (geometry.size.width * 0.8), geometry.size.width * 0.8)
                                                 }
                                         }.cornerRadius(45.0)
                                             .padding()

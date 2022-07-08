@@ -68,7 +68,7 @@ struct OnboardingScene: View {
                         VStack(spacing:0) {
                             VStack(alignment:.leading) {
                                 Text(title)
-                                    .font(Font.fredoka(.bold, size: 32))
+                                    .font(Font.fredoka(.semiBold, size: 32))
                                     .padding(.horizontal)
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
@@ -78,7 +78,7 @@ struct OnboardingScene: View {
                                     Text(" Gamification")
                                         .foregroundColor(Clr.brightGreen)
                                 }
-                                .font(Font.fredoka(.bold, size: 32))
+                                .font(Font.fredoka(.semiBold, size: 32))
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom,10)
@@ -115,13 +115,13 @@ struct OnboardingScene: View {
                                    Purchases.shared.setOnesignalID(onesignalId)
                             }
                         } label: {
-                            Capsule()
+                            Rectangle()
                                 .fill(Clr.yellow)
                                 .overlay(
                                     Text("Start Growing 👉")
                                         .foregroundColor(Clr.darkgreen)
                                         .font(Font.fredoka(.semiBold, size: 20))
-                                )
+                                ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
                         }.frame(width:UIScreen.screenWidth*0.8, height: 50)
                             .padding()
                         .buttonStyle(BonusPress())

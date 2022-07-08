@@ -18,11 +18,12 @@ struct PlantTile: View {
     var body: some View {
             ZStack {
                 Rectangle()
-                    .foregroundColor(isBadge ? isOwned ? Clr.darkWhite : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.darkWhite)
+                    .foregroundColor(isBadge ? isOwned ? Clr.yellow : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.yellow)
                     .frame(width: width * 0.35, height: height * 0.3)
                     .cornerRadius(15)
-                    .overlay(RoundedRectangle(cornerRadius: 15)
+                    .overlay(RoundedRectangle(cornerRadius: 14)
                     .stroke(Clr.darkgreen, lineWidth: !isShop && plant == userModel.selectedPlant ? 3 : 0))
+                    .addBorder(.black,width: 1.5, cornerRadius: 14)
                     .padding()
                 VStack(alignment: isShop ? .leading : .center, spacing: 0) {
                     isShop ?
