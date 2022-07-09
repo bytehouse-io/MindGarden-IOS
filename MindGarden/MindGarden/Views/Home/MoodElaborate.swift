@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct MoodElaborate: View {
-    @State var selectedMood: Mood
+    
+    @EnvironmentObject var moodModel: MoodModel
+    @State var selectedMood: NewMood
     @State private var selectedSubMood: String = ""
     @Environment(\.presentationMode) var presentationMode
     
@@ -61,6 +63,7 @@ struct MoodElaborate: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(selectedMood.options, id: \.self) { item in
                             Button {
+                                moodModel.addMood(mood: MoodData(date: "\(Date().toString(withFormat: "EEEE, MMM dd"))", mood: selectedMood.rawValue, subMood: selectedSubMood))
                                 selectedSubMood = item
                                 showDetail = true
                             }
@@ -87,7 +90,7 @@ struct MoodElaborate: View {
             }
         }
         .fullScreenCover(isPresented: $showDetail) {
-            PromptsDetailView(selectedMood: selectedMood,selectedSubMood:$selectedSubMood)
+            PromptsDetailView()
                 .environmentObject(MoodModel())
         }
     }

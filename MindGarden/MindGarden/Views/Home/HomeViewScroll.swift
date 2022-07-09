@@ -21,7 +21,7 @@ struct HomeViewScroll: View {
     @EnvironmentObject var bonusModel: BonusViewModel
     
     @State private var isRecent = true
-    @Binding var selectedMood : Mood
+    @Binding var selectedMood : NewMood
     
     let width = UIScreen.screenWidth
     let height = UIScreen.screenHeight - 100

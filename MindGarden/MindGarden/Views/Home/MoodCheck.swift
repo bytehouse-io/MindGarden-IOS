@@ -8,6 +8,51 @@
 import SwiftUI
 import Amplitude
 
+enum NewMood: String, CaseIterable {
+    case happy, veryGood, good, okay, bad, veryBad
+    
+    var id: String { return self.rawValue }
+    
+    var options: [String] {
+        switch self {
+        case .happy: return ["😃 Excited","😊 Happy","🎨 Inspired","💪 Confident","🌱 Hopeful","💚 Loved","👏 Proud","🙏 Grateful","☀️ Joyful"]
+        case .veryGood: return ["😃 Excited", "😊 happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
+        case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 happy", "🎨 Inspired"]
+        case .okay: return ["😐 Fine", "🥱 Bored", "🙃 Unsure", "🏃 Busy", "😌 Calm", "🤨 Confused", "😠 Frustrated", "😴 Tired", "✈️ Distant"]
+        case .bad: return ["😰 anxious", "😩 stressed", "🏎️ Impatient", "😤 Frustrated", "😒 annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
+        case .veryBad: return ["😰 anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
+        }
+    }
+    
+    var moodImage: Image {
+        switch self {
+        case .happy:
+            return Image("happyPot")
+        case .okay:
+            return Image("okayPot")
+        case .veryGood:
+            return Image("veryGoodPot")
+        case .good:
+            return Image("goodPot")
+        case .bad:
+            return Image("badPot")
+        case .veryBad:
+            return Image("veryBadPot")
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .happy: return "happy"
+        case .okay: return "okay"
+        case .veryGood: return "very Good"
+        case .good: return "good"
+        case .bad: return "bad"
+        case .veryBad: return "very Bad"
+        }
+    }
+}
+
 enum Mood: String, CaseIterable {
     case happy
     case okay
@@ -55,17 +100,6 @@ enum Mood: String, CaseIterable {
             return .none
         }
     }
-    var options: [String] {
-        switch self {
-        case .happy: return ["😃 Excited","😊 Happy","🎨 Inspired","💪 Confident","🌱 Hopeful","💚 Loved","👏 Proud","🙏 Grateful","☀️ Joyful"]
-        case .veryGood: return ["😃 Excited", "😊 happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
-        case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 happy", "🎨 Inspired"]
-        case .okay: return ["😐 Fine", "🥱 Bored", "🙃 Unsure", "🏃 Busy", "😌 Calm", "🤨 Confused", "😠 Frustrated", "😴 Tired", "✈️ Distant"]
-        case .bad: return ["😰 anxious", "😩 stressed", "🏎️ Impatient", "😤 Frustrated", "😒 annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
-        case .veryBad: return ["😰 anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
-        default: return []
-        }
-    }
 
     var color: Color {
         switch self {
@@ -102,30 +136,6 @@ enum Mood: String, CaseIterable {
         }
     }
     
-    var moodImage: Image {
-            switch self {
-            case .happy:
-                return Image("happyPot")
-            case .sad:
-                return Image("sadPot")
-            case .angry:
-                return Image("angryPot")
-            case .okay:
-                return Image("okayPot")
-            case .stressed:
-                return Image("stressedPot")
-            case .veryGood:
-                return Image("veryGoodPot")
-            case .good:
-                return Image("goodPot")
-            case .bad:
-                return Image("badPot")
-            case .veryBad:
-                return Image("veryBadPot")
-            case .none:
-                return Image("okay")
-            }
-        }
 }
 struct MoodCheck: View {
     @Binding var shown: Bool

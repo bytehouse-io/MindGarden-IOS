@@ -16,7 +16,6 @@ struct MoodData: Codable,Identifiable {
     let date: String
     let mood: String
     let subMood: String
-    let elaboration: String
 }
 
 class MoodModel: ObservableObject {
@@ -34,7 +33,6 @@ class MoodModel: ObservableObject {
                         var date = ""
                         var mood = ""
                         var subMood = ""
-                        var elaboration = ""
                         
                         if let idx = document["id"] as? String {
                             ids = idx
@@ -48,11 +46,7 @@ class MoodModel: ObservableObject {
                         if let subMd = document["subMood"] as? String {
                             subMood = subMd
                         }
-                        
-                        if let elb = document["elaboration"] as? String {
-                            elaboration = elb
-                        }
-                        let moodObj = MoodData(id:ids, date: date, mood: mood, subMood: subMood, elaboration: elaboration)
+                        let moodObj = MoodData(id:ids, date: date, mood: mood, subMood: subMood)
                         self?.moodList.append(moodObj)
                     }
                 }
@@ -78,7 +72,6 @@ class MoodModel: ObservableObject {
                 "date": mood.date,
                 "mood": mood.mood,
                 "subMood": mood.subMood,
-                "elaboration": mood.elaboration,
             ]) { (err) in
                 if err != nil {
                     print(err?.localizedDescription as Any)
