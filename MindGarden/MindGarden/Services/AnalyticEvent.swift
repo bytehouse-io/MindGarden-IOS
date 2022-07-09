@@ -148,7 +148,8 @@ enum AnalyticEvent {
     case store_tapped_go_pro
     case store_tapped_badge_tile
     case store_animation_continue //
-    case store_tapped_real_tree //
+    case store_tapped_real_tree_option //
+    case store_tapped_buy_real_tree //
     case store_bought_real_tree //
     case notification_success_store //
     case notification_settings_store //
@@ -621,6 +622,8 @@ extension AnalyticEvent {
         case .store_tapped_go_pro: return "store_tapped_go_pro"
         case .store_tapped_reddit: return "store_tapped_reddit"
         case .store_tapped_badge_tile: return "store_tapped_badge_tile"
+        case  .store_tapped_real_tree_option: return "store_tapped_real_tree_option"
+        case .store_tapped_buy_real_tree: return "store_tapped_buy_real_tree"
         case .store_animation_continue: return "store_animation_continue"
         case .notification_success_store: return "notification_success_store"
         case .notification_settings_store: return "notification_settings_store"
@@ -820,7 +823,6 @@ extension AnalyticEvent {
         case .story_tip_opened: return "story_tip_opened"
         case .story_notification_swipe_gratitude: return "story_notification_swipe_gratitude"
         case .story_swipe_trees_future: return "story_swipe_trees_future"
-        case .store_tapped_real_tree: return "store_tapped_real_tree"
         case .store_bought_real_tree: return "store_bought_real_tree"
         case .no_thanks_50: return "no_thanks_50"
         
