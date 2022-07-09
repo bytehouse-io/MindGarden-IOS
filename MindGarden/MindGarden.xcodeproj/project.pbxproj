@@ -16,6 +16,8 @@
 		581EF8872875CC7E0058C7E4 /* MoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581EF8862875CC7E0058C7E4 /* MoodModel.swift */; };
 		5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5822E586286186C000DB0AFC /* waterdrops.mp3 */; };
 		5822E58B286216C300DB0AFC /* NewAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822E58A286216C200DB0AFC /* NewAuthentication.swift */; };
+		58266E2528798797008594E0 /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58266E2428798797008594E0 /* RecommendationsView.swift */; };
+		58266E2728798E30008594E0 /* party.json in Resources */ = {isa = PBXBuildFile; fileRef = 58266E2628798E30008594E0 /* party.json */; };
 		582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302E27EF3D960026DD16 /* ShareStreak.swift */; };
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
@@ -277,6 +279,8 @@
 		581EF8862875CC7E0058C7E4 /* MoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodModel.swift; sourceTree = "<group>"; };
 		5822E586286186C000DB0AFC /* waterdrops.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = waterdrops.mp3; sourceTree = "<group>"; };
 		5822E58A286216C200DB0AFC /* NewAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAuthentication.swift; sourceTree = "<group>"; };
+		58266E2428798797008594E0 /* RecommendationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
+		58266E2628798E30008594E0 /* party.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = party.json; sourceTree = "<group>"; };
 		582B302E27EF3D960026DD16 /* ShareStreak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreak.swift; sourceTree = "<group>"; };
 		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		5836FA70281C1DAC001AB151 /* ReminderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
@@ -758,6 +762,7 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				58266E2628798E30008594E0 /* party.json */,
 				589DCB072873401B005A8D7E /* turtle.json */,
 				58D5C0F327FB675A00454937 /* background.json */,
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
@@ -779,6 +784,7 @@
 		FE4E9E622676AE39002BC758 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				58266E2428798797008594E0 /* RecommendationsView.swift */,
 				589DCB0528732975005A8D7E /* StartDayView.swift */,
 				58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */,
 				586F856B287026D400C34460 /* HomeViewDashboard.swift */,
@@ -1358,6 +1364,7 @@
 				88D4C5DB27FA468C00CBB956 /* sloth.json in Resources */,
 				8884A998284BDBCA00B0B315 /* flame 2.json in Resources */,
 				58C8BE322804AACA00075FD2 /* plantUnlock.mp3 in Resources */,
+				58266E2728798E30008594E0 /* party.json in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
 				882E62C8284A5E4E00E8BC09 /* background.wav in Resources */,
 				88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */,
@@ -1627,6 +1634,7 @@
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
 				58D6FB4F286D6199003EA6A7 /* PromptsModel.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
+				58266E2528798797008594E0 /* RecommendationsView.swift in Sources */,
 				582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */,
 				88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */,
 				8894E73B27FA809F00234466 /* IAPModal.swift in Sources */,

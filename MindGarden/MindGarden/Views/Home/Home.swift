@@ -47,7 +47,7 @@ struct Home: View {
     @State private var alertMsg = ""
     @State private var showChallenge = false
     @State private var showMoodElaborate = true
-    @State private var selectedMood: Mood = .happy
+    @State private var selectedMood: NewMood = .happy
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -120,6 +120,7 @@ struct Home: View {
                     StreakScene()
                 case .mood:
                     MoodElaborate(selectedMood:selectedMood)
+                        .environmentObject(MoodModel())
                 }
             }
             .navigationBarHidden(true)

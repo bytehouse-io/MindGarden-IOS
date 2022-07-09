@@ -7,15 +7,17 @@
 
 import SwiftUI
 import Lottie
+import Amplitude
 
 struct PromptsDetailView: View, KeyboardReadable {
-    @EnvironmentObject var moodModel: MoodModel
-    @State var selectedMood: Mood
-    @Binding var selectedSubMood: String
     
     @State private var text: String = "Write here..."
     @State private var contentKeyVisible: Bool = true
     @State private var showPrompt = false
+    @State private var showRecommendation = false
+    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
+    
         
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
@@ -102,8 +104,22 @@ struct PromptsDetailView: View, KeyboardReadable {
                 Spacer()
                     .frame(height:50)
                 Button {
-                    moodModel.addMood(mood: MoodData(date: "\(Date().toString(withFormat: "EEEE, MMM dd"))", mood: selectedMood.rawValue, subMood: selectedSubMood, elaboration: text))
-                    presentationMode.wrappedValue.dismiss()
+                    var num = UserDefaults.standard.integer(forKey: "numGrads")
+                    num += 1
+                    let identify = AMPIdentify()
+                        .set("num_gratitudes", value: NSNumber(value: num))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                    if num == 30 {
+                        userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
+                        userModel.buyPlant(unlockedStrawberry: true)
+                        userModel.triggerAnimation = true
+                    }
+                    UserDefaults.standard.setValue(num, forKey: "numGrads")
+                    Analytics.shared.log(event: .gratitude_tapped_done)
+                    gardenModel.save(key: K.defaults.gratitudes, saveValue: text, coins: userModel.coins)
+                    text = "I'm thankful for "
+                    showRecommendation = true
+                    
                 } label: {
                     HStack {
                         Text("Done")
@@ -121,7 +137,10 @@ struct PromptsDetailView: View, KeyboardReadable {
             }
         }
         .ignoresSafeArea()
-        .fullScreenCover(isPresented: $showPrompt) {
+        .fullScreenCover(isPresented: $showRecommendation) {
+            RecommendationsView()
+        }
+        .sheet(isPresented: $showPrompt) {
             PromptsView()
         }
     }

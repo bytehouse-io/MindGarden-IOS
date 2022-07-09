@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StartDayView: View {
     @Binding var activeSheet: Sheet?
-    @Binding var selectedMood: Mood
+    @Binding var selectedMood: NewMood
     var body: some View {
         VStack {
             HStack {
@@ -58,25 +58,24 @@ struct StartDayView: View {
                                     .foregroundColor(Clr.brightGreen)
                                     .font(Font.fredoka(.semiBold, size: 12))
                                 HStack(alignment:.top) {
-                                    ForEach(Mood.allCases, id: \.id) { item in
+                                    ForEach(NewMood.allCases, id: \.id) { item in
                                         Button {
                                             selectedMood = item
                                             activeSheet = .mood
                                         } label: {
                                             VStack(spacing:0) {
-                                                if !(item.title == "none") {
-                                                    item.moodImage
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(maxWidth:80)
-                                                    Text(item.title)
-                                                        .foregroundColor(.black)
-                                                        .font(Font.fredoka(.regular, size: 8))
-                                                }
+                                                item.moodImage
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(maxWidth:80)
+                                                Text(item.title)
+                                                    .foregroundColor(.black)
+                                                    .font(Font.fredoka(.regular, size: 8))
                                             }
+                                            .padding(.bottom,10)
                                         }
                                     }
-                                }
+                                }.padding(.horizontal, 5)
                             }
                             .padding(5)
                             .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 14))
