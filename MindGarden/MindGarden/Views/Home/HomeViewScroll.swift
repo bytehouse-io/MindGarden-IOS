@@ -33,7 +33,7 @@ struct HomeViewScroll: View {
             //MARK: - scroll view
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    HomeViewDashboard(greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP,coin:userModel.coins, streakNumber: bonusModel.streakNumber)
+                    HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP,coin:userModel.coins, streakNumber: bonusModel.streakNumber)
                     StartDayView(activeSheet:$activeSheet, selectedMood: $selectedMood)
                     
                     HStack(spacing: 15) {

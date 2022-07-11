@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeViewDashboard: View {
+    @Binding var showModal : Bool
+    @Binding var totalBonuses : Int
     @Binding var greeting : String
     @State var name : String
     @Binding var activeSheet: Sheet?
@@ -35,12 +37,31 @@ struct HomeViewDashboard: View {
                     
                     Spacer()
                     Button {
-                        UserDefaults.standard.setValue(true, forKey: "plusCoins")
+                        Analytics.shared.log(event: .home_tapped_bonus)
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        Analytics.shared.log(event: .home_tapped_IAP)
-                        withAnimation { showIAP.toggle() }
+                        withAnimation {
+                            DispatchQueue.main.async {
+                                showModal = true
+                            }
+                        }
+//                        UserDefaults.standard.setValue(true, forKey: "plusCoins")
+//                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                        Analytics.shared.log(event: .home_tapped_IAP)
+//                        withAnimation { showIAP.toggle() }
                     } label : {
                         HStack(spacing:5) {
+                            if totalBonuses > 0 {
+                                ZStack {
+                                    Circle().frame(height: 16)
+                                        .foregroundColor(Clr.redGradientBottom)
+                                    Text("\(totalBonuses)")
+                                        .font(Font.fredoka(.bold, size: 12))
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.005)
+                                        .frame(width: 10)
+                                }.frame(width: 15)
+                            }
                             Img.coin
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -54,6 +75,7 @@ struct HomeViewDashboard: View {
                         .roundedCapsule()
                     }
                     .buttonStyle(BonusPress())
+                    .wiggling()
                     
                     Spacer()
                     Button {
