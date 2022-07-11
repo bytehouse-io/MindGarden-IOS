@@ -186,7 +186,15 @@ extension Date {
         }
 
     }
-
+    static func getTime() -> String {
+        let time = Date()
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "h:mm a"
+        timeFormatter.amSymbol = "AM"
+        timeFormatter.pmSymbol = "PM"
+        let stringTime = timeFormatter.string(from: time)
+        return stringTime
+    }
     func intToMonth(num: Int) -> String {
         switch num {
         case 1:

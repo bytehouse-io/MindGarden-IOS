@@ -43,8 +43,8 @@ struct NewAuthentication: View {
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.screenWidth * 0.8, height: 150)
                         .offset(y: -45)
-                    Spacer()
                     if !showFields {
+                        Spacer()
                         HStack {
                             LottieView(fileName: "turtle")
                                 .offset(x: 75, y: -95)
@@ -67,9 +67,10 @@ struct NewAuthentication: View {
                                             .font(Font.fredoka(.semiBold, size: 20))
                                             .foregroundColor(Clr.darkgreen)
                                     )
-                                    .frame(width: UIScreen.screenWidth * 0.35, height: 30)
+                                    .frame(width: UIScreen.screenWidth * 0.35, height: 50)
                             }
                             .buttonStyle(NeumorphicPress())
+                            .offset(y: -45)
                         }
                         VStack(spacing: 0) {
                             ZStack(alignment: .leading) {
@@ -80,7 +81,7 @@ struct NewAuthentication: View {
                                 HStack {
                                     TextField("Email", text: $viewModel.email, onEditingChanged: { focused in
                                         withAnimation {
-                                                                            focusedText = focused
+                                            focusedText = focused
                                         }
                                     })
                                     .foregroundColor(Clr.black2)
@@ -178,7 +179,6 @@ struct NewAuthentication: View {
                                 }
                         }
                     }
-                    Spacer()
                     if !showFields  {
                         Button {
                             withAnimation {
@@ -199,7 +199,7 @@ struct NewAuthentication: View {
                                             .foregroundColor(Clr.darkgreen)
                                         Text("Sign up with Email")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.fredoka(.bold, size: 18))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                     }.offset(x: -20)
                                 )
                         }.frame(height: 60)
@@ -244,11 +244,12 @@ struct NewAuthentication: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if !viewModel.isSignUp && showFields {
                                     withAnimation {
-                                        showFields = false
                                         viewModel.isSignUp = true
+                                        showFields = true
                                     }
                                 } else {
                                     withAnimation {
+                                        print("tapped here")
                                         tappedSignIn = true
                                         viewModel.isSignUp = false
                                         showFields = true
@@ -338,6 +339,9 @@ struct NewAuthentication: View {
                 viewModel.isSignUp = false
                 showFields = true
             }
+        }
+        .onDisappear {
+            showFields = false
         }
         .transition(.opacity)
         
