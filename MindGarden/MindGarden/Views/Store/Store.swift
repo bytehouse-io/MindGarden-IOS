@@ -23,8 +23,9 @@ struct Store: View {
     @State private var tabType:TopTabType = .badge
     
     @Environment(\.presentationMode) var presentationMode
-
+    
     var body: some View {
+        // TODO if tapped real tree open storly
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
@@ -33,30 +34,30 @@ struct Store: View {
                         StoreTab(selectedTab: $tabType)
                             .frame(width: g.size.width * 0.85)
                             .padding(.top, 35)
-//                        HStack(spacing: 25) {
-//                            Spacer()
-//                            Button {
-//                                Analytics.shared.log(event: .store_tapped_store_option)
-//                                withAnimation {
-//                                    isStore = true
-//                                }
-//                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                            } label: {
-//                                MenuButton(title: "Store", isStore: isStore)
-//                            }
-//                            Button {
-//                                Analytics.shared.log(event: .store_tapped_badges_option)
-//                                withAnimation {
-//                                    isStore = false
-//                                }
-//                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                            } label: {
-//                                MenuButton(title: "Badges", isStore: !isStore)
-//                            }
-//                            Spacer()
-//                        }
-//                        .padding(.top, 35)
-//                        .zIndex(currentHightlight == 0 ? 50 : -4)
+                        //                        HStack(spacing: 25) {
+                        //                            Spacer()
+                        //                            Button {
+                        //                                Analytics.shared.log(event: .store_tapped_store_option)
+                        //                                withAnimation {
+                        //                                    isStore = true
+                        //                                }
+                        //                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        //                            } label: {
+                        //                                MenuButton(title: "Store", isStore: isStore)
+                        //                            }
+                        //                            Button {
+                        //                                Analytics.shared.log(event: .store_tapped_badges_option)
+                        //                                withAnimation {
+                        //                                    isStore = false
+                        //                                }
+                        //                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        //                            } label: {
+                        //                                MenuButton(title: "Badges", isStore: !isStore)
+                        //                            }
+                        //                            Spacer()
+                        //                        }
+                        //                        .padding(.top, 35)
+                        //                        .zIndex(currentHightlight == 0 ? 50 : -4)
                     } else {
                         HStack {
                             Spacer()
@@ -90,129 +91,132 @@ struct Store: View {
                             Spacer()
                             
                         }.frame(width: g.size.width * 0.9)
-             
+                        
                         
                     }
-                ScrollView(showsIndicators: false) {
-                    HStack(alignment: .top, spacing: 20) {
-                        VStack(alignment: .leading, spacing: -10) {
-                            HStack {
-                                if isShop {
-                                    Text(!(tabType == .store) ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
-                                        .font(Font.fredoka(.bold, size: 32))
-                                        .minimumScaleFactor(0.005)
-                                        .lineLimit(2)
-                                        .multilineTextAlignment(.center)
-                                        .foregroundColor(Clr.black1)
-                                        .padding(.horizontal, isShop ? 25 : 10)
-                                        .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
-                                }
-                            }
-                            if isShop && !(tabType == .store) {
-                                ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
-                                    Button {
-                                        Analytics.shared.log(event: .store_tapped_badge_tile)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        userModel.willBuyPlant = plant
-                                        withAnimation {
-                                            showModal = true
+                    if tabType == .realTree {
+                        RealTrees(buyRealTree: $showModal)
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            HStack(alignment: .top, spacing: 20) {
+                                VStack(alignment: .leading, spacing: -10) {
+                                    HStack {
+                                        if isShop {
+                                            Text(!(tabType == .store) ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
+                                                .font(Font.fredoka(.bold, size: 32))
+                                                .minimumScaleFactor(0.005)
+                                                .lineLimit(2)
+                                                .multilineTextAlignment(.center)
+                                                .foregroundColor(Clr.black1)
+                                                .padding(.horizontal, isShop ? 25 : 10)
+                                                .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
                                         }
-                                    } label: {
-                                        if userModel.ownedPlants.contains(plant) {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
-                                        } else {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
-                                        }
-                                    }.buttonStyle(NeumorphicPress())
-                                }
-                            } else {
-                                ForEach(isShop ? Plant.packetPlants.prefix(Plant.packetPlants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
-                                { plant in
-                                    if userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree" {
-                                        PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                    } else {
-                                        Button {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if isShop {
+                                    }
+                                    if isShop && !(tabType == .store) {
+                                        ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
+                                            Button {
+                                                Analytics.shared.log(event: .store_tapped_badge_tile)
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 userModel.willBuyPlant = plant
                                                 withAnimation {
                                                     showModal = true
                                                 }
-                                            } else {
-                                                UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                                userModel.selectedPlant = plant
-                                            }
-                                        } label: {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                        }.buttonStyle(NeumorphicPress())
-                                    }
-                                }
-                            }
-                        }
-
-                        VStack {
-                            HStack {
-                                Img.coin
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 25)
-                                    .padding(5)
-                                Text(String(userModel.coins))
-                                    .font(Font.fredoka(.semiBold, size: 24))
-                                    .foregroundColor(Clr.black1)
-                            }.padding(.bottom, -10)
-                            if isShop && !(tabType == .store) {
-                                ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count/2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
-                                    Button {
-                                        Analytics.shared.log(event: .store_tapped_badge_tile)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        userModel.willBuyPlant = plant
-                                        withAnimation {
-                                            showModal = true
-                                        }
-                                    } label: {
-                                        if userModel.ownedPlants.contains(plant) {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
-                                        } else {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
-                                        }
-                                    }.buttonStyle(NeumorphicPress())
-                                }
-                            } else {
-                                ForEach(isShop ? Plant.packetPlants.suffix(Plant.packetPlants.count/2 + (Plant.packetPlants.count % 2 == 0 ? 0 : 1))
-                                        : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
-                                        if (userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree") {
-                                            PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                        } else {
-                                            Button {
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                if isShop {
-                                                    Analytics.shared.log(event: .store_tapped_plant_tile)
-                                                    userModel.willBuyPlant = plant
-                                                    if plant.title == "Real Tree" {
-                                                    }
-                                                    withAnimation {
-                                                        showModal = true
-                                                    }
-                                                } else {
-                                                    UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                                    userModel.selectedPlant = plant
-                                                    Analytics.shared.log(event: .home_selected_plant)
-                                                }
                                             } label: {
-                                                PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                                if userModel.ownedPlants.contains(plant) {
+                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
+                                                } else {
+                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
+                                                }
                                             }.buttonStyle(NeumorphicPress())
                                         }
+                                    } else {
+                                        ForEach(isShop ? Plant.packetPlants.prefix(Plant.packetPlants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
+                                        { plant in
+                                            if (userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree") {
+                                                PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                            } else if (plant.title != "Real Tree") {
+                                                Button {
+                                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                    if isShop {
+                                                        userModel.willBuyPlant = plant
+                                                        withAnimation {
+                                                            showModal = true
+                                                        }
+                                                    } else {
+                                                        UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                        userModel.selectedPlant = plant
+                                                    }
+                                                } label: {
+                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                                }.buttonStyle(NeumorphicPress())
+                                            } else {
+                                                EmptyView()
+                                            }
+                                        }
                                     }
-                            }
-
-                        }
-                        if K.isPad() {
-                            Spacer()
-                        }
-                    }.padding()
-                }
-                .opacity(confirmModal ? 0.3 : 1)
+                                }
+                                
+                                VStack {
+                                    HStack {
+                                        Img.coin
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 25)
+                                            .padding(5)
+                                        Text(String(userModel.coins))
+                                            .font(Font.fredoka(.semiBold, size: 24))
+                                            .foregroundColor(Clr.black1)
+                                    }.padding(.bottom, -10)
+                                    if isShop && !(tabType == .store) {
+                                        ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count/2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
+                                            Button {
+                                                Analytics.shared.log(event: .store_tapped_badge_tile)
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                userModel.willBuyPlant = plant
+                                                withAnimation {
+                                                    showModal = true
+                                                }
+                                            } label: {
+                                                if userModel.ownedPlants.contains(plant) {
+                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
+                                                } else {
+                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
+                                                }
+                                            }.buttonStyle(NeumorphicPress())
+                                        }
+                                    } else {
+                                        ForEach(isShop ? Plant.packetPlants.suffix(Plant.packetPlants.count/2 + (Plant.packetPlants.count % 2 == 0 ? 0 : 1))
+                                                : userModel.ownedPlants.suffix(userModel.ownedPlants.count/2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
+                                            if (userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree") {
+                                                PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
+                                            } else {
+                                                Button {
+                                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                    if isShop {
+                                                        Analytics.shared.log(event: .store_tapped_plant_tile)
+                                                        userModel.willBuyPlant = plant
+                                                        withAnimation {
+                                                            showModal = true
+                                                        }
+                                                    } else {
+                                                        UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                        userModel.selectedPlant = plant
+                                                        Analytics.shared.log(event: .home_selected_plant)
+                                                    }
+                                                } label: {
+                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
+                                                }.buttonStyle(NeumorphicPress())
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                                if K.isPad() {
+                                    Spacer()
+                                }
+                            }.padding()
+                        }.opacity(confirmModal ? 0.3 : 1)
+                    }
                 }
                 if currentHightlight == 0 {
                     VStack (spacing: 0) {
@@ -245,96 +249,96 @@ struct Store: View {
                                 }.padding()
                             ).cornerRadius(12)
                     }.position(x: g.size.width/2, y: 180)
-                    .opacity(currentHightlight == 0 ? 1 : 0)
+                        .opacity(currentHightlight == 0 ? 1 : 0)
                 }
                 
                 if !UserDefaults.standard.bool(forKey: "day2") && isShop {
-//                    Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
-//                        .frame(height: UIScreen.screenHeight)
-
-//                    ZStack {
-//                        Rectangle()
-//                            .fill(Clr.darkWhite)
-//                            .cornerRadius(20)
-//                        VStack {
-//                            if UserDefaults.standard.bool(forKey: "day1") {
-//                                (Text("🔐 This page will\nunlock in ")
-//                                    .foregroundColor(Clr.black2) +
-//                                 Text(bonusModel.progressiveInterval)
-//                                    .foregroundColor(Clr.darkgreen) +
-//                                 Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
-//                                    .foregroundColor(Clr.black2))
-//                                    .font(Font.fredoka(.semiBold, size: 22))
-//                                    .multilineTextAlignment(.center)
-//                            } else {
-//                                (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
-//                                 + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
-//                                    .font(Font.fredoka(.semiBold, size: 22))
-//                                    .multilineTextAlignment(.center)
-//                            }
-//
-//                            if !isNotifOn {
-//                                Button {
-//                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
-//                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
-//                                            if accepted {
-//                                                Analytics.shared.log(event: .notification_success_learn)
-//                                                NotificationHelper.addOneDay()
-//                                                NotificationHelper.addThreeDay()
-//                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
-//                                                    NotificationHelper.freeTrial()
-//                                                }
-//                                                UserDefaults.standard.setValue(true, forKey: "mindful")
-////                                                NotificationHelper.createMindfulNotifs()
-//                                                isNotifOn = true
-//                                                if UserDefaults.standard.bool(forKey: "day1") {
-//                                                    NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
-//                                                } else {
-//                                                    NotificationHelper.addUnlockedFeature(title: "🔓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
-//                                                }
-//                                            }
-//                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
-//                                        })
-//                                    } else {
-//                                        promptNotif()
-//                                        if UserDefaults.standard.bool(forKey: "day1") {
-//                                            NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
-//                                        } else {
-//                                            NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
-//                                        }
-//                                    }
-//
-//                                } label: {
-//                                    Capsule()
-//                                        .fill(Clr.yellow)
-//                                        .frame(width: UIScreen.main.bounds.width/2, height: 40)
-//                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
-//                                                    .multilineTextAlignment(.center)
-//                                                    .foregroundColor(.black)
-//                                        )
-//                                }.buttonStyle(NeumorphicPress())
-//                            }
-//                      }
-//                    }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
-//                      .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+                    //                    Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
+                    //                        .frame(height: UIScreen.screenHeight)
+                    
+                    //                    ZStack {
+                    //                        Rectangle()
+                    //                            .fill(Clr.darkWhite)
+                    //                            .cornerRadius(20)
+                    //                        VStack {
+                    //                            if UserDefaults.standard.bool(forKey: "day1") {
+                    //                                (Text("🔐 This page will\nunlock in ")
+                    //                                    .foregroundColor(Clr.black2) +
+                    //                                 Text(bonusModel.progressiveInterval)
+                    //                                    .foregroundColor(Clr.darkgreen) +
+                    //                                 Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
+                    //                                    .foregroundColor(Clr.black2))
+                    //                                    .font(Font.fredoka(.semiBold, size: 22))
+                    //                                    .multilineTextAlignment(.center)
+                    //                            } else {
+                    //                                (Text("🔐 This page will\nunlock on Day 2\nYou're on ").foregroundColor(Clr.black2)
+                    //                                 + Text("Day \(UserDefaults.standard.integer(forKey: "day"))").foregroundColor(Clr.darkgreen))
+                    //                                    .font(Font.fredoka(.semiBold, size: 22))
+                    //                                    .multilineTextAlignment(.center)
+                    //                            }
+                    //
+                    //                            if !isNotifOn {
+                    //                                Button {
+                    //                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
+                    //                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
+                    //                                            if accepted {
+                    //                                                Analytics.shared.log(event: .notification_success_learn)
+                    //                                                NotificationHelper.addOneDay()
+                    //                                                NotificationHelper.addThreeDay()
+                    //                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                    //                                                    NotificationHelper.freeTrial()
+                    //                                                }
+                    //                                                UserDefaults.standard.setValue(true, forKey: "mindful")
+                    ////                                                NotificationHelper.createMindfulNotifs()
+                    //                                                isNotifOn = true
+                    //                                                if UserDefaults.standard.bool(forKey: "day1") {
+                    //                                                    NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
+                    //                                                } else {
+                    //                                                    NotificationHelper.addUnlockedFeature(title: "🔓 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+                    //                                                }
+                    //                                            }
+                    //                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
+                    //                                        })
+                    //                                    } else {
+                    //                                        promptNotif()
+                    //                                        if UserDefaults.standard.bool(forKey: "day1") {
+                    //                                            NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
+                    //                                        } else {
+                    //                                            NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+                    //                                        }
+                    //                                    }
+                    //
+                    //                                } label: {
+                    //                                    Capsule()
+                    //                                        .fill(Clr.yellow)
+                    //                                        .frame(width: UIScreen.main.bounds.width/2, height: 40)
+                    //                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
+                    //                                                    .multilineTextAlignment(.center)
+                    //                                                    .foregroundColor(.black)
+                    //                                        )
+                    //                                }.buttonStyle(NeumorphicPress())
+                    //                            }
+                    //                      }
+                    //                    }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
+                    //                      .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
                 }
-
-                if showModal || confirmModal {
+                
+                    if showModal || confirmModal  {
                     Color.black
                         .opacity(0.3)
                         .edgesIgnoringSafeArea(.all)
                         .frame(height: UIScreen.screenHeight)
                 }
                 if isShop {
-                    PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal ? 0 : g.size.height)
+                    PurchaseModal(shown: $showModal, showConfirm: $confirmModal).offset(y: showModal  ? 0 : g.size.height)
                         .opacity(confirmModal || showSuccess ? 0.3 : 1)
                         .environmentObject(bonusModel)
                         .environmentObject(profileModel)
                 }
-
+                
                 ConfirmModal(shown: $confirmModal, showMainModal: $showModal).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
-//                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
+                //                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
             }.padding(.top)
                 .alert(isPresented: $showTip) {
                     Alert(title: Text("💡 Quick Tip"), message:
@@ -343,7 +347,7 @@ struct Store: View {
                 }
         }
         .onAppear {
-//            let _ = storylyViewProgrammatic.openStory(storyGroupId: 41611, play: .StoryGroup)
+            //            let _ = storylyViewProgrammatic.openStory(storyGroupId: 41611, play: .StoryGroup)
             DispatchQueue.main.async {
                 isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
                 if UserDefaults.standard.bool(forKey: "day2") && isShop {
@@ -397,24 +401,24 @@ struct Store: View {
                 }
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
             case .notDetermined:
-                    Analytics.shared.log(event: .notification_settings_learn)
-                    DispatchQueue.main.async {
-                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
-                            UIApplication.shared.open(appSettings)
-                        }
+                Analytics.shared.log(event: .notification_settings_learn)
+                DispatchQueue.main.async {
+                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                        UIApplication.shared.open(appSettings)
                     }
+                }
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
             default:
                 print("Unknow Status")
             }
         })
-    } 
+    }
     
     struct SuccessModal: View {
         @EnvironmentObject var userModel: UserViewModel
         @Binding var showSuccess: Bool
         @Binding var showMainModal: Bool
-
+        
         var  body: some View {
             GeometryReader { g in
                 VStack {
@@ -468,11 +472,11 @@ struct Store: View {
             }
         }
     }
-
+    
     struct MenuButton: View {
         var title: String
         var isStore: Bool
-
+        
         var body: some View {
             ZStack {
                 Capsule()
@@ -485,8 +489,8 @@ struct Store: View {
             }
         }
     }
- 
-
+    
+    
 }
 
 struct Store_Previews: PreviewProvider {
