@@ -190,7 +190,6 @@ struct Store: View {
                                                     Analytics.shared.log(event: .store_tapped_plant_tile)
                                                     userModel.willBuyPlant = plant
                                                     if plant.title == "Real Tree" {
-                                                        Analytics.shared.log(event: .store_tapped_real_tree)
                                                     }
                                                     withAnimation {
                                                         showModal = true
