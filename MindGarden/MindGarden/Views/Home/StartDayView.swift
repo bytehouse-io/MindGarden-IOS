@@ -68,9 +68,6 @@ struct StartDayView: View {
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(maxWidth:80)
-                                                Text(item.title)
-                                                    .foregroundColor(.black)
-                                                    .font(Font.fredoka(.regular, size: 8))
                                             }
                                             .padding(.bottom,10)
                                         }

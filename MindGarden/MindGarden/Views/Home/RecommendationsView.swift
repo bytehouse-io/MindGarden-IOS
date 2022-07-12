@@ -19,37 +19,22 @@ struct RecommendationsView: View {
                 VStack {
                     Spacer()
                         .frame(height:20)
-                    HStack() {
-                        Spacer()
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundColor(Clr.black1)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height:16)
-                            .background(
-                                Rectangle()
-                                    .fill(Clr.darkWhite)
-                                    .frame(width:35,height:35)
-                                    .cornerRadius(17)
-                                    .neoShadow()
-                            )
-                            .onTapGesture {
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                    }
                     VStack(spacing:0) {
                         HStack {
                             Text("Hooray!")
                                 .foregroundColor(Clr.brightGreen)
                                 .font(Font.fredoka(.semiBold, size: 28))
                             Spacer()
+                            CloseButton() {
+                                presentationMode.wrappedValue.dismiss()
+                            }.offset(x:20)
                         }.padding(5)
                             .padding(.bottom,10)
                         ZStack {
                             Rectangle().fill(Clr.darkWhite)
                                 .addBorder(Color.black, width: 1.5, cornerRadius: 14)
                             LottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
+                                .scaleEffect(2)
                             VStack(alignment:.leading, spacing: 0) {
                                 HStack {
                                     Text("You earned +6 coins")
@@ -64,6 +49,7 @@ struct RecommendationsView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .padding(5)
                                         .padding(.leading,10)
+                                    Spacer()
                                     VStack(alignment: .leading, spacing:10) {
                                         Spacer()
                                         HStack {
@@ -90,6 +76,7 @@ struct RecommendationsView: View {
                                         }
                                         Spacer()
                                     }
+                                    .padding(.trailing,30)
                                 }
                                 Spacer()
                             }
@@ -120,12 +107,13 @@ struct RecommendationsView: View {
                 Img.moodCheck
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .frame(height:50)
                 Text("Based on how your feeling, we chose these for you:")
                     .foregroundColor(Clr.black2)
                     .font(Font.fredoka(.regular, size: 20))
                     .multilineTextAlignment(.leading)
-            }.frame(height:80)
-                .padding(.bottom,20)
+            }.frame(height:50)
+            .padding(.bottom,20)
             ForEach(0..<titles.count) { idx in
                 MeditationRow(title: titles[idx])
                     .padding(.vertical,5)
@@ -172,7 +160,7 @@ struct MeditationRow: View {
                 .addBorder(Color.black, width: 1.5, cornerRadius: 14)
                 .neoShadow()
             HStack(spacing:0) {
-                VStack(alignment:.leading,spacing:0) {
+                VStack(alignment:.leading,spacing:3) {
                     Text(title)
                         .font(Font.fredoka(.medium, size: 20))
                         .frame(width: 200,alignment: .leading)
