@@ -47,7 +47,6 @@ struct Home: View {
     @State private var alertMsg = ""
     @State private var showChallenge = false
     @State private var showMoodElaborate = true
-    @State private var selectedMood: NewMood = .happy
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -59,7 +58,7 @@ struct Home: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 GeometryReader { g in
-                    HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel, selectedMood: $selectedMood)
+                    HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel)
                         .padding(.top, -20)
                     if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase || showChallenge {
                         Color.black
@@ -119,8 +118,7 @@ struct Home: View {
                 case .streak:
                     StreakScene()
                 case .mood:
-                    MoodElaborate(selectedMood:selectedMood)
-                        .environmentObject(MoodModel())
+                    MoodElaborate()
                 }
             }
             .navigationBarHidden(true)

@@ -32,14 +32,12 @@ struct ContentView: View {
     var authModel: AuthenticationViewModel
     @State var hasConnection = false
     @State var playAnim = false
-    
     @State var selectedTab: TabType = .meditate
-
     @State var selectedPopupOption: PlusMenuType = .none
-    
     @State private var showSplash = true
     @State private var goShinny = false
     @State private var progressWidth = 0.0
+    
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -156,6 +154,12 @@ struct ContentView: View {
 //                                                    }
 //                                                }
 //                                            }))
+                                    case .mood:
+                                        MoodElaborate()
+                                    case .journal:
+                                        JournalView()
+                                            .environmentObject(userModel)
+                                            .environmentObject(gardenModel)
                                     case .finished:
                                         Finished(bonusModel: bonusModel, model: meditationModel, userModel: userModel, gardenModel: gardenModel)
                                             .frame(height: geometry.size.height + 160)
@@ -386,7 +390,7 @@ struct ContentView: View {
         .sheet(isPresented: $showRecs) {
             if !isOnboarding {
                 let meditations = Meditation.getRecsFromMood()
-                ShowRecsScene(mood: selectedMood, meditations: meditations)
+//                ShowRecsScene(mood: , meditations: meditations)
             }
         }
         .onAppear {

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct RecommendationsView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     private let titles = ["Intro to Meditation", "Intro to Meditation","Basic Confidence Meditation"]
     @State private var playAnim = false
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
-    
+
     var body: some View {
         ZStack {
             Clr.darkWhite.ignoresSafeArea()
@@ -27,7 +27,7 @@ struct RecommendationsView: View {
                                 .font(Font.fredoka(.semiBold, size: 28))
                             Spacer()
                             CloseButton() {
-                                viewControllerHolder?.dismissController()
+                                withAnimation { viewRouter.currentPage = .meditate }
                             }.offset(x:20)
                         }.padding(5)
                             .padding(.bottom,10)

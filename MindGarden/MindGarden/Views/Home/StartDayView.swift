@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct StartDayView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var userModel: UserViewModel
     @Binding var activeSheet: Sheet?
-    @Binding var selectedMood: NewMood
     
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     
     var body: some View {
         VStack {
@@ -61,17 +61,15 @@ struct StartDayView: View {
                                     .foregroundColor(Clr.brightGreen)
                                     .font(Font.fredoka(.semiBold, size: 12))
                                 HStack(alignment:.top) {
-                                    ForEach(NewMood.allCases, id: \.id) { item in
+                                    ForEach(Mood.allCases(), id: \.id) { item in
                                         Button {
-                                            selectedMood = item
-                                            
-                                            viewControllerHolder?.present(style: .overFullScreen, builder: {
-                                                MoodElaborate(selectedMood:selectedMood)
-                                                    .environmentObject(MoodModel())
-                                            })
+                                            withAnimation {
+                                                userModel.selectedMood = item
+                                                viewRouter.currentPage = .mood
+                                            }                                         
                                         } label: {
                                             VStack(spacing:0) {
-                                                item.moodImage
+                                                Mood.getMoodImage(mood: item)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(maxWidth:80)

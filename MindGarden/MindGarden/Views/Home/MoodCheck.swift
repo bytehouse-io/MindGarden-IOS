@@ -8,52 +8,23 @@
 import SwiftUI
 import Amplitude
 
-enum NewMood: String, CaseIterable {
-    case happy, veryGood, good, okay, bad, veryBad
-    
-    var id: String { return self.rawValue }
-    
+
+enum Mood: String, CaseIterable {
     var options: [String] {
-        switch self {
-        case .happy: return ["😃 Excited","😊 Happy","🎨 Inspired","💪 Confident","🌱 Hopeful","💚 Loved","👏 Proud","🙏 Grateful","☀️ Joyful"]
+    switch self {
         case .veryGood: return ["😃 Excited", "😊 happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
         case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 happy", "🎨 Inspired"]
         case .okay: return ["😐 Fine", "🥱 Bored", "🙃 Unsure", "🏃 Busy", "😌 Calm", "🤨 Confused", "😠 Frustrated", "😴 Tired", "✈️ Distant"]
         case .bad: return ["😰 anxious", "😩 stressed", "🏎️ Impatient", "😤 Frustrated", "😒 annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
         case .veryBad: return ["😰 anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
+        default: return [""]
         }
     }
     
-    var moodImage: Image {
-        switch self {
-        case .happy:
-            return Image("happyPot")
-        case .okay:
-            return Image("okayPot")
-        case .veryGood:
-            return Image("veryGoodPot")
-        case .good:
-            return Image("goodPot")
-        case .bad:
-            return Image("badPot")
-        case .veryBad:
-            return Image("veryBadPot")
-        }
+    static func allCases() -> [Mood] {
+        return [veryBad, bad, okay, good,veryGood]
     }
-    
-    var title: String {
-        switch self {
-        case .happy: return "happy"
-        case .okay: return "okay"
-        case .veryGood: return "very Good"
-        case .good: return "good"
-        case .bad: return "bad"
-        case .veryBad: return "very Bad"
-        }
-    }
-}
 
-enum Mood: String, CaseIterable {
     case happy
     case okay
     case sad
@@ -333,7 +304,6 @@ struct SingleMood: View {
     }
 }
 
-var selectedMood = Mood.none
 struct DoneCancel: View {
     @Binding var showPrompt: Bool
     @Binding var shown: Bool
@@ -350,7 +320,7 @@ struct DoneCancel: View {
                 if moodSelected != Mood.none {
                     save()
                     withAnimation {
-                        selectedMood = moodSelected ?? Mood.none
+//                        selectedMood = moodSelected ?? Mood.none
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                         showPrompt = false
                         shown = false

@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
+import Amplitude
 
 struct MoodElaborate: View {
-    
-    @EnvironmentObject var moodModel: MoodModel
-    @State var selectedMood: NewMood
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State private var selectedSubMood: String = ""
     
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     
     @State private var showDetail = false
     let columns = [
@@ -23,6 +23,7 @@ struct MoodElaborate: View {
         ]
     var body: some View {
         ZStack {
+            Clr.darkWhite.edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
                     .frame(height:40)
@@ -33,11 +34,13 @@ struct MoodElaborate: View {
                         .padding(.leading,30)
                     Spacer()
                     CloseButton() {
-                        viewControllerHolder?.dismissController()
+                        withAnimation {
+                            viewRouter.currentPage = .meditate
+                        }
                     }.padding(.trailing,20)
                 }
                 .frame(width: UIScreen.screenWidth)
-                selectedMood.moodImage
+                Mood.getMoodImage(mood: userModel.selectedMood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth:70)
@@ -48,16 +51,31 @@ struct MoodElaborate: View {
                     .multilineTextAlignment(.center)
                 ZStack {
                     LazyVGrid(columns: columns, spacing: 15) {
-                        ForEach(selectedMood.options, id: \.self) { item in
+                        ForEach(userModel.selectedMood.options, id: \.self) { item in
                             Button {
-                                moodModel.addMood(mood: MoodData(date: "\(Date().toString(withFormat: "EEEE, MMM dd"))", mood: selectedMood.rawValue, subMood: selectedSubMood))
-                                selectedSubMood = item
-                                viewControllerHolder?.present(style: .overFullScreen, builder: {
-                                    PromptsDetailView()
-                                        .environmentObject(MoodModel())
-                                        .environmentObject(GardenViewModel())
-                                        .environmentObject(UserViewModel())
-                                })
+                                withAnimation {
+                                    selectedSubMood = item
+                                    var num = UserDefaults.standard.integer(forKey: "numMoods")
+                                    num += 1
+                                    UserDefaults.standard.setValue(num, forKey: "numMoods")
+                                    let identify = AMPIdentify()
+                                        .set("num_moods", value: NSNumber(value: num))
+                                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                                    Analytics.shared.log(event: .mood_tapped_done)
+                                    
+                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                                        UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
+                                    }
+                                    Amplitude.instance().logEvent("mood_elaborate", withEventProperties: ["elaboration": item])
+                                    var moodSession = [String: String]()
+                                    moodSession["timeStamp"] = Date.getTime()
+                                    moodSession["elaboration"] = item
+                                    moodSession["mood"] = userModel.selectedMood.title
+                                    userModel.coins += 10
+                                    gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
+                                
+                                    viewRouter.currentPage = .journal
+                                }
                             }
                             label : {
                                 ZStack {

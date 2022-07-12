@@ -58,7 +58,7 @@ struct Meditation: Hashable {
         } else {
             retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
         }
-        switch selectedMood {
+        switch Mood.veryBad {
         case .stressed, .veryBad:
             retMeds += allMeditations.filter { med in
                 med.id == 46 || med.id == 38 || med.id == 51 || med.id == 25  || med.id == 36 || med.id == 24

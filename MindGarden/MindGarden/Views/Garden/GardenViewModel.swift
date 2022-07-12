@@ -35,7 +35,7 @@ class GardenViewModel: ObservableObject {
         selectedMonth = (Int(Date().get(.month)) ?? 1)
         selectedYear = Int(Date().get(.year)) ?? 2021
     }
-
+    
     func getRecentMeditations() {
         medIds = [String]()
         grid.values.forEach { value in //TODO sort years
@@ -86,19 +86,6 @@ class GardenViewModel: ObservableObject {
                 index += 1
             }
             recentMeditations = []
-            if med2 != nil {
-                if med1 != med2 {
-                    recentMeditations.append(med2!)
-                    ids.append(med2!.id)
-                }
-            }
-
-            if med1 != nil {
-                recentMeditations.append(med1!)
-                ids.append(med1!.id)
-            }
-
-
             UserDefaults.standard.setValue(ids, forKey: "recent")
         }
     }

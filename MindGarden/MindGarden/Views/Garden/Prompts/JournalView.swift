@@ -9,15 +9,14 @@ import SwiftUI
 import Lottie
 import Amplitude
 
-struct PromptsDetailView: View, KeyboardReadable {
-    
+struct JournalView: View, KeyboardReadable {
     @State private var text: String = "Write here..."
     @State private var contentKeyVisible: Bool = true
+    @State private var showPrompts = false
+    @State private var showRecs = false
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     
-        
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     var body: some View {
         ZStack(alignment:.top) {
             Clr.darkWhite.ignoresSafeArea()
@@ -32,9 +31,9 @@ struct PromptsDetailView: View, KeyboardReadable {
                         .opacity(0.5)
                     Spacer()
                     Button {
-                        viewControllerHolder?.present(style: .overFullScreen, builder: {
-                            PromptsView()
-                        })
+                        withAnimation {
+                            showPrompts = true
+                        }
                     } label: {
                         Text("Prompts")
                             .font(Font.fredoka(.semiBold, size: 16))
@@ -52,7 +51,6 @@ struct PromptsDetailView: View, KeyboardReadable {
                             //TODO: implement shuffle tap event
                         }
                     CloseButton() {
-                        viewControllerHolder?.dismissController()
                     }.padding(.leading, 10)
                 }
                 .padding(.horizontal,30)
@@ -65,7 +63,8 @@ struct PromptsDetailView: View, KeyboardReadable {
                 ZStack {
                     Rectangle()
                         .fill(Clr.darkWhite)
-                        .cornerRadius(15)
+                        .cornerRadius(14)
+                        .addBorder(.black, width: 1.5, cornerRadius: 14)
                         .neoShadow()
                     ScrollView(.vertical, showsIndicators: false) {
                         if #available(iOS 14.0, *) {
@@ -90,13 +89,11 @@ struct PromptsDetailView: View, KeyboardReadable {
                 Spacer()
                     .frame(height:50)
                 Button {
-                    Analytics.shared.log(event: .gratitude_tapped_done)
-                    gardenModel.save(key: K.defaults.gratitudes, saveValue: text, coins: userModel.coins)
-                    text = "I'm thankful for "
-                    viewControllerHolder?.present(style: .overFullScreen, builder: {
-                        RecommendationsView()
-                    })
-                    
+                    withAnimation {
+                        Analytics.shared.log(event: .gratitude_tapped_done)
+                        gardenModel.save(key: K.defaults.gratitudes, saveValue: text, coins: userModel.coins)
+                        showRecs = true
+                    }
                 } label: {
                     HStack {
                         Text("Done")
@@ -114,5 +111,11 @@ struct PromptsDetailView: View, KeyboardReadable {
             }
         }
         .ignoresSafeArea()
+        .sheet(isPresented: $showPrompts) {
+            PromptsView()
+        }
+        .fullScreenCover(isPresented: $showRecs) {
+            RecommendationsView()
+        }
     }
 }

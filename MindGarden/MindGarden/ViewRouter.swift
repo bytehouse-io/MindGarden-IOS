@@ -47,4 +47,6 @@ enum Page {
     case pricing
     case review
     case learn
+    case mood
+    case journal
 }

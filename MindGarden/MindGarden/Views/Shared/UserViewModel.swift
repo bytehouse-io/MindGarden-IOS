@@ -33,6 +33,7 @@ class UserViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var userCoinCollectedLevel: Int = 0
     @Published var journeyFinished = false
+    @Published var selectedMood: Mood = .none
     private var validationCancellables: Set<AnyCancellable> = []
     var joinDate: String = ""
     var greeting: String = ""
@@ -349,18 +350,18 @@ class UserViewModel: ObservableObject {
                 
                 UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
                 WidgetCenter.shared.reloadAllTimelines()
-            
-//                    if let email = Auth.auth().currentUser?.email {
-//                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-//                            "isPro": isPro,
-//                        ]) { (error) in
-//                            if let e = error {
-//                                print("There was a issue saving data to firestore \(e) ")
-//                            } else {
-//                                print("Succesfully saved user is pro")
-//                            }
-//                        }
-//                    }
+                
+                //                    if let email = Auth.auth().currentUser?.email {
+                //                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                //                            "isPro": isPro,
+                //                        ]) { (error) in
+                //                            if let e = error {
+                //                                print("There was a issue saving data to firestore \(e) ")
+                //                            } else {
+                //                                print("Succesfully saved user is pro")
+                //                            }
+                //                        }
+                //                    }
             }
         }
     }

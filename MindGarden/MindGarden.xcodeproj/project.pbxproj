@@ -55,8 +55,8 @@
 		58D5C0F227FB672500454937 /* PlantGrowing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5C0F027FB672500454937 /* PlantGrowing.swift */; };
 		58D5C0F427FB675A00454937 /* background.json in Resources */ = {isa = PBXBuildFile; fileRef = 58D5C0F327FB675A00454937 /* background.json */; };
 		58D6FB4A286CBDAB003EA6A7 /* PromptsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB49286CBDAB003EA6A7 /* PromptsView.swift */; };
-		58D6FB4D286CBEF5003EA6A7 /* PromptsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4C286CBEF5003EA6A7 /* PromptsDetailView.swift */; };
-		58D6FB4F286D6199003EA6A7 /* PromptsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4E286D6199003EA6A7 /* PromptsModel.swift */; };
+		58D6FB4D286CBEF5003EA6A7 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4C286CBEF5003EA6A7 /* JournalView.swift */; };
+		58D6FB4F286D6199003EA6A7 /* PromptsTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4E286D6199003EA6A7 /* PromptsTabModel.swift */; };
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
 		58DEE5AC2867390400A04CA2 /* BreathWorkAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */; };
@@ -319,8 +319,8 @@
 		58D5C0F027FB672500454937 /* PlantGrowing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantGrowing.swift; sourceTree = "<group>"; };
 		58D5C0F327FB675A00454937 /* background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = background.json; sourceTree = "<group>"; };
 		58D6FB49286CBDAB003EA6A7 /* PromptsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsView.swift; sourceTree = "<group>"; };
-		58D6FB4C286CBEF5003EA6A7 /* PromptsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsDetailView.swift; sourceTree = "<group>"; };
-		58D6FB4E286D6199003EA6A7 /* PromptsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsModel.swift; sourceTree = "<group>"; };
+		58D6FB4C286CBEF5003EA6A7 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
+		58D6FB4E286D6199003EA6A7 /* PromptsTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsTabModel.swift; sourceTree = "<group>"; };
 		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
 		58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathWorkAnimation.swift; sourceTree = "<group>"; };
@@ -681,8 +681,8 @@
 			isa = PBXGroup;
 			children = (
 				58D6FB49286CBDAB003EA6A7 /* PromptsView.swift */,
-				58D6FB4C286CBEF5003EA6A7 /* PromptsDetailView.swift */,
-				58D6FB4E286D6199003EA6A7 /* PromptsModel.swift */,
+				58D6FB4C286CBEF5003EA6A7 /* JournalView.swift */,
+				58D6FB4E286D6199003EA6A7 /* PromptsTabModel.swift */,
 			);
 			path = Prompts;
 			sourceTree = "<group>";
@@ -1634,7 +1634,7 @@
 				FE6FBFA827ADC00400F05A66 /* KeyboardModifier.swift in Sources */,
 				5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */,
 				FEA592CD267E6153006558A2 /* SingleDay.swift in Sources */,
-				58D6FB4F286D6199003EA6A7 /* PromptsModel.swift in Sources */,
+				58D6FB4F286D6199003EA6A7 /* PromptsTabModel.swift in Sources */,
 				FEA592CB267E611F006558A2 /* Garden.swift in Sources */,
 				58266E2528798797008594E0 /* RecommendationsView.swift in Sources */,
 				582B303127EF3D960026DD16 /* ShareStreak.swift in Sources */,
@@ -1755,7 +1755,7 @@
 				FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */,
 				FEEC6516267817D400ECD32D /* PlantTile.swift in Sources */,
 				FE98160026E559E000A4992D /* NotificationScene.swift in Sources */,
-				58D6FB4D286CBEF5003EA6A7 /* PromptsDetailView.swift in Sources */,
+				58D6FB4D286CBEF5003EA6A7 /* JournalView.swift in Sources */,
 				FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */,
 				88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */,
 				8871EF9A2868D5BE00E28616 /* LikeButton.swift in Sources */,

@@ -21,7 +21,6 @@ struct HomeViewScroll: View {
     @EnvironmentObject var bonusModel: BonusViewModel
     
     @State private var isRecent = true
-    @Binding var selectedMood : NewMood
     
     let width = UIScreen.screenWidth
     let height = UIScreen.screenHeight - 100
@@ -34,7 +33,7 @@ struct HomeViewScroll: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP,coin:userModel.coins, streakNumber: bonusModel.streakNumber)
-                    StartDayView(activeSheet:$activeSheet, selectedMood: $selectedMood)
+                    StartDayView(activeSheet:$activeSheet)
                     
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")

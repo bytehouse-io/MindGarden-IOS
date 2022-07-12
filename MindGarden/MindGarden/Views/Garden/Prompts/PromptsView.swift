@@ -10,7 +10,7 @@ import SwiftUI
 struct PromptsView: View {
     
     @State var selectedTab: PromptsTabType = .gratitude
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         ZStack {
@@ -33,7 +33,9 @@ struct PromptsView: View {
                                 .neoShadow()
                         )
                         .onTapGesture {
-                            viewControllerHolder?.dismissController()
+                            withAnimation {
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }
                     Text("Prompts")
                         .font(Font.fredoka(.medium, size: 20))
