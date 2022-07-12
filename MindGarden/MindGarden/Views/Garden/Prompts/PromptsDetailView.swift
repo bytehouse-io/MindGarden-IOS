@@ -51,23 +51,9 @@ struct PromptsDetailView: View, KeyboardReadable {
                         .onTapGesture {
                             //TODO: implement shuffle tap event
                         }
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundColor(Clr.black1)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height:16)
-                        .background(
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .frame(width:35,height:35)
-                                .cornerRadius(17)
-                                .neoShadow()
-                        )
-                        .padding(.horizontal,20)
-                        .onTapGesture {
-                            presentationMode.wrappedValue.dismiss()
-                        }
+                    CloseButton() {
+                        presentationMode.wrappedValue.dismiss()
+                    }.padding(.leading, 10)
                 }
                 .padding(.horizontal,30)
                 Text("Reflect on how you feel.")

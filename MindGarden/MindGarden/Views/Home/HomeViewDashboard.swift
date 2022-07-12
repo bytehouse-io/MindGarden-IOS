@@ -44,38 +44,49 @@ struct HomeViewDashboard: View {
                                 showModal = true
                             }
                         }
-//                        UserDefaults.standard.setValue(true, forKey: "plusCoins")
-//                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                        Analytics.shared.log(event: .home_tapped_IAP)
-//                        withAnimation { showIAP.toggle() }
                     } label : {
-                        HStack(spacing:5) {
-                            if totalBonuses > 0 {
-                                ZStack {
-                                    Circle().frame(height: 16)
-                                        .foregroundColor(Clr.redGradientBottom)
-                                    Text("\(totalBonuses)")
-                                        .font(Font.fredoka(.bold, size: 12))
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.005)
-                                        .frame(width: 10)
-                                }.frame(width: 15)
+                        if totalBonuses > 0 {
+                            HStack(spacing:5) {
+                                if totalBonuses > 0 {
+                                    ZStack {
+                                        Circle().frame(height: 16)
+                                            .foregroundColor(Clr.redGradientBottom)
+                                        Text("\(totalBonuses)")
+                                            .font(Font.fredoka(.bold, size: 12))
+                                            .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.005)
+                                            .frame(width: 10)
+                                    }.frame(width: 15)
+                                }
+                                Img.coin
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height:20)
+                                    .foregroundColor(.black)
+                                Text("\(coin)")
+                                    .font(Font.fredoka(.medium, size: 16))
+                                    .foregroundColor(.black)
                             }
-                            Img.coin
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height:20)
-                                .foregroundColor(.black)
-                            Text("\(coin)")
-                                .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(.black)
+                            .frame(height:height)
+                            .roundedCapsule()
+                            .wiggling1()
+                        } else {
+                            HStack(spacing:5) {
+                                Img.coin
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height:20)
+                                    .foregroundColor(.black)
+                                Text("\(coin)")
+                                    .font(Font.fredoka(.medium, size: 16))
+                                    .foregroundColor(.black)
+                            }
+                            .frame(height:height)
+                            .roundedCapsule()
                         }
-                        .frame(height:height)
-                        .roundedCapsule()
                     }
-                    .buttonStyle(BonusPress())
-                    .wiggling()
+                    
                     
                     Spacer()
                     Button {

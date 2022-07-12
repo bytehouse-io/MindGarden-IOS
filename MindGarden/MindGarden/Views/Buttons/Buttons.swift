@@ -91,6 +91,25 @@ struct LightButton: View {
     }
 }
 
+struct CloseButton: View {
+    let action: () -> Void
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: "xmark.circle.fill")
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(Clr.darkWhite)
+                .aspectRatio(contentMode: .fit)
+                .frame(height:30)
+                .background(Circle().foregroundColor(Clr.black2).padding(1))
+                .neoShadow()
+        }
+    }
+}
+
 struct LightButton_Previews: PreviewProvider {
     static var previews: some View {
         LightButton(title: .constant(""), action: {

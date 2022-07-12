@@ -31,23 +31,9 @@ struct MoodElaborate: View {
                         .foregroundColor(Clr.black2)
                         .padding(.leading,30)
                     Spacer()
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundColor(Clr.black1)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 16, height:16)
-                        .background(
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .frame(width:35,height:35)
-                                .cornerRadius(17)
-                                .neoShadow()
-                        )
-                        .padding(.trailing,30)
-                        .onTapGesture {
-                            presentationMode.wrappedValue.dismiss()
-                        }
+                    CloseButton() {
+                        presentationMode.wrappedValue.dismiss()
+                    }.padding(.trailing,20)
                 }
                 .frame(width: UIScreen.screenWidth)
                 selectedMood.moodImage
