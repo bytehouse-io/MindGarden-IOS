@@ -74,26 +74,25 @@ enum Mood: String, CaseIterable {
         case .sad: return "sad"
         case .angry: return "angry"
         case .stressed: return "stressed"
-        case .veryGood: return "very Good"
+        case .veryGood: return "very good"
         case .good: return "good"
         case .bad: return "bad"
-        case .veryBad: return "very Bad"
+        case .veryBad: return "very bad"
         case .none: return "none"
         }
     }
 
     static func getMood(str: String) -> Mood {
         switch str {
-        case "happy":
-            return .happy
-        case "okay":
-            return .okay
-        case "sad":
-            return .sad
-        case "angry":
-            return .angry
-        case "stressed":
-            return .stressed
+        case "happy": return .happy
+        case "okay": return .okay
+        case "sad":  return .sad
+        case "angry": return .angry
+        case "stressed":  return .stressed
+        case "very good": return .veryGood
+        case "good": return .good
+        case "bad": return .bad
+        case "very bad": return .veryBad
         case "none":
             return .none
         default:
@@ -132,7 +131,7 @@ enum Mood: String, CaseIterable {
         case .good: return Image("goodPot")
         case .veryGood: return Image("veryGoodPot")
         default:
-            return Image("okay")
+            return Image("okayPot")
         }
     }
     
@@ -246,7 +245,11 @@ struct MoodCheck: View {
                 UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
                 showPopupWithAnimation {}
             }
-            gardenModel.save(key: "moods", saveValue: moodSelected.title, coins: userModel.coins)
+            var moodSession = [String: String]()
+            moodSession["timeStamp"] = Date.getTime()
+            moodSession["mood"] = moodSelected.title
+            
+            gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
         }
         withAnimation {
             shown = false

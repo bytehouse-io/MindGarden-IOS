@@ -15,7 +15,7 @@ struct SingleDay: View {
     @Binding var day: Int
     var month: Int
     var year: Int
-    @State var moods: [String]?
+    @State var moods: [[String: String]]?
     @State var gratitudes: [String]?
     @State var sessions: [[String: String]]?
     @State var totalTime: Int = 0
@@ -120,12 +120,63 @@ struct SingleDay: View {
                             .minimumScaleFactor(0.5)
                         HStack(spacing: 15) {
                             VStack(spacing: 25) {
-                                StatBox(label: "Total Mins", img: Img.iconTotalTime, value: totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)")
-                                StatBox(label: "Total Sessions", img: Img.iconSessions, value: "\(totalSessions)")
+                                ZStack(alignment: .leading) {
+                                    Rectangle()
+                                        .fill(Clr.darkWhite)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 14)
+                                        .neoShadow()
+                                    VStack(alignment:.center, spacing:5){
+                                        Text("Total Mins")
+                                            .font(Font.fredoka(.regular, size: 16))
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .padding(.horizontal, 5)
+                                            .padding(.top,10)
+                                        HStack(spacing:25) {
+                                            Img.iconTotalTime
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 30)
+                                            Text(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)")
+                                                .font(Font.fredoka(.bold, size: 20))
+                                                .minimumScaleFactor(0.7)
+                                                .foregroundColor(Clr.black2)
+                                        }
+                                        .padding(.bottom,10)
+                                        .padding(.horizontal, 5)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                    }
+                                }
+                                ZStack(alignment: .leading) {
+                                    Rectangle()
+                                        .fill(Clr.darkWhite)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 14)
+                                        .neoShadow()
+                                    VStack(alignment:.center, spacing:5){
+                                        Text("Total Sessions")
+                                            .font(Font.fredoka(.regular, size: 16))
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .padding(.horizontal, 5)
+                                            .padding(.top,10)
+                                        HStack(spacing:15) {
+                                            Img.iconSessions
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 30)
+                                            Text("\(totalSessions)")
+                                                .font(Font.fredoka(.bold, size: 20))
+                                                .minimumScaleFactor(0.7)
+                                                .foregroundColor(Clr.black2)
+                                        }
+                                        .padding(.bottom,10)
+                                        .padding(.horizontal, 5)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                    }
+                                }
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
-                                        .cornerRadius(15)
+                                        .cornerRadius(14)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 14)
                                         .neoShadow()
                                     VStack(spacing: -5) {
                                         Text("Moods:")
@@ -133,31 +184,32 @@ struct SingleDay: View {
                                             .font(Font.fredoka(.regular, size: 16))
                                             .padding(5)
                                         HStack(spacing: 0) {
-                                            ForEach(self.moods ?? ["none"], id: \.self) { mood in
-                                                if mood != "none" {
-                                                    Mood.getMoodImage(mood: Mood.getMood(str: mood))
+                                            ForEach(self.moods ?? [["mood": "none"]], id: \.self) { mood in
+                                                if mood["mood"] != "none" {
+                                                    Mood.getMoodImage(mood: Mood.getMood(str: mood["mood"] ?? "okay"))
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .padding(5)
                                                 }
                                             }
                                         }.frame(height: g.size.height * 0.07)
-                                    }.padding(3)
+                                    }
                                 }
-                                .padding(.trailing, 10)
+                                .padding(.horizontal, 5)
                             }
                             .frame(maxWidth: g.size.width * 0.38)
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
-                                    .cornerRadius(15)
+                                    .cornerRadius(14)
+                                    .addBorder(.black, width: 1.5, cornerRadius: 14)
                                     .neoShadow()
                                 VStack(spacing: 5){
-                                    Text("Gratitude: ")
+                                    Text("Reflections:")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.semiBold, size: 16))
                                     ScrollView(showsIndicators: false) {
-                                        ForEach(self.gratitudes ?? ["No gratitude written this day"], id: \.self) { gratitude in
+                                        ForEach(self.gratitudes ?? ["No reflections written this day"], id: \.self) { gratitude in
                                             Text(gratitude)
                                                 .fixedSize(horizontal: false, vertical: true)
                                                 .foregroundColor(Clr.black2)
@@ -262,7 +314,7 @@ struct SingleDay: View {
                 }
                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
             }
-            if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [String] {
+            if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [[String: String]] {
                 self.moods = moods
             }
             if let gratitudes = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.gratitudes] as? [String] {

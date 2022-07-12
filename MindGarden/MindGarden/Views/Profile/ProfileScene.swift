@@ -30,7 +30,7 @@ struct ProfileScene: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @ObservedObject var profileModel: ProfileViewModel
-    @State private var selection: settings = .settings
+    @State private var selection: TopTabType = .profile
     @State private var showNotification = false
     @State private var showGarden = false
     @State private var isSignedIn = true
@@ -68,39 +68,35 @@ struct ProfileScene: View {
             ZStack {
             VStack {
                 if #available(iOS 14.0, *) {
-                    NavigationView {
                         GeometryReader { g in
                             let width = g.size.width
                             let height = g.size.height
                             ZStack {
                                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                                 VStack(alignment: .center, spacing: 0) {
-                                    HStack(alignment: .bottom, spacing: 0) {
-                                        SelectionButton(selection: $selection, type: .referrals)
-                                            .frame(width: abs(g.size.width/4 - 1))
-                                        VStack {
-                                            Rectangle().fill(Color.gray.opacity(0.3))
-                                                .frame(width: 2, height: 35)
-                                                .padding(.top, 10)
-                                            Rectangle()
-                                                .fill(Color.gray.opacity(0.3))
-                                                .frame(height: 5)
-                                        }.frame(width: 5)
-                                        SelectionButton(selection: $selection, type: .settings)
-                                            .frame(width: abs(g.size.width/4 - 1))
-                                        VStack {
-                                            Rectangle().fill(Color.gray.opacity(0.3))
-                                                .frame(width: 2, height: 35)
-                                                .padding(.top, 10)
-                                            Rectangle()
-                                                .fill(Color.gray.opacity(0.3))
-                                                .frame(height: 5)
-                                        }.frame(width: 5)
-                                        SelectionButton(selection: $selection, type: .journey)
-                                            .frame(width: abs(g.size.width/4 - 1))
-                                    }.background(Clr.darkWhite).frame(height: 50)
-                                        .cornerRadius(12)
-                                        .neoShadow()
+                                    HStack {
+                                        Text("Dante")
+                                            .font(Font.fredoka(.semiBold, size: 20))
+                                            .foregroundColor(Clr.black2)
+                                        Spacer()
+                                        ZStack {
+                                            Circle()
+                                                .fill(Clr.darkWhite)
+                                                .neoShadow()
+                                            Image(systemName: "xmark")
+                                            .font(.system(size: 18))
+                                            .foregroundColor(Color.gray)
+                                            .onTapGesture {
+                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                presentationMode.wrappedValue.dismiss()
+                                            }
+                                        }.frame(width: 30, height: 30)
+                                    
+                                    }.frame(width: width * 0.8)
+                                    .padding()
+                                    .padding(.top)
+                                    ProfileTab(selectedTab: $selection)
+                                        .frame(width: width * 0.85)
                                     if showNotification || showGarden && selection == .settings {
                                         Button {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -348,16 +344,17 @@ struct ProfileScene: View {
                                             .frame(width: width * 0.8, height: height * 0.7)
                                             .padding(.top, 25)
                                         }
-                                    } else if selection == .journey {
+                                    } else if selection == .profile {
                                         // Journey
-                                        JourneyPage(profileModel: profileModel, width: width, height: height, totalSessions: gardenModel.totalSessions, totalMins: gardenModel.totalMins)
+                                        ProfilePage(profileModel: profileModel, width: width, height: height, totalSessions: gardenModel.totalSessions, totalMins: gardenModel.totalMins)
+                                            .padding(.top, 25)
                                     } else {
                                         ReferralScene(numRefs: $numRefs, action: {
                                             actionSheet()
                                         })
                                     }
                                     
-                                    if selection == .referrals {
+                                    if selection == .referral {
                                  
                                     } else {
                                         Spacer()
@@ -411,16 +408,7 @@ struct ProfileScene: View {
                                         }
                                     }
                                     Spacer()
-                                }.navigationBarTitle("\(userModel.name)", displayMode: .inline)
-                                    .navigationBarItems(leading:
-                                                            Image(systemName: "xmark")
-                                                            .font(.system(size: 22))
-                                                            .foregroundColor(Color.gray)
-                                                            .onTapGesture {
-                                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                                presentationMode.wrappedValue.dismiss()
-                                                            }
-                                    )
+                                }
                                     .frame(width: width, height: height)
                                     .background(Clr.darkWhite)
                                 if showWidget {
@@ -434,7 +422,6 @@ struct ProfileScene: View {
                                     .animation(.default, value: showWidget)
                             }
                         }
-                    }
                     .onAppear {
                         fromOnboarding = false
                         // Set the default to clear
@@ -527,7 +514,7 @@ struct ProfileScene: View {
         }.onAppear {
             //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
             if tappedRefer {
-                selection = .referrals
+                selection = .referral
                 tappedRefer = false
             } else {
                 selection = .settings
@@ -556,105 +543,7 @@ struct ProfileScene: View {
             gardenSettings = false
         }
     }
-    struct JourneyPage: View {
-        var profileModel: ProfileViewModel
-        var width: CGFloat
-        var height: CGFloat
-        var totalSessions: Int
-        var totalMins: Int
-        @State private var text = ""
-        @State private var response = ""
-        var body: some View {
-            VStack {
-                VStack(alignment: .center, spacing: 20) {
-                    HStack(alignment: .center, spacing: 15) {
-                        StatBox(label: "Total Time", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(totalMins),isNewLine: true))")
-                        StatBox(label: "All Sessions", img: Img.iconSessions, value: "\(totalSessions)")
-                    }.padding(.horizontal, 5)
-                    HStack(alignment: .center, spacing: 15) {
-                        StatBox(label: "All Gratitudes", img: Img.hands, value: "\(UserDefaults.standard.integer(forKey: "numGrads"))")
-                        StatBox(label: "Longest Streak", img: Img.streak, value: "\(UserDefaults.standard.integer(forKey: "longestStreak"))")
-                    }.padding(.horizontal, 5)
-                }.frame(width: width * 0.8, height: 160)
-                    .padding()
-                ZStack {
-                    Rectangle()
-                        .fill(Clr.yellow)
-                        .cornerRadius(12) 
-                        .frame(width: width * 0.75, height: 120)
-                        .neoShadow()
-                    VStack(alignment: .leading) {
-                        HStack(alignment: .center, spacing: 10) {
-                            Image(systemName: "calendar")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(.black)
-                            Text("Your journey began")
-                                .font(Font.fredoka(.regular, size: 18))
-                                .foregroundColor(.black)
-                                .padding(.top, 3)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.05)
-                        }.frame(width: width * 0.75, height: 25, alignment: .leading)
-                        Text("\(profileModel.signUpDate)")
-                            .font(Font.fredoka(.bold, size: 34))
-                            .foregroundColor(Clr.darkgreen)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.05)
-                    }
-                    .frame(width: width * 0.65, height: 120, alignment: .leading)
-                    .padding()
-                }.frame(width: width * 0.75, height: 120)
-                    .padding()
-                Text(response)
-                    .foregroundColor(Clr.darkgreen)
-                    .font(Font.fredoka(.semiBold, size: 16))
-                    .frame(width: width * 0.75, alignment: .center)
-                HStack {
-                    TextField("Enter promo code", text: $text)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .background(Clr.darkWhite)
-                        .frame(width: width * 0.5, height: 40)
-                        .oldShadow()
-                    Button {
-                        if text == "FTXTNL7E3AA6" {
-                            UserDefaults.standard.setValue(true, forKey: "promoCode")
-                            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
-                            WidgetCenter.shared.reloadAllTimelines()
-                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                            UserDefaults.standard.setValue(true, forKey: "bonsai")
-                            if let email = Auth.auth().currentUser?.email {
-                                Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                                    "isPro": true,
-                                ]) { (error) in
-                                    if let e = error {
-                                        print("There was a issue saving data to firestore \(e) ")
-                                    } else {
-                                        print("Succesfully saved pro")
-                                    }
-                                }
-                            }
-                            response = "✅ Success your a pro user now!"
-                        } else {
-                            response = "Invalid code"
-                        }
-                    } label: {
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .cornerRadius(12)
-                            Text("Submit")
-                                .font(Font.fredoka(.semiBold, size: 16))
-                                .foregroundColor(.black)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.05)
-                        }
-                    }.buttonStyle(NeumorphicPress())
-                }.frame(width: width * 0.75,height: 35)
-                    .keyboardResponsive()
-            }
-        }
-    }
+ 
     private func rateFunc() {
         Analytics.shared.log(event: .profile_tapped_rate)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -669,13 +558,13 @@ struct ProfileScene: View {
     }
 
     func actionSheet() {
-        if selection == .referrals {
+        if selection == .referral {
             if Auth.auth().currentUser?.email == nil {
                 tappedRefer = true
                 viewRouter.currentPage = .authentication
             }
         }
-        if selection == .referrals {
+        if selection == .referral {
 //            showSpinner = true
             guard let uid = Auth.auth().currentUser?.email else {
                 return
@@ -808,39 +697,7 @@ struct ProfileScene_Previews: PreviewProvider {
     }
 }
 
-struct SelectionButton: View {
-    @Binding var selection: settings
-    var type: settings
 
-    var body: some View {
-        VStack {
-            Spacer()
-            Button {
-                if type == .settings {
-                    Analytics.shared.log(event: .profile_tapped_settings)
-                } else if type == .journey{
-                    Analytics.shared.log(event: .profile_tapped_journey)
-                } else {
-                    Analytics.shared.log(event: .profile_tapped_refer)
-                }
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                selection = type
-            } label: {
-                HStack(alignment: .top) {
-                    Text(type == .settings ?  "Settings" : type == .referrals ? "Referrals" : "Journey")
-                        .font(Font.fredoka(.bold, size: 18))
-                        .foregroundColor(selection == type ? Clr.brightGreen : Clr.black1)
-                        .padding(.top, 10)
-                }
-            }.frame(height: 25, alignment: .center)
-            Spacer()
-            Rectangle()
-                .fill(selection == type ?  Clr.brightGreen : Color.gray.opacity(0.3))
-                .frame(height: 8)
-        }.frame(height: 52)
-
-    }
-}
 
 struct ReferralView: View {
     @Binding var url: URL?
