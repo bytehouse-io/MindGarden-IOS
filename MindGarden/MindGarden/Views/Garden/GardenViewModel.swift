@@ -263,20 +263,20 @@ class GardenViewModel: ObservableObject {
                     if let year = self.grid[date.get(.year)] {
                         if let month = year[date.get(.month)] {
                             if let day = month[date.get(.day)] {
-                                if var values = day[key] as? [Any] {
-                                    values.append(saveValue)
+                                if var values = day[key] as? [[String: Any]] {
+                                    values.append([Date.getTime() : saveValue])
                                     self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
                                 } else { // first of that type today
-                                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
+                                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [[Date.getTime() : saveValue]]
                                 }
                             } else { // first save of type that day
-                                self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
+                                self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [Date.getTime() :saveValue]]
                             }
                         } else { //first session of month
-                            self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [saveValue]]]
+                            self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [Date.getTime() : saveValue]]]
                         }
                     } else {
-                        self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
+                        self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [Date.getTime() : saveValue]]]]
                     }
                 }
 
@@ -305,19 +305,19 @@ class GardenViewModel: ObservableObject {
                     if let day = month[date.get(.day)] {
                         if var values = day[key] as? [Any] {
                             //["plantSelected" : "coogie", "meditationId":3]
-                            values.append(saveValue)
+                            values.append([Date.getTime() : saveValue])
                             self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
                         } else { // first of that type today
-                            self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
+                            self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [Date.getTime() :saveValue]
                         }
                     } else { // first save of type that day
-                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
+                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [Date.getTime() :saveValue]]
                     }
                 } else { //first session of month
-                    self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [saveValue]]]
+                    self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [Date.getTime() :saveValue]]]
                 }
             } else {
-                self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
+                self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [Date.getTime() :saveValue]]]]
             }
             self.updateData(completionHandler: completionHandler, key: key)
         }
