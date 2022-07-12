@@ -9,9 +9,10 @@ import SwiftUI
 
 struct RecommendationsView: View {
     @EnvironmentObject var model: MeditationViewModel
-    @Environment(\.presentationMode) var presentationMode
     private let titles = ["Intro to Meditation", "Intro to Meditation","Basic Confidence Meditation"]
     @State private var playAnim = false
+    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+    
     var body: some View {
         ZStack {
             Clr.darkWhite.ignoresSafeArea()
@@ -26,15 +27,17 @@ struct RecommendationsView: View {
                                 .font(Font.fredoka(.semiBold, size: 28))
                             Spacer()
                             CloseButton() {
-                                presentationMode.wrappedValue.dismiss()
+                                viewControllerHolder?.dismissController()
                             }.offset(x:20)
                         }.padding(5)
                             .padding(.bottom,10)
+                            .zIndex(2)
                         ZStack {
                             Rectangle().fill(Clr.darkWhite)
                                 .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                            LottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
-                                .scaleEffect(2)
+                                .overlay(LottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
+                                            .scaleEffect(2))
+                            
                             VStack(alignment:.leading, spacing: 0) {
                                 HStack {
                                     Text("You earned +6 coins")

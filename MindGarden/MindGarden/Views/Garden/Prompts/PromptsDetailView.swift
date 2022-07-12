@@ -13,13 +13,11 @@ struct PromptsDetailView: View, KeyboardReadable {
     
     @State private var text: String = "Write here..."
     @State private var contentKeyVisible: Bool = true
-    @State private var showPrompt = false
-    @State private var showRecommendation = false
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     
         
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     var body: some View {
         ZStack(alignment:.top) {
             Clr.darkWhite.ignoresSafeArea()
@@ -34,7 +32,9 @@ struct PromptsDetailView: View, KeyboardReadable {
                         .opacity(0.5)
                     Spacer()
                     Button {
-                        showPrompt = true
+                        viewControllerHolder?.present(style: .overFullScreen, builder: {
+                            PromptsView()
+                        })
                     } label: {
                         Text("Prompts")
                             .font(Font.fredoka(.semiBold, size: 16))
@@ -52,7 +52,7 @@ struct PromptsDetailView: View, KeyboardReadable {
                             //TODO: implement shuffle tap event
                         }
                     CloseButton() {
-                        presentationMode.wrappedValue.dismiss()
+                        viewControllerHolder?.dismissController()
                     }.padding(.leading, 10)
                 }
                 .padding(.horizontal,30)
@@ -90,21 +90,12 @@ struct PromptsDetailView: View, KeyboardReadable {
                 Spacer()
                     .frame(height:50)
                 Button {
-                    var num = UserDefaults.standard.integer(forKey: "numGrads")
-                    num += 1
-                    let identify = AMPIdentify()
-                        .set("num_gratitudes", value: NSNumber(value: num))
-                    Amplitude.instance().identify(identify ?? AMPIdentify())
-                    if num == 30 {
-                        userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
-                        userModel.buyPlant(unlockedStrawberry: true)
-                        userModel.triggerAnimation = true
-                    }
-                    UserDefaults.standard.setValue(num, forKey: "numGrads")
                     Analytics.shared.log(event: .gratitude_tapped_done)
                     gardenModel.save(key: K.defaults.gratitudes, saveValue: text, coins: userModel.coins)
                     text = "I'm thankful for "
-                    showRecommendation = true
+                    viewControllerHolder?.present(style: .overFullScreen, builder: {
+                        RecommendationsView()
+                    })
                     
                 } label: {
                     HStack {
@@ -123,11 +114,5 @@ struct PromptsDetailView: View, KeyboardReadable {
             }
         }
         .ignoresSafeArea()
-        .fullScreenCover(isPresented: $showRecommendation) {
-            RecommendationsView()
-        }
-        .sheet(isPresented: $showPrompt) {
-            PromptsView()
-        }
     }
 }

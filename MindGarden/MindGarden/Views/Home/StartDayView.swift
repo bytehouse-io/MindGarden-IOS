@@ -10,6 +10,9 @@ import SwiftUI
 struct StartDayView: View {
     @Binding var activeSheet: Sheet?
     @Binding var selectedMood: NewMood
+    
+    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+    
     var body: some View {
         VStack {
             HStack {
@@ -61,7 +64,11 @@ struct StartDayView: View {
                                     ForEach(NewMood.allCases, id: \.id) { item in
                                         Button {
                                             selectedMood = item
-                                            activeSheet = .mood
+                                            
+                                            viewControllerHolder?.present(style: .overFullScreen, builder: {
+                                                MoodElaborate(selectedMood:selectedMood)
+                                                    .environmentObject(MoodModel())
+                                            })
                                         } label: {
                                             VStack(spacing:0) {
                                                 item.moodImage

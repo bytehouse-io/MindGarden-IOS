@@ -12,7 +12,8 @@ struct MoodElaborate: View {
     @EnvironmentObject var moodModel: MoodModel
     @State var selectedMood: NewMood
     @State private var selectedSubMood: String = ""
-    @Environment(\.presentationMode) var presentationMode
+    
+    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
     
     @State private var showDetail = false
     let columns = [
@@ -32,7 +33,7 @@ struct MoodElaborate: View {
                         .padding(.leading,30)
                     Spacer()
                     CloseButton() {
-                        presentationMode.wrappedValue.dismiss()
+                        viewControllerHolder?.dismissController()
                     }.padding(.trailing,20)
                 }
                 .frame(width: UIScreen.screenWidth)
@@ -51,7 +52,12 @@ struct MoodElaborate: View {
                             Button {
                                 moodModel.addMood(mood: MoodData(date: "\(Date().toString(withFormat: "EEEE, MMM dd"))", mood: selectedMood.rawValue, subMood: selectedSubMood))
                                 selectedSubMood = item
-                                showDetail = true
+                                viewControllerHolder?.present(style: .overFullScreen, builder: {
+                                    PromptsDetailView()
+                                        .environmentObject(MoodModel())
+                                        .environmentObject(GardenViewModel())
+                                        .environmentObject(UserViewModel())
+                                })
                             }
                             label : {
                                 ZStack {
@@ -74,10 +80,6 @@ struct MoodElaborate: View {
                 .padding(.top,20)
                 Spacer()
             }
-        }
-        .fullScreenCover(isPresented: $showDetail) {
-            PromptsDetailView()
-                .environmentObject(MoodModel())
         }
     }
 }
