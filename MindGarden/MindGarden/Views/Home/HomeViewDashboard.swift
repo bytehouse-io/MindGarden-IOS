@@ -102,7 +102,7 @@ struct HomeViewDashboard: View {
                     
                     Spacer()
                     HStack(spacing:5) {
-                        Img.fire
+                        Img.streak
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 20, height:20)

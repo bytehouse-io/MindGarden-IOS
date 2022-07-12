@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum TopTabType: String {
-    case journey,quickStart, learn, store, badge, realTree
+    case journey,quickStart, learn, store, badge, realTree, referral, settings, profile
 }
 
 var discoverTabList = [
@@ -20,6 +20,11 @@ var storeTabList = [
     MenuItem(tabName: .store),
     MenuItem(tabName: .badge),
     MenuItem(tabName: .realTree)
+]
+var profileTabList = [
+    MenuItem(tabName: .referral),
+    MenuItem(tabName: .profile),
+    MenuItem(tabName: .settings)
 ]
 
 
@@ -35,6 +40,9 @@ struct MenuItem: Identifiable {
         case .store: return "Store"
         case .badge: return "Badge"
         case .realTree: return "Real Tree"
+        case .referral: return "Referral"
+        case .profile: return "Profile"
+        case .settings: return "Settings"
         }
     }
 }

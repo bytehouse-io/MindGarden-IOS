@@ -214,14 +214,14 @@ struct Finished: View {
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
                     HStack {
-                        LikeButton(isLiked: favorited, size:25.0) {
+                        LikeButton(isLiked: favorited, size:35) {
                             Analytics.shared.log(event: .finished_tapped_favorite)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if let med = model.selectedMeditation {
                                 model.favorite(selectMeditation: med)
                             }
                             favorited.toggle()
-                        }
+                        }.padding(.leading)
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(Clr.black1)
@@ -354,6 +354,7 @@ struct Finished: View {
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                 session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+                session["timeStamp"] = Date.getTime()
                 let dur = model.selectedMeditation?.duration ?? 0
                 if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
                     userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))

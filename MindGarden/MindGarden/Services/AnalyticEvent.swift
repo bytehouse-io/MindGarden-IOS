@@ -267,7 +267,7 @@ enum AnalyticEvent {
 
     //MARK: - Profile
     case screen_load_profile //
-    case profile_tapped_journey //
+    case profile_tapped_profile //
     case profile_tapped_settings //
     case profile_tapped_email //
     case profile_tapped_reddit //
@@ -710,7 +710,7 @@ extension AnalyticEvent {
         case .finished_seize_the_day: return "finished_seize_the_day"
         case .finished_bedtime_meditation: return "finished_bedtime_meditation"
         case .screen_load_profile: return "screen_load_profile"
-        case .profile_tapped_journey: return "profile_tapped_journey"
+        case .profile_tapped_profile: return "profile_tapped_profile"
         case .profile_tapped_settings: return "profile_tapped_settings"
         case .profile_tapped_email: return "profile_tapped_email"
         case .profile_tapped_reddit: return "profile_tapped_reddit"

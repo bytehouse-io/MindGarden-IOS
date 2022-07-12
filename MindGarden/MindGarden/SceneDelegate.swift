@@ -308,7 +308,7 @@ extension SceneDelegate {
     }
     
     func playSound(soundName: String) {
-        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") else { return }
         
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)

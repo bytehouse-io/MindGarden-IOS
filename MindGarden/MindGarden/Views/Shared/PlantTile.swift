@@ -18,7 +18,7 @@ struct PlantTile: View {
     var body: some View {
             ZStack {
                 Rectangle()
-                    .foregroundColor(isBadge ? isOwned ? Clr.yellow : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.yellow)
+                    .foregroundColor(isBadge ? isOwned ? Clr.yellow : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.darkWhite)
                     .frame(width: width * 0.35, height: height * 0.3)
                     .cornerRadius(15)
                     .overlay(RoundedRectangle(cornerRadius: 14)
