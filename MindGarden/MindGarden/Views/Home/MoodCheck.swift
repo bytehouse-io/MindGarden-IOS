@@ -94,13 +94,13 @@ enum Mood: String, CaseIterable {
         case .angry:
             return Image("angryPot")
         case .okay:
-            return Image("okayPot")
+            return Image("okay")
         case .stressed:
             return Image("stressedPot")
-        case .bad: return Image("badPot")
-        case .veryBad: return Image("veryBadPot")
-        case .good: return Image("goodPot")
-        case .veryGood: return Image("veryGoodPot")
+        case .bad: return Image("bad")
+        case .veryBad: return Image("veryBad")
+        case .good: return Image("good")
+        case .veryGood: return Image("veryGood")
         default:
             return Image("okayPot")
         }

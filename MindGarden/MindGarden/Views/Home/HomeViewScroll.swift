@@ -34,7 +34,6 @@ struct HomeViewScroll: View {
                 VStack {
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP,coin:userModel.coins, streakNumber: bonusModel.streakNumber)
                     StartDayView(activeSheet:$activeSheet)
-                    
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")
                             .font(Font.fredoka(.bold, size: 36))

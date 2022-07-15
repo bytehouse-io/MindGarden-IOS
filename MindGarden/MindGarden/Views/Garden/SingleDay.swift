@@ -317,7 +317,7 @@ struct SingleDay: View {
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [[String: String]] {
                 self.moods = moods
             }
-            if let gratitudes = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.gratitudes] as? [String] {
+            if let gratitudes = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["gratitudes"] as? [String] {
                 self.gratitudes = gratitudes
             }
             if let sessions = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.sessions] as? [[String: String]] {

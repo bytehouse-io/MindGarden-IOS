@@ -32,7 +32,6 @@ struct IAPModal: View {
     @State private var potionPrice  = 0.0
     @State private var chestPrice  = 0.0
     @State private var packagesAvailableForPurchase = [Purchases.Package]()
-    @Binding var alertMsg: String
     @Binding var showAlert: Bool
     @State var isLoading = false
     //TODO if user has a potion or chest activated can't purchase more or the other.
@@ -62,8 +61,9 @@ struct IAPModal: View {
                                     }.position(x: 30, y: 25)
                                 }
                                 Text("Potion Shop")
-                                        .font(Font.fredoka(.bold, size: 24))
+                                        .font(Font.fredoka(.bold, size: 20))
                                         .foregroundColor(Clr.black1)
+                                        .padding(.top)
                                 if userModel.streakFreeze > 0 {
                                     Text("You have \(userModel.streakFreeze) streak freeze" + "\(userModel.streakFreeze == 1 ? " " : "s ")" + "equipped")
                                         .font(Font.fredoka(.semiBold, size: 16))
@@ -73,6 +73,7 @@ struct IAPModal: View {
                                         .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black1)
                                         .opacity(0.8)
+                                        .padding(.bottom)
                                 }
                                 
                                 Spacer()
@@ -155,13 +156,10 @@ struct IAPModal: View {
         isLoading = false
         switch type {
         case .freeze:
-            alertMsg = "Freeze streak purchase was successful"
             userModel.streakFreeze += 2
         case .potion:
-            alertMsg = "Sunshine potion purchase was successful"
             userModel.potion = Date().getdateAfterweek(week: 1)?.toString() ?? ""
         case .chest:
-            alertMsg = "Sunshine chest purchase was successful"
             userModel.chest = Date().getdateAfterweek(week: 3)?.toString() ?? ""
         }
         userModel.saveIAP()
@@ -342,6 +340,6 @@ struct IAPModal: View {
 
 struct IAPModal_Previews: PreviewProvider {
     static var previews: some View {
-        IAPModal(shown: .constant(false), fromPage: "home", alertMsg: .constant(""), showAlert: .constant(false))
+        IAPModal(shown: .constant(false), fromPage: "home", showAlert: .constant(false))
     }
 }

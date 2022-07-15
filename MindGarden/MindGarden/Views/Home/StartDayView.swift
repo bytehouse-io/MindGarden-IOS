@@ -26,7 +26,7 @@ struct StartDayView: View {
                 VStack {
                     Circle()
                         .fill(Clr.brightGreen)
-                        .frame(width:18,height: 18)
+                        .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
                     DottedLine()
                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
@@ -34,18 +34,17 @@ struct StartDayView: View {
                         .frame(width:2)
                     Circle()
                         .fill(.white)
-                        .frame(width:18,height: 18)
-                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
+                        .frame(width:24,height: 24)
+                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                     DottedLine()
                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
                         .opacity(0.5)
                         .frame(width:2)
                     Circle()
                         .fill(.white)
-                        .frame(width:18,height: 18)
-                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
+                        .frame(width:24,height: 24)
+                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                 }
-                .padding()
                 .padding(.vertical,50)
                 VStack(spacing:30) {
                     ZStack {
@@ -53,13 +52,14 @@ struct StartDayView: View {
                             .resizable()
                             .frame(height:170)
                             .aspectRatio(contentMode: .fill)
-                        
+                            .opacity(0.9)
                         VStack {
                             Spacer()
                             VStack {
                                 Text("How are you feeling?")
                                     .foregroundColor(Clr.brightGreen)
-                                    .font(Font.fredoka(.semiBold, size: 12))
+                                    .font(Font.fredoka(.semiBold, size: 16))
+                                    .offset(y: 4)
                                 HStack(alignment:.top) {
                                     ForEach(Mood.allCases(), id: \.id) { item in
                                         Button {
@@ -72,34 +72,32 @@ struct StartDayView: View {
                                                 Mood.getMoodImage(mood: item)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(maxWidth:80)
-                                            }
-                                            .padding(.bottom,10)
+                                                    .frame(maxWidth: 70)
+                                                    .padding(.horizontal, 4)
+                                            }.padding(.bottom,10)
                                         }
                                     }
-                                }.padding(.horizontal, 5)
-                            }
-                            .padding(5)
-                            .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 14))
-                            
+                                }.padding(.horizontal, 10)
+                            }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
                         }
-                        
                     }
-                    .addBorder(Color.black, width: 1.5, cornerRadius: 14)
+                    .frame(width: UIScreen.screenWidth * 0.775)
+                    .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                    .padding(.horizontal, 12)
                     
                     ZStack {
                         Rectangle().fill(Clr.yellow)
-                            .frame(height:150)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                    }
+                            
+                    }.frame(width: UIScreen.screenWidth * 0.775, height: 150)
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                        .padding(.horizontal, 12)
                     ZStack {
                         Rectangle().fill(Clr.yellow)
                             .frame(height:150)
                             .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                    }
+                    }.frame(width: UIScreen.screenWidth * 0.775)
                 }
             }
-        }
-        .padding(.horizontal,30)
+        }.padding(.horizontal, 30)
     }
 }

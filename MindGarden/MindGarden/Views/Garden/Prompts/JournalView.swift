@@ -91,7 +91,7 @@ struct JournalView: View, KeyboardReadable {
                 Button {
                     withAnimation {
                         Analytics.shared.log(event: .gratitude_tapped_done)
-                        gardenModel.save(key: K.defaults.gratitudes, saveValue: text, coins: userModel.coins)
+                        gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
                         showRecs = true
                     }
                 } label: {

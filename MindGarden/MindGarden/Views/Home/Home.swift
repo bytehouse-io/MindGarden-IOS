@@ -43,8 +43,6 @@ struct Home: View {
     @State private var coins = 0
     @State private var attempts = 5
     @State var activeSheet: Sheet?
-    @State private var showAlert = false
-    @State private var alertMsg = ""
     @State private var showChallenge = false
     @State private var showMoodElaborate = true
     
@@ -92,10 +90,6 @@ struct Home: View {
                     NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
-                    IAPModal(shown: $showIAP, fromPage: "home", alertMsg: $alertMsg, showAlert: $showAlert)
-                        .offset(y: showIAP ? 0 : g.size.height)
-                        .edgesIgnoringSafeArea(.top)
-                        .animation(.default, value: showIAP)
                     ChallengeModal(shown: $showChallenge)
                         .offset(y: showChallenge ? 0 : g.size.height)
                         .animation(.default, value: showChallenge)
@@ -126,9 +120,6 @@ struct Home: View {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("Success"), message: Text(alertMsg), dismissButton: .default(Text("Ok")))
-        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
@@ -158,14 +149,14 @@ struct Home: View {
                     ios14 = false
                 }
                 
-                if launchedApp {
-                    gardenModel.updateSelf()
-                    launchedApp = false
-                    var num = UserDefaults.standard.integer(forKey: "shownFive")
-                    num += 1
-                    UserDefaults.standard.setValue(num, forKey: "shownFive")
-                    model.getFeaturedMeditation()
-                }
+//                if launchedApp {
+//                    gardenModel.updateSelf()
+//                    launchedApp = false
+//                    var num = UserDefaults.standard.integer(forKey: "shownFive")
+//                    num += 1
+//                    UserDefaults.standard.setValue(num, forKey: "shownFive")
+//                    model.getFeaturedMeditation()
+//                }
                 
                 if userWentPro {
                     wentPro = userWentPro

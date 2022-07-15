@@ -100,23 +100,20 @@ struct HomeViewDashboard: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height:20)
                                 .foregroundColor(.black)
-                            Text("plant select")
-                                .font(Font.fredoka(.regular, size: 12))
+                            Text("Select")
+                                .font(Font.fredoka(.regular, size: 16))
                                 .minimumScaleFactor(0.05)
                                 .foregroundColor(.black)
-                           
-                        }
-                        .frame(height:height)
+                        }.frame(height:height)
                         .roundedCapsule()
-                    }
-                    .buttonStyle(BonusPress())
+                    }.buttonStyle(BonusPress())
                     
                     Spacer()
                     HStack(spacing:5) {
                         Img.streak
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height:20)
+                            .frame(width: 24, height:24)
                             .foregroundColor(.black)
                         Text("\(streakNumber) days")
                             .font(Font.fredoka(.medium, size: 16))
@@ -124,6 +121,7 @@ struct HomeViewDashboard: View {
                     }
                     .frame(height:height)
                     .roundedCapsule(color: .clear)
+                    Spacer()
                 }
                 
                 

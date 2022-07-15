@@ -24,7 +24,7 @@ struct K {
         static var gardenGrid = "gardenGrid"
         static var sessions = "sessions"
         static var moods = "moods"
-        static var gratitudes = "gratitudes"
+        static var journals = "journals"
         static var plantSelected = "plantSelected"
         static var meditationId = "meditationId"
         static var duration = "duration"

@@ -118,7 +118,8 @@ struct Finished: View {
                                                     Button {
                                                     } label: {
                                                         HStack {
-                                                            Img.happy.padding([.top, .leading, .bottom])
+                                                            Img.veryGood
+                                                                .padding([.leading, .vertical])
                                                             Text("Log Mood")
                                                                 .foregroundColor(.black)
                                                                 .font(Font.fredoka(.semiBold, size: 16))
@@ -287,7 +288,7 @@ struct Finished: View {
                         .zIndex(100)
                         .frame(width: g.size.width * 0.6, height: g.size.height/16)
                         .rightShadow()
-                    }.frame(width: g.size.width, height: g.size.height/10)
+                    }.frame(width: g.size.width - 50, height: g.size.height/10)
                     .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
                     .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? ios14 ? 7 : 9 : 4))

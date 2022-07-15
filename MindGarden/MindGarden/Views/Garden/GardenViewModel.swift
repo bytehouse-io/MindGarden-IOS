@@ -24,11 +24,9 @@ class GardenViewModel: ObservableObject {
     @Published var recentMeditations: [Meditation] = []
     @Published var gratitudes = 0
     @Published var lastFive =  [(String, Plant?,Mood?)]()
-    var medIds: [String] = [] //TODO turn this into a set
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
-    var startsOnSunday = false
     let db = Firestore.firestore()
 
     init() {
@@ -37,57 +35,69 @@ class GardenViewModel: ObservableObject {
     }
     
     func getRecentMeditations() {
-        medIds = [String]()
-        grid.values.forEach { value in //TODO sort years
+        var yearSortDict = [String: [[[String:String]]]]()
+        var entireHistory = [([Int], [[String: String]])]()
+        for (key,value) in grid {
+            print(value.keys, value, key)
             let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
+            var yearIds = [[[String:String]]]()
             for mo in months  {
                 if let singleDay = value[String(mo)]{
                     let days = singleDay.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
                     for day in days { // we can improve performance by stopping when we get the last two different sessions
+                        var dataArr = [[String: String]]()
                         if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
-                            for sess in sessions {
-                                medIds.insert(sess["meditationId"] ?? "1", at: 0)
+                            for sess in sessions { // sort by timestamp here
+                                dataArr.append(sess)
                             }
                         }
-                    }
-                }
-            }
-
-            var med1: Meditation?
-            var med2: Meditation?
-            var ids = [Int]()
-            if medIds.count >= 1 {
-                med1 = Meditation.allMeditations.first(where: { medd in
-                    String(medd.id) == medIds[0]
-                })
-                if med1?.type == .lesson && med1?.belongsTo != "Open-ended Meditation" && med1?.belongsTo != "Timed Meditation" {
-                    let parentCourse = Meditation.allMeditations.first { medd in
-                        medd.title == med1?.belongsTo
-                    }
-                    med1 = parentCourse
-                }
-            }
-
-            var index = 0
-            while index < medIds.count {
-                if med2 != nil && med1 != med2 {
-                    break
-                } else {
-                    med2 = Meditation.allMeditations.first(where: { medd in
-                        String(medd.id) == medIds[index]
-                    })
-                    if med2?.type == .lesson  && med2?.belongsTo != "Open-ended Meditation" && med2?.belongsTo != "Timed Meditation" {
-                        let parentCourse = Meditation.allMeditations.first { medd in
-                            medd.title == med2?.belongsTo
+                        
+                        if let moods = singleDay[String(day)]?["moods"] as? [[String: String]] {
+                            for mood in moods {
+                                dataArr.append(mood)
+                            }
                         }
-                        med2 = parentCourse
+                        
+                        if let journals = singleDay[String(day)]?["gratitudes"] as? [[String: String]] {
+                            for journal in journals {
+                                dataArr.append(journal)
+                            }
+                        }
+                        print(type(of: mo), type(of: day), "geng")
+                        entireHistory.append(([Int(mo) ?? 1, Int(day) ?? 1, Int(key) ?? 2022], dataArr)) // append day data and attach date
+                       
                     }
                 }
-                index += 1
             }
-            recentMeditations = []
-            UserDefaults.standard.setValue(ids, forKey: "recent")
+            yearSortDict[key] = yearIds
+//            UserDefaults.standard.setValue(ids, forKey: "recent")
+            // TODO instead of timestamp, save entire date.
         }
+        
+        entireHistory = entireHistory.sorted { (lhs, rhs) in
+            let date1 = lhs.0
+            let date2 = rhs.0
+            if  date1[0] == date2[0] { //same year
+                if date1[1] == date2[1] { // same month
+                    return date1[2] < date2[2]
+                }
+                return date1[1] > date2[2]
+            }
+            return date1[0] > date2[0]
+        }
+//        let sortedIds = yearSortDict.sorted { $0.0 < $1.0 }.compactMap { $0 }
+//        let timeFormatter = DateFormatter()
+//        timeFormatter.dateFormat = "h:mm a"
+//        timeFormatter.amSymbol = "AM"
+//        timeFormatter.pmSymbol = "PM"
+//        let convertedArray = dataArr
+//            .map { return ($0, timeFormatter.date(from: $0["timeStamp"] ?? "12:00 AM")!) }
+//                .sorted { $0.1 > $1.1 }
+//                .map(\.0)
+//        yearIds.insert(convertedArray, at: 0)
+//        for arr in sortedIds {
+//            print(arr, "day day")
+//        }
     }
 
     func populateMonth() {
@@ -98,7 +108,7 @@ class GardenViewModel: ObservableObject {
         monthTiles = [Int: [Int: (Plant?, Mood?)]]()
         totalMoods = [Mood:Int]()
         favoritePlants = [String: Int]()
-        startsOnSunday = false
+        var startsOnSunday = false
         let strMonth = String(selectedMonth)
         let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
         let intWeek = Date().weekDayToInt(weekDay: Date.dayOfWeek(day: "1", month: strMonth, year: String(selectedYear)))
@@ -149,7 +159,7 @@ class GardenViewModel: ObservableObject {
                     }
                 }
             }
-            if let gratitudez = grid[Date().get(.year)]?[strMonth]?[String(day)]?[K.defaults.gratitudes] as? [String] {
+            if let gratitudez = grid[Date().get(.year)]?[strMonth]?[String(day)]?["gratitudes"] as? [String] {
                 gratitudes += gratitudez.count
             }
 
@@ -230,6 +240,7 @@ class GardenViewModel: ObservableObject {
     
 
     func save(key: String, saveValue: Any, date: Date = Date(), freeze: Bool = false, coins: Int,  completionHandler:  @escaping ()->Void = { }) {
+        
         if key == "sessions" {
             if let session = saveValue as? [String: String] {
                 if !freeze {  self.allTimeSessions += 1  }

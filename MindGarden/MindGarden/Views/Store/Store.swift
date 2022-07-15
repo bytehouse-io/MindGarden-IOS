@@ -21,7 +21,9 @@ struct Store: View {
     @State private var currentHightlight: Int = -1
     @State private var isNotifOn = false
     @State private var tabType:TopTabType = .badge
-    
+    @State private var showIAP = false
+    @State private var showAlert = false
+
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -158,14 +160,13 @@ struct Store: View {
                                 
                                 VStack {
                                     HStack {
-                                        Img.coin
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 25)
-                                            .padding(5)
-                                        Text(String(userModel.coins))
-                                            .font(Font.fredoka(.semiBold, size: 24))
-                                            .foregroundColor(Clr.black1)
+                                        PlusCoins(coins: $userModel.coins)
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                    showIAP.toggle()
+                                                }
+                                            }
                                     }.padding(.bottom, -10)
                                     if isShop && !(tabType == .store) {
                                         ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count/2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
@@ -323,7 +324,7 @@ struct Store: View {
                     //                      .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
                 }
                 
-                    if showModal || confirmModal  {
+                    if showModal || confirmModal || showIAP  {
                     Color.black
                         .opacity(0.3)
                         .edgesIgnoringSafeArea(.all)
@@ -335,7 +336,10 @@ struct Store: View {
                         .environmentObject(bonusModel)
                         .environmentObject(profileModel)
                 }
-                
+                IAPModal(shown: $showIAP, fromPage: "home", showAlert: $showAlert)
+                    .offset(y: showIAP ? 0 : g.size.height)
+                    .edgesIgnoringSafeArea(.top)
+                    .animation(.default, value: showIAP)
                 ConfirmModal(shown: $confirmModal, showMainModal: $showModal).offset(y: confirmModal ? 0 : g.size.height)
                     .opacity(showSuccess ? 0.3 : 1)
                 //                SuccessModal(showSuccess: $showSuccess, showMainModal: $showModal).offset(y: showSuccess ? 0 : g.size.height)
@@ -345,6 +349,9 @@ struct Store: View {
                             Text("You can click on badges and open them up")
                           , dismissButton: .default(Text("Got it!")))
                 }
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Success"), message: Text("🚀 Your Purchase was Successful!"), dismissButton: .default(Text("OK")))
         }
         .onAppear {
             //            let _ = storylyViewProgrammatic.openStory(storyGroupId: 41611, play: .StoryGroup)
