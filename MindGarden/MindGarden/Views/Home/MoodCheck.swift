@@ -102,7 +102,7 @@ enum Mood: String, CaseIterable {
         case .good: return Image("good")
         case .veryGood: return Image("veryGood")
         default:
-            return Image("okayPot")
+            return Image("okay")
         }
     }
     

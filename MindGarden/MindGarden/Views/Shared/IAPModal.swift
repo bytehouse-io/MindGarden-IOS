@@ -111,7 +111,7 @@ struct IAPModal: View {
                         }
                         .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.7), alignment: .center)
                         .background(Clr.darkWhite)
-                        .cornerRadius(12)
+                        .cornerRadius(32)
                         Spacer()
                     }
                     Spacer()
@@ -277,8 +277,9 @@ struct IAPModal: View {
             ZStack(alignment: .center){
                 Rectangle()
                     .fill(Clr.darkWhite)
-                    .cornerRadius(15)
+                    .cornerRadius(16)
                     .neoShadow()
+                    .addBorder(.black, cornerRadius: 16)
                 Capsule()
                     .fill(Clr.yellow)
                     .frame(width: 75, height: 25)

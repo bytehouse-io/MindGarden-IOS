@@ -28,17 +28,22 @@ struct PurchaseModal: View {
                 HStack(alignment: .center) {
                     Spacer()
                     VStack(alignment: .center) {
-                        HStack(alignment: .top) {
+                        HStack(alignment: .center) {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
                                 }
                             } label: {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.gray.opacity(0.5))
-                                    .font(.title)
-                                    .padding()
+                                ZStack {
+                                    Circle()
+                                        .fill(Clr.darkWhite)
+                                        .neoShadow()
+                                    Image(systemName: "xmark")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(Color.gray)
+                                }.frame(width: 30)
+                                 .padding(.leading, 24)
                             }
                             Spacer()
                             Text((userModel.willBuyPlant?.title == "Real Tree" ? "Plant a " : "") + (userModel.willBuyPlant?.title ?? ""))
@@ -49,10 +54,12 @@ struct PurchaseModal: View {
                                 .padding()
                             Spacer()
                             Image(systemName: "xmark")
-                                .font(.title)
+                                .font(.system(size: 18))
                                 .padding()
                                 .opacity(0)
-                        }
+                                .frame(width: 30)
+                                .padding(.leading, 24)
+                        }.frame(height: 75)
                         if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                             userModel.willBuyPlant?.coverImage
                                 .resizable()
@@ -156,7 +163,7 @@ struct PurchaseModal: View {
                                 .frame(width: g.size.width * 0.7, alignment: .leading)
                                 .padding(.top)
                         }
-                        
+                        Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
@@ -198,16 +205,11 @@ struct PurchaseModal: View {
                                     if !UserDefaults.standard.bool(forKey: "reddit") {
                                         UserDefaults.standard.setValue(true, forKey: "reddit")
                                     }
-                                case "🙏 30 Gratitudes":
-                                    break
+                                case "🙏 Write 30 Gratitudes":
+                                    NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
                                 default:
-                                    meditateModel.selectedMeditation = meditateModel.featuredMeditation
                                     withAnimation {
-                                        if meditateModel.featuredMeditation?.type == .course {
-                                            viewRouter.currentPage = .middle
-                                        } else {
-                                            viewRouter.currentPage = .play
-                                        }
+                                        viewRouter.currentPage = .learn
                                     }
                                 }
                             } else {
@@ -220,31 +222,37 @@ struct PurchaseModal: View {
                             }
                         } label: {
                             Capsule()
-                                .fill(Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? Clr.darkgreen : Clr.darkWhite)
-                                .frame(width: g.size.width * (Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 0.55 : 0.25), height: g.size.height * 0.05)
+                                .fill(Clr.yellow)
+                                .frame(width: g.size.width * 0.75, height: g.size.height * 0.05)
                                 .neoShadow()
+                                .addBorder(.black, width: 1.5, cornerRadius: 30)
                                 .padding()
                                 .overlay(HStack{
                                     if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                                         Text("\(Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] ?? "" )")
                                             .font(Font.fredoka(.bold, size: 18))
-                                            .foregroundColor(Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? .white : Clr.black1)
+                                            .foregroundColor(Clr.black2)
                                     } else {
+                                        Text("Purchase")
+                                            .font(Font.fredoka(.bold, size: Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 18 : 20))
+                                            .foregroundColor( Clr.black2)
                                         Img.coin
                                             .renderingMode(.original)
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: g.size.width * 0.05, height: g.size.width * 0.05)
+                                            .shadow(radius: 15)
                                         Text("\(userModel.willBuyPlant?.price ?? 0)")
-                                            .font(Font.fredoka(.bold, size: Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 18 : 20))
-                                            .foregroundColor( Clr.black1)
+                                            .font(Font.fredoka(.medium, size: Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) ? 18 : 20))
+                                            .foregroundColor( Clr.black2)
                                     }
                                 })
                         }
                     }.frame(width: g.size.width * 0.85, height: g.size.height * (userModel.willBuyPlant?.title == "Real Tree" ? 0.85 : 0.80), alignment: .top)
                     .background(Clr.darkWhite)
-                    .cornerRadius(20)
+                    .cornerRadius(32)
                     .padding(.bottom)
+                    .buttonStyle(NeoPress())
                     Spacer()
                 }.cornerRadius(20)
                 Spacer()

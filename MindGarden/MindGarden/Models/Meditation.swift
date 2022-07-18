@@ -29,7 +29,7 @@ struct Meditation: Hashable {
         return lhs.id == rhs.id
     }
 
-    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105, 82, 107,14, 104, 108, 88, 92, 26, 75, 80, 83]
+    static var lockedMeditations = [25,41,42,43,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105, 82, 107,14, 104, 108, 88, 92, 26, 75, 80, 83, 15,16,17,18,19,20,21, 38]
     static var popularMeditations = [77, 92, 89, 105, 108, 104, 90, 85, 24]
     static var morningMeds = [53, 49, 50]
     func returnEventName() -> String {
@@ -122,7 +122,7 @@ struct Meditation: Hashable {
         Meditation(title: "Sustain Focus & Increase Motivation", description: "Build the discipline of laser like focus and rock solid motivation through some breath work and simple observation", belongsTo: "7 Days to Happiness", category: .focus, img: Img.target, type: .single_and_lesson, id: 18, duration: 615, reward: 10, url: "https://mcdn.podbean.com/mf/web/244bfv/1440C_Sustain_Focus_and_Increase_Motivation_10_min_VOCALS8fk39.mp3", instructor: "Lisa",  imgURL: "", isNew: false),
         Meditation(title: "The Basics", description: "A simple 10 minute guided meditaiton you can do anywhere at anytime, empty the mind, get relaxed and receive clarity.", belongsTo: "7 Days to Happiness", category: .beginners, img: Img.icecream, type: .single_and_lesson, id: 19, duration: 616, reward: 10, url: "https://mcdn.podbean.com/mf/web/2p2ww9/1433_10_Minute_Guided_Meditation_that_you_can_listen_to_every_day_VOCALS9v8ek.mp3", instructor: "Lisa",  imgURL: "", isNew: false),
         Meditation(title: "Thankful Meditation for Gratitude", description: "Gratitude is the easiest thing you can do to become happier, learn to truly be thankful when having a clear focused mind.", belongsTo: "7 Days to Happiness", category: .growth, img: Img.hands, type: .single_and_lesson, id: 20, duration: 608, reward: 10, url: "https://mcdn.podbean.com/mf/web/ez7xsw/1456C_Thankful_Meditation_for_Gratitude_10_min_VOCALSbfhth.mp3", instructor: "Lisa",  imgURL: "", isNew: false),
-        Meditation(title: "Life is Beautiful", description: "When you have no agenda, and simply observe you come to realize just how breath taking life truly is.", belongsTo: "7 Days to Happiness", category: .growth, img: Img.tree, type: .single_and_lesson, id: 21, duration: 623, reward: 10, url: "https://mcdn.podbean.com/mf/web/5w8mig/1530_A_Meditation_Called_Life_is_Beautiful_10_min_VOCALS99c8u.mp3", instructor: "Lisa",  imgURL: "", isNew: false),
+        Meditation(title: "Life is Beautiful", description: "When you have no agenda, and simply observe you come to realize just how breath taking life truly is.", belongsTo: "7 Days to Happiness", category: .growth, img: Img.apple3, type: .single_and_lesson, id: 21, duration: 623, reward: 10, url: "https://mcdn.podbean.com/mf/web/5w8mig/1530_A_Meditation_Called_Life_is_Beautiful_10_min_VOCALS99c8u.mp3", instructor: "Lisa",  imgURL: "", isNew: false),
 
         // Singles
         Meditation(title: "30 Second Meditation", description: "A super quick, 30 second breath work session.", belongsTo: "Unguided", category: .all, img: Img.strawberryMilk, type: .single, id: 22, duration: 29, reward: 1, url: "", instructor: "Bijan",  imgURL: "", isNew: false),

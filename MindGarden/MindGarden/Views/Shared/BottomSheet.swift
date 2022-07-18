@@ -56,7 +56,7 @@ struct BottomSheet<Content: View>: View {
             }.offset(y: -20)
             .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
             .background(Color(.secondarySystemBackground))
-            .cornerRadius(Constants.radius)
+            .cornerRadius(32)
             .frame(height: geometry.size.height, alignment: .bottom)
             .offset(y: max(self.offset + self.translation, 0))
             .animation(.interactiveSpring(), value: isOpen)

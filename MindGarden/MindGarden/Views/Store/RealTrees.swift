@@ -69,6 +69,7 @@ struct RealTrees: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(20)
+                    .addBorder(.black, width: 1.5, cornerRadius: 20)
                     .neoShadow()
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()

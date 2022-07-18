@@ -12,15 +12,15 @@ class Helper: NSObject {
         let hour = Int(min / 60)
         let minute = Int(min) % 60
         if hour > 0 && minute > 0 {
-            return "\((hour == 1) ? "\(hour) hr" : "\(hour) hrs") \(isNewLine ? "\n" : "")\((minute == 1) ? "\(minute) min" : "\(minute) mins")"
+            return "\((hour == 1) ? "\(hour) H" : "\(hour) H") \(isNewLine ? "\n" : "")\((minute == 1) ? "\(minute) m" : "\(minute) m")"
         }
         else if(hour > 0){
-            return (hour == 1) ? "\(hour) hr" : "\(hour) hrs"
+            return (hour == 1) ? "\(hour) H" : "\(hour) H"
         }
         else if(minute > 0){
-            return (minute == 1) ? "\(minute) min" : "\(minute) mins"
+            return (minute == 1) ? "\(minute) m" : "\(minute) m"
         }
-        return "0 min"
+        return "0 m"
     }
 
 }

@@ -63,7 +63,7 @@ struct MiddleSelect: View {
                                                 .aspectRatio(contentMode: .fit)
                                             Text("\(userModel.selectedPlant?.title ?? "none")")
                                                 .font(Font.fredoka(.semiBold, size: 16))
-                                                .foregroundColor(.black)
+                                                .foregroundColor(Clr.black2)
                                                 .font(.footnote)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)

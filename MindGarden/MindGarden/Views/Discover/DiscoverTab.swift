@@ -38,14 +38,12 @@ struct DiscoverTab: View {
                             Text(item.name)
                                 .minimumScaleFactor(0.5)
                                 .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
+                                .foregroundColor(selectedTab == item.tabName ? .white : .white)
                                 .multilineTextAlignment(.center)
                                 .padding(.leading, item.name == "Courses" ? 10 : 0)
                                 .padding(.trailing, item.name == "Learn" ? 10 : 0)
-                        }
-                        .foregroundColor(selectedTab == item.tabName ? .white : Clr.unselectedIcon)
+                        }.foregroundColor(selectedTab == item.tabName ? .white : .white)
                         .frame(maxWidth: .infinity)
-                        
                     }
                 }
             }
@@ -53,8 +51,8 @@ struct DiscoverTab: View {
         }
         .frame(height: 36, alignment: .top)
         .background(
-            Clr.darkgreen
-            .cornerRadius(18)
+            Clr.brightGreen
+            .cornerRadius(16)
                 .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
         )
     }

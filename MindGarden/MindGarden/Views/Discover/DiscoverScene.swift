@@ -43,11 +43,11 @@ struct DiscoverScene: View {
                                 tappedSearch = true
                             }
                     }
-                    .frame(height:35)
-                    .padding(.vertical,5)
-                    .padding(.horizontal,40)
+                    .frame(height:36)
+                    .padding(.vertical,4)
+                    .padding(.horizontal,28)
                     DiscoverTab(selectedTab: $selectedTab)
-                        .padding(.horizontal,35)
+                        .padding(.horizontal,24)
                         .frame(height:36)
                 }
             }

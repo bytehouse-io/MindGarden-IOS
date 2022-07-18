@@ -11,6 +11,7 @@ import FirebaseFirestore
 import Foundation
 import WidgetKit
 
+
 class GardenViewModel: ObservableObject {
     @Published var grid = [String: [String:[String:[String:Any]]]]()
     @Published var isYear: Bool = false
@@ -24,10 +25,12 @@ class GardenViewModel: ObservableObject {
     @Published var recentMeditations: [Meditation] = []
     @Published var gratitudes = 0
     @Published var lastFive =  [(String, Plant?,Mood?)]()
+    @Published var entireHistory = [([Int], [[String: String]])]()
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
     let db = Firestore.firestore()
+    
 
     init() {
         selectedMonth = (Int(Date().get(.month)) ?? 1)
@@ -36,7 +39,7 @@ class GardenViewModel: ObservableObject {
     
     func getRecentMeditations() {
         var yearSortDict = [String: [[[String:String]]]]()
-        var entireHistory = [([Int], [[String: String]])]()
+        
         for (key,value) in grid {
             print(value.keys, value, key)
             let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
@@ -63,13 +66,15 @@ class GardenViewModel: ObservableObject {
                                 dataArr.append(journal)
                             }
                         }
-                        print(type(of: mo), type(of: day), "geng")
-                        entireHistory.append(([Int(mo) ?? 1, Int(day) ?? 1, Int(key) ?? 2022], dataArr)) // append day data and attach date
-                       
+                        
+                        if key == "2023" {
+                            entireHistory.append(([Int(day) ?? 1, Int(mo) ?? 1, Int(key) ?? 2022], dataArr)) // append day data and attach date
+                        }
                     }
                 }
             }
             yearSortDict[key] = yearIds
+            // TODO get old timestamp sorting code from github
 //            UserDefaults.standard.setValue(ids, forKey: "recent")
             // TODO instead of timestamp, save entire date.
         }
@@ -77,27 +82,14 @@ class GardenViewModel: ObservableObject {
         entireHistory = entireHistory.sorted { (lhs, rhs) in
             let date1 = lhs.0
             let date2 = rhs.0
-            if  date1[0] == date2[0] { //same year
+            if  date1[2] == date2[2] { //same year
                 if date1[1] == date2[1] { // same month
-                    return date1[2] < date2[2]
+                    return date1[0] > date2[0]
                 }
-                return date1[1] > date2[2]
+                return date1[1] > date2[1]
             }
-            return date1[0] > date2[0]
+            return date1[2] > date2[2]
         }
-//        let sortedIds = yearSortDict.sorted { $0.0 < $1.0 }.compactMap { $0 }
-//        let timeFormatter = DateFormatter()
-//        timeFormatter.dateFormat = "h:mm a"
-//        timeFormatter.amSymbol = "AM"
-//        timeFormatter.pmSymbol = "PM"
-//        let convertedArray = dataArr
-//            .map { return ($0, timeFormatter.date(from: $0["timeStamp"] ?? "12:00 AM")!) }
-//                .sorted { $0.1 > $1.1 }
-//                .map(\.0)
-//        yearIds.insert(convertedArray, at: 0)
-//        for arr in sortedIds {
-//            print(arr, "day day")
-//        }
     }
 
     func populateMonth() {

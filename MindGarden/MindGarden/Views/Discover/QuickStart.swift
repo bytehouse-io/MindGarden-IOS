@@ -18,7 +18,7 @@ struct QuickStart: View {
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     Spacer()
-                        .frame(height:15)
+                        .frame(height:16)
                     ForEach(quickStartTabList) { item in
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -32,17 +32,14 @@ struct QuickStart: View {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
                                     .frame(height: 56.0, alignment: .center)
-                                    .cornerRadius(27)
-                                    .neoShadow()
-                                RoundedRectangle(cornerRadius: 27)
-                                    .stroke(Color.black, lineWidth: 1)
-                                    .frame(height: 56.0, alignment: .center)
+                                    .cornerRadius(28)
+                                    .addBorder(.black, cornerRadius: 28)
                                 HStack {
                                     Text(item.name)
                                         .font(Font.fredoka(.semiBold, size: 16))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.center)
-                                        .padding(.vertical, 15)
+                                        .padding(.vertical, 16)
                                         .padding(.leading,20)
                                     Spacer()
                                     item.image
@@ -52,13 +49,11 @@ struct QuickStart: View {
                                 }
                                 .frame(height: 56.0, alignment: .center)
                                 .cornerRadius(28)
-                            }
-                            .padding(.horizontal,30)
-                        }
-                        .padding(5)
+                            }.padding(.horizontal,24)
+                        }.padding(6)
                         .offset(y: playEntryAnimation ? 0 : 75)
                         .animation(.spring().delay(item.delay), value: playEntryAnimation)
-                            .padding(5)
+                        .buttonStyle(NeoPress())
                     }
                 }.padding(.bottom, 100)
                 Spacer()

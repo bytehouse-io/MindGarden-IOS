@@ -10,7 +10,7 @@ import Combine
 
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
-    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -25), count: 2)
+    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -35), count: 2)
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -50,8 +50,7 @@ struct CategoriesScene: View {
                                 backButton
                                     .opacity(0)
                                     .disabled(true)
-                            }.padding([.horizontal])
-                                .padding(.top, 50)
+                            }.padding(.top, 50)
                         } else {
                             //Search bar
                             HStack {

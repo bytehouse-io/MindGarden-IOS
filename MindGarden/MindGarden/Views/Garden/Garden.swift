@@ -359,11 +359,11 @@ struct Garden: View {
                                             .foregroundColor(Clr.black2)
                                             .font(Font.fredoka(.regular, size: 12))
                                             .padding(0)
-                                        MoodImage(mood: .happy, value: gardenModel.totalMoods[.happy] ?? 0)
-                                        MoodImage(mood: .sad, value: gardenModel.totalMoods[.sad] ?? 0)
+                                        MoodImage(mood: .veryGood, value: gardenModel.totalMoods[.veryGood] ?? 0)
+                                        MoodImage(mood: .good, value: gardenModel.totalMoods[.good] ?? 0)
                                         MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
-                                        MoodImage(mood: .angry, value: gardenModel.totalMoods[.angry] ?? 0)
-                                        MoodImage(mood: .stressed, value: gardenModel.totalMoods[.stressed] ?? 0)
+                                        MoodImage(mood: .bad, value: gardenModel.totalMoods[.bad] ?? 0)
+                                        MoodImage(mood: .veryBad, value: gardenModel.totalMoods[.veryBad] ?? 0)
                                     }
                                     .padding(15)
                                 }

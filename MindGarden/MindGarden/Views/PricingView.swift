@@ -58,59 +58,18 @@ struct PricingView: View {
                                         .frame(width: width * 0.7, height: height * 0.2)
                                         .offset(x: -25)
                                 }
-                         
-                                Image(systemName: "xmark")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20)
-                                    .foregroundColor(.gray)
-                                    .padding(.leading, UIScreen.main.bounds.width/1.25)
-                                    .padding(.bottom, 50)
-                                    .opacity(0.5)
-                                    .onTapGesture {
-                                        MGAudio.sharedInstance.playBubbleSound()
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            switch fromPage {
-                                            case "home": viewRouter.currentPage = .meditate
-                                            case "profile": viewRouter.currentPage = .meditate
-                                            case "onboarding": viewRouter.currentPage = .middle
-                                            case "store": viewRouter.currentPage = .shop
-                                            case "onboarding2": viewRouter.currentPage = .meditate
-                                            case "lockedMeditation": viewRouter.currentPage = .categories
-                                            case "lockedHome": viewRouter.currentPage = .meditate
-                                            case "middle": viewRouter.currentPage = .middle
-                                            case "widget": viewRouter.currentPage = .meditate
-                                            case "discover": viewRouter.currentPage = .learn
-                                            default: viewRouter.currentPage = .meditate
-                                            }
-                                        }
-//
-//                                        if fromPage == "onboarding2" {
-//                                            if !UserDefaults.standard.bool(forKey: "isPro") {
-//                                                let center = UNUserNotificationCenter.current()
-//                                                let content = UNMutableNotificationContent()
-//                                                content.title = "Don't Miss This Opportunity"
-//                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2974 other pro users"
-//                                                // Step 3: Create the notification trigger
-//                                                let date = Date().addingTimeInterval(13200)
-//                                                let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-//                                                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-//                                                // Step 4: Create the request
-//                                                let uuidString = UUID().uuidString
-//                                                let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-//                                                // Step 5: Register the request
-//                                                center.add(request) { (error) in }
-//                                            }
-//                                        }
-                                    }
+                             
                             }.frame(width: g.size.width)
                             .padding(.bottom, -25)
+                            .buttonStyle(NeoPress())
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : "🍏 Unlock ") + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
+                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : "🍏 Unlock ")
+                                .font(Font.fredoka(.bold, size: 24))
+                             + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
+                                .font(Font.fredoka(.bold, size: 24))
                              +
-                             Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\nHow your free trial works:" : " & get 1% happier everyday"))
-                                .font(Font.fredoka(.bold, size: 22))
+                             Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : " & get 1% happier everyday"))
+                                .font(Font.fredoka(.semiBold, size: 24))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: width * 0.78, alignment: .leading)
@@ -374,6 +333,55 @@ struct PricingView: View {
 //                            .offset(y: K.hasNotch() ? -30 : 0)
                         Spacer()
                     }.padding(.top, K.hasNotch() ? 30 : 10)
+                    Button {
+                        MGAudio.sharedInstance.playBubbleSound()
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        withAnimation {
+                            switch fromPage {
+                            case "home": viewRouter.currentPage = .meditate
+                            case "profile": viewRouter.currentPage = .meditate
+                            case "onboarding": viewRouter.currentPage = .middle
+                            case "store": viewRouter.currentPage = .shop
+                            case "onboarding2": viewRouter.currentPage = .meditate
+                            case "lockedMeditation": viewRouter.currentPage = .categories
+                            case "lockedHome": viewRouter.currentPage = .meditate
+                            case "middle": viewRouter.currentPage = .middle
+                            case "widget": viewRouter.currentPage = .meditate
+                            case "discover": viewRouter.currentPage = .learn
+                            default: viewRouter.currentPage = .meditate
+                            }
+                        }
+//
+//                                        if fromPage == "onboarding2" {
+//                                            if !UserDefaults.standard.bool(forKey: "isPro") {
+//                                                let center = UNUserNotificationCenter.current()
+//                                                let content = UNMutableNotificationContent()
+//                                                content.title = "Don't Miss This Opportunity"
+//                                                content.body = "🎉 MindGarden Pro 50% sale is gone in the Next 12 Hours!!! 🎉 Join 2974 other pro users"
+//                                                // Step 3: Create the notification trigger
+//                                                let date = Date().addingTimeInterval(13200)
+//                                                let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+//                                                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+//                                                // Step 4: Create the request
+//                                                let uuidString = UUID().uuidString
+//                                                let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+//                                                // Step 5: Register the request
+//                                                center.add(request) { (error) in }
+//                                            }
+//                                        }
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(Clr.darkWhite)
+                                .frame(width: 40)
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.gray)
+                                .frame(width: 20)
+                        }.frame(width: 40)
+                    }.position(x: g.size.width - 50, y: 75)
+                    .buttonStyle(NeoPress())
                 }
             }.onAppear {
                 if #available(iOS 15.0, *) {

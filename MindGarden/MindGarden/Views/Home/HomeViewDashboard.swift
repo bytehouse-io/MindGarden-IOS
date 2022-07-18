@@ -138,7 +138,7 @@ struct HomeViewDashboard: View {
                 }
                 .padding(.top,20)
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 24)
             .padding(.vertical)
             .padding(.top,20)
         }

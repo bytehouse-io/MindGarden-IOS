@@ -15,7 +15,7 @@ import AppsFlyerLib
 import Paywall
 
 var launchedApp = false
-
+var showProfile = false
 enum Sheet: Identifiable {
     case profile, plant, search, streak, mood
     var id: Int {
@@ -136,6 +136,10 @@ struct Home: View {
                 onboardingTime = true
             } else {
                 onboardingTime = false
+            }
+            if showProfile {
+                activeSheet = .profile
+                showProfile = false
             }
             if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)

@@ -31,7 +31,7 @@ struct HomeTabView: View {
                     }
                 }
             TabButtonView(selectedTab:$selectedTab, isOnboarding:$isOnboarding)
-                .padding([.bottom, .horizontal],15)
+                .padding([.bottom, .horizontal],16)
             PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption, isOnboarding: $isOnboarding)
                 .padding(.bottom,15)
         }.onChange(of: selectedTab) { value in

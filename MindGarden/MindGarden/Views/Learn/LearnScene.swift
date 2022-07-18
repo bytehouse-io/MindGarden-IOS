@@ -53,7 +53,8 @@ struct LearnScene: View {
                                     .minimumScaleFactor(0.5)
                             }
                         }.padding(10)
-                    }.frame(width: width * 0.85, height: height * 0.15, alignment: .center)
+                    }.frame(height: height * 0.15, alignment: .center)
+                     .padding(.horizontal, 24)
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)

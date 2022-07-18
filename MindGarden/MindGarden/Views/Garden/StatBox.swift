@@ -30,7 +30,7 @@ struct StatBox: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 20)
                     Text(value)
-                        .font(Font.fredoka(.bold, size: 16))
+                        .font(Font.fredoka(.semiBold, size: 16))
                         .minimumScaleFactor(0.7)
                         .foregroundColor(Clr.black2)
                 }

@@ -18,7 +18,7 @@ struct FreeTrialView: View {
     var body: some View {
         ZStack {
             VStack {
-                HStack {
+                HStack(spacing: 20) {
                     ZStack {
                         VStack {
                             Spacer()
@@ -72,7 +72,7 @@ struct FreeTrialView: View {
                             Text("Today")
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(Clr.black2)
-                            Text("Get instant access and see how it change you life.")
+                            Text("Get instant access and see how MindGarden changes your life.")
                                 .lineLimit(2)
                                 .font(Font.fredoka(.regular, size: 16))
                                 .foregroundColor(Clr.black2)
@@ -106,7 +106,7 @@ struct FreeTrialView: View {
                 .padding(.horizontal,40)
                 ZStack {
                     Clr.darkWhite
-                        .cornerRadius(30)
+                        .cornerRadius(16)
                         .neoShadow()
                     HStack {
                         Toggle(" Remind me when my trial ends", isOn: $isReminderOn)
@@ -120,7 +120,7 @@ struct FreeTrialView: View {
                                     }
                                 }
                             }
-                            .font(Font.fredoka(.medium, size: 14))
+                            .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.black2)
                     }
                     .padding()

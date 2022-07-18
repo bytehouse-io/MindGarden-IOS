@@ -28,12 +28,9 @@ struct HomeSquare: View {
                 Rectangle()
                     .fill(Clr.darkWhite)
                     .border(Clr.darkWhite)
-                    .cornerRadius(25)
-                    .frame(width: width * 0.41, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .center)
-                RoundedRectangle(cornerRadius: 25)
-                    .stroke(Color.black, lineWidth: 1)
-                    .frame(width: width * 0.41, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .center)
-                    .overlay(
+                    .cornerRadius(16)
+                    .frame(width: width * 0.42, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .center)
+                    .addBorder(.black, width: 1.5, cornerRadius: 16)
                         HStack(alignment: .center) {
                             VStack(alignment: .leading, spacing: -2) {
                                 Spacer()
@@ -41,8 +38,8 @@ struct HomeSquare: View {
                                     .frame(width: width * 0.225, alignment: .leading)
                                     .font(Font.fredoka(.semiBold, size: 16))
                                     .foregroundColor(Clr.black2)
-//                                    .minimumScaleFactor(0.05)
-//                                    .lineLimit(3)
+                                    .minimumScaleFactor(0.05)
+                                    .lineLimit(3)
                                 HStack(spacing: 4) {
                                     Image(systemName: "speaker.wave.2.fill")
                                         .resizable()
@@ -86,19 +83,17 @@ struct HomeSquare: View {
                                 UrlImageView(urlString: imgURL)
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
-                                    .padding(.leading, -17)
+                                    .padding(.leading, -16)
                                     .padding(.top, 10)
                             } else {
                                 img
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
-                                    .padding(.leading, -17)
+                                    .padding(.leading, -16)
                                     .padding(.top, 10)
                             }
-                        }.frame(width: width * 0.40, height: height * (K.hasNotch() ? 0.225 : 0.25), alignment: .leading)
-                        , alignment: .topLeading)
-                
+                        }.offset(x: -4)
                 if isNew {
                     Capsule()
                         .fill(Clr.redGradientBottom)
