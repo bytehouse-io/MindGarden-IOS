@@ -11,7 +11,7 @@ struct TabButtonView: View {
     @Binding var selectedTab: TabType
     @State var color: Color = .white
     @Binding var isOnboarding: Bool
-    
+    @State private var currentTab: TabType?
     @State var tag = 2
     
     var body: some View {
@@ -39,10 +39,9 @@ struct TabButtonView: View {
                             Text(item.name())
                                 .minimumScaleFactor(0.5)
                                 .font(Font.fredoka(.semiBold, size: 10))
-                                .foregroundColor(selectedTab == item.tabName ? .black : .white)
                                 .padding(.top, 5)
                         }
-                        .foregroundColor(selectedTab == item.tabName ? .black : .white)
+                        .foregroundColor(currentTab == item.tabName ? .black : .white)
                         .frame(maxWidth: .infinity)
                     }
                     .background(PositionReader(tag: item.index))
@@ -58,6 +57,11 @@ struct TabButtonView: View {
             }
             
         }
+        .onChange(of: selectedTab) { val in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                currentTab = selectedTab
+            }
+        }
         .frame(height: 50, alignment: .center)
         .padding(8)
         .background(
@@ -70,6 +74,7 @@ struct TabButtonView: View {
                 .stroke(.black, lineWidth: 1)
         )
         .onAppear(){
+            currentTab = selectedTab
             switch selectedTab {
             case .garden:
                 tag = 1

@@ -21,7 +21,7 @@ enum Mood: String, CaseIterable {
         }
     }
     
-    static func allCases() -> [Mood] {
+    static func allMoodCases() -> [Mood] {
         return [veryBad, bad, okay, good,veryGood]
     }
 

@@ -4,6 +4,7 @@ import SwiftUI
 
 /// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
 public enum Img {
+  public static let house = Image("House")
   public static let iceFlower = Image("Ice Flower")
   public static let bad = Image("bad")
   public static let good = Image("good")
@@ -181,6 +182,7 @@ public enum Img {
   public static let discoverSearch = Image("discoverSearch")
   public static let educatedRacoon = Image("educatedRacoon")
   public static let eggs = Image("eggs")
+  public static let emptyMood = Image("emptyMood")
   public static let feather = Image("feather")
   public static let flowers = Image("flowers")
   public static let foxStudy = Image("foxStudy")
@@ -193,7 +195,6 @@ public enum Img {
   public static let hands = Image("hands")
   public static let happySunflower = Image("happySunflower")
   public static let heart = Image("heart")
-  public static let house = Image("house")
   public static let icecream = Image("icecream")
   public static let alpha = Image("alpha")
   public static let beach = Image("beach")
@@ -296,6 +297,11 @@ public enum Img {
   public static let starfish = Image("starfish")
   public static let strawberryMilk = Image("strawberryMilk")
   public static let streak = Image("streak")
+  public static let streakCutPencil = Image("streakCutPencil")
+  public static let streakPencil = Image("streakPencil")
+  public static let streakPencilUnselected = Image("streakPencilUnselected")
+  public static let streakViewPencil = Image("streakViewPencil")
+  public static let streakViewPencil1 = Image("streakViewPencil1")
   public static let sun = Image("sun")
   public static let sunglasses = Image("sunglasses")
   public static let sunshinechest = Image("sunshinechest")
