@@ -182,6 +182,7 @@ public enum Img {
   public static let discoverSearch = Image("discoverSearch")
   public static let educatedRacoon = Image("educatedRacoon")
   public static let eggs = Image("eggs")
+  public static let emptyMood = Image("emptyMood")
   public static let feather = Image("feather")
   public static let flowers = Image("flowers")
   public static let foxStudy = Image("foxStudy")

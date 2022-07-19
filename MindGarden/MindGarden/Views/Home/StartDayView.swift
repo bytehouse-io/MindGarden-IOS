@@ -7,23 +7,38 @@
 
 import SwiftUI
 
-struct streakItem : Identifiable {
+struct StreakItem : Identifiable {
     var id = UUID()
     var title: String
     var streak: Bool
+}
+
+struct DailyMoodItem : Identifiable {
+    var id = UUID()
+    var title: String
+    var dailyMood: Image
 }
 struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @Binding var activeSheet: Sheet?
+    @State private var isDailyMood = false
     
-    @State var streakList:[streakItem] = [streakItem(title: "S", streak: false),
-                                          streakItem(title: "M", streak: false),
-                                          streakItem(title: "T", streak: false),
-                                          streakItem(title: "W", streak: true),
-                                          streakItem(title: "T", streak: true),
-                                          streakItem(title: "F", streak: false),
-                                          streakItem(title: "S", streak: false)]
+    @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
+                                          StreakItem(title: "M", streak: false),
+                                          StreakItem(title: "T", streak: false),
+                                          StreakItem(title: "W", streak: true),
+                                          StreakItem(title: "T", streak: true),
+                                          StreakItem(title: "F", streak: false),
+                                          StreakItem(title: "S", streak: false)]
+    
+    @State var dailyMoodList:[DailyMoodItem] = [DailyMoodItem(title: "S", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "M", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "W", dailyMood: Mood.getMoodImage(mood: .veryBad)),
+                                                DailyMoodItem(title: "T", dailyMood: Mood.getMoodImage(mood: .veryGood)),
+                                             DailyMoodItem(title: "F", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "S", dailyMood: Img.emptyMood)]
     var body: some View {
         VStack {
             HStack {
@@ -63,34 +78,7 @@ struct StartDayView: View {
                             .frame(height:170)
                             .aspectRatio(contentMode: .fill)
                             .opacity(0.95)
-                        VStack {
-                            Spacer()
-                            VStack {
-                                Text("How are you feeling?")
-                                    .foregroundColor(Clr.brightGreen)
-                                    .font(Font.fredoka(.semiBold, size: 16))
-                                    .offset(y: 8)
-                                HStack(alignment:.top) {
-                                    ForEach(Mood.allMoodCases(), id: \.id) { item in
-                                        Button {
-                                            withAnimation {
-                                                userModel.selectedMood = item
-                                                viewRouter.currentPage = .mood
-                                            }                                         
-                                        } label: {
-                                            VStack(spacing:0) {
-                                                Mood.getMoodImage(mood: item)
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(maxWidth: 70)
-                                                    .padding(.horizontal, 4)
-                                                    .padding(.bottom, 8)
-                                            }
-                                        }
-                                    }
-                                }.padding(10)
-                            }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
-                        }
+                        if isDailyMood { SelectMood } else { DailyMood }
                     }
                     .frame(width: UIScreen.screenWidth * 0.775)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
@@ -169,5 +157,68 @@ struct StartDayView: View {
                 }
             }
         }.padding(.horizontal, 26)
+    }
+    
+    var SelectMood: some View {
+        VStack {
+            Spacer()
+            VStack {
+                Text("How are you feeling?")
+                    .foregroundColor(Clr.brightGreen)
+                    .font(Font.fredoka(.semiBold, size: 16))
+                    .offset(y: 8)
+                HStack(alignment:.top) {
+                    ForEach(Mood.allMoodCases(), id: \.id) { item in
+                        Button {
+                            withAnimation {
+                                userModel.selectedMood = item
+                                viewRouter.currentPage = .mood
+                            }
+                        } label: {
+                            VStack(spacing:0) {
+                                Mood.getMoodImage(mood: item)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: 70)
+                                    .padding(.horizontal, 4)
+                                    .padding(.bottom, 8)
+                            }
+                        }
+                    }
+                }.padding(10)
+            }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+        }
+    }
+    
+    var DailyMood: some View {
+        VStack {
+            Spacer()
+            VStack {
+                Text("👍 Daily Mood Log Complete")
+                    .foregroundColor(Clr.brightGreen)
+                    .font(Font.fredoka(.semiBold, size: 16))
+                    .offset(y: 8)
+                HStack(alignment:.top) {
+                    ForEach(dailyMoodList, id: \.id) { item in
+                        VStack(spacing:5) {
+                            Text(item.title)
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.semiBold, size: 10))
+                            Button {}
+                        label: {
+                            VStack(spacing:0) {
+                                item.dailyMood
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                        }
+                        .padding(.horizontal,5)
+                        .frame(maxWidth:.infinity)
+                    }
+                }
+                .padding(10)
+            }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+        }
     }
 }
