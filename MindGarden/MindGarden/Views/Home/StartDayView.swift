@@ -7,12 +7,23 @@
 
 import SwiftUI
 
+struct streakItem : Identifiable {
+    var id = UUID()
+    var title: String
+    var streak: Bool
+}
 struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @Binding var activeSheet: Sheet?
     
-    
+    @State var streakList:[streakItem] = [streakItem(title: "S", streak: false),
+                                          streakItem(title: "M", streak: false),
+                                          streakItem(title: "T", streak: false),
+                                          streakItem(title: "W", streak: true),
+                                          streakItem(title: "T", streak: true),
+                                          streakItem(title: "F", streak: false),
+                                          streakItem(title: "S", streak: false)]
     var body: some View {
         VStack {
             HStack {
@@ -60,7 +71,7 @@ struct StartDayView: View {
                                     .font(Font.fredoka(.semiBold, size: 16))
                                     .offset(y: 8)
                                 HStack(alignment:.top) {
-                                    ForEach(Mood.allCases(), id: \.id) { item in
+                                    ForEach(Mood.allMoodCases(), id: \.id) { item in
                                         Button {
                                             withAnimation {
                                                 userModel.selectedMood = item
@@ -88,10 +99,68 @@ struct StartDayView: View {
                     
                     ZStack {
                         Rectangle().fill(Clr.yellow)
-                            
+                        VStack {
+                            HStack(spacing:0) {
+                                Spacer()
+                                Text("Answer today’s Journal Prompt")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.semiBold, size: 16))
+                                    .padding(.leading,16)
+                                Spacer()
+                                Img.streakViewPencil
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxHeight: 45)
+                                    .offset(x: 3, y: -15)
+                                Img.streakViewPencil1
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxHeight: 70)
+                            }
+                            Spacer()
+                            VStack {
+                                HStack(alignment:.top) {
+                                    ForEach(streakList, id: \.id) { item in
+                                        VStack(spacing:5) {
+                                            Text(item.title)
+                                                .foregroundColor(Clr.black2)
+                                                .font(Font.fredoka(.semiBold, size: 10))
+                                            Button {}
+                                        label: {
+                                            VStack(spacing:0) {
+                                                if item.streak {
+                                                    Img.streakPencil
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                } else {
+                                                    Img.streakPencilUnselected
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                }
+                                            }
+                                        }
+                                        }
+                                        .padding(.horizontal,5)
+                                        .frame(maxWidth:.infinity)
+                                    }
+                                }
+                                .padding(10)
+                            }
+                            .frame(height: 75)
+                            .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 16))
+                        }
+                        HStack {
+                            Img.streakCutPencil
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxHeight:70)
+                            Spacer()
+                        }
+                        .offset(y:-15)
                     }.frame(width: UIScreen.screenWidth * 0.775, height: 150)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                         .padding(.horizontal, 12)
+                        .neoShadow()
                     ZStack {
                         Rectangle().fill(Clr.yellow)
                             .frame(height:150)
