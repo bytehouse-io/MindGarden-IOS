@@ -266,8 +266,8 @@ struct FeaturedItem: View {
                     .offset(y: -25)
             }
         }
-            RoundedRectangle(cornerRadius: 30)
-                .stroke(Clr.brightGreen, lineWidth: 4)
+            RoundedRectangle(cornerRadius: 32)
+                .stroke(Clr.brightGreen, lineWidth: 8)
         }.frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * (K.isSmall() ? 0.7 : 0.6) , alignment: .center)
             .background(Clr.darkWhite)
             .cornerRadius(30)

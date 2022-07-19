@@ -56,7 +56,7 @@ struct RealTrees: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: width * 0.12)
-                            Text("0")
+                            Text("\(userModel.plantedTrees.count)")
                                 .font(Font.fredoka(.bold, size: 32))
                                 .foregroundColor(Clr.brightGreen)
                             Text("trees")

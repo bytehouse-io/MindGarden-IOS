@@ -15,15 +15,16 @@ struct StatBox: View {
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                .fill(Clr.yellow)
+                .fill(Clr.darkWhite)
                 .addBorder(.black, width: 1.5, cornerRadius: 14)
                 .neoShadow()
             VStack(alignment:.center, spacing:5){
                 Text(label)
-                    .font(Font.fredoka(.regular, size: 12))
+                    .font(Font.fredoka(.semiBold, size: 12))
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal, 5)
                     .padding(.top,10)
+                    .foregroundColor(Clr.black2)
                 HStack(spacing:5) {
                     img
                         .resizable()

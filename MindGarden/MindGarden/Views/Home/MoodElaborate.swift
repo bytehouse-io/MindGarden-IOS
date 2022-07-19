@@ -71,7 +71,7 @@ struct MoodElaborate: View {
                                     moodSession["timeStamp"] = Date.getTime()
                                     moodSession["elaboration"] = item
                                     moodSession["mood"] = userModel.selectedMood.title
-                                    userModel.coins += 10
+                                    userModel.coins += 20
                                     gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
                                 
                                     viewRouter.currentPage = .journal

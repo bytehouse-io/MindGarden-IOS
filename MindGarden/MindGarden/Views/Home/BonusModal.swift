@@ -55,8 +55,8 @@ struct BonusModal: View {
                                     place = .button1
                                     playCoinAnimation()
                                     Analytics.shared.log(event: .home_claim_daily)
-                                    bonusModel.saveDaily(plusCoins: 5)
-                                    coins += 5
+                                    bonusModel.saveDaily(plusCoins: 10)
+                                    coins += 10
                                     bonusModel.totalBonuses -= 1
                                 }
 
@@ -76,7 +76,7 @@ struct BonusModal: View {
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
-                                .cornerRadius(12)
+                                .cornerRadius(16)
                                 .neoShadow()
                             HStack(spacing: 0) {
                                 VStack {
@@ -139,7 +139,7 @@ struct BonusModal: View {
                     }
                     .frame(width: g.size.width * 0.85, height: g.size.height * (K.hasNotch() ? 0.55 : 0.6), alignment: .center)
                     .background(Clr.darkWhite)
-                    .cornerRadius(12)
+                    .cornerRadius(32)
                     Spacer()
                 } 
                 Spacer()
@@ -214,7 +214,7 @@ struct BonusModal: View {
                 Rectangle()
                     .fill(Clr.darkWhite)
                     .frame(width: width * 0.65, height: height * 0.07)
-                    .cornerRadius(15)
+                    .cornerRadius(16)
                     .neoShadow()
                 HStack {
                     if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {

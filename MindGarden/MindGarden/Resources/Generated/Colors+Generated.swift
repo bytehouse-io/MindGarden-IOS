@@ -21,34 +21,22 @@ public enum Clr {
   /// **Universal - Any**: `#D2713D` with alpha: `1.000`
   public static let sleepSecondary = Color("sleepSecondary")
   /// **Universal - Any**: `#535353` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#F5F5F5` with alpha: `1.000`
   public static let black1 = Color("black1")
   /// **Universal - Any**: `#444446` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#F5F5F5` with alpha: `1.000`
   public static let black2 = Color("black2")
   /// **Universal - Any**: `#595959` with alpha: `1.000`
   public static let blackShadow = Color("blackShadow")
   /// **Universal - Any**: `#80A800` with alpha: `1.000`
   public static let brightGreen = Color("brightGreen")
   /// **Universal - Any**: `#D2E3F3` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#D2E3F3` with alpha: `1.000`
   public static let calenderSquare = Color("calenderSquare")
   /// **Universal - Any**: `#AC8DFF` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#AC8DFF` with alpha: `1.000`
   public static let cherryPink = Color("cherryPink")
   /// **Universal - Any**: `#A3A3A3` with alpha: `1.000`
   public static let darkGray = Color("darkGray")
   /// **Universal - Any**: `#121212` with alpha: `1.000`
   public static let darkShadow = Color("darkShadow")
   /// **Universal - Any**: `#F5F5F5` with alpha: `1.000`
-  ///
-  /// **Universal - Light**: `#616161` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#2C2826` with alpha: `1.000`
   public static let darkWhite = Color("darkWhite")
   /// **Universal - Any**: `#5D6F1E` with alpha: `1.000`
   ///
@@ -57,12 +45,8 @@ public enum Clr {
   /// **Universal - Any**: `#6F96CA` with alpha: `1.000`
   public static let dirtBrown = Color("dirtBrown")
   /// **Universal - Any**: `#74804B` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#74804B` with alpha: `1.000`
   public static let finishedGreen = Color("finishedGreen")
   /// **Universal - Any**: `#F7CB5A` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#F7CB5A` with alpha: `1.000`
   public static let freezeBlue = Color("freezeBlue")
   /// **Universal - Any**: `#DDAA69` with alpha: `1.000`
   public static let gardenBlue = Color("gardenBlue")
@@ -95,26 +79,18 @@ public enum Clr {
   /// **Universal - Any**: `#2323D2` with alpha: `1.000`
   public static let redGradientBottom = Color("redGradientBottom")
   /// **Universal - Any**: `#F6F2F2` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#000000` with alpha: `1.000`
   public static let review = Color("review")
   /// **Universal - Any**: `#BFA588` with alpha: `1.000`
   public static let shadow = Color("shadow")
   /// **Universal - Any**: `#FDE292` with alpha: `1.000`
   public static let skyBlue = Color("skyBlue")
   /// **Universal - Any**: `#47C4E9` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#47C4E9` with alpha: `1.000`
   public static let sunshine = Color("sunshine")
   /// **Universal - Any**: `#000000` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#000000` with alpha: `1.000`
   public static let superBlack = Color("superBlack")
   /// **Universal - Any**: `#F0F0F0` with alpha: `1.000`
   public static let superLightGray = Color("superLightGray")
   /// **Universal - Any**: `#FFFFFF` with alpha: `1.000`
-  ///
-  /// **Universal - Dark**: `#000000` with alpha: `1.000`
   public static let superWhite = Color("superWhite")
   /// **Universal - Any**: `#C3C3C3` with alpha: `1.000`
   public static let unselectedIcon = Color("unselectedIcon")
