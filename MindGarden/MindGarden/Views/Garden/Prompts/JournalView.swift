@@ -16,6 +16,7 @@ struct JournalView: View, KeyboardReadable {
     @State private var showRecs = false
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         ZStack(alignment:.top) {
@@ -51,6 +52,7 @@ struct JournalView: View, KeyboardReadable {
                             //TODO: implement shuffle tap event
                         }
                     CloseButton() {
+                        withAnimation { viewRouter.currentPage = .meditate  }
                     }.padding(.leading, 10)
                 }
                 .padding(.horizontal,30)

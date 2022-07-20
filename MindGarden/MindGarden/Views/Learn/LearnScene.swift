@@ -30,7 +30,7 @@ struct LearnScene: View {
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
-                            .cornerRadius(20)
+                            .cornerRadius(24)
                             .neoShadow()
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Clr.darkgreen, lineWidth: 3)
@@ -54,18 +54,43 @@ struct LearnScene: View {
                             }
                         }.padding(10)
                     }.frame(height: height * 0.15, alignment: .center)
-                     .padding(.horizontal, 24)
+                     .padding(.horizontal, 28)
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
-                            .cornerRadius(20)
+                            .cornerRadius(24)
+                            .frame(height: 120, alignment: .center)
+                            .addBorder(Clr.yellow, width: 3, cornerRadius: 16)
+                            .oldShadow()
+                        Rectangle()
+                            .fill(Clr.yellow)
+                            .frame(width: width * 0.55, height: 40)
+                            .cornerRadius(24, corners: [.topLeft, .bottomRight, .topRight])
+                            .overlay(
+                                Text("Daily Stories")
+                                    .font(Font.fredoka(.semiBold, size: 16))
+                                    .foregroundColor(Clr.black2)
+                                    .minimumScaleFactor(0.5)
+                                    .lineLimit(1)
+                            ).position(x: width * 0.272, y: 24)
+                        Stories()
+                            .frame(height: K.isSmall() ? 110 : 150)
+                            .padding(.leading, K.isSmall() ? 10 : 20)
+                            .padding(.top, K.isSmall() ? 24 : 56)
+                    }.frame(height: K.isSmall() ? 90 : 120, alignment: .center)
+                        .padding(.horizontal, 28)
+                        .padding(.top, 56)
+                    ZStack {
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .cornerRadius(24)
                             .neoShadow()
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Clr.brightGreen, lineWidth: 3)
                         Rectangle()
                             .fill(Clr.brightGreen)
                             .frame(width: width * 0.55, height: 40)
-                            .cornerRadius(20, corners: [.topLeft, .bottomRight, .topRight])
+                            .cornerRadius(24, corners: [.topLeft, .bottomRight, .topRight])
                             .overlay(
                                 Text("Learning Mindfulness")
                                     .font(Font.fredoka(.semiBold, size: 16))
@@ -80,23 +105,23 @@ struct LearnScene: View {
                                     ForEach(meditationCourses, id: \.self) { course in
                                         LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
                                     }
-                                }.frame(height: height * 0.3 + 15)
+                                }.frame(height: height * 0.325 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
-                            }.frame(width: width * 0.85, height: height * 0.3, alignment: .center)
+                            }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
                         }
-                    }.frame(width: width * 0.85, height: height * 0.3, alignment: .center)
+                    }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
                     .padding(.top, 40)
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
-                            .cornerRadius(20)
+                            .cornerRadius(24)
                             .neoShadow()
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Clr.yellow, lineWidth: 3)
                         Rectangle()
                             .fill(Clr.yellow)
                             .frame(width: width * 0.55, height: 40)
-                            .cornerRadius(20, corners: [.topLeft, .bottomRight, .topRight])
+                            .cornerRadius(24, corners: [.topLeft, .bottomRight, .topRight])
                             .overlay(
                                 Text("Building Life Skills")
                                     .font(Font.fredoka(.semiBold, size:  16))
@@ -111,11 +136,11 @@ struct LearnScene: View {
                                     ForEach(lifeCourses, id: \.self) { course in
                                         LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
                                     }
-                                }.frame(height: height * 0.3 + 15)
+                                }.frame(height: height * 0.325 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
-                            }.frame(width: width * 0.85, height: height * 0.3, alignment: .center)
+                            }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
                         }
-                    }.frame(width: width * 0.85, height: height * 0.3, alignment: .center)
+                    }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
                     .padding(.top, 40)
                     Spacer()
                     .frame(height: 60)
@@ -129,7 +154,7 @@ struct LearnScene: View {
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
-                            .cornerRadius(20)
+                            .cornerRadius(24)
                         VStack {
                             (Text("🔐 This page will\nunlock in ")
                                 .foregroundColor(Clr.black2) +
@@ -256,17 +281,13 @@ struct LearnScene: View {
             } label: {
                Rectangle()
                     .fill(Clr.darkWhite)
-                    .cornerRadius(20)
+                    .cornerRadius(16)
                     .overlay(
                         VStack(alignment: .leading, spacing: 0) {
                             UrlImageView(urlString: course.img)
                                 .scaledToFill()
-                                .cornerRadius(20, corners: [.topRight, .topLeft])
-                                .frame(width: width * 0.5, height: height * 0.13)
-//                                  Text("The Power of Gratitude")
-//                                                            .font(Font.fredoka(.semiBold, size: 16))
-//                                                            .foregroundColor(Clr.black2)
-//                                                            .padding(.leading, 10)
+                                .cornerRadius(16, corners: [.topRight, .topLeft])
+                                .frame(width: width * 0.5, height: height * 0.16)
                             Spacer()
                             HStack(spacing: 5) {
                                 Image(systemName: "clock")
@@ -319,7 +340,7 @@ struct LearnScene: View {
                         }
                     )
             }.buttonStyle(NeumorphicPress())
-            .frame(width: width * 0.5, height: height * 0.225)
+            .frame(width: width * 0.5, height: height * 0.25)
             
         }
     }

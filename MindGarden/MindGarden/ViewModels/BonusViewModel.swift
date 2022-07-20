@@ -128,7 +128,7 @@ class BonusViewModel: ObservableObject {
     }
 
     func saveSeven() {
-        userModel.coins += 30
+        userModel.coins += 300
         sevenDay += 1
         UserDefaults.standard.setValue(sevenDay, forKey: K.defaults.seven)
         UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
@@ -152,7 +152,7 @@ class BonusViewModel: ObservableObject {
     }
 
     func saveThirty() {
-        userModel.coins += 100
+        userModel.coins += 1000
         thirtyDay += 1
         UserDefaults.standard.setValue(thirtyDay, forKey: K.defaults.thirty)
         UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)

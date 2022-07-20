@@ -67,9 +67,7 @@ class GardenViewModel: ObservableObject {
                             }
                         }
                         
-                        if key == "2023" {
-                            entireHistory.append(([Int(day) ?? 1, Int(mo) ?? 1, Int(key) ?? 2022], dataArr)) // append day data and attach date
-                        }
+                        entireHistory.append(([Int(day) ?? 1, Int(mo) ?? 1, Int(key) ?? 2022], dataArr)) // append day data and attach date
                     }
                 }
             }
@@ -140,9 +138,9 @@ class GardenViewModel: ObservableObject {
             }
 
             if let moods = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.moods] as? [[String: String]] {
-                mood = Mood.getMood(str: moods[moods.count - 1]["mood"] ?? "okay")
+                mood = Mood.getMood(str: moods[moods.count - 1]["mood"] ?? "bad")
                 for forMood in moods {
-                    let singleMood = Mood.getMood(str: forMood["moodSelected"] ?? "okay")
+                    let singleMood = Mood.getMood(str: forMood["mood"] ?? "bad")
                     if var count = totalMoods[singleMood] {
                         count += 1
                         totalMoods[singleMood] = count

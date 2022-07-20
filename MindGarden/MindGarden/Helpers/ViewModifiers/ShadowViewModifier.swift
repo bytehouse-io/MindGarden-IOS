@@ -12,8 +12,8 @@ struct ShadowViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .drawingGroup()
-            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.darkShadow.opacity(0.95), radius: 5 , x: 5, y: 5)
-            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Clr.blackShadow.opacity(0.4), radius: 5, x: -5, y: -5)
+            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.shadow.opacity(0.3), radius: 5 , x: 5, y: 5)
+            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Color.white.opacity(0.95), radius: 5, x: -5, y: -5)
     }
 }
 
@@ -23,8 +23,8 @@ struct DarkShadowViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .drawingGroup()
-            .shadow(color: colorScheme == .light ? Clr.shadow : Clr.darkShadow.opacity(0.95), radius: 3 , x: 3, y: 3)
-            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Clr.blackShadow, radius: 3, x: -3, y: -3)
+            .shadow(color: colorScheme == .light ? Clr.shadow :  Clr.shadow , radius: 3 , x: 3, y: 3)
+            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Color.white.opacity(0.95), radius: 3, x: -3, y: -3)
     }
 }
 
@@ -34,7 +34,7 @@ struct RightShadow: ViewModifier {
     func body(content: Content) -> some View {
         content
             .drawingGroup()
-            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.darkShadow.opacity(0.95), radius: 5 , x: 5, y: 5)
+            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.shadow.opacity(0.3), radius: 5 , x: 5, y: 5)
 //            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Clr.blackShadow.opacity(0.4), radius: 5, x: -5, y: -5)
     }
 }
@@ -44,8 +44,8 @@ struct OldModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.darkShadow.opacity(0.95), radius: 5 , x: 5, y: 5)
-            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Clr.blackShadow.opacity(0.4), radius: 5, x: -5, y: -5)
+            .shadow(color: colorScheme == .light ? Clr.shadow.opacity(0.3) : Clr.shadow.opacity(0.3), radius: 5 , x: 5, y: 5)
+            .shadow(color: colorScheme == .light ? Color.white.opacity(0.95) : Color.white.opacity(0.95), radius: 5, x: -5, y: -5)
     }
 }
 

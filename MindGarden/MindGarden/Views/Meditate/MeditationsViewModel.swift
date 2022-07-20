@@ -330,13 +330,13 @@ class MeditationViewModel: ObservableObject {
             switch secondsRemaining {
             case 0...59:
                 reward = 0
-            case 60...299: reward = 1
-            case 300...599: reward = 5
-            case 600...899: reward = 10
-            case 900...1199: reward = 12
-            case 1200...1499: reward = 15
-            case 1500...1799: reward = 18
-            default: reward = 20
+            case 60...299: reward = 10
+            case 300...599: reward = 50
+            case 600...899: reward = 100
+            case 900...1199: reward = 120
+            case 1200...1499: reward = 150
+            case 1500...1799: reward = 180
+            default: reward = 200
             }
             if secondsRemaining < 60 {
                 shouldStreakUpdate = false

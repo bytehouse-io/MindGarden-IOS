@@ -74,7 +74,7 @@ enum Mood: String, CaseIterable {
     var color: Color {
         switch self {
         case .happy: return Clr.gardenGreen
-        case .okay: return Clr.gardenGray
+        case .okay: return Clr.okay
         case .sad: return Clr.gardenBlue
         case .angry: return Clr.gardenRed
         case .stressed: return Clr.purple
@@ -146,7 +146,7 @@ struct MoodCheck: View {
                                         .neoShadow()
                                 ).onTapGesture {
                                     withAnimation { shown.toggle() }
-                                }.offset(x: -5, y: 5)
+                                }.offset(x: -5, y: 10)
                         }.frame(width: g.size.width * 0.85, alignment: .leading)
      
                         Text("How are you feeling right now?")
@@ -179,7 +179,7 @@ struct MoodCheck: View {
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(Clr.yellow)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 14)
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                             .neoShadow()
                         HStack {
                             SingleMood(moodSelected: $moodSelected, mood: .veryBad, save: save)
@@ -216,12 +216,13 @@ struct MoodCheck: View {
                 UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
                 showPopupWithAnimation {}
             }
+            userModel.coins += 20
             var moodSession = [String: String]()
             moodSession["timeStamp"] = Date.getTime()
             moodSession["mood"] = moodSelected.title
             
             gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
-        }
+        } // testing one two three
         withAnimation {
             shown = false
         }

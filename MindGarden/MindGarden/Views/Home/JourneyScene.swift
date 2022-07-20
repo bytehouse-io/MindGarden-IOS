@@ -90,7 +90,7 @@ struct JourneyScene: View {
                         .font(Font.fredoka(.medium, size: 12))
                     Button {
                         if model.roadMaplevel <= 6 && isAward {
-                            userModel.updateCoins(plusCoins: 100)
+                            userModel.updateCoins(plusCoins: model.roadMaplevel < 2 ? 1000 : model.roadMaplevel > 4 ? 1500 :  1250)
                             if model.roadMaplevel == 6 {
                                 userModel.finishedJourney()
                             } else {
@@ -108,7 +108,7 @@ struct JourneyScene: View {
                                 .font(.system(size: 28, weight: .bold))
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width:30)
-                            Text(model.roadMaplevel < 2 ? "100" : model.roadMaplevel > 4 ? "150" : "125")
+                            Text(model.roadMaplevel < 2 ? "1000" : model.roadMaplevel > 4 ? "1500" : "1250")
                                 .foregroundColor(Clr.black2)
                                 .font(Font.fredoka(.bold, size: 22))
                                 .padding(5)

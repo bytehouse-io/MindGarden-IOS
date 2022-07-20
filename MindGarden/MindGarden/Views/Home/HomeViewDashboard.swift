@@ -18,6 +18,7 @@ struct HomeViewDashboard: View {
     @State var streakNumber: Int
     let height = 20.0
     var body: some View {
+        let width = UIScreen.screenWidth
         ZStack {
             VStack {
                 HStack {
@@ -29,7 +30,7 @@ struct HomeViewDashboard: View {
                         Image(systemName: "person")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height:height)
+                            .frame(width: 30, height:height)
                             .foregroundColor(.black)
                             .roundedCapsule()
                     }
@@ -68,7 +69,7 @@ struct HomeViewDashboard: View {
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)
                             }
-                            .frame(height:height)
+                            .frame(width: width * 0.2, height:height)
                             .roundedCapsule()
                             .wiggling1()
                         } else {
@@ -82,7 +83,7 @@ struct HomeViewDashboard: View {
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)
                             }
-                            .frame(height:height)
+                            .frame(width: width * 0.2, height:height)
                             .roundedCapsule()
                         }
                     }
@@ -104,7 +105,7 @@ struct HomeViewDashboard: View {
                                 .font(Font.fredoka(.regular, size: 16))
                                 .minimumScaleFactor(0.05)
                                 .foregroundColor(.black)
-                        }.frame(height:height)
+                        }.frame(width: width * 0.2, height:height)
                         .roundedCapsule()
                     }.buttonStyle(BonusPress())
                     
@@ -122,7 +123,7 @@ struct HomeViewDashboard: View {
                     .frame(height:height)
                     .roundedCapsule(color: .clear)
                     Spacer()
-                }
+                }.padding(.trailing, 8)
                 
                 
                 HStack {
