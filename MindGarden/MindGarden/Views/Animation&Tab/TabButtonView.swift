@@ -52,7 +52,7 @@ struct TabButtonView: View {
             }
             .backgroundPreferenceValue(Positions.self) { preferences in
                 GeometryReader { proxy in
-                    Capsule().fill(Clr.yellow).overlay(Capsule().stroke(.black, lineWidth: 1)).frame(width: 70, height: 50).position( self.getPosition(proxy: proxy, tag: self.tag, preferences: preferences))
+                    Capsule().fill(Clr.yellow).overlay(Capsule().stroke(.black, lineWidth: 1.5)).frame(width: 70, height: 50).position( self.getPosition(proxy: proxy, tag: self.tag, preferences: preferences))
                 }
             }
             

@@ -236,7 +236,6 @@ public enum Img {
   public static let mgGuestPass = Image("mgGuestPass")
   public static let mgLogo = Image("mgLogo")
   public static let moneybag = Image("moneybag")
-  public static let moodCheck = Image("moodCheck")
   public static let moon = Image("moon")
   public static let moonFull = Image("moonFull")
   public static let morningBackground = Image("morningBackground")

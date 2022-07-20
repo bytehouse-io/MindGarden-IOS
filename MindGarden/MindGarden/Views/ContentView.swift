@@ -560,21 +560,15 @@ struct ContentView: View {
 
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                     Analytics.shared.log(event: .onboarding_finished_gratitude)
-                    meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
-                        med.id == 22
-                    })
-                    viewRouter.currentPage = .play
-                } else {
-                    if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
-                        meditationModel.selectedMeditation = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()[0]
-                    } else {
-                        meditationModel.selectedMeditation = meditationModel.featuredMeditation
-                    }
-
-                    if meditationModel.selectedMeditation?.type == .course {
-                        viewRouter.currentPage = .middle
-                    } else {
+                    withAnimation {
+                        meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
+                            med.id == 22
+                        })
                         viewRouter.currentPage = .play
+                    }
+                } else {
+                    withAnimation {
+                        viewRouter.currentPage = .learn
                     }
                 }
             }

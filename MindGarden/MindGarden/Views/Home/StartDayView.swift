@@ -21,8 +21,9 @@ struct DailyMoodItem : Identifiable {
 struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @Binding var activeSheet: Sheet?
-    @State private var isDailyMood = false
+    @State private var isDailyMood = true
     
     @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
                                           StreakItem(title: "M", streak: false),
@@ -78,12 +79,17 @@ struct StartDayView: View {
                             .frame(height:170)
                             .aspectRatio(contentMode: .fill)
                             .opacity(0.95)
-                        if isDailyMood { SelectMood } else { DailyMood }
+                        if isDailyMood {
+                            SelectMood
+                        } else {
+                            DailyMood
+                        }
                     }
                     .frame(width: UIScreen.screenWidth * 0.775)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                     .padding(.horizontal, 12)
                     .neoShadow()
+                    .opacity(isDailyMood ? 1 : 0.5)
                     
                     ZStack {
                         Rectangle().fill(Clr.yellow)
@@ -92,8 +98,8 @@ struct StartDayView: View {
                                 Spacer()
                                 Text("Answer today’s Journal Prompt")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.semiBold, size: 16))
-                                    .padding(.leading,16)
+                                    .font(Font.fredoka(.semiBold, size: 20))
+                                    .padding([.leading, .top],16)
                                 Spacer()
                                 Img.streakViewPencil
                                     .resizable()
@@ -112,29 +118,31 @@ struct StartDayView: View {
                                         VStack(spacing:5) {
                                             Text(item.title)
                                                 .foregroundColor(Clr.black2)
-                                                .font(Font.fredoka(.semiBold, size: 10))
-                                            Button {}
-                                        label: {
+                                                .font(Font.fredoka(.semiBold, size: 12))
+                                            Button {
+                                            } label: {
                                             VStack(spacing:0) {
                                                 if item.streak {
                                                     Img.streakPencil
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
+                                                        .frame(height: 35)
                                                 } else {
                                                     Img.streakPencilUnselected
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
+                                                        .frame(height: 35)
                                                 }
                                             }
                                         }
                                         }
-                                        .padding(.horizontal,5)
+                                        .padding(.horizontal,3)
                                         .frame(maxWidth:.infinity)
                                     }
                                 }
                                 .padding(10)
                             }
-                            .frame(height: 75)
+                            .frame(height: 85)
                             .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 16))
                         }
                         HStack {
@@ -145,7 +153,7 @@ struct StartDayView: View {
                             Spacer()
                         }
                         .offset(y:-15)
-                    }.frame(width: UIScreen.screenWidth * 0.775, height: 150)
+                    }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                         .padding(.horizontal, 12)
                         .neoShadow()
@@ -156,7 +164,49 @@ struct StartDayView: View {
                     }.frame(width: UIScreen.screenWidth * 0.775)
                 }
             }
-        }.padding(.horizontal, 26)
+        }
+        .padding(.horizontal, 26)
+        .onAppear() {
+            if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
+                if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
+                    isDailyMood = false
+                    getMoods()
+                }
+            }
+        }
+    }
+    private func getMoods() {
+        let weekDays = getAllDaysOfTheCurrentWeek()
+        for i in 0..<weekDays.count {
+            let day = weekDays[i]
+            if let moods = gardenModel.grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?["moods"]  as? [[String: String]] {
+                let mood = Mood.getMood(str: moods[moods.count - 1]["mood"] ?? "okay")
+                dailyMoodList[i].dailyMood = Mood.getMoodImage(mood: mood)
+            }
+        }
+    }
+    
+    private func getAllDaysOfTheCurrentWeek() -> [Date] {
+        var dates: [Date] = []
+        guard let dateInterval = Calendar.current.dateInterval(of: .weekOfYear,
+                                                               for: Date()) else {
+            return dates
+        }
+        
+        Calendar.current.enumerateDates(startingAfter: dateInterval.start,
+                                        matching: DateComponents(hour:0),
+                                        matchingPolicy: .nextTime) { date, _, stop in
+                guard let date = date else {
+                    return
+                }
+                if date <= dateInterval.end {
+                    dates.append(date)
+                } else {
+                    stop = true
+                }
+        }
+        
+        return dates
     }
     
     var SelectMood: some View {
@@ -194,30 +244,29 @@ struct StartDayView: View {
         VStack {
             Spacer()
             VStack {
-                Text("👍 Daily Mood Log Complete")
-                    .foregroundColor(Clr.brightGreen)
-                    .font(Font.fredoka(.semiBold, size: 16))
-                    .offset(y: 8)
+//                Text("👍 Daily Mood Log Complete")
+//                    .foregroundColor(Clr.brightGreen)
+//                    .font(Font.fredoka(.semiBold, size: 16))
+//                    .offset(y: 8)
                 HStack(alignment:.top) {
                     ForEach(dailyMoodList, id: \.id) { item in
                         VStack(spacing:5) {
                             Text(item.title)
                                 .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.semiBold, size: 10))
-                            Button {}
-                        label: {
+                                .font(Font.fredoka(.semiBold, size: 12))
+                                .padding(.bottom, 4)
                             VStack(spacing:0) {
                                 item.dailyMood
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             }
                         }
-                        }
-                        .padding(.horizontal,5)
+                        .padding(.horizontal,2)
                         .frame(maxWidth:.infinity)
                     }
                 }
                 .padding(10)
+                .padding(.vertical, 10)
             }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
         }
     }
