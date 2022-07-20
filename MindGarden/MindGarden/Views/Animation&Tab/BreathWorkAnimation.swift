@@ -18,7 +18,12 @@ struct BreathWorkAnimation : View {
     
     @State var time = 3.0
     @State var size = 300.0
+    @State private var showPanel = true
+    @State private var timerCount:TimeInterval = 1.0
     
+    let panelHideDelay = 2.0
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
         ZStack {
             AnimatedBackground().edgesIgnoringSafeArea(.all)
@@ -45,7 +50,32 @@ struct BreathWorkAnimation : View {
                     .minimumScaleFactor(0.1)
             }
             
-        }.onAppear() {
+            if showPanel {
+                ZStack(alignment:.bottom) {
+                    VStack {
+                        Spacer()
+                        Text(timerCount.secondsFromTimeInterval())
+                            .font(Font.fredoka(.bold, size: 20))
+                            .foregroundColor(Clr.black2)
+                            .padding(.bottom,30)
+                        LightButton(title:.constant("Pause")) {
+                            
+                        }
+                        Button {}
+                        label : {
+                            Text("I'm Done")
+                                .font(Font.fredoka(.bold, size: 20))
+                                .foregroundColor(Clr.black2)
+                        }
+                        Spacer()
+                            .frame(height:130)
+                    }
+                }
+            }
+            
+        }
+        .onAppear() {
+            toggleControllPanel()
             meditateTimer = Timer.scheduledTimer(withTimeInterval: time, repeats: true) { timer in
                 if title == "Chest" {
                     title = "Exhale"
@@ -66,8 +96,22 @@ struct BreathWorkAnimation : View {
                 }
             }
             
-        }.onDisappear() {
+        }
+        .onDisappear() {
             meditateTimer?.invalidate()
+        }
+        .onTapGesture {
+            toggleControllPanel()
+        }
+        .onReceive(timer) { input in
+            timerCount += 1
+        }
+    }
+    
+    private func toggleControllPanel() {
+        showPanel = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + panelHideDelay) {
+            showPanel = false
         }
     }
 }
