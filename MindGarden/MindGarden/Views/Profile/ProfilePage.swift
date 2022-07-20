@@ -174,7 +174,7 @@ struct ProfilePage: View {
                 }.padding(.trailing)
                 if type == "journal" || type == "meditation" {
                     VStack(alignment: .leading) {
-                        Text("\(Int(med.duration/60)) mins  |  \(med.instructor)")
+                        Text("\(med.duration/60 == 0 && med.duration != 0 ? "0.5" : "\(Int(med.duration/60))") mins  |  \(med.instructor)")
                             .font(Font.fredoka(.regular, size: 14))
                             .foregroundColor(Clr.darkGray)
                         Text(med.title)
@@ -214,6 +214,8 @@ struct ProfilePage: View {
                     } else if let journal = data["entry"] {
                         type = "journal"
                     }
+                    
+                    // legacy data
                     
                     if let theTime = data["timeStamp"] {
                         timeStamp = theTime

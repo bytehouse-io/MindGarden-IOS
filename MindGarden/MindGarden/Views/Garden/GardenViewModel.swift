@@ -43,7 +43,7 @@ class GardenViewModel: ObservableObject {
         for (key,value) in grid {
             print(value.keys, value, key)
             let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
-            var yearIds = [[[String:String]]]()
+            let yearIds = [[[String:String]]]()
             for mo in months  {
                 if let singleDay = value[String(mo)]{
                     let days = singleDay.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
@@ -54,18 +54,26 @@ class GardenViewModel: ObservableObject {
                                 dataArr.append(sess)
                             }
                         }
-                        
-                        if let moods = singleDay[String(day)]?["moods"] as? [[String: String]] {
-                            for mood in moods {
-                                dataArr.append(mood)
+                            if let moods = singleDay[String(day)]?["moods"] as? [[String: String]] {
+                                for mood in moods {
+                                    dataArr.append(mood)
+                                }
+                            } else if let moods = singleDay[String(day)]?["moods"] as? [String] {
+                                for mood in moods {
+                                    var moodObj = [String: String]()
+                                    moodObj["mood"] = mood
+                                    moodObj["elaboration"] = mood
+                                    moodObj["timeStamp"] = "12:00 AM"
+                                    dataArr.append(moodObj)
+                                }
                             }
-                        }
-                        
-                        if let journals = singleDay[String(day)]?["gratitudes"] as? [[String: String]] {
-                            for journal in journals {
-                                dataArr.append(journal)
+ 
+                            if let journals = singleDay[String(day)]?["gratitudes"] as? [[String: String]] {
+                                for journal in journals {
+                                    dataArr.append(journal)
+                                }
                             }
-                        }
+                        
                         
                         entireHistory.append(([Int(day) ?? 1, Int(mo) ?? 1, Int(key) ?? 2022], dataArr)) // append day data and attach date
                     }
