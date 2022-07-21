@@ -89,6 +89,7 @@ struct StartDayView: View {
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                     .padding(.horizontal, 12)
                     .neoShadow()
+                    .opacity(isDailyMood ? 1 : 0.5)
                     
                     ZStack {
                         Rectangle().fill(Clr.yellow)
@@ -97,8 +98,8 @@ struct StartDayView: View {
                                 Spacer()
                                 Text("Answer today’s Journal Prompt")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.semiBold, size: 16))
-                                    .padding(.leading,16)
+                                    .font(Font.fredoka(.semiBold, size: 20))
+                                    .padding([.leading, .top],16)
                                 Spacer()
                                 Img.streakViewPencil
                                     .resizable()
@@ -117,29 +118,31 @@ struct StartDayView: View {
                                         VStack(spacing:5) {
                                             Text(item.title)
                                                 .foregroundColor(Clr.black2)
-                                                .font(Font.fredoka(.semiBold, size: 10))
-                                            Button {}
-                                        label: {
+                                                .font(Font.fredoka(.semiBold, size: 12))
+                                            Button {
+                                            } label: {
                                             VStack(spacing:0) {
                                                 if item.streak {
                                                     Img.streakPencil
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
+                                                        .frame(height: 35)
                                                 } else {
                                                     Img.streakPencilUnselected
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
+                                                        .frame(height: 35)
                                                 }
                                             }
                                         }
                                         }
-                                        .padding(.horizontal,5)
+                                        .padding(.horizontal,3)
                                         .frame(maxWidth:.infinity)
                                     }
                                 }
                                 .padding(10)
                             }
-                            .frame(height: 75)
+                            .frame(height: 85)
                             .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 16))
                         }
                         HStack {
@@ -150,7 +153,7 @@ struct StartDayView: View {
                             Spacer()
                         }
                         .offset(y:-15)
-                    }.frame(width: UIScreen.screenWidth * 0.775, height: 150)
+                    }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                         .padding(.horizontal, 12)
                         .neoShadow()
@@ -241,30 +244,29 @@ struct StartDayView: View {
         VStack {
             Spacer()
             VStack {
-                Text("👍 Daily Mood Log Complete")
-                    .foregroundColor(Clr.brightGreen)
-                    .font(Font.fredoka(.semiBold, size: 16))
-                    .offset(y: 8)
+//                Text("👍 Daily Mood Log Complete")
+//                    .foregroundColor(Clr.brightGreen)
+//                    .font(Font.fredoka(.semiBold, size: 16))
+//                    .offset(y: 8)
                 HStack(alignment:.top) {
                     ForEach(dailyMoodList, id: \.id) { item in
                         VStack(spacing:5) {
                             Text(item.title)
                                 .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.semiBold, size: 10))
-                            Button {}
-                        label: {
+                                .font(Font.fredoka(.semiBold, size: 12))
+                                .padding(.bottom, 4)
                             VStack(spacing:0) {
                                 item.dailyMood
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             }
                         }
-                        }
-                        .padding(.horizontal,5)
+                        .padding(.horizontal,2)
                         .frame(maxWidth:.infinity)
                     }
                 }
                 .padding(10)
+                .padding(.vertical, 10)
             }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
         }
     }

@@ -13,7 +13,7 @@ struct PlusButtonPopup: View {
     @Binding var isOnboarding: Bool
     
     private let buttonRadius : CGFloat = 12.0
-    private let popupRadius : CGFloat = 20.0
+    private let popupRadius : CGFloat = 32.0
             
     var body: some View {
         GeometryReader { geometry in
@@ -24,29 +24,30 @@ struct PlusButtonPopup: View {
                     VStack(spacing:-10) {
                         ZStack {
                         PlusButtonShape(cornerRadius: popupRadius)
-                                .fill(Clr.superWhite)
+                                .fill(Clr.darkWhite)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                             
                             PlusMenuView(showPopup:$showPopup, selectedOption: $selectedOption, isOnboarding: $isOnboarding).cornerRadius(popupRadius)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                         }.zIndex(1)
-                        PlusButtonShape(cornerRadius: buttonRadius)
-                            .fill(Clr.superWhite)
-                            .shadow(color:.black.opacity(0.25), radius: 4, x: 4, y: 4)
-                            .plusButtonStyle(scale: scale)
-                            .overlay(RoundedRectangle(cornerRadius: buttonRadius).stroke(.black, lineWidth: 1))
-                            .onTapGesture {
-                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
-                                    DispatchQueue.main.async {
-                                        withAnimation(.spring()) {
-                                            DispatchQueue.main.async {
-                                                showPopup.toggle()
-                                            }
+                        Button {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
+                                DispatchQueue.main.async {
+                                    withAnimation(.spring()) {
+                                        DispatchQueue.main.async {
+                                            showPopup.toggle()
                                         }
                                     }
                                 }
                             }
+                        } label: {
+                            PlusButtonShape(cornerRadius: buttonRadius)
+                                .fill(Clr.darkWhite)
+                                .shadow(color:.black.opacity(0.25), radius: 4, x: 4, y: 4)
+                                .plusButtonStyle(scale: scale)
+                                .overlay(RoundedRectangle(cornerRadius: buttonRadius).stroke(.black, lineWidth: 1.5))
+                        }.buttonStyle(ScalePress())
                     }
                     Spacer()
                         .frame(height:32)

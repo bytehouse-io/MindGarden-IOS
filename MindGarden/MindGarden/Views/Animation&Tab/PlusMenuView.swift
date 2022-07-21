@@ -20,10 +20,12 @@ struct PlusMenuView: View {
                         selectedOption = item.tabName
                         showPopup = false
                     } label: {
-                        MenuChoice(title: item.title, img: Image(systemName: item.image), disabled: false)
+                        MenuChoice(title: item.title, img: item.image, disabled: false)
                     }.disabled((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"))).opacity((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")) ? 0.5 : 1.0)
+                        .buttonStyle(NeoPress())
                 }
             }
+            .background(Clr.darkWhite)
             .scaleEffect(opac)
             .opacity(opac)
             .padding()
@@ -47,19 +49,18 @@ struct PlusMenuView: View {
                     img
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(Clr.darkgreen)
-                        .padding(title == "Meditate" ? 5 : 3)
+                        .padding(.leading, 8)
+                        .frame(width: 32)
                     Text(title)
-                        .font(Font.fredoka(.medium, size: 20))
+                        .font(Font.fredoka(.semiBold, size: 18))
                         .minimumScaleFactor(0.5)
-                        .foregroundColor(Clr.darkgreen)
-                        .frame(width: UIScreen.main.bounds.width * 0.3)
-                        .multilineTextAlignment(.trailing)
+                        .foregroundColor(Clr.brightGreen)
+                        .frame(width: UIScreen.main.bounds.width * 0.32, alignment: .center)
+                        .padding(.leading, 8)
                 }.frame(width: UIScreen.main.bounds.width * 0.4, alignment: .leading)
                 .padding(5)
             }
             .opacity(disabled ? 0.3 : 1)
-            .neoShadow()
         }
     }
 }
@@ -73,14 +74,14 @@ enum PlusMenuType: String {
 }
 
 var plusMenuList = [
-    PlusMenuItem(title: "Mood Check", image: "face.smiling", tabName: .moodCheck),
-    PlusMenuItem(title: "Gratitude", image: "square.and.pencil", tabName: .gratitude),
-    PlusMenuItem(title: "Meditate", image: "play", tabName: .meditate)
+    PlusMenuItem(title: "Log Mood", image: Img.veryGood, tabName: .moodCheck),
+    PlusMenuItem(title: "Gratitude", image: Img.streakPencil, tabName: .gratitude),
+    PlusMenuItem(title: "Meditate", image: Img.meditatingTurtle, tabName: .meditate)
 ]
 
 struct PlusMenuItem: Identifiable {
     var id = UUID()
     var title: String
-    var image: String
+    var image: Image
     var tabName: PlusMenuType
 }

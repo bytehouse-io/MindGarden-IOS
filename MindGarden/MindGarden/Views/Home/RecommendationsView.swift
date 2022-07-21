@@ -28,7 +28,7 @@ struct RecommendationsView: View {
                             Spacer()
                             CloseButton() {
                                 withAnimation { viewRouter.currentPage = .meditate }
-                            }.offset(x:20)
+                            }
                         }.padding(5)
                             .padding(.bottom,10)
                             .zIndex(2)
@@ -51,31 +51,31 @@ struct RecommendationsView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .padding(5)
-                                        .padding(.leading,10)
+                                        .padding(.leading,16)
                                     Spacer()
                                     VStack(alignment: .leading, spacing:10) {
                                         Spacer()
                                         HStack {
+                                            Img.happyPot
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
                                             Text("+2")
                                                 .foregroundColor(Clr.brightGreen)
                                                 .font(Font.fredoka(.semiBold, size: 20)) +
                                             Text(" Mood Check")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.fredoka(.regular, size: 20))
-                                            Img.moodCheck
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
                                         }
                                         HStack {
+                                            Img.pencil
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
                                             Text("+4")
                                                 .foregroundColor(Clr.brightGreen)
                                                 .font(Font.fredoka(.semiBold, size: 20)) +
                                             Text(" Journaling")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.fredoka(.regular, size: 20))
-                                            Img.pencil
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
                                         }
                                         Spacer()
                                     }
@@ -91,7 +91,7 @@ struct RecommendationsView: View {
                         .padding(.top,30)
                     Spacer()
                 }
-                .padding(.horizontal,30)
+                .padding(.horizontal,32)
             }
         }.onAppear() {
             playAnim = true
@@ -107,7 +107,7 @@ struct RecommendationsView: View {
                 Spacer()
             }
             HStack(spacing:16) {
-                Img.moodCheck
+                Img.happyPot
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:50)
@@ -128,25 +128,29 @@ struct RecommendationsView: View {
                     .font(Font.fredoka(.medium, size: 10))
                 Spacer()
             }
-            ZStack {
-                Capsule()
-                    .fill(Clr.yellow)
-                    .frame(height: 44)
-                    .addBorder(Color.black, width: 1.5, cornerRadius: 22)
-                    .neoShadow()
-                    .padding(.horizontal)
-                HStack {
-                    Text("See More")
-                        .foregroundColor(Clr.black2)
-                        .font(Font.fredoka(.medium, size: 16))
-                    Image(systemName: "arrow.right")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height:16)
+            Button {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                withAnimation {
+                    viewRouter.currentPage = .learn
                 }
-            }.onTapGesture {
-                //TODO: Implement see more button tap event here
-            }
+            } label: {
+                ZStack {
+                    Capsule()
+                        .fill(Clr.yellow)
+                        .frame(height: 44)
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 22)
+                    HStack {
+                        Text("See More")
+                            .foregroundColor(Clr.black2)
+                            .font(Font.fredoka(.medium, size: 16))
+                        Image(systemName: "arrow.right")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height:16)
+                    }
+                }
+            }.buttonStyle(NeoPress())
+  
         }
     }
 }
