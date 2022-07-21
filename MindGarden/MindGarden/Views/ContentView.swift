@@ -325,16 +325,7 @@ struct ContentView: View {
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(32)
-                                    .offset(y: addMood ?( geometry.size.height/(K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)
-                                Gratitude(shown: $addGratitude, showPopUp: $showPopUp, openPrompts: $openPrompts, contentKeyVisible: $isKeyboardVisible, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
-                                    .frame(width: geometry.size.width, height: (geometry.size.height * (K.hasNotch() ? 0.5 : 0.6 ) * (openPrompts ? 2.25 : 1)) + (isKeyboardVisible ? geometry.size.height * 0.2 : 0))
-                                    .background(Clr.darkWhite)
-                                    .cornerRadius(12)
-                                    .offset(y: (addGratitude ? (geometry.size.height/((K.hasNotch()
-                                                                                     ? 3.25 * (openPrompts ? 2 : 1)
-                                                                                     : K.isPad()  ?  2.5 * (openPrompts ? 2 : 1)
-                                                                                       : 4.5 * (openPrompts ? 3.5 : 1) ) ) + (viewRouter.currentPage == .finished ? -60 : 0))
-                                                : geometry.size.height) - (isKeyboardVisible ? geometry.size.height * 0.12 : 0))
+                                    .offset(y: addMood ?( geometry.size.height/(K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)                            
                                 BottomSheet(
                                     isOpen: $userModel.showCoinAnimation,
                                     maxHeight: geometry.size.height * (K.isSmall() ? 0.75 : 0.6),
@@ -426,17 +417,7 @@ struct ContentView: View {
             viewRouter.currentPage = .pricing}
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.meditate))
         { _ in
-            if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
-                meditationModel.selectedMeditation = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()[0]
-            } else {
-                meditationModel.selectedMeditation = meditationModel.featuredMeditation
-            }
-
-            if meditationModel.selectedMeditation?.type == .course {
-                viewRouter.currentPage = .middle
-            } else {
-                viewRouter.currentPage = .play
-            }
+            viewRouter.currentPage = .learn
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.garden)) { _ in
             selectedTab = .garden
@@ -484,7 +465,7 @@ struct ContentView: View {
         withAnimation(.easeOut(duration: 0.08).delay(0.24)) {
             PopUpIn = false
         }
-        withAnimation(.easeOut(duration: 0.14).delay(0.31)){
+        withAnimation(.easeOut(duration: 0.14).delay(0.31)) {
             showPopUp = false
             completion()
         }
@@ -495,7 +476,7 @@ struct ContentView: View {
         case .moodCheck:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
+            if UserDefaults.standard.integer(forKey: "numMoods") >= 70 && !UserDefaults.standard.bool(forKey: "isPro") {
                 withAnimation {
                     Analytics.shared.log(event: .plus_tapped_mood_to_pricing)
                     fromPage = "plusMood"
@@ -533,9 +514,7 @@ struct ContentView: View {
                 
                 withAnimation {
                     ///Ashvin : Hide popup with animation
-                    hidePopupWithAnimation {
-                        addGratitude = true
-                    }
+                    viewRouter.currentPage = .journal
                 }
             }
         case .meditate:

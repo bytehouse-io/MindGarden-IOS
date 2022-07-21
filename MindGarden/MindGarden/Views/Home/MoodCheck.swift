@@ -113,6 +113,7 @@ struct MoodCheck: View {
     @State var moodSelected: Mood = .none
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
 
     ///Ashvin : Binding variable for pass animation flag
     @Binding var PopUpIn: Bool
@@ -156,25 +157,6 @@ struct MoodCheck: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             .padding(.bottom, 15)
-//                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-//                            HStack {
-//                                Text("Recommendations ")
-//                                        .font(Font.fredoka(.semiBold, size: K.isPad() ? 36 : 20))
-//                                        .foregroundColor(Clr.black1)
-//                                        .lineLimit(1)
-//                                        .minimumScaleFactor(0.5)
-//                                Toggle("", isOn: $notifOn)
-//                                    .onChange(of: notifOn) { val in
-//                                        UserDefaults.standard.setValue(val, forKey: "moodRecsToggle")
-//                                        if val {
-//                                            Analytics.shared.log(event: .mood_toggle_recs_on)
-//                                        } else { //turned off
-//                                            Analytics.shared.log(event: .mood_toggle_recs_off)
-//                                        }
-//                                    }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-//                                    .frame(width: g.size.width * 0.08, height: 10)
-//                            } .frame(width: g.size.width * 0.8, alignment: .center)
-//                        }
                     
                     ZStack(alignment: .center) {
                         Rectangle()
@@ -210,21 +192,10 @@ struct MoodCheck: View {
         let identify = AMPIdentify()
             .set("num_moods", value: NSNumber(value: num))
         Amplitude.instance().identify(identify ?? AMPIdentify())
-        if moodSelected != .none {
-            Analytics.shared.log(event: .mood_tapped_done)
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
-                UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
-                showPopupWithAnimation {}
-            }
-            userModel.coins += 20
-            var moodSession = [String: String]()
-            moodSession["timeStamp"] = Date.getTime()
-            moodSession["mood"] = moodSelected.title
-            
-            gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
-        } // testing one two three
-        withAnimation {
+        withAnimation(.easeOut(duration: 0.25)) {
             shown = false
+            userModel.selectedMood = moodSelected
+            viewRouter.currentPage = .mood
         }
     }
 
@@ -263,7 +234,6 @@ struct SingleMood: View {
         ZStack {
             VStack(spacing: 2) {
                 Button {
-                    print("jermain")
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     switch mood {
                     case .angry: Analytics.shared.log(event: .mood_tapped_angry)

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlusMenuView: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @Binding var showPopup: Bool
     @Binding var selectedOption: PlusMenuType
     @State var opac: CGFloat = 0.01
@@ -75,7 +76,7 @@ enum PlusMenuType: String {
 
 var plusMenuList = [
     PlusMenuItem(title: "Log Mood", image: Img.veryGood, tabName: .moodCheck),
-    PlusMenuItem(title: "Gratitude", image: Img.streakPencil, tabName: .gratitude),
+    PlusMenuItem(title: "Journal", image: Img.streakPencil, tabName: .gratitude),
     PlusMenuItem(title: "Meditate", image: Img.meditatingTurtle, tabName: .meditate)
 ]
 

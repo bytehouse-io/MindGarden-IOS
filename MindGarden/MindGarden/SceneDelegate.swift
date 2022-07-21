@@ -14,7 +14,6 @@ import Foundation
 import OneSignal
 import Storyly
 import AVFoundation
-import AppTrackingTransparency
 
 var numberOfMeds = 0
 var storylyViewProgrammatic = StorylyView()

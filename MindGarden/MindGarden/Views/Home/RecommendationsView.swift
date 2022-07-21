@@ -10,6 +10,7 @@ import SwiftUI
 struct RecommendationsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
     private let titles = ["Intro to Meditation", "Intro to Meditation","Basic Confidence Meditation"]
     @State private var playAnim = false
 
@@ -56,7 +57,7 @@ struct RecommendationsView: View {
                                     VStack(alignment: .leading, spacing:10) {
                                         Spacer()
                                         HStack {
-                                            Img.happyPot
+                                            Mood.getMoodImage(mood: userModel.selectedMood)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                             Text("+2")
@@ -107,7 +108,7 @@ struct RecommendationsView: View {
                 Spacer()
             }
             HStack(spacing:16) {
-                Img.happyPot
+                Mood.getMoodImage(mood: userModel.selectedMood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:50)

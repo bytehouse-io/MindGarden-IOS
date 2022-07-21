@@ -119,5 +119,6 @@ struct JournalView: View, KeyboardReadable {
         .fullScreenCover(isPresented: $showRecs) {
             RecommendationsView()
         }
+        .transition(.move(edge: .trailing))
     }
 }

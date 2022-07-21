@@ -98,6 +98,6 @@ struct MoodElaborate: View {
                 .padding(.top,20)
                 Spacer()
             }
-        }
+        }.transition(.move(edge: .trailing))
     }
 }

@@ -91,72 +91,79 @@ struct StartDayView: View {
                     .neoShadow()
                     .opacity(isDailyMood ? 1 : 0.5)
                     
-                    ZStack {
-                        Rectangle().fill(Clr.yellow)
-                        VStack {
-                            HStack(spacing:0) {
-                                Spacer()
-                                Text("Answer today’s Journal Prompt")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.semiBold, size: 20))
-                                    .padding([.leading, .top],16)
-                                Spacer()
-                                Img.streakViewPencil
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(maxHeight: 45)
-                                    .offset(x: 3, y: -15)
-                                Img.streakViewPencil1
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(maxHeight: 70)
-                            }
-                            Spacer()
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        withAnimation {
+                            viewRouter.currentPage = .journal
+                        }
+                    } label: {
+                        ZStack {
+                            Rectangle().fill(Clr.yellow)
                             VStack {
-                                HStack(alignment:.top) {
-                                    ForEach(streakList, id: \.id) { item in
-                                        VStack(spacing:5) {
-                                            Text(item.title)
-                                                .foregroundColor(Clr.black2)
-                                                .font(Font.fredoka(.semiBold, size: 12))
-                                            Button {
-                                            } label: {
-                                            VStack(spacing:0) {
-                                                if item.streak {
-                                                    Img.streakPencil
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(height: 35)
-                                                } else {
-                                                    Img.streakPencilUnselected
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(height: 35)
+                                HStack(spacing:0) {
+                                    Spacer()
+                                    Text("Answer today’s Journal Prompt")
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.fredoka(.semiBold, size: 20))
+                                        .padding([.leading, .top],16)
+                                    Spacer()
+                                    Img.streakViewPencil
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(maxHeight: 45)
+                                        .offset(x: 3, y: -15)
+                                    Img.streakViewPencil1
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(maxHeight: 70)
+                                }
+                                Spacer()
+                                VStack {
+                                    HStack(alignment:.top) {
+                                        ForEach(streakList, id: \.id) { item in
+                                            VStack(spacing:5) {
+                                                Text(item.title)
+                                                    .foregroundColor(Clr.black2)
+                                                    .font(Font.fredoka(.semiBold, size: 12))
+                                                Button {
+                                                } label: {
+                                                VStack(spacing:0) {
+                                                    if item.streak {
+                                                        Img.streakPencil
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(height: 35)
+                                                    } else {
+                                                        Img.streakPencilUnselected
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(height: 35)
+                                                    }
                                                 }
                                             }
+                                            }
+                                            .padding(.horizontal,3)
+                                            .frame(maxWidth:.infinity)
                                         }
-                                        }
-                                        .padding(.horizontal,3)
-                                        .frame(maxWidth:.infinity)
                                     }
+                                    .padding(10)
                                 }
-                                .padding(10)
+                                .frame(height: 85)
+                                .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 16))
                             }
-                            .frame(height: 85)
-                            .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 16))
-                        }
-                        HStack {
-                            Img.streakCutPencil
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxHeight:70)
-                            Spacer()
-                        }
-                        .offset(y:-15)
-                    }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
-                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                        .padding(.horizontal, 12)
-                        .neoShadow()
+                            HStack {
+                                Img.streakCutPencil
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxHeight:70)
+                                Spacer()
+                            }
+                            .offset(y:-15)
+                        }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                            .padding(.horizontal, 12)
+                    }.buttonStyle(NeoPress() )
+                  
                     ZStack {
                         Rectangle().fill(Clr.yellow)
                             .frame(height:150)
