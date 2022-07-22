@@ -12,11 +12,13 @@ struct LikeButton : View {
     @State private var isTapped: Bool = false
     @State private var startAnimation: Bool
     @State private var bgAnimation: Bool
+    @State private var circletAnimation: Bool
     @State var isLiked: Bool
     @State private var fireworkAnimation: Bool
     @State private var animationEnded: Bool
     @State private var tapComplete: Bool
     @State var size: Double
+    @State var speed: Double = 0.5
     let action: () -> Void
     
     init(isLiked:Bool = false, size:Double = 30.0, action: @escaping () -> Void) {
@@ -25,6 +27,7 @@ struct LikeButton : View {
         self.action = action
         startAnimation = isLiked
         bgAnimation = isLiked
+        circletAnimation = isLiked
         fireworkAnimation = isLiked
         animationEnded = isLiked
         tapComplete = isLiked
@@ -38,8 +41,9 @@ struct LikeButton : View {
             .scaleEffect(startAnimation && !isLiked ? 0 : 1)
             .background(
                 ZStack{
-                    CustomShape(radius: isLiked ? 0 : size * 0.5 )
-                        .fill(Color.purple)
+                    Circle()
+                        .stroke(lineWidth: circletAnimation ? 0.0 : 5.0)
+                        .fill(Color.white.opacity(0.5))
                         .clipShape(Circle())
                         .frame(width: size, height: size)
                         .scaleEffect(bgAnimation ? 2.2 : 0)
@@ -78,6 +82,7 @@ struct LikeButton : View {
             MGAudio.sharedInstance.playBubbleSound()
             startAnimation = false
             bgAnimation = false
+            circletAnimation = false
             isLiked = false
             fireworkAnimation = false
             animationEnded = false
@@ -96,14 +101,19 @@ struct LikeButton : View {
             startAnimation = true
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + speed*0.25) {
             
             withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5)) {
                 
                 bgAnimation = true
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(.linear) {
+                
+                circletAnimation = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + speed*0.3) {
                 MGAudio.sharedInstance.playBubbleSound()
                 withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.6)) {
                     isLiked = true
@@ -113,13 +123,13 @@ struct LikeButton : View {
                     fireworkAnimation = true
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + speed*0.4) {
                     withAnimation(.easeOut(duration: 0.4)) {
                         animationEnded = true
                     }
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + speed*0.3) {
                     tapComplete = true
                 }
             }

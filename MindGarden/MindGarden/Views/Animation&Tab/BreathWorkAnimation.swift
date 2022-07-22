@@ -19,16 +19,16 @@ struct BreathWorkAnimation : View {
     @State var time = 3.0
     @State var size = 300.0
     @State private var showPanel = true
-    @State private var timerCount:TimeInterval = 1.0
+    @State private var timerCount:TimeInterval = 0.0
     @State private var scale = 0.0
     
     let panelHideDelay = 2.0
     let progress = 0.5
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let totalTime = 120.0
+    let images = [Img.seed,Img.sunflower1,Img.sunflower2,Img.sunflower3]
+    @State var timer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
-//            Clr.darkWhite.ignoresSafeArea()
             AnimatedBackground().edgesIgnoringSafeArea(.all).blur(radius: 50)
             VStack {
                 HStack {
@@ -86,15 +86,8 @@ struct BreathWorkAnimation : View {
                         Img.grass
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .background(
-                                Img.grassSunflower
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height:150)
-                                    .offset(y:-80)
-                                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
-                                    .animation(Animation
-                                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+                            .overlay(
+                                plantView
                             )
                             .frame(maxWidth:.infinity)
                         ZStack {
@@ -162,6 +155,20 @@ struct BreathWorkAnimation : View {
                 }
             }
             
+            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                if timerCount <= totalTime {
+                    timerCount += 1
+                    if Int(timerCount) == Int(totalTime*0.25) + 1 || Int(timerCount) == Int(totalTime*0.50) + 1 || Int(timerCount) == Int(totalTime*0.75) + 1 {
+                        scale = 0.0
+                        withAnimation(Animation.spring(response: 0.3, dampingFraction: 3.0)) {
+                            scale = 1.0
+                        }
+                    }
+                } else {
+                    timer.invalidate()
+                }
+            }
+            
             DispatchQueue.main.async {
                 withAnimation(Animation.spring(response: 0.3, dampingFraction: 3.0)) {
                     scale = 1.0
@@ -170,22 +177,63 @@ struct BreathWorkAnimation : View {
         }
         .onDisappear() {
             meditateTimer?.invalidate()
+            timer?.invalidate()
         }
         .onTapGesture {
             toggleControllPanel()
         }
-        .onReceive(timer) { input in
-            timerCount += 1
-        }
     }
     
-    //MARK: - nav
     var backArrow: some View {
         Image(systemName: "arrow.backward")
             .font(.system(size: 24))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
             }
+    }
+    //MARK: - nav
+    var plantView: some View {
+        ZStack {
+            if timerCount <= totalTime*0.25 {
+                images[0]
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height:40)
+                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
+                    .animation(Animation
+                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+                    .transition(.scale)
+                
+            } else if timerCount <= totalTime*0.50 {
+                images[1]
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height:50)
+                    .transition(.scale)
+                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
+                    .animation(Animation
+                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+            } else if timerCount <= totalTime*0.75 {
+                images[2]
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height:60)
+                    .transition(.scale)
+                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
+                    .animation(Animation
+                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+            } else {
+                images[3]
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height:150)
+                    .offset(y:-50)
+                    .transition(.scale)
+                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
+                    .animation(Animation
+                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+            }
+        }
     }
     var sound: some View {
         Image(systemName: "gearshape")
@@ -214,7 +262,7 @@ struct AnimatedBackground: View {
     @State var duration = 6.0
     
     let timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
-    let colors = [Clr.brightGreen, Clr.yellow, Clr.darkgreen]
+    let colors = [Clr.brightGreen, Clr.darkWhite]
     
     var body: some View {
         
