@@ -6,30 +6,31 @@
 //
 
 import SwiftUI
+import AudioToolbox
 
-struct BreathWorkAnimation : View {
+struct BreathworkPlay : View {
     
     @State private var bgAnimation = false
     @State private var fadeAnimation = false
-    @State private var isBally = false
-    @State private var title = "Belly"
-    
-    @State var meditateTimer: Timer?
-    
-    @State var time = 3.0
+    @State private var title = ""
+        
+    @State var sequenceCounter = 0
+    @State var noOfSequence = 0
     @State var size = 300.0
     @State private var showPanel = true
     @State private var timerCount:TimeInterval = 0.0
-    @State private var scale = 0.0
+    @State private var totalTime = 0.0
+    @State private var progress = 0.0
     
     let panelHideDelay = 2.0
-    let progress = 0.5
-    let totalTime = 120.0
+    
     let images = [Img.seed,Img.sunflower1,Img.sunflower2,Img.sunflower3]
+    let breathWork: Breathwork
+    
     @State var timer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
-            AnimatedBackground().edgesIgnoringSafeArea(.all).blur(radius: 50)
+            AnimatedBackground(colors:[breathWork.color.primary, breathWork.color.primary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
             VStack {
                 HStack {
                     Button {
@@ -41,7 +42,7 @@ struct BreathWorkAnimation : View {
                             .aspectRatio(contentMode: .fit)
                             .frame(height:30)
                             .background(Circle().foregroundColor(Clr.black2).padding(1))
-                            .neoShadow()
+                            .darkShadow()
                     }
                     Spacer()
                     Spacer()
@@ -57,12 +58,11 @@ struct BreathWorkAnimation : View {
                         .frame(width:size)
                         .foregroundColor(Clr.brightGreen)
                     Circle()
-                        .stroke(lineWidth:isBally ? 5 : size/2)
                         .fill(Clr.yellow)
                         .frame(width:size/2)
                         .clipShape(Circle())
                         .scaleEffect(bgAnimation ? 2 : 1)
-                        .opacity(fadeAnimation ? 0 : 1)
+                        
                     ZStack {
                         Circle()
                             .frame(width:size/2)
@@ -73,10 +73,10 @@ struct BreathWorkAnimation : View {
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.1)
-                            Text(timerCount.secondsFromTimeInterval())
+                            Text("  \(noOfSequence > 0 ? noOfSequence : 1 )  ")
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(.white)
-                                .opacity(showPanel ? 1.0 : 0.0)
+                                .opacity(fadeAnimation ? 0 : 1)
                             Spacer()
                         }
                     }
@@ -134,53 +134,67 @@ struct BreathWorkAnimation : View {
             }
         }
         .onAppear() {
-            toggleControllPanel()
-            meditateTimer = Timer.scheduledTimer(withTimeInterval: time, repeats: true) { timer in
-                if title == "Chest" {
-                    title = "Exhale"
-                } else {
-                    title =  "Belly"
-                    isBally = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + time/2) {
-                        title =  "Chest"
-                        isBally = false
-                        fadeAnimation = true
-                        withAnimation(.spring()) {
-                            fadeAnimation = false
-                        }
-                    }
-                }
-                withAnimation(.linear(duration: time)) {
-                    bgAnimation.toggle()
-                }
+            totalTime = Double(breathWork.duration)
+            let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
+            noOfSequence = Int(totalTime/Double(singleTime))
+            DispatchQueue.main.async {
+                playAnimation()
+                toggleControllPanel()
             }
-            
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                if timerCount <= totalTime {
+                if timerCount < totalTime {
                     timerCount += 1
-                    if Int(timerCount) == Int(totalTime*0.25) + 1 || Int(timerCount) == Int(totalTime*0.50) + 1 || Int(timerCount) == Int(totalTime*0.75) + 1 {
-                        scale = 0.0
-                        withAnimation(Animation.spring(response: 0.3, dampingFraction: 3.0)) {
-                            scale = 1.0
-                        }
+                    withAnimation(.linear(duration: 1.0)) {
+                        progress = timerCount/totalTime
                     }
                 } else {
                     timer.invalidate()
                 }
             }
-            
-            DispatchQueue.main.async {
-                withAnimation(Animation.spring(response: 0.3, dampingFraction: 3.0)) {
-                    scale = 1.0
-                }
-            }
         }
         .onDisappear() {
-            meditateTimer?.invalidate()
             timer?.invalidate()
         }
         .onTapGesture {
             toggleControllPanel()
+        }
+    }
+    
+    private func playAnimation(){
+        let time =  breathWork.sequence[sequenceCounter].0
+        let status = breathWork.sequence[sequenceCounter].1
+        
+        if noOfSequence > 0 {
+            switch status.lowercased() {
+            case "i":
+                title = "Inhale"
+                withAnimation(.linear(duration: Double(time))) {
+                    bgAnimation = true
+                }
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            case "h":
+                title = time > 0 ? "Hold" : ""
+            case "e":
+                title = "Exhale"
+                withAnimation(.linear(duration: Double(time))) {
+                    bgAnimation = false
+                }
+            default: break
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(time)) {
+                playAnimation()
+            }
+            if sequenceCounter < breathWork.sequence.count-1 {
+                sequenceCounter += 1
+            } else {
+                sequenceCounter = 0
+                fadeAnimation = true
+                withAnimation(.linear(duration: 1.0)) {
+                    noOfSequence -= 1
+                    fadeAnimation = false
+                }
+            }
         }
     }
     
@@ -194,44 +208,40 @@ struct BreathWorkAnimation : View {
     //MARK: - nav
     var plantView: some View {
         ZStack {
-            if timerCount <= totalTime*0.25 {
+            if progress < 0.25 {
                 images[0]
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:40)
-                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
                     .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
-                    .transition(.scale)
+                                .spring(response: 0.3, dampingFraction: 3.0))
+                    .transition(.opacity)
                 
-            } else if timerCount <= totalTime*0.50 {
+            } else if progress < 0.50 {
                 images[1]
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:50)
-                    .transition(.scale)
-                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
                     .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
-            } else if timerCount <= totalTime*0.75 {
+                                .spring(response: 0.3, dampingFraction: 3.0))
+                    .transition(.opacity)
+            } else if progress < 0.75 {
                 images[2]
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:60)
-                    .transition(.scale)
-                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
                     .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+                                .spring(response: 0.3, dampingFraction: 3.0))
+                    .transition(.opacity)
             } else {
                 images[3]
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:150)
                     .offset(y:-50)
-                    .transition(.scale)
-                    .scaleEffect(CGSize(width: scale, height: scale), anchor: .bottom)
                     .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0), value: scale)
+                                .spring(response: 0.3, dampingFraction: 3.0))
+                    .transition(.opacity)
             }
         }
     }
@@ -261,8 +271,8 @@ struct AnimatedBackground: View {
     @State var end = UnitPoint(x: 4, y: 0)
     @State var duration = 6.0
     
-    let timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
-    let colors = [Clr.brightGreen, Clr.darkWhite]
+    let timer = Timer.publish(every: 0.5, on: .main, in: .default).autoconnect()
+    @State var colors:[Color]
     
     var body: some View {
         
