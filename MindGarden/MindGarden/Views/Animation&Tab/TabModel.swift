@@ -16,7 +16,7 @@ enum TabType: String {
 
 var tabList = [
     TabMenuItem(image: Img.plantIcon, tabName: .garden, color: .white),
-    TabMenuItem(image: Img.meditateIcon, tabName: .meditate, color: .white),
+    TabMenuItem(image: Image(systemName: "house"), tabName: .meditate, color: .white),
     TabMenuItem(image: Img.search, tabName: .search, color: .white),
     TabMenuItem(image: Img.shopIcon, tabName: .shop, color: .white)
 ]
@@ -30,7 +30,7 @@ struct TabMenuItem: Identifiable {
     func name() -> String {
         switch self.tabName {
         case .garden: return "Garden"
-        case .meditate: return "Meditate"
+        case .meditate: return "Home"
         case .shop: return "Shop"
         case .search: return "Search"
         }

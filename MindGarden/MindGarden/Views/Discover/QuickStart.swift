@@ -51,7 +51,8 @@ struct QuickStart: View {
                                 .cornerRadius(28)
                             }.padding(.horizontal,24)
                         }.padding(6)
-                        .offset(y: playEntryAnimation ? 0 : 75)
+                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(item.delay), value: playEntryAnimation)
                         .buttonStyle(NeoPress())
                     }

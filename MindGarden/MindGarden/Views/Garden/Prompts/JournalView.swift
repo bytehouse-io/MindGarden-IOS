@@ -128,7 +128,7 @@ struct JournalView: View, KeyboardReadable {
                     
                 }
                 .padding()
-                .buttonStyle(BonusPress())
+                .buttonStyle(NeoPress())
             }
         }
         .ignoresSafeArea()
