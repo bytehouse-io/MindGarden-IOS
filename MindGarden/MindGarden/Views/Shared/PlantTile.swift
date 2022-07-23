@@ -20,10 +20,8 @@ struct PlantTile: View {
                 Rectangle()
                     .foregroundColor(isBadge ? isOwned ? Clr.darkWhite : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.darkWhite)
                     .frame(width: width * 0.35, height: height * 0.3)
-                    .cornerRadius(15)
-                    .overlay(RoundedRectangle(cornerRadius: 14)
-                    .stroke(Clr.darkgreen, lineWidth: !isShop && plant == userModel.selectedPlant ? 3 : 0))
-                    .addBorder(.black,width: 1.5, cornerRadius: 14)
+                    .cornerRadius(16)
+                    .addBorder(!isShop && plant == userModel.selectedPlant ? Clr.yellow : Clr.black1 ,width:!isShop && plant == userModel.selectedPlant ? 3 : 1.5, cornerRadius: 16)
                     .padding()
                 VStack(alignment: isShop ? .leading : .center, spacing: 0) {
                     isShop ?
@@ -111,15 +109,16 @@ struct PlantTile: View {
                         }
                     } else {
                         Capsule()
-                            .fill(plant == userModel.selectedPlant  ? Clr.yellow : Clr.darkgreen)
+                            .fill(plant == userModel.selectedPlant  ? Clr.yellow : Clr.brightGreen)
                             .overlay(Text(plant == userModel.selectedPlant ? "Selected" : "Select")
                                         .font(Font.fredoka(.semiBold, size: 18))
-                                        .foregroundColor(plant == userModel.selectedPlant ? .black : .white)
+                                        .foregroundColor(plant == userModel.selectedPlant ? Clr.black2 : .white)
                                         .padding()
                             )
                             .frame(width: width * 0.30, height: height * 0.04)
                             .buttonStyle(NeumorphicPress())
                             .padding(.top, 5)
+                            .neoShadow()
                     }
                 }
             }

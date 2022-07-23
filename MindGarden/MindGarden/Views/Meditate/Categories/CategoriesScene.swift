@@ -81,14 +81,16 @@ struct CategoriesScene: View {
                         if isSearch {
                             HStack {
                                 CategoryButton(category: .all, selected: $model.selectedCategory)
+                                CategoryButton(category: .breathwork, selected: $model.selectedCategory)
                                 CategoryButton(category: .unguided, selected: $model.selectedCategory)
                                 CategoryButton(category: .beginners, selected: $model.selectedCategory)
                                 CategoryButton(category: .anxiety, selected: $model.selectedCategory)
                                 CategoryButton(category: .focus, selected: $model.selectedCategory)
                                 CategoryButton(category: .growth, selected: $model.selectedCategory)
+                                CategoryButton(category: .sadness, selected: $model.selectedCategory)
                                 CategoryButton(category: .sleep, selected: $model.selectedCategory)
                                 CategoryButton(category: .courses, selected: $model.selectedCategory)
-                            }.padding([.horizontal, .bottom])
+                            }.padding()
                         }
                     }
                     ScrollView(showsIndicators: false) {
@@ -127,8 +129,8 @@ struct CategoriesScene: View {
                                 .cornerRadius(25)
                             }.buttonStyle(NeumorphicPress())
                         }.frame(height: 140)
-                        .padding(.bottom)
-                    }
+                            .padding(.bottom,isFromQuickstart ?  36 : 100)
+                    }.frame(height: UIScreen.screenHeight * (isFromQuickstart ? 0.65 : 0.9))
                     if isFromQuickstart { Spacer().frame(height:100) }
                     Spacer()
                 }
@@ -209,7 +211,7 @@ struct CategoriesScene: View {
             case .popular: return !meditation.title.isEmpty
             case .morning: return Meditation.morningMeds.contains(meditation.id)
             case .sleep: return meditation.category == .sleep
-            case .anxiety: return meditation.category == .anxiety
+            case .anxiety: return (meditation.category == .anxiety || meditation.category == .sadness)
             case .unguided: return meditation.category == .unguided
             case .courses: return meditation.type == .course
             case .focus: return meditation.category == .focus
@@ -312,6 +314,7 @@ struct CategoriesScene: View {
                 .padding(8)
                 .background(selected == category ? Clr.yellow : Clr.darkWhite)
                 .cornerRadius(16)
+                .addBorder(.black, width: 1.5, cornerRadius: 16)
             }
             .frame(height:32)
             .buttonStyle(NeumorphicPress())
@@ -322,6 +325,8 @@ struct CategoriesScene: View {
 
 enum Category {
     case all
+    case breathwork
+    case sadness
     case unguided
     case courses
     case beginners
@@ -345,12 +350,16 @@ enum Category {
             return "😖 Anxiety"
         case .focus:
             return "🎧 Focus"
+        case .sadness:
+            return "😢 Sadness"
         case .sleep:
             return "😴 Sleep"
         case .confidence:
             return "💪 Confidence"
         case .growth:
             return "🌱 Growth"
+        case .breathwork:
+            return "💨 Breathwork"
         }
     }
 }

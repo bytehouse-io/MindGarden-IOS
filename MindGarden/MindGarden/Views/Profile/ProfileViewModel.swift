@@ -32,8 +32,11 @@ class ProfileViewModel: ObservableObject {
     }
 
     func signOut() {
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
         do { try Auth.auth().signOut() }
-        catch { print("already logged out") }
+        catch { print("already logged out") }        
         UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
         UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
         UserDefaults.standard.setValue(false, forKey: "isPro")

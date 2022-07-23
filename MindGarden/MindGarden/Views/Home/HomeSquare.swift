@@ -84,14 +84,14 @@ struct HomeSquare: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
                                     .padding(.leading, -16)
-                                    .padding(.top, 10)
+                                    .padding(.top, 20)
                             } else {
                                 img
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
                                     .padding(.leading, -16)
-                                    .padding(.top, 10)
+                                    .padding(.top, 20)
                             }
                         }.offset(x: -4)
                 if isNew {

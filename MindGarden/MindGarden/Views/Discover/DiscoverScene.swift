@@ -60,6 +60,7 @@ struct DiscoverScene: View {
         }
         .sheet(isPresented: $tappedSearch) {
             CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false))
+                .frame(height: UIScreen.screenHeight - 90)
         }
         .edgesIgnoringSafeArea(.all)
         .onAppear {

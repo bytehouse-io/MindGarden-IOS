@@ -40,7 +40,7 @@ struct Meditation: Hashable {
             .lowercased()
     }
 
-    static func getRecsFromMood() -> [Meditation] {
+    static func getRecsFromMood() -> [Int] {
         var retMeds: [Meditation] = []
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
@@ -58,33 +58,34 @@ struct Meditation: Hashable {
         } else {
             retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
         }
+        var breathWork = 0
         switch Mood.veryBad {
         case .stressed, .veryBad:
-            retMeds += allMeditations.filter { med in
-                med.id == 46 || med.id == 38 || med.id == 51 || med.id == 25  || med.id == 36 || med.id == 24
-            }
+            retMeds += allMeditations.filter { med in  med.category == .anxiety }
+            breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
         case .angry:
             retMeds += allMeditations.filter { med in
                 med.id == 24 || med.id == 42 || med.id == 25 || med.id == 15 || med.id == 50
             }
         case .okay, .happy, .good, .veryGood:
-            if Calendar.current.component( .hour, from:Date() ) < 18 { // daytime meds only
-                retMeds += allMeditations.filter { med in med.id == 53  || med.id == 49}
+            if Calendar.current.component( .hour, from:Date() ) < 12 { // daytime meds only
+                retMeds += allMeditations.filter { med in Meditation.morningMeds.contains(med.id) }
             } else {
-                retMeds += allMeditations.filter { med in  med.id == 27 || med.id == 39 }
+                retMeds += allMeditations.filter { med in  med.category == .growth || med.category == .confidence }
             }
-            retMeds += allMeditations.filter { med in med.id == 25  || med.id == 50 // affirmations
-            || med.id == 20 || med.id == 21 || med.id == 16 || med.id == 40 || med.id == 17
-            }
+            breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
+
         case .sad, .bad:
             retMeds += allMeditations.filter { med in
-                med.id == 52 || med.id == 40 || med.id == 42 || med.id == 21 || med.id == 50 // affirmations
-                || med.id == 51 || med.id == 21 || med.id == 15  || med.id == 36
+                med.category == .anxiety 
             }
         case .none: break
         }
         retMeds.shuffle()
-            let finalMeds = Array(retMeds[0..<retMeds.count])
+        var finalMeds = [Int]()
+        for med in retMeds {
+            finalMeds.append(med.id)
+        }
         return finalMeds
     }
     

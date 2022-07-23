@@ -239,10 +239,10 @@ struct ReviewScene: View {
                             }
                             
                             Analytics.shared.log(event: .review_tapped_explore)
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                             UserDefaults.standard.setValue(true, forKey: "review")
+                            
                             withAnimation(.easeOut(duration: 0.3)) {
                                 DispatchQueue.main.async {
                                     viewRouter.progressValue = 1

@@ -148,62 +148,6 @@ struct LearnScene: View {
                 .padding(.top, 25)
                 .padding(.bottom, g.size.height * (K.hasNotch() ? 0.1 : 0.25))
                 }.frame(height: height)
-                if !UserDefaults.standard.bool(forKey: "day1") {
-                    Color.gray.edgesIgnoringSafeArea(.all).animation(nil).opacity(0.85)
-                        .frame(height: UIScreen.screenHeight,alignment:.center).offset(y: -100)
-                    ZStack {
-                        Rectangle()
-                            .fill(Clr.darkWhite)
-                            .cornerRadius(24)
-                        VStack {
-                            (Text("🔐 This page will\nunlock in ")
-                                .foregroundColor(Clr.black2) +
-                             Text(bonusModel.progressiveInterval)
-                                .foregroundColor(Clr.darkgreen) +
-                             Text("\nYou're on Day \(UserDefaults.standard.integer(forKey: "day"))")
-                                .foregroundColor(Clr.black2))
-                                .font(Font.fredoka(.semiBold, size: 22))
-                                .multilineTextAlignment(.center)
-                            if !isNotifOn {
-                                Button {
-                                    if !UserDefaults.standard.bool(forKey: "showedNotif") {
-                                        OneSignal.promptForPushNotifications(userResponse: { accepted in
-                                            if accepted {
-                                                Analytics.shared.log(event: .notification_success_learn)
-                                                NotificationHelper.addOneDay()
-                                                NotificationHelper.addThreeDay()
-                                                
-                                                if UserDefaults.standard.bool(forKey: "freeTrial") {
-                                                    NotificationHelper.freeTrial()
-                                                }
-                                                
-                                                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
-                                                UserDefaults.standard.setValue(true, forKey: "mindful")
-    //                                            NotificationHelper.createMindfulNotifs()
-                                                isNotifOn = true
-                                                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
-                                            }
-                                            UserDefaults.standard.setValue(true, forKey: "showedNotif")
-                                        })
-                                    } else {
-                                        promptNotif()
-                                        NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
-                                    }
-                                    
-                                } label: {
-                                    Capsule()
-                                        .fill(Clr.yellow)
-                                        .frame(width: UIScreen.main.bounds.width/2, height: 40)
-                                        .overlay(Text("Be Notified").font(Font.fredoka(.bold, size: 22))
-                                                    .multilineTextAlignment(.center)
-                                                    .foregroundColor(.black)
-                                        )
-                                }.buttonStyle(NeumorphicPress())
-                            }
-                        }
-                    }.frame(width: UIScreen.main.bounds.width/1.5, height: isNotifOn ? 150 : 180)
-                        .position(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/3)
-                }
             }
             .disabled(!UserDefaults.standard.bool(forKey: "day1"))
             }

@@ -156,8 +156,7 @@ struct MoodCheck: View {
                             .frame(width: g.size.width * 0.85, alignment: .leading)
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
-                            .padding(.bottom, 15)
-                    
+                            .padding(.bottom, 15)                    
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(Clr.yellow)

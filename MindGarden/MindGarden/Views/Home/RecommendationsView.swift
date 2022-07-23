@@ -13,6 +13,7 @@ struct RecommendationsView: View {
     @EnvironmentObject var userModel: UserViewModel
     private let titles = ["Intro to Meditation", "Intro to Meditation","Basic Confidence Meditation"]
     @State private var playAnim = false
+    let width = UIScreen.screenWidth
 
     var body: some View {
         ZStack {
@@ -35,31 +36,31 @@ struct RecommendationsView: View {
                             .zIndex(2)
                         ZStack {
                             Rectangle().fill(Clr.darkWhite)
-                                .addBorder(Color.black, width: 1.5, cornerRadius: 14)
+                                .font(Font.fredoka(.medium, size: 20))
                                 .overlay(LottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
-                                            .scaleEffect(2))
-                            
+                                .scaleEffect(2))
                             VStack(alignment:.leading, spacing: 0) {
                                 HStack {
-                                    Text("You earned +6 coins")
-                                        .foregroundColor(Clr.black2)
-                                        .font(Font.fredoka(.medium, size: 20))
+                                   ( Text("You earned")  .foregroundColor(Clr.black2) + Text(" +6 ").foregroundColor(Clr.brightGreen) + Text("coins")  .foregroundColor(Clr.black2))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                         .padding()
+                                        .offset(x: 16)
                                     Spacer()
                                 }
                                 HStack(spacing:20) {
                                     Img.coinBunch
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .padding(5)
                                         .padding(.leading,16)
+                                        .frame(width: 100)
+                                        .offset(x: 16, y: -8)
                                     Spacer()
                                     VStack(alignment: .leading, spacing:10) {
-                                        Spacer()
                                         HStack {
                                             Mood.getMoodImage(mood: userModel.selectedMood)
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
+                                                .frame(width: 30)
                                             Text("+2")
                                                 .foregroundColor(Clr.brightGreen)
                                                 .font(Font.fredoka(.semiBold, size: 20)) +
@@ -68,9 +69,10 @@ struct RecommendationsView: View {
                                                 .font(Font.fredoka(.regular, size: 20))
                                         }
                                         HStack {
-                                            Img.pencil
+                                            Img.streakPencil
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
+                                                .frame(width: 30)
                                             Text("+4")
                                                 .foregroundColor(Clr.brightGreen)
                                                 .font(Font.fredoka(.semiBold, size: 20)) +
@@ -80,12 +82,15 @@ struct RecommendationsView: View {
                                         }
                                         Spacer()
                                     }
+                                    .frame(width: width * 0.45)
                                     .padding(.trailing,30)
+                                    .padding(.top)
                                 }
                                 Spacer()
                             }
                         }
-                        .frame(height:150)
+                        .frame(width: width * 0.85, height:175)
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                     }
                     
                     TodaysMeditation
@@ -171,17 +176,18 @@ struct MeditationRow: View {
                 VStack(alignment:.leading,spacing:3) {
                     Text(title)
                         .font(Font.fredoka(.medium, size: 20))
-                        .frame(width: 200,alignment: .leading)
+                        .frame(width: UIScreen.screenWidth * 0.5, alignment: .leading)
                         .foregroundColor(Clr.black2)
                         .multilineTextAlignment(.leading)
+                        .padding(.vertical, 5)
                     HStack {
                         Image(systemName: "speaker.wave.3.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height:8)
+                            .frame(height:10)
                             .padding(.vertical,0)
                         Text("7 day course")
-                            .font(Font.fredoka(.medium, size: 10))
+                            .font(Font.fredoka(.medium, size: 12))
                             .foregroundColor(Clr.black2.opacity(0.5))
                             .padding(.vertical,0)
                     }.padding(.vertical,0)
@@ -191,10 +197,10 @@ struct MeditationRow: View {
                             Image(systemName: "timer")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height:8)
+                                .frame(height:10)
                                 .padding(.vertical,0)
                             Text("1/2 mins")
-                                .font(Font.fredoka(.medium, size: 10))
+                                .font(Font.fredoka(.medium, size: 12))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)
@@ -202,10 +208,10 @@ struct MeditationRow: View {
                             Image(systemName: "person.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height:8)
+                                .frame(height:10)
                                 .padding(.vertical,0)
                             Text("Bijan")
-                                .font(Font.fredoka(.medium, size: 10))
+                                .font(Font.fredoka(.medium, size: 12))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)
@@ -214,23 +220,23 @@ struct MeditationRow: View {
                             Image(systemName: "timer")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height:8)
+                                .frame(height:10)
                                 .padding(.vertical,0)
                             Text("1/2 mins")
-                                .font(Font.fredoka(.medium, size: 10))
+                                .font(Font.fredoka(.medium, size: 12))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                             Text("•")
-                                .font(Font.fredoka(.medium, size: 10))
+                                .font(Font.fredoka(.bold, size: 12))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                             Image(systemName: "person.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height:8)
+                                .frame(height:10)
                                 .padding(.vertical,0)
                             Text("Bijan")
-                                .font(Font.fredoka(.medium, size: 10))
+                                .font(Font.fredoka(.medium, size: 12))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)
@@ -241,8 +247,10 @@ struct MeditationRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 80)
+                    .offset(y: 2)
             }
-            .frame(height: 80, alignment: .center)
+            .frame(height: 100, alignment: .center)
+            .offset(y: -7)
             .padding(.horizontal, 30)
             .padding(.vertical, 20)
         }

@@ -51,11 +51,14 @@ struct JournalView: View, KeyboardReadable {
                         .onTapGesture {
                             //TODO: implement shuffle tap event
                         }
-                    CloseButton() {
-                        withAnimation { viewRouter.currentPage = .meditate  }
-                    }.padding(.leading, 10)
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
+                        CloseButton() {
+                            withAnimation { viewRouter.currentPage = .meditate  }
+                        }.padding(.leading, 10)
+                    }
                 }
                 .padding(.horizontal,30)
+            
                 Text("Reflect on how you feel.")
                     .font(Font.fredoka(.semiBold, size: 28))
                     .foregroundColor(Clr.black2)
@@ -91,7 +94,23 @@ struct JournalView: View, KeyboardReadable {
                 Spacer()
                     .frame(height:50)
                 Button {
-                    withAnimation {
+                    var num = UserDefaults.standard.integer(forKey: "numGrads")
+                    num += 1
+                    let identify = AMPIdentify()
+                        .set("num_gratitudes", value: NSNumber(value: num))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                    if num == 30 {
+                        userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
+                        userModel.buyPlant(unlockedStrawberry: true)
+                        userModel.triggerAnimation = true
+                    }
+                    UserDefaults.standard.setValue(num, forKey: "numGrads")
+                    Analytics.shared.log(event: .gratitude_tapped_done)
+                    gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
+                    withAnimation {                        
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                        }
                         Analytics.shared.log(event: .gratitude_tapped_done)
                         gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
                         showRecs = true

@@ -26,18 +26,20 @@ struct MoodElaborate: View {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
-                    .frame(height:40)
+                    .frame(height:100)
                 HStack() {
                     Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
-                        .font(Font.fredoka(.regular, size: 16))
+                        .font(Font.fredoka(.regular, size: 20))
                         .foregroundColor(Clr.black2)
                         .padding(.leading,30)
                     Spacer()
-                    CloseButton() {
-                        withAnimation {
-                            viewRouter.currentPage = .meditate
-                        }
-                    }.padding(.trailing,20)
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+                        CloseButton() {
+                            withAnimation {
+                                viewRouter.currentPage = .meditate
+                            }
+                        }.padding(.trailing,20)
+                    }
                 }
                 .frame(width: UIScreen.screenWidth)
                 Mood.getMoodImage(mood: userModel.selectedMood)

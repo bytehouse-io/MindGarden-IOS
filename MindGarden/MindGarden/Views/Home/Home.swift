@@ -120,6 +120,9 @@ struct Home: View {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
+//        .fullScreenCover(isPresented: .constant(true)) {
+//            RecommendationsView()
+//        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
@@ -129,6 +132,7 @@ struct Home: View {
             model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
             viewRouter.currentPage = .middle
         }
+
         .onAppear {
             tappedSignOut = false
 //            activeSheet = .streak
