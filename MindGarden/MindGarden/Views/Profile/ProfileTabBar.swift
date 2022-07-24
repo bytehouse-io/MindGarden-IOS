@@ -19,6 +19,8 @@ struct ProfileTab: View {
                     .fill(.white.opacity(0.4))
                     .frame(width:UIScreen.screenWidth*0.27)
                     .padding(.vertical,3)
+                    .addBorder(.black, width: 1.5, cornerRadius: 16)
+                    .offset(x: selectedTab == .settings ? 2 : -2)
                 if selectedTab == .profile { Spacer() }
                 if selectedTab == .referral { Spacer() }
             }.padding(.horizontal,3)
@@ -29,14 +31,12 @@ struct ProfileTab: View {
                         DispatchQueue.main.async {
                             withAnimation {
                                 selectedTab = item.tabName
-                                withAnimation {
-                                    if selectedTab == .profile {
-                                        Analytics.shared.log(event: .profile_tapped_profile)
-                                    } else if selectedTab == .settings {
-                                        Analytics.shared.log(event: .profile_tapped_settings)
-                                    } else if selectedTab == .referral {
-                                        Analytics.shared.log(event: .profile_tapped_refer)
-                                    }
+                                if selectedTab == .profile {
+                                    Analytics.shared.log(event: .profile_tapped_profile)
+                                } else if selectedTab == .settings {
+                                    Analytics.shared.log(event: .profile_tapped_settings)
+                                } else if selectedTab == .referral {
+                                    Analytics.shared.log(event: .profile_tapped_refer)
                                 }
                             }
                         }
@@ -62,8 +62,8 @@ struct ProfileTab: View {
         .background(
             Clr.brightGreen
             .cornerRadius(18)
-                .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
-        )
+        ).addBorder(.black, width: 1.5, cornerRadius: 16)
+         .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
     }
 }
 

@@ -13,6 +13,7 @@ struct MoodElaborate: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @State private var selectedSubMood: String = ""
+    @State private var playEntryAnimation = false
     
     
     @State private var showDetail = false
@@ -26,18 +27,20 @@ struct MoodElaborate: View {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
-                    .frame(height:40)
+                    .frame(height:100)
                 HStack() {
                     Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
-                        .font(Font.fredoka(.regular, size: 16))
+                        .font(Font.fredoka(.regular, size: 20))
                         .foregroundColor(Clr.black2)
                         .padding(.leading,30)
                     Spacer()
-                    CloseButton() {
-                        withAnimation {
-                            viewRouter.currentPage = .meditate
-                        }
-                    }.padding(.trailing,20)
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+                        CloseButton() {
+                            withAnimation {
+                                viewRouter.currentPage = .meditate
+                            }
+                        }.padding(.trailing,20)
+                    }
                 }
                 .frame(width: UIScreen.screenWidth)
                 Mood.getMoodImage(mood: userModel.selectedMood)
@@ -45,10 +48,14 @@ struct MoodElaborate: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth:70)
                     .padding(.top,30)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(0.25), value: playEntryAnimation)
                 Text("How would you describe how you’re feeling?")
                     .foregroundColor(Clr.black2)
                     .font(Font.fredoka(.semiBold, size: 28))
                     .multilineTextAlignment(.center)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(0.25), value: playEntryAnimation)
                 ZStack {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(userModel.selectedMood.options, id: \.self) { item in
@@ -66,6 +73,7 @@ struct MoodElaborate: View {
                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                         UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
                                     }
+                                    
                                     Amplitude.instance().logEvent("mood_elaborate", withEventProperties: ["elaboration": item])
                                     var moodSession = [String: String]()
                                     moodSession["timeStamp"] = Date.getTime()
@@ -76,13 +84,11 @@ struct MoodElaborate: View {
                                 
                                     viewRouter.currentPage = .journal
                                 }
-                            }
-                            label : {
+                            } label: {
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
                                         .cornerRadius(10)
-                                        .neoShadow()
                                     Text(item)
                                         .font(Font.fredoka(.semiBold, size: 14))
                                         .foregroundColor(Clr.black2)
@@ -91,6 +97,10 @@ struct MoodElaborate: View {
                                         .padding(5)
                                 }.padding(5)
                             }
+                            .offset(y: playEntryAnimation ? 0 : 100)
+                            .opacity(playEntryAnimation ? 1 : 0)
+                            .animation(.spring().delay(0.25), value: playEntryAnimation)
+                            .buttonStyle(NeoPress())
                         }
                     }
                     .padding(.horizontal)
@@ -99,5 +109,10 @@ struct MoodElaborate: View {
                 Spacer()
             }
         }.transition(.move(edge: .trailing))
+        .onAppear {
+            withAnimation(.easeIn(duration: 0.6)) {
+                playEntryAnimation = true
+            }
+        }
     }
 }

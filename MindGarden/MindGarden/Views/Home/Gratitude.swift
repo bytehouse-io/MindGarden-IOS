@@ -96,19 +96,7 @@ struct Gratitude: View, KeyboardReadable {
                         .offset(y: -10)
                         .padding(.top)
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height/2), mood: false, save: {
-                        var num = UserDefaults.standard.integer(forKey: "numGrads")
-                        num += 1
-                        let identify = AMPIdentify()
-                            .set("num_gratitudes", value: NSNumber(value: num))
-                        Amplitude.instance().identify(identify ?? AMPIdentify())
-                        if num == 30 {
-                            userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
-                            userModel.buyPlant(unlockedStrawberry: true)
-                            userModel.triggerAnimation = true
-                        }
-                        UserDefaults.standard.setValue(num, forKey: "numGrads")
-                        Analytics.shared.log(event: .gratitude_tapped_done)
-                        gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
+                       
                         text = "I'm thankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)

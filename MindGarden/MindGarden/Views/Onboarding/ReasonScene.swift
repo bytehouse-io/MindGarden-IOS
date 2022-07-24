@@ -47,6 +47,7 @@ struct ReasonScene: View {
                                 .padding(.vertical, 20)
                                 .padding(.horizontal)
                                 .frame(height: 50)
+                                .padding(.bottom, 15)
                             ForEach(reasonList) { reason in
                                 SelectionRow(width: width, height: height, reason: reason, selected: $selected)
                             }

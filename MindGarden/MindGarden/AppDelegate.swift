@@ -16,7 +16,6 @@ import OneSignal
 import Paywall
 import WidgetKit
 import AVFoundation
-import AppTrackingTransparency
 
 var player: AVAudioPlayer?
 
@@ -94,20 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         return true
     }
     
-    func applicationDidBecomeActive(_ application: UIApplication) {
-//           if #available(iOS 14, *) {
-//               ATTrackingManager.requestTrackingAuthorization { status in
-//                   switch status {
-//                       case .authorized:
-//                           print("enable tracking")
-//                       case .denied:
-//                           print("disable tracking")
-//                       default:
-//                           print("disable tracking")
-//                   }
-//               }
-//           }
-       }
     
     func playSound(soundName: String) {
         guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }

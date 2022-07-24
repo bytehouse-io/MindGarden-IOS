@@ -16,8 +16,10 @@ struct DiscoverTab: View {
                 if selectedTab == .quickStart { Spacer() }
                 Capsule()
                     .fill(.white.opacity(0.4))
-                    .frame(width:UIScreen.screenWidth*0.27)
+                    .frame(width:UIScreen.screenWidth * 0.27)
                     .padding(.vertical,3)
+                    .addBorder(.black, width: 1.5, cornerRadius: 30)
+                    .offset(x: selectedTab == .learn ? 2 : -2)
                 if selectedTab == .quickStart { Spacer() }
                 if selectedTab == .journey { Spacer() }
             }.padding(.horizontal,3)
@@ -46,15 +48,15 @@ struct DiscoverTab: View {
                         .frame(maxWidth: .infinity)
                     }
                 }
-            }
-            .padding(.vertical,5)
+            }.padding(.vertical,5)
         }
         .frame(height: 36, alignment: .top)
         .background(
             Clr.brightGreen
             .cornerRadius(16)
-                .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
         )
+        .addBorder(.black, width: 1, cornerRadius: 16)
+        .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
     }
 }
 

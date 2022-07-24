@@ -59,7 +59,7 @@
 		58D6FB4F286D6199003EA6A7 /* PromptsTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4E286D6199003EA6A7 /* PromptsTabModel.swift */; };
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
-		58DEE5AC2867390400A04CA2 /* BreathWorkAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */; };
+		58DEE5AC2867390400A04CA2 /* BreathworkPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */; };
 		58E21AD2280687DE00F2BC0F /* HomeViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */; };
 		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
@@ -323,7 +323,7 @@
 		58D6FB4E286D6199003EA6A7 /* PromptsTabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptsTabModel.swift; sourceTree = "<group>"; };
 		58D90A9527E6F925008C4E1C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
-		58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathWorkAnimation.swift; sourceTree = "<group>"; };
+		58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathworkPlay.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
 		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
@@ -654,7 +654,6 @@
 				58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */,
 				58F171A527E45A93008D380E /* WiggleModifier.swift */,
 				58D90A9727E70DA4008C4E1C /* ViewTransition.swift */,
-				58DEE5AB2867390400A04CA2 /* BreathWorkAnimation.swift */,
 				8871EF992868D5BE00E28616 /* LikeButton.swift */,
 			);
 			path = "Animation&Tab";
@@ -1151,6 +1150,7 @@
 		FEC5B008267D2ABE00BC8D8C /* Play */ = {
 			isa = PBXGroup;
 			children = (
+				58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */,
 				FEC5B009267D2ACF00BC8D8C /* Play.swift */,
 				FEDC430F269A553B008E0318 /* Finished.swift */,
 				FE04A804279CD77400799A07 /* SaveProgressModal.swift */,
@@ -1643,7 +1643,7 @@
 				FEBF22C826D98E87002572E2 /* Numbers+Extension.swift in Sources */,
 				FEB6AF96265D95F500224BFD /* AppDelegate.swift in Sources */,
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
-				58DEE5AC2867390400A04CA2 /* BreathWorkAnimation.swift in Sources */,
+				58DEE5AC2867390400A04CA2 /* BreathworkPlay.swift in Sources */,
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				589DCB0628732975005A8D7E /* StartDayView.swift in Sources */,

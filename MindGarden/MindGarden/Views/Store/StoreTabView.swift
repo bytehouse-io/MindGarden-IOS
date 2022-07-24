@@ -19,6 +19,8 @@ struct StoreTab: View {
                     .fill(.white.opacity(0.4))
                     .frame(width:UIScreen.screenWidth*0.27)
                     .padding(.vertical,3)
+                    .addBorder(.black, width: 1.5, cornerRadius: 16)
+                    .offset(x: selectedTab == .realTree ? 2 : -2)
                 if selectedTab == .badge { Spacer() }
                 if selectedTab == .store { Spacer() }
             }.padding(.horizontal,3)
@@ -60,8 +62,9 @@ struct StoreTab: View {
         .background(
             Clr.brightGreen
             .cornerRadius(18)
-                .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
         )
+        .addBorder(.black, width: 1.5, cornerRadius: 16)
+        .shadow(color: Clr.blackShadow.opacity(0.4), radius: 2, x: 2, y: 2)
     }
 }
 

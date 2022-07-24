@@ -128,6 +128,7 @@ struct FirebaseAPI {
                         case "sleep": medCateogry = .sleep
                         case "confidence": medCateogry = .confidence
                         case "growth": medCateogry = .growth
+                        case "sadness": medCateogry = .sadness
                         default: break
                         }
                     }

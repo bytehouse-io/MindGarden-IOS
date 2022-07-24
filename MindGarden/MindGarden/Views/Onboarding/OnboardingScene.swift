@@ -10,7 +10,6 @@ import Paywall
 import OneSignal
 import Purchases
 import Amplitude
-import AppTrackingTransparency
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -120,7 +119,7 @@ struct OnboardingScene: View {
                                 .overlay(
                                     Text("Start Growing 👉")
                                         .foregroundColor(Clr.darkgreen)
-                                        .font(Font.fredoka(.semiBold, size: 20))
+                                        .font(Font.fredoka(.bold, size: 20))
                                 ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
                         }.frame(width:UIScreen.screenWidth*0.8, height: 50)
                             .padding()
@@ -151,19 +150,6 @@ struct OnboardingScene: View {
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
             .onAppear {
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    DispatchQueue.main.async {
-                        switch status {
-                        case .authorized:
-                            Analytics.shared.log(event: .onboarding_tapped_allowed_att)
-                        case .denied:
-                            Analytics.shared.log(event: .onboarding_tapped_denied_att)
-                        default:
-                            Analytics.shared.log(event: .onboarding_tapped_denied_att)
-
-                        }
-                    }
-                }
                 if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
                     let identify = AMPIdentify()
                         .set("abTest1.53", value: NSNumber(value: num))

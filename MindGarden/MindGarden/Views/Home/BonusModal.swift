@@ -35,11 +35,15 @@ struct BonusModal: View {
                                     shown = false
                                 }
                             } label: {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.gray.opacity(0.5))
-                                    .font(.system(size: 22))
-                                    .padding()
+                                ZStack {
+                                    Circle()
+                                        .fill(Clr.darkWhite)
+                                    Image(systemName: "xmark")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(Color.gray)
+                                }.frame(width: 30)
                             }.position(x: 30, y: 35)
+                            .buttonStyle(NeoPress())
                             HStack(alignment: .center) {
                                 Text("Daily Bonus")
                                     .font(Font.fredoka(.bold, size: 30))

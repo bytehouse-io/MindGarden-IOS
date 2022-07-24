@@ -459,12 +459,15 @@ struct ContentView: View {
         withAnimation(.easeOut(duration: 0.2)) {
             showItems = false
         }
+        
         withAnimation(.easeOut(duration: 0.14).delay(0.1)) {
             showPopUpOption = false
         }
+        
         withAnimation(.easeOut(duration: 0.08).delay(0.24)) {
             PopUpIn = false
         }
+        
         withAnimation(.easeOut(duration: 0.14).delay(0.31)) {
             showPopUp = false
             completion()
@@ -512,7 +515,7 @@ struct ContentView: View {
                     Analytics.shared.log(event: .onboarding_finished_gratitude)
                 }
                 
-                withAnimation {
+                withAnimation(.easeOut(duration: 0.4)) {
                     ///Ashvin : Hide popup with animation
                     viewRouter.currentPage = .journal
                 }

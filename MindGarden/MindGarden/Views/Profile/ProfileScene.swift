@@ -404,9 +404,10 @@ struct ProfileScene: View {
                                                         .minimumScaleFactor(0.05)
                                                 }
                                             }
-                                            .frame(width: abs(width - 100), height: 50, alignment: .center)
+                                            .frame(width:width, height: 50, alignment: .center)
                                             .padding()
                                             .padding(.bottom, 20)
+                                            .padding(.horizontal, 32)
                                         }
                                     }
                                     Spacer()

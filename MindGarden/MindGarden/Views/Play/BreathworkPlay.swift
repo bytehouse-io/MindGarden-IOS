@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AVKit
+import MediaPlayer
 import AudioToolbox
 
 struct BreathworkPlay : View {
@@ -22,6 +24,15 @@ struct BreathworkPlay : View {
     @State private var totalTime = 0.0
     @State private var progress = 0.0
     
+    // Background Settings
+    @State var backgroundPlayer : AVAudioPlayer!
+    @State var del = AVdelegate()
+    @State var showNatureModal = false
+    @State var selectedSound: Sound? = .noSound
+    @State var sliderData = SliderData()
+    @State var bellSlider = SliderData()
+    @State var data : Data = .init(count: 0)
+
     let panelHideDelay = 2.0
     
     let images = [Img.seed,Img.sunflower1,Img.sunflower2,Img.sunflower3]
@@ -40,23 +51,25 @@ struct BreathworkPlay : View {
                             .renderingMode(.template)
                             .foregroundColor(Clr.darkWhite)
                             .aspectRatio(contentMode: .fit)
-                            .frame(height:30)
+                            .frame(height:40)
                             .background(Circle().foregroundColor(Clr.black2).padding(1))
                             .darkShadow()
                     }
-                    Spacer()
                     Spacer()
                     HStack{
                         sound
                         heart
                     }
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 50)
+                .frame(width: UIScreen.screenWidth * 0.85)
+                .padding()
+                .opacity(showPanel ? 1 : 0)
+                .disabled(!showPanel)
                 ZStack {
                     Circle()
-                        .frame(width:size)
                         .foregroundColor(Clr.brightGreen)
+                        .addBorder(.black, width: 2, cornerRadius: size/2)
+                        .frame(width:size, height: size)
                     Circle()
                         .fill(Clr.yellow)
                         .frame(width:size/2)
@@ -65,8 +78,9 @@ struct BreathworkPlay : View {
                         
                     ZStack {
                         Circle()
-                            .frame(width:size/2)
                             .foregroundColor(Clr.darkgreen)
+                            .addBorder(.black, width: 2, cornerRadius: size/2)
+                            .frame(width:size/2, height: size/2)
                         VStack {
                             Spacer()
                             Text(title)
@@ -101,37 +115,54 @@ struct BreathworkPlay : View {
                                     .frame(width:geometry.size.width*progress, height:15)
                                     .cornerRadius(25,corners: [.bottomLeft, .bottomRight])
                             }
-                        }
-                        .frame(height:15)
+                        }.frame(height:15)
                     }
                     .padding(.top,150)
                     VStack {
-                        Button {}
-                        label : {
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                // TODO when paused
+                            }
+                        } label : {
                             ZStack {
-                                Rectangle()
+                                Capsule()
                                     .fill(Clr.yellow)
-                                    .addBorder(.black, width: 1.5, cornerRadius: 14)
-                                Text("Pause")
-                                    .font(Font.fredoka(.medium, size: 20))
-                                    .foregroundColor(Clr.black2)
+                                    .overlay(
+                                        Text("Pause")
+                                            .font(Font.fredoka(.medium, size: 20))
+                                            .foregroundColor(Clr.black2)
+                                    ).addBorder(.black, width: 1, cornerRadius: 30)
+                               
                             }
                         }
-                        .frame(height:40)
-                        Button {}
-                        label : {
+                        .frame(height:50)
+                        .buttonStyle(ScalePress())
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                // TODO when paused
+                            }
+                        } label: {
                             Text("I'm Done")
                                 .font(Font.fredoka(.medium, size: 20))
                                 .foregroundColor(Clr.black2)
-                        }
-                        .frame(height:40)
+                                .underline()
+                        }.padding(.top)
                     }
-                    .padding(.top,30)
+                    .padding(.vertical)
+                    .disabled(!showPanel)
                     .opacity(showPanel ? 1.0 : 0.0)
-                    Spacer()
                 }.padding(.horizontal,30)
-                Spacer()
             }
+            if showNatureModal  {
+                Color.black
+                    .opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+            }
+            NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider)
+                .offset(y: showNatureModal ? 0 : UIScreen.screenHeight)
+                .animation(.default)
         }
         .onAppear() {
             totalTime = Double(breathWork.duration)
@@ -198,9 +229,23 @@ struct BreathworkPlay : View {
         }
     }
     
+    func changeSound() {
+        backgroundPlayer.stop()
+       let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
+        backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+        backgroundPlayer.delegate = self.del
+        backgroundPlayer.numberOfLoops = -1
+        backgroundPlayer.volume = sliderData.sliderValue
+       self.data = .init(count: 0)
+        backgroundPlayer.prepareToPlay()
+       self.backgroundPlayer.play()
+       self.sliderData.setPlayer(player: backgroundPlayer!)
+   }
+    
+    //MARK: - nav
     var backArrow: some View {
         Image(systemName: "arrow.backward")
-            .font(.system(size: 24))
+            .font(.system(size: 32))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
             }
@@ -246,21 +291,28 @@ struct BreathworkPlay : View {
         }
     }
     var sound: some View {
-        Image(systemName: "gearshape")
-            .font(.system(size: 24))
+        Image(systemName: "gearshape.fill")
+            .font(.system(size: 32))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
+                withAnimation {
+                    showNatureModal = true
+                }
             }
     }
     var heart: some View {
-        LikeButton(isLiked: false, size:25.0) {
+        LikeButton(isLiked: false, size:32) {
         }
     }
     
     private func toggleControllPanel() {
-        showPanel = true
+        withAnimation {
+            showPanel = true
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + panelHideDelay) {
-            showPanel = false
+            withAnimation {
+                showPanel = false
+            }
         }
     }
 }

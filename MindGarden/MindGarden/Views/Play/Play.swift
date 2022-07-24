@@ -28,11 +28,12 @@ struct Play: View {
     @State var finish = false
     @State var showNatureModal = false
     @State var selectedSound: Sound? = .noSound
+    @State var sliderData = SliderData()
+    @State var bellSlider = SliderData()
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
-    @State var sliderData = SliderData()
-    @State var bellSlider = SliderData()
+
     @State var showTutorialModal = false
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
@@ -569,144 +570,6 @@ struct Play: View {
         }
     }
 
-    //MARK: - nature modal
-    struct NatureModal: View {
-        @State private var volume: Double = 0.0
-        @Binding var show: Bool
-        @Binding var sound: Sound?
-        var change: () -> Void
-        var player: AVAudioPlayer?
-        @Binding var sliderData: SliderData
-        @Binding var bellSlider: SliderData
-
-        var  body: some View {
-            GeometryReader { g in
-                VStack {
-                    Spacer()
-                    HStack(alignment: .center) {
-                        Spacer()
-                        VStack(alignment: .center, spacing: 15) {
-                            Text("Ambient Sounds")
-                                .foregroundColor(Clr.black1)
-                                .font(Font.fredoka(.bold, size: 24))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.05)
-                                .multilineTextAlignment(.center)
-                                .padding(.bottom)
-                            HStack {
-                                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            }
-                            HStack {
-                                SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            }
-                            HStack {
-                                SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            }
-                            GeometryReader { geometry in
-                                Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
-                                    .accentColor(Clr.darkgreen)
-                            }.frame(height: 30)
-                                .padding(.horizontal, 30)
-                                .padding(.top)
-                            Text("Bell Volume")
-                                .foregroundColor(Clr.black1)
-                                .font(Font.fredoka(.bold, size: 24))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.05)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                            GeometryReader { geometry in
-                                Slider(value: self.$bellSlider.sliderValue, in: 0.0...1.0, step: 0.01)
-                                    .accentColor(Clr.darkgreen)
-                            }.frame(height: 30)
-                                .padding(.horizontal, 30)
-                                .padding(.top, 10)
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    show = false
-                                }
-                                UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
-                                UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
-                            } label: {
-                                Text("Done")
-                                    .font(Font.fredoka(.bold, size: 18))
-                                    .foregroundColor(Color.black)
-                                    .frame(width: g.size.width/3, height: 35)
-                                    .background(Clr.yellow)
-                                    .clipShape(Capsule())
-                                    .padding(.top, 25)
-                            }
-                            .neoShadow()
-                            .animation(.default)
-
-                            
-                        }.frame(width: g.size.width * 0.85, height: g.size.height * 0.65, alignment: .center)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(20)
-                        Spacer()
-                    }
-                    Spacer()
-                }
-            }
-        }
-    }
-
-    struct SoundButton: View {
-        var type: Sound?
-        @Binding var selectedType: Sound?
-        var change: () -> Void
-        var player: AVAudioPlayer?
-        @Binding var sliderData: SliderData
-
-        var body: some View {
-            Button {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                withAnimation {
-                    if selectedType == type {
-                        Analytics.shared.log(event: .play_tapped_sound_noSound)
-                        selectedType = .noSound
-                        player?.pause()
-                    } else {
-                        Analytics.shared.log(event: AnalyticEvent.getSound(sound: type!))
-                        selectedType = type
-                        change()
-                    }
-                    UserDefaults.standard.setValue(selectedType?.title, forKey: "sound")
-                }
-            } label: {
-                ZStack {
-                    Rectangle()
-                        .fill(selectedType == type ? Clr.darkgreen : Color.gray.opacity(0.5))
-                        .aspectRatio(1.0, contentMode: .fit)
-                        .cornerRadius(12)
-                    type?.img
-                        .resizable()
-                        .renderingMode(.template)
-                        .padding(type == .fourThirtyTwo ? 0 :  type == .flute ? 5 : 10)
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.white)
-//                    Rectangle()
-//                        .fill(Color.white)
-//                        .frame(width: type != selectedType ? 40 : 0, height: 3)
-//                        .opacity(0.9)
-//                        .rotationEffect(.degrees(-45))
-                }.frame(width: 50, height: 50)
-            }.buttonStyle(NeumorphicPress())
-        }
-    }
-
 
      func changeSound() {
          backgroundPlayer.stop()
@@ -741,6 +604,158 @@ final class SliderData: ObservableObject {
 
     func setPlayer(player: AVAudioPlayer) {
         self.player = player
+    }
+}
+struct SoundButton: View {
+    var type: Sound?
+    @Binding var selectedType: Sound?
+    var change: () -> Void
+    var player: AVAudioPlayer?
+    @Binding var sliderData: SliderData
+
+    var body: some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation {
+                if selectedType == type {
+                    Analytics.shared.log(event: .play_tapped_sound_noSound)
+                    selectedType = .noSound
+                    player?.pause()
+                } else {
+                    Analytics.shared.log(event: AnalyticEvent.getSound(sound: type!))
+                    selectedType = type
+                    change()
+                }
+                UserDefaults.standard.setValue(selectedType?.title, forKey: "sound")
+            }
+        } label: {
+            ZStack {
+                Rectangle()
+                    .fill(selectedType == type ? Clr.darkgreen : Color.gray.opacity(0.5))
+                    .aspectRatio(1.0, contentMode: .fit)
+                    .cornerRadius(12)
+                type?.img
+                    .resizable()
+                    .renderingMode(.template)
+                    .padding(type == .fourThirtyTwo ? 0 :  type == .flute ? 5 : 10)
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(.white)
+//                    Rectangle()
+//                        .fill(Color.white)
+//                        .frame(width: type != selectedType ? 40 : 0, height: 3)
+//                        .opacity(0.9)
+//                        .rotationEffect(.degrees(-45))
+            }.frame(width: 50, height: 50)
+        }.buttonStyle(NeumorphicPress())
+    }
+}
+
+//MARK: - nature modal
+struct NatureModal: View {
+    @State private var volume: Double = 0.0
+    @Binding var show: Bool
+    @Binding var sound: Sound?
+    var change: () -> Void
+    var player: AVAudioPlayer?
+    @Binding var sliderData: SliderData
+    @Binding var bellSlider: SliderData
+
+    var  body: some View {
+        GeometryReader { g in
+            VStack {
+                Spacer()
+                HStack(alignment: .center) {
+                    Spacer()
+                    VStack(alignment: .center, spacing: 15) {
+                        HStack {
+                            ZStack{}.frame(width: 30, height: 30)
+                            Spacer()
+                            Text("Ambient Sounds")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.bold, size: 20))
+                                .multilineTextAlignment(.center)
+                            Spacer()
+                            ZStack {
+                                Circle()
+                                    .fill(Clr.darkWhite)
+                                    .neoShadow()
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(Color.gray)
+                                    .onTapGesture {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation { show = false}
+                                    }
+                            }.frame(width: 30, height: 30)
+                        }.padding(20)
+                        HStack {
+                            SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                        }
+                        HStack {
+                            SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                        }
+                        HStack {
+                            SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                        }
+                        GeometryReader { geometry in
+                            Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
+                                .accentColor(Clr.darkgreen)
+                        }.frame(height: 30)
+                            .padding(.horizontal, 30)
+                            .padding(.top)
+                        Text("Bell Volume")
+                            .foregroundColor(Clr.black2)
+                            .font(Font.fredoka(.semiBold, size: 20))
+                            .multilineTextAlignment(.center)
+                            .padding(.top)
+                        GeometryReader { geometry in
+                            Slider(value: self.$bellSlider.sliderValue, in: 0.0...1.0, step: 0.01)
+                                .accentColor(Clr.darkgreen)
+                        }.frame(height: 30)
+                            .padding(.horizontal, 30)
+                            .padding(.top, 10)
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                show = false
+                            }
+                            UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
+                            UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
+                        } label: {
+                            ZStack {
+                                Capsule()
+                                    .fill(Clr.yellow)
+                                    .overlay(
+                                        Text("Save")
+                                            .font(Font.fredoka(.bold, size: 20))
+                                            .foregroundColor(Clr.black2)
+                                            .background(Clr.yellow)
+                                    ).addBorder(.black, width: 1, cornerRadius: 24)
+                            }.frame(height: 40)
+                            .padding(15)
+                        }
+                        .neoShadow()
+                        .animation(.default)
+                        .padding(15)                        
+                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.7, alignment: .center)
+                    .background(Clr.darkWhite)
+                    .cornerRadius(20)
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
     }
 }
 
