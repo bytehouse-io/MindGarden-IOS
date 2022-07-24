@@ -165,10 +165,56 @@ struct StartDayView: View {
                     }.buttonStyle(NeoPress() )
                   
                     ZStack {
-                        Rectangle().fill(Clr.yellow)
-                            .frame(height:150)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                    }.frame(width: UIScreen.screenWidth * 0.775)
+                        let titles = ["30 Sec Meditation","30 Sec Meditation"]
+                        VStack(spacing:5) {
+                            HStack {
+                                ForEach(0..<titles.count) { idx in
+                                    HomeMeditationRow(title: titles[idx])
+                                        .padding(.vertical,5)
+                                }
+                                Button {
+                                } label: {
+                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)
+                                }
+                                .padding(.vertical,5)
+                                .buttonStyle(BonusPress())
+                                .frame(width:30)
+                                .overlay(
+                                    HStack {
+                                        Text("Discover")
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.fredoka(.semiBold, size: 16))
+                                            .lineLimit(1)
+                                            .frame(width:75)
+                                        Image(systemName: "arrow.up")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width:12)
+                                    }
+                                        .rotationEffect(Angle(degrees: 90))
+                                )
+                            }
+                            HStack {
+                                Text("Breathwork")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.medium, size: 16))
+                                    .lineLimit(1)
+                                    .frame(maxWidth:.infinity)
+                                Text("OR")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.semiBold, size: 18))
+                                    .lineLimit(1)
+                                Text("Meditation")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.medium, size: 16))
+                                    .lineLimit(1)
+                                    .frame(maxWidth:.infinity)
+                                Spacer()
+                                    .frame(width:30)
+                            }
+                        }
+                    }
+                    .frame(width: UIScreen.screenWidth * 0.775)
                 }
             }
         }
@@ -275,6 +321,76 @@ struct StartDayView: View {
                 .padding(10)
                 .padding(.vertical, 10)
             }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+        }
+    }
+}
+
+
+struct HomeMeditationRow: View {
+    
+    @State var title:String
+    
+    var body: some View {
+        ZStack(alignment:.top) {
+            Rectangle()
+                .fill(Clr.darkWhite)
+                .padding(.vertical,10)
+                .addBorder(Color.black, width: 1.5, cornerRadius: 14)
+                .background(Clr.darkWhite.cornerRadius(14).neoShadow())
+                
+            VStack(spacing:0) {
+                HStack {
+                    Text(title)
+                        .font(Font.fredoka(.medium, size: 16))
+                        .foregroundColor(Clr.black2)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                
+                HStack(spacing:0) {
+                    VStack(alignment:.leading,spacing:3) {
+                        HStack {
+                            Image(systemName: "speaker.wave.3.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:8)
+                                .padding(.vertical,0)
+                            Text("Meditation")
+                                .font(Font.fredoka(.medium, size: 10))
+                                .foregroundColor(Clr.black2.opacity(0.5))
+                                .padding(.vertical,0)
+                        }.padding(.vertical,0)
+                        HStack {
+                            Image(systemName: "timer")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:8)
+                                .padding(.vertical,0)
+                            Text("10 mins")
+                                .font(Font.fredoka(.medium, size: 10))
+                                .foregroundColor(Clr.black2.opacity(0.5))
+                                .padding(.vertical,0)
+                        }.padding(.vertical,0)
+                        HStack {
+                            Image(systemName: "person.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:8)
+                                .padding(.vertical,0)
+                            Text("Bijan")
+                                .font(Font.fredoka(.medium, size: 10))
+                                .foregroundColor(Clr.black2.opacity(0.5))
+                                .padding(.vertical,0)
+                        }.padding(.vertical,0)
+                    }
+                    Img.happySunflower
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 50)
+                }
+                
+            }
+            .padding(10)
         }
     }
 }
