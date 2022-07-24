@@ -121,7 +121,7 @@ struct Home: View {
             }
         }
 //        .fullScreenCover(isPresented: .constant(true)) {
-//            RecommendationsView()
+//            NextSteps()
 //        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
         { _ in

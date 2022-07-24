@@ -62,7 +62,7 @@ public enum Clr {
   ///
   /// **Universal - Dark**: `#898989` with alpha: `1.000`
   public static let lightTextGray = Color("lightTextGray")
-  /// **Universal - Any**: `#000000` with alpha: `1.000`
+  /// **Universal - Any**: `#ADC5F6` with alpha: `1.000`
   public static let bad = Color("bad")
   /// **Universal - Any**: `#F7D4CB` with alpha: `1.000`
   public static let good = Color("good")

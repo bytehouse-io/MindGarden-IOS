@@ -88,7 +88,7 @@ struct StartDayView: View {
                     .frame(width: UIScreen.screenWidth * 0.775)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                     .padding(.horizontal, 12)
-                    .neoShadow()
+                    .shadow(color: .black.opacity(0.25), radius: 1, x:  3 , y: 3)
                     .opacity(isDailyMood ? 1 : 0.5)
                     
                     Button {
@@ -162,7 +162,7 @@ struct StartDayView: View {
                         }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
                             .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                             .padding(.horizontal, 12)
-                    }.buttonStyle(NeoPress() )
+                    }.buttonStyle(ScalePress() )
                   
                     ZStack {
                         Rectangle().fill(Clr.yellow)
