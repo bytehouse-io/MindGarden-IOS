@@ -9,12 +9,13 @@ import SwiftUI
 
 struct HomeTabView: View {
     @Binding var selectedOption: PlusMenuType
-    
     @ObservedObject var viewRouter: ViewRouter
     @Binding var selectedTab: TabType
     @Binding var showPopup : Bool
     @State var scale : CGFloat = 0.01
     @Binding var isOnboarding: Bool
+    @State private var playEntryAnimation = false
+
     var body: some View {
         ZStack(alignment: .bottom) {
             

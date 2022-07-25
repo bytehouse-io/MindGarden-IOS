@@ -236,7 +236,7 @@ struct Garden: View {
                                 .zIndex(-1000)
                                 
                                 HStack {
-                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) Garden \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
+                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
                                         .font(Font.fredoka(.regular, size: 20))
                                         .foregroundColor(Clr.black2)
                                         .padding(.leading)

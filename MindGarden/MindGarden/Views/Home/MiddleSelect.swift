@@ -138,7 +138,7 @@ struct MiddleSelect: View {
                                     }
                                     
                                 } label: {
-                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[0].img, title: model.recommendedMeds[0].title, id: model.recommendedMeds[0].id, instructor: model.recommendedMeds[0].instructor, duration: model.recommendedMeds[0].duration, imgURL: model.recommendedMeds[0].imgURL,isNew: model.recommendedMeds[0].isNew)
+                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[0])
                                 }.buttonStyle(NeumorphicPress())
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -158,8 +158,8 @@ struct MiddleSelect: View {
                                         }
                                     }
                                 } label: {
-                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, img: model.recommendedMeds[1].img, title: model.recommendedMeds[1].title, id: model.recommendedMeds[1].id, instructor: model.recommendedMeds[1].instructor, duration: model.recommendedMeds[1].duration, imgURL: model.recommendedMeds[1].imgURL, isNew: model.recommendedMeds[1].isNew)
-                                }.buttonStyle(NeumorphicPress())
+                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[1])
+                                }
                             }
                             .frame(width: g.size.width - 60)
                             .padding([.vertical, .horizontal], 15)

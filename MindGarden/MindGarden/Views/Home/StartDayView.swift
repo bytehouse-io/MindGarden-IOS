@@ -22,9 +22,8 @@ struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    @Binding var activeSheet: Sheet?
     @State private var isDailyMood = true
-    
+    @State private var playEntryAnimation = false
     @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
                                           StreakItem(title: "M", streak: false),
                                           StreakItem(title: "T", streak: false),
@@ -41,6 +40,8 @@ struct StartDayView: View {
                                              DailyMoodItem(title: "F", dailyMood: Img.emptyMood),
                                              DailyMoodItem(title: "S", dailyMood: Img.emptyMood)]
     var body: some View {
+        let width = UIScreen.screenWidth
+        let height = UIScreen.screenHeight
         VStack {
             HStack {
                 Text("Start your day")
@@ -49,6 +50,7 @@ struct StartDayView: View {
                     .padding(.top,5)
                 Spacer()
             }
+            
             HStack {
                 VStack {
                     Circle()
@@ -90,6 +92,9 @@ struct StartDayView: View {
                     .padding(.horizontal, 12)
                     .shadow(color: .black.opacity(0.25), radius: 1, x:  3 , y: 3)
                     .opacity(isDailyMood ? 1 : 0.5)
+                    .offset(y: playEntryAnimation ? 0 : 100)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(0.3), value: playEntryAnimation)
                     
                     Button {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -162,18 +167,76 @@ struct StartDayView: View {
                         }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
                             .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                             .padding(.horizontal, 12)
+                            .offset(y: playEntryAnimation ? 0 : 100)
+                            .opacity(playEntryAnimation ? 1 : 0)
+                            .animation(.spring().delay(0.275), value: playEntryAnimation)
                     }.buttonStyle(ScalePress() )
                   
                     ZStack {
-                        Rectangle().fill(Clr.yellow)
-                            .frame(height:150)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                    }.frame(width: UIScreen.screenWidth * 0.775)
+                        let titles = ["30 Sec Meditation","30 Sec Meditation"]
+                        VStack(spacing:5) {
+                            HStack(spacing: 15) {
+                                ForEach(0..<titles.count) { idx in
+                                    Button {
+                                        
+                                    } label: {
+                                        HomeSquare(width: width - 50, height: height * 0.75, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0])
+                                            .offset(y: playEntryAnimation ? 0 : 100)
+                                            .opacity(playEntryAnimation ? 1 : 0)
+                                            .animation(.spring().delay(0.3), value: playEntryAnimation)
+                                    }.buttonStyle(ScalePress())
+                                }
+//                                Button {
+//                                } label: {
+//                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)
+//                                }
+//                                .padding(.vertical,5)
+//                                .buttonStyle(BonusPress())
+//                                .frame(width:30)
+//                                .overlay(
+//                                    HStack {
+//                                        Text("Discover")
+//                                            .foregroundColor(Clr.black2)
+//                                            .font(Font.fredoka(.semiBold, size: 16))
+//                                            .lineLimit(1)
+//                                            .frame(width:75)
+//                                        Image(systemName: "arrow.up")
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .frame(width:12)
+//                                    }
+//                                        .rotationEffect(Angle(degrees: 90))
+//                                )
+                            }
+                            HStack {
+                                Spacer()
+                                Text("Breathwork")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.regular, size: 16))
+                                Spacer()
+                                Text("OR")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.medium, size: 16))
+                                Spacer()
+                                Text("Meditation")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.regular, size: 16))
+                                Spacer()
+                            }.offset(x: -5)
+                        }
+                    }
+                    .frame(width: UIScreen.screenWidth * 0.775)
+                    .offset(y: playEntryAnimation ? 0 : 100)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(0.3), value: playEntryAnimation)
                 }
             }
         }
         .padding(.horizontal, 26)
         .onAppear() {
+            withAnimation {
+                playEntryAnimation = true
+            }
             if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
                 if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
                     isDailyMood = false
@@ -275,6 +338,77 @@ struct StartDayView: View {
                 .padding(10)
                 .padding(.vertical, 10)
             }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+        }
+    }
+}
+
+
+struct HomeMeditationRow: View {
+    
+    @State var title:String
+    
+    var body: some View {
+        ZStack(alignment:.top) {
+            Rectangle()
+                .fill(Clr.darkWhite)
+                .padding(.vertical,10)
+                .addBorder(Color.black, width: 1.5, cornerRadius: 14)
+                .background(Clr.darkWhite.cornerRadius(14).neoShadow())
+                
+            VStack(spacing:0) {
+                HStack {
+                    Text(title)
+                        .font(Font.fredoka(.medium, size: 16))
+                        .foregroundColor(Clr.black2)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                
+                HStack(spacing:0) {
+                    VStack(alignment:.leading,spacing:3) {
+                        HStack {
+                            Image(systemName: "speaker.wave.3.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:8)
+                                .padding(.vertical,0)
+                            Text("Meditation")
+                                .font(
+                                    .fredoka(.medium, size: 10))
+                                .foregroundColor(Clr.black2.opacity(0.5))
+                                .padding(.vertical,0)
+                        }.padding(.vertical,0)
+                        HStack {
+                            Image(systemName: "timer")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:8)
+                                .padding(.vertical,0)
+                            Text("10 mins")
+                                .font(Font.fredoka(.medium, size: 10))
+                                .foregroundColor(Clr.black2.opacity(0.5))
+                                .padding(.vertical,0)
+                        }.padding(.vertical,0)
+                        HStack {
+                            Image(systemName: "person.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:8)
+                                .padding(.vertical,0)
+                            Text("Bijan")
+                                .font(Font.fredoka(.medium, size: 10))
+                                .foregroundColor(Clr.black2.opacity(0.5))
+                                .padding(.vertical,0)
+                        }.padding(.vertical,0)
+                    }
+                    Img.happySunflower
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 50)
+                }
+                
+            }
+            .padding(10)
         }
     }
 }

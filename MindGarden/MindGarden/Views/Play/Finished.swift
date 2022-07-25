@@ -180,7 +180,14 @@ struct Finished: View {
                             HStack(alignment: .center) {
                                 Spacer()
                                 VStack(alignment: .center, spacing: 10) {
-
+                                    if !UserDefaults.standard.bool(forKey: "isNotifOn") && !isOnboarding {
+                                        ReminderView(playAnim: .constant(false))
+                                            .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
+                                            .padding(.top,50)
+                                            .padding()
+                                            .offset(y: !isOnboarding ? -25 : -100)
+                                        Spacer()
+                                    }
                                     VStack {
                                         Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
                                             .font(Font.fredoka(.regular, size: 20))
