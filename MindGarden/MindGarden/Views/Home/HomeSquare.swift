@@ -13,15 +13,11 @@ import SwiftUI
 
 struct HomeSquare: View {
     @EnvironmentObject var viewRouter: ViewRouter
-    
+    @State private var isSmaller = false
     let width, height: CGFloat
-    let img: Image
-    let title: String
-    let id: Int
-    let instructor: String
-    let duration: Float
-    let imgURL: String
-    let isNew: Bool
+    let meditation: Meditation
+
+   
     var body: some View {
         ZStack() {
             ZStack {
@@ -34,7 +30,7 @@ struct HomeSquare: View {
                         HStack(alignment: .center) {
                             VStack(alignment: .leading, spacing: -2) {
                                 Spacer()
-                                Text(title)
+                                Text(meditation.title)
                                     .frame(width: width * 0.225, alignment: .leading)
                                     .font(Font.fredoka(.semiBold, size: 16))
                                     .foregroundColor(Clr.black2)
@@ -46,7 +42,9 @@ struct HomeSquare: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
                                     Text("Meditation")
-                                        .font(Font.fredoka(.regular, size: 12))
+                                        .font(.caption)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
                                 }
                                 .padding(.top, 10)
                                 .foregroundColor(Clr.lightTextGray)
@@ -55,7 +53,7 @@ struct HomeSquare: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
-                                    Text(Int(duration) == 0 ? "Course" : (Int(duration/60) == 0 ? "1/2" : "\(Int(duration/60))") + " mins")
+                                    Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
                                         .padding(.leading, 2)
                                         .font(.caption)
                                         .lineLimit(1)
@@ -68,7 +66,7 @@ struct HomeSquare: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
-                                    Text("\(instructor)")
+                                    Text("\(meditation.instructor)")
                                         .padding(.leading, 2)
                                         .font(.caption)
                                         .lineLimit(1)
@@ -79,22 +77,22 @@ struct HomeSquare: View {
                                 Spacer()
                             }.padding(.leading, 25)
                                 .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
-                            if imgURL != "" {
-                                UrlImageView(urlString: imgURL)
+                            if meditation.imgURL != "" {
+                                UrlImageView(urlString: meditation.imgURL)
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
+                                    .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
                                     .padding(.leading, -16)
-                                    .padding(.top, 20)
+                                    .padding(.top, isSmaller ? 30 : 20)
                             } else {
-                                img
+                                meditation.img
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.17, height: height * 0.14, alignment: .center)
+                                    .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
                                     .padding(.leading, -16)
-                                    .padding(.top, 20)
+                                    .padding(.top, isSmaller ? 30 : 20)
                             }
                         }.offset(x: -4)
-                if isNew {
+                if meditation.isNew {
                     Capsule()
                         .fill(Clr.redGradientBottom)
                         .frame(width: 45, height: 20)
@@ -108,13 +106,17 @@ struct HomeSquare: View {
                         .position(x: width * (viewRouter.currentPage == .learn || searchScreen ? 0.385 : 0.34), y: viewRouter.currentPage == .learn || searchScreen ? 20 : 17)
                         .opacity(0.8)
                 }
-            }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id)) ? 0.45 : 1)
-            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(id) {
+            }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id)) ? 0.45 : 1)
+            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id) {
                 Img.lockIcon
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
                     .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .learn || searchScreen ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .learn || searchScreen ? 0 : 10))
+            }
+        }.onAppear {
+            if width != UIScreen.screenWidth {
+                isSmaller = true
             }
         }
         
@@ -123,6 +125,6 @@ struct HomeSquare: View {
 
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
-        HomeSquare(width: 425, height: 800, img: Img.chatBubble, title: "Open Ended Meditation", id: 0, instructor: "None", duration: 15, imgURL: "", isNew: false)
+        HomeSquare(width: 425, height: 800, meditation: Meditation.allMeditations[0])
     }
 }

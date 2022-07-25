@@ -96,14 +96,16 @@ struct CategoriesScene: View {
                     ScrollView(showsIndicators: false) {
                             LazyVGrid(columns: gridItemLayout, content: {
                                 ForEach(meditations, id: \.self) { item in
-                                    HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , img: item.img, title: item.title, id: item.id, instructor: item.instructor, duration: item.duration, imgURL: item.imgURL, isNew: item.isNew)
-                                        .onTapGesture {
-                                            withAnimation {
-                                                didSelectcategory(item: item)
-                                            }
+                                    Button {
+                                        Analytics.shared.log(event: .categories_tapped_square)
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            didSelectcategory(item: item)
                                         }
-                                        .neoShadow()
-                                        .padding(.vertical, 8)
+                                    } label: {
+                                        HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: item)
+                                            .padding(.vertical, 8)
+                                    }.buttonStyle(NeoPress())
                                 }
                             })
                         VStack {

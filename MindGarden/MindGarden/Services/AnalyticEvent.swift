@@ -305,6 +305,7 @@ enum AnalyticEvent {
     case categories_tapped_confidence //
     case categories_tapped_request //
     case categories_tapped_locked_meditation //
+    case categories_tapped_square //
     
     //MARK: - Breathwrk
     case breathwrk_middle_favorited
@@ -736,6 +737,7 @@ extension AnalyticEvent {
         case .profile_tapped_garden_date_on: return "profile_tapped_garden_date_on"
         case .profile_tapped_garden_date_off: return "profile_tapped_garden_date_off"
         case .screen_load_categories: return "screen_load_categories"
+        case .categories_tapped_square: return "categories_tapped_square"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
         case .categories_tapped_all: return "categories_tapped_all"
         case .categories_tapped_courses: return "categories_tapped_courses"

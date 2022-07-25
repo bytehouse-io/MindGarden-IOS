@@ -22,9 +22,8 @@ struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    @Binding var activeSheet: Sheet?
     @State private var isDailyMood = true
-    
+    @State private var playEntryAnimation = false
     @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
                                           StreakItem(title: "M", streak: false),
                                           StreakItem(title: "T", streak: false),
@@ -41,6 +40,8 @@ struct StartDayView: View {
                                              DailyMoodItem(title: "F", dailyMood: Img.emptyMood),
                                              DailyMoodItem(title: "S", dailyMood: Img.emptyMood)]
     var body: some View {
+        let width = UIScreen.screenWidth
+        let height = UIScreen.screenHeight
         VStack {
             HStack {
                 Text("Start your day")
@@ -49,6 +50,7 @@ struct StartDayView: View {
                     .padding(.top,5)
                 Spacer()
             }
+            
             HStack {
                 VStack {
                     Circle()
@@ -88,8 +90,11 @@ struct StartDayView: View {
                     .frame(width: UIScreen.screenWidth * 0.775)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                     .padding(.horizontal, 12)
-                    .neoShadow()
+                    .shadow(color: .black.opacity(0.25), radius: 1, x:  3 , y: 3)
                     .opacity(isDailyMood ? 1 : 0.5)
+                    .offset(y: playEntryAnimation ? 0 : 100)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(0.3), value: playEntryAnimation)
                     
                     Button {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -162,64 +167,76 @@ struct StartDayView: View {
                         }.frame(width: UIScreen.screenWidth * 0.775, height: 175)
                             .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                             .padding(.horizontal, 12)
-                    }.buttonStyle(NeoPress() )
+                            .offset(y: playEntryAnimation ? 0 : 100)
+                            .opacity(playEntryAnimation ? 1 : 0)
+                            .animation(.spring().delay(0.275), value: playEntryAnimation)
+                    }.buttonStyle(ScalePress() )
                   
                     ZStack {
                         let titles = ["30 Sec Meditation","30 Sec Meditation"]
                         VStack(spacing:5) {
-                            HStack {
+                            HStack(spacing: 15) {
                                 ForEach(0..<titles.count) { idx in
-                                    HomeMeditationRow(title: titles[idx])
-                                        .padding(.vertical,5)
+                                    Button {
+                                        
+                                    } label: {
+                                        HomeSquare(width: width - 50, height: height * 0.75, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0])
+                                            .offset(y: playEntryAnimation ? 0 : 100)
+                                            .opacity(playEntryAnimation ? 1 : 0)
+                                            .animation(.spring().delay(0.3), value: playEntryAnimation)
+                                    }.buttonStyle(ScalePress())
                                 }
-                                Button {
-                                } label: {
-                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)
-                                }
-                                .padding(.vertical,5)
-                                .buttonStyle(BonusPress())
-                                .frame(width:30)
-                                .overlay(
-                                    HStack {
-                                        Text("Discover")
-                                            .foregroundColor(Clr.black2)
-                                            .font(Font.fredoka(.semiBold, size: 16))
-                                            .lineLimit(1)
-                                            .frame(width:75)
-                                        Image(systemName: "arrow.up")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width:12)
-                                    }
-                                        .rotationEffect(Angle(degrees: 90))
-                                )
+//                                Button {
+//                                } label: {
+//                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)
+//                                }
+//                                .padding(.vertical,5)
+//                                .buttonStyle(BonusPress())
+//                                .frame(width:30)
+//                                .overlay(
+//                                    HStack {
+//                                        Text("Discover")
+//                                            .foregroundColor(Clr.black2)
+//                                            .font(Font.fredoka(.semiBold, size: 16))
+//                                            .lineLimit(1)
+//                                            .frame(width:75)
+//                                        Image(systemName: "arrow.up")
+//                                            .resizable()
+//                                            .aspectRatio(contentMode: .fit)
+//                                            .frame(width:12)
+//                                    }
+//                                        .rotationEffect(Angle(degrees: 90))
+//                                )
                             }
                             HStack {
+                                Spacer()
                                 Text("Breathwork")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.medium, size: 16))
-                                    .lineLimit(1)
-                                    .frame(maxWidth:.infinity)
+                                    .font(Font.fredoka(.regular, size: 16))
+                                Spacer()
                                 Text("OR")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.semiBold, size: 18))
-                                    .lineLimit(1)
+                                    .font(Font.fredoka(.medium, size: 16))
+                                Spacer()
                                 Text("Meditation")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.medium, size: 16))
-                                    .lineLimit(1)
-                                    .frame(maxWidth:.infinity)
+                                    .font(Font.fredoka(.regular, size: 16))
                                 Spacer()
-                                    .frame(width:30)
-                            }
+                            }.offset(x: -5)
                         }
                     }
                     .frame(width: UIScreen.screenWidth * 0.775)
+                    .offset(y: playEntryAnimation ? 0 : 100)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(0.3), value: playEntryAnimation)
                 }
             }
         }
         .padding(.horizontal, 26)
         .onAppear() {
+            withAnimation {
+                playEntryAnimation = true
+            }
             if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
                 if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
                     isDailyMood = false
@@ -356,7 +373,8 @@ struct HomeMeditationRow: View {
                                 .frame(height:8)
                                 .padding(.vertical,0)
                             Text("Meditation")
-                                .font(Font.fredoka(.medium, size: 10))
+                                .font(
+                                    .fredoka(.medium, size: 10))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)

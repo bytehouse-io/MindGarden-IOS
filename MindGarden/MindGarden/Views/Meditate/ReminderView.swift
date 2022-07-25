@@ -9,86 +9,109 @@ import SwiftUI
 import OneSignal
 
 struct ReminderView: View {
-    let reminderTitle = "Remind me Tomorrow"
+    let reminderTitle = "1. ⏰ Remind me Tomorrow"
+    @Binding var playAnim: Bool
     @State private var time = 0.0
     @State private var isToggled : Bool = false
-
+    @State private var changeHeight = false
     var body: some View {
-        VStack {
-            Text(reminderTitle)
-                .font(Font.fredoka(.bold, size: 20))
-                .foregroundColor(Clr.black2)
-            ZStack {
-                Rectangle()
-                    .fill(Clr.darkWhite)
-                    .cornerRadius(25)
-                    .neoShadow()
-                
-                VStack {
-                    Slider(value: $time, in: 0...86399)
-                        .accentColor(.gray)
-                        .padding(.top,20)
-                        .padding(.horizontal)
-                    HStack {
-                        Image(systemName: "cloud.sun")
-                            .resizable()
-                            .foregroundColor(Clr.brightGreen)
-                            .aspectRatio(contentMode: .fit)
-                        Spacer()
-                        Image(systemName: "sun.max.fill")
-                            .resizable()
-                            .foregroundColor(Clr.dirtBrown)
-                            .aspectRatio(contentMode: .fit)
-                        Spacer()
-                        Image(systemName: "moon.stars.fill")
-                            .resizable()
-                            .foregroundColor(Clr.freezeBlue)
-                            .aspectRatio(contentMode: .fit)
-                    }
-                    .frame(height: 20, alignment: .center)
-                    .padding(.horizontal)
-                    .padding(.bottom,40)
-                    ZStack {
-                        Rectangle()
-                            .fill(Clr.lightGray)
-                            .opacity(0.4)
-                            .cornerRadius(25)
+        ZStack {
+  
+            // when I give it a frame it appears on load, when I don't it doesn't, it's hidden
+            VStack {
+                ZStack {
+                    Rectangle()
+                        .fill(Clr.darkWhite)
+                        .cornerRadius(32)
+                    VStack {
                         HStack {
-                            if let timeInterval = TimeInterval(time) {
-                                Text(timeInterval.secondsToHourMinFormat() ?? "")
-                                    .font(Font.fredoka(.bold, size: 20))
-                                    .foregroundColor(Clr.black2)
-                                Toggle("", isOn: $isToggled)
-                                    .onChange(of: isToggled) { val in
-                                    if val {
-                                        if !UserDefaults.standard.bool(forKey: "showedNotif") {
-                                            OneSignal.promptForPushNotifications(userResponse: { accepted in
-                                                if accepted {
-                                                    Analytics.shared.log(event: .finished_set_reminder)
-                                                    NotificationHelper.addOneDay()
-                                                    NotificationHelper.addThreeDay()
-                                                    // UserDefaults.standard.setValue(true, forKey: "mindful")
-                                                    // NotificationHelper.createMindfulNotifs()
-                                                    if UserDefaults.standard.bool(forKey: "freeTrial")  {
-                                                        NotificationHelper.freeTrial()
+                            Text(reminderTitle)
+                                .font(Font.fredoka(.semiBold, size: 20))
+                                .foregroundColor(Clr.black2)
+                            Spacer()
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Clr.black2)
+                                .frame(width: 15)
+                        }.padding([.top, .horizontal], 24)
+                        Slider(value: $time, in: 0...86399)
+                            .accentColor(.gray)
+                            .padding(.top,20)
+                            .padding(.horizontal)
+                        HStack {
+                            Image(systemName: "cloud.sun")
+                                .resizable()
+                                .foregroundColor(Clr.brightGreen)
+                                .aspectRatio(contentMode: .fit)
+                            Spacer()
+                            Image(systemName: "sun.max.fill")
+                                .resizable()
+                                .foregroundColor(Clr.dirtBrown)
+                                .aspectRatio(contentMode: .fit)
+                            Spacer()
+                            Image(systemName: "moon.stars.fill")
+                                .resizable()
+                                .foregroundColor(Clr.freezeBlue)
+                                .aspectRatio(contentMode: .fit)
+                        }.frame(height: 20, alignment: .center)
+                        .padding(.horizontal, 30)
+                        .padding(.bottom, 24)
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.lightGray)
+                                .opacity(0.4)
+                                .cornerRadius(32, corners: [.bottomLeft, .bottomRight])
+                            HStack {
+                                if let timeInterval = TimeInterval(time) {
+                                    Text(timeInterval.secondsToHourMinFormat() ?? "")
+                                        .font(Font.fredoka(.bold, size: 20))
+                                        .foregroundColor(Clr.black2)
+                                    Toggle("", isOn: $isToggled)
+                                        .onChange(of: isToggled) { val in
+                                        if val {
+                                            if !UserDefaults.standard.bool(forKey: "showedNotif") {
+                                                OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                                    if accepted {
+                                                        Analytics.shared.log(event: .finished_set_reminder)
+                                                        NotificationHelper.addOneDay()
+                                                        NotificationHelper.addThreeDay()
+                                                        // UserDefaults.standard.setValue(true, forKey: "mindful")
+                                                        // NotificationHelper.createMindfulNotifs()
+                                                        if UserDefaults.standard.bool(forKey: "freeTrial")  {
+                                                            NotificationHelper.freeTrial()
+                                                        }
+                                                        withAnimation {
+                                                            playAnim.toggle()
+                                                        }
+                                                        promptNotification()
+                                                    } else {
+                                                        isToggled = false
                                                     }
-                                                    promptNotification()
-                                                } else {
-                                                    isToggled = false
-                                                }
-                                                UserDefaults.standard.setValue(true, forKey: "showedNotif")
-                                            })
-                                        } else {
-                                            promptNotification()
+                                                    UserDefaults.standard.setValue(true, forKey: "showedNotif")
+                                                })
+                                            } else {
+                                                promptNotification()
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }.padding()
+                            }.padding(.horizontal, 30)
+                        }.frame(height: 75)
                     }
+         
                 }
             }
-        }
+        }.frame(height: UIScreen.screenHeight * (playAnim ? 0 : 0.28))
+            .opacity(playAnim ? 0 : 1)
+           .animation(.spring().delay(0.25), value: playAnim)
+           .addBorder(.black, width: 1.5, cornerRadius: 32)
+           .shadow(color: .black.opacity(0.25), radius: 1, x:  3 , y: 3)
+           .onTapGesture {
+               withAnimation {
+                   playAnim.toggle()
+               }
+           }
     }
     
     private func promptNotification() {

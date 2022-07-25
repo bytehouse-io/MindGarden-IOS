@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// Font sizes: 12, 16, 28
 struct HomeViewDashboard: View {
     @Binding var showModal : Bool
     @Binding var totalBonuses : Int

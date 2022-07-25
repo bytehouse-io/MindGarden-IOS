@@ -180,8 +180,8 @@ struct Finished: View {
                             HStack(alignment: .center) {
                                 Spacer()
                                 VStack(alignment: .center, spacing: 10) {
-                                    if !UserDefaults.standard.bool(forKey: "isNotifOn") {
-                                        ReminderView()
+                                    if !UserDefaults.standard.bool(forKey: "isNotifOn") && !isOnboarding {
+                                        ReminderView(playAnim: .constant(false))
                                             .frame(width:UIScreen.screenWidth*0.85, height: 250, alignment: .center)
                                             .padding(.top,50)
                                             .padding()
