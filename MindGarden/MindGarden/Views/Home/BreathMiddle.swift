@@ -11,7 +11,18 @@ struct BreathMiddle: View {
     @State var duration: Int = 300
     @State var isLiked: Bool = false
     let breathWork: Breathwork
+    @State var showPlay = false
+    
     var body: some View {
+        if showPlay {
+            BreathworkPlay(totalTime:$duration, showPlay:$showPlay, breathWork:breathWork)
+                .transition(.opacity)
+        } else  {
+            breathMiddle
+        }
+    }
+    
+    var breathMiddle: some View {
         ZStack {
             Clr.darkWhite
                 .edgesIgnoringSafeArea(.all)
@@ -105,7 +116,11 @@ struct BreathMiddle: View {
                         Spacer()
                     }
                     Button {
-                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            withAnimation(.linear) {
+                                showPlay = true
+                            }
+                        }
                     } label: {
                         ZStack {
                             Rectangle()
@@ -152,6 +167,7 @@ struct BreathMiddle: View {
         
         }
     }
+    
     var heart: some View {
         LikeButton(isLiked: isLiked) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
