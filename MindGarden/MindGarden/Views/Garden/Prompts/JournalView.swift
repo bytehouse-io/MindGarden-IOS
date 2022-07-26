@@ -18,6 +18,9 @@ struct JournalView: View, KeyboardReadable {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     
+    @State private var showtextFieldToolbar = false
+    @State private var coin = 0
+    
     var body: some View {
         ZStack(alignment:.top) {
             Clr.darkWhite.ignoresSafeArea()
@@ -73,7 +76,8 @@ struct JournalView: View, KeyboardReadable {
                         .neoShadow()
                     ScrollView(.vertical, showsIndicators: false) {
                         if #available(iOS 14.0, *) {
-                            TextEditor(text: $text)
+                            TextEditor(text: $text) 
+                                .frame(height:240)
                                 .disableAutocorrection(false)
                                 .foregroundColor(Clr.black2)
                                 .padding(EdgeInsets(top: 10, leading: 10, bottom: -10, trailing: 10))
@@ -130,6 +134,22 @@ struct JournalView: View, KeyboardReadable {
                 .padding()
                 .buttonStyle(NeoPress())
             }
+        }
+        .onChange(of:text) { text in
+            if text.count >= 25 && text.count < 50 {
+                coin = 10
+            } else if text.count >= 50 && text.count < 100 {
+                coin = 20
+            } else if text.count >= 100 && text.count < 200 {
+                coin = 30
+            } else if text.count >= 200 && text.count < 300 {
+                coin = 40
+            } else if text.count >= 300 {
+                coin = 50
+            }
+        }
+        .onAppear {
+            UITextView.appearance().backgroundColor = .clear
         }
         .ignoresSafeArea()
         .sheet(isPresented: $showPrompts) {
