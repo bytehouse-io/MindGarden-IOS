@@ -13,33 +13,33 @@ struct LoadingIllusion: View {
     @State var meditateTimer: Timer?
     @State var time = 1.5
     @State var index = -1
-    @State var topics = ["subtitle1",
-                         "subtitle2",
-                         "subtitle3",
-                         "subtitle4",
-                         "subtitle5"]
+    @State var topics = [ "✅ Analyzing your answers",
+                          "✅ Creating custom journal questions",
+                         "✅ Creating custom meditation plan",
+                         "✅ Encrypting and securing your data"]
     
     var body: some View {
         CircleLoadingView(isShowing: $showCircleProgress) {
             ZStack(alignment:.bottom) {
-                Clr.darkgreen
+                AnimatedBackground(colors:[Clr.brightGreen, Clr.yellow, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
                 HStack {
-                    VStack(alignment:.leading) {
-                        Text("Title")
-                            .font(Font.fredoka(.bold, size: 30))
-                            .foregroundColor(Clr.darkWhite)
+                    VStack(alignment:.leading, spacing: 15) {
+                        Text("🛠 Preparing Your Personal Plan")
+                            .font(Font.fredoka(.bold, size: 32))
+                            .foregroundColor(Clr.brightGreen)
                         if index >= 0 {
                             ForEach(0...index, id: \.self) { idx in
                                 Text(topics[idx])
-                                    .font(Font.fredoka(.bold, size: 20))
-                                    .foregroundColor( idx == index ? .white : Clr.lightGray.opacity(0.5))
+                                    .font(Font.fredoka(.medium, size: 20))
+                                    .foregroundColor(Clr.black2)
                             }
                         }
                         Spacer()
                             .frame(height:100)
                     }
                     Spacer()
-                }
+                }.frame(width: UIScreen.screenWidth - 50, alignment: .center)
+                .offset(y: 50)
                 .padding(50)
             }
         }.onAppear() {

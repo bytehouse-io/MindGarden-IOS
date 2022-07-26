@@ -24,14 +24,14 @@ struct ProfilePage: View {
         dateFormatter.dateFormat = "EEE"
         return dateFormatter
     }
+    @State private var showJournal = false
     let currentYear = Calendar.current.component(.year, from: Date())
     
     var body: some View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
-            ScrollView(showsIndicators: false) {
-                
-                VStack {
+            ScrollView(showsIndicators: false) {                
+                LazyVStack {
                     VStack(alignment: .center, spacing: 10) {
                         Text("Your Mindfulness Journey")
                             .font(Font.fredoka(.medium, size: 24))
@@ -53,6 +53,11 @@ struct ProfilePage: View {
                         }
                     }.frame(width: width * 0.8, height: 160)
                         .padding(50)
+                    if gardenModel.entireHistory.isEmpty {
+                        Text("We need more data! 🧐")
+                            .font(Font.fredoka(.semiBold, size: 28))
+                            .foregroundColor(Clr.brightGreen)
+                    } else {
                     ForEach(gardenModel.entireHistory, id: \.0) { day in
                         let date = day.0
                         let dateComponents = DateComponents(calendar: Calendar.current, timeZone: TimeZone.current, year: date[2], month: date[1], day: date[0])
@@ -73,64 +78,18 @@ struct ProfilePage: View {
                                         .frame(width: width * 0.725, alignment: .leading)
                                     ForEach(daysData, id: \.self) { data in // sessions, mood, journals for that day
                                         VStack(spacing: 0) {
-                                            DataRow(data: data)
+                                            DataRow(data: data, showJournal: $showJournal)
                                         }
                                     }
                                 }.padding(15)
                             ).frame(width: width * 0.85, height: CGFloat(daysData.count) * 70 + 60)
                             .padding(16)
                     }
-                    
-                    Text(response)
-                        .foregroundColor(Clr.darkgreen)
-                        .font(Font.fredoka(.semiBold, size: 16))
-                        .frame(width: width * 0.75, alignment: .center)
-                    HStack {
-                        TextField("Enter promo code", text: $text)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .background(Clr.darkWhite)
-                            .frame(width: width * 0.5, height: 40)
-                            .oldShadow()
-                        Button {
-                            if text == "FTXTNL7E3AA6" {
-                                UserDefaults.standard.setValue(true, forKey: "promoCode")
-                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
-                                WidgetCenter.shared.reloadAllTimelines()
-                                UserDefaults.standard.setValue(true, forKey: "isPro")
-                                UserDefaults.standard.setValue(true, forKey: "bonsai")
-                                if let email = Auth.auth().currentUser?.email {
-                                    Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                                        "isPro": true,
-                                    ]) { (error) in
-                                        if let e = error {
-                                            print("There was a issue saving data to firestore \(e) ")
-                                        } else {
-                                            print("Succesfully saved pro")
-                                        }
-                                    }
-                                }
-                                response = "✅ Success your a pro user now!"
-                            } else {
-                                response = "Invalid code"
-                            }
-                        } label: {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Clr.yellow)
-                                    .cornerRadius(12)
-                                Text("Submit")
-                                    .font(Font.fredoka(.semiBold, size: 16))
-                                    .foregroundColor(.black)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
-                            }
-                        }.buttonStyle(NeumorphicPress( ))
-                    }.frame(width: width * 0.75, height: 35)
-                        .keyboardResponsive()
+                    }
                 }
             }
-        }.onAppear {
-            //            fetchHistory()
+        }.fullScreenCover(isPresented: $showJournal) {
+            JournalView()
         }
     }
     
@@ -140,14 +99,17 @@ struct ProfilePage: View {
         @State var med: Meditation = Meditation.allMeditations.first!
         @State var mood: Image = Img.veryGood
         @State var elaboration: String = ""
+        @State var question: String = ""
+        @State var reflection: String = ""
         let width = UIScreen.screenWidth
         var data: [String: String]
+        @Binding var showJournal: Bool
         
         var body: some View {
             HStack(alignment: .center, spacing: 0) {
                 Group {
                     VStack {
-                        if type == "gratitude" {
+                        if type == "journal" {
                             Img.pencil
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -172,12 +134,21 @@ struct ProfilePage: View {
                         }
                     }
                 }.padding(.trailing)
-                if type == "journal" || type == "meditation" {
+                if type == "meditation" {
                     VStack(alignment: .leading) {
                         Text("\(med.duration/60 == 0 && med.duration != 0 ? "0.5" : "\(Int(med.duration/60))") mins  |  \(med.instructor)")
                             .font(Font.fredoka(.regular, size: 14))
                             .foregroundColor(Clr.darkGray)
                         Text(med.title)
+                            .font(Font.fredoka(.medium, size: 14))
+                            .foregroundColor(Clr.black2)
+                    }
+                } else if type == "journal" {
+                    VStack(alignment: .leading) {
+                        Text(question)
+                            .font(Font.fredoka(.regular, size: 14))
+                            .foregroundColor(Clr.darkGray)
+                        Text(reflection)
                             .font(Font.fredoka(.medium, size: 14))
                             .foregroundColor(Clr.black2)
                     }
@@ -211,14 +182,25 @@ struct ProfilePage: View {
                         if let elab = data["elaboration"] {
                             elaboration = elab
                         }
-                    } else if let journal = data["entry"] {
+                    } else if let journal = data["gratitude"] {
                         type = "journal"
+                        reflection = journal
+                        if let fbQuestion = data["question"] {
+                            question = fbQuestion
+                        }
                     }
                     
                     // legacy data
                     
                     if let theTime = data["timeStamp"] {
                         timeStamp = theTime
+                    }
+                }
+                .onTapGesture {
+                    withAnimation {
+                        placeholderQuestion = question
+                        placeholderReflection = reflection
+                        showJournal = true
                     }
                 }
         }

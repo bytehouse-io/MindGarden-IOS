@@ -37,6 +37,7 @@ enum Page {
     case play
     case categories
     case middle
+    case breathMiddle
     case authentication
     case finished
     case onboarding

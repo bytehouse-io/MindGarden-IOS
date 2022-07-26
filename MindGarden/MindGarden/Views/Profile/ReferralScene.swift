@@ -149,14 +149,15 @@ struct ReferralScene: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.05)
                     }
-                    .frame(width: UIScreen.screenWidth * 0.7, height:50)
+                    .frame(width: UIScreen.screenWidth * 0.85, height:50)
                     .background(Clr.yellow)
-                    .cornerRadius(25)
+                    .cornerRadius(24)
                     .onTapGesture {
                         createDynamicLink()
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         action()
                     }
+                    .addBorder(.black, width: 1.5, cornerRadius: 24)
                 }
                 .buttonStyle(BonusPress())
                 .padding(.top)

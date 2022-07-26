@@ -68,9 +68,17 @@ class GardenViewModel: ObservableObject {
                                 }
                             }
  
-                            if let journals = singleDay[String(day)]?["gratitudes"] as? [[String: String]] {
+                            if let journals = singleDay[String(day)]?["journals"] as? [[String: String]] {
                                 for journal in journals {
                                     dataArr.append(journal)
+                                }
+                            } else if let journals = singleDay[String(day)]?["gratitudes"] as? [String] {
+                                for journal in journals {
+                                    var journalObj = [String: String]()
+                                    journalObj["question"] = "None"
+                                    journalObj["gratitude"] = journal
+                                    journalObj["timeStamp"] = "12:00 AM"
+                                    dataArr.append(journalObj)
                                 }
                             }
                         
@@ -317,8 +325,8 @@ class GardenViewModel: ObservableObject {
             }
             self.updateData(completionHandler: completionHandler, key: key)
         }
-    
     }
+    
     private func updateData(completionHandler: ()->Void = { }, key: String) {
         UserDefaults.standard.setValue(self.grid, forKey: "grid")
         UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")

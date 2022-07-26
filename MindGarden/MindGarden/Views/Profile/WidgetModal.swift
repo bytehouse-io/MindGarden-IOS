@@ -69,8 +69,8 @@ struct WidgetModal: View {
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
                                 )
-                                .frame(width: g.size.width * 0.7 * 0.5, height: g.size.height * 0.05)
-                        }.buttonStyle(NeumorphicPress())
+                                .frame(width: g.size.width * 0.85 * 0.8, height: g.size.height * 0.05)
+                        }.buttonStyle(ScalePress())
                             .padding([.horizontal, .bottom])
                         Spacer()
                     }
@@ -79,7 +79,7 @@ struct WidgetModal: View {
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()
-                    .cornerRadius(12)
+                    .cornerRadius(32)
                     .offset(y: -50)
                     Spacer()
                 }

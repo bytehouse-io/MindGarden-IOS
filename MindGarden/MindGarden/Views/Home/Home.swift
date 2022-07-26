@@ -120,9 +120,6 @@ struct Home: View {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
-//        .fullScreenCover(isPresented: .constant(true)) {
-//            NextSteps()
-//        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
@@ -135,21 +132,15 @@ struct Home: View {
 
         .onAppear {
             tappedSignOut = false
-//            activeSheet = .streak
-            if !UserDefaults.standard.bool(forKey: "tappedFeature") && !UserDefaults.standard.bool(forKey: "day1Intro") {
-                onboardingTime = true
-            } else {
-                onboardingTime = false
-            }
             if showProfile {
                 activeSheet = .profile
                 showProfile = false
             }
-            if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
-                let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
-                storylyViewProgrammatic.resume()
-                UserDefaults.standard.setValue(true, forKey: "firstStory")
-            }
+//            if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
+//                let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
+//                storylyViewProgrammatic.resume()
+//                UserDefaults.standard.setValue(true, forKey: "firstStory")
+//            }
     
             userModel.checkIfPro()
             DispatchQueue.main.async {

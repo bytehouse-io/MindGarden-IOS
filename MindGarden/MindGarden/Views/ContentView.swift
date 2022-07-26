@@ -131,6 +131,10 @@ struct ContentView: View {
                                         MiddleSelect()
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                    case .breathMiddle:
+                                        BreathMiddle(breathWork: Breathwork.breathworks[0])
+                                            .frame(height: geometry.size.height + 10)
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .play:
                                         Play()
                                             .frame(height: geometry.size.height + 80)

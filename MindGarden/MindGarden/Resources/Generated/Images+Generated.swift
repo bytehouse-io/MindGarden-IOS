@@ -161,6 +161,7 @@ public enum Img {
   public static let vector = Image("Vector")
   public static let alarmClock = Image("alarmClock")
   public static let angryFire = Image("angryFire")
+  public static let backgroundCircle = Image("backgroundCircle")
   public static let bee = Image("bee")
   public static let bell = Image("bell")
   public static let bonfire = Image("bonfire")

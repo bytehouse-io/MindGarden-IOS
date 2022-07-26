@@ -343,13 +343,14 @@ struct ProfileScene: View {
                                                 } .frame(width: width * 0.8)
                                                 .padding(.bottom)
                                             }
-                                            .frame(width: width * 0.8, height: height * 0.7)
+                                            .frame(width: width * 0.8, height: height * (K.isSmall() ?  0.65 : 0.7))
                                             .padding(.top, 25)
                                         }
                                     } else if selection == .profile {
                                         // Journey
                                         ProfilePage(profileModel: profileModel, width: width, height: height, totalSessions: gardenModel.totalSessions, totalMins: gardenModel.totalMins)
-                                            .padding(.top, 25)
+                                            .frame(height: height * 0.87)
+                                            .padding(.top, 10)
                                     } else {
                                         ReferralScene(numRefs: $numRefs, action: {
                                             actionSheet()
@@ -394,20 +395,24 @@ struct ProfileScene: View {
                                                         .fill(Clr.redGradientBottom)
                                                         .neoShadow()
                                                         .overlay(Text("Sign Out").foregroundColor(.white).font(Font.fredoka(.bold, size: 24)))
+                                                        .frame(height: 50)
+                                                        .padding(.horizontal, 32)
+                                                        .padding(.bottom, 20)
                                                 } else {
                                                     Capsule()
                                                         .fill(Clr.darkgreen)
                                                         .neoShadow()
                                                         .overlay(
                                                             Text("Create an account").foregroundColor(.white).font(Font.fredoka(.bold, size: 24)))
+                                                        .frame(height: 50)
                                                         .lineLimit(1)
                                                         .minimumScaleFactor(0.05)
+                                                        .padding(.horizontal, 32)
+                                                        .padding(.bottom, 20)
                                                 }
                                             }
                                             .frame(width:width, height: 50, alignment: .center)
                                             .padding()
-                                            .padding(.bottom, 20)
-                                            .padding(.horizontal, 32)
                                         }
                                     }
                                     Spacer()
@@ -520,7 +525,6 @@ struct ProfileScene: View {
                 selection = .referral
                 tappedRefer = false
             } else {
-                selection = .settings
                 if mindfulNotifs {
                     showNotification = true
                     mindfulNotifs = false
