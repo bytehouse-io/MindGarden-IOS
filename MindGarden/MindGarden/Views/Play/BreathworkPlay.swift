@@ -21,7 +21,7 @@ struct BreathworkPlay : View {
     @State var size = 300.0
     @State private var showPanel = true
     @State private var timerCount:TimeInterval = 0.0
-    @State private var totalTime = 0.0
+    @Binding var totalTime: Int
     @State private var progress = 0.0
     
     // Background Settings
@@ -35,6 +35,9 @@ struct BreathworkPlay : View {
 
     let panelHideDelay = 2.0
     
+    @State var isPaused = false
+    @Binding var showPlay:Bool
+    
     let images = [Img.seed,Img.sunflower1,Img.sunflower2,Img.sunflower3]
     let breathWork: Breathwork
     
@@ -45,6 +48,9 @@ struct BreathworkPlay : View {
             VStack {
                 HStack {
                     Button {
+                        withAnimation(.linear) {
+                            showPlay = false
+                        }
                     } label: {
                         Image(systemName: "arrow.left.circle.fill")
                             .resizable()
@@ -123,13 +129,19 @@ struct BreathworkPlay : View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 // TODO when paused
+                                if !isPaused {
+                                isPaused = true
+                                } else {
+                                    isPaused = false
+                                    playAnimation()
+                                }
                             }
                         } label : {
                             ZStack {
                                 Capsule()
                                     .fill(Clr.yellow)
                                     .overlay(
-                                        Text("Pause")
+                                        Text(isPaused ? "Play" : "Pause")
                                             .font(Font.fredoka(.medium, size: 20))
                                             .foregroundColor(Clr.black2)
                                     ).addBorder(.black, width: 1, cornerRadius: 30)
@@ -165,21 +177,22 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear() {
-            totalTime = Double(breathWork.duration)
             let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
-            noOfSequence = Int(totalTime/Double(singleTime))
+            noOfSequence = Int(Double(totalTime)/Double(singleTime))
             DispatchQueue.main.async {
                 playAnimation()
                 toggleControllPanel()
             }
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                if timerCount < totalTime {
-                    timerCount += 1
-                    withAnimation(.linear(duration: 1.0)) {
-                        progress = timerCount/totalTime
+                if !isPaused {
+                    if timerCount < Double(totalTime) {
+                        timerCount += 1
+                        withAnimation(.linear(duration: 1.0)) {
+                            progress = timerCount/Double(totalTime)
+                        }
+                    } else {
+                        timer.invalidate()
                     }
-                } else {
-                    timer.invalidate()
                 }
             }
         }
@@ -191,11 +204,11 @@ struct BreathworkPlay : View {
         }
     }
     
-    private func playAnimation(){
+    private func playAnimation() {
         let time =  breathWork.sequence[sequenceCounter].0
         let status = breathWork.sequence[sequenceCounter].1
         
-        if noOfSequence > 0 {
+        if noOfSequence > 0 && !isPaused {
             switch status.lowercased() {
             case "i":
                 title = "Inhale"

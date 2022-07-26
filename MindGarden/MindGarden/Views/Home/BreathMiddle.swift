@@ -11,7 +11,18 @@ struct BreathMiddle: View {
     @State var duration: Int = 300
     @State var isLiked: Bool = false
     let breathWork: Breathwork
+    @State var showPlay = false
+    
     var body: some View {
+        if showPlay {
+            BreathworkPlay(totalTime:$duration, showPlay:$showPlay, breathWork:breathWork)
+                .transition(.opacity)
+        } else  {
+            breathMiddle
+        }
+    }
+    
+    var breathMiddle: some View {
         ZStack {
             Clr.darkWhite
                 .edgesIgnoringSafeArea(.all)
@@ -36,11 +47,83 @@ struct BreathMiddle: View {
                          .offset(x: -5, y: 5)
                         Spacer()
                         heart
-                    }.frame(width: width - 60, height: 35)
-                    ScrollView(showsIndicators: false) {
-                        VStack(alignment: .center, spacing: 30) {
-                            HStack(spacing: 15) {
-                                Img.sun
+
+                    }.frame(width: width - 60, height: 40)
+                    HStack {
+                        Img.sun
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                        VStack(alignment: .leading) {
+                            Text("Fall Asleep Fast")
+                                .font(Font.fredoka(.semiBold, size: 28))
+                            Text(breathWork.description)
+                        }.foregroundColor(Clr.black2)
+                        .frame(width: width * 0.6, alignment: .leading)
+                    }.frame(width: width - 30, height: height * 0.2)
+                    HStack() {
+                        Spacer()
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            Analytics.shared.log(event: .breathwrk_middle_duration_1)
+                            withAnimation {
+                                duration = 30
+                            }
+                        } label: {
+                            DurationButton(selected: $duration, duration: 30)
+                        }.buttonStyle(NeoPress())
+                        Spacer()
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            Analytics.shared.log(event: .breathwrk_middle_duration_3)
+                            withAnimation {
+                                duration = 60
+                            }
+                        } label: {
+                            DurationButton(selected: $duration, duration: 1)
+                        }.buttonStyle(NeoPress())
+                        Spacer()
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            Analytics.shared.log(event: .breathwrk_middle_duration_5)
+                            withAnimation {
+                                duration = 180
+                            }
+                        } label: {
+                            DurationButton(selected: $duration, duration: 3)
+                        }.buttonStyle(NeoPress())
+                        Spacer()
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            Analytics.shared.log(event: .breathwrk_middle_duration_10)
+                            withAnimation {
+                                duration = 300
+                            }
+                        } label: {
+                            DurationButton(selected: $duration, duration: 5)
+                        }.buttonStyle(NeoPress())
+                        Spacer()
+                    }.frame(width: width - 15)
+                    
+                    HStack {
+                        Spacer()
+                        BreathSequence(sequence: breathWork.sequence, width: width, height: height)
+                        Spacer()
+                    }
+                    Button {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            withAnimation(.linear) {
+                                showPlay = true
+                            }
+                        }
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.yellow)
+                                .addBorder(Color.black, width: 1.5, cornerRadius: 14)
+                            HStack {
+                                Text("Start Breathwork")
+                                    .font(Font.fredoka(.bold, size: 20))
+                                Image(systemName: "arrow.right")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                 VStack(alignment: .leading) {
@@ -142,6 +225,7 @@ struct BreathMiddle: View {
             
         }
     }
+    
     var heart: some View {
         LikeButton(isLiked: isLiked) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
