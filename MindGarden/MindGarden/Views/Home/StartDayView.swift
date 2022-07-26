@@ -97,10 +97,7 @@ struct StartDayView: View {
                     .animation(.spring().delay(0.3), value: playEntryAnimation)
                     
                     Button {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        withAnimation {
-                            viewRouter.currentPage = .journal
-                        }
+
                     } label: {
                         ZStack {
                             Rectangle().fill(Clr.yellow)
@@ -130,8 +127,6 @@ struct StartDayView: View {
                                                 Text(item.title)
                                                     .foregroundColor(Clr.black2)
                                                     .font(Font.fredoka(.semiBold, size: 12))
-                                                Button {
-                                                } label: {
                                                 VStack(spacing:0) {
                                                     if item.streak {
                                                         Img.streakPencil
@@ -145,7 +140,7 @@ struct StartDayView: View {
                                                             .frame(height: 35)
                                                     }
                                                 }
-                                            }
+                                            
                                             }
                                             .padding(.horizontal,3)
                                             .frame(maxWidth:.infinity)
@@ -170,6 +165,12 @@ struct StartDayView: View {
                             .offset(y: playEntryAnimation ? 0 : 100)
                             .opacity(playEntryAnimation ? 1 : 0)
                             .animation(.spring().delay(0.275), value: playEntryAnimation)
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    viewRouter.currentPage = .journal
+                                }
+                            }
                     }.buttonStyle(ScalePress() )
                   
                     ZStack {
@@ -291,6 +292,7 @@ struct StartDayView: View {
                     ForEach(Mood.allMoodCases(), id: \.id) { item in
                         Button {
                             withAnimation {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 userModel.selectedMood = item
                                 viewRouter.currentPage = .mood
                             }

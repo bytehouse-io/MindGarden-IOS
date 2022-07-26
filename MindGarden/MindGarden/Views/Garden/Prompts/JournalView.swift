@@ -9,15 +9,18 @@ import SwiftUI
 import Lottie
 import Amplitude
 
+var placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
+var placeholderQuestion = "Reflect on how you feel"
 struct JournalView: View, KeyboardReadable {
-    @State private var text: String = "Write here..."
+    @State private var text: String = placeholderReflection
     @State private var contentKeyVisible: Bool = true
     @State private var showPrompts = false
     @State private var showRecs = false
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
-    
+    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         ZStack(alignment:.top) {
             Clr.darkWhite.ignoresSafeArea()
@@ -53,13 +56,18 @@ struct JournalView: View, KeyboardReadable {
                         }
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
                         CloseButton() {
-                            withAnimation { viewRouter.currentPage = .meditate  }
+                            withAnimation {
+                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
+                                placeholderQuestion = "Reflect on how you feel"
+                                presentationMode.wrappedValue.dismiss()
+                                viewRouter.currentPage = .meditate
+                            }
                         }.padding(.leading, 10)
                     }
                 }
                 .padding(.horizontal,30)
             
-                Text("Reflect on how you feel.")
+                Text(placeholderQuestion)
                     .font(Font.fredoka(.semiBold, size: 28))
                     .foregroundColor(Clr.black2)
                     .multilineTextAlignment(.leading)
@@ -82,7 +90,7 @@ struct JournalView: View, KeyboardReadable {
                                         contentKeyVisible = newIsKeyboardVisible
                                     }
                                 }.onTapGesture {
-                                    if text == "Write here..." {
+                                    if text == placeholderReflection {
                                         text = ""
                                     }
                                 }
@@ -94,6 +102,7 @@ struct JournalView: View, KeyboardReadable {
                 Spacer()
                     .frame(height:50)
                 Button {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     var num = UserDefaults.standard.integer(forKey: "numGrads")
                     num += 1
                     let identify = AMPIdentify()
@@ -112,9 +121,16 @@ struct JournalView: View, KeyboardReadable {
                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                         }
                         Analytics.shared.log(event: .gratitude_tapped_done)
-                        gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
+                        var journalObj = [String: String]()
+                        journalObj["timeStamp"] = Date.getTime()
+                        journalObj["gratitude"] = text
+                        journalObj["question"] =  placeholderQuestion
+                        userModel.coins += 20
+                        gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
                         showRecs = true
                     }
+                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
+                    placeholderQuestion = "Reflect on how you feel"
                 } label: {
                     HStack {
                         Text("Done")

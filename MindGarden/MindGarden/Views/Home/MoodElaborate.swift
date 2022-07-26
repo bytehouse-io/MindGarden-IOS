@@ -60,6 +60,7 @@ struct MoodElaborate: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(userModel.selectedMood.options, id: \.self) { item in
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     selectedSubMood = item
                                     var num = UserDefaults.standard.integer(forKey: "numMoods")

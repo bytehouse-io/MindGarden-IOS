@@ -18,7 +18,7 @@ struct BreathMiddle: View {
             GeometryReader { g in
                 let width = g.size.width
                 let height = g.size.height
-                VStack(alignment: .center, spacing: 30) {
+                VStack {
                     HStack {
                         Button {
                             Analytics.shared.log(event: .breathwrk_middle_tapped_back)
@@ -30,126 +30,116 @@ struct BreathMiddle: View {
                                     Image(systemName: "arrow.left")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20)
+                                        .frame(width: 15)
                                 )
                         }.buttonStyle(NeoPress())
+                         .offset(x: -5, y: 5)
                         Spacer()
-//                        Image(systemName: "gearshape.fill")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .foregroundColor(Color.gray)
-//                            .frame(width: 30)
-//                            .onTapGesture {
-//                                Analytics.shared.log(event: .breathwrk_middle_tapped_settings)
-//                            }
                         heart
-                    }.frame(width: width - 60, height: 40)
-                    HStack {
-                        Img.sun
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                        VStack(alignment: .leading) {
-                            Text("Fall Asleep Fast")
-                                .font(Font.fredoka(.semiBold, size: 28))
-                            Text(breathWork.description)
-                        }.foregroundColor(Clr.black2)
-                        .frame(width: width * 0.6, alignment: .leading)
-                    }.frame(width: width - 30, height: height * 0.2)
-                    HStack() {
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_1)
-                            withAnimation {
-                                duration = 30
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 30)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_3)
-                            withAnimation {
-                                duration = 60
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 1)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_5)
-                            withAnimation {
-                                duration = 180
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 3)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_10)
-                            withAnimation {
-                                duration = 300
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 5)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                    }.frame(width: width - 15)
-                    
-                    HStack {
-                        Spacer()
-                        BreathSequence(sequence: breathWork.sequence, width: width, height: height)
-                        Spacer()
-                    }
-                    Button {
-                        
-                    } label: {
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                            HStack {
-                                Text("Start Breathwork")
-                                    .font(Font.fredoka(.bold, size: 20))
-                                Image(systemName: "arrow.right")
+                    }.frame(width: width - 60, height: 35)
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .center, spacing: 30) {
+                            HStack(spacing: 15) {
+                                Img.sun
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .font(Font.title.weight(.bold))
-                                    .frame(width: 20)
-                            }.foregroundColor(Clr.black2)
-                         
-                        }.frame(width: width - 45, height: 60)
-                    }.buttonStyle(NeoPress())
-                    (Text("Tips: ").bold() + Text(breathWork.tip))
-                        .font(Font.fredoka(.medium, size: 16))
-                        .foregroundColor(Clr.black2)
-                        .frame(width: width - 60, height: 80, alignment: .leading)
-                    //MARK: - Recommended Use
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Recommend Use")
-                            .font(Font.fredoka(.semiBold, size: 20))
-                            .foregroundColor(Clr.black2)
-                        HStack {
-                            ForEach(breathWork.recommendedUse, id: \.self) { str in
-                                Text(str)
-                                    .font(Font.fredoka(.medium, size: 16))
-                                    .foregroundColor(Clr.black2)
-                                    .padding(.horizontal, 15)
-                                    .padding(.vertical, 5)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 14)
-                                            .stroke(Color.black, lineWidth: 1.5)
-                                    )
+                                VStack(alignment: .leading) {
+                                    Text("Fall Asleep Fast")
+                                        .font(Font.fredoka(.semiBold, size: 28))
+                                    Text(breathWork.description)
+                                        .font(Font.fredoka(.regular, size: 16))
+                                }.foregroundColor(Clr.black2)
+                                    .frame(width: width * 0.55, alignment: .leading)
+                            }.frame(width: width - 60, height: height * 0.2)
+                            HStack() {
+                                Spacer()
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .breathwrk_middle_duration_1)
+                                    withAnimation {
+                                        duration = 30
+                                    }
+                                } label: {
+                                    DurationButton(selected: $duration, duration: 30)
+                                }.buttonStyle(NeoPress())
+                                Spacer()
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .breathwrk_middle_duration_3)
+                                    withAnimation {
+                                        duration = 60
+                                    }
+                                } label: {
+                                    DurationButton(selected: $duration, duration: 1)
+                                }.buttonStyle(NeoPress())
+                                Spacer()
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .breathwrk_middle_duration_5)
+                                    withAnimation {
+                                        duration = 180
+                                    }
+                                } label: {
+                                    DurationButton(selected: $duration, duration: 3)
+                                }.buttonStyle(NeoPress())
+                                Spacer()
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .breathwrk_middle_duration_10)
+                                    withAnimation {
+                                        duration = 300
+                                    }
+                                } label: {
+                                    DurationButton(selected: $duration, duration: 5)
+                                }.buttonStyle(NeoPress())
+                                Spacer()
+                            }.frame(width: width - 15)
+                            
+                            HStack {
+                                Spacer()
+                                BreathSequence(sequence: breathWork.sequence, width: width, height: height)
+                                Spacer()
                             }
+                            Button {
+                                
+                            } label: {
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Clr.yellow)
+                                        .addBorder(Color.black, width: 1.5, cornerRadius: 32)
+                                    HStack {
+                                        Text("Start Breathwork")
+                                            .font(Font.fredoka(.bold, size: 20))
+                                        Image(systemName: "arrow.right")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .font(Font.title.weight(.bold))
+                                            .frame(width: 20)
+                                    }.foregroundColor(Clr.black2)
+                                    
+                                }.frame(width: width - 45, height: 50)
+                            }.buttonStyle(NeoPress())
+                            (Text("💡 Tip: ").bold() + Text(breathWork.tip))
+                                .font(Font.fredoka(.medium, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .frame(width: width - 60, height: 70, alignment: .leading)
+                            //MARK: - Recommended Use
+                            VStack(alignment: .leading, spacing: 10) {
+                                Text("Recommended Use")
+                                    .font(Font.fredoka(.semiBold, size: 20))
+                                    .foregroundColor(Clr.black2)
+                                VStack {
+                                    WrappingHStack(list: breathWork.recommendedUse, geometry: g)
+                                        .offset(x: -7)
+                                }
+                            }.frame(width: width - 60, alignment: .leading)
+                                .offset(y: -15)
+                            Spacer()
                         }
-                    }.frame(width: width - 60, alignment: .leading)
-                    Spacer()
-                }.frame(height: height)
+                    }
+                }.padding(.top, K.hasNotch() ? 50 : 25)
             }
-        
+            
         }
     }
     var heart: some View {
@@ -231,7 +221,7 @@ struct BreathMiddle: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 35)
                                     .offset(y: -5)
-                          
+                                
                                 VStack(spacing: -3) {
                                     Text("3")
                                         .font(Font.fredoka(.semiBold, size: 16))
@@ -266,11 +256,11 @@ struct BreathMiddle: View {
                     }.frame(width: width * 0.5)
                 }.foregroundColor(Clr.black2)
             }
-
+            
         }
         
         var mouth: some View {
-             Image(systemName: "mouth")
+            Image(systemName: "mouth")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 35, height: 35)
@@ -283,5 +273,59 @@ struct BreathMiddle: View {
 struct BreathMiddle_Previews: PreviewProvider {
     static var previews: some View {
         BreathMiddle(breathWork: Breathwork.breathworks[0])
+    }
+}
+
+struct WrappingHStack: View {
+    let list: [String]
+    let geometry: GeometryProxy
+    
+    var body: some View {
+        self.generateContent(in: geometry)
+    }
+    
+    private func generateContent(in g: GeometryProxy) -> some View {
+        var width = CGFloat.zero
+        var height = CGFloat.zero
+        
+        return ZStack(alignment: .topLeading) {
+            ForEach(self.list, id: \.self) { platform in
+                self.item(for: platform)
+                    .padding([.horizontal, .vertical], 4)
+                    .alignmentGuide(.leading, computeValue: { d in
+                        if (abs(width - d.width) > g.size.width - 40)
+                        {
+                            width = 0
+                            height -= d.height
+                        }
+                        let result = width
+                        if platform == self.list.first! {
+                            width = 0 //last item
+                        } else {
+                            width -= d.width
+                        }
+                        return result
+                    })
+                    .alignmentGuide(.top, computeValue: {d in
+                        let result = height
+                        if platform == self.list.first! {
+                            height = 0 // last item
+                        }
+                        return result
+                    })
+            }
+        }
+    }
+    
+    func item(for text: String) -> some View {
+        Text(text)
+            .font(Font.fredoka(.medium, size: 16))
+            .foregroundColor(Clr.black2)
+            .padding(.horizontal, 15)
+            .padding(.vertical, 5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(Color.black, lineWidth: 1.5)
+            )
     }
 }

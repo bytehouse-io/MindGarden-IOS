@@ -108,7 +108,6 @@ struct HomeViewDashboard: View {
                         }.frame(width: width * 0.2, height:height)
                         .roundedCapsule()
                     }.buttonStyle(BonusPress())
-                    
                     Spacer()
                     HStack(spacing:5) {
                         Img.streak
@@ -116,7 +115,7 @@ struct HomeViewDashboard: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 24, height:24)
                             .foregroundColor(.black)
-                        Text("\(streakNumber) days")
+                        Text("\(streakNumber) " + (K.isSmall() ? "" : "days"))
                             .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.gardenRed)
                     }
@@ -124,7 +123,6 @@ struct HomeViewDashboard: View {
                     .roundedCapsule(color: .clear)
                     Spacer()
                 }.padding(.trailing, 8)
-                
                 
                 HStack {
                     VStack(alignment:.leading) {

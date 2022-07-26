@@ -96,6 +96,7 @@ struct CloseButton: View {
     
     var body: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             action()
         } label: {
             Image(systemName: "xmark.circle.fill")

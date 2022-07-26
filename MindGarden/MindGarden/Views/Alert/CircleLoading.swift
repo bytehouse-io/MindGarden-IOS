@@ -21,9 +21,9 @@ struct CircleLoadingView<Content>: View where Content: View {
             isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
         }
     }
-
+    @EnvironmentObject var viewRouter: ViewRouter
     @Binding var isShowing: Bool
-    @State var animationDuration = 5000
+    @State var animationDuration = 6500
     var content: () -> Content
     
     @State private var playanim = false
@@ -34,45 +34,50 @@ struct CircleLoadingView<Content>: View where Content: View {
                 self.content()
                     .disabled(self.isShowing)
                 Group {
-                    Circle().fill(.white)
-                        .frame(width:100)
+                    Circle().fill(Clr.brightGreen.opacity(0.7))
+                        .frame(width:180)
                     Img.circle
+                        .renderingMode(.template)
                         .resizable()
-                        .frame(width:120,height:115)
-                        .foregroundColor(.white.opacity(0.4))
+                        .frame(width:200,height:195)
+                        .foregroundColor(Clr.brightGreen.opacity(0.8))
                         .rotationEffect(Angle(degrees: playanim ? 360 : 0 ))
                         .animation(.linear(duration: 6).repeatForever(autoreverses: false))
                         .offset(y:-10)
                     Img.circle
+                        .renderingMode(.template)
                         .resizable()
-                        .frame(width:110,height:110)
-                        .foregroundColor(.white.opacity(0.4))
+                        .frame(width:200,height:200)
+                        .foregroundColor(Clr.brightGreen.opacity(0.8))
                         .rotationEffect(Angle(degrees: playanim ? 360 : 0 ))
                         .animation(.linear(duration: 6).repeatForever(autoreverses: false))
                         .offset(y:10)
                     Img.circle
                         .resizable()
-                        .frame(width:120,height:115)
-                        .foregroundColor(.white.opacity(0.4))
+                        .renderingMode(.template)
+                        .frame(width:200,height:195)
+                        .foregroundColor(Clr.brightGreen.opacity(0.8))
                         .rotationEffect(Angle(degrees: playanim ? -360 : 0 ))
                         .animation(.linear(duration: 5).repeatForever(autoreverses: false))
                         .offset(x:5)
                     Img.circle
+                        .renderingMode(.template)
                         .resizable()
-                        .frame(width:125,height:110)
-                        .foregroundColor(.white.opacity(0.4))
+                        .frame(width:205,height:190)
+                        .foregroundColor(Clr.brightGreen.opacity(0.8))
                         .rotationEffect(Angle(degrees: playanim ? -360 : 0 ))
                         .animation(.linear(duration:4).repeatForever(autoreverses: false))
                         .offset(x:-5)
                     Text("  \(percentage)%  ")
-                        .foregroundColor(Clr.black2)
+                        .foregroundColor(.white)
                         .minimumScaleFactor(0.5)
-                        .font(Font.fredoka(.bold, size: 16))
+                        .font(Font.fredoka(.bold, size: 28))
                         .animation(.linear(duration: 5))
                 }
+                .offset(y: -150)
                 .opacity(self.isShowing ? 1 : 0)
             }
-            
+            .frame(width: UIScreen.screenWidth, alignment: .center)
             .onAppear() {
                 withAnimation {
                     playanim = true
@@ -99,7 +104,11 @@ struct CircleLoadingView<Content>: View where Content: View {
                 let deadline = DispatchTime.now() + updateTimeInterval
                 
                 DispatchQueue.main.asyncAfter(deadline: deadline) {
+                    print(percentage, "go go")
                     self.percentage += Int(100 / steps)
+                    if percentage == 99 {
+                        viewRouter.currentPage = .meditate
+                    }
                 }
             }
         }

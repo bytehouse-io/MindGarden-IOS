@@ -9,7 +9,6 @@ import SwiftUI
 import Paywall
 
 var tappedTurnOn = false
-var onboardingTime = false
 struct ReviewScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var experience: (Image, String) =  (Img.moon, "")
@@ -17,7 +16,7 @@ struct ReviewScene: View {
     @State private var aim2 = (Img.redTulips3, "")
     @State private var aim3 = (Img.redTulips3, "")
     @State private var notifications = ""
-    @State private var showLoading = true
+    @State private var showLoading = false
     var displayedTime: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
@@ -169,6 +168,7 @@ struct ReviewScene: View {
                                                     .frame(width: width * 0.2, height: height * 0.03)
                                                     .overlay(
                                                         Text("Turn On")
+                                                        
                                                             .foregroundColor(.black)
                                                             .font(.caption)
                                                             .lineLimit(1)
@@ -185,55 +185,6 @@ struct ReviewScene: View {
                         Spacer()
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
-                            onboardingTime = false
-                            Analytics.shared.log(event: .review_tapped_tutorial)
-                       
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                            fromPage = "onboarding2"
-                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                            UserDefaults.standard.setValue(true, forKey: "onboarded")
-                            withAnimation {
-                                viewRouter.progressValue += 0.1
-                                if fromInfluencer != "" {
-                                    Analytics.shared.log(event: .user_from_influencer)
-                                    viewRouter.currentPage = .pricing
-                                } else {
-                                    Paywall.present { info in
-                                        Analytics.shared.log(event: .screen_load_superwall)
-                                    } onDismiss: {  didPurchase, productId, paywallInfo in
-                                        switch productId {
-                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                        case "io.mindgarden.pro.yearly":
-                                            Analytics.shared.log(event: .yearly_started_from_superwall)
-                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
-                                                NotificationHelper.freeTrial()
-                                            }
-                                        default: break
-                                        }
-                                        viewRouter.currentPage = .meditate
-                                    } onFail: { error in
-                                        viewRouter.currentPage = .pricing
-                                    }
-                                }
-                            }
-                        } label: {
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .overlay(
-                                    Text("MindGarden Tutorial 👉")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.fredoka(.bold, size: 20))
-                                ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
-                                .frame(width: width * 0.75, height: 50)
-                        }.padding()
-                        .buttonStyle(NeumorphicPress())
-                        Button {
-                            MGAudio.sharedInstance.playBubbleSound()
-                            onboardingTime = true
                             if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                             }
@@ -244,49 +195,65 @@ struct ReviewScene: View {
                             UserDefaults.standard.setValue(true, forKey: "review")
                             
                             withAnimation(.easeOut(duration: 0.3)) {
+                                viewRouter.progressValue = 1
+
                                 DispatchQueue.main.async {
-                                    viewRouter.progressValue = 1
                                     if fromInfluencer != "" {
                                         Analytics.shared.log(event: .user_from_influencer)
                                         viewRouter.currentPage = .pricing
                                     } else {
-                                        Paywall.present { info in
-                                            Analytics.shared.log(event: .screen_load_superwall)
-                                        } onDismiss: {  didPurchase, productId, paywallInfo in
-                                            switch productId {
-                                            case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-                                                UserDefaults.standard.setValue(true, forKey: "isPro")
-                                            case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
-                                                UserDefaults.standard.setValue(true, forKey: "freeTrial")
-                                                UserDefaults.standard.setValue(true, forKey: "isPro")
-                                                if UserDefaults.standard.bool(forKey: "isNotifOn") {
-                                                    NotificationHelper.freeTrial()
-                                                }
-                                            default: break
-                                            }
-                                            viewRouter.currentPage = .meditate
-                                        } onFail: { error in
-                                            fromPage = "onboarding2"
-                                            viewRouter.currentPage = .pricing
-                                        }
+                                        showLoading = true
+//                                        Paywall.present { info in
+//                                            Analytics.shared.log(event: .screen_load_superwall)
+//                                        } onDismiss: {  didPurchase, productId, paywallInfo in
+//                                            switch productId {
+//                                            case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+//                                                UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                            case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
+//                                                UserDefaults.standard.setValue(true, forKey: "freeTrial")
+//                                                UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                                if UserDefaults.standard.bool(forKey: "isNotifOn") {
+//                                                    NotificationHelper.freeTrial()
+//                                                }
+//                                            default: break
+//                                            }
+//                                            viewRouter.currentPage = .meditate
+//                                        } onFail: { error in
+//                                            fromPage = "onboarding2"
+//                                            viewRouter.currentPage = .pricing
+//                                        }
                                     }
                                 }
                             }
+                            
                         } label: {
-                                Text("Skip (Not Recommended)")
-                                    .underline()
-                                    .font(Font.fredoka(.regular, size: 18))
-                                    .foregroundColor(.gray)
-                                    .padding(.top, 35)
-                        }
+                            Rectangle()
+                                .fill(Clr.yellow)
+                                .overlay(
+                                    Text("Finish 👉")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.fredoka(.bold, size: 20))
+                                ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
+                                .frame(width: width * 0.75, height: 50)
+                        }.padding()
+                        .buttonStyle(NeumorphicPress())
+//                        Button {
+//
+//                        } label: {
+//                                Text("Skip (Not Recommended)")
+//                                    .underline()
+//                                    .font(Font.fredoka(.regular, size: 18))
+//                                    .foregroundColor(.gray)
+//                                    .padding(.top, 35)
+//                        }
                     }
                 }
             }
         }
-        /*.fullScreenCover(isPresented: $showLoading)  {
+        .fullScreenCover(isPresented: $showLoading)  {
             LoadingIllusion()
                 .frame(height: UIScreen.screenHeight + 50)
-        }*/
+        }
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
             .onAppear {

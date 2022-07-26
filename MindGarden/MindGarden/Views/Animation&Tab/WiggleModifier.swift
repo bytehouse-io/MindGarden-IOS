@@ -24,17 +24,13 @@ struct WiggleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .rotationEffect(.degrees(Double(buttonRotating)), anchor: .center)
-            .animation(onboardingTime ? rotateAnimation.repeatForever(autoreverses: false) : nil, value: buttonRotating)
+            .animation(rotateAnimation.repeatForever(autoreverses: false), value: buttonRotating)
             .onAppear() {
-                if onboardingTime {
                     DispatchQueue.main.async {
                         withAnimation(Animation.interpolatingSpring(stiffness: 170, damping: 5)) {
                             buttonRotating = 0
                         }
                     }
-                } else {
-                    buttonRotating = 0
-                }
             }
     }
 }
