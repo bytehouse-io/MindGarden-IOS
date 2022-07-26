@@ -8,6 +8,7 @@
 import SwiftUI
 import Lottie
 import Amplitude
+import Combine
 
 var placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
 var placeholderQuestion = "Reflect on how you feel"
@@ -22,6 +23,7 @@ struct JournalView: View, KeyboardReadable {
     
     @State private var showtextFieldToolbar = false
     @State private var coin = 0
+    @State var question = ""
     
     @Environment(\.presentationMode) var presentationMode
 
@@ -38,26 +40,6 @@ struct JournalView: View, KeyboardReadable {
                         .multilineTextAlignment(.center)
                         .opacity(0.5)
                     Spacer()
-                    Button {
-                        withAnimation {
-                            showPrompts = true
-                        }
-                    } label: {
-                        Text("Prompts")
-                            .font(Font.fredoka(.semiBold, size: 16))
-                            .foregroundColor(Clr.gardenRed)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                    }
-                    Image(systemName: "shuffle")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundColor(Clr.black1)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width:30)
-                        .onTapGesture {
-                            //TODO: implement shuffle tap event
-                        }
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
                         CloseButton() {
                             withAnimation {
@@ -104,52 +86,94 @@ struct JournalView: View, KeyboardReadable {
                 }
                 .frame(width:UIScreen.screenWidth-40, height:250)
                 .padding()
-                Spacer()
-                    .frame(height:50)
-                Button {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    var num = UserDefaults.standard.integer(forKey: "numGrads")
-                    num += 1
-                    let identify = AMPIdentify()
-                        .set("num_gratitudes", value: NSNumber(value: num))
-                    Amplitude.instance().identify(identify ?? AMPIdentify())
-                    if num == 30 {
-                        userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
-                        userModel.buyPlant(unlockedStrawberry: true)
-                        userModel.triggerAnimation = true
-                    }
-                    UserDefaults.standard.setValue(num, forKey: "numGrads")
-                    Analytics.shared.log(event: .gratitude_tapped_done)
-                    gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
-                    withAnimation {                        
-                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                        }
-                        Analytics.shared.log(event: .gratitude_tapped_done)
-                        var journalObj = [String: String]()
-                        journalObj["timeStamp"] = Date.getTime()
-                        journalObj["gratitude"] = text
-                        journalObj["question"] =  placeholderQuestion
-                        userModel.coins += 20
-                        gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
-                        showRecs = true
-                    }
-                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
-                    placeholderQuestion = "Reflect on how you feel"
-                } label: {
+            }
+            ZStack(alignment:.top) {
+                VStack {
+                    Spacer()
                     HStack {
-                        Text("Done")
-                            .foregroundColor(.white)
-                            .font(Font.fredoka(.semiBold, size: 20))
-                            .padding()
-                    }
-                    .frame(width:150, height: 44, alignment: .center)
-                    .background(Clr.brightGreen)
-                    .cornerRadius(28)
-                    
+                        Text("\(coin)")
+                            .font(Font.fredoka(.medium, size: 16))
+                            .foregroundColor(.black)
+                            .padding(.leading)
+                        Img.coin
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height:20)
+                            .foregroundColor(.black)
+                            .neoShadow()
+                        
+                        Spacer()
+                        Image(systemName: "shuffle")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(Clr.black1)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width:20)
+                            .onTapGesture {
+                                //TODO: implement shuffle tap event
+                            }
+                            .neoShadow()
+                        Button {
+                            withAnimation {
+                                showPrompts = true
+                            }
+                        } label: {
+                            Text("Prompts")
+                                .font(Font.fredoka(.semiBold, size: 16))
+                                .foregroundColor(Clr.gardenRed)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                        }.frame(height: 35)
+                            .neoShadow()
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            var num = UserDefaults.standard.integer(forKey: "numGrads")
+                            num += 1
+                            let identify = AMPIdentify()
+                                .set("num_gratitudes", value: NSNumber(value: num))
+                            Amplitude.instance().identify(identify ?? AMPIdentify())
+                            if num == 30 {
+                                userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
+                                userModel.buyPlant(unlockedStrawberry: true)
+                                userModel.triggerAnimation = true
+                            }
+                            UserDefaults.standard.setValue(num, forKey: "numGrads")
+                            Analytics.shared.log(event: .gratitude_tapped_done)
+                            gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
+                            withAnimation {
+                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                                    UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                                }
+                                Analytics.shared.log(event: .gratitude_tapped_done)
+                                var journalObj = [String: String]()
+                                journalObj["timeStamp"] = Date.getTime()
+                                journalObj["gratitude"] = text
+                                journalObj["question"] =  placeholderQuestion
+                                userModel.coins += 20
+                                gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
+                                showRecs = true
+                            }
+                            placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
+                            placeholderQuestion = "Reflect on how you feel"
+                        } label: {
+                            HStack {
+                                Text("Done")
+                                    .foregroundColor(.white)
+                                    .font(Font.fredoka(.semiBold, size: 20))
+                                    .padding()
+                            }
+                            .frame(width:120, height: 35)
+                            .background(Clr.brightGreen.neoShadow())
+                            .cornerRadius(10)
+                            
+                        }
+                        .padding()
+                        .buttonStyle(NeoPress())
+                        
+                    }.KeyboardAwarePadding()
+                    Spacer()
+                        .frame(height:50)
                 }
-                .padding()
-                .buttonStyle(NeoPress())
             }
         }
         .onChange(of:text) { text in
@@ -163,6 +187,8 @@ struct JournalView: View, KeyboardReadable {
                 coin = 40
             } else if text.count >= 300 {
                 coin = 50
+            } else {
+                coin = 0
             }
         }
         .onAppear {
@@ -170,11 +196,41 @@ struct JournalView: View, KeyboardReadable {
         }
         .ignoresSafeArea()
         .sheet(isPresented: $showPrompts) {
-            PromptsView()
+            PromptsView(question: $question)
         }
         .fullScreenCover(isPresented: $showRecs) {
             RecommendationsView()
         }
         .transition(.move(edge: .trailing))
+    }
+}
+
+
+
+struct KeyboardAwareModifier: ViewModifier {
+    @State private var keyboardHeight: CGFloat = 0
+
+    private var keyboardHeightPublisher: AnyPublisher<CGFloat, Never> {
+        Publishers.Merge(
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillShowNotification)
+                .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+                .map { $0.cgRectValue.height - 60 },
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in CGFloat(0) }
+       ).eraseToAnyPublisher()
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom, keyboardHeight)
+            .onReceive(keyboardHeightPublisher) { self.keyboardHeight = $0 }
+    }
+}
+
+extension View {
+    func KeyboardAwarePadding() -> some View {
+        ModifiedContent(content: self, modifier: KeyboardAwareModifier())
     }
 }

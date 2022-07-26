@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PromptsView: View {
     
+    @Binding var question:String
     @State var selectedTab: PromptsTabType = .gratitude
     @Environment(\.presentationMode) var presentationMode
     
@@ -80,7 +81,10 @@ struct PromptsView: View {
                         .frame(height:15)
                     ForEach(promptsTabList) { item in
                         Button {
-                            //TODO: redirect on item selection
+                            question = "What am I holding onto that I need to forgive myself for?"
+                            withAnimation {
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         } label: {
                             ZStack {
                                 Rectangle()
@@ -126,6 +130,6 @@ struct PromptsView: View {
 //MARK: - preview
 struct PromptsView_Previews: PreviewProvider {
     static var previews: some View {
-        PromptsView(selectedTab: .gratitude)
+        PromptsView(question: .constant(""), selectedTab: .gratitude)
     }
 }
