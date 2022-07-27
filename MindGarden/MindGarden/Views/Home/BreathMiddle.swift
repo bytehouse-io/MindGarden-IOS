@@ -10,12 +10,12 @@ import SwiftUI
 struct BreathMiddle: View {
     @State var duration: Int = 300
     @State var isLiked: Bool = false
-    let breathWork: Breathwork
+    @EnvironmentObject var medModel: MeditationViewModel
     @State var showPlay = false
     
     var body: some View {
         if showPlay {
-            BreathworkPlay(totalTime:$duration, showPlay:$showPlay, breathWork:breathWork)
+            BreathworkPlay(totalTime:$duration, showPlay:$showPlay, breathWork: medModel.selectedBreath)
                 .transition(.opacity)
         } else  {
             breathMiddle
@@ -51,13 +51,13 @@ struct BreathMiddle: View {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .center, spacing: 30) {
                     HStack {
-                        Img.sun
+                        medModel.selectedBreath.img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                         VStack(alignment: .leading) {
-                            Text("Fall Asleep Fast")
+                            Text(medModel.selectedBreath.title)
                                 .font(Font.fredoka(.semiBold, size: 28))
-                            Text(breathWork.description)
+                            Text(medModel.selectedBreath.description)
                         }.foregroundColor(Clr.black2)
                         .frame(width: width * 0.6, alignment: .leading)
                     }.frame(width: width - 30, height: height * 0.2)
@@ -107,7 +107,7 @@ struct BreathMiddle: View {
                     
                     HStack {
                         Spacer()
-                        BreathSequence(sequence: breathWork.sequence, width: width, height: height)
+                        BreathSequence(sequence: medModel.selectedBreath.sequence, width: width, height: height)
                         Spacer()
                     }
                     Button {
@@ -128,9 +128,9 @@ struct BreathMiddle: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                 VStack(alignment: .leading) {
-                                    Text("Fall Asleep Fast")
+                                    Text(medModel.selectedBreath.title)
                                         .font(Font.fredoka(.semiBold, size: 28))
-                                    Text(breathWork.description)
+                                    Text(medModel.selectedBreath.description)
                                         .font(Font.fredoka(.regular, size: 16))
                                 }.foregroundColor(Clr.black2)
                                     .frame(width: width * 0.55, alignment: .leading)
@@ -181,7 +181,7 @@ struct BreathMiddle: View {
                             
                             HStack {
                                 Spacer()
-                                BreathSequence(sequence: breathWork.sequence, width: width, height: height)
+                                BreathSequence(sequence: medModel.selectedBreath.sequence, width: width, height: height)
                                 Spacer()
                             }
                             Button {
@@ -203,7 +203,7 @@ struct BreathMiddle: View {
                                     
                                 }.frame(width: width - 45, height: 50)
                             }.buttonStyle(NeoPress())
-                            (Text("💡 Tip: ").bold() + Text(breathWork.tip))
+                            (Text("💡 Tip: ").bold() + Text(medModel.selectedBreath.tip))
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2)
                                 .frame(width: width - 60, height: 70, alignment: .leading)
@@ -213,7 +213,7 @@ struct BreathMiddle: View {
                                     .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(Clr.black2)
                                 VStack {
-                                    WrappingHStack(list: breathWork.recommendedUse, geometry: g)
+                                    WrappingHStack(list: medModel.selectedBreath.recommendedUse, geometry: g)
                                         .offset(x: -7)
                                 }
                             }.frame(width: width - 60, alignment: .leading)
@@ -358,7 +358,7 @@ struct BreathMiddle: View {
 
 struct BreathMiddle_Previews: PreviewProvider {
     static var previews: some View {
-        BreathMiddle(breathWork: Breathwork.breathworks[0])
+        BreathMiddle()
     }
 }
 

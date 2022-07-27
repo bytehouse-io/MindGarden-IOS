@@ -14,8 +14,11 @@ import SwiftUI
 struct HomeSquare: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var isSmaller = false
+    @State private var isBreath = false
+    @State private var breathWork = Breathwork.breathworks[0]
     let width, height: CGFloat
     let meditation: Meditation
+    let breathwork: Breathwork?
 
    
     var body: some View {
@@ -30,18 +33,19 @@ struct HomeSquare: View {
                         HStack(alignment: .center) {
                             VStack(alignment: .leading, spacing: -2) {
                                 Spacer()
-                                Text(meditation.title)
+                                Text(isBreath ? breathWork.title : meditation.title)
                                     .frame(width: width * 0.225, alignment: .leading)
                                     .font(Font.fredoka(.semiBold, size: 16))
                                     .foregroundColor(Clr.black2)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(3)
                                 HStack(spacing: 4) {
-                                    Image(systemName: "speaker.wave.2.fill")
+                                    
+                                    Image(systemName: isBreath ? "wind" : "speaker.wave.2.fill")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
-                                    Text("Meditation")
+                                    Text(isBreath ? "Breathwork" : "Meditation")
                                         .font(.caption)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
@@ -49,11 +53,11 @@ struct HomeSquare: View {
                                 .padding(.top, 10)
                                 .foregroundColor(Clr.lightTextGray)
                                 HStack(spacing: 4) {
-                                    Image(systemName: "timer")
+                                    Image(systemName: isBreath ? breathWork.color.image : "timer")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
-                                    Text(Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
+                                    Text(isBreath ? breathWork.color.name.capitalized : Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
                                         .padding(.leading, 2)
                                         .font(.caption)
                                         .lineLimit(1)
@@ -75,22 +79,29 @@ struct HomeSquare: View {
                                 .padding(.top, 5)
                                 .foregroundColor(Clr.lightTextGray)
                                 Spacer()
-                            }.padding(.leading, 25)
+                            }.padding(.leading, isSmaller ? 15 : 25)
                                 .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
-                            if meditation.imgURL != "" {
-                                UrlImageView(urlString: meditation.imgURL)
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
-                                    .padding(.leading, -16)
-                                    .padding(.top, isSmaller ? 30 : 20)
-                            } else {
-                                meditation.img
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
-                                    .padding(.leading, -16)
-                                    .padding(.top, isSmaller ? 30 : 20)
-                            }
+                            Group {
+                                if isBreath {
+                                    breathWork.img
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
+                                } else {
+                                    if meditation.imgURL != "" {
+                                        UrlImageView(urlString: meditation.imgURL)
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
+                                    } else {
+                                        meditation.img
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
+                                    }
+                                }
+                            } .padding(.leading, -16)
+                            .padding(.top, isSmaller ? 30 : 20)
+                    
                         }.offset(x: -4)
                 if meditation.isNew {
                     Capsule()
@@ -118,6 +129,10 @@ struct HomeSquare: View {
             if width != UIScreen.screenWidth {
                 isSmaller = true
             }
+            if let work = breathwork {
+                isBreath = true
+                breathWork = work
+            }
         }
         
     }
@@ -125,6 +140,6 @@ struct HomeSquare: View {
 
 struct HomeSquare_Previews: PreviewProvider {
     static var previews: some View {
-        HomeSquare(width: 425, height: 800, meditation: Meditation.allMeditations[0])
+        HomeSquare(width: 425, height: 800, meditation: Meditation.allMeditations[0], breathwork: nil)
     }
 }

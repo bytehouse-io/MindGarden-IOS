@@ -11,7 +11,8 @@ import WidgetKit
 
 struct ProfilePage: View {
     @EnvironmentObject var gardenModel: GardenViewModel
-    
+    @EnvironmentObject var userModel: UserViewModel
+
     var profileModel: ProfileViewModel
     var width: CGFloat
     var height: CGFloat
@@ -21,7 +22,7 @@ struct ProfilePage: View {
     @State private var response = ""
     var dateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE"
+        dateFormatter.dateFormat = "EEEE"
         return dateFormatter
     }
     @State private var showJournal = false
@@ -37,19 +38,19 @@ struct ProfilePage: View {
                             .font(Font.fredoka(.medium, size: 24))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
-                        Text("7 Mindful Days")
+                        Text("\(UserDefaults.standard.integer(forKey: "launchNumber")) Mindful Days")
                             .font(Font.fredoka(.regular, size: 20))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
                         HStack(alignment: .center, spacing: 5) {
-                            ProfileBox(img: Img.veryGoodPot, count: 3)
-                            ProfileBox(img: Img.meditateTurtle, count: 4)
+                            ProfileBox(img: Img.veryGood, count:  UserDefaults.standard.integer(forKey: "numMoods"))
+                            ProfileBox(img: Img.meditateTurtle, count:  UserDefaults.standard.integer(forKey: "numMeds"))
                             ProfileBox(img: Img.streak, count: UserDefaults.standard.integer(forKey: "longestStreak"))
                         }.padding(.top)
                         HStack(alignment: .center, spacing: 5) {
-                            ProfileBox(img: Img.veryGoodPot, count: 72)
+                            ProfileBox(img: Img.streakPencil, count: UserDefaults.standard.integer(forKey: "numGrads"))
                             ProfileBox(img: Img.breathIcon, count: 22)
-                            ProfileBox(img: Img.flowers, count: 14)
+                            ProfileBox(img: Img.flowers, count: userModel.ownedPlants.count)
                         }
                     }.frame(width: width * 0.8, height: 160)
                         .padding(50)
@@ -136,7 +137,7 @@ struct ProfilePage: View {
                 }.padding(.trailing)
                 if type == "meditation" {
                     VStack(alignment: .leading) {
-                        Text("\(med.duration/60 == 0 && med.duration != 0 ? "0.5" : "\(Int(med.duration/60))") mins  |  \(med.instructor)")
+                        Text("\((Int(med.duration/60) == 0 && med.duration != 0) ? "0.5" : "\(Int(med.duration/60))") mins  |  \(med.instructor)")
                             .font(Font.fredoka(.regular, size: 14))
                             .foregroundColor(Clr.darkGray)
                         Text(med.title)

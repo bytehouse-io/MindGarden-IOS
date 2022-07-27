@@ -127,7 +127,13 @@ struct JournalView: View, KeyboardReadable {
                         journalObj["question"] =  placeholderQuestion
                         userModel.coins += 20
                         gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
-                        showRecs = true
+                        
+                        if moodFirst {
+                            showRecs = true
+                            moodFirst = false
+                        } else {
+                            viewRouter.currentPage = .meditate
+                        }
                     }
                     placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
                     placeholderQuestion = "Reflect on how you feel"

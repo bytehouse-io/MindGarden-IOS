@@ -213,16 +213,21 @@ struct ProfileScene: View {
                                                                     .frame(height: 40)
                                                                 Divider()
                                                             }
-                                                            Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
-                                                                showNotification = true
-                                                                Analytics.shared.log(event: .profile_tapped_notifications)
-                                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                                .frame(height: 40)
-                                                            Row(title: "Garden", img: Image(systemName: "calendar"), action: {
-                                                                showGarden = true
-                                                                Analytics.shared.log(event: .profile_tapped_garden)
-                                                            }, showNotif: $showNotif, showMindful: $showMindful)
-                                                                .frame(height: 40)
+                                                            VStack {
+                                                                Row(title: "Background Music", img: Image(systemName: "speaker.fill"), action: {
+                                                                    print("gang")
+                                                                }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
+                                                                    showNotification = true
+                                                                    Analytics.shared.log(event: .profile_tapped_notifications)
+                                                                }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                    .frame(height: 40)
+                                                                Row(title: "Garden", img: Image(systemName: "calendar"), action: {
+                                                                    showGarden = true
+                                                                    Analytics.shared.log(event: .profile_tapped_garden)
+                                                                }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                    .frame(height: 40)
+                                                            }
                                                             Divider()
 //                                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
 //                                                                Analytics.shared.log(event: .profile_tapped_email)
@@ -264,7 +269,7 @@ struct ProfileScene: View {
                                                                     .frame(height: 40)
                                                             }
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 260 : 300) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
+                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 300 : 340) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
 
                                                     Text("I want to help")
                                                         .font(Font.fredoka(.regular, size: 20))

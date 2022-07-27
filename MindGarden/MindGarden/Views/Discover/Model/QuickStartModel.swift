@@ -76,7 +76,7 @@ struct QuickStartMenuItem: Identifiable {
         case .morning: return Img.morning
         case .anxiety: return Img.tired
         case .unguided: return Img.unguided
-        case .sleep: return Img.sleep
+        case .sleep: return Img.sleepIcon
         case .courses: return Img.courses
         case .focus: return Img.focus
         }

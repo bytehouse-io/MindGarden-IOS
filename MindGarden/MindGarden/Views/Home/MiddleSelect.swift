@@ -138,7 +138,7 @@ struct MiddleSelect: View {
                                     }
                                     
                                 } label: {
-                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[0])
+                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[0], breathwork: nil)
                                 }.buttonStyle(NeumorphicPress())
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -158,7 +158,7 @@ struct MiddleSelect: View {
                                         }
                                     }
                                 } label: {
-                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[1])
+                                    HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[1], breathwork: nil)
                                 }
                             }
                             .frame(width: g.size.width - 60)

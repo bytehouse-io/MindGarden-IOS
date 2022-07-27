@@ -38,10 +38,10 @@ class GardenViewModel: ObservableObject {
     }
     
     func getRecentMeditations() {
+        entireHistory = []
         var yearSortDict = [String: [[[String:String]]]]()
         
         for (key,value) in grid {
-            print(value.keys, value, key)
             let months = value.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
             let yearIds = [[[String:String]]]()
             for mo in months  {
@@ -72,7 +72,7 @@ class GardenViewModel: ObservableObject {
                                 for journal in journals {
                                     dataArr.append(journal)
                                 }
-                            } else if let journals = singleDay[String(day)]?["gratitudes"] as? [String] {
+                            } else if let journals = singleDay[String(day)]?["journals"] as? [String] {
                                 for journal in journals {
                                     var journalObj = [String: String]()
                                     journalObj["question"] = "None"
@@ -264,24 +264,7 @@ class GardenViewModel: ObservableObject {
                     if let gardenGrid = document[K.defaults.gardenGrid] {
                         self.grid = gardenGrid as! [String: [String:[String:[String:Any]]]]
                     }
-                    if let year = self.grid[date.get(.year)] {
-                        if let month = year[date.get(.month)] {
-                            if let day = month[date.get(.day)] {
-                                if var values = day[key] as? [Any] {
-                                    values.append(saveValue)
-                                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
-                                } else { // first of that type today
-                                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
-                                }
-                            } else { // first save of type that day
-                                self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
-                            }
-                        } else { //first session of month
-                            self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [saveValue]]]
-                        }
-                    } else {
-                        self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
-                    }
+                    self.saveToGrid(key: key, saveValue: saveValue, date: date)
                 }
 
                 self.db.collection(K.userPreferences).document(email).updateData([
@@ -293,6 +276,7 @@ class GardenViewModel: ObservableObject {
                     if let e = error {
                         print("There was a issue saving data to firestore \(e) ")
                     } else {
+                        self.getRecentMeditations()
                         self.updateData(completionHandler: completionHandler, key: key)
                     }
                 }
@@ -304,27 +288,11 @@ class GardenViewModel: ObservableObject {
             if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
                 self.grid = gridd
             }
-            if let year = self.grid[date.get(.year)] {
-                if let month = year[date.get(.month)] {
-                    if let day = month[date.get(.day)] {
-                        if var values = day[key] as? [Any] {
-                            //["plantSelected" : "coogie", "meditationId":3]
-                            values.append(saveValue)
-                            self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
-                        } else { // first of that type today
-                            self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
-                        }
-                    } else { // first save of type that day
-                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
-                    }
-                } else { //first session of month
-                    self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [saveValue]]]
-                }
-            } else {
-                self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
-            }
-            self.updateData(completionHandler: completionHandler, key: key)
+            
+            saveToGrid(key: key, saveValue: saveValue, date: date)
+            
         }
+        self.updateData(completionHandler: completionHandler, key: key)
     }
     
     private func updateData(completionHandler: ()->Void = { }, key: String) {
@@ -333,10 +301,31 @@ class GardenViewModel: ObservableObject {
         WidgetCenter.shared.reloadAllTimelines()
         self.populateMonth()
         self.getLastFive()
-        if key == "sessions" {
-            self.getRecentMeditations()
-        }
+        self.getRecentMeditations()
+    
         completionHandler()
+    }
+    
+    private func saveToGrid(key: String, saveValue: Any, date: Date) {
+        if let year = self.grid[date.get(.year)] {
+            if let month = year[date.get(.month)] {
+                if let day = month[date.get(.day)] {
+                    if var values = day[key] as? [Any] {
+                        values.append(saveValue)
+                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
+                    } else { // first of that type today
+                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
+                    }
+                } else { // first save of type that day
+                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
+                }
+            } else { //first session of month
+                self.grid[date.get(.year)]?[date.get(.month)] = [date.get(.day): [key: [saveValue]]]
+            }
+        } else {
+            self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
+        }
+
     }
 }
 

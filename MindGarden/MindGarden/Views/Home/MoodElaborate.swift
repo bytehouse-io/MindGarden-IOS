@@ -8,6 +8,7 @@
 import SwiftUI
 import Amplitude
 
+var moodFirst = false
 struct MoodElaborate: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
@@ -60,6 +61,7 @@ struct MoodElaborate: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(userModel.selectedMood.options, id: \.self) { item in
                             Button {
+                                moodFirst = true
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     selectedSubMood = item

@@ -122,7 +122,6 @@ struct Finished: View {
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .frame(width: 50)
-                                                                .padding([.leading, .vertical])
                                                             Text("Log Mood")
                                                                 .foregroundColor(.black)
                                                                 .font(Font.fredoka(.semiBold, size: 16))

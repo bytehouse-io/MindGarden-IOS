@@ -21,6 +21,7 @@ struct DailyMoodItem : Identifiable {
 struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @State private var isDailyMood = true
     @State private var playEntryAnimation = false
@@ -177,16 +178,26 @@ struct StartDayView: View {
                         let titles = ["30 Sec Meditation","30 Sec Meditation"]
                         VStack(spacing:5) {
                             HStack(spacing: 15) {
-                                ForEach(0..<titles.count) { idx in
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        
+                                    }
+                                } label: {
+                                    HomeSquare(width: width - 50, height: height * 0.7, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0], breathwork: medModel.featuredBreathwork)
+                                        .offset(y: playEntryAnimation ? 0 : 100)
+                                        .opacity(playEntryAnimation ? 1 : 0)
+                                        .animation(.spring().delay(0.3), value: playEntryAnimation)
+                                }.buttonStyle(ScalePress())
                                     Button {
                                         
                                     } label: {
-                                        HomeSquare(width: width - 50, height: height * 0.75, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0])
+                                        HomeSquare(width: width - 50, height: height * 0.7, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0], breathwork: nil)
                                             .offset(y: playEntryAnimation ? 0 : 100)
                                             .opacity(playEntryAnimation ? 1 : 0)
                                             .animation(.spring().delay(0.3), value: playEntryAnimation)
                                     }.buttonStyle(ScalePress())
-                                }
+                                
 //                                Button {
 //                                } label: {
 //                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)

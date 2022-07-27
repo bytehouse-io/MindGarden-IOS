@@ -103,7 +103,7 @@ struct CategoriesScene: View {
                                             didSelectcategory(item: item)
                                         }
                                     } label: {
-                                        HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: item)
+                                        HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: item, breathwork: nil)
                                             .padding(.vertical, 8)
                                     }.buttonStyle(NeoPress())
                                 }
@@ -150,12 +150,12 @@ struct CategoriesScene: View {
                                     showModal.toggle()
                             }
                         }
-                    MiddleModal(shown: $showModal)
-                        .offset(y: showModal ? 0 : g.size.height)
-                        .edgesIgnoringSafeArea(.top)
-                        .animation(.default, value: showModal).offset(y: showModal ? (isFromQuickstart ? -80 : 0) : -600)
-                        .transition(.move(edge: .bottom))
                 }
+                MiddleModal(shown: $showModal)
+                    .offset(y: showModal ? (isFromQuickstart ? -80 : 0)  : g.size.height)
+                    .edgesIgnoringSafeArea(.top)
+                    .animation(.default, value: showModal)
+                    .transition(.move(edge: .bottom))
                 if isFromQuickstart {
                     HStack {
                         backButton

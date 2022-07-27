@@ -746,7 +746,7 @@ struct NatureModal: View {
                                             .font(Font.fredoka(.bold, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .background(Clr.yellow)
-                                    ).addBorder(.black, width: 1, cornerRadius: 24)
+                                    ).addBorder(.black, width: 1, cornerRadius: 20)
                             }.frame(height: 40)
                             .padding(15)
                         }
@@ -755,7 +755,7 @@ struct NatureModal: View {
                         .padding(15)                        
                     }.frame(width: g.size.width * 0.85, height: g.size.height * 0.7, alignment: .center)
                     .background(Clr.darkWhite)
-                    .cornerRadius(20)
+                    .cornerRadius(32)
                     Spacer()
                 }
                 Spacer()

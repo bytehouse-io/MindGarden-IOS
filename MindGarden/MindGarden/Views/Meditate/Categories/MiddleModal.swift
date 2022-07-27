@@ -145,7 +145,7 @@ struct MiddleModal: View {
                                     )
                                     .frame(height: 40)
                                     .addBorder(.black, width: 1.5, cornerRadius: 24)
-                            }.buttonStyle(NeumorphicPress())
+                            }.buttonStyle(NeoPress())
                                 .padding([.horizontal, .bottom])
                                 .padding(.horizontal, 8)
                             Spacer()

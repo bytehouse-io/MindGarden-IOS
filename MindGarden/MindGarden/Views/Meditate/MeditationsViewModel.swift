@@ -42,6 +42,8 @@ class MeditationViewModel: ObservableObject {
     
     @Published var roadMaplevel: Int = 1
     @Published var roadMapArr: [Int] = []
+    @Published var featuredBreathwork = Breathwork.breathworks[0]
+    @Published var selectedBreath = Breathwork.breathworks[0]
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
@@ -103,16 +105,23 @@ class MeditationViewModel: ObservableObject {
     }
 
     func getFeaturedMeditation()  {
+        
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
-        if Calendar.current.component( .hour, from:Date() ) < 16 {
+        if Calendar.current.component( .hour, from:Date() ) < 12 { // morning
+            featuredBreathwork = Breathwork.breathworks[0]
             filtedMeds = filtedMeds.filter { med in // day time meds only
                 med.id != 27 && med.id != 54 && med.id != 39 && med.category != .sleep}
-        }
-        if Calendar.current.component(.hour, from: Date()) > 11 { // not morning
+        } else if Calendar.current.component( .hour, from:Date() ) < 16 {
+            filtedMeds = filtedMeds.filter { med in // day time meds only
+                med.id != 27 && med.id != 54 && med.id != 39 && med.category != .sleep}
+            featuredBreathwork = Breathwork.breathworks.first { $0.id == -2 }! //unwind
+        } else  { // not morning
             filtedMeds = filtedMeds.filter { med in
                 med.id != 53 && med.id != 49 && med.id != 84
             }
+            featuredBreathwork = Breathwork.breathworks.first { $0.id == -4 }! //unwind
+
         }
         if UserDefaults.standard.bool(forKey: "intermediateCourse") {
             filtedMeds = filtedMeds.filter { med in
@@ -127,7 +136,7 @@ class MeditationViewModel: ObservableObject {
                 if UserDefaults.standard.integer(forKey: "launchNumber") <= 6 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
                 } else {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
+                    if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 && !UserDefaults.standard.bool(forKey: "10days") {
                         featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 105 })
                     } else {
                         setFeaturedReason()
