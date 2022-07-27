@@ -73,18 +73,18 @@ struct BreathworkPlay : View {
                 .disabled(!showPanel)
                 ZStack {
                     Circle()
-                        .foregroundColor(Clr.brightGreen)
+                        .foregroundColor(Clr.calmPrimary)
                         .addBorder(.black, width: 2, cornerRadius: size/2)
                         .frame(width:size, height: size)
                     Circle()
-                        .fill(Clr.yellow)
+                        .fill(Clr.lightGreen)
                         .frame(width:size/2)
                         .clipShape(Circle())
                         .scaleEffect(bgAnimation ? 2 : 1)
                         
                     ZStack {
                         Circle()
-                            .foregroundColor(Clr.darkgreen)
+                            .foregroundColor(Clr.calmsSecondary)
                             .addBorder(.black, width: 2, cornerRadius: size/2)
                             .frame(width:size/2, height: size/2)
                         VStack {
@@ -108,6 +108,21 @@ struct BreathworkPlay : View {
                             .aspectRatio(contentMode: .fit)
                             .overlay(
                                 plantView
+                            ).background(
+                                ZStack {
+                                    if progress >= 0.75 {
+                                        images[3]
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height:150)
+                                            .offset(y:-80)
+                                            .animation(Animation
+                                                        .spring(response: 0.3, dampingFraction: 3.0))
+                                            .transition(.opacity)
+                                    } else {
+                                        EmptyView()
+                                    }
+                                }
                             )
                             .frame(maxWidth:.infinity)
                         ZStack {
@@ -292,14 +307,7 @@ struct BreathworkPlay : View {
                                 .spring(response: 0.3, dampingFraction: 3.0))
                     .transition(.opacity)
             } else {
-                images[3]
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height:150)
-                    .offset(y:-50)
-                    .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0))
-                    .transition(.opacity)
+                EmptyView()
             }
         }
     }
