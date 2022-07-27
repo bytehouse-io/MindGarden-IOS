@@ -11,6 +11,8 @@ struct StreakItem : Identifiable {
     var id = UUID()
     var title: String
     var streak: Bool
+    var gratitude: String = ""
+    var question: String = ""
 }
 
 struct DailyMoodItem : Identifiable {
@@ -23,20 +25,22 @@ struct StartDayView: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @State private var isDailyMood = true
+    @State private var isGratitudeDone = false
     @State private var playEntryAnimation = false
+    @State private var isWeekStreakDone = false
     @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
                                           StreakItem(title: "M", streak: false),
                                           StreakItem(title: "T", streak: false),
-                                          StreakItem(title: "W", streak: true),
-                                          StreakItem(title: "T", streak: true),
+                                          StreakItem(title: "W", streak: false),
+                                          StreakItem(title: "T", streak: false),
                                           StreakItem(title: "F", streak: false),
                                           StreakItem(title: "S", streak: false)]
     
     @State var dailyMoodList:[DailyMoodItem] = [DailyMoodItem(title: "S", dailyMood: Img.emptyMood),
                                              DailyMoodItem(title: "M", dailyMood: Img.emptyMood),
                                              DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
-                                             DailyMoodItem(title: "W", dailyMood: Mood.getMoodImage(mood: .veryBad)),
-                                                DailyMoodItem(title: "T", dailyMood: Mood.getMoodImage(mood: .veryGood)),
+                                             DailyMoodItem(title: "W", dailyMood: Img.emptyMood),
+                                                DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
                                              DailyMoodItem(title: "F", dailyMood: Img.emptyMood),
                                              DailyMoodItem(title: "S", dailyMood: Img.emptyMood)]
     var body: some View {
@@ -54,19 +58,21 @@ struct StartDayView: View {
             HStack {
                 VStack {
                     Circle()
-                        .fill(Clr.brightGreen)
+                        .fill(isDailyMood ? .clear : Clr.brightGreen)
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
                     DottedLine()
                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                        .fill(isDailyMood ? .clear : Clr.brightGreen)
                         .opacity(0.5)
                         .frame(width:2)
                     Circle()
-                        .fill(.white)
+                        .fill(isGratitudeDone ? Clr.brightGreen : .clear )
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                     DottedLine()
                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                        .fill(isGratitudeDone ? Clr.brightGreen : .clear )
                         .opacity(0.5)
                         .frame(width:2)
                     Circle()
@@ -104,7 +110,7 @@ struct StartDayView: View {
                             VStack {
                                 HStack(spacing:0) {
                                     Spacer()
-                                    Text("Answer today’s Journal Prompt")
+                                    Text(isWeekStreakDone ? "Wow! Perfect this week!" : "Answer today’s Journal Prompt")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .padding([.leading, .top],16)
@@ -238,16 +244,45 @@ struct StartDayView: View {
             withAnimation {
                 playEntryAnimation = true
             }
-            if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
-                if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
-                    isDailyMood = false
-                    getMoods()
+            
+            DispatchQueue.main.async {
+                let weekDays = getAllDaysOfTheCurrentWeek()
+                getAllGratitude(weekDays:weekDays)
+                if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
+                    if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
+                        isDailyMood = false
+                        getMoods(weekDays:weekDays)
+                    }
+                }
+                
+                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                    if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
+                        isGratitudeDone = true
+                    }
                 }
             }
         }
     }
-    private func getMoods() {
-        let weekDays = getAllDaysOfTheCurrentWeek()
+    
+    private func getAllGratitude(weekDays:[Date]) {
+        for i in 0..<weekDays.count {
+            let day = weekDays[i]
+            if let gratitudes = gardenModel.grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                if let gratitude = gratitudes[gratitudes.count-1]["gratitude"] {
+                    streakList[i].gratitude = gratitude
+                    if gratitude.count > 0 {
+                        streakList[i].streak = true
+                    }
+                }
+                if let question = gratitudes[gratitudes.count-1]["question"] {
+                    streakList[i].question = question
+                }
+            }
+        }
+        isWeekStreakDone = streakList.filter { !$0.streak }.count == 7
+    }
+    
+    private func getMoods(weekDays:[Date]) {
         for i in 0..<weekDays.count {
             let day = weekDays[i]
             if let moods = gardenModel.grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?["moods"]  as? [[String: String]] {
@@ -258,26 +293,18 @@ struct StartDayView: View {
     }
     
     private func getAllDaysOfTheCurrentWeek() -> [Date] {
-        var dates: [Date] = []
-        guard let dateInterval = Calendar.current.dateInterval(of: .weekOfYear,
-                                                               for: Date()) else {
-            return dates
-        }
-        
-        Calendar.current.enumerateDates(startingAfter: dateInterval.start,
-                                        matching: DateComponents(hour:0),
-                                        matchingPolicy: .nextTime) { date, _, stop in
-                guard let date = date else {
-                    return
+        var calendar = Calendar.autoupdatingCurrent
+        calendar.firstWeekday = 1
+        let today = calendar.startOfDay(for: Date())
+        var week = [Date]()
+        if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
+            for i in 0...6 {
+                if let day = calendar.date(byAdding: .day, value: i, to: weekInterval.start) {
+                    week += [day]
                 }
-                if date <= dateInterval.end {
-                    dates.append(date)
-                } else {
-                    stop = true
-                }
+            }
         }
-        
-        return dates
+        return week
     }
     
     var SelectMood: some View {
