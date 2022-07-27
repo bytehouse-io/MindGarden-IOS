@@ -44,87 +44,14 @@ struct BreathMiddle: View {
                                         .frame(width: 15)
                                 )
                         }.buttonStyle(NeoPress())
-                         .offset(x: -5, y: 5)
+                            .offset(x: -5, y: 5)
                         Spacer()
                         heart
                     }.frame(width: width - 60, height: 35)
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .center, spacing: 30) {
-                    HStack {
-                        medModel.selectedBreath.img
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                        VStack(alignment: .leading) {
-                            Text(medModel.selectedBreath.title)
-                                .font(Font.fredoka(.semiBold, size: 28))
-                            Text(medModel.selectedBreath.description)
-                        }.foregroundColor(Clr.black2)
-                        .frame(width: width * 0.6, alignment: .leading)
-                    }.frame(width: width - 30, height: height * 0.2)
-                    HStack() {
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_1)
-                            withAnimation {
-                                duration = 30
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 30)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_3)
-                            withAnimation {
-                                duration = 60
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 1)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_5)
-                            withAnimation {
-                                duration = 180
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 3)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_duration_10)
-                            withAnimation {
-                                duration = 300
-                            }
-                        } label: {
-                            DurationButton(selected: $duration, duration: 5)
-                        }.buttonStyle(NeoPress())
-                        Spacer()
-                    }.frame(width: width - 15)
-                    
-                    HStack {
-                        Spacer()
-                        BreathSequence(sequence: medModel.selectedBreath.sequence, width: width, height: height)
-                        Spacer()
-                    }
-                    Button {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            withAnimation(.linear) {
-                                showPlay = true
-                            }
-                        }
-                    } label: {
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .addBorder(Color.black, width: 1.5, cornerRadius: 14)
-                            HStack {
-                                Text("Start Breathwork")
-                                    .font(Font.fredoka(.bold, size: 20))
-                                Image(systemName: "arrow.right")
+                            HStack(spacing: 15) {
+                                Img.sun
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                 VStack(alignment: .leading) {
@@ -185,7 +112,12 @@ struct BreathMiddle: View {
                                 Spacer()
                             }
                             Button {
-                                
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    withAnimation(.linear) {
+                                        showPlay = true
+                                    }
+                                }
                             } label: {
                                 ZStack {
                                     Rectangle()
@@ -221,12 +153,12 @@ struct BreathMiddle: View {
                             Spacer()
                         }
                     }
-                }.padding(.top, K.hasNotch() ? 50 : 25)
+                }
             }
                 }
         }
-    }
-    }
+    
+
     
     var heart: some View {
         LikeButton(isLiked: isLiked) {

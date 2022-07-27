@@ -181,7 +181,7 @@ struct StartDayView: View {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        
+                                        viewRouter.currentPage = .breathMiddle
                                     }
                                 } label: {
                                     HomeSquare(width: width - 50, height: height * 0.7, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0], breathwork: medModel.featuredBreathwork)
