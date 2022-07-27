@@ -119,6 +119,9 @@ struct Finished: View {
                                                     } label: {
                                                         HStack {
                                                             Img.veryGood
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fit)
+                                                                .frame(width: 50)
                                                                 .padding([.leading, .vertical])
                                                             Text("Log Mood")
                                                                 .foregroundColor(.black)
@@ -128,7 +131,8 @@ struct Finished: View {
                                                                 .minimumScaleFactor(0.05)
                                                         }.frame(width: g.size.width * 0.4, height: 45)
                                                             .background(Clr.yellow)
-                                                            .cornerRadius(25)
+                                                            .cornerRadius(24)
+                                                            .addBorder(.black, width: 1.5, cornerRadius: 24)
                                                             .onTapGesture {
                                                                 withAnimation {
                                                                     hideConfetti = true
@@ -155,7 +159,8 @@ struct Finished: View {
                                                                 .minimumScaleFactor(0.05)
                                                         }.frame(width: g.size.width * 0.4, height: 45)
                                                             .background(Clr.yellow)
-                                                            .cornerRadius(25)
+                                                            .cornerRadius(24)
+                                                            .addBorder(.black, width: 1.5, cornerRadius: 24)
                                                             .onTapGesture {
                                                                 withAnimation {
                                                                     hideConfetti = true
@@ -242,17 +247,18 @@ struct Finished: View {
                         } label: {
                             Capsule()
                                 .fill(Clr.yellow)
-                                .padding(.horizontal)
                                 .overlay(
                                     HStack {
                                         Text("Finished")
-                                            .foregroundColor(Color.black)
+                                            .foregroundColor(Clr.black2)
                                             .font(Font.fredoka(.bold, size: 22))
                                         Image(systemName: "arrow.right")
                                             .foregroundColor(Color.black)
                                             .font(.system(size: 22, weight: .bold))
                                     }
                                 )
+                                .addBorder(.black, width: 1.5, cornerRadius: 24)
+                                .padding(.horizontal)
                             // TODO -> change not now in saveProgress modal to trigger showStreak
                                 .onTapGesture {
                                     Analytics.shared.log(event: .finished_tapped_finished)

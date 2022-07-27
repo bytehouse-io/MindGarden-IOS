@@ -47,8 +47,9 @@ struct BreathMiddle: View {
                          .offset(x: -5, y: 5)
                         Spacer()
                         heart
-
-                    }.frame(width: width - 60, height: 40)
+                    }.frame(width: width - 60, height: 35)
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .center, spacing: 30) {
                     HStack {
                         Img.sun
                             .resizable()
@@ -133,7 +134,7 @@ struct BreathMiddle: View {
                                         .font(Font.fredoka(.regular, size: 16))
                                 }.foregroundColor(Clr.black2)
                                     .frame(width: width * 0.55, alignment: .leading)
-                            }.frame(width: width - 60, height: height * 0.2)
+                            }.frame(width: width - 60, height: 50)
                             HStack() {
                                 Spacer()
                                 Button {
@@ -222,8 +223,9 @@ struct BreathMiddle: View {
                     }
                 }.padding(.top, K.hasNotch() ? 50 : 25)
             }
-            
+                }
         }
+    }
     }
     
     var heart: some View {

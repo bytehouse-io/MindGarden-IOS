@@ -147,9 +147,7 @@ struct CategoriesScene: View {
                         .edgesIgnoringSafeArea(.all)
                         .onTapGesture {
                             withAnimation {
-                                DispatchQueue.main.async {
                                     showModal.toggle()
-                                }
                             }
                         }
                     MiddleModal(shown: $showModal)

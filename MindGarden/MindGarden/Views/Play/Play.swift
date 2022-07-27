@@ -68,6 +68,7 @@ struct Play: View {
                                     Circle()
                                         .stroke(lineWidth: 20.0)
                                         .foregroundColor(Clr.superLightGray)
+                      
                                     Circle()
                                         .trim(from: 0.0, to: CGFloat(min(self.progressValue, 1.0)))
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
@@ -78,6 +79,10 @@ struct Play: View {
                                         .frame(width: K.isPad() ? 480 : 230)
                                         .foregroundColor(Clr.darkWhite)
                                         .shadow(color: .black.opacity(0.35), radius: 20.0, x: 10, y: 5)
+                                    Img.backgroundCircle
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 230)
                                     //four different plant stages
                                     if model.secondsRemaining <= model.totalTime * 0.25 || (model.secondsRemaining >= 300 && model.selectedMeditation?.duration == -1) { //secoond
                                         withAnimation {
