@@ -134,7 +134,7 @@ struct Finished: View {
                                                             .cornerRadius(24)
                                                             .addBorder(.black, width: 1.5, cornerRadius: 24)
                                                             .onTapGesture {
-                                                                withAnimation {
+                                                                withAnimation(.easeOut) {
                                                                     hideConfetti = true
                                                                     Analytics.shared.log(event: .home_tapped_categories)
                                                                     let impact = UIImpactFeedbackGenerator(style: .light)
@@ -142,16 +142,15 @@ struct Finished: View {
                                                                     NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
                                                                 }
                                                             }
-                                                    }
-                                                    .buttonStyle(BonusPress())
+                                                    }.buttonStyle(BonusPress())
                                                     Button { } label: {
                                                         HStack {
-                                                            Img.hands
+                                                            Img.streakPencil
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .padding([.leading])
                                                                 .padding(.vertical, 5)
-                                                            Text("Gratitude")
+                                                            Text("Journal")
                                                                 .foregroundColor(.black)
                                                                 .font(Font.fredoka(.semiBold, size: 16))
                                                                 .padding(.trailing)
@@ -167,7 +166,8 @@ struct Finished: View {
                                                                     Analytics.shared.log(event: .home_tapped_categories)
                                                                     let impact = UIImpactFeedbackGenerator(style: .light)
                                                                     impact.impactOccurred()
-                                                                    NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+                                                                    viewRouter.previousPage = .garden
+                                                                    viewRouter.currentPage = .journal
                                                                 }
                                                             }
                                                     }

@@ -195,17 +195,19 @@ struct MiddleSelect: View {
             Analytics.shared.log(event: .middle_tapped_back)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
-                if middleToSearch != "" {
-                    viewRouter.currentPage = .learn
-                } else {
-                    viewRouter.currentPage = .meditate
-                }
+                viewRouter.currentPage = viewRouter.previousPage
             }
         } label: {
-            Image(systemName: "arrow.backward")
-                .font(.title)
-                .foregroundColor(Clr.darkgreen)
-        }
+            Circle()
+                .fill(Clr.darkWhite)
+                .frame(width: 40)
+                .overlay(
+                    Image(systemName: "arrow.left")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15)
+                )
+        }.buttonStyle(NeoPress())
     }
     
     var heart: some View {

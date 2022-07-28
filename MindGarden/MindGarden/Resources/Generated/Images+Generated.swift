@@ -176,6 +176,7 @@ public enum Img {
   public static let unwind = Image("unwind")
   public static let vitality = Image("vitality")
   public static let wakingup = Image("wakingup")
+  public static let breathworkIcon = Image("breathworkIcon")
   public static let cactusSmile = Image("cactusSmile")
   public static let cando = Image("cando")
   public static let chatBubble = Image("chatBubble")

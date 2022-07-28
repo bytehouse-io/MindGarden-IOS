@@ -181,7 +181,6 @@ struct StartDayView: View {
                     }.buttonStyle(ScalePress() )
                   
                     ZStack {
-                        let titles = ["30 Sec Meditation","30 Sec Meditation"]
                         VStack(spacing:5) {
                             HStack(spacing: 15) {
                                 Button {
@@ -198,8 +197,14 @@ struct StartDayView: View {
                                 }.buttonStyle(ScalePress())
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        Analytics.shared.log(event: .home_tapped_featured)
                                         withAnimation {
-                                            
+                                            medModel.selectedMeditation = medModel.featuredMeditation
+                                            if medModel.featuredMeditation?.type == .course {
+                                                viewRouter.currentPage = .middle
+                                            } else {
+                                                viewRouter.currentPage = .play
+                                            }
                                         }
                                     } label: {
                                         HomeSquare(width: width - 50, height: height * 0.7, meditation: medModel.featuredMeditation ?? Meditation.allMeditations[0], breathwork: nil)

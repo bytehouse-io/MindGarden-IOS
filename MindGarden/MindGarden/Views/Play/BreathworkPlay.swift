@@ -48,7 +48,11 @@ struct BreathworkPlay : View {
     @State var durationTimer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
-            AnimatedBackground(colors:[breathWork.color.primary, Clr.skyBlue.opacity(0.5), Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
+            if medModel.selectedBreath.color == .sleep {
+                Clr.darkMode.edgesIgnoringSafeArea(.all)
+            } else {
+                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+            }
             VStack {
                 Spacer()
                     .frame(height: K.hasNotch() ? 50 : 25)
@@ -65,8 +69,7 @@ struct BreathworkPlay : View {
                             .aspectRatio(contentMode: .fit)
                             .frame(height:40)
                             .background(Circle().foregroundColor(Clr.black2).padding(1))
-                            .darkShadow()
-                    }
+                    }.buttonStyle(ScalePress())
                     Spacer()
                     HStack{
                         sound
@@ -188,7 +191,7 @@ struct BreathworkPlay : View {
                     .disabled(!showPanel)
                     .opacity(showPanel ? 1.0 : 0.0)
                 }.padding(.horizontal,30)
-            }.padding(.top, 50)
+            }
             if showNatureModal  {
                 Color.black
                     .opacity(0.3)
@@ -199,6 +202,7 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
+            totalTime = 24
             if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
                 userModel.selectedPlant = Plant.allPlants.first(where: { plant in
                     return plant.title == plantTitle
@@ -384,11 +388,9 @@ struct AnimatedBackground: View {
     @State var colors:[Color]
     
     var body: some View {
-        
         LinearGradient(gradient: Gradient(colors: colors), startPoint: start, endPoint: end)
             .animation(Animation.easeInOut(duration: duration).repeatForever())
             .onReceive(timer, perform: { _ in
-                
                 self.start = UnitPoint(x: 4, y: 0)
                 self.end = UnitPoint(x: 0, y: 2)
                 self.start = UnitPoint(x: -4, y: 20)

@@ -46,7 +46,7 @@ struct JournalView: View, KeyboardReadable {
                                 placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
                                 placeholderQuestion = "Reflect on how you feel"
                                 presentationMode.wrappedValue.dismiss()
-                                viewRouter.currentPage = .meditate
+                                viewRouter.currentPage = viewRouter.previousPage
                             }
                         }.padding(.leading, 10)
                     }

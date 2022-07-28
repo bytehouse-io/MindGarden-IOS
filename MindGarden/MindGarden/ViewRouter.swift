@@ -8,6 +8,7 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
+    @Published var previousPage: Page = .meditate
     @Published var currentPage: Page = 
     {
         if UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {

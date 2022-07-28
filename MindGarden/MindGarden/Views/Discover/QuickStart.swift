@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct QuickStart: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var isShowCategory = false
     @State private var category : QuickStartType = .minutes3
     @State private var playEntryAnimation = false
@@ -61,10 +62,12 @@ struct QuickStart: View {
                     .frame(height:200)
             }
         }.onAppear {
+            viewRouter.previousPage = .learn
             withAnimation {
                 if middleToSearch != "" {
                     category = QuickStartMenuItem.getName(str: middleToSearch)
                     isShowCategory = true
+                    playEntryAnimation = true
                 } else {
                     playEntryAnimation = true
                 }

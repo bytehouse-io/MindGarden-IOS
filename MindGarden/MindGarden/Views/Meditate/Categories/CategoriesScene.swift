@@ -96,13 +96,13 @@ struct CategoriesScene: View {
                     ScrollView(showsIndicators: false) {
                         
                             LazyVGrid(columns: gridItemLayout, content: {
-                                if selectedCategory == .breathwork {
+                                if selectedCategory == .breathwork || model.selectedCategory == .breathwork {
                                     ForEach(Breathwork.breathworks, id: \.self) { item in
                                         Button {
-                                            Analytics.shared.log(event: .categories_tapped_square)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 model.selectedBreath = item
+                                                viewRouter.previousPage = .learn
                                                 viewRouter.currentPage = .breathMiddle
                                             }
                                         } label: {
@@ -113,8 +113,8 @@ struct CategoriesScene: View {
                                 } else {
                                     ForEach(meditations, id: \.self) { item in
                                         Button {
-                                            Analytics.shared.log(event: .categories_tapped_square)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            viewRouter.previousPage = .learn
                                             withAnimation {
                                                 didSelectcategory(item: item)
                                             }
@@ -226,7 +226,7 @@ struct CategoriesScene: View {
             case .minutes5: return meditation.duration <= 400 && meditation.duration >= 250
             case .minutes10: return meditation.duration <= 700 && meditation.duration >= 500
             case .minutes20: return meditation.duration >= 1000 && meditation.duration <= 2000
-            case .popular: return !meditation.title.isEmpty
+            case .popular: return Meditation.popularMeditations.contains(meditation.id)
             case .morning: return Meditation.morningMeds.contains(meditation.id)
             case .sleep: return meditation.category == .sleep
             case .anxiety: return (meditation.category == .anxiety || meditation.category == .sadness)
@@ -293,11 +293,11 @@ struct CategoriesScene: View {
                     presentationMode.wrappedValue.dismiss()
                 } else {
                     if model.selectedMeditation?.type == .course {
-                        if viewRouter.currentPage == .learn {
-                            middleToSearch = QuickStartMenuItem(title: selectedCategory).name
-                        } else {
-                            middleToSearch = ""
-                        }
+//                        if viewRouter.currentPage == .learn {
+//                            middleToSearch = QuickStartMenuItem(title: selectedCategory).name
+//                        } else {
+//                            middleToSearch = ""
+//                        }
                         viewRouter.currentPage = .middle
                     } else {
                         DispatchQueue.main.async {
@@ -320,13 +320,13 @@ struct CategoriesScene: View {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 Analytics.shared.log(event: AnalyticEvent.getCategory(category: category.value))
                 withAnimation {
-                    selected = category
+                    selected = category                    
                 }
             } label: {
                 HStack {
                     Text(category.value)
-                        .font(Font.fredoka(selected == category ? .bold : .regular, size: 16))
-                        .foregroundColor(selected == category ? .black : Clr.black2)
+                        .font(Font.fredoka(selected == category ? .semiBold : .regular, size: 16))
+                        .foregroundColor(Clr.black2)
                         .font(.footnote)
                         .padding(.horizontal)
                 }

@@ -13,7 +13,7 @@ struct BreathMiddle: View {
     @EnvironmentObject var viewRouter:ViewRouter
     @State private var showPlay = false
     @State private var showPlant = false
-    @State private var duration: Int = 300
+    @State private var duration: Int = 60
     @State private var isLiked: Bool = false
 
     
@@ -39,7 +39,7 @@ struct BreathMiddle: View {
                         Button {
                             Analytics.shared.log(event: .breathwrk_middle_tapped_back)
                             withAnimation {
-                                viewRouter.currentPage = .meditate
+                                viewRouter.currentPage = viewRouter.previousPage
                             }
                         } label: {
                             Circle()
