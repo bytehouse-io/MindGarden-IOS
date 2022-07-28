@@ -11,11 +11,12 @@ import FirebaseFirestore
 
 
 struct FirebaseAPI {
-    static let db = Firestore.firestore()
-    static var firebaseMeds: [Meditation] = []
+    let db = Firestore.firestore()
+    var firebaseMeds: [Meditation] = []
+    let medModel: MeditationViewModel 
     
     // For the Learn Page
-    static func fetchCourses() {
+     func fetchCourses() {
         db.collection("Learn Page").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -63,7 +64,7 @@ struct FirebaseAPI {
     }
     
     // For Meditation Page
-    static func fetchMeditations(meditationModel: MeditationViewModel) {
+     func fetchMeditations(meditationModel: MeditationViewModel) {
         db.collection("Meditations").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -145,6 +146,7 @@ struct FirebaseAPI {
                     if Meditation.allMeditations.contains(where: { med in  med.id != medId }) {
                         Meditation.allMeditations.append(newMed)
                     }
+                    medModel.getFeaturedMeditation()
                 }
             }
         }

@@ -133,7 +133,7 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .breathMiddle:
                                         BreathMiddle()
-                                            .frame(height: geometry.size.height + 10)
+                                            .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .play:
                                         Play()

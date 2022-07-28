@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct BreathMiddle: View {
-    @State var duration: Int = 300
-    @State var isLiked: Bool = false
     @EnvironmentObject var medModel: MeditationViewModel
-    @State var showPlay = false
+    @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var viewRouter:ViewRouter
+    @State private var showPlay = false
+    @State private var showPlant = false
+    @State private var duration: Int = 300
+    @State private var isLiked: Bool = false
+
     
     var body: some View {
         if showPlay {
             BreathworkPlay(totalTime:$duration, showPlay:$showPlay, breathWork: medModel.selectedBreath)
                 .transition(.opacity)
+                .padding(.top, 50)
         } else  {
             breathMiddle
         }
@@ -33,6 +38,9 @@ struct BreathMiddle: View {
                     HStack {
                         Button {
                             Analytics.shared.log(event: .breathwrk_middle_tapped_back)
+                            withAnimation {
+                                viewRouter.currentPage = .meditate
+                            }
                         } label: {
                             Circle()
                                 .fill(Clr.darkWhite)
@@ -46,12 +54,37 @@ struct BreathMiddle: View {
                         }.buttonStyle(NeoPress())
                             .offset(x: -5, y: 5)
                         Spacer()
+                        HStack {
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    showPlant = true
+                                }
+                            } label: {
+                                HStack {
+                                    userModel.selectedPlant?.head
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                    Text("\(userModel.selectedPlant?.title ?? "none")")
+                                        .font(Font.fredoka(.medium, size: 16))
+                                        .foregroundColor(Clr.black2)
+                                        .font(.footnote)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
+                                }
+                                .frame(width: g.size.width * 0.3, height: 20)
+                                .padding(8)
+                                .background(Clr.yellow)
+                                .cornerRadius(24)
+                            }
+                            .buttonStyle(BonusPress())
+                        }
                         heart
                     }.frame(width: width - 60, height: 35)
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .center, spacing: 30) {
                             HStack(spacing: 15) {
-                                Img.sun
+                                medModel.selectedBreath.img
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                 VStack(alignment: .leading) {
@@ -61,7 +94,7 @@ struct BreathMiddle: View {
                                         .font(Font.fredoka(.regular, size: 16))
                                 }.foregroundColor(Clr.black2)
                                     .frame(width: width * 0.55, alignment: .leading)
-                            }.frame(width: width - 60, height: 50)
+                            }.frame(width: width - 60, height: height * 0.175)
                             HStack() {
                                 Spacer()
                                 Button {
@@ -111,6 +144,7 @@ struct BreathMiddle: View {
                                 BreathSequence(sequence: medModel.selectedBreath.sequence, width: width, height: height)
                                 Spacer()
                             }
+                            
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -135,6 +169,7 @@ struct BreathMiddle: View {
                                     
                                 }.frame(width: width - 45, height: 50)
                             }.buttonStyle(NeoPress())
+                            
                             (Text("💡 Tip: ").bold() + Text(medModel.selectedBreath.tip))
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2)
@@ -153,10 +188,12 @@ struct BreathMiddle: View {
                             Spacer()
                         }
                     }
-                }
+                }.padding(.top, 50)
+            }.sheet(isPresented: $showPlant) {
+                Store(isShop: false)
             }
-                }
         }
+    }
     
 
     
@@ -196,13 +233,13 @@ struct BreathMiddle: View {
             ZStack {
                 Rectangle()
                     .fill(Clr.calmPrimary)
-                    .frame(height: height * 0.2)
+                    .frame(height: height * 0.175)
                     .opacity(0.4)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 14)
                     .padding(.horizontal, 15)
                 VStack {
                     Text("Breath Sequence")
-                        .font(Font.fredoka(.semiBold, size: 20))
+                        .font(Font.fredoka(.semiBold, size: 16))
                     HStack {
                         // inhale
                         VStack(spacing: 3) {

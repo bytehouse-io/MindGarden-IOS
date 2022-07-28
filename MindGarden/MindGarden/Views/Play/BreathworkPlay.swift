@@ -11,7 +11,8 @@ import MediaPlayer
 import AudioToolbox
 
 struct BreathworkPlay : View {
-    
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var medModel: MeditationViewModel
     @State private var bgAnimation = false
     @State private var fadeAnimation = false
     @State private var title = ""
@@ -49,7 +50,7 @@ struct BreathworkPlay : View {
                 HStack {
                     Button {
                         withAnimation(.linear) {
-                            showPlay = false
+                            viewRouter.currentPage = .meditate
                         }
                     } label: {
                         Image(systemName: "arrow.left.circle.fill")
@@ -168,7 +169,9 @@ struct BreathworkPlay : View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                // TODO when paused
+                                withAnimation {
+                                    viewRouter.currentPage  = .finished
+                                }
                             }
                         } label: {
                             Text("I'm Done")
@@ -204,6 +207,7 @@ struct BreathworkPlay : View {
                         timerCount += 1
                         withAnimation(.linear(duration: 1.0)) {
                             progress = timerCount/Double(totalTime)
+                            print(progress, timerCount, totalTime, "bick back")
                         }
                     } else {
                         timer.invalidate()

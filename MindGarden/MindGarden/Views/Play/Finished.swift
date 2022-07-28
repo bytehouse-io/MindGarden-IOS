@@ -73,7 +73,7 @@ struct Finished: View {
                                     .opacity(hideConfetti ? 0 : 1)
                                 HStack(alignment: .center) {
                                     VStack {
-                                        Text("Minutes Meditated")
+                                        Text(model.finishedBreath ? "Total Breaths" : "Minutes Meditated")
                                             .font(Font.fredoka(.semiBold, size: 28))
                                             .foregroundColor(.white)
                                             .onTapGesture {
@@ -86,7 +86,7 @@ struct Finished: View {
                                             .animation(.easeInOut(duration: 1.5))
                                             .opacity(animateViews ? 0 : 1)
                                             .offset(x: animateViews ? 500 : 0)
-                                        Text(String(minsMed))
+                                        Text(model.finishedBreath ? String() : String(minsMed))
                                             .font(Font.fredoka(.bold, size: 70))
                                             .foregroundColor(.white)
                                             .animation(.easeInOut(duration: 1.5))
@@ -122,6 +122,7 @@ struct Finished: View {
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .frame(width: 50)
+                                                                .padding(.vertical, 5)
                                                             Text("Log Mood")
                                                                 .foregroundColor(.black)
                                                                 .font(Font.fredoka(.semiBold, size: 16))
@@ -226,7 +227,7 @@ struct Finished: View {
                                 model.favorite(selectMeditation: med)
                             }
                             favorited.toggle()
-                        }.padding(.leading)
+                        }.padding(.horizontal)
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(Clr.black1)

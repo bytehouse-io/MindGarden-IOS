@@ -71,7 +71,8 @@ struct MiddleSelect: View {
                                         .frame(width: g.size.width * 0.3, height: 20)
                                         .padding(8)
                                         .background(Clr.yellow)
-                                        .cornerRadius(20)
+                                        .cornerRadius(24)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 24)
                                     }
                                     .buttonStyle(BonusPress())
                                 }

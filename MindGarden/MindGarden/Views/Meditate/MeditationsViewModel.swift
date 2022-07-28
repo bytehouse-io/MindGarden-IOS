@@ -44,6 +44,7 @@ class MeditationViewModel: ObservableObject {
     @Published var roadMapArr: [Int] = []
     @Published var featuredBreathwork = Breathwork.breathworks[0]
     @Published var selectedBreath = Breathwork.breathworks[0]
+    @Published var finishedBreath = false
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
@@ -108,6 +109,12 @@ class MeditationViewModel: ObservableObject {
         
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
+        if !UserDefaults.standard.bool(forKey: "isPro") {
+            filtedMeds = filtedMeds.filter { med in
+                return !Meditation.lockedMeditations.contains(med.id)
+            }
+        }
+        
         if Calendar.current.component( .hour, from:Date() ) < 12 { // morning
             featuredBreathwork = Breathwork.breathworks[0]
             filtedMeds = filtedMeds.filter { med in // day time meds only
@@ -167,6 +174,13 @@ class MeditationViewModel: ObservableObject {
     private func setFeaturedReason() {
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56 && med.type != .weekly }
+      
+        if !UserDefaults.standard.bool(forKey: "isPro") {
+            filtedMeds = filtedMeds.filter { med in
+                return !Meditation.lockedMeditations.contains(med.id)
+            }
+        }
+        
         if Calendar.current.component( .hour, from:Date() ) < 18 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
             med.id != 27 && med.id != 54 && med.id != 39 }

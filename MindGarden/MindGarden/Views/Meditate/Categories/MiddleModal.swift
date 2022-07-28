@@ -131,6 +131,8 @@ struct MiddleModal: View {
                                     withAnimation {
                                         shown = false
                                         viewRouter.currentPage = .play
+                                        middleToSearch = ""
+                                        medSearch = false
                                     }
                                 }
                             } label: {
