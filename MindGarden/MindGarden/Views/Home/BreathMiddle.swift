@@ -188,7 +188,7 @@ struct BreathMiddle: View {
                             Spacer()
                         }
                     }
-                }.padding(.top, 50)
+                }.padding(.top, K.hasNotch() ? 50 : 25)
             }.sheet(isPresented: $showPlant) {
                 Store(isShop: false)
             }
