@@ -16,9 +16,10 @@ struct BreathworkPlay : View {
     @State private var fadeAnimation = false
     @State private var title = ""
         
-    @State var sequenceCounter = 0
-    @State var noOfSequence = 0
-    @State var size = 300.0
+    @State private var durationCounter = 1
+    @State private var sequenceCounter = 0
+    @State private var noOfSequence = 0
+    @State private var size = 300.0
     @State private var showPanel = true
     @State private var timerCount:TimeInterval = 0.0
     @Binding var totalTime: Int
@@ -42,10 +43,13 @@ struct BreathworkPlay : View {
     let breathWork: Breathwork
     
     @State var timer: Timer?
+    @State var durationTimer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
             AnimatedBackground(colors:[breathWork.color.primary, breathWork.color.primary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
             VStack {
+                Spacer()
+                    .frame(height: K.hasNotch() ? 50 : 25)
                 HStack {
                     Button {
                         withAnimation(.linear) {
@@ -93,7 +97,7 @@ struct BreathworkPlay : View {
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.1)
-                            Text("  \(noOfSequence > 0 ? noOfSequence : 1 )  ")
+                            Text("  \(durationCounter)  ")
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(.white)
                                 .opacity(fadeAnimation ? 0 : 1)
@@ -213,6 +217,7 @@ struct BreathworkPlay : View {
         }
         .onDisappear() {
             timer?.invalidate()
+            durationTimer?.invalidate()
         }
         .onTapGesture {
             toggleControllPanel()
@@ -244,6 +249,25 @@ struct BreathworkPlay : View {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(time)) {
                 playAnimation()
             }
+            durationTimer = nil
+            if time > 0 {
+                fadeAnimation = true
+                withAnimation(.linear(duration: 0.5)) {
+                    fadeAnimation = false
+                    durationCounter = time
+                }
+                durationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                    fadeAnimation = true
+                    withAnimation(.linear(duration: 0.5)) {
+                        fadeAnimation = false
+                        durationCounter -= 1
+                    }
+                    if durationCounter<=1 {
+                        timer.invalidate()
+                    }
+                }
+            }
+            
             if sequenceCounter < breathWork.sequence.count-1 {
                 sequenceCounter += 1
             } else {

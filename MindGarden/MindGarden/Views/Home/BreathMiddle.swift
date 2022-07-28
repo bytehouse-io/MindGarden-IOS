@@ -153,7 +153,7 @@ struct BreathMiddle: View {
                             Spacer()
                         }
                     }
-                }
+                }.padding(.top, K.hasNotch() ? 50 : 25)
             }
                 }
         }
