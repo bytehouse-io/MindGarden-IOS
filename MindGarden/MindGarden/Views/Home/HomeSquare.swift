@@ -70,7 +70,7 @@ struct HomeSquare: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
-                                    Text("\(meditation.instructor)")
+                                    Text(isBreath ? "Visual" : "\(meditation.instructor)")
                                         .padding(.leading, 2)
                                         .font(.caption)
                                         .lineLimit(1)
@@ -79,14 +79,14 @@ struct HomeSquare: View {
                                 .padding(.top, 5)
                                 .foregroundColor(Clr.lightTextGray)
                                 Spacer()
-                            }.padding(.leading, isSmaller ? 15 : 25)
+                            }.padding(.leading, isSmaller ? 15 : 20)
                                 .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
                             Group {
                                 if isBreath {
                                     breathWork.img
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
+                                        .frame(width: width * (isSmaller ? 0.14 : 0.15), height: height * 0.14, alignment: .center)
                                 } else {
                                     if meditation.imgURL != "" {
                                         UrlImageView(urlString: meditation.imgURL)

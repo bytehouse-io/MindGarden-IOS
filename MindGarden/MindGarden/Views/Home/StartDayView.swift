@@ -187,6 +187,7 @@ struct StartDayView: View {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
+                                        medModel.selectedBreath = medModel.featuredBreathwork
                                         viewRouter.currentPage = .breathMiddle
                                     }
                                 } label: {
@@ -196,9 +197,12 @@ struct StartDayView: View {
                                         .animation(.spring().delay(0.3), value: playEntryAnimation)
                                 }.buttonStyle(ScalePress())
                                     Button {
-                                        
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            
+                                        }
                                     } label: {
-                                        HomeSquare(width: width - 50, height: height * 0.7, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0], breathwork: nil)
+                                        HomeSquare(width: width - 50, height: height * 0.7, meditation: medModel.featuredMeditation ?? Meditation.allMeditations[0], breathwork: nil)
                                             .offset(y: playEntryAnimation ? 0 : 100)
                                             .opacity(playEntryAnimation ? 1 : 0)
                                             .animation(.spring().delay(0.3), value: playEntryAnimation)
@@ -241,6 +245,7 @@ struct StartDayView: View {
                                     .font(Font.fredoka(.regular, size: 16))
                                 Spacer()
                             }.offset(x: -5)
+                            .padding(.top, 10)
                         }
                     }
                     .frame(width: UIScreen.screenWidth * 0.775)

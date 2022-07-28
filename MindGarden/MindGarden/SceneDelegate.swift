@@ -67,15 +67,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
 
         let medModel = MeditationViewModel()
-        medModel.getUserMap()
         
         let profileModel = ProfileViewModel()
         let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
-        medModel.updateSelf()
+        let firebaseAPI = FirebaseAPI(medModel: medModel)
+
         SceneDelegate.userModel.updateSelf()
         SceneDelegate.gardenModel.updateSelf()
-        FirebaseAPI.fetchMeditations(meditationModel: medModel)
-        FirebaseAPI.fetchCourses()
+        firebaseAPI.fetchMeditations(meditationModel: medModel)
+        firebaseAPI.fetchCourses()
+        medModel.updateSelf()
+        medModel.getUserMap()
+
 
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
             SceneDelegate.bonusModel.totalBonuses = 1

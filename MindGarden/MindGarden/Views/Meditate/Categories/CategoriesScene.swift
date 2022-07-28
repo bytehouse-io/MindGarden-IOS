@@ -94,18 +94,35 @@ struct CategoriesScene: View {
                         }
                     }
                     ScrollView(showsIndicators: false) {
+                        
                             LazyVGrid(columns: gridItemLayout, content: {
-                                ForEach(meditations, id: \.self) { item in
-                                    Button {
-                                        Analytics.shared.log(event: .categories_tapped_square)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            didSelectcategory(item: item)
-                                        }
-                                    } label: {
-                                        HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: item, breathwork: nil)
-                                            .padding(.vertical, 8)
-                                    }.buttonStyle(NeoPress())
+                                if selectedCategory == .breathwork {
+                                    ForEach(Breathwork.breathworks, id: \.self) { item in
+                                        Button {
+                                            Analytics.shared.log(event: .categories_tapped_square)
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            withAnimation {
+                                                model.selectedBreath = item
+                                                viewRouter.currentPage = .breathMiddle
+                                            }
+                                        } label: {
+                                            HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: Meditation.allMeditations[0], breathwork: item)
+                                                .padding(.vertical, 8)
+                                        }.buttonStyle(NeoPress())
+                                    }
+                                } else {
+                                    ForEach(meditations, id: \.self) { item in
+                                        Button {
+                                            Analytics.shared.log(event: .categories_tapped_square)
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            withAnimation {
+                                                didSelectcategory(item: item)
+                                            }
+                                        } label: {
+                                            HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: item, breathwork: nil)
+                                                .padding(.vertical, 8)
+                                        }.buttonStyle(NeoPress())
+                                    }
                                 }
                             })
                         VStack {
@@ -159,6 +176,7 @@ struct CategoriesScene: View {
                 if isFromQuickstart {
                     HStack {
                         backButton
+                            .offset(x: -10)
                         Spacer()
                         Text(QuickStartMenuItem(title: selectedCategory).name)
                             .foregroundColor(Clr.black2)
@@ -215,6 +233,7 @@ struct CategoriesScene: View {
             case .unguided: return meditation.category == .unguided
             case .courses: return meditation.type == .course
             case .focus: return meditation.category == .focus
+            default: return true
             }
         })
     }
