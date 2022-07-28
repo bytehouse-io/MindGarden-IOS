@@ -49,7 +49,7 @@ struct Play: View {
                 GeometryReader { g in
                     let width = g.size.width
                     let height = g.size.height
-                    Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                    AnimatedBackground(colors:[Clr.yellow, Clr.skyBlue.opacity(0.5), Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
                     HStack(alignment: .center) {
                         Spacer()
                         VStack(alignment: .center) {

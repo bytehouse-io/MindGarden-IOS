@@ -8,6 +8,7 @@
 import SwiftUI
 // Font sizes: 12, 16, 28
 struct HomeViewDashboard: View {
+    @EnvironmentObject var userModel: UserViewModel
     @Binding var showModal : Bool
     @Binding var totalBonuses : Int
     @Binding var greeting : String
@@ -96,7 +97,7 @@ struct HomeViewDashboard: View {
                         activeSheet = .plant
                     } label: {
                         HStack(spacing:5) {
-                            Img.sunflowerHead
+                            userModel.selectedPlant?.head
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height:20)

@@ -183,7 +183,7 @@ class MeditationViewModel: ObservableObject {
         
         if Calendar.current.component( .hour, from:Date() ) < 18 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
-            med.id != 27 && med.id != 54 && med.id != 39 }
+                med.id != 27 && med.id != 54 && med.id != 39 && med.category != .sleep }
         }
         if Calendar.current.component(.hour, from: Date()) > 11 { // not morning
             filtedMeds = filtedMeds.filter { med in
