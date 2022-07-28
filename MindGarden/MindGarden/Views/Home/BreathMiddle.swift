@@ -20,8 +20,8 @@ struct BreathMiddle: View {
     var body: some View {
         if showPlay {
             BreathworkPlay(totalTime:$duration, showPlay:$showPlay, breathWork: medModel.selectedBreath)
+                .environmentObject(userModel)
                 .transition(.opacity)
-                .padding(.top, 50)
         } else  {
             breathMiddle
         }

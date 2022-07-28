@@ -59,13 +59,15 @@ struct PlantTile: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.05)
                         .frame(width: width * 0.35 * 0.85, alignment: .leading)
-                        .padding(.leading, isBadge ? 3 : isShop ? 0 : 5)
+                        .padding(.leading, isBadge ? 3 : isShop ? 3 : 5)
+                        .padding(.top, 5)
                     if isShop {
                         if isOwned && !isBadge {
                             Text("Bought")
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .opacity(0.4)
+                                .padding(.leading, 3)
                         } else {
                             HStack(spacing: isBadge ? 0 : 5) {
                                 if isBadge {
@@ -82,6 +84,7 @@ struct PlantTile: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(height: 20)
+                                        .padding(.leading, 3)
                                 }
 
                                 Text(isBadge ? Plant.badgeDict[plant.price] ?? "" : String(plant.price))

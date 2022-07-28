@@ -13,17 +13,19 @@ import AudioToolbox
 struct BreathworkPlay : View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var userModel: MeditationViewModel
     @State private var bgAnimation = false
     @State private var fadeAnimation = false
     @State private var title = ""
         
-    @State var sequenceCounter = 0
-    @State var noOfSequence = 0
-    @State var size = 300.0
+    @State private var sequenceCounter = 0
+    @State private var noOfSequence = 0
+    @State private var size = 300.0
     @State private var showPanel = true
     @State private var timerCount:TimeInterval = 0.0
     @Binding var totalTime: Int
     @State private var progress = 0.0
+
     
     // Background Settings
     @State var backgroundPlayer : AVAudioPlayer!
@@ -39,13 +41,12 @@ struct BreathworkPlay : View {
     @State var isPaused = false
     @Binding var showPlay:Bool
     
-    let images = [Img.seed,Img.sunflower1,Img.sunflower2,Img.sunflower3]
     let breathWork: Breathwork
     
     @State var timer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
-            AnimatedBackground(colors:[breathWork.color.primary, breathWork.color.primary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
+            AnimatedBackground(colors:[breathWork.color.primary, Clr.skyBlue.opacity(0.5), Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
             VStack {
                 HStack {
                     Button {
@@ -74,18 +75,17 @@ struct BreathworkPlay : View {
                 .disabled(!showPanel)
                 ZStack {
                     Circle()
-                        .foregroundColor(Clr.calmPrimary)
+                        .foregroundColor(breathWork.color.primary)
                         .addBorder(.black, width: 2, cornerRadius: size/2)
                         .frame(width:size, height: size)
                     Circle()
-                        .fill(Clr.lightGreen)
+                        .fill(breathWork.color.secondary.opacity(0.4))
                         .frame(width:size/2)
                         .clipShape(Circle())
                         .scaleEffect(bgAnimation ? 2 : 1)
-                        
                     ZStack {
                         Circle()
-                            .foregroundColor(Clr.calmsSecondary)
+                            .foregroundColor(breathWork.color.secondary)
                             .addBorder(.black, width: 2, cornerRadius: size/2)
                             .frame(width:size/2, height: size/2)
                         VStack {
@@ -112,7 +112,7 @@ struct BreathworkPlay : View {
                             ).background(
                                 ZStack {
                                     if progress >= 0.75 {
-                                        images[3]
+                                        userModel.selectedPlant?.coverImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(height:150)
@@ -133,7 +133,7 @@ struct BreathworkPlay : View {
                                     .frame(width:geometry.size.width, height:15)
                                     .cornerRadius(25,corners: [.bottomLeft, .bottomRight])
                                 Rectangle()
-                                    .fill(Clr.brightGreen)
+                                    .fill(breathWork.color.secondary)
                                     .frame(width:geometry.size.width*progress, height:15)
                                     .cornerRadius(25,corners: [.bottomLeft, .bottomRight])
                             }
@@ -184,7 +184,7 @@ struct BreathworkPlay : View {
                     .disabled(!showPanel)
                     .opacity(showPanel ? 1.0 : 0.0)
                 }.padding(.horizontal,30)
-            }
+            }.padding(.top, 50)
             if showNatureModal  {
                 Color.black
                     .opacity(0.3)
@@ -194,7 +194,13 @@ struct BreathworkPlay : View {
                 .offset(y: showNatureModal ? 0 : UIScreen.screenHeight)
                 .animation(.default)
         }
-        .onAppear() {
+        .onAppear {
+            if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
+                userModel.selectedPlant = Plant.allPlants.first(where: { plant in
+                    return plant.title == plantTitle
+                })
+            }
+            
             let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
             noOfSequence = Int(Double(totalTime)/Double(singleTime))
             DispatchQueue.main.async {
@@ -214,6 +220,7 @@ struct BreathworkPlay : View {
                     }
                 }
             }
+
         }
         .onDisappear() {
             timer?.invalidate()
@@ -221,6 +228,7 @@ struct BreathworkPlay : View {
         .onTapGesture {
             toggleControllPanel()
         }
+        
     }
     
     private func playAnimation() {
@@ -286,7 +294,7 @@ struct BreathworkPlay : View {
     var plantView: some View {
         ZStack {
             if progress < 0.25 {
-                images[0]
+                Img.seed
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:40)
@@ -295,7 +303,7 @@ struct BreathworkPlay : View {
                     .transition(.opacity)
                 
             } else if progress < 0.50 {
-                images[1]
+                userModel.selectedPlant?.one
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:50)
@@ -303,7 +311,7 @@ struct BreathworkPlay : View {
                                 .spring(response: 0.3, dampingFraction: 3.0))
                     .transition(.opacity)
             } else if progress < 0.75 {
-                images[2]
+                userModel.selectedPlant?.two
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:60)
