@@ -207,6 +207,7 @@ struct BreathworkPlay : View {
             
             let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
             noOfSequence = Int(Double(totalTime)/Double(singleTime))
+            totalTime = noOfSequence*singleTime
             DispatchQueue.main.async {
                 playAnimation()
                 toggleControllPanel()
