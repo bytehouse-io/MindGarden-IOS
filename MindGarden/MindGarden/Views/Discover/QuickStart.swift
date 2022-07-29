@@ -23,7 +23,7 @@ struct QuickStart: View {
                     ForEach(quickStartTabList) { item in
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
+                            withAnimation(.linear(duration: 0.3)) {
                                 category = item.title
                                 middleToSearch = item.name
                                 isShowCategory = true

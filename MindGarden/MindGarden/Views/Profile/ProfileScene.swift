@@ -53,7 +53,7 @@ struct ProfileScene: View {
     
     @State private var isSharePresented: Bool = false
     @State private var urlShare2 = URL(string: "https://mindgarden.io")
-    
+    @State private var backgroundMusicOn = false
     @State private var showFeedbackOption = false
     @State private var showFeedbackSheet = false
     @State private var selectedFeedback:FeedbackType = .helpMindGarden
@@ -214,14 +214,27 @@ struct ProfileScene: View {
                                                                 Divider()
                                                             }
                                                             VStack {
-                                                                Row(title: "Background Music", img: Image(systemName: "speaker.fill"), action: {
-                                                                    print("gang")
+                                                                Row(title: "Background Music", img: Image(systemName: backgroundMusicOn ? "speaker.wave.2.fill" : "speaker.slash.fill"), action: {
+                                                                    backgroundMusicOn.toggle()
+                                                                    if let player = player {
+                                                                        if player.isPlaying {
+                                                                            player.pause()
+                                                                            backgroundMusicOn = false
+                                                                        } else {
+                                                                            player.play()
+                                                                            backgroundMusicOn = true
+                                                                        }
+                                                                    }
+                                                                    UserDefaults.standard.setValue(backgroundMusicOn, forKey: "isPlayMusic")
                                                                 }, showNotif: $showNotif, showMindful: $showMindful)
+                                                                .frame(height: 40)
+                                                                Divider()
                                                                 Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
                                                                     showNotification = true
                                                                     Analytics.shared.log(event: .profile_tapped_notifications)
                                                                 }, showNotif: $showNotif, showMindful: $showMindful)
                                                                     .frame(height: 40)
+                                                                Divider()
                                                                 Row(title: "Garden", img: Image(systemName: "calendar"), action: {
                                                                     showGarden = true
                                                                     Analytics.shared.log(event: .profile_tapped_garden)
@@ -525,6 +538,7 @@ struct ProfileScene: View {
                         .transition(.move(edge: .trailing))
             }
         }.onAppear {
+            backgroundMusicOn = UserDefaults.standard.bool(forKey: "isPlayMusic")
             //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
             if tappedRefer {
                 selection = .referral

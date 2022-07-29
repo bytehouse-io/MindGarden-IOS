@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */; };
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
+		5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */; };
+		5801C2752892F3C900927C4F /* Fredoka-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */; };
+		5801C2762892F3D000927C4F /* Fredoka-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */; };
+		5801C2772892F3D400927C4F /* Fredoka-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF83286B6ED5000C6E0B /* Fredoka-Regular.ttf */; };
+		5801C2782892F3D800927C4F /* Fredoka-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF81286B6ED5000C6E0B /* Fredoka-SemiBold.ttf */; };
 		5803A31D27DBB8CB00F1F2E7 /* DaysProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */; };
 		5803A31E27DBB8CB00F1F2E7 /* StreakScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */; };
 		5810EB632847971800DD4D25 /* JourneyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5810EB622847971800DD4D25 /* JourneyScene.swift */; };
@@ -1339,9 +1344,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5801C2762892F3D000927C4F /* Fredoka-Medium.ttf in Resources */,
 				FE48B44F277959A400CA7B63 /* Colors.xcassets in Resources */,
+				5801C2772892F3D400927C4F /* Fredoka-Regular.ttf in Resources */,
+				5801C2782892F3D800927C4F /* Fredoka-SemiBold.ttf in Resources */,
 				FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */,
+				5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */,
 				FE48B4512779618600CA7B63 /* Assets.xcassets in Resources */,
+				5801C2752892F3C900927C4F /* Fredoka-Light.ttf in Resources */,
 				FE48B44D2779583500CA7B63 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

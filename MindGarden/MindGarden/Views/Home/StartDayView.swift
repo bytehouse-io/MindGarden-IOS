@@ -64,7 +64,7 @@ struct StartDayView: View {
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
                     DottedLine()
                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                        .fill(isDailyMood ? .clear : Clr.brightGreen)
+                        .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
                         .opacity(0.5)
                         .frame(width:2)
                     Circle()
@@ -73,11 +73,11 @@ struct StartDayView: View {
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                     DottedLine()
                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                        .fill(isGratitudeDone ? Clr.brightGreen : .clear )
+                        .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
                         .opacity(0.5)
                         .frame(width:2)
                     Circle()
-                        .fill(.white)
+                        .fill(updatedStreak ? Clr.brightGreen : .clear )
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                 }.padding(.vertical,50)
@@ -102,6 +102,7 @@ struct StartDayView: View {
                     .offset(y: playEntryAnimation ? 0 : 100)
                     .opacity(playEntryAnimation ? 1 : 0)
                     .animation(.spring().delay(0.3), value: playEntryAnimation)
+                 
                     
                     Button {
 
@@ -262,9 +263,7 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
-            withAnimation {
-                playEntryAnimation = true
-            }
+      
             
             DispatchQueue.main.async {
                 let weekDays = getAllDaysOfTheCurrentWeek()
@@ -280,6 +279,9 @@ struct StartDayView: View {
                     if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
                         isGratitudeDone = true
                     }
+                }
+                withAnimation {
+                    playEntryAnimation = true
                 }
             }
         }
@@ -384,10 +386,10 @@ struct StartDayView: View {
                         .padding(.horizontal,2)
                         .frame(maxWidth:.infinity)
                     }
-                }
-                .padding(10)
+                }.padding(10)
                 .padding(.vertical, 10)
             }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+   
         }
     }
 }

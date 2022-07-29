@@ -21,13 +21,13 @@ struct GridStack<Content: View>: View {
                     ForEach(0 ..< columns, id: \.self) { column in
                         if row == 0 && column == 0 {
                             content(row, column)
-                                .cornerRadius(0, corners: [.topLeft])
+                                .cornerRadius(16, corners: [.topLeft])
                         } else if row == (extraRow ? 5 : 4) && column == 0 {
                             content(row, column)
                                 .cornerRadius(0, corners: [.bottomLeft])
                         } else if row == 0 && column == 6 {
                             content(row, column)
-                                .cornerRadius(0, corners: [.topRight])
+                                .cornerRadius(16, corners: [.topRight])
                         } else if row == (extraRow ? 5 : 4) && column == 6 {
                             content(row, column)
                                 .cornerRadius(0, corners: [.bottomRight])
@@ -38,11 +38,7 @@ struct GridStack<Content: View>: View {
                 }
             }
         }
-        .cornerRadius(15)
-        .overlay(
-            RoundedRectangle(cornerRadius: 0)
-                .stroke(Color.white, lineWidth: 2)
-        )
+
     }
 
     init(rows: Int, columns: Int, @ViewBuilder content: @escaping (Int, Int) -> Content) {

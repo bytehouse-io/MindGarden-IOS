@@ -22,7 +22,6 @@ struct TabButtonView: View {
                         if !isOnboarding || UserDefaults.standard.bool(forKey: "review") {
                             DispatchQueue.main.async {
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                    self.tag = item.index
                                     middleToSearch = ""
                                     selectedTab = item.tabName
                                     color = item.color
@@ -59,7 +58,7 @@ struct TabButtonView: View {
         }
         .onChange(of: selectedTab) { val in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                currentTab = selectedTab
+                setTab()
             }
         }
         .frame(height: 50, alignment: .center)
@@ -74,7 +73,13 @@ struct TabButtonView: View {
                 .stroke(.black, lineWidth: 1)
         )
         .onAppear(){
-            currentTab = selectedTab
+            setTab()
+        }
+    }
+    
+    private func setTab() {
+        currentTab = selectedTab
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
             switch selectedTab {
             case .garden:
                 tag = 1
@@ -85,7 +90,6 @@ struct TabButtonView: View {
             case .search:
                 tag = 4
             }
-            
         }
     }
     

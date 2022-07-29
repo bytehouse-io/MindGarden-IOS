@@ -13,7 +13,7 @@ import Purchases
 import WidgetKit
 
 class UserViewModel: ObservableObject {
-    @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge)]
+    @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),  Plant(title: "Red Tulip", price: 900, selected: false, description: "🌷 Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.redTulipsHead, badge: Img.redTulipsBadge)]
     @Published var selectedPlant: Plant?
     @Published var willBuyPlant: Plant?
     @Published var streakFreeze = 0
@@ -430,7 +430,7 @@ class UserViewModel: ObservableObject {
                     newPlants.append(plant.title)
                     UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
                 } else {
-                    var newPlants = ["White Daisy"]
+                    var newPlants = ["White Daisy", "Red Tulips"]
                     newPlants.append(plant.title)
                     UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
                 }

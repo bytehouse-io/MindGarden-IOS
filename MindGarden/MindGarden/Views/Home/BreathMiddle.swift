@@ -217,9 +217,9 @@ struct BreathMiddle: View {
                     .frame(width: width/5.5, height: width/5.5)
                 VStack(spacing: -5) {
                     Text(String(duration))
-                        .font(Font.fredoka(.semiBold, size: 32))
+                        .font(Font.fredoka(.medium, size: 32))
                     Text(duration == 30 ? "sec" : "min")
-                        .font(Font.fredoka(.medium, size: 20))
+                        .font(Font.fredoka(.regular, size: 20))
                 }.foregroundColor(Clr.black2)
             }
         }
@@ -261,7 +261,7 @@ struct BreathMiddle: View {
                                     .rotationEffect(sequence[0].1 == "e" ? .degrees(180) : .degrees(0))
                             }.foregroundColor(Clr.calmsSecondary)
                             VStack(spacing: -3) {
-                                Text("3")
+                                Text(String(sequence[0].0))
                                     .font(Font.fredoka(.semiBold, size: 16))
                                 Text(sequence[0].1 == "i" ? "Inhale" : "Exhale")
                                     .font(Font.fredoka(.regular, size: 16))
@@ -278,7 +278,7 @@ struct BreathMiddle: View {
                                     .offset(y: -5)
                                 
                                 VStack(spacing: -3) {
-                                    Text("3")
+                                    Text(String(sequence[1].0))
                                         .font(Font.fredoka(.semiBold, size: 16))
                                     Text("Hold")
                                         .font(Font.fredoka(.regular, size: 16))
@@ -302,7 +302,7 @@ struct BreathMiddle: View {
                                     .rotationEffect(sequence[2].1 == "e" ? .degrees(180) : .degrees(0))
                             }.foregroundColor(Clr.calmsSecondary)
                             VStack(spacing: -3) {
-                                Text("3")
+                                Text(String(sequence[2].0))
                                     .font(Font.fredoka(.semiBold, size: 16))
                                 Text(sequence[2].1 == "i" ? "Inhale" : "Exhale")
                                     .font(Font.fredoka(.regular, size: 16))

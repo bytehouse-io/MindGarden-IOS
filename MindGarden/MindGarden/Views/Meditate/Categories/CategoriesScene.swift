@@ -193,7 +193,7 @@ struct CategoriesScene: View {
                 model.selectedCategory = .all
             }
         }
-        .transition(.move(edge: .bottom))
+        .transition(.move(edge: .trailing))
         .onDisappear {
             medSearch = false
             searchScreen = false
@@ -240,6 +240,7 @@ struct CategoriesScene: View {
 
     var backButton: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !isFromQuickstart {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 middleToSearch = ""

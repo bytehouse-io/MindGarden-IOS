@@ -59,7 +59,7 @@ struct BreathworkPlay : View {
                 HStack {
                     Button {
                         withAnimation(.linear) {
-                            viewRouter.currentPage = .meditate
+                            viewRouter.currentPage = viewRouter.previousPage
                         }
                     } label: {
                         Image(systemName: "arrow.left.circle.fill")
@@ -118,11 +118,29 @@ struct BreathworkPlay : View {
                                 plantView
                             ).background(
                                 ZStack {
-                                    if progress >= 0.75 {
+                                    if progress < 0.50 && progress >= 0.24 {
+                                        userModel.selectedPlant?.one
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height:60)
+                                            .animation(Animation
+                                                        .spring(response: 0.3, dampingFraction: 3.0))
+                                            .transition(.opacity)
+                                            .offset(y:-30)
+                                    } else if progress > 0.5 && progress < 0.75 {
+                                       userModel.selectedPlant?.two
+                                           .resizable()
+                                           .aspectRatio(contentMode: .fit)
+                                           .frame(height:100)
+                                           .animation(Animation
+                                                       .spring(response: 0.3, dampingFraction: 3.0))
+                                           .transition(.opacity)
+                                           .offset(y:-55)
+                                    } else if  progress >= 0.75 {
                                         userModel.selectedPlant?.coverImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(height:150)
+                                            .frame(height:160)
                                             .offset(y:-80)
                                             .animation(Animation
                                                         .spring(response: 0.3, dampingFraction: 3.0))
@@ -173,19 +191,19 @@ struct BreathworkPlay : View {
                         }
                         .frame(height:50)
                         .buttonStyle(ScalePress())
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                withAnimation {
-                                    viewRouter.currentPage  = .finished
-                                }
-                            }
-                        } label: {
-                            Text("I'm Done")
-                                .font(Font.fredoka(.medium, size: 20))
-                                .foregroundColor(Clr.black2)
-                                .underline()
-                        }.padding(.top)
+//                        Button {
+//                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                            withAnimation {
+//                                withAnimation {
+//                                    viewRouter.currentPage  = .finished
+//                                }
+//                            }
+//                        } label: {
+//                            Text("I'm Done")
+//                                .font(Font.fredoka(.medium, size: 20))
+//                                .foregroundColor(Clr.black2)
+//                                .underline()
+//                        }.padding(.top)
                     }
                     .padding(.vertical)
                     .disabled(!showPanel)
@@ -202,7 +220,6 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
-            totalTime = 24
             if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
                 userModel.selectedPlant = Plant.allPlants.first(where: { plant in
                     return plant.title == plantTitle
@@ -211,10 +228,7 @@ struct BreathworkPlay : View {
             
             let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
             noOfSequence = Int(Double(totalTime)/Double(singleTime))
-            DispatchQueue.main.async {
-                playAnimation()
-                toggleControllPanel()
-            }
+            totalTime = noOfSequence*singleTime
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
@@ -225,9 +239,17 @@ struct BreathworkPlay : View {
                         }
                     } else {
                         timer.invalidate()
+                        withAnimation {
+                            viewRouter.currentPage = .finished
+                        }
                     }
                 }
             }
+            DispatchQueue.main.async {
+                playAnimation()
+                toggleControllPanel()
+            }
+
 
         }
         .onDisappear() {
@@ -259,6 +281,7 @@ struct BreathworkPlay : View {
                 withAnimation(.linear(duration: Double(time))) {
                     bgAnimation = false
                 }
+                medModel.totalBreaths += 1
             default: break
             }
             
@@ -325,27 +348,11 @@ struct BreathworkPlay : View {
                 Img.seed
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height:40)
+                    .frame(height:30)
                     .animation(Animation
                                 .spring(response: 0.3, dampingFraction: 3.0))
                     .transition(.opacity)
-                
-            } else if progress < 0.50 {
-                userModel.selectedPlant?.one
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height:50)
-                    .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0))
-                    .transition(.opacity)
-            } else if progress < 0.75 {
-                userModel.selectedPlant?.two
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height:60)
-                    .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0))
-                    .transition(.opacity)
+                    .offset(y: -20)
             } else {
                 EmptyView()
             }

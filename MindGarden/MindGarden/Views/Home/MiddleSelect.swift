@@ -198,16 +198,10 @@ struct MiddleSelect: View {
                 viewRouter.currentPage = viewRouter.previousPage
             }
         } label: {
-            Circle()
-                .fill(Clr.darkWhite)
-                .frame(width: 40)
-                .overlay(
-                    Image(systemName: "arrow.left")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15)
-                )
-        }.buttonStyle(NeoPress())
+            Image(systemName: "arrow.backward")
+                .font(.title)
+                .foregroundColor(Clr.brightGreen)
+        }.offset(x: -10)
     }
     
     var heart: some View {
