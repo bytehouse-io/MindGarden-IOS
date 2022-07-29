@@ -67,6 +67,13 @@ struct StartDayView: View {
                         .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
                         .opacity(0.5)
                         .frame(width:2)
+                        .frame(maxHeight:.infinity)
+                    DottedLine()
+                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                        .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
+                        .opacity(0.5)
+                        .frame(width:2)
+                        .frame(maxHeight:.infinity)
                     Circle()
                         .fill(isGratitudeDone ? Clr.brightGreen : .clear )
                         .frame(width:24,height: 24)
@@ -76,11 +83,20 @@ struct StartDayView: View {
                         .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
                         .opacity(0.5)
                         .frame(width:2)
+                        .frame(maxHeight:.infinity)
+                    DottedLine()
+                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                        .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
+                        .opacity(0.5)
+                        .frame(width:2)
+                        .frame(maxHeight:.infinity)
                     Circle()
                         .fill(updatedStreak ? Clr.brightGreen : .clear )
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
-                }.padding(.vertical,50)
+                    Spacer()
+                        .frame(height:30)
+                }.padding(.vertical,70)
                 VStack(spacing:30) {
                     ZStack {
                         Img.whiteClouds
@@ -244,7 +260,9 @@ struct StartDayView: View {
                                     .foregroundColor(Clr.black2)
                                     .font(Font.fredoka(.regular, size: 16))
                                 Spacer()
-                            }.offset(x: -5)
+                            }
+                            .frame(height:30)
+                            .offset(x: -5)
                             .padding(.top, 10)
                         }
                     }
