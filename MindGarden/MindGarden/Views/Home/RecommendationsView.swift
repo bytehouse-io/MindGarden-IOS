@@ -14,6 +14,7 @@ struct RecommendationsView: View {
     private let titles = ["Intro to Meditation", "Intro to Meditation","Basic Confidence Meditation"]
     @State private var playAnim = false
     let width = UIScreen.screenWidth
+    @State private var playEntryAnimation = false
 
     var body: some View {
         ZStack {
@@ -100,7 +101,10 @@ struct RecommendationsView: View {
                 .padding(.horizontal,32)
             }
         }.onAppear() {
-            playAnim = true
+            withAnimation(.spring()) {
+                playAnim = true
+                playEntryAnimation = true
+            }
         }
     }
     
@@ -126,6 +130,9 @@ struct RecommendationsView: View {
             ForEach(0..<titles.count) { idx in
                 MeditationRow(title: titles[idx])
                     .padding(.vertical,5)
+                    .offset(y: playEntryAnimation ? 0 : 100)
+                    .opacity(playEntryAnimation ? 1 : 0)
+                    .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
             }
             HStack {
                 Spacer()
