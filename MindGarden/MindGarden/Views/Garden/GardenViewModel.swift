@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestore
 import Foundation
 import WidgetKit
+import Amplitude
 
 
 class GardenViewModel: ObservableObject {
@@ -26,6 +27,10 @@ class GardenViewModel: ObservableObject {
     @Published var gratitudes = 0
     @Published var lastFive =  [(String, Plant?,Mood?)]()
     @Published var entireHistory = [([Int], [[String: String]])]()
+    @Published var numBreaths = 0
+    @Published var numMeds = 0
+    @Published var numMoods = 0
+    @Published var numGrads = 0
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -39,6 +44,10 @@ class GardenViewModel: ObservableObject {
     
     func getRecentMeditations() {
         entireHistory = []
+        numMoods = 0
+        numGrads = 0
+        numMeds = 0
+        numBreaths = 0
         var yearSortDict = [String: [[[String:String]]]]()
         
         for (key,value) in grid {
@@ -50,13 +59,22 @@ class GardenViewModel: ObservableObject {
                     for day in days { // we can improve performance by stopping when we get the last two different sessions
                         var dataArr = [[String: String]]()
                         if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
+                            
                             for sess in sessions { // sort by timestamp here
+                                if let id = Int(sess["meditationId"] ?? "0") {
+                                    if id >= 0 {
+                                        numMeds += 1
+                                    } else {
+                                        numBreaths += 1
+                                    }
+                                }
                                 dataArr.append(sess)
                             }
                         }
                             if let moods = singleDay[String(day)]?["moods"] as? [[String: String]] {
                                 for mood in moods {
                                     dataArr.append(mood)
+                                    numMoods += 1
                                 }
                             } else if let moods = singleDay[String(day)]?["moods"] as? [String] {
                                 for mood in moods {
@@ -65,20 +83,23 @@ class GardenViewModel: ObservableObject {
                                     moodObj["elaboration"] = mood
                                     moodObj["timeStamp"] = "12:00 AM"
                                     dataArr.append(moodObj)
+                                    numMoods += 1
                                 }
                             }
  
                             if let journals = singleDay[String(day)]?["journals"] as? [[String: String]] {
                                 for journal in journals {
                                     dataArr.append(journal)
+                                    numGrads += 1
                                 }
-                            } else if let journals = singleDay[String(day)]?["journals"] as? [String] {
+                            } else if let journals = singleDay[String(day)]?["gratitudes"] as? [String] {
                                 for journal in journals {
                                     var journalObj = [String: String]()
                                     journalObj["question"] = "None"
                                     journalObj["gratitude"] = journal
                                     journalObj["timeStamp"] = "12:00 AM"
                                     dataArr.append(journalObj)
+                                    numGrads += 1
                                 }
                             }
                         
@@ -91,6 +112,16 @@ class GardenViewModel: ObservableObject {
             // TODO get old timestamp sorting code from github
 //            UserDefaults.standard.setValue(ids, forKey: "recent")
             // TODO instead of timestamp, save entire date.
+            let identify = AMPIdentify()
+                .set("breathwork_sessions", value: NSNumber(value: numBreaths))
+            identify?
+                .set("meditation_sessions", value: NSNumber(value: numMeds))
+            identify?
+                .set("journal_sessions", value: NSNumber(value: numGrads))
+            identify?
+                .set("mood_sessions", value: NSNumber(value: numMoods))
+            Amplitude.instance().identify(identify ?? AMPIdentify())
+
         }
         
         entireHistory = entireHistory.sorted { (lhs, rhs) in

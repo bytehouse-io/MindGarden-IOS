@@ -220,11 +220,11 @@ struct Finished: View {
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
                     HStack {
-                        LikeButton(isLiked: favorited, size:35) {
+                        LikeButton(isLiked: $favorited, size:35) {
                             Analytics.shared.log(event: .finished_tapped_favorite)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if let med = model.selectedMeditation {
-                                model.favorite(selectMeditation: med)
+                                model.favorite(id: med.id)
                             }
                             favorited.toggle()
                         }.padding(.horizontal)
@@ -360,23 +360,18 @@ struct Finished: View {
                 
                 var session = [String: String]()
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
+                var minutesMed = 0
+                
                 if model.totalBreaths > 0 {
-                    session[K.defaults.meditationId] = String(model.selectedBreath.id)
-                    var minutesMed = 0
-                    switch (model.selectedBreath.duration * model.totalBreaths) {
-                    case 0...35: minutesMed = 30
-                    case 36...70: minutesMed = 60
-                    default: minutesMed = model.selectedBreath.duration * model.totalBreaths
+                    if let selectedBreath = model.selectedBreath {
+                        session[K.defaults.meditationId] = String(selectedBreath.id)
+                        switch (selectedBreath.duration * model.totalBreaths) {
+                        case 0...35: minutesMed = 30
+                        case 36...70: minutesMed = 60
+                        default: minutesMed = selectedBreath.duration * model.totalBreaths
+                        }
                     }
                     session[K.defaults.duration] = String(minutesMed)
-                    //num times med
-                    var num = UserDefaults.standard.integer(forKey: "numBreaths")
-                    num += 1
-                    UserDefaults.standard.setValue(num, forKey: "numBreaths")
-            
-                    let identify = AMPIdentify()
-                        .set("breathwork_sessions", value: NSNumber(value: num))
-                    Amplitude.instance().identify(identify ?? AMPIdentify())
                 } else {
                     session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                     session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
@@ -384,19 +379,9 @@ struct Finished: View {
                     if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
                         userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
                     }
-                    //num times med
-                    var num = UserDefaults.standard.integer(forKey: "numMeds")
-                    num += 1
-                    UserDefaults.standard.setValue(num, forKey: "numMeds")
-            
-                    let identify = AMPIdentify()
-                        .set("meditation_sessions", value: NSNumber(value: num))
-                    Amplitude.instance().identify(identify ?? AMPIdentify())
                 }
                 
                 session["timeStamp"] = Date.getTime()
-
-  
 
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {

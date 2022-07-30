@@ -14,7 +14,8 @@ struct BreathMiddle: View {
     @State private var showPlay = false
     @State private var showPlant = false
     @State private var duration: Int = 60
-    @State private var isLiked: Bool = false
+    @State private var isFavorited: Bool = false
+    @State private var breathWork: Breathwork = Breathwork.breathworks[0]
 
     
     var body: some View {
@@ -84,13 +85,13 @@ struct BreathMiddle: View {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .center, spacing: 30) {
                             HStack(spacing: 15) {
-                                medModel.selectedBreath.img
+                                breathWork.img
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                 VStack(alignment: .leading) {
-                                    Text(medModel.selectedBreath.title)
+                                    Text(breathWork.title)
                                         .font(Font.fredoka(.semiBold, size: 28))
-                                    Text(medModel.selectedBreath.description)
+                                    Text(breathWork.description)
                                         .font(Font.fredoka(.regular, size: 16))
                                 }.foregroundColor(Clr.black2)
                                     .frame(width: width * 0.55, alignment: .leading)
@@ -141,7 +142,7 @@ struct BreathMiddle: View {
                             
                             HStack {
                                 Spacer()
-                                BreathSequence(sequence: medModel.selectedBreath.sequence, width: width, height: height)
+                                BreathSequence(sequence: breathWork.sequence, width: width, height: height, color: breathWork.color.secondary)
                                 Spacer()
                             }
                             
@@ -170,7 +171,7 @@ struct BreathMiddle: View {
                                 }.frame(width: width - 45, height: 50)
                             }.buttonStyle(NeoPress())
                             
-                            (Text("💡 Tip: ").bold() + Text(medModel.selectedBreath.tip))
+                            (Text("💡 Tip: ").bold() + Text(breathWork.tip))
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2)
                                 .frame(width: width - 60, height: 70, alignment: .leading)
@@ -180,7 +181,7 @@ struct BreathMiddle: View {
                                     .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(Clr.black2)
                                 VStack {
-                                    WrappingHStack(list: medModel.selectedBreath.recommendedUse, geometry: g)
+                                    WrappingHStack(list: breathWork.recommendedUse, geometry: g)
                                         .offset(x: -7)
                                 }
                             }.frame(width: width - 60, alignment: .leading)
@@ -192,15 +193,22 @@ struct BreathMiddle: View {
             }.sheet(isPresented: $showPlant) {
                 Store(isShop: false)
             }
+        }.onAppear {
+            medModel.checkIfFavorited()
+            if let breath = medModel.selectedBreath {
+                breathWork = breath
+            }
         }
     }
     
 
     
     var heart: some View {
-        LikeButton(isLiked: isLiked) {
+        LikeButton(isLiked: $medModel.isFavorited) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             Analytics.shared.log(event: .breathwrk_middle_favorited)
+            medModel.favorite(id: breathWork.id)
+            isFavorited.toggle()
         }
     }
     
@@ -228,11 +236,12 @@ struct BreathMiddle: View {
     struct BreathSequence:  View {
         let sequence: [(Int,String)]
         let width, height: CGFloat
+        let color: Color
         
         var body: some View {
             ZStack {
                 Rectangle()
-                    .fill(Clr.calmPrimary)
+                    .fill(color)
                     .frame(height: height * 0.175)
                     .opacity(0.4)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 14)
@@ -253,12 +262,14 @@ struct BreathMiddle: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 12)
                                     .rotationEffect(sequence[0].1 == "e" ? .degrees(180) : .degrees(0))
+                                    .foregroundColor(.black)
                                 Image(systemName: "line.diagonal.arrow")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 12)
                                     .rotationEffect(.degrees(270))
                                     .rotationEffect(sequence[0].1 == "e" ? .degrees(180) : .degrees(0))
+                                    .foregroundColor(.black)
                             }.foregroundColor(Clr.calmsSecondary)
                             VStack(spacing: -3) {
                                 Text(String(sequence[0].0))
@@ -294,12 +305,14 @@ struct BreathMiddle: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 12)
                                     .rotationEffect(sequence[2].1 == "e" ? .degrees(180) : .degrees(0))
+                                    .foregroundColor(.black)
                                 Image(systemName: "line.diagonal.arrow")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 12)
                                     .rotationEffect(.degrees(270))
                                     .rotationEffect(sequence[2].1 == "e" ? .degrees(180) : .degrees(0))
+                                    .foregroundColor(.black)
                             }.foregroundColor(Clr.calmsSecondary)
                             VStack(spacing: -3) {
                                 Text(String(sequence[2].0))

@@ -65,6 +65,7 @@ struct Play: View {
                                     .padding(.leading, 10)
                                 Spacer()
                                 HStack{sound; heart}
+                                    .padding(.trailing)
                             }.padding(.horizontal)
                             .padding(.top, height * 0.07)
                             HStack(alignment: .center) {
@@ -95,6 +96,7 @@ struct Play: View {
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: model.lastSeconds ? width/3 : width/5, height: model.lastSeconds ? height/5 : height/7)
                                                 .animation(.easeIn(duration: 2.0))
+                                                .offset(y: 20)
                                         }
                                     } else if model.secondsRemaining <= model.totalTime * 0.5 || (model.secondsRemaining >= 200 && model.selectedMeditation?.duration == -1) {
                                         model.playImage
@@ -102,7 +104,7 @@ struct Play: View {
                                             .aspectRatio(contentMode: .fit)
                                             .animation(.easeIn(duration: 2.0))
                                             .frame(width: width/4, height: height/6)
-                                            .offset(y: 25)
+                                            .offset(y: 40)
                                         
                                     } else if model.secondsRemaining <= model.totalTime * 0.75 || (model.secondsRemaining >= 100 && model.selectedMeditation?.duration == -1) {
                                         model.playImage
@@ -110,14 +112,14 @@ struct Play: View {
                                             .aspectRatio(contentMode: .fit)
                                             .animation(.easeIn(duration: 2.0))
                                             .frame(width: width/6, height: height/8)
-                                            .offset(y: 50)
+                                            .offset(y: 70)
                                     } else {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .animation(.easeIn(duration: 1.0))
-                                            .frame(width: width/10, height: height/12)
-                                            .offset(y: 75)
+                                            .frame(width: 40, height: 40)
+                                            .offset(y: 85)
                                     }
                                 }
                                 .frame(width: K.isPad() ? 500 : 250)
@@ -125,7 +127,7 @@ struct Play: View {
                             Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
                                 .foregroundColor(Clr.black1)
                                 .font(Font.fredoka(.bold, size: 60))
-                                .padding(.horizontal)
+                                .frame(width: UIScreen.screenWidth)
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {
@@ -236,6 +238,7 @@ struct Play: View {
         }
         
         .onAppear {
+            model.selectedBreath = nil
             if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                 if let player = player {
                     player.stop()
@@ -508,12 +511,12 @@ struct Play: View {
             }
     }
     var heart: some View {
-        LikeButton(isLiked: favorited, size:25.0) {
+        LikeButton(isLiked: $model.isFavorited, size:25.0) {
             Analytics.shared.log(event: .play_tapped_favorite)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if let med = model.selectedMeditation {
 //                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
-                model.favorite(selectMeditation: med)
+                model.favorite(id: med.id)
             }
             favorited.toggle()
         }

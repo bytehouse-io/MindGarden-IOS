@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct LikeButton : View {
-    
     @State private var isTapped: Bool = false
     @State private var startAnimation: Bool
     @State private var bgAnimation: Bool
     @State private var circletAnimation: Bool
-    @State var isLiked: Bool
+    @Binding var isLiked: Bool
     @State private var fireworkAnimation: Bool
     @State private var animationEnded: Bool
     @State private var tapComplete: Bool
@@ -21,17 +20,17 @@ struct LikeButton : View {
     @State var speed: Double = 0.5
     let action: () -> Void
     
-    init(isLiked:Bool = false, size:Double = 30.0, action: @escaping () -> Void) {
-        self.isLiked = isLiked
+    init(isLiked:Binding<Bool>, size:Double = 30.0, action: @escaping () -> Void) {
+        self._isLiked = isLiked
         self.size = size
         self.action = action
-        startAnimation = isLiked
-        bgAnimation = isLiked
-        circletAnimation = isLiked
-        fireworkAnimation = isLiked
-        animationEnded = isLiked
-        tapComplete = isLiked
-        isTapped = isLiked
+        startAnimation = isLiked.wrappedValue
+        bgAnimation = isLiked.wrappedValue
+        circletAnimation = isLiked.wrappedValue
+        fireworkAnimation = isLiked.wrappedValue
+        animationEnded = isLiked.wrappedValue
+        tapComplete = isLiked.wrappedValue
+        isTapped = isLiked.wrappedValue
     }
     
     var body: some View {
@@ -72,8 +71,14 @@ struct LikeButton : View {
             )
             .contentShape(Rectangle())
             .onTapGesture {
+                withAnimation {
+                    isLiked.toggle()
+                }
                 heartPressed()
                 action()
+            }
+            .onDisappear {
+                isLiked = false
             }
     }
     
@@ -139,7 +144,7 @@ struct LikeButton : View {
 
 struct LikeButton_Previews: PreviewProvider {
     static var previews: some View {
-        LikeButton(isLiked:true) {
+        LikeButton(isLiked:.constant(true)) {
         }
     }
 }

@@ -29,26 +29,27 @@ struct BreathworkPlay : View {
 
     
     // Background Settings
-    @State var backgroundPlayer : AVAudioPlayer!
-    @State var del = AVdelegate()
-    @State var showNatureModal = false
-    @State var selectedSound: Sound? = .noSound
-    @State var sliderData = SliderData()
-    @State var bellSlider = SliderData()
-    @State var data : Data = .init(count: 0)
+    @State private var backgroundPlayer : AVAudioPlayer!
+    @State private var del = AVdelegate()
+    @State private var showNatureModal = false
+    @State private var selectedSound: Sound? = .noSound
+    @State private var sliderData = SliderData()
+    @State private var bellSlider = SliderData()
+    @State private var data : Data = .init(count: 0)
+    @State private var isFavorited: Bool = false
 
     let panelHideDelay = 2.0
     
     @State var isPaused = false
     @Binding var showPlay:Bool
     
-    let breathWork: Breathwork
+    let breathWork: Breathwork?
     
     @State var timer: Timer?
     @State var durationTimer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
-            if medModel.selectedBreath.color == .sleep {
+            if medModel.selectedBreath?.color == .sleep {
                 Clr.darkMode.edgesIgnoringSafeArea(.all)
             } else {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
@@ -82,17 +83,17 @@ struct BreathworkPlay : View {
                 .disabled(!showPanel)
                 ZStack {
                     Circle()
-                        .foregroundColor(breathWork.color.primary)
+                        .foregroundColor(breathWork?.color.primary)
                         .addBorder(.black, width: 2, cornerRadius: size/2)
                         .frame(width:size, height: size)
                     Circle()
-                        .fill(breathWork.color.secondary.opacity(0.4))
+                        .fill(breathWork?.color.secondary.opacity(0.4) ?? Clr.calmsSecondary)
                         .frame(width:size/2)
                         .clipShape(Circle())
                         .scaleEffect(bgAnimation ? 2 : 1)
                     ZStack {
                         Circle()
-                            .foregroundColor(breathWork.color.secondary)
+                            .foregroundColor(breathWork?.color.secondary)
                             .addBorder(.black, width: 2, cornerRadius: size/2)
                             .frame(width:size/2, height: size/2)
                         VStack {
@@ -158,7 +159,7 @@ struct BreathworkPlay : View {
                                     .frame(width:geometry.size.width, height:15)
                                     .cornerRadius(25,corners: [.bottomLeft, .bottomRight])
                                 Rectangle()
-                                    .fill(breathWork.color.secondary)
+                                    .fill(breathWork?.color.secondary ?? Clr.calmsSecondary)
                                     .frame(width:geometry.size.width*progress, height:15)
                                     .cornerRadius(25,corners: [.bottomLeft, .bottomRight])
                             }
@@ -220,15 +221,16 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
+            medModel.checkIfFavorited()
             if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
                 userModel.selectedPlant = Plant.allPlants.first(where: { plant in
                     return plant.title == plantTitle
                 })
             }
             
-            let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
-            noOfSequence = Int(Double(totalTime)/Double(singleTime))
-            totalTime = noOfSequence*singleTime
+            let singleTime = breathWork?.sequence.map { $0.0 }.reduce(0, +)
+            noOfSequence = Int(Double(totalTime)/Double(singleTime ?? 0))
+            totalTime = noOfSequence*(singleTime ?? 0)
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
@@ -263,8 +265,8 @@ struct BreathworkPlay : View {
     }
     
     private func playAnimation() {
-        let time =  breathWork.sequence[sequenceCounter].0
-        let status = breathWork.sequence[sequenceCounter].1
+        let time =  breathWork?.sequence[sequenceCounter].0 ?? 0
+        let status = breathWork?.sequence[sequenceCounter].1 ?? "I"
         
         if noOfSequence > 0 && !isPaused {
             switch status.lowercased() {
@@ -307,7 +309,7 @@ struct BreathworkPlay : View {
                 }
             }
             
-            if sequenceCounter < breathWork.sequence.count-1 {
+            if sequenceCounter < (breathWork?.sequence.count ?? 0)-1 {
                 sequenceCounter += 1
             } else {
                 sequenceCounter = 0
@@ -333,15 +335,6 @@ struct BreathworkPlay : View {
        self.sliderData.setPlayer(player: backgroundPlayer!)
    }
     
-    //MARK: - nav
-    var backArrow: some View {
-        Image(systemName: "arrow.backward")
-            .font(.system(size: 32))
-            .foregroundColor(Clr.lightGray)
-            .onTapGesture {
-            }
-    }
-    //MARK: - nav
     var plantView: some View {
         ZStack {
             if progress < 0.25 {
@@ -368,8 +361,12 @@ struct BreathworkPlay : View {
                 }
             }
     }
+    
     var heart: some View {
-        LikeButton(isLiked: false, size:32) {
+        LikeButton(isLiked: $medModel.isFavorited) {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            medModel.favorite(id: breathWork?.id ?? 0)
+            isFavorited.toggle()
         }
     }
     

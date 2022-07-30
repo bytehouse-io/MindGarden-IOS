@@ -182,6 +182,7 @@ struct MiddleSelect: View {
         .transition(.scale)
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
+            model.selectedBreath = nil
             model.checkIfFavorited()
             if let id =  model.selectedMeditations.lastIndex(where: { ($0.type == .lesson || $0.type == .single_and_lesson) && userModel.completedMeditations.contains(String($0.id)) && $0.belongsTo != "Timed Meditation" && $0.belongsTo != "Open-ended Meditation"}) {
                 lastPlayed = id
@@ -205,11 +206,11 @@ struct MiddleSelect: View {
     }
     
     var heart: some View {
-        LikeButton(isLiked: model.isFavorited) {
+        LikeButton(isLiked: $model.isFavorited) {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if let med = model.selectedMeditation {
                 Analytics.shared.log(event: .middle_tapped_favorite)
-                model.favorite(selectMeditation: med)
+                model.favorite(id: med.id)
             }
         }
     }
@@ -269,10 +270,10 @@ struct MiddleSelect: View {
                             .padding(.trailing, 15)
                     }
                     
-                    LikeButton(isLiked: isFavorited, size:25.0) {
+                    LikeButton(isLiked: $isFavorited, size:25.0) {
                         Analytics.shared.log(event: .middle_tapped_row_favorite)
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        model.favorite(selectMeditation: meditation)
+                        model.favorite(id: meditation.id)
                         isFavorited.toggle()
                     }
                 }
@@ -280,6 +281,7 @@ struct MiddleSelect: View {
             .padding(5)
             .frame(width: width)
             .onAppear {
+                model.selectedBreath = nil
                 if didComplete && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation" {
                     state = .checked
                 } else if  meditation.belongsTo == "Timed Meditation" || meditation.belongsTo == "Open-ended Meditation" {
@@ -288,7 +290,7 @@ struct MiddleSelect: View {
                     state =  (idx - 1 == lastPlayed) ? .playable : .locked
                 }
                 
-                isFavorited = model.favoritedMeditations.contains { $0 == meditation }
+                isFavorited = model.favoritedMeditations.contains { $0 == meditation.id }
             }
         }
     }
