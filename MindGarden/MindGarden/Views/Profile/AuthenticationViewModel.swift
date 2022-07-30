@@ -532,7 +532,7 @@ extension AuthenticationViewModel {
         if let favorites = UserDefaults.standard.array(forKey: K.defaults.favorites) as? [Int] {
             favs = favorites
         }
-        var uniquePlants = ["White Daisy"]
+        var uniquePlants = ["White Daisy", "Red Tulips"]
         if let plantArr = UserDefaults.standard.array(forKey: K.defaults.plants) as? [String]{
              uniquePlants = Array<String>(Set(plantArr))
         }

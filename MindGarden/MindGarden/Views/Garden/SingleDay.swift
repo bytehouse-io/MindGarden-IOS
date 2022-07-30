@@ -361,7 +361,7 @@ struct SingleDay: View {
                     .font(Font.fredoka(.bold, size: 38))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
-                Text("Minutes Meditated: \(minutesMeditated/60 == 0 && minutesMeditated != 0 ? "0.5" : "\(minutesMeditated/60)")")
+                Text("Mindful Minutes: \(minutesMeditated/60 == 0 && minutesMeditated != 0 ? "0.5" : "\(minutesMeditated/60)")")
                     .font(Font.fredoka(.semiBold, size: 18))
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)

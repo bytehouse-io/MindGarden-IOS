@@ -195,17 +195,13 @@ struct MiddleSelect: View {
             Analytics.shared.log(event: .middle_tapped_back)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
-                if middleToSearch != "" {
-                    viewRouter.currentPage = .learn
-                } else {
-                    viewRouter.currentPage = .meditate
-                }
+                viewRouter.currentPage = viewRouter.previousPage
             }
         } label: {
             Image(systemName: "arrow.backward")
                 .font(.title)
-                .foregroundColor(Clr.darkgreen)
-        }
+                .foregroundColor(Clr.brightGreen)
+        }.offset(x: -10)
     }
     
     var heart: some View {

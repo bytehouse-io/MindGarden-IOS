@@ -121,6 +121,7 @@ struct StartDayView: View {
                     .offset(y: playEntryAnimation ? 0 : 100)
                     .opacity(playEntryAnimation ? 1 : 0)
                     .animation(.spring().delay(0.3), value: playEntryAnimation)
+                 
                     
                     Button {
 
@@ -200,7 +201,6 @@ struct StartDayView: View {
                     }.buttonStyle(ScalePress() )
                   
                     ZStack {
-                        let titles = ["30 Sec Meditation","30 Sec Meditation"]
                         VStack(spacing:5) {
                             HStack(spacing: 15) {
                                 Button {
@@ -217,8 +217,14 @@ struct StartDayView: View {
                                 }.buttonStyle(ScalePress())
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        Analytics.shared.log(event: .home_tapped_featured)
                                         withAnimation {
-                                            
+                                            medModel.selectedMeditation = medModel.featuredMeditation
+                                            if medModel.featuredMeditation?.type == .course {
+                                                viewRouter.currentPage = .middle
+                                            } else {
+                                                viewRouter.currentPage = .play
+                                            }
                                         }
                                     } label: {
                                         HomeSquare(width: width - 50, height: height * 0.7, meditation: medModel.featuredMeditation ?? Meditation.allMeditations[0], breathwork: nil)
@@ -278,9 +284,7 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
-            withAnimation {
-                playEntryAnimation = true
-            }
+      
             
             DispatchQueue.main.async {
                 let weekDays = getAllDaysOfTheCurrentWeek()
@@ -296,6 +300,9 @@ struct StartDayView: View {
                     if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
                         isGratitudeDone = true
                     }
+                }
+                withAnimation {
+                    playEntryAnimation = true
                 }
             }
         }
@@ -400,10 +407,10 @@ struct StartDayView: View {
                         .padding(.horizontal,2)
                         .frame(maxWidth:.infinity)
                     }
-                }
-                .padding(10)
+                }.padding(10)
                 .padding(.vertical, 10)
             }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+   
         }
     }
 }

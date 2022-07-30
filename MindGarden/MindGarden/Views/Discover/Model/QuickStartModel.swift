@@ -82,7 +82,7 @@ struct QuickStartMenuItem: Identifiable {
         case .sleep: return Img.sleepIcon
         case .courses: return Img.courses
         case .focus: return Img.focus
-        case .breathwork: return Img.focus
+        case .breathwork: return Img.breathworkIcon
         }
     }
     

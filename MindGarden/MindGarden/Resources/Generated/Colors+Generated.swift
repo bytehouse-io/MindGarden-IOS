@@ -34,6 +34,8 @@ public enum Clr {
   public static let cherryPink = Color("cherryPink")
   /// **Universal - Any**: `#A3A3A3` with alpha: `1.000`
   public static let darkGray = Color("darkGray")
+  /// **Universal - Any**: `#2C2826` with alpha: `1.000`
+  public static let darkMode = Color("darkMode")
   /// **Universal - Any**: `#121212` with alpha: `1.000`
   public static let darkShadow = Color("darkShadow")
   /// **Universal - Any**: `#F5F5F5` with alpha: `1.000`

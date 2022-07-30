@@ -48,14 +48,18 @@ struct BreathworkPlay : View {
     @State var durationTimer: Timer?
     var body: some View {
         ZStack(alignment:.top) {
-            AnimatedBackground(colors:[breathWork.color.primary, Clr.skyBlue.opacity(0.5), Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
+            if medModel.selectedBreath.color == .sleep {
+                Clr.darkMode.edgesIgnoringSafeArea(.all)
+            } else {
+                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+            }
             VStack {
                 Spacer()
                     .frame(height: K.hasNotch() ? 50 : 25)
                 HStack {
                     Button {
                         withAnimation(.linear) {
-                            viewRouter.currentPage = .meditate
+                            viewRouter.currentPage = viewRouter.previousPage
                         }
                     } label: {
                         Image(systemName: "arrow.left.circle.fill")
@@ -65,8 +69,7 @@ struct BreathworkPlay : View {
                             .aspectRatio(contentMode: .fit)
                             .frame(height:40)
                             .background(Circle().foregroundColor(Clr.black2).padding(1))
-                            .darkShadow()
-                    }
+                    }.buttonStyle(ScalePress())
                     Spacer()
                     HStack{
                         sound
@@ -115,11 +118,29 @@ struct BreathworkPlay : View {
                                 plantView
                             ).background(
                                 ZStack {
-                                    if progress >= 0.75 {
+                                    if progress < 0.50 && progress >= 0.24 {
+                                        userModel.selectedPlant?.one
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height:60)
+                                            .animation(Animation
+                                                        .spring(response: 0.3, dampingFraction: 3.0))
+                                            .transition(.opacity)
+                                            .offset(y:-30)
+                                    } else if progress > 0.5 && progress < 0.75 {
+                                       userModel.selectedPlant?.two
+                                           .resizable()
+                                           .aspectRatio(contentMode: .fit)
+                                           .frame(height:100)
+                                           .animation(Animation
+                                                       .spring(response: 0.3, dampingFraction: 3.0))
+                                           .transition(.opacity)
+                                           .offset(y:-55)
+                                    } else if  progress >= 0.75 {
                                         userModel.selectedPlant?.coverImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(height:150)
+                                            .frame(height:160)
                                             .offset(y:-80)
                                             .animation(Animation
                                                         .spring(response: 0.3, dampingFraction: 3.0))
@@ -170,25 +191,25 @@ struct BreathworkPlay : View {
                         }
                         .frame(height:50)
                         .buttonStyle(ScalePress())
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                withAnimation {
-                                    viewRouter.currentPage  = .finished
-                                }
-                            }
-                        } label: {
-                            Text("I'm Done")
-                                .font(Font.fredoka(.medium, size: 20))
-                                .foregroundColor(Clr.black2)
-                                .underline()
-                        }.padding(.top)
+//                        Button {
+//                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                            withAnimation {
+//                                withAnimation {
+//                                    viewRouter.currentPage  = .finished
+//                                }
+//                            }
+//                        } label: {
+//                            Text("I'm Done")
+//                                .font(Font.fredoka(.medium, size: 20))
+//                                .foregroundColor(Clr.black2)
+//                                .underline()
+//                        }.padding(.top)
                     }
                     .padding(.vertical)
                     .disabled(!showPanel)
                     .opacity(showPanel ? 1.0 : 0.0)
                 }.padding(.horizontal,30)
-            }.padding(.top, 50)
+            }
             if showNatureModal  {
                 Color.black
                     .opacity(0.3)
@@ -208,10 +229,6 @@ struct BreathworkPlay : View {
             let singleTime = breathWork.sequence.map { $0.0 }.reduce(0, +)
             noOfSequence = Int(Double(totalTime)/Double(singleTime))
             totalTime = noOfSequence*singleTime
-            DispatchQueue.main.async {
-                playAnimation()
-                toggleControllPanel()
-            }
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
@@ -222,9 +239,17 @@ struct BreathworkPlay : View {
                         }
                     } else {
                         timer.invalidate()
+                        withAnimation {
+                            viewRouter.currentPage = .finished
+                        }
                     }
                 }
             }
+            DispatchQueue.main.async {
+                playAnimation()
+                toggleControllPanel()
+            }
+
 
         }
         .onDisappear() {
@@ -256,6 +281,7 @@ struct BreathworkPlay : View {
                 withAnimation(.linear(duration: Double(time))) {
                     bgAnimation = false
                 }
+                medModel.totalBreaths += 1
             default: break
             }
             
@@ -322,27 +348,11 @@ struct BreathworkPlay : View {
                 Img.seed
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height:40)
+                    .frame(height:30)
                     .animation(Animation
                                 .spring(response: 0.3, dampingFraction: 3.0))
                     .transition(.opacity)
-                
-            } else if progress < 0.50 {
-                userModel.selectedPlant?.one
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height:50)
-                    .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0))
-                    .transition(.opacity)
-            } else if progress < 0.75 {
-                userModel.selectedPlant?.two
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height:60)
-                    .animation(Animation
-                                .spring(response: 0.3, dampingFraction: 3.0))
-                    .transition(.opacity)
+                    .offset(y: -20)
             } else {
                 EmptyView()
             }
@@ -385,11 +395,9 @@ struct AnimatedBackground: View {
     @State var colors:[Color]
     
     var body: some View {
-        
         LinearGradient(gradient: Gradient(colors: colors), startPoint: start, endPoint: end)
             .animation(Animation.easeInOut(duration: duration).repeatForever())
             .onReceive(timer, perform: { _ in
-                
                 self.start = UnitPoint(x: 4, y: 0)
                 self.end = UnitPoint(x: 0, y: 2)
                 self.start = UnitPoint(x: -4, y: 20)

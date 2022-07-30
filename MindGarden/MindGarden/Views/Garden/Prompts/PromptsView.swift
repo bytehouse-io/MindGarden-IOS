@@ -20,34 +20,22 @@ struct PromptsView: View {
                 Spacer()
                     .frame(height:40)
                 HStack() {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundColor(Clr.black1)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: UIScreen.screenWidth/3, height:16)
-                        .background(
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .frame(width:35,height:35)
-                                .cornerRadius(17)
-                                .neoShadow()
-                        )
-                        .onTapGesture {
-                            withAnimation {
-                                presentationMode.wrappedValue.dismiss()
-                            }
+                    CloseButton() {
+                        withAnimation {
+                            presentationMode.wrappedValue.dismiss()
                         }
-                    Text("Prompts")
-                        .font(Font.fredoka(.medium, size: 20))
+                    }
+                    Spacer()
+                    Text("Journal Prompts")
+                        .font(Font.fredoka(.bold, size: 16))
                         .foregroundColor(Clr.black2)
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.screenWidth/3, height:30)
                     Spacer()
-                        .frame(width: UIScreen.screenWidth/3, height:30)
-                }
-                .frame(width: UIScreen.screenWidth)
-                .padding()
+                    CloseButton() {}.opacity(0)
+                }.padding(.horizontal, 32)
+                .padding(.bottom)
+           
                 ScrollView(.horizontal,showsIndicators: false) {
                     HStack {
                         ForEach(promptsTabList) { item in
@@ -69,16 +57,17 @@ struct PromptsView: View {
                                     .background (
                                         Capsule()
                                                 .fill(selectedTab == item.tabName ? Clr.brightGreen : .clear)
+                                                .addBorder(.black, width: selectedTab == item.tabName ? 1.5 :0, cornerRadius: 28)
                                     )
-                            }
+                            }.buttonStyle(ScalePress())
+                                .cornerRadius(28)
                         }
                     }
                 }
-                .padding(.leading,30)
-                .padding()
+                .padding(.horizontal)
+                .padding(.leading, 16)
                 ScrollView(.vertical, showsIndicators: false) {
-                    Spacer()
-                        .frame(height:15)
+                    VStack(spacing: -20) {
                     ForEach(promptsTabList) { item in
                         Button {
                             question = "What am I holding onto that I need to forgive myself for?"
@@ -89,14 +78,15 @@ struct PromptsView: View {
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
-                                    .frame(height: 80, alignment: .center)
-                                    .cornerRadius(15)
+                                    .frame(height: UIScreen.screenHeight * 0.1, alignment: .center)
+                                    .cornerRadius(16)
+                                    .addBorder(.black, width: 1.5, cornerRadius: 16)
                                     .neoShadow()
                                 HStack(spacing:0) {
                                     Img.heart
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(height: 60)
+                                        .frame(width: 70, height: 70)
                                         .padding()
                                         .padding(.horizontal,0)
                                     VStack(alignment:.leading) {
@@ -105,22 +95,21 @@ struct PromptsView: View {
                                             .foregroundColor(Clr.black2)
                                             .multilineTextAlignment(.leading)
                                         Text("What am I holding onto that I need to forgive myself for?")
-                                            .font(Font.fredoka(.medium, size: 16))
+                                            .font(Font.fredoka(.medium, size: 12))
                                             .foregroundColor(Clr.black2)
                                             .multilineTextAlignment(.leading)
-
-                                    }
-                                    Spacer()
+                                    }.frame(width: UIScreen.screenWidth * 0.6, alignment: .leading)
                                 }
-                                .frame(height: 80, alignment: .center)
-                                .cornerRadius(15)
+                                .frame(width: UIScreen.screenWidth - 96, height: UIScreen.screenHeight * 0.1, alignment: .center)
+                                .cornerRadius(16)
+                                .padding()
                             }
-                            .padding(.horizontal,30)
                         }
                         .padding(5)
                     }
-                }.padding(.horizontal)
-            }
+                    }.padding(.horizontal, 48)
+                }
+            }.frame(width: UIScreen.screenWidth)
         }
         .ignoresSafeArea()
     }

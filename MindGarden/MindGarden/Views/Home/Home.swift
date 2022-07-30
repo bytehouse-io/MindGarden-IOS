@@ -131,6 +131,7 @@ struct Home: View {
         }
 
         .onAppear {
+            viewRouter.previousPage = .meditate
             tappedSignOut = false
             if showProfile {
                 activeSheet = .profile

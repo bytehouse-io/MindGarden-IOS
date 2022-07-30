@@ -283,7 +283,7 @@ struct Garden: View {
                         }
                         .background(Clr.darkWhite)
                         .cornerRadius(16)
-                        .addBorder(.black, width: 1.5, cornerRadius: 16)
+                        .addBorder(.black, width: 2, cornerRadius: 16)
                         .neoShadow()
                         .offset(y: playEntryAnimation ? 0 : 200)
                         .animation(animation.delay(0.1), value: playEntryAnimation)
@@ -363,7 +363,7 @@ struct Garden: View {
                                         Text("Moods")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.fredoka(.semiBold, size: 12))
-                                            .offset(y: -10)
+                                            .offset(y: -7)
                                         MoodImage(mood: .veryGood, value: gardenModel.totalMoods[.veryGood] ?? 0)
                                         MoodImage(mood: .good, value: gardenModel.totalMoods[.good] ?? 0)
                                         MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)

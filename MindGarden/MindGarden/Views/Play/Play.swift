@@ -49,7 +49,11 @@ struct Play: View {
                 GeometryReader { g in
                     let width = g.size.width
                     let height = g.size.height
-                    AnimatedBackground(colors:[Clr.yellow, Clr.skyBlue.opacity(0.5), Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
+                    if model.selectedMeditation?.category == .sleep {
+                        Clr.darkMode.edgesIgnoringSafeArea(.all)
+                    } else {
+                        Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                    }
                     HStack(alignment: .center) {
                         Spacer()
                         VStack(alignment: .center) {

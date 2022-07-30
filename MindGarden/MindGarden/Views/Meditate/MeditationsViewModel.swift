@@ -44,7 +44,7 @@ class MeditationViewModel: ObservableObject {
     @Published var roadMapArr: [Int] = []
     @Published var featuredBreathwork = Breathwork.breathworks[0]
     @Published var selectedBreath = Breathwork.breathworks[0]
-    @Published var finishedBreath = false
+    @Published var totalBreaths = 0
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
@@ -338,8 +338,22 @@ class MeditationViewModel: ObservableObject {
     }
 
     func getReward() -> Int {
-        let duration = selectedMeditation?.duration ?? 0
         var reward = 0
+        if totalBreaths > 0 {
+            let totalSeconds = self.selectedBreath.duration * totalBreaths
+            switch totalSeconds {
+            case 10...23: reward = 5
+            case 24...60: reward = 10
+            case 61...120: reward = 20
+            case 121...180: reward = 25
+            case 181...240: reward = 30
+            case 241...301: reward = 35
+            default: reward = 0
+            }
+            return reward
+        }
+        
+        let duration = selectedMeditation?.duration ?? 0
         
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" && !UserDefaults.standard.bool(forKey: "review") {
             shouldStreakUpdate = false

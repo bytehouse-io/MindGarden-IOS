@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct QuickStart: View {
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var isShowCategory = false
     @State private var category : QuickStartType = .minutes3
     @State private var playEntryAnimation = false
@@ -22,7 +23,7 @@ struct QuickStart: View {
                     ForEach(quickStartTabList) { item in
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
+                            withAnimation(.linear(duration: 0.3)) {
                                 category = item.title
                                 middleToSearch = item.name
                                 isShowCategory = true
@@ -61,10 +62,12 @@ struct QuickStart: View {
                     .frame(height:200)
             }
         }.onAppear {
+            viewRouter.previousPage = .learn
             withAnimation {
                 if middleToSearch != "" {
                     category = QuickStartMenuItem.getName(str: middleToSearch)
                     isShowCategory = true
+                    playEntryAnimation = true
                 } else {
                     playEntryAnimation = true
                 }

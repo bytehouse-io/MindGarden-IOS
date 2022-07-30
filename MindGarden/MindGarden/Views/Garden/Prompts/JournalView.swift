@@ -35,7 +35,7 @@ struct JournalView: View, KeyboardReadable {
                     .frame(height:50)
                 HStack {
                     Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
-                        .font(Font.fredoka(.medium, size: 16))
+                        .font(Font.fredoka(.medium, size: 20))
                         .foregroundColor(Clr.blackShadow)
                         .multilineTextAlignment(.center)
                         .opacity(0.5)
@@ -46,37 +46,38 @@ struct JournalView: View, KeyboardReadable {
                                 placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\" — Flannery O’Connor"
                                 placeholderQuestion = "Reflect on how you feel"
                                 presentationMode.wrappedValue.dismiss()
-                                viewRouter.currentPage = .meditate
+                                viewRouter.currentPage = viewRouter.previousPage
                             }
-                        }.padding(.leading, 10)
+                        }.padding(.leading, 5)
                     }
-                }
-                .padding(.horizontal,30)
+                }.padding(.leading, 5)
             
                 Text(placeholderQuestion)
                     .font(Font.fredoka(.semiBold, size: 28))
                     .foregroundColor(Clr.black2)
-                    .multilineTextAlignment(.leading)
                     .lineLimit(2)
-                    .padding(.horizontal,20)
+                    .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
+                    .padding(.top)
+                    .padding(.leading, 5)
                 ZStack {
                     Rectangle()
                         .fill(Clr.darkWhite)
-                        .cornerRadius(14)
-                        .addBorder(.black, width: 1.5, cornerRadius: 14)
+                        .cornerRadius(16)
+                        .addBorder(.black, width: 1.5, cornerRadius: 16)
                         .neoShadow()
                     ScrollView(.vertical, showsIndicators: false) {
                         if #available(iOS 14.0, *) {
                             TextEditor(text: $text) 
-                                .frame(height:240)
+                                .frame(height:240, alignment: .leading)
                                 .disableAutocorrection(false)
-                                .foregroundColor(Clr.black2)
-                                .padding(EdgeInsets(top: 10, leading: 10, bottom: -10, trailing: 10))
+                                .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
                                 .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                                     withAnimation {
                                         contentKeyVisible = newIsKeyboardVisible
                                     }
                                 }.onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if text == placeholderReflection {
                                         text = ""
                                     }
@@ -84,17 +85,16 @@ struct JournalView: View, KeyboardReadable {
                         }
                     }
                 }
-                .frame(width:UIScreen.screenWidth-40, height:250)
-                .padding()
+                .frame(height:UIScreen.screenHeight * 0.375)
+                .padding(.top, 15)
             }
             ZStack(alignment:.top) {
                 VStack {
                     Spacer()
                     HStack {
                         Text("\(coin)")
-                            .font(Font.fredoka(.medium, size: 16))
+                            .font(Font.fredoka(.semiBold, size: 20))
                             .foregroundColor(.black)
-                            .padding(.leading)
                         Img.coin
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -108,21 +108,24 @@ struct JournalView: View, KeyboardReadable {
                             .renderingMode(.template)
                             .foregroundColor(Clr.black1)
                             .aspectRatio(contentMode: .fit)
-                            .frame(width:20)
+                            .frame(width:25)
                             .onTapGesture {
                                 //TODO: implement shuffle tap event
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+
                             }
-                            .neoShadow()
+                            .padding(.trailing)
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 showPrompts = true
                             }
                         } label: {
                             Text("Prompts")
                                 .font(Font.fredoka(.semiBold, size: 16))
-                                .foregroundColor(Clr.gardenRed)
+                                .foregroundColor(Clr.redGradientBottom)
                                 .multilineTextAlignment(.center)
-                                .padding()
+                                .padding(.trailing)
                         }.frame(height: 35)
                             .neoShadow()
                         Button {
@@ -168,18 +171,19 @@ struct JournalView: View, KeyboardReadable {
                             }
                             .frame(width:120, height: 35)
                             .background(Clr.brightGreen.neoShadow())
-                            .cornerRadius(10)
-                            
+                            .cornerRadius(24)
+                            .addBorder(.black, width: 1.5, cornerRadius: 24)
                         }
-                        .padding()
                         .buttonStyle(NeoPress())
                         
                     }.KeyboardAwarePadding()
+                        .padding(.bottom)
                     Spacer()
                         .frame(height:50)
                 }
-            }
-        }
+            }.padding(.horizontal, 5)
+        }.frame(width: UIScreen.screenWidth - 60, alignment: .leading)
+        .offset(x: -5)
         .onChange(of:text) { text in
             if text.count >= 25 && text.count < 50 {
                 coin = 10

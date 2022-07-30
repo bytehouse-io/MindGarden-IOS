@@ -50,6 +50,7 @@ struct IAPModal: View {
                                     Img.coverImage
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
+                                        .frame(width: g.size.width * 0.85, height: g.size.height * 0.14)
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation { shown.toggle() }
@@ -279,7 +280,6 @@ struct IAPModal: View {
                     .fill(Clr.darkWhite)
                     .cornerRadius(16)
                     .neoShadow()
-                    .addBorder(.black, cornerRadius: 16)
                 Capsule()
                     .fill(Clr.yellow)
                     .frame(width: 75, height: 25)

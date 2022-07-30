@@ -73,7 +73,7 @@ struct Finished: View {
                                     .opacity(hideConfetti ? 0 : 1)
                                 HStack(alignment: .center) {
                                     VStack {
-                                        Text(model.finishedBreath ? "Total Breaths" : "Minutes Meditated")
+                                        Text(model.totalBreaths > 0 ? "Total Breaths" : "Minutes Meditated")
                                             .font(Font.fredoka(.semiBold, size: 28))
                                             .foregroundColor(.white)
                                             .onTapGesture {
@@ -86,7 +86,7 @@ struct Finished: View {
                                             .animation(.easeInOut(duration: 1.5))
                                             .opacity(animateViews ? 0 : 1)
                                             .offset(x: animateViews ? 500 : 0)
-                                        Text(model.finishedBreath ? String() : String(minsMed))
+                                        Text(model.totalBreaths > 0 ? String(model.totalBreaths) : String(minsMed))
                                             .font(Font.fredoka(.bold, size: 70))
                                             .foregroundColor(.white)
                                             .animation(.easeInOut(duration: 1.5))
@@ -134,7 +134,7 @@ struct Finished: View {
                                                             .cornerRadius(24)
                                                             .addBorder(.black, width: 1.5, cornerRadius: 24)
                                                             .onTapGesture {
-                                                                withAnimation {
+                                                                withAnimation(.easeOut) {
                                                                     hideConfetti = true
                                                                     Analytics.shared.log(event: .home_tapped_categories)
                                                                     let impact = UIImpactFeedbackGenerator(style: .light)
@@ -142,16 +142,15 @@ struct Finished: View {
                                                                     NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
                                                                 }
                                                             }
-                                                    }
-                                                    .buttonStyle(BonusPress())
+                                                    }.buttonStyle(BonusPress())
                                                     Button { } label: {
                                                         HStack {
-                                                            Img.hands
+                                                            Img.streakPencil
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
                                                                 .padding([.leading])
                                                                 .padding(.vertical, 5)
-                                                            Text("Gratitude")
+                                                            Text("Journal")
                                                                 .foregroundColor(.black)
                                                                 .font(Font.fredoka(.semiBold, size: 16))
                                                                 .padding(.trailing)
@@ -167,7 +166,8 @@ struct Finished: View {
                                                                     Analytics.shared.log(event: .home_tapped_categories)
                                                                     let impact = UIImpactFeedbackGenerator(style: .light)
                                                                     impact.impactOccurred()
-                                                                    NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+                                                                    viewRouter.previousPage = .garden
+                                                                    viewRouter.currentPage = .journal
                                                                 }
                                                             }
                                                     }
@@ -294,7 +294,7 @@ struct Finished: View {
                         .zIndex(100)
                         .frame(width: g.size.width * 0.6, height: g.size.height/16)
                         .rightShadow()
-                    }.frame(width: g.size.width - 50, height: g.size.height/10)
+                    }.frame(width: abs(g.size.width - 50), height: g.size.height/10)
                     .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
                     .position(x: g.size.width/2, y: g.size.height - g.size.height/(K.hasNotch() ? ios14 ? 7 : 9 : 4))
@@ -324,6 +324,7 @@ struct Finished: View {
                         .background(Clr.darkWhite)
             })
             .onDisappear {
+                model.totalBreaths = 0
                 model.playImage = Img.seed
                 model.lastSeconds = false
                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
@@ -359,18 +360,49 @@ struct Finished: View {
                 
                 var session = [String: String]()
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
-                session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
-                session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
-                session["timeStamp"] = Date.getTime()
-                let dur = model.selectedMeditation?.duration ?? 0
-                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
-                    userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                if model.totalBreaths > 0 {
+                    session[K.defaults.meditationId] = String(model.selectedBreath.id)
+                    var minutesMed = 0
+                    switch (model.selectedBreath.duration * model.totalBreaths) {
+                    case 0...35: minutesMed = 30
+                    case 36...70: minutesMed = 60
+                    default: minutesMed = model.selectedBreath.duration * model.totalBreaths
+                    }
+                    session[K.defaults.duration] = String(minutesMed)
+                    //num times med
+                    var num = UserDefaults.standard.integer(forKey: "numBreaths")
+                    num += 1
+                    UserDefaults.standard.setValue(num, forKey: "numBreaths")
+            
+                    let identify = AMPIdentify()
+                        .set("breathwork_sessions", value: NSNumber(value: num))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                } else {
+                    session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
+                    session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+                    let dur = model.selectedMeditation?.duration ?? 0
+                    if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
+                        userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                    }
+                    //num times med
+                    var num = UserDefaults.standard.integer(forKey: "numMeds")
+                    num += 1
+                    UserDefaults.standard.setValue(num, forKey: "numMeds")
+            
+                    let identify = AMPIdentify()
+                        .set("meditation_sessions", value: NSNumber(value: num))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
                 }
+                
+                session["timeStamp"] = Date.getTime()
+
+  
 
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3
                 }
+                
                 
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
@@ -382,17 +414,9 @@ struct Finished: View {
                             p.title == "Cherry Blossoms"
                         })
                         userModel.buyPlant(unlockedStrawberry: true)
-
                     }
                 }
-                //num times med
-                var num = UserDefaults.standard.integer(forKey: "numMeds")
-                num += 1
-                UserDefaults.standard.setValue(num, forKey: "numMeds")
-        
-                let identify = AMPIdentify()
-                    .set("meditation_sessions", value: NSNumber(value: num))
-                Amplitude.instance().identify(identify ?? AMPIdentify())
+
                 
 
                 favorited = model.isFavorited

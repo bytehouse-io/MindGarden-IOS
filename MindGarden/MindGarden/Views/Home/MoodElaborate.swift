@@ -95,6 +95,7 @@ struct MoodElaborate: View {
                                     Text(item)
                                         .font(Font.fredoka(.semiBold, size: 14))
                                         .foregroundColor(Clr.black2)
+                                        .minimumScaleFactor(0.05)
                                         .lineLimit(1)
                                         .padding(.vertical,10)
                                         .padding(5)
