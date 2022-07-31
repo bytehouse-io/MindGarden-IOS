@@ -43,13 +43,13 @@ struct ProfilePage: View {
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
                         HStack(alignment: .center, spacing: 5) {
-                            ProfileBox(img: Img.veryGood, count:  UserDefaults.standard.integer(forKey: "numMoods"))
-                            ProfileBox(img: Img.meditateTurtle, count:  UserDefaults.standard.integer(forKey: "numMeds"))
+                            ProfileBox(img: Img.veryGood, count:  gardenModel.numMoods)
+                            ProfileBox(img: Img.meditateTurtle, count:  gardenModel.numMeds)
                             ProfileBox(img: Img.streak, count: UserDefaults.standard.integer(forKey: "longestStreak"))
                         }.padding(.top)
                         HStack(alignment: .center, spacing: 5) {
-                            ProfileBox(img: Img.streakPencil, count: UserDefaults.standard.integer(forKey: "numGrads"))
-                            ProfileBox(img: Img.breathIcon, count: 22)
+                            ProfileBox(img: Img.streakPencil, count: gardenModel.numGrads)
+                            ProfileBox(img: Img.breathIcon, count: gardenModel.numBreaths)
                             ProfileBox(img: Img.flowers, count: userModel.ownedPlants.count)
                         }
                     }.frame(width: width * 0.8, height: 160)
@@ -98,6 +98,7 @@ struct ProfilePage: View {
         @State var type: String = ""
         @State var timeStamp: String = ""
         @State var med: Meditation = Meditation.allMeditations.first!
+        @State var breathWork: Breathwork = Breathwork.breathworks.first!
         @State var mood: Image = Img.veryGood
         @State var elaboration: String = ""
         @State var question: String = ""
@@ -105,6 +106,7 @@ struct ProfilePage: View {
         let width = UIScreen.screenWidth
         var data: [String: String]
         @Binding var showJournal: Bool
+        @State var breathworkDuration: Int = 0
         
         var body: some View {
             HStack(alignment: .center, spacing: 0) {
@@ -127,7 +129,12 @@ struct ProfilePage: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.08)
                             }
-                        } else {
+                        } else if type == "breathwork" {
+                            breathWork.img
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: width * 0.08)
+                        } else if type == "mood" {
                             mood
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -141,6 +148,15 @@ struct ProfilePage: View {
                             .font(Font.fredoka(.regular, size: 14))
                             .foregroundColor(Clr.darkGray)
                         Text(med.title)
+                            .font(Font.fredoka(.medium, size: 14))
+                            .foregroundColor(Clr.black2)
+                    }
+                } else if type == "breathwork" {
+                    VStack(alignment: .leading) {
+                        Text("\((Int(breathworkDuration/60) == 0 && breathworkDuration != 0) ? "0.5" : "\(Int(breathworkDuration/60))") mins  |  \(breathWork.color.name)")
+                            .font(Font.fredoka(.regular, size: 14))
+                            .foregroundColor(Clr.darkGray)
+                        Text(breathWork.title)
                             .font(Font.fredoka(.medium, size: 14))
                             .foregroundColor(Clr.black2)
                     }
@@ -175,8 +191,14 @@ struct ProfilePage: View {
             }.frame(width: width * 0.75, height: type == "mood" ? 50 : 60, alignment: .leading)
                 .onAppear {
                     if let medId = data["meditationId"] {
-                        type = "meditation"
-                        med = Meditation.allMeditations.first(where: { $0.id == Int(medId) }) ?? Meditation.allMeditations[0]
+                        if Int(medId) ?? 0 < 0 {
+                            type = "breathwork"
+                            breathworkDuration = Int(data["duration"] ?? "0") ?? 0
+                            breathWork = Breathwork.breathworks.first(where: { $0.id == Int(medId) }) ?? Breathwork.breathworks[0]
+                        } else {
+                            type = "meditation"
+                            med = Meditation.allMeditations.first(where: { $0.id == Int(medId) }) ?? Meditation.allMeditations[0]
+                        }
                     } else if let fbMood = data["mood"] {
                         type = "mood"
                         mood = Mood.getMoodImage(mood: Mood.getMood(str: fbMood))

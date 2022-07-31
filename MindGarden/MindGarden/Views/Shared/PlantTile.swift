@@ -21,7 +21,7 @@ struct PlantTile: View {
                     .foregroundColor(isBadge ? isOwned ? Clr.darkWhite : .gray.opacity(0.2): isOwned ? .gray.opacity(0.2) : Clr.darkWhite)
                     .frame(width: width * 0.35, height: height * 0.3)
                     .cornerRadius(16)
-                    .addBorder(!isShop && plant == userModel.selectedPlant ? Clr.yellow : Clr.black2 ,width:!isShop && plant == userModel.selectedPlant ? 3 : 1.5, cornerRadius: 16)
+                    .addBorder(!isShop && plant == userModel.selectedPlant ? Clr.yellow : Clr.black2 ,width: !isShop && plant == userModel.selectedPlant ? 3 : isShop ? 2 : 0, cornerRadius: 16)
                     .padding()
                 VStack(alignment: isShop ? .leading : .center, spacing: 0) {
                     isShop ?

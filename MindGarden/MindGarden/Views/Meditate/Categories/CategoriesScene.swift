@@ -225,7 +225,7 @@ struct CategoriesScene: View {
             case .minutes3: return meditation.duration.isLess(than: 250) && meditation.type != .course
             case .minutes5: return meditation.duration <= 400 && meditation.duration >= 250
             case .minutes10: return meditation.duration <= 700 && meditation.duration >= 500
-            case .minutes20: return meditation.duration >= 1000 && meditation.duration <= 2000
+            case .minutes20: return meditation.duration >= 1000 && meditation.duration <= 1750
             case .popular: return Meditation.popularMeditations.contains(meditation.id)
             case .morning: return Meditation.morningMeds.contains(meditation.id)
             case .sleep: return meditation.category == .sleep

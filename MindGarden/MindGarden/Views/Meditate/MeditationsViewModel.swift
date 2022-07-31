@@ -16,7 +16,7 @@ import Amplitude
 var medSearch = false
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
-    @Published var favoritedMeditations: [Meditation] = []
+    @Published var favoritedMeditations: [Int] = []
     @Published var newMeditations:  [Meditation] = []
     @Published var weeklyMeditation: Meditation?
     @Published var featuredMeditation: Meditation?
@@ -43,14 +43,18 @@ class MeditationViewModel: ObservableObject {
     @Published var roadMaplevel: Int = 1
     @Published var roadMapArr: [Int] = []
     @Published var featuredBreathwork = Breathwork.breathworks[0]
-    @Published var selectedBreath = Breathwork.breathworks[0]
+    @Published var selectedBreath: Breathwork?
     @Published var totalBreaths = 0
 
     private var validationCancellables: Set<AnyCancellable> = []
     let db = Firestore.firestore()
 
     func checkIfFavorited() {
-        isFavorited = self.favoritedMeditations.contains(self.selectedMeditation!) ? true : false
+        if let breath = selectedBreath {
+            isFavorited = self.favoritedMeditations.contains(breath.id) ? true : false
+        } else {
+            isFavorited = self.favoritedMeditations.contains(self.selectedMeditation!.id) ? true : false
+        }
     }
 
     init() {
@@ -106,7 +110,6 @@ class MeditationViewModel: ObservableObject {
     }
 
     func getFeaturedMeditation()  {
-        
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
         if !UserDefaults.standard.bool(forKey: "isPro") {
@@ -264,83 +267,73 @@ class MeditationViewModel: ObservableObject {
 
     func updateSelf() {
         if let defaultFavorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
-            self.favoritedMeditations = Meditation.allMeditations.filter({ med in defaultFavorites.contains(med.id) }).reversed()
+            self.favoritedMeditations =  defaultFavorites.reversed()
         }
         
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
                     if let favorites = document[K.defaults.favorites] as? [Int] {
-                        self.favoritedMeditations = Meditation.allMeditations.filter({ med in favorites.contains(med.id) }).reversed()
+                        self.favoritedMeditations = favorites.reversed()
                     }
                 }
             }
         }
     }
 
-    func favorite(selectMeditation: Meditation) {
-        Amplitude.instance().logEvent("favorited_meditation", withEventProperties: ["meditation": selectedMeditation?.returnEventName() ?? ""])
+    func favorite(id: Int) {
+        let breathWork = Breathwork.breathworks.first { $0.id == id }
+        if id < 0 {
+            Amplitude.instance().logEvent("favorited_breathwork", withEventProperties: ["breathwork": breathWork?.title ?? ""])
+        } else {
+            Amplitude.instance().logEvent("favorited_meditation", withEventProperties: ["meditation": selectedMeditation?.returnEventName() ?? ""])
+        }
+        
+
         if let email = Auth.auth().currentUser?.email {
-            let docRef = db.collection(K.userPreferences).document(email)
             //Read Data from firebase, for syncing
-            var favorites: [Int] = []
-            docRef.getDocument { (snapshot, error) in
-                if let document = snapshot, document.exists {
-                    if let favorited = document[K.defaults.favorites] {
-                        favorites = favorited as! [Int]
-                    }
-                    if favorites.contains(where: { id in id == selectMeditation.id }) {
-                        favorites.removeAll { fbId in
-                            return fbId == selectMeditation.id
-                        }
-                        self.favoritedMeditations.removeAll { med in
-                            med.id == selectMeditation.id
-                        }
-                    } else {
-                        self.favoritedMeditations.insert(selectMeditation, at: 0)
-                        favorites.insert(selectMeditation.id, at: 0)
-                    }
-                    self.checkIfFavorited()
+            print(self.favoritedMeditations, "big")
+            if self.favoritedMeditations.contains(where: { favId in favId == id }) {
+                self.favoritedMeditations.removeAll { med in
+                    med == id
                 }
-                UserDefaults.standard.setValue(favorites, forKey: K.defaults.favorites)
-                self.db.collection(K.userPreferences).document(email).updateData([
-                    "favorited": favorites,
-                ]) { (error) in
-                    if let e = error {
-                        print("There was a issue saving data to firestore \(e) ")
-                    } else {
-                        print("Succesfully saved meditations")
-                    }
+            } else {
+                self.favoritedMeditations.insert(id, at: 0)
+            }
+            self.checkIfFavorited()
+            
+            UserDefaults.standard.setValue(self.favoritedMeditations, forKey: K.defaults.favorites)
+            self.db.collection(K.userPreferences).document(email).updateData([
+                "favorited": self.favoritedMeditations,
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved meditations")
                 }
             }
         } else {
             if var favorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
-                if favorites.contains(where: { id in id == selectMeditation.id }) {
-                    favorites.removeAll { fbId in
-                        return fbId == selectMeditation.id
-                    }
-                    self.favoritedMeditations.removeAll { med in
-                        med.id == selectMeditation.id
-                    }
+                if favorites.contains(where: { id in id == id }) {
+                    favorites.removeAll { fbId in return fbId == id }
+                    self.favoritedMeditations.removeAll { med in  med == id }
                 } else {
-                    self.favoritedMeditations.insert(selectMeditation, at: 0)
-                    favorites.insert(selectMeditation.id, at: 0)
+                    self.favoritedMeditations.insert(id, at: 0)
+                    favorites.insert(id, at: 0)
                 }
-                self.checkIfFavorited()
                 UserDefaults.standard.setValue(favorites, forKey: K.defaults.favorites)
             } else {
-                var favorites = [Int]()
-                self.favoritedMeditations.insert(selectMeditation, at: 0)
-                favorites.insert(selectMeditation.id, at: 0)
-                UserDefaults.standard.setValue(favorites, forKey: K.defaults.favorites)
+                self.favoritedMeditations.insert(id, at: 0)
+                UserDefaults.standard.setValue(self.favoritedMeditations, forKey: K.defaults.favorites)
             }
+            self.checkIfFavorited()
         }
     }
 
     func getReward() -> Int {
         var reward = 0
         if totalBreaths > 0 {
-            let totalSeconds = self.selectedBreath.duration * totalBreaths
+            let totalSeconds = self.selectedBreath?.duration ?? 0 * totalBreaths
             switch totalSeconds {
             case 10...23: reward = 5
             case 24...60: reward = 10
