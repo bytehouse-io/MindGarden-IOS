@@ -128,10 +128,10 @@ struct HomeViewDashboard: View {
                 HStack {
                     VStack(alignment:.leading) {
                         Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
-                            .font(Font.fredoka(.regular, size: 16))
+                            .font(Font.fredoka(.regular, size: 20))
                             .foregroundColor(Clr.black2)
                         Text("\(greeting), \(name)")
-                            .font(Font.fredoka(.semiBold, size: 28))
+                            .font(Font.fredoka(.medium, size: 32))
                             .foregroundColor(Clr.black2)
                     }
                     Spacer()
@@ -139,8 +139,7 @@ struct HomeViewDashboard: View {
                 .padding(.top,20)
             }
             .padding(.horizontal, 24)
-            .padding(.vertical)
-            .padding(.top,20)
+            .padding(.top)
         }
     }
 }

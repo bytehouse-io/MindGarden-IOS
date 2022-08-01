@@ -119,7 +119,6 @@ struct MoodCheck: View {
     @Binding var PopUpIn: Bool
     @Binding var showPopUpOption: Bool
     @Binding var showItems: Bool
-    @Binding var showRecs: Bool
     @State private var notifOn: Bool = false
 
     var body: some View {
@@ -217,7 +216,7 @@ struct MoodCheck: View {
 
 struct MoodCheck_Previews: PreviewProvider {
     static var previews: some View {
-        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false), showRecs: .constant(false))
+        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 250)
             .background(Clr.darkWhite)
             .cornerRadius(12)

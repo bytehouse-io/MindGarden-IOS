@@ -91,6 +91,7 @@
 		8894E73B27FA809F00234466 /* IAPModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8894E73A27FA809F00234466 /* IAPModal.swift */; };
 		8897F12B283BEAC100F4E158 /* educatedRacoon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8897F12A283BEAC100F4E158 /* educatedRacoon.png */; };
 		88A15835288C816400892774 /* NextSteps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A15834288C816300892774 /* NextSteps.swift */; };
+		88A5D65D2895CD6D00EA535A /* Journal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A5D65C2895CD6D00EA535A /* Journal.swift */; };
 		88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */ = {isa = PBXBuildFile; productRef = 88A6FABF2814A9B500B88BEF /* Storyly */; };
 		88A7D91827C0897C001A53DE /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91727C0897C001A53DE /* Course.swift */; };
 		88A7D91A27C0989A001A53DE /* CourseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7D91927C0989A001A53DE /* CourseScene.swift */; };
@@ -356,6 +357,7 @@
 		8894E73A27FA809F00234466 /* IAPModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPModal.swift; sourceTree = "<group>"; };
 		8897F12A283BEAC100F4E158 /* educatedRacoon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = educatedRacoon.png; sourceTree = "<group>"; };
 		88A15834288C816300892774 /* NextSteps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSteps.swift; sourceTree = "<group>"; };
+		88A5D65C2895CD6D00EA535A /* Journal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Journal.swift; sourceTree = "<group>"; };
 		88A7D91727C0897C001A53DE /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		88A7D91927C0989A001A53DE /* CourseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScene.swift; sourceTree = "<group>"; };
 		88A7D91B27C0A522001A53DE /* OutlineModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineModifier.swift; sourceTree = "<group>"; };
@@ -1051,6 +1053,7 @@
 				88D4C5D627F6439A00CBB956 /* StorylyManager.swift */,
 				58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */,
 				88B6ACB32870F2A400A1E042 /* Breathwork.swift */,
+				88A5D65C2895CD6D00EA535A /* Journal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1777,6 +1780,7 @@
 				FE683F37269E47D1009A66DF /* LoadingView.swift in Sources */,
 				FEA7FBE426B0DF5A0073C62D /* Plant.swift in Sources */,
 				586E7DAD2841DF8B007E0695 /* QuickStartModel.swift in Sources */,
+				88A5D65D2895CD6D00EA535A /* Journal.swift in Sources */,
 				FE683F3E26A0CAE1009A66DF /* MeditationsViewModel.swift in Sources */,
 				586E7DAB2841DF40007E0695 /* DiscoverModel.swift in Sources */,
 				FEB85FD7266D4E5B008CDAA4 /* Colors+Generated.swift in Sources */,

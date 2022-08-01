@@ -10,6 +10,7 @@ import SwiftUI
 struct PromptsView: View {
     
     @Binding var question:String
+    @State var selectedPrompts: [Journal] = []
     @State var selectedTab: PromptsTabType = .gratitude
     @Environment(\.presentationMode) var presentationMode
     
@@ -36,41 +37,42 @@ struct PromptsView: View {
                 }.padding(.horizontal, 32)
                 .padding(.bottom)
            
-                ScrollView(.horizontal,showsIndicators: false) {
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(promptsTabList) { item in
                             Button {
-                                DispatchQueue.main.async {
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                        selectedTab = item.tabName
-                                        //TODO: implement tab selection ui update event
-                                    }
+                                withAnimation {
+                                    selectedTab = item.tabName
+                                    selectedPrompts = Journal.prompts.filter({ prompt in
+                                        prompt.category == selectedTab
+                                    })
                                 }
                             } label: {
-                                Text(item.name)
-                                    .font(Font.fredoka(.medium, size: 16))
-                                    .foregroundColor(selectedTab == item.tabName ? .white : Clr.black2 )
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal,10)
-                                    .padding(.vertical,5)
-                                    .shadow(color: selectedTab == item.tabName ? .black : .clear, radius: 2)
-                                    .background (
-                                        Capsule()
-                                                .fill(selectedTab == item.tabName ? Clr.brightGreen : .clear)
-                                                .addBorder(.black, width: selectedTab == item.tabName ? 1.5 :0, cornerRadius: 28)
-                                    )
-                            }.buttonStyle(ScalePress())
-                                .cornerRadius(28)
+                                HStack {
+                                    Text(item.name)
+                                        .font(Font.fredoka(.medium, size: 16))
+                                        .foregroundColor(selectedTab == item.tabName ? Clr.black2 : Clr.black2 )
+                                        .padding(.horizontal)
+
+                                }
+                                .padding(8)
+                                .background(selectedTab == item.tabName ? Clr.yellow : Clr.darkWhite)
+                                .cornerRadius(16)
+                                .addBorder(.black, width: selectedTab == item.tabName ? 2 : 1, cornerRadius: 16)
+                
+                            }
+                            .frame(height:32)
+                            .buttonStyle(NeumorphicPress())
                         }
-                    }
+                    }.frame(height:45)
                 }
-                .padding(.horizontal)
-                .padding(.leading, 16)
+                .frame(height:45)
+                .padding(.leading, 32)
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: -20) {
-                    ForEach(promptsTabList) { item in
+                        ForEach(selectedPrompts, id: \.self) { prompt in
                         Button {
-                            question = "What am I holding onto that I need to forgive myself for?"
+                            question = prompt.description
                             withAnimation {
                                 presentationMode.wrappedValue.dismiss()
                             }
@@ -83,22 +85,23 @@ struct PromptsView: View {
                                     .addBorder(.black, width: 1.5, cornerRadius: 16)
                                     .neoShadow()
                                 HStack(spacing:0) {
-                                    Img.heart
+                                    prompt.img
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 70, height: 70)
+                                        .frame(width: 60, height: 60)
                                         .padding()
                                         .padding(.horizontal,0)
+                                        .offset(x: -5)
                                     VStack(alignment:.leading) {
-                                        Text("Self-Love")
+                                        Text(prompt.title)
                                             .font(Font.fredoka(.semiBold, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .multilineTextAlignment(.leading)
-                                        Text("What am I holding onto that I need to forgive myself for?")
+                                        Text(prompt.description)
                                             .font(Font.fredoka(.medium, size: 12))
                                             .foregroundColor(Clr.black2)
                                             .multilineTextAlignment(.leading)
-                                    }.frame(width: UIScreen.screenWidth * 0.6, alignment: .leading)
+                                    }.frame(width: UIScreen.screenWidth * 0.55, alignment: .leading)
                                 }
                                 .frame(width: UIScreen.screenWidth - 96, height: UIScreen.screenHeight * 0.1, alignment: .center)
                                 .cornerRadius(16)
@@ -112,6 +115,11 @@ struct PromptsView: View {
             }.frame(width: UIScreen.screenWidth)
         }
         .ignoresSafeArea()
+        .onAppear {
+            selectedPrompts = Journal.prompts.filter({ prompt in
+                prompt.category == selectedTab
+            })
+        }
     }
 }
 

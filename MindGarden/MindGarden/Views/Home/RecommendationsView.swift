@@ -11,10 +11,10 @@ struct RecommendationsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
-    private let titles = ["Intro to Meditation", "Intro to Meditation","Basic Confidence Meditation"]
     @State private var playAnim = false
     let width = UIScreen.screenWidth
     @State private var playEntryAnimation = false
+    @Binding var recs: [Int]
 
     var body: some View {
         ZStack {
@@ -62,7 +62,7 @@ struct RecommendationsView: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 30)
-                                            Text("+2")
+                                            Text("+20")
                                                 .foregroundColor(Clr.brightGreen)
                                                 .font(Font.fredoka(.semiBold, size: 20)) +
                                             Text(" Mood Check")
@@ -127,8 +127,8 @@ struct RecommendationsView: View {
                     .multilineTextAlignment(.leading)
             }.frame(height:50)
             .padding(.bottom,20)
-            ForEach(0..<titles.count) { idx in
-                MeditationRow(title: titles[idx])
+            ForEach(0..<3) { idx in
+                MeditationRow(id: recs[idx], isBreathwork: idx == 0)
                     .padding(.vertical,5)
                     .offset(y: playEntryAnimation ? 0 : 100)
                     .opacity(playEntryAnimation ? 1 : 0)
@@ -170,8 +170,10 @@ struct RecommendationsView: View {
 
 
 struct MeditationRow: View {
-    
-    @State var title:String
+    var id:Int
+    var isBreathwork: Bool
+    @State var meditation: Meditation = Meditation.allMeditations[0]
+    @State var breathwork: Breathwork = Breathwork.breathworks[0]
     
     var body: some View {
         ZStack {
@@ -181,85 +183,80 @@ struct MeditationRow: View {
                 .neoShadow()
             HStack(spacing:0) {
                 VStack(alignment:.leading,spacing:3) {
-                    Text(title)
-                        .font(Font.fredoka(.medium, size: 20))
+                    Text(isBreathwork ? breathwork.title : meditation.title)
+                        .font(Font.fredoka(.semiBold, size: 20))
                         .frame(width: UIScreen.screenWidth * 0.5, alignment: .leading)
                         .foregroundColor(Clr.black2)
                         .multilineTextAlignment(.leading)
                         .padding(.vertical, 5)
+                        .lineLimit(2)
                     HStack {
                         Image(systemName: "speaker.wave.3.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height:10)
+                            .frame(height:15)
                             .padding(.vertical,0)
-                        Text("7 day course")
-                            .font(Font.fredoka(.medium, size: 12))
+                        Text(isBreathwork ? breathwork.color.name : meditation.type.toString())
+                            .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.black2.opacity(0.5))
                             .padding(.vertical,0)
                     }.padding(.vertical,0)
-                    let _ = print(title.count)
-                    if title.count < 22 {
+                        .frame(width: UIScreen.screenWidth/2.5, alignment: .leading)
+
                         HStack {
                             Image(systemName: "timer")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height:10)
+                                .frame(height:15)
                                 .padding(.vertical,0)
                             Text("1/2 mins")
-                                .font(Font.fredoka(.medium, size: 12))
-                                .foregroundColor(Clr.black2.opacity(0.5))
-                                .padding(.vertical,0)
-                        }.padding(.vertical,0)
-                        HStack {
-                            Image(systemName: "person.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height:10)
-                                .padding(.vertical,0)
-                            Text("Bijan")
-                                .font(Font.fredoka(.medium, size: 12))
-                                .foregroundColor(Clr.black2.opacity(0.5))
-                                .padding(.vertical,0)
-                        }.padding(.vertical,0)
-                    } else {
-                        HStack {
-                            Image(systemName: "timer")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height:10)
-                                .padding(.vertical,0)
-                            Text("1/2 mins")
-                                .font(Font.fredoka(.medium, size: 12))
+                                .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                             Text("•")
-                                .font(Font.fredoka(.bold, size: 12))
+                                .font(Font.fredoka(.bold, size: 16))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                             Image(systemName: "person.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height:10)
+                                .frame(height:15)
                                 .padding(.vertical,0)
                             Text("Bijan")
-                                .font(Font.fredoka(.medium, size: 12))
+                                .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)
-                    }
+                        .frame(width: UIScreen.screenWidth/2.5, alignment: .leading)
                 }
                 Spacer()
-                Img.happySunflower
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 80)
+                Group {
+                    if isBreathwork {
+                        breathwork.img
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        meditation.img
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                }.frame(height: 80)
                     .offset(y: 2)
             }
             .frame(height: 100, alignment: .center)
             .offset(y: -7)
             .padding(.horizontal, 30)
             .padding(.vertical, 20)
+        }.onAppear {
+            if isBreathwork {
+                if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
+                    breathwork = breath
+                }
+            } else {
+                if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
+                    meditation = med
+                }
+            }
         }
     }
 }
@@ -267,6 +264,6 @@ struct MeditationRow: View {
 
 struct RecommendationsView_Previews: PreviewProvider {
     static var previews: some View {
-        RecommendationsView()
+        RecommendationsView(recs: .constant([-1,1,2]))
     }
 }

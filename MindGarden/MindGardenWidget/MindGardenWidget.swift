@@ -82,21 +82,21 @@ struct MindGardenWidgetEntryView : View {
                         HStack(spacing:0) {
                             VStack(alignment:.leading,spacing:0) {
                                 Text("\(streak)")
-                                    .font(Font.fredoka(.bold, size: 28))
+                                    .font(Font.fredoka(.bold, size: 40))
                                     .foregroundColor(Color("smallWidgetText"))
                                     .shadow(color: .black, radius: 2, x: 2, y: 2)
                                     .shadow(color: .black, radius: 2, x: -2, y: -2)
                                     .padding(.vertical,0)
                                 Text("day streak")
-                                    .font(Font.fredoka(.bold, size: 24))
+                                    .font(Font.fredoka(.bold, size: 20))
                                     .foregroundColor(Color.white)
                                     .shadow(color: .black.opacity(0.5), radius: 2, x: 2, y: 2)
                                     .shadow(color: .black.opacity(0.5), radius: 2, x: -2, y: -2)
-                                    .offset(y:-4)
+                                    .offset(y:-8)
                                 Spacer()
                             }
                             Spacer()
-                        }.padding(.horizontal)
+                        }.padding(.leading, 24)
                         .padding(.top,5)
                     }
                     

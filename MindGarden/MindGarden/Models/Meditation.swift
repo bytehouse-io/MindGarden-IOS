@@ -40,7 +40,7 @@ struct Meditation: Hashable {
             .lowercased()
     }
 
-    static func getRecsFromMood() -> [Int] {
+    static func getRecsFromMood(selectedMood: Mood) -> [Int] {
         var retMeds: [Meditation] = []
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  }
@@ -59,9 +59,9 @@ struct Meditation: Hashable {
             retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
         }
         var breathWork = 0
-        switch Mood.veryBad {
+        switch selectedMood {
         case .stressed, .veryBad:
-            retMeds += allMeditations.filter { med in  med.category == .anxiety }
+            retMeds += allMeditations.filter { med in  med.category == .anxiety || med.category == .sadness }
             breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
         case .angry:
             retMeds += allMeditations.filter { med in
@@ -77,7 +77,7 @@ struct Meditation: Hashable {
 
         case .sad, .bad:
             retMeds += allMeditations.filter { med in
-                med.category == .anxiety 
+                med.category == .anxiety || med.category == .sadness
             }
         case .none: break
         }
