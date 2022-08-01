@@ -15,11 +15,11 @@ struct HomeSquare: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var isSmaller = false
     @State private var isBreath = false
+    @State private var isLocked = false
     @State private var breathWork = Breathwork.breathworks[0]
     let width, height: CGFloat
     let meditation: Meditation
     let breathwork: Breathwork?
-
    
     var body: some View {
         ZStack() {
@@ -35,7 +35,7 @@ struct HomeSquare: View {
                                 Spacer()
                                 Text(isBreath ? breathWork.title : meditation.title)
                                     .frame(width: width * 0.225, alignment: .leading)
-                                    .font(Font.fredoka(.semiBold, size: 16))
+                                    .font(Font.fredoka(.semiBold, size: isBreath ? 18 : 16))
                                     .foregroundColor(Clr.black2)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(3)
@@ -118,13 +118,13 @@ struct HomeSquare: View {
                         .position(x: width * (viewRouter.currentPage == .learn || searchScreen ? 0.385 : 0.34), y: viewRouter.currentPage == .learn || searchScreen ? 20 : 17)
                         .opacity(0.8)
                 }
-            }.opacity((!UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id)) ? 0.45 : 1)
-            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id) {
+            }.opacity(isLocked ? 0.45 : 1)
+            if isLocked {
                 Img.lockIcon
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .learn || searchScreen ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .learn || searchScreen ? 0 : 10))
+                    .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .learn || searchScreen ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .learn || searchScreen ? 0 : 10) - (isSmaller ? 10 : 0))
             }
         }.onAppear {
             if width != UIScreen.screenWidth {
@@ -133,6 +133,9 @@ struct HomeSquare: View {
             if let work = breathwork {
                 isBreath = true
                 breathWork = work
+                isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Breathwork.lockedBreaths.contains(work.id)
+            } else {
+                isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id)
             }
         }
         

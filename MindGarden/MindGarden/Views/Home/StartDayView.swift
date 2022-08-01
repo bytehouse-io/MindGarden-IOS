@@ -49,9 +49,10 @@ struct StartDayView: View {
     var body: some View {
         let width = UIScreen.screenWidth
         let height = UIScreen.screenHeight
+        let hour = Calendar.current.component( .hour, from:Date() )
         VStack {
             HStack {
-                Text("Start your day")
+                Text(hour > 16 ? "Relfect on your day" : "Start your day")
                     .foregroundColor(Clr.brightGreen)
                     .font(Font.fredoka(.bold, size: 24))
                     .padding(.top,5)
@@ -137,8 +138,8 @@ struct StartDayView: View {
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .padding([.top],16)
-                                        .padding(.leading, isWeekStreakDone ? 16 : -16)
-                                        .offset(x: isWeekStreakDone ? 0 : 32)
+                                        .padding(.leading, isWeekStreakDone || !isGratitudeDone  ? 16 : -16)
+                                        .offset(x: isWeekStreakDone || !isGratitudeDone  ? 0 : 32)
                                     Spacer()
                                     Img.streakViewPencil
                                         .resizable()
@@ -224,11 +225,15 @@ struct StartDayView: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         Analytics.shared.log(event: .home_tapped_featured)
                                         withAnimation {
-                                            medModel.selectedMeditation = medModel.featuredMeditation
-                                            if medModel.featuredMeditation?.type == .course {
-                                                viewRouter.currentPage = .middle
+                                            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
+                                                viewRouter.currentPage = .pricing
                                             } else {
-                                                viewRouter.currentPage = .play
+                                                medModel.selectedMeditation = medModel.featuredMeditation
+                                                if medModel.featuredMeditation?.type == .course {
+                                                    viewRouter.currentPage = .middle
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
                                             }
                                         }
                                     } label: {

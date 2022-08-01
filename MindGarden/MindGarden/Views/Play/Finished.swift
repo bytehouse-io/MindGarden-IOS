@@ -345,12 +345,13 @@ struct Finished: View {
                 }
               
                 if !UserDefaults.standard.bool(forKey: "tappedRate") {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 6 {
+                    if UserDefaults.standard.integer(forKey: "launchNumber") == 1 || UserDefaults.standard.integer(forKey: "launchNumber") == 4 {
                         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
                         }
                     }
                 }
                 
+          
                 var session = [String: String]()
                 session[K.defaults.plantSelected] = userModel.selectedPlant?.title
                 var minutesMed = 0

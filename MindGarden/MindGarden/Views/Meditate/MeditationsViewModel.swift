@@ -120,20 +120,24 @@ class MeditationViewModel: ObservableObject {
             }
         }
         
-        if Calendar.current.component( .hour, from:Date() ) < 12 { // morning
-            featuredBreathwork = Breathwork.breathworks[0]
+        if Calendar.current.component( .hour, from:Date() ) < 11 { // morning
+            featuredBreathwork = Breathwork.breathworks[0] // waking up
             filtedMeds = filtedMeds.filter { med in // day time meds only
                 med.id != 27 && med.id != 54 && med.id != 39 && med.category != .sleep}
-        } else if Calendar.current.component( .hour, from:Date() ) < 16 {
+        } else if Calendar.current.component( .hour, from:Date() ) < 15 {
             filtedMeds = filtedMeds.filter { med in // day time meds only
                 med.id != 27 && med.id != 54 && med.id != 39 && med.category != .sleep}
-            featuredBreathwork = Breathwork.breathworks.first { $0.id == -2 }! //unwind
-        } else  { // not morning
+            featuredBreathwork = Breathwork.breathworks.first { $0.id == -2 }! //energize
+        } else if Calendar.current.component( .hour, from:Date() ) < 20 {
             filtedMeds = filtedMeds.filter { med in
                 med.id != 53 && med.id != 49 && med.id != 84
             }
-            featuredBreathwork = Breathwork.breathworks.first { $0.id == -4 }! //unwind
-
+            featuredBreathwork = Breathwork.breathworks.first { $0.id == -6 }! // calm
+        } else{ // not morning
+            filtedMeds = filtedMeds.filter { med in
+                med.id != 53 && med.id != 49 && med.id != 84 && med.category == .sleep
+            }
+            featuredBreathwork = Breathwork.breathworks.first { $0.id == -3 }! // calm
         }
         if UserDefaults.standard.bool(forKey: "intermediateCourse") {
             filtedMeds = filtedMeds.filter { med in

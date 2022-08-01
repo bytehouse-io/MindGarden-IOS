@@ -82,10 +82,11 @@ struct Meditation: Hashable {
         case .none: break
         }
         retMeds.shuffle()
-        var finalMeds = [Int]()
+        var finalMeds = [breathWork]
         for med in retMeds {
             finalMeds.append(med.id)
         }
+        
         return finalMeds
     }
     

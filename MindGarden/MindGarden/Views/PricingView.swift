@@ -348,7 +348,8 @@ struct PricingView: View {
                             case "middle": viewRouter.currentPage = .middle
                             case "widget": viewRouter.currentPage = .meditate
                             case "discover": viewRouter.currentPage = .learn
-                            default: viewRouter.currentPage = .meditate
+                            default: viewRouter.currentPage = viewRouter.previousPage
+
                             }
                         }
 //

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlusMenuView: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var userModel: UserViewModel
     @Binding var showPopup: Bool
     @Binding var selectedOption: PlusMenuType
     @State var opac: CGFloat = 0.01
@@ -20,6 +21,9 @@ struct PlusMenuView: View {
                     Button {
                         selectedOption = item.tabName
                         showPopup = false
+                        if item.tabName == .gratitude {
+                            userModel.elaboration = ""
+                        }
                     } label: {
                         MenuChoice(title: item.title, img: item.image, disabled: false)
                     }.disabled((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"))).opacity((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")) ? 0.5 : 1.0)

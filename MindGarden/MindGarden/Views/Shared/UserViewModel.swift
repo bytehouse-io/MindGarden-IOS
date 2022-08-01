@@ -34,6 +34,7 @@ class UserViewModel: ObservableObject {
     @Published var userCoinCollectedLevel: Int = 0
     @Published var journeyFinished = false
     @Published var selectedMood: Mood = .none
+    @Published var elaboration: String = ""
     private var validationCancellables: Set<AnyCancellable> = []
     var joinDate: String = ""
     var greeting: String = ""
@@ -145,7 +146,7 @@ class UserViewModel: ObservableObject {
                     if let longestStreak = document["longestStreak"] as? Int {
                         UserDefaults.standard.setValue(longestStreak, forKey: "longestStreak")
                     }
-
+                    
                     if let fbPlants = document[K.defaults.plants] as? [String] {
                         self.ownedPlants = Plant.allPlants.filter({ plant in
                             return fbPlants.contains(where: { str in

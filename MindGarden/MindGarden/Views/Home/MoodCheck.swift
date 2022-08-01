@@ -12,11 +12,11 @@ import Amplitude
 enum Mood: String, CaseIterable {
     var options: [String] {
     switch self {
-        case .veryGood: return ["😃 Excited", "😊 happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
-        case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 happy", "🎨 Inspired"]
+        case .veryGood: return ["😃 Excited", "😊 Happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
+        case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 Happy", "🎨 Inspired"]
         case .okay: return ["😐 Fine", "🥱 Bored", "🙃 Unsure", "🏃 Busy", "😌 Calm", "🤨 Confused", "😠 Frustrated", "😴 Tired", "✈️ Distant"]
-        case .bad: return ["😰 anxious", "😩 stressed", "🏎️ Impatient", "😤 Frustrated", "😒 annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
-        case .veryBad: return ["😰 anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
+        case .bad: return ["😰 Anxious", "😩 Stressed", "🏎️ Impatient", "😤 Frustrated", "😒 Annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
+        case .veryBad: return ["😰 Anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
         default: return [""]
         }
     }
@@ -129,7 +129,7 @@ struct MoodCheck: View {
                         HStack {
                             Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
                                 .font(Font.fredoka(.medium, size: 20))
-                                .foregroundColor(Clr.black2)
+                                .foregroundColor(Clr.darkGray)
                                 .padding(.top, 35)
                             Spacer()
                             Image(systemName: "xmark")
@@ -151,15 +151,15 @@ struct MoodCheck: View {
      
                         Text("How are you feeling right now?")
                             .font(Font.fredoka(.semiBold, size: K.isPad() ? 40 : 28))
-                            .foregroundColor(Clr.brightGreen)
+                            .foregroundColor(Clr.black2)
                             .frame(width: g.size.width * 0.85, alignment: .leading)
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             .padding(.bottom, 15)                    
                     ZStack(alignment: .center) {
                         Rectangle()
-                            .fill(Clr.yellow)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                            .fill(LinearGradient(colors: [Clr.veryBad, Clr.bad, Clr.okay, Clr.good, Clr.veryGood], startPoint: .leading, endPoint: .trailing))
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 32)
                             .neoShadow()
                         HStack {
                             SingleMood(moodSelected: $moodSelected, mood: .veryBad, save: save)
@@ -168,7 +168,7 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .good, save: save)
                             SingleMood(moodSelected: $moodSelected, mood: .veryGood, save: save)
                         }.padding(.horizontal, 10)
-                    }.frame(width: g.size.width * 0.9, height: g.size.height/(K.isPad() ? 3.5 : 3.5), alignment: .center)
+                    }.frame(width: g.size.width * 0.9, height: g.size.height/(3.25), alignment: .center)
                         Spacer()
                         if K.isPad() {
                             Spacer()

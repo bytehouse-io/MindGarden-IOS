@@ -101,9 +101,15 @@ struct CategoriesScene: View {
                                         Button {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
-                                                model.selectedBreath = item
+                                                fromPage = ""
                                                 viewRouter.previousPage = .learn
-                                                viewRouter.currentPage = .breathMiddle
+                                                if !UserDefaults.standard.bool(forKey: "isPro") && Breathwork.lockedBreaths.contains(item.id) {
+                                                    viewRouter.currentPage = .pricing
+                                                } else {
+                                                    model.selectedBreath = item
+                                                    viewRouter.currentPage = .breathMiddle
+                                                }
+                                     
                                             }
                                         } label: {
                                             HomeSquare(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height * 0.75) , meditation: Meditation.allMeditations[0], breathwork: item)
@@ -279,9 +285,11 @@ struct CategoriesScene: View {
     
     private func didSelectcategory(item: Meditation){
         withAnimation {
+            
+            viewRouter.previousPage = .learn
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
-                fromPage = "discover"
+                fromPage = ""
                 Analytics.shared.log(event: .pricing_from_locked)
                 Analytics.shared.log(event: .categories_tapped_locked_meditation)
                 presentationMode.wrappedValue.dismiss()
@@ -294,11 +302,6 @@ struct CategoriesScene: View {
                     presentationMode.wrappedValue.dismiss()
                 } else {
                     if model.selectedMeditation?.type == .course {
-//                        if viewRouter.currentPage == .learn {
-//                            middleToSearch = QuickStartMenuItem(title: selectedCategory).name
-//                        } else {
-//                            middleToSearch = ""
-//                        }
                         viewRouter.currentPage = .middle
                     } else {
                         DispatchQueue.main.async {

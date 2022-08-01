@@ -15,8 +15,6 @@ struct MoodElaborate: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @State private var selectedSubMood: String = ""
     @State private var playEntryAnimation = false
-    
-    
     @State private var showDetail = false
     let columns = [
             GridItem(.flexible()),
@@ -28,7 +26,7 @@ struct MoodElaborate: View {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
-                    .frame(height:100)
+                    .frame(height:50)
                 HStack() {
                     Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
                         .font(Font.fredoka(.regular, size: 20))
@@ -81,6 +79,7 @@ struct MoodElaborate: View {
                                     var moodSession = [String: String]()
                                     moodSession["timeStamp"] = Date.getTime()
                                     moodSession["elaboration"] = item
+                                    userModel.elaboration = item
                                     moodSession["mood"] = userModel.selectedMood.title
                                     userModel.coins += 20
                                     gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
@@ -91,16 +90,18 @@ struct MoodElaborate: View {
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
-                                        .cornerRadius(10)
+                                        .cornerRadius(16)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 16)
                                     Text(item)
-                                        .font(Font.fredoka(.semiBold, size: 14))
+                                        .font(Font.fredoka(.medium, size: 14))
                                         .foregroundColor(Clr.black2)
                                         .minimumScaleFactor(0.05)
                                         .lineLimit(1)
                                         .padding(.vertical,10)
                                         .padding(5)
-                                }.padding(5)
+                                }
                             }
+                            .padding(.vertical, 5)
                             .offset(y: playEntryAnimation ? 0 : 100)
                             .opacity(playEntryAnimation ? 1 : 0)
                             .animation(.spring().delay(0.25), value: playEntryAnimation)
