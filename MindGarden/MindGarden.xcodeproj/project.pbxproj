@@ -35,6 +35,9 @@
 		586E7DAB2841DF40007E0695 /* DiscoverModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DAA2841DF40007E0695 /* DiscoverModel.swift */; };
 		586E7DAD2841DF8B007E0695 /* QuickStartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DAC2841DF8B007E0695 /* QuickStartModel.swift */; };
 		586F856C287026D400C34460 /* HomeViewDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586F856B287026D400C34460 /* HomeViewDashboard.swift */; };
+		5898541528954E0C002999A0 /* SmallWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898541428954E0C002999A0 /* SmallWidget.swift */; };
+		5898541728954E33002999A0 /* MediumWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898541628954E33002999A0 /* MediumWidget.swift */; };
+		5898541928954E4C002999A0 /* LargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898541828954E4C002999A0 /* LargeWidget.swift */; };
 		589DCB0628732975005A8D7E /* StartDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589DCB0528732975005A8D7E /* StartDayView.swift */; };
 		589DCB082873401B005A8D7E /* turtle.json in Resources */ = {isa = PBXBuildFile; fileRef = 589DCB072873401B005A8D7E /* turtle.json */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
@@ -301,6 +304,9 @@
 		586E7DAA2841DF40007E0695 /* DiscoverModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverModel.swift; sourceTree = "<group>"; };
 		586E7DAC2841DF8B007E0695 /* QuickStartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartModel.swift; sourceTree = "<group>"; };
 		586F856B287026D400C34460 /* HomeViewDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewDashboard.swift; sourceTree = "<group>"; };
+		5898541428954E0C002999A0 /* SmallWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallWidget.swift; sourceTree = "<group>"; };
+		5898541628954E33002999A0 /* MediumWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumWidget.swift; sourceTree = "<group>"; };
+		5898541828954E4C002999A0 /* LargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeWidget.swift; sourceTree = "<group>"; };
 		589DCB0528732975005A8D7E /* StartDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDayView.swift; sourceTree = "<group>"; };
 		589DCB072873401B005A8D7E /* turtle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = turtle.json; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
@@ -707,6 +713,9 @@
 			isa = PBXGroup;
 			children = (
 				58E82A54283E870200E224D4 /* CurrentStreak.swift */,
+				5898541428954E0C002999A0 /* SmallWidget.swift */,
+				5898541628954E33002999A0 /* MediumWidget.swift */,
+				5898541828954E4C002999A0 /* LargeWidget.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -1627,9 +1636,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5898541728954E33002999A0 /* MediumWidget.swift in Sources */,
 				FE48B44E2779599400CA7B63 /* Fonts+Generated.swift in Sources */,
+				5898541528954E0C002999A0 /* SmallWidget.swift in Sources */,
 				FE647DCE277AAD22008901AD /* Widget+Extensions.swift in Sources */,
 				FE135BD0277BA75800614A4E /* Util.swift in Sources */,
+				5898541928954E4C002999A0 /* LargeWidget.swift in Sources */,
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
 				58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */,

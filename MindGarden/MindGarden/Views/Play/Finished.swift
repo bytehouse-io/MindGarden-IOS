@@ -220,14 +220,7 @@ struct Finished: View {
                         }.offset(y: -g.size.height/6)
                     }.frame(width: g.size.width)
                     HStack {
-                        LikeButton(isLiked: $favorited, size:35) {
-                            Analytics.shared.log(event: .finished_tapped_favorite)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            if let med = model.selectedMeditation {
-                                model.favorite(id: med.id)
-                            }
-                            favorited.toggle()
-                        }.padding(.horizontal)
+                        heart.padding(.horizontal)
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(Clr.black1)
@@ -430,6 +423,29 @@ struct Finished: View {
     }
 
 
+    var heart: some View {
+        ZStack {
+            if model.isFavoritedLoaded {
+                LikeButton(isLiked: favorited, size:35) {
+                    likeAction()
+                }
+            } else {
+                LikeButton(isLiked: false) {
+                    likeAction()
+                }
+            }
+        }
+    }
+    
+    private func likeAction(){
+        Analytics.shared.log(event: .play_tapped_favorite)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if let med = model.selectedMeditation {
+//                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
+            model.favorite(id: med.id)
+        }
+        favorited.toggle()
+    }
 }
 
 struct Finished_Previews: PreviewProvider {

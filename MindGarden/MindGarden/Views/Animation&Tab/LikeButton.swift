@@ -12,7 +12,7 @@ struct LikeButton : View {
     @State private var startAnimation: Bool
     @State private var bgAnimation: Bool
     @State private var circletAnimation: Bool
-    @Binding var isLiked: Bool
+    @State var isLiked: Bool
     @State private var fireworkAnimation: Bool
     @State private var animationEnded: Bool
     @State private var tapComplete: Bool
@@ -20,17 +20,17 @@ struct LikeButton : View {
     @State var speed: Double = 0.5
     let action: () -> Void
     
-    init(isLiked:Binding<Bool>, size:Double = 30.0, action: @escaping () -> Void) {
-        self._isLiked = isLiked
+    init(isLiked:Bool = false, size:Double = 30.0, action: @escaping () -> Void) {
+        self.isLiked = isLiked
         self.size = size
         self.action = action
-        startAnimation = isLiked.wrappedValue
-        bgAnimation = isLiked.wrappedValue
-        circletAnimation = isLiked.wrappedValue
-        fireworkAnimation = isLiked.wrappedValue
-        animationEnded = isLiked.wrappedValue
-        tapComplete = isLiked.wrappedValue
-        isTapped = isLiked.wrappedValue
+        startAnimation = isLiked
+        bgAnimation = isLiked
+        circletAnimation = isLiked
+        fireworkAnimation = isLiked
+        animationEnded = isLiked
+        tapComplete = isLiked
+        isTapped = isLiked
     }
     
     var body: some View {
@@ -144,7 +144,7 @@ struct LikeButton : View {
 
 struct LikeButton_Previews: PreviewProvider {
     static var previews: some View {
-        LikeButton(isLiked:.constant(true)) {
+        LikeButton(isLiked:true) {
         }
     }
 }

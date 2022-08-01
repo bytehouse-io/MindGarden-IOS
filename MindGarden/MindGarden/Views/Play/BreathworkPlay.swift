@@ -363,11 +363,23 @@ struct BreathworkPlay : View {
     }
     
     var heart: some View {
-        LikeButton(isLiked: $medModel.isFavorited) {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            medModel.favorite(id: breathWork?.id ?? 0)
-            isFavorited.toggle()
+        ZStack {
+            if medModel.isFavoritedLoaded {
+                LikeButton(isLiked: medModel.isFavorited) {
+                    likeAction()
+                }
+            } else {
+                LikeButton(isLiked: false) {
+                    likeAction()
+                }
+            }
         }
+    }
+    
+    private func likeAction(){
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        medModel.favorite(id: breathWork?.id ?? 0)
+        isFavorited.toggle()
     }
     
     private func toggleControllPanel() {

@@ -206,12 +206,24 @@ struct MiddleSelect: View {
     }
     
     var heart: some View {
-        LikeButton(isLiked: $model.isFavorited) {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if let med = model.selectedMeditation {
-                Analytics.shared.log(event: .middle_tapped_favorite)
-                model.favorite(id: med.id)
+        ZStack {
+            if model.isFavoritedLoaded {
+                LikeButton(isLiked: model.isFavorited) {
+                    likeAction()
+                }
+            } else {
+                LikeButton(isLiked: false) {
+                    likeAction()
+                }
             }
+        }
+    }
+    
+    private func likeAction(){
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if let med = model.selectedMeditation {
+            Analytics.shared.log(event: .middle_tapped_favorite)
+            model.favorite(id: med.id)
         }
     }
     
@@ -270,7 +282,7 @@ struct MiddleSelect: View {
                             .padding(.trailing, 15)
                     }
                     
-                    LikeButton(isLiked: $isFavorited, size:25.0) {
+                    LikeButton(isLiked: isFavorited, size:25.0) {
                         Analytics.shared.log(event: .middle_tapped_row_favorite)
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         model.favorite(id: meditation.id)
