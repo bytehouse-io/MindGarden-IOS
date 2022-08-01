@@ -201,15 +201,25 @@ struct BreathMiddle: View {
         }
     }
     
-
-    
     var heart: some View {
-        LikeButton(isLiked: $medModel.isFavorited) {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            Analytics.shared.log(event: .breathwrk_middle_favorited)
-            medModel.favorite(id: breathWork.id)
-            isFavorited.toggle()
+        ZStack {
+            if medModel.isFavoritedLoaded {
+                LikeButton(isLiked: medModel.isFavorited) {
+                    likeAction()
+                }
+            } else {
+                LikeButton(isLiked: false) {
+                    likeAction()
+                }
+            }
         }
+    }
+    
+    private func likeAction(){
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        Analytics.shared.log(event: .breathwrk_middle_favorited)
+        medModel.favorite(id: breathWork.id)
+        isFavorited.toggle()
     }
     
     struct DurationButton: View {

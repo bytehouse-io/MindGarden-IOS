@@ -323,7 +323,7 @@ struct StartDayView: View {
                 }
             }
         }
-        isWeekStreakDone = streakList.filter { !$0.streak }.count == 7
+        isWeekStreakDone = streakList.filter { $0.streak }.count == 7
     }
     
     private func getMoods(weekDays:[Date]) {

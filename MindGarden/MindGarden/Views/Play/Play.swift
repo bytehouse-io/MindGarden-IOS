@@ -510,16 +510,29 @@ struct Play: View {
                 }
             }
     }
+    
     var heart: some View {
-        LikeButton(isLiked: $model.isFavorited, size:25.0) {
-            Analytics.shared.log(event: .play_tapped_favorite)
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if let med = model.selectedMeditation {
-//                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
-                model.favorite(id: med.id)
+        ZStack {
+            if model.isFavoritedLoaded {
+                LikeButton(isLiked: model.isFavorited, size:25.0) {
+                    likeAction()
+                }
+            } else {
+                LikeButton(isLiked: false) {
+                    likeAction()
+                }
             }
-            favorited.toggle()
         }
+    }
+    
+    private func likeAction(){
+        Analytics.shared.log(event: .play_tapped_favorite)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if let med = model.selectedMeditation {
+//                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
+            model.favorite(id: med.id)
+        }
+        favorited.toggle()
     }
 
     //MARK: - tutorial modal
