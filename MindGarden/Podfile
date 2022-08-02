@@ -7,7 +7,7 @@ target 'MindGarden' do
 
   # Pods for MindGarden
    pod 'FirebaseFirestore'
-   pod 'FirebaseAuth', '~> 8.9'
+   pod 'FirebaseAuth'
    pod 'Firebase'
    pod 'Amplitude-iOS', '~> 4.9.3'
    pod 'GoogleSignIn', '~> 5.0'
@@ -17,6 +17,11 @@ target 'MindGarden' do
    pod 'Firebase/DynamicLinks'
    pod 'Amplitude', '~> 8.5.0'
    pod 'Firebase/Crashlytics'
+   
+   target 'MindGardenWidgetExtension' do
+     pod 'FirebaseFirestore'
+     pod 'Firebase'
+   end
 
   target 'MindGardenTests' do
     inherit! :search_paths
@@ -27,4 +32,12 @@ target 'MindGarden' do
     # Pods for testing
   end
 
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'No'
+      end
+    end
+  end
+  
 end

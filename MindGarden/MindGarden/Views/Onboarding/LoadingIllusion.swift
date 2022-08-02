@@ -21,7 +21,7 @@ struct LoadingIllusion: View {
     var body: some View {
         CircleLoadingView(isShowing: $showCircleProgress) {
             ZStack(alignment:.bottom) {
-                AnimatedBackground(colors:[Clr.brightGreen, Clr.yellow, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
+                AnimatedBackground(colors:[Clr.yellow, Clr.yellow, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50)
                 HStack {
                     VStack(alignment:.leading, spacing: 15) {
                         Text("🛠 Preparing Your Personal Plan")

@@ -58,9 +58,11 @@ struct K {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
     
+    @available(iOSApplicationExtension, unavailable)
     static func hasNotch() -> Bool {
         let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         return bottom > 0
+        
     }
 
     static func isBig() -> Bool {

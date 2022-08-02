@@ -257,36 +257,18 @@ struct Finished: View {
                                     Analytics.shared.log(event: .finished_tapped_finished)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        if UserDefaults.standard.integer(forKey: "numMeds") == 1 {
-                                            if UserDefaults.standard.bool(forKey: "review") {
-                                                viewRouter.currentPage = .garden
-                                            } else {
-                                                if updatedStreak && model.shouldStreakUpdate {
-                                                    showStreak.toggle()
-                                                    updatedStreak = false
-                                                } else {
-                                                    viewRouter.currentPage = .garden
-                                                }
-                                            }
+                                        if updatedStreak && model.shouldStreakUpdate {
+                                            showStreak.toggle()
+                                            updatedStreak = false
                                         } else {
-                                            if Auth.auth().currentUser?.email == nil && UserDefaults.standard.integer(forKey: "numMeds") >= 3 {
-                                                fromPage = "garden"
-                                                viewRouter.currentPage = .authentication
-                                            } else {
-                                                if updatedStreak && model.shouldStreakUpdate {
-                                                    showStreak.toggle()
-                                                    updatedStreak = false
-                                                } else {
-                                                    viewRouter.currentPage = .garden
-                                                }
-                                            }
+                                            viewRouter.currentPage = .garden
                                         }
                                     }
                                 }
                         }
                         .zIndex(100)
                         .frame(width: g.size.width * 0.6, height: g.size.height/16)
-                        .rightShadow()
+                        .buttonStyle(ScalePress())
                     }.frame(width: abs(g.size.width - 50), height: g.size.height/10)
                     .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
@@ -343,13 +325,7 @@ struct Finished: View {
                         ios14 = false
                     }
                 }
-              
-                if !UserDefaults.standard.bool(forKey: "tappedRate") {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") == 1 || UserDefaults.standard.integer(forKey: "launchNumber") == 4 {
-                        if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                        }
-                    }
-                }
+                
                 
           
                 var session = [String: String]()

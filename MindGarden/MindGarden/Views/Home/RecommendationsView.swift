@@ -110,7 +110,7 @@ struct RecommendationsView: View {
                 playEntryAnimation = true
             }
             
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" && !UserDefaults.standard.bool(forKey: "review") {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
                 if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
                     isOnboarding = true
                     var count = 0

@@ -14,6 +14,7 @@ import OneSignal
 import Amplitude
 
 var medSearch = false
+var middleToSearch = ""
 class MeditationViewModel: ObservableObject {
     @Published var selectedMeditations: [Meditation] = []
     @Published var favoritedMeditations: [Int] = []

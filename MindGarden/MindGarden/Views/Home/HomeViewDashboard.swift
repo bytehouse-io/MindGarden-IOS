@@ -115,7 +115,7 @@ struct HomeViewDashboard: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 24, height:24)
                             .foregroundColor(.black)
-                        Text("\(streakNumber) " + (K.isSmall() ? "" : "days"))
+                        Text("\(streakNumber) " + (K.isSmall() ? "" : "day") + (streakNumber == 1 ? "s" : ""))
                             .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.gardenRed)
                     }

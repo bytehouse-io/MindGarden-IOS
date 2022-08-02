@@ -478,14 +478,13 @@ struct Garden: View {
                             }
                         }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -125 : -75)
                     }
-                    if UserDefaults.standard.integer(forKey: "numMeds") > 0 {
                         switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
                         case "meditate":
                             Img.calendarRacoon
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 125)
-                                .position(x: gp.size.width/2, y: gp.size.height/1.25)
+                                .position(x: gp.size.width/2, y: gp.size.height/1)
                         case "calendar":
                             Img.statRacoon
                                 .resizable()
@@ -500,7 +499,6 @@ struct Garden: View {
                                 .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
                         default: EmptyView()
                         }
-                    }
                     // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
                 Spacer().frame(height:80)
@@ -518,9 +516,7 @@ struct Garden: View {
                     }
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                        if UserDefaults.standard.integer(forKey: "numMeds") > 0 {
-                            isOnboarding = true
-                        }
+                        isOnboarding = true
                         if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                         }

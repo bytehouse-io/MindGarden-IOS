@@ -346,47 +346,6 @@ struct CategoriesScene: View {
     }
 }
 
-enum Category {
-    case all
-    case breathwork
-    case sadness
-    case unguided
-    case courses
-    case beginners
-    case anxiety
-    case focus
-    case confidence
-    case growth
-    case sleep
-
-    var value: String {
-        switch self {
-        case .all:
-            return "👨‍🌾 All"
-        case .unguided:
-            return "⏳ Unguided"
-        case .beginners:
-            return "😁 Beginners"
-        case .courses:
-            return "👨‍🏫 Courses"
-        case .anxiety:
-            return "😖 Anxiety"
-        case .focus:
-            return "🎧 Focus"
-        case .sadness:
-            return "😢 Sadness"
-        case .sleep:
-            return "😴 Sleep"
-        case .confidence:
-            return "💪 Confidence"
-        case .growth:
-            return "🌱 Growth"
-        case .breathwork:
-            return "💨 Breathwork"
-        }
-    }
-}
-
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
@@ -394,4 +353,3 @@ struct CategoriesScene_Previews: PreviewProvider {
         }
     }
 }
-

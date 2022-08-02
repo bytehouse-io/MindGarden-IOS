@@ -268,10 +268,16 @@ struct StartDayView: View {
                 }
             }
         }
+        .onReceive(gardenModel.$grid){ grid in
+            if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
+                    isGratitudeDone = true
+                }
+            }
+        }
         .padding(.horizontal, 26)
         .onAppear() {
-      
-            
+            gardenModel.updateSelf()
             DispatchQueue.main.async {
                 let weekDays = getAllDaysOfTheCurrentWeek()
                 getAllGratitude(weekDays:weekDays)

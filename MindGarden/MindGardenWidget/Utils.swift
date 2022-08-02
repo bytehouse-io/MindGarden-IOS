@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct K {
+struct KK {
     static func getMoodImage(mood: Mood) -> Image {
         switch mood {
         case .happy:
@@ -55,52 +55,52 @@ struct K {
     }
 }
 
-    enum Mood: String {
-        case happy
-        case okay
-        case sad
-        case angry
-        case stressed
-        case none
-
-        var title: String {
-            switch self {
-            case .happy: return "happy"
-            case .okay: return "okay"
-            case .sad: return "sad"
-            case .angry: return "angry"
-            case .stressed: return "stressed"
-            case .none: return "none"
-            }
-        }
-
-        static func getMood(str: String) -> Mood {
-            switch str {
-            case "happy":
-                return .happy
-            case "okay":
-                return .okay
-            case "sad":
-                return .sad
-            case "angry":
-                return .angry
-            case "stressed":
-                return .stressed
-            case "none":
-                return .none
-            default:
-                return .none
-            }
-        }
-
-        var color: Color {
-            switch self {
-            case .happy: return Color("brightGreen")
-            case .okay: return Color("gardenGray")
-            case .sad: return Color("gardenBlue")
-            case .angry: return Color("gardenRed")
-            case .stressed: return Color("purple")
-            case .none: return Color("dirtBrown")
-            }
-        }
-    }
+//    enum Mood: String {
+//        case happy
+//        case okay
+//        case sad
+//        case angry
+//        case stressed
+//        case none
+//
+//        var title: String {
+//            switch self {
+//            case .happy: return "happy"
+//            case .okay: return "okay"
+//            case .sad: return "sad"
+//            case .angry: return "angry"
+//            case .stressed: return "stressed"
+//            case .none: return "none"
+//            }
+//        }
+//
+//        static func getMood(str: String) -> Mood {
+//            switch str {
+//            case "happy":
+//                return .happy
+//            case "okay":
+//                return .okay
+//            case "sad":
+//                return .sad
+//            case "angry":
+//                return .angry
+//            case "stressed":
+//                return .stressed
+//            case "none":
+//                return .none
+//            default:
+//                return .none
+//            }
+//        }
+//
+//        var color: Color {
+//            switch self {
+//            case .happy: return Color("brightGreen")
+//            case .okay: return Color("gardenGray")
+//            case .sad: return Color("gardenBlue")
+//            case .angry: return Color("gardenRed")
+//            case .stressed: return Color("purple")
+//            case .none: return Color("dirtBrown")
+//            }
+//        }
+//    }

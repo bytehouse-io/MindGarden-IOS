@@ -521,7 +521,7 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Crashlytics
   - Firebase/DynamicLinks
-  - FirebaseAuth (~> 8.9)
+  - FirebaseAuth
   - FirebaseFirestore
   - GoogleSignIn (~> 5.0)
   - lottie-ios
@@ -590,6 +590,6 @@ SPEC CHECKSUMS:
   Purchases: b714751c386c2204d2d5aafaa903fd424a25cd59
   PurchasesCoreSwift: 2cf98c52dd4b785177539fbfd1c32f60c89eafe7
 
-PODFILE CHECKSUM: f14b132c27d5c1055b1977601f6383c94a0376ac
+PODFILE CHECKSUM: 54a7482969e1a55c3373b006a60cb9656e8f9eca
 
 COCOAPODS: 1.11.2
