@@ -83,7 +83,16 @@ struct StreakScene: View {
 //                    .padding(.top, 50)
                     Button {
                         //TODO: implement continue tap event
-                        viewRouter.currentPage = .garden
+                        withAnimation {
+                            if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
+                                fromPage = ""
+                                viewRouter.previousPage = .garden
+                                viewRouter.currentPage = .pricing
+                            } else {
+                                viewRouter.currentPage = .garden
+                            }
+                        }
+                  
                     } label: {
                         Capsule()
                             .fill(Clr.gardenRed)

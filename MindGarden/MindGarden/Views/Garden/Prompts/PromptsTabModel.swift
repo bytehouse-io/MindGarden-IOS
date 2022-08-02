@@ -8,14 +8,15 @@
 import SwiftUI
 
 enum PromptsTabType: String {
-    case gratitude,mentalHealth,night,morning
+    case gratitude,mentalHealth,evening,morning, bigPicture
 }
 
 var promptsTabList = [
     PromptsMenuItem(tabName: .gratitude),
+    PromptsMenuItem(tabName: .morning),
     PromptsMenuItem(tabName: .mentalHealth),
-    PromptsMenuItem(tabName: .night),
-    PromptsMenuItem(tabName: .morning)
+    PromptsMenuItem(tabName: .evening),
+    PromptsMenuItem(tabName: .bigPicture)
 ]
 
 struct PromptsMenuItem: Identifiable {
@@ -25,13 +26,15 @@ struct PromptsMenuItem: Identifiable {
     var name: String {
         switch self.tabName {
         case .gratitude:
-            return "Gratitude"
+            return "🙏 Gratitude"
         case .mentalHealth:
-            return "Mental Health"
-        case .night:
-            return "Night"
+            return "🎗️ Mental Health"
+        case .evening:
+            return "🌙 Evening"
         case .morning:
-            return "Morning"
+            return "☀️ Morning"
+        case .bigPicture:
+            return "🖼️ Big Picture"
         }
     }
 }

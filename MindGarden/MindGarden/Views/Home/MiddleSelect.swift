@@ -256,7 +256,7 @@ struct MiddleSelect: View {
                         .font(Font.fredoka(.semiBold, size: 16))
                         .padding(.trailing, 3)
                     Text(meditation.title)
-                        .foregroundColor(Clr.black2)
+                        .foregroundColor(state == .locked ? Clr.darkGray : Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 16))
                         .lineLimit(2)
                         .minimumScaleFactor(0.05)

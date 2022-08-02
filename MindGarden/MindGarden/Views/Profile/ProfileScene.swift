@@ -548,10 +548,11 @@ struct ProfileScene: View {
                     showNotification = true
                     mindfulNotifs = false
                 } else if gardenSettings {
+                    selection = .settings
                     showGarden = true
                 }
             }
-
+            
             tappedRate = UserDefaults.standard.bool(forKey: "tappedRate")
             if userModel.referredStack == "" {
                 if !UserDefaults.standard.bool(forKey: "isPro") {

@@ -53,6 +53,7 @@ struct ShowRecsScene: View {
                     }.padding(.top)
                     .frame(width: abs(width * 0.79), alignment: .leading)
                     ForEach(0...3, id: \.self) { index in
+                        
                         RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter, isWeekly: false)
                             .padding(.top, 10)
                             .animation(Animation.easeInOut(duration: 1.5).delay(3))

@@ -588,6 +588,12 @@ extension AuthenticationViewModel {
                     if let name = document[K.defaults.name] {
                         UserDefaults.standard.setValue(name, forKey: K.defaults.name)
                     }
+                    if let fbFav = document[K.defaults.favorites] {
+                        UserDefaults.standard.setValue(fbFav, forKey: K.defaults.favorites)
+                    }
+                    if let fbRecents = document[K.defaults.completedMeditations] {
+                        UserDefaults.standard.setValue(fbRecents, forKey: K.defaults.completedMeditations)
+                    }
                     
                     if let joinDate = document[K.defaults.joinDate] {
                         UserDefaults.standard.setValue(joinDate, forKey: K.defaults.joinDate)

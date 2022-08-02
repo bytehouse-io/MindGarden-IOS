@@ -283,8 +283,7 @@ struct Garden: View {
                         }
                         .background(Clr.darkWhite)
                         .cornerRadius(16)
-//                        .addBorder(Clr.brightGreen
-//                                   , width: 3, cornerRadius: 16)
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                         .neoShadow()
                         .offset(y: playEntryAnimation ? 0 : 200)
                         .animation(animation.delay(0.1), value: playEntryAnimation)

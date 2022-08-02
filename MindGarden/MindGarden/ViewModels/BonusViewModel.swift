@@ -317,6 +317,7 @@ class BonusViewModel: ObservableObject {
         
         if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {
             launchNum += 1
+            
         } else if  Date() - formatter.date(from: self.lastStreakDate)! > 172800 {
             launchNum += 1
         }

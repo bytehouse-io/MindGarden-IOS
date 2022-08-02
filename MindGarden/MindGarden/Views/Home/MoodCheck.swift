@@ -8,6 +8,105 @@
 import SwiftUI
 import Amplitude
 
+
+enum Mood: String, CaseIterable {
+    var options: [String] {
+    switch self {
+        case .veryGood: return ["😃 Excited", "😊 Happy", "🎨 Inspired",  "💪 Confident", "🌱 Hopeful", "💚 Loved", "👏 Proud", "🙏 Grateful",  "☀️ Joyful"]
+        case .good: return ["🌱 Hopeful", "😌 Calm",  "🙂 Good",  "🏃 Busy", "😃 Excited", "✊ Fulfilled", "🙏 Grateful", "😊 Happy", "🎨 Inspired"]
+        case .okay: return ["😐 Fine", "🥱 Bored", "🙃 Unsure", "🏃 Busy", "😌 Calm", "🤨 Confused", "😠 Frustrated", "😴 Tired", "✈️ Distant"]
+        case .bad: return ["😰 Anxious", "😩 Stressed", "🏎️ Impatient", "😤 Frustrated", "😒 Annoyed", "😴 Tired", "😟 Nervous", "😨 Scared", "😓 Insecure", "🥲 Sad", "🥱 Bored", "😞 Disappointed"]
+        case .veryBad: return ["😰 Anxious", "😩 stressed", "😡 Angry",  "😨 Scared", "😢 Depressed", "😓 Judged", "😖 Disrespected", "😞 Disappointed", "💔 Hurt", "🤢 Sick", "😭 Grief"]
+        default: return [""]
+        }
+    }
+    
+    static func allMoodCases() -> [Mood] {
+        return [veryBad, bad, okay, good,veryGood]
+    }
+
+    case happy
+    case okay
+    case sad
+    case angry
+    case stressed
+    case veryGood
+    case good
+    case bad
+    case veryBad
+    case none
+
+    var id: String { return self.rawValue }
+    
+    var title: String {
+        switch self {
+        case .happy: return "happy"
+        case .okay: return "okay"
+        case .sad: return "sad"
+        case .angry: return "angry"
+        case .stressed: return "stressed"
+        case .veryGood: return "very good"
+        case .good: return "good"
+        case .bad: return "bad"
+        case .veryBad: return "very bad"
+        case .none: return "none"
+        }
+    }
+
+    static func getMood(str: String) -> Mood {
+        switch str {
+        case "happy": return .happy
+        case "okay": return .okay
+        case "sad":  return .sad
+        case "angry": return .angry
+        case "stressed":  return .stressed
+        case "very good": return .veryGood
+        case "good": return .good
+        case "bad": return .bad
+        case "very bad": return .veryBad
+        case "none":
+            return .none
+        default:
+            return .none
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .happy: return Clr.gardenGreen
+        case .okay: return Clr.okay
+        case .sad: return Clr.gardenBlue
+        case .angry: return Clr.gardenRed
+        case .stressed: return Clr.purple
+        case .veryGood: return Clr.veryGood
+        case .good: return Clr.good
+        case .bad: return Clr.bad
+        case .veryBad: return Clr.veryBad
+        case .none: return Clr.dirtBrown
+        }
+    }
+    static func getMoodImage(mood: Mood) -> Image {
+        switch mood {
+        case .happy:
+            return Image("happyPot")
+        case .sad:
+            return Image("sadPot")
+        case .angry:
+            return Image("angryPot")
+        case .okay:
+            return Image("okay")
+        case .stressed:
+            return Image("stressedPot")
+        case .bad: return Image("bad")
+        case .veryBad: return Image("veryBad")
+        case .good: return Image("good")
+        case .veryGood: return Image("veryGood")
+        default:
+            return Image("okay")
+        }
+    }
+    
+}
 struct MoodCheck: View {
     @Binding var shown: Bool
     @Binding var showPopUp: Bool
@@ -20,7 +119,6 @@ struct MoodCheck: View {
     @Binding var PopUpIn: Bool
     @Binding var showPopUpOption: Bool
     @Binding var showItems: Bool
-    @Binding var showRecs: Bool
     @State private var notifOn: Bool = false
 
     var body: some View {
@@ -31,7 +129,7 @@ struct MoodCheck: View {
                         HStack {
                             Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
                                 .font(Font.fredoka(.medium, size: 20))
-                                .foregroundColor(Clr.black2)
+                                .foregroundColor(Clr.darkGray)
                                 .padding(.top, 35)
                             Spacer()
                             Image(systemName: "xmark")
@@ -53,15 +151,15 @@ struct MoodCheck: View {
      
                         Text("How are you feeling right now?")
                             .font(Font.fredoka(.semiBold, size: K.isPad() ? 40 : 28))
-                            .foregroundColor(Clr.brightGreen)
+                            .foregroundColor(Clr.black2)
                             .frame(width: g.size.width * 0.85, alignment: .leading)
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                             .padding(.bottom, 15)                    
                     ZStack(alignment: .center) {
                         Rectangle()
-                            .fill(Clr.yellow)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                            .fill(LinearGradient(colors: [Clr.veryBad, Clr.bad, Clr.okay, Clr.good, Clr.veryGood], startPoint: .leading, endPoint: .trailing))
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 32)
                             .neoShadow()
                         HStack {
                             SingleMood(moodSelected: $moodSelected, mood: .veryBad, save: save)
@@ -70,7 +168,7 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .good, save: save)
                             SingleMood(moodSelected: $moodSelected, mood: .veryGood, save: save)
                         }.padding(.horizontal, 10)
-                    }.frame(width: g.size.width * 0.9, height: g.size.height/(K.isPad() ? 3.5 : 3.5), alignment: .center)
+                    }.frame(width: g.size.width * 0.9, height: g.size.height/(3.25), alignment: .center)
                         Spacer()
                         if K.isPad() {
                             Spacer()
@@ -118,7 +216,7 @@ struct MoodCheck: View {
 
 struct MoodCheck_Previews: PreviewProvider {
     static var previews: some View {
-        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false), showRecs: .constant(false))
+        MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false))
             .frame(width: UIScreen.main.bounds.width, height: 250)
             .background(Clr.darkWhite)
             .cornerRadius(12)

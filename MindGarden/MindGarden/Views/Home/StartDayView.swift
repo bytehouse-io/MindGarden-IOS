@@ -28,6 +28,7 @@ struct StartDayView: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @State private var isDailyMood = true
     @State private var isGratitudeDone = false
+    @State private var isMeditationDone = false
     @State private var playEntryAnimation = false
     @State private var isWeekStreakDone = false
     @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
@@ -48,11 +49,12 @@ struct StartDayView: View {
     var body: some View {
         let width = UIScreen.screenWidth
         let height = UIScreen.screenHeight
+        let hour = Calendar.current.component( .hour, from:Date() )
         VStack {
             HStack {
-                Text("Start your day")
+                Text(hour > 16 ? "Relfect on your day" : "Start your day")
                     .foregroundColor(Clr.brightGreen)
-                    .font(Font.fredoka(.semiBold, size: 20))
+                    .font(Font.fredoka(.bold, size: 24))
                     .padding(.top,5)
                 Spacer()
             }
@@ -67,12 +69,12 @@ struct StartDayView: View {
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
                     Rectangle()
                         .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
-                        .frame(width:2)
+                        .frame(width: 4)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Rectangle()
                         .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
-                        .frame(width:2)
+                        .frame(width:4)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Image(systemName: "checkmark.circle.fill")
@@ -83,23 +85,24 @@ struct StartDayView: View {
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                     Rectangle()
                         .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
-                        .frame(width:2)
+                        .frame(width:4)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Rectangle()
                         .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
-                        .frame(width:2)
+                        .frame(width: 4)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(updatedStreak ? Clr.brightGreen : Clr.darkWhite )
+                        .foregroundColor(isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
                     Spacer()
                         .frame(height:30)
                 }.padding(.vertical,70)
+                .neoShadow()
                 VStack(spacing:30) {
                     ZStack {
                         Img.whiteClouds
@@ -131,10 +134,12 @@ struct StartDayView: View {
                             VStack {
                                 HStack(spacing:0) {
                                     Spacer()
-                                    Text(isWeekStreakDone ? "Wow! Perfect this week!" : "Answer today’s Journal Prompt")
+                                    Text(isWeekStreakDone ? "Wow! Perfect this week!" : isGratitudeDone ? "📈 Confidence, Clarity, Inspiration" : "Answer today’s Journal Prompt")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.semiBold, size: 20))
-                                        .padding([.leading, .top],16)
+                                        .padding([.top],16)
+                                        .padding(.leading, isWeekStreakDone || !isGratitudeDone  ? 16 : -16)
+                                        .offset(x: isWeekStreakDone || !isGratitudeDone  ? 0 : 32)
                                     Spacer()
                                     Img.streakViewPencil
                                         .resizable()
@@ -198,6 +203,7 @@ struct StartDayView: View {
                                     viewRouter.currentPage = .journal
                                 }
                             }
+                            .opacity(isGratitudeDone ? 0.5 : 1)
                     }.buttonStyle(ScalePress() )
                   
                     ZStack {
@@ -219,11 +225,15 @@ struct StartDayView: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         Analytics.shared.log(event: .home_tapped_featured)
                                         withAnimation {
-                                            medModel.selectedMeditation = medModel.featuredMeditation
-                                            if medModel.featuredMeditation?.type == .course {
-                                                viewRouter.currentPage = .middle
+                                            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
+                                                viewRouter.currentPage = .pricing
                                             } else {
-                                                viewRouter.currentPage = .play
+                                                medModel.selectedMeditation = medModel.featuredMeditation
+                                                if medModel.featuredMeditation?.type == .course {
+                                                    viewRouter.currentPage = .middle
+                                                } else {
+                                                    viewRouter.currentPage = .play
+                                                }
                                             }
                                         }
                                     } label: {
@@ -254,7 +264,7 @@ struct StartDayView: View {
 //                                    }
 //                                        .rotationEffect(Angle(degrees: 90))
 //                                )
-                            }
+                            }.opacity(isMeditationDone ? 0.5 : 1)
                             HStack {
                                 Spacer()
                                 Text("Breathwork")
@@ -307,6 +317,13 @@ struct StartDayView: View {
                         isGratitudeDone = true
                     }
                 }
+                if let meditations = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["sessions"]  as? [[String: String]] {
+                    if let meditation = meditations[meditations.count-1]["meditationId"], !meditation.isEmpty  {
+                        isMeditationDone = true
+                    }
+                }
+                    
+                
                 withAnimation {
                     playEntryAnimation = true
                 }

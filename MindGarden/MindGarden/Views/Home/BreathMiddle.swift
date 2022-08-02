@@ -94,7 +94,7 @@ struct BreathMiddle: View {
                                     Text(breathWork.description)
                                         .font(Font.fredoka(.regular, size: 16))
                                 }.foregroundColor(Clr.black2)
-                                    .frame(width: width * 0.55, alignment: .leading)
+                                    .frame(width: width * 0.575, alignment: .leading)
                             }.frame(width: width - 60, height: height * 0.175)
                             HStack() {
                                 Spacer()

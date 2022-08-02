@@ -30,7 +30,7 @@ struct HomeViewScroll: View {
         ZStack(alignment: .top) {
             //MARK: - scroll view
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                VStack(spacing: 7) {
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP,coin:userModel.coins, streakNumber: bonusModel.streakNumber)
                     StartDayView()
                     HStack(spacing: 15) {

@@ -26,7 +26,6 @@ struct ContentView: View {
     @State private var PopUpIn = false
     @State private var showPopUpOption = false
     @State private var showItems = false
-    @State private var showRecs = false
     var bonusModel: BonusViewModel
     var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
@@ -261,7 +260,7 @@ struct ContentView: View {
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             
-                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" &&                     UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
+                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
                             ) {
                                 ///Ashvin : Replace background button to stack with shollw effect with animation
                                 ZStack {
@@ -324,7 +323,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                                MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems, showRecs: $showRecs)
+                                MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(32)
@@ -381,12 +380,7 @@ struct ContentView: View {
             }
           }
         }
-        .sheet(isPresented: $showRecs) {
-            if !isOnboarding {
-                let meditations = Meditation.getRecsFromMood()
-//                ShowRecsScene(mood: , meditations: meditations)
-            }
-        }
+
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
                 withAnimation(.linear(duration: 0.5)) {
