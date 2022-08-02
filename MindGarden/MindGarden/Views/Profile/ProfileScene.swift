@@ -384,7 +384,7 @@ struct ProfileScene: View {
                                                 Text("Save your progress")
                                                     .foregroundColor(Clr.black2).font(Font.fredoka(.semiBold, size: 20))
                                                     .padding(.top, K.isSmall() ? 0 : 15)
-                                                    .padding(.bottom, -10)
+                                                    .padding(.bottom, 10)
                                             }
                                             
                                             Button {
@@ -427,6 +427,7 @@ struct ProfileScene: View {
                                                         .minimumScaleFactor(0.05)
                                                         .padding(.horizontal, 32)
                                                         .padding(.bottom, 20)
+                                                        .addBorder(.black, width: 1.5, cornerRadius: 20)
                                                 }
                                             }
                                             .frame(width:width, height: 50, alignment: .center)

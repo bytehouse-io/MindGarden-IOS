@@ -65,40 +65,37 @@ struct StartDayView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isDailyMood ? Clr.darkWhite : Clr.brightGreen)
-                        .frame(width:24,height: 24)
-                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 14)
+                        .frame(width:28,height: 28)
                     Rectangle()
                         .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
-                        .frame(width: 4)
+                        .frame(width: 6)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Rectangle()
                         .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
-                        .frame(width:4)
+                        .frame(width:6)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isGratitudeDone ? Clr.brightGreen : Clr.darkWhite)
-                        .frame(width:24,height: 24)
-                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
+                        .frame(width:28,height: 28)
                     Rectangle()
                         .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
-                        .frame(width:4)
+                        .frame(width:6)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Rectangle()
                         .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
-                        .frame(width: 4)
+                        .frame(width: 6)
                         .frame(maxHeight:.infinity)
                         .scaleEffect(CGSize(width: 1.0, height: 1.2))
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
-                        .frame(width:24,height: 24)
-                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 16)
+                        .frame(width:28,height: 28)
                     Spacer()
                         .frame(height:30)
                 }.padding(.vertical,70)
@@ -200,6 +197,7 @@ struct StartDayView: View {
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
+                                    userModel.elaboration = ""
                                     viewRouter.currentPage = .journal
                                 }
                             }
@@ -242,28 +240,6 @@ struct StartDayView: View {
                                             .opacity(playEntryAnimation ? 1 : 0)
                                             .animation(.spring().delay(0.3), value: playEntryAnimation)
                                     }.buttonStyle(ScalePress())
-                                
-//                                Button {
-//                                } label: {
-//                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)
-//                                }
-//                                .padding(.vertical,5)
-//                                .buttonStyle(BonusPress())
-//                                .frame(width:30)
-//                                .overlay(
-//                                    HStack {
-//                                        Text("Discover")
-//                                            .foregroundColor(Clr.black2)
-//                                            .font(Font.fredoka(.semiBold, size: 16))
-//                                            .lineLimit(1)
-//                                            .frame(width:75)
-//                                        Image(systemName: "arrow.up")
-//                                            .resizable()
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .frame(width:12)
-//                                    }
-//                                        .rotationEffect(Angle(degrees: 90))
-//                                )
                             }.opacity(isMeditationDone ? 0.5 : 1)
                             HStack {
                                 Spacer()
