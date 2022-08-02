@@ -225,16 +225,16 @@ struct MindGardenWidgetEntryView : View {
                startsOnSunday = false
            }
 
-           if let sessions = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[K.defaults.sessions] as? [[String: String]] {
+           if let sessions = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[KK.defaults.sessions] as? [[String: String]] {
                for session in sessions {
                    self.totalSess += 1
                    self.totalTime += Int(Double(session[K.defaults.duration] ?? "0.0") ?? 0.0)
-                   let plant = session[K.defaults.plantSelected] ?? ""
+                   let plant = session[KK.defaults.plantSelected] ?? ""
                    allPlants.append(plant)
                }
            }
 
-           if let moods = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[K.defaults.moods] as? [String] {
+           if let moods = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[KK.defaults.moods] as? [String] {
                mood = Mood.getMood(str: moods[moods.count - 1])
                for forMood in moods {
                    let singleMood = Mood.getMood(str: forMood)
@@ -247,14 +247,14 @@ struct MindGardenWidgetEntryView : View {
                }
            }
 
-           if let gratitudez = entry.grid[Date().get(.year)]?[strMonth]?[String(day)]?[K.defaults.gratitudes] as? [String] {
+           if let gratitudez = entry.grid[Date().get(.year)]?[strMonth]?[String(day)]?[KK.defaults.gratitudes] as? [String] {
                gratitudes += gratitudez.count
            }
    }
         var plantz = [Plnt]()
         for plant in allPlants {
 //            if  plant != "Bonsai Tree"  {
-                if let img = K.plantImages[plant]{
+                if let img = KK.plantImages[plant]{
                     let plnt = Plnt(title: img, id: plant)
                     plantz.append(plnt)
                 }
@@ -272,7 +272,7 @@ struct MindGardenWidgetEntryView : View {
 
         var body: some View {
             VStack(spacing: 2) {
-                K.getMoodImage(mood: mood)
+                KK.getMoodImage(mood: mood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 Text("\(count)")

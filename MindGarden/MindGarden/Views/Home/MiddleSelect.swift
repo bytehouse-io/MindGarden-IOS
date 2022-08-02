@@ -16,7 +16,7 @@ import SwiftUI
 //HomeSquares
 //Title: 28, semibold
 //subscript: 12, regular
-var middleToSearch = ""
+
 struct MiddleSelect: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel

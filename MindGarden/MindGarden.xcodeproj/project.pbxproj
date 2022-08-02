@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */; };
+		2DAD2CD52D8956FCFD51DF91 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267FF021DD48962EE52032DD /* Pods_MindGarden_MindGardenWidgetExtension.framework */; };
 		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
 		5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */; };
 		5801C2752892F3C900927C4F /* Fredoka-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */; };
@@ -69,6 +70,18 @@
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
 		58DEE5AC2867390400A04CA2 /* BreathworkPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */; };
 		58E21AD2280687DE00F2BC0F /* HomeViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */; };
+		58E4199B28982FC20042F492 /* MeditationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */; };
+		58E4199E2898DDDA0042F492 /* Images+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FD6266D4E5B008CDAA4 /* Images+Generated.swift */; };
+		58E4199F2898DE000042F492 /* Breathwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6ACB32870F2A400A1E042 /* Breathwork.swift */; };
+		58E419A02898DE210042F492 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FE6266EA49A008CDAA4 /* ViewRouter.swift */; };
+		58E419A12898DE2C0042F492 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA7FBE326B0DF5A0073C62D /* Plant.swift */; };
+		58E419A22898DE560042F492 /* QuickStartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DAC2841DF8B007E0695 /* QuickStartModel.swift */; };
+		58E419A62898E42C0042F492 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FD4266D4E5B008CDAA4 /* Colors+Generated.swift */; };
+		58E419A72898E5390042F492 /* MoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581EF8862875CC7E0058C7E4 /* MoodModel.swift */; };
+		58E419A92898E65C0042F492 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E419A82898E65C0042F492 /* CategoryModel.swift */; };
+		58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E419A82898E65C0042F492 /* CategoryModel.swift */; };
+		58E419AB2898E75E0042F492 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
+		58E419AC2898EBA70042F492 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CE267E8D98006558A2 /* Util.swift */; };
 		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
@@ -137,7 +150,7 @@
 		FE09DA2326F53BD00018099F /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = FE09DA2226F53BD00018099F /* confetti.json */; };
 		FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B2268FAABE00E1E71A /* Gratitude.swift */; };
 		FE11F0B62691073300E1E71A /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE11F0B52691073200E1E71A /* Authentication.swift */; };
-		FE135BD0277BA75800614A4E /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE135BCF277BA75800614A4E /* Util.swift */; };
+		FE135BD0277BA75800614A4E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE135BCF277BA75800614A4E /* Utils.swift */; };
 		FE135BD1277BC48000614A4E /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */; };
 		FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */; };
 		FE17B8AC26BF116F002CF8C2 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */; };
@@ -281,6 +294,7 @@
 		04371576AAD4E6B810CC782C /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
 		1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
 		21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
+		267FF021DD48962EE52032DD /* Pods_MindGarden_MindGardenWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
 		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
@@ -337,10 +351,12 @@
 		58D90A9727E70DA4008C4E1C /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
 		58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathworkPlay.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
+		58E419A82898E65C0042F492 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
 		58F5F04A2860D7E000207D92 /* FreeTrialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeTrialView.swift; sourceTree = "<group>"; };
+		605E304F19ACE4AFB3123482 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		88164778287D0D4C00C2B6D4 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
@@ -399,6 +415,7 @@
 		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED8CDB12AA546761D320FBB9 /* Pods-MindGardenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.release.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.release.xcconfig"; sourceTree = "<group>"; };
+		F08C90D1DEB871934670CE18 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE04A802279A3CA900799A07 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		FE04A804279CD77400799A07 /* SaveProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveProgressModal.swift; sourceTree = "<group>"; };
@@ -407,7 +424,7 @@
 		FE11F0B2268FAABE00E1E71A /* Gratitude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gratitude.swift; sourceTree = "<group>"; };
 		FE11F0B52691073200E1E71A /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		FE11F0B726910D5A00E1E71A /* MindGarden.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MindGarden.entitlements; sourceTree = "<group>"; };
-		FE135BCF277BA75800614A4E /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		FE135BCF277BA75800614A4E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenViewModel.swift; sourceTree = "<group>"; };
 		FE17B8AB26BF116F002CF8C2 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meditation.swift; sourceTree = "<group>"; };
@@ -527,6 +544,7 @@
 			files = (
 				FE48B43C27791B5500CA7B63 /* SwiftUI.framework in Frameworks */,
 				FE48B43A27791B5500CA7B63 /* WidgetKit.framework in Frameworks */,
+				2DAD2CD52D8956FCFD51DF91 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +590,7 @@
 				93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */,
 				F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */,
 				D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */,
+				267FF021DD48962EE52032DD /* Pods_MindGarden_MindGardenWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -585,6 +604,8 @@
 				8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */,
 				21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */,
 				ED8CDB12AA546761D320FBB9 /* Pods-MindGardenTests.release.xcconfig */,
+				F08C90D1DEB871934670CE18 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */,
+				605E304F19ACE4AFB3123482 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -773,7 +794,7 @@
 				FE48B44127791B5B00CA7B63 /* Assets.xcassets */,
 				FE48B44327791B5B00CA7B63 /* Info.plist */,
 				FE647DCD277AAD22008901AD /* Widget+Extensions.swift */,
-				FE135BCF277BA75800614A4E /* Util.swift */,
+				FE135BCF277BA75800614A4E /* Utils.swift */,
 			);
 			path = MindGardenWidget;
 			sourceTree = "<group>";
@@ -843,6 +864,7 @@
 			children = (
 				FE683F3B269FC54D009A66DF /* CategoriesScene.swift */,
 				FEB580CE278A236F0022B5E9 /* MiddleModal.swift */,
+				58E419A82898E65C0042F492 /* CategoryModel.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1203,9 +1225,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE48B44C27791B5B00CA7B63 /* Build configuration list for PBXNativeTarget "MindGardenWidgetExtension" */;
 			buildPhases = (
+				CC4BB242769C01E0930528C1 /* [CP] Check Pods Manifest.lock */,
 				FE48B43427791B5500CA7B63 /* Sources */,
 				FE48B43527791B5500CA7B63 /* Frameworks */,
 				FE48B43627791B5500CA7B63 /* Resources */,
+				8D49A27A048FB0CCAAFEFE13 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1539,6 +1563,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8D49A27A048FB0CCAAFEFE13 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C0C8C8ABA1FF5B74850CB317 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1554,6 +1595,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC4BB242769C01E0930528C1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MindGarden-MindGardenWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D884199FE9D80E9C4E89C8D6 /* [CP] Check Pods Manifest.lock */ = {
@@ -1633,14 +1696,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E4199B28982FC20042F492 /* MeditationsViewModel.swift in Sources */,
 				5898541728954E33002999A0 /* MediumWidget.swift in Sources */,
 				FE48B44E2779599400CA7B63 /* Fonts+Generated.swift in Sources */,
 				5898541528954E0C002999A0 /* SmallWidget.swift in Sources */,
+				58E419AC2898EBA70042F492 /* Util.swift in Sources */,
 				FE647DCE277AAD22008901AD /* Widget+Extensions.swift in Sources */,
-				FE135BD0277BA75800614A4E /* Util.swift in Sources */,
+				58E4199E2898DDDA0042F492 /* Images+Generated.swift in Sources */,
+				FE135BD0277BA75800614A4E /* Utils.swift in Sources */,
+				58E419A02898DE210042F492 /* ViewRouter.swift in Sources */,
+				58E419A12898DE2C0042F492 /* Plant.swift in Sources */,
+				58E419A72898E5390042F492 /* MoodModel.swift in Sources */,
 				5898541928954E4C002999A0 /* LargeWidget.swift in Sources */,
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
+				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
+				58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */,
+				58E419A62898E42C0042F492 /* Colors+Generated.swift in Sources */,
+				58E4199F2898DE000042F492 /* Breathwork.swift in Sources */,
+				58E419A22898DE560042F492 /* QuickStartModel.swift in Sources */,
 				58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */,
 				FE135BD1277BC48000614A4E /* Date+Extensions.swift in Sources */,
 			);
@@ -1767,6 +1841,7 @@
 				FEB2E3C8270F9AC700F5C23C /* AnalyticEvent.swift in Sources */,
 				88B6ACB62871125400A1E042 /* BreathMiddle.swift in Sources */,
 				FE4E9E642676AE54002BC758 /* HomeSquare.swift in Sources */,
+				58E419A92898E65C0042F492 /* CategoryModel.swift in Sources */,
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
 				FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */,
 				58C052E22805DF3E007B4D2B /* HomeViewHeader.swift in Sources */,
@@ -1901,6 +1976,7 @@
 		};
 		FE48B44A27791B5B00CA7B63 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F08C90D1DEB871934670CE18 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1931,6 +2007,7 @@
 		};
 		FE48B44B27791B5B00CA7B63 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 605E304F19ACE4AFB3123482 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
