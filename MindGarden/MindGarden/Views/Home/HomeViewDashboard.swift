@@ -15,7 +15,6 @@ struct HomeViewDashboard: View {
     @State var name : String
     @Binding var activeSheet: Sheet?
     @Binding var showIAP: Bool
-    @State var coin: Int
     @State var streakNumber: Int
     let height = 20.0
     var body: some View {
@@ -66,7 +65,7 @@ struct HomeViewDashboard: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height:20)
                                     .foregroundColor(.black)
-                                Text("\(coin)")
+                                Text("\(userModel.coins)")
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)
                             }
@@ -80,7 +79,7 @@ struct HomeViewDashboard: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height:20)
                                     .foregroundColor(.black)
-                                Text("\(coin)")
+                                Text("\(userModel.coins)")
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)
                             }
@@ -116,7 +115,7 @@ struct HomeViewDashboard: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 24, height:24)
                             .foregroundColor(.black)
-                        Text("\(streakNumber) " + (K.isSmall() ? "" : "days"))
+                        Text("\(streakNumber) " + (K.isSmall() ? "" : "day") + (streakNumber == 1 ? "s" : ""))
                             .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.gardenRed)
                     }

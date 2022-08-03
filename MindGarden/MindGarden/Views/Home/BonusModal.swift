@@ -46,7 +46,7 @@ struct BonusModal: View {
                             .buttonStyle(NeoPress())
                             HStack(alignment: .center) {
                                 Text("Daily Bonus")
-                                    .font(Font.fredoka(.bold, size: 30))
+                                    .font(Font.fredoka(.bold, size: 28))
                                     .foregroundColor(Clr.black1)
                                     .padding()
                             }.padding(.bottom, -5)
@@ -72,7 +72,7 @@ struct BonusModal: View {
                         Spacer()
                         if !K.isIpod() {
                             Text("Streaks")
-                                .font(Font.fredoka(.bold, size: 30))
+                                .font(Font.fredoka(.bold, size: 28))
                                 .foregroundColor(Clr.black1)
                                 .frame(alignment: .center)
                                 .padding(.bottom, 5)
@@ -227,7 +227,7 @@ struct BonusModal: View {
                             .renderingMode(.original)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.07)
-                        Text("5")
+                        Text("10")
                             .foregroundColor(Clr.black1)
                             .font(Font.fredoka(.semiBold, size: 24))
                             .minimumScaleFactor(0.5)

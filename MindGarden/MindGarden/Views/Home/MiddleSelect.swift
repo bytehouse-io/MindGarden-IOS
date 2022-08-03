@@ -256,7 +256,7 @@ struct MiddleSelect: View {
                         .font(Font.fredoka(.semiBold, size: 16))
                         .padding(.trailing, 3)
                     Text(meditation.title)
-                        .foregroundColor(state == .locked ? Clr.darkGray : Clr.black2)
+                        .foregroundColor(state == .checked ? Clr.darkgreen : Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 16))
                         .lineLimit(2)
                         .minimumScaleFactor(0.05)
@@ -288,7 +288,7 @@ struct MiddleSelect: View {
                         model.favorite(id: meditation.id)
                         isFavorited.toggle()
                     }
-                }
+                }.opacity(state == .checked ? 0.5 : 1)
             }
             .padding(5)
             .frame(width: width)

@@ -77,7 +77,7 @@ struct JournalView: View, KeyboardReadable {
                     }
                     .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
                     .padding(.leading, 5)
-                    .padding(.vertical, 5)
+                    .padding(.vertical, 10)
                 }
                 GeometryReader { g in
                     VStack(spacing: 0) {

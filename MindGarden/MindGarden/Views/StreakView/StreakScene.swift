@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+import StoreKit
+import Firebase
 
 struct StreakScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -20,6 +21,7 @@ struct StreakScene: View {
     @State private var img = UIImage()
     @State private var isSharePresented: Bool = false
     @State private var showButtons = true
+    @State private var triggerRating = false
     
     var subTitle : String {
         switch bonusModel.streakNumber {
@@ -82,17 +84,17 @@ struct StreakScene: View {
 //                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
 //                    .padding(.top, 50)
                     Button {
-                        //TODO: implement continue tap event
-                        withAnimation {
-                            if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
-                                fromPage = ""
-                                viewRouter.previousPage = .garden
-                                viewRouter.currentPage = .pricing
-                            } else {
-                                viewRouter.currentPage = .garden
+                        let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+                        if Auth.auth().currentUser?.email == nil && launchNum >= 2 {
+                            fromPage = "garden"
+                            viewRouter.currentPage = .authentication
+                        } else {
+                            if !UserDefaults.standard.bool(forKey: "tappedRate") {
+                                if launchNum == 1 || launchNum == 3 || launchNum == 5 || launchNum == 7  {
+                                    triggerRating.toggle()
+                                }
                             }
                         }
-                  
                     } label: {
                         Capsule()
                             .fill(Clr.gardenRed)
@@ -110,6 +112,18 @@ struct StreakScene: View {
             }
             .offset(y: -145)
         }
+        .alert(isPresented: $triggerRating) {
+            Alert(title: Text(""), message: Text("🧑‍🌾 Are you enjoying MindGarden so far?"),
+                  primaryButton: .default(Text("Yes!")) {
+                    if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
+                        dismiss()
+                    }
+                  },
+                  secondaryButton: .default(Text("No")) {
+                    
+                    dismiss()
+            })
+        }
         .onChange(of: isSharePresented) { value in
             showButtons = !value
         }
@@ -120,6 +134,7 @@ struct StreakScene: View {
             MGAudio.sharedInstance.stopSound()
             MGAudio.sharedInstance.playSounds(soundFileNames: ["fire_ignite.mp3","fire.mp3"])
             self.animate()
+
         }
         .onDisappear() {
             MGAudio.sharedInstance.stopSound()
@@ -133,6 +148,17 @@ struct StreakScene: View {
 //        }
 
         .background(Clr.darkWhite)
+    }
+    private func dismiss() {
+        withAnimation {
+            if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
+                fromPage = ""
+                viewRouter.previousPage = .garden
+                viewRouter.currentPage = .pricing
+            } else {
+                viewRouter.currentPage = .garden
+            }
+        }
     }
     
     private func animate() {

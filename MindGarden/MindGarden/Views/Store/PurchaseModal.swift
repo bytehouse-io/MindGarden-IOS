@@ -139,7 +139,7 @@ struct PurchaseModal: View {
                         if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                             HStack {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
-                                case "🙏 Write 30 Gratitudes": Text("Total gratitudes: \(UserDefaults.standard.integer(forKey: "numGrads"))")
+                                case "✏️ 30 Journal Entries": Text("Total Journal Entries: \(UserDefaults.standard.integer(forKey: "numGrads"))")
                                 case "7️⃣ Day Streak": Text("Current Streak: \(bonusModel.streakNumber)")
                                 case  "🌸 Meditate on Mar 20": Text("Current Streak: \(bonusModel.streakNumber)")
                                 default: Text("")

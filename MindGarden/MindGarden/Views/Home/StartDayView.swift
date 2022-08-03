@@ -243,6 +243,7 @@ struct StartDayView: View {
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
+                                    userModel.elaboration = ""
                                     viewRouter.currentPage = .journal
                                 }
                             }
@@ -285,28 +286,6 @@ struct StartDayView: View {
                                             .opacity(playEntryAnimation ? 1 : 0)
                                             .animation(.spring().delay(0.3), value: playEntryAnimation)
                                     }.buttonStyle(ScalePress())
-                                
-//                                Button {
-//                                } label: {
-//                                    Clr.yellow.addBorder(Color.black, width: 1.5, cornerRadius: 20)
-//                                }
-//                                .padding(.vertical,5)
-//                                .buttonStyle(BonusPress())
-//                                .frame(width:30)
-//                                .overlay(
-//                                    HStack {
-//                                        Text("Discover")
-//                                            .foregroundColor(Clr.black2)
-//                                            .font(Font.fredoka(.semiBold, size: 16))
-//                                            .lineLimit(1)
-//                                            .frame(width:75)
-//                                        Image(systemName: "arrow.up")
-//                                            .resizable()
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .frame(width:12)
-//                                    }
-//                                        .rotationEffect(Angle(degrees: 90))
-//                                )
                             }.opacity(isMeditationDone ? 0.5 : 1)
                             HStack {
                                 Spacer()

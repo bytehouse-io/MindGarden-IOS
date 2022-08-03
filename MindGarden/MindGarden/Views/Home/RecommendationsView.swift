@@ -17,6 +17,7 @@ struct RecommendationsView: View {
     @Binding var recs: [Int]
     @Binding var coin: Int
     @State private var isOnboarding = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ZStack {
@@ -45,7 +46,7 @@ struct RecommendationsView: View {
                                 .scaleEffect(2))
                             VStack(alignment:.leading, spacing: 0) {
                                 HStack {
-                                    ( Text("You earned")  .foregroundColor(.white) + Text(" +\(20 + coin) ").foregroundColor(Clr.brightGreen) + Text("coins")  .foregroundColor(.white))
+                                    ( Text("You earned")  .foregroundColor(.white) + Text("  +\(20 + coin)  ").foregroundColor(Clr.brightGreen) + Text("coins")  .foregroundColor(.white))
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .padding()
                                         .offset(x: 24)
@@ -102,15 +103,27 @@ struct RecommendationsView: View {
                     Spacer()
                 }
                 .padding(.horizontal,32)
-            }
+            }.disabled(isOnboarding)
         }.onAppear() {
             withAnimation(.spring()) {
                 playAnim = true
                 playEntryAnimation = true
             }
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                if UserDefaults.standard.integer(forKey: "numMeds") > 0 {
+            
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
+                if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
                     isOnboarding = true
+                    var count = 0
+                    let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                        count += 1
+                        if count == 2 {
+                            timer.invalidate()
+                            withAnimation {
+                                presentationMode.wrappedValue.dismiss()
+                                viewRouter.currentPage = .meditate
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -136,7 +149,7 @@ struct RecommendationsView: View {
             }.frame(height:50)
             .padding(.bottom,20)
             ForEach(0..<3) { idx in
-                MeditationRow(id: recs[idx], isBreathwork: idx == 0)
+                MeditationRow(id: recs[idx], isBreathwork: idx == 0, idx: idx)
                     .padding(.vertical,5)
                     .offset(y: playEntryAnimation ? 0 : 100)
                     .opacity(playEntryAnimation ? 1 : 0)
@@ -162,7 +175,7 @@ struct RecommendationsView: View {
                         .addBorder(Color.black, width: 1.5, cornerRadius: 22)
                     HStack {
                         Text("See More")
-                            .foregroundColor(Clr.darkWhite)
+                            .foregroundColor(Clr.black2)
                             .font(Font.fredoka(.bold, size: 16))
                         Image(systemName: "arrow.right")
                             .resizable()
@@ -171,111 +184,113 @@ struct RecommendationsView: View {
                     }
                 }
             }.buttonStyle(NeoPress())
-  
         }
     }
-}
-
-
-struct MeditationRow: View {
-    var id:Int
-    var isBreathwork: Bool
-    @State var meditation: Meditation = Meditation.allMeditations[0]
-    @State var breathwork: Breathwork = Breathwork.breathworks[0]
     
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill(Clr.darkWhite)
-                .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                .neoShadow()
-            HStack(spacing:0) {
-                VStack(alignment:.leading,spacing:3) {
-                    Text(isBreathwork ? breathwork.title : meditation.title)
-                        .font(Font.fredoka(.semiBold, size: 20))
-                        .frame(width: UIScreen.screenWidth * 0.5, height: !isBreathwork
-                               && meditation.title.count > 20 ? 55 : 25, alignment: .leading)
-                        .foregroundColor(Clr.black2)
-                        .multilineTextAlignment(.leading)
-                        .padding(.vertical, 5)
-                        .lineLimit(2)
-                        .offset(y:!isBreathwork && meditation.title.count > 19 ? 5 : 0)
-                    HStack {
-                        Image(systemName: isBreathwork ? "wind" : "speaker.wave.3.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height:12)
-                            .padding(.vertical,0)
-                        Text(isBreathwork ? "Breathwork" : " Meditation")
-                            .font(Font.fredoka(.medium, size: 16))
-                            .foregroundColor(Clr.black2.opacity(0.5))
-                            .padding(.vertical,0)
-                    }.padding(.vertical,0)
-                        .frame(width: UIScreen.screenWidth/2.5, alignment: .leading)
-
+    struct MeditationRow: View {
+        @EnvironmentObject var viewRouter: ViewRouter
+        var id:Int
+        var isBreathwork: Bool
+        var idx: Int
+        @State var meditation: Meditation = Meditation.allMeditations[0]
+        @State var breathwork: Breathwork = Breathwork.breathworks[0]
+        
+        var body: some View {
+            ZStack {
+                Rectangle()
+                    .fill(Clr.darkWhite)
+                    .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                    .neoShadow()
+                HStack(spacing:0) {
+                    VStack(alignment:.leading,spacing:3) {
+                        Text(isBreathwork ? breathwork.title : meditation.title)
+                            .font(Font.fredoka(.semiBold, size: 20))
+                            .frame(width: UIScreen.screenWidth * 0.5, height: !isBreathwork
+                                   && meditation.title.count > 20 ? 55 : 25, alignment: .leading)
+                            .foregroundColor(Clr.black2)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 5)
+                            .lineLimit(2)
+                            .offset(y:!isBreathwork && meditation.title.count > 19 ? 5 : 0)
                         HStack {
-                            Image(systemName: isBreathwork ? breathwork.color.image : "timer")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height:13)
-                                .padding(.vertical,0)
-                            Text(isBreathwork ? breathwork.color.name.capitalized : Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
-                                .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(Clr.black2.opacity(0.5))
-                                .padding(.vertical,0)
-                            Text("•")
-                                .font(Font.fredoka(.bold, size: 16))
-                                .foregroundColor(Clr.black2.opacity(0.5))
-                                .padding(.vertical,0)
-                            Image(systemName: "person.fill")
+                            Image(systemName: isBreathwork ? "wind" : "speaker.wave.3.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height:12)
                                 .padding(.vertical,0)
-                            Text(isBreathwork ? "Visual" : "\(meditation.instructor)")
+                            Text(isBreathwork ? "Breathwork" : " Meditation")
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)
-                        .frame(width: UIScreen.screenWidth/2.25, alignment: .leading)
-                }
-                Spacer()
-                Group {
-                    if isBreathwork {
-                        breathwork.img
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    } else {
-                        if meditation.imgURL != "" {
-                            UrlImageView(urlString: meditation.imgURL)
-                                .aspectRatio(contentMode: .fit)
-                        } else {
-                            meditation.img
+                            .frame(width: UIScreen.screenWidth/2.5, alignment: .leading)
+
+                            HStack {
+                                Image(systemName: isBreathwork ? breathwork.color.image : "timer")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height:13)
+                                    .padding(.vertical,0)
+                                Text(isBreathwork ? breathwork.color.name.capitalized : Int(meditation.duration) == 0 ? "Course" : (Int(meditation.duration/60) == 0 ? "1/2" : "\(Int(meditation.duration/60))") + " mins")
+                                    .font(Font.fredoka(.medium, size: 16))
+                                    .foregroundColor(Clr.black2.opacity(0.5))
+                                    .padding(.vertical,0)
+                                Text("•")
+                                    .font(Font.fredoka(.bold, size: 16))
+                                    .foregroundColor(Clr.black2.opacity(0.5))
+                                    .padding(.vertical,0)
+                                Image(systemName: "person.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height:12)
+                                    .padding(.vertical,0)
+                                Text(isBreathwork ? "Visual" : "\(meditation.instructor)")
+                                    .font(Font.fredoka(.medium, size: 16))
+                                    .foregroundColor(Clr.black2.opacity(0.5))
+                                    .padding(.vertical,0)
+                            }.padding(.vertical,0)
+                            .frame(width: UIScreen.screenWidth/2.25, alignment: .leading)
+                    }
+                    Spacer()
+                    Group {
+                        if isBreathwork {
+                            breathwork.img
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                        } else {
+                            if meditation.imgURL != "" {
+                                UrlImageView(urlString: meditation.imgURL)
+                                    .aspectRatio(contentMode: .fit)
+                            } else {
+                                meditation.img
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+        
                         }
-    
-                    }
-                }.frame(width: 80, height: 80)
-                    .offset(y: 2)
-            }
-            .frame(height: 100, alignment: .center)
-            .offset(y: -7)
-            .padding(.horizontal, 30)
-            .padding(.vertical, 20)
-        }.onAppear {
-            if isBreathwork {
-                if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
-                    breathwork = breath
+                    }.frame(width: 80, height: 80)
+                        .offset(y: 2)
                 }
-            } else {
-                if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
-                    meditation = med
+                .frame(height: 100, alignment: .center)
+                .offset(y: -7)
+                .padding(.horizontal, 30)
+                .padding(.vertical, 20)
+            }.onAppear {
+                if isBreathwork {
+                    if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
+                        breathwork = breath
+                    }
+                } else {
+                    if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
+                        meditation = med
+                    }
                 }
             }
         }
     }
+
 }
+
 
 
 struct RecommendationsView_Previews: PreviewProvider {

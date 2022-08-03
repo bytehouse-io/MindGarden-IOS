@@ -128,6 +128,7 @@ struct Play: View {
                                 .foregroundColor(Clr.black1)
                                 .font(Font.fredoka(.bold, size: 60))
                                 .frame(width: UIScreen.screenWidth)
+                                .animation(UserDefaults.standard.integer(forKey: "numMeds") == 0 ? nil : nil)
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {

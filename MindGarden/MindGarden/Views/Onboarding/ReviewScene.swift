@@ -180,9 +180,58 @@ struct ReviewScene: View {
                                     }
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
-                            
                         }
                         Spacer()
+                        Button {
+                            MGAudio.sharedInstance.playBubbleSound()
+                            Analytics.shared.log(event: .review_tapped_tutorial)
+                            
+                            let impact = UIImpactFeedbackGenerator(style: .light)
+                            impact.impactOccurred()
+                            fromPage = "onboarding2"
+                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                            UserDefaults.standard.setValue(true, forKey: "onboarded")
+                            withAnimation {
+                                viewRouter.progressValue = 1
+                                if fromInfluencer != "" {
+                                    Analytics.shared.log(event: .user_from_influencer)
+                                    viewRouter.currentPage = .pricing
+                                } else {
+                                    showLoading = true
+//
+//                                    Paywall.present { info in
+//                                        Analytics.shared.log(event: .screen_load_superwall)
+//                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+//                                        switch productId {
+//                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                        case "io.mindgarden.pro.yearly":
+//                                            Analytics.shared.log(event: .yearly_started_from_superwall)
+//                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+//                                                NotificationHelper.freeTrial()
+//                                            }
+//                                        default: break
+//                                        }
+//                                        viewRouter.currentPage = .meditate
+//                                    } onFail: { error in
+//                                        viewRouter.currentPage = .pricing
+//                                    }
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text("MindGarden Tutorial  👉🏻")
+                                    .foregroundColor(Clr.darkgreen)
+                                    .font(Font.fredoka(.semiBold, size: 18))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                            }.frame(width: g.size.width * 0.75, height: g.size.height/16)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
+                        }.padding()
+                            .buttonStyle(NeumorphicPress())
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
                             if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {

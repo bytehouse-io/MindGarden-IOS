@@ -476,7 +476,7 @@ struct ContentView: View {
         case .moodCheck:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if UserDefaults.standard.integer(forKey: "numMoods") >= 70 && !UserDefaults.standard.bool(forKey: "isPro") {
+            if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
                 withAnimation {
                     Analytics.shared.log(event: .plus_tapped_mood_to_pricing)
                     fromPage = "plusMood"
