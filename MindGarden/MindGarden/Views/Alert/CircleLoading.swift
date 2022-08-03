@@ -104,7 +104,6 @@ struct CircleLoadingView<Content>: View where Content: View {
                 let deadline = DispatchTime.now() + updateTimeInterval
                 
                 DispatchQueue.main.asyncAfter(deadline: deadline) {
-                    print(percentage, "go go")
                     self.percentage += Int(100 / steps)
                     if percentage == 99 {
                         viewRouter.currentPage = .meditate

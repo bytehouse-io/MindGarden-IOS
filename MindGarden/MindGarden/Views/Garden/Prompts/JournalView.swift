@@ -110,7 +110,7 @@ struct JournalView: View, KeyboardReadable {
                             }
                         }
                         .transition(.move(edge: .leading))
-                        .frame(height: g.size.height * (question == placeholderQuestion ? 0.4 : (question.count >= 64 ? 0.35 : question.count >= 32 ? 0.5 : 0.45)))
+                        .frame(height: g.size.height * (question == placeholderQuestion ? 0.4 : (question.count >= 64 ? 0.35 : question.count >= 32 ? 0.4 : 0.45)))
                         .padding(.top, 15)
                     }
                 }

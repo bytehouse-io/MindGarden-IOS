@@ -67,7 +67,7 @@ struct OnboardingScene: View {
                         VStack(spacing:0) {
                             VStack(alignment:.leading) {
                                 Text(title)
-                                    .font(Font.fredoka(.semiBold, size: 32))
+                                    .font(Font.fredoka(.bold, size: 32))
                                     .padding(.horizontal)
                                     .foregroundColor(Clr.black2)
                                     .multilineTextAlignment(.leading)
@@ -77,7 +77,7 @@ struct OnboardingScene: View {
                                     Text(" Gamification")
                                         .foregroundColor(Clr.brightGreen)
                                 }
-                                .font(Font.fredoka(.semiBold, size: 32))
+                                .font(Font.fredoka(.bold, size: 32))
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom,10)

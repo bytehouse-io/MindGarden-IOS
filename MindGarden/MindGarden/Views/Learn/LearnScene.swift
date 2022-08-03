@@ -149,7 +149,6 @@ struct LearnScene: View {
                 .padding(.bottom, g.size.height * (K.hasNotch() ? 0.1 : 0.25))
                 }.frame(height: height)
             }
-            .disabled(!UserDefaults.standard.bool(forKey: "day1"))
             }
         }
         .fullScreenCover(isPresented: $showCourse) {

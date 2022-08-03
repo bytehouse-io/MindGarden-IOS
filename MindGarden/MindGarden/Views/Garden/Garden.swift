@@ -26,7 +26,7 @@ struct Garden: View {
     @State private var color = Clr.yellow
     @Environment(\.sizeCategory) var sizeCategory
     @State var activeSheet: Sheet?
-    
+    @State private var showStreak: Bool = false
     @EnvironmentObject var bonusModel: BonusViewModel
     @Environment(\.colorScheme) var colorScheme
     var currentStreak : String {
@@ -484,7 +484,7 @@ struct Garden: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 125)
-                                .position(x: gp.size.width/2, y: gp.size.height/1)
+                                .position(x: gp.size.width/2, y: gp.size.height/1.5)
                         case "calendar":
                             Img.statRacoon
                                 .resizable()
@@ -535,12 +535,18 @@ struct Garden: View {
                 case .search:
                     EmptyView()
                 case .streak:
-                    EmptyView()
+                    StreakScene(showStreak: $showStreak)
                 case .mood:
                     EmptyView()
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)
+            .popover(isPresented: $showStreak) {
+                StreakScene(showStreak: $showStreak)
+            }
+            .onTapGesture {
+                showStreak = true
+            }
         }
     }
     private func getFavoritePlants() {

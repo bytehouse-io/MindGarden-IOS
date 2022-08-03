@@ -258,6 +258,7 @@ struct MiddleSelect: View {
                     Text(meditation.title)
                         .foregroundColor(state == .checked ? Clr.darkgreen : Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 16))
+                        .strikethrough(state == .checked)
                         .lineLimit(2)
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)

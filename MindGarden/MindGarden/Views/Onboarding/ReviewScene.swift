@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Paywall
+import Amplitude
+import OneSignal
 
 var tappedTurnOn = false
 struct ReviewScene: View {
@@ -23,6 +25,7 @@ struct ReviewScene: View {
         return formatter
     }
     @State private var showPaywall = false
+    @State private var showNotification = false
     
     var body: some View {
         ZStack {
@@ -159,8 +162,7 @@ struct ReviewScene: View {
                                             Button {
                                                 MGAudio.sharedInstance.playBubbleSound()
                                                 withAnimation {
-                                                    tappedTurnOn = true
-                                                    viewRouter.currentPage = .notification
+                                                    showNotification = true
                                                 }
                                             } label: {
                                                 Capsule()
@@ -222,70 +224,18 @@ struct ReviewScene: View {
                             }
                         } label: {
                             HStack {
-                                Text("MindGarden Tutorial  👉🏻")
+                                Text("Finish  👉🏻")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.fredoka(.semiBold, size: 18))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                             }.frame(width: g.size.width * 0.75, height: g.size.height/16)
                                 .background(Clr.yellow)
-                                .cornerRadius(25)
+                                .cornerRadius(24)
+                                .addBorder(.black, width: 1.5,  cornerRadius: 24)
                         }.padding()
                             .buttonStyle(NeumorphicPress())
-                        Button {
-                            MGAudio.sharedInstance.playBubbleSound()
-                            if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
-                                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
-                            }
-                            
-                            Analytics.shared.log(event: .review_tapped_explore)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
-                            UserDefaults.standard.setValue(true, forKey: "review")
-                            
-                            withAnimation(.easeOut(duration: 0.3)) {
-                                viewRouter.progressValue = 1
-
-                                DispatchQueue.main.async {
-                                    if fromInfluencer != "" {
-                                        Analytics.shared.log(event: .user_from_influencer)
-                                        viewRouter.currentPage = .pricing
-                                    } else {
-                                        showLoading = true
-//                                        Paywall.present { info in
-//                                            Analytics.shared.log(event: .screen_load_superwall)
-//                                        } onDismiss: {  didPurchase, productId, paywallInfo in
-//                                            switch productId {
-//                                            case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-//                                                UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                            case "io.mindgarden.pro.yearly": Analytics.shared.log(event: .yearly_started_from_superwall)
-//                                                UserDefaults.standard.setValue(true, forKey: "freeTrial")
-//                                                UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                                if UserDefaults.standard.bool(forKey: "isNotifOn") {
-//                                                    NotificationHelper.freeTrial()
-//                                                }
-//                                            default: break
-//                                            }
-//                                            viewRouter.currentPage = .meditate
-//                                        } onFail: { error in
-//                                            fromPage = "onboarding2"
-//                                            viewRouter.currentPage = .pricing
-//                                        }
-                                    }
-                                }
-                            }
-                            
-                        } label: {
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .overlay(
-                                    Text("Finish 👉")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.fredoka(.bold, size: 20))
-                                ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
-                                .frame(width: width * 0.75, height: 50)
-                        }.padding()
-                        .buttonStyle(NeumorphicPress())
+                     
 //                        Button {
 //
 //                        } label: {
@@ -302,6 +252,32 @@ struct ReviewScene: View {
         .fullScreenCover(isPresented: $showLoading)  {
             LoadingIllusion()
                 .frame(height: UIScreen.screenHeight + 50)
+        }
+        .alert(isPresented: $showNotification) {
+                Alert(
+                    title: Text("You'll need to turn on Push"),
+                    message: Text("In order to fully experience MindGarden you'll need to turn on notifications"),
+                    primaryButton: Alert.Button.default(Text("Not now"), action: {
+                        Analytics.shared.log(event: .review_notification_off)
+                    }),
+                    secondaryButton: .default(Text("Ok"), action: {
+                        Analytics.shared.log(event: .experience_tapped_okay_push)
+                        OneSignal.promptForPushNotifications(userResponse: { accepted in
+                            if accepted {
+                                notifications = "On"
+                                Analytics.shared.log(event: .review_notification_on)
+                                NotificationHelper.addOneDay()
+                                NotificationHelper.addThreeDay()
+                                NotificationHelper.addOnboarding()
+                                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
+                            } else {
+                                notifications = "Off"
+                                Analytics.shared.log(event: .review_notification_off)
+                                promptNotification()
+                            }
+                        })
+                    })
+                )
         }
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
@@ -346,7 +322,56 @@ struct ReviewScene: View {
                 }
             }
     }
-    
+    private func promptNotification() {
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { permission in
+            switch permission.authorizationStatus  {
+            case .authorized:
+                Analytics.shared.log(event: .review_notification_on)
+                let identify = AMPIdentify()
+                    .set("reminder_set", value: NSNumber(1))
+                Amplitude.instance().identify(identify ?? AMPIdentify())
+                
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+//                UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
+                if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                    NotificationHelper.addOneDay()
+                }
+                
+                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                    NotificationHelper.addThreeDay()
+                }
+                if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
+                    NotificationHelper.addOnboarding()
+                }
+
+//                if fromSettings && UserDefaults.standard.bool(forKey: "freeTrial")  {
+//                    NotificationHelper.freeTrial()
+//                }
+                
+                UserDefaults.standard.setValue(true, forKey: "notifOn")
+            case .denied:
+                Analytics.shared.log(event: .review_notification_off)
+                    Analytics.shared.log(event: .notification_go_to_settings)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+            case .notDetermined:
+                Analytics.shared.log(event: .review_notification_off)
+                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                    Analytics.shared.log(event: .notification_go_to_settings)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+            default:
+                print("Unknow Status")
+            }
+        })
+    }
 }
 
 struct ReviewScene_Previews: PreviewProvider {

@@ -110,7 +110,7 @@ struct Home: View {
                 case .search:
                     CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false))
                 case .streak:
-                    StreakScene()
+                    EmptyView()
                 case .mood:
                     MoodElaborate()
                 }

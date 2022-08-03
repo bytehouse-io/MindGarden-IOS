@@ -123,7 +123,7 @@ struct ExperienceScene: View {
     private func promptNotif() {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             if accepted {
-
+                UserDefaults.standard.setValue("", forKey: K.defaults.meditationReminder)
                 Analytics.shared.log(event: .onboarding_notification_on)
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()
@@ -131,6 +131,7 @@ struct ExperienceScene: View {
                 NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
             } else {
                 Analytics.shared.log(event: .onboarding_notification_off)
+                
             }
         })
     }

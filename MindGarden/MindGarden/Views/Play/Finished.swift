@@ -285,17 +285,11 @@ struct Finished: View {
 //                        .animation(.default, value: showUnlockedModal)
                 }
             }
-            .fullScreenCover(isPresented: $showStreak, content: {
-                    StreakScene()
-                        .environmentObject(bonusModel)
-                        .environmentObject(viewRouter)
-                        .background(Clr.darkWhite)
-            })
-            
         }.transition(.move(edge: .trailing))
             .fullScreenCover(isPresented: $showStreak, content: {
-                    StreakScene()
+                StreakScene(showStreak: $showStreak)
                         .environmentObject(bonusModel)
+                        .environmentObject(viewRouter)
                         .background(Clr.darkWhite)
             })
             .onDisappear {

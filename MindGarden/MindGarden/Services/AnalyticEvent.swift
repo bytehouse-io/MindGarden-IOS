@@ -41,6 +41,8 @@ enum AnalyticEvent {
     case screen_load_review
     case review_tapped_tutorial
     case review_tapped_explore
+    case review_notification_on
+    case review_notification_off
 
     //name
     case screen_load_name //
@@ -794,6 +796,8 @@ extension AnalyticEvent {
         case .screen_load_review: return "screen_load_review"
         case .review_tapped_tutorial: return "review_tapped_tutorial"
         case .review_tapped_explore: return "review_tapped_explore"
+        case .review_notification_on: return "review_notification_on"
+        case .review_notification_off: return "review_notification_off"
         case .screen_load_learn: return "screen_load_learn"
         case .notification_success_learn: return "notification_success_learn"
         case .notification_settings_learn: return "notification_settings_learn"

@@ -128,7 +128,7 @@ struct Play: View {
                                 .foregroundColor(Clr.black1)
                                 .font(Font.fredoka(.bold, size: 60))
                                 .frame(width: UIScreen.screenWidth)
-                                .animation(UserDefaults.standard.integer(forKey: "numMeds") == 0 ? nil : nil)
+                                .animation(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? nil : Animation.easeIn(duration: 0.5))
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {
@@ -319,12 +319,13 @@ struct Play: View {
             timerSeconds = Double(model.totalTime)
             let timeScale = CMTimeScale(NSEC_PER_SEC)
             let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+
             mainPlayer?.addPeriodicTimeObserver(forInterval: time, queue: .main) { time in
                 guard let item = self.mainPlayer?.currentItem, !item.duration.seconds.isNaN else {
                     return
                 }
                 
-                let timer = time.seconds / item.duration.seconds
+                let _ = time.seconds / item.duration.seconds
                 self.timerSeconds = item.duration.seconds - time.seconds
                 if self.timerSeconds < 1 {
                     model.secondsRemaining = -1

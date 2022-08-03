@@ -129,14 +129,11 @@ struct ContentView: View {
                                     case .middle:
                                         MiddleSelect()
                                             .frame(height: geometry.size.height + 10)
-                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .breathMiddle:
                                         BreathMiddle()
-                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .play:
                                         Play()
                                             .frame(height: geometry.size.height + 80)
-                                            .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                                                     self.isOnboarding = false

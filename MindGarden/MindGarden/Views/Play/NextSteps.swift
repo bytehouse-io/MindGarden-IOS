@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NextSteps: View {
     @EnvironmentObject var viewRouter: ViewRouter
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var playAnim = false
     var body: some View {
         ZStack {
@@ -27,21 +29,14 @@ struct NextSteps: View {
                         .padding(.bottom, playAnim ? height * -0.25 : 24)
           
                     Button {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        withAnimation {
-                            viewRouter.currentPage = .authentication
-                        }
+       
                     } label: {
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(32)
                                 .addBorder(.black, width: 1.5,  cornerRadius: 32)
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                }
-                            } label: {
+                            Button { } label: {
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.brightGreen)
@@ -56,30 +51,46 @@ struct NextSteps: View {
                                             }
                                         )
                                         .padding(.horizontal, 8)
+                                }.onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        presentationMode.wrappedValue.dismiss()
+                                        viewRouter.currentPage = .authentication
+                                    }
                                 }
                             }.buttonStyle(ScalePress())
                              .position(x: width * 0.65, y: height * 0.15)
+               
+
                             VStack {
                                 HStack {
                                     Text("2. ✍️ Save your progress")
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .foregroundColor(Clr.black2)
                                     Spacer()
-                                    Image(systemName: "xmark")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .foregroundColor(Clr.black2)
-                                        .frame(width: 15)
+//                                    Image(systemName: "xmark")
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fit)
+//                                        .foregroundColor(Clr.black2)
+//                                        .frame(width: 15)
                                 }
                                 Text("Create an account to save your progress & access your MindGarden anywhere")
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(Clr.darkGray)
+                                    .multilineTextAlignment(.leading)
                                     .frame(width: width * 0.7, alignment: .leading)
                         
                             }.padding([.horizontal, .bottom], 24)
                             .offset(y: -10)
                         }.frame(height: height * 0.2, alignment: .leading)
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    presentationMode.wrappedValue.dismiss()
+                                    viewRouter.currentPage = .authentication
+                                }
                     }.buttonStyle(ScalePress())
+                        }
                     Spacer()
 
                 }.padding(.horizontal, 32)
@@ -94,6 +105,7 @@ struct NextSteps: View {
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
+                    presentationMode.wrappedValue.dismiss()
                     viewRouter.currentPage = .garden
                 }
             } label: {

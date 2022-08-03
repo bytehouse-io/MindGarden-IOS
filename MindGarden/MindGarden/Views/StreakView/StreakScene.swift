@@ -18,10 +18,12 @@ struct StreakScene: View {
     var title : String {
         return "\(bonusModel.streakNumber) Day Streak"
     }
+    @Binding  var showStreak: Bool
     @State private var img = UIImage()
     @State private var isSharePresented: Bool = false
     @State private var showButtons = true
     @State private var triggerRating = false
+    @State private var showNextSteps = false
     
     var subTitle : String {
         switch bonusModel.streakNumber {
@@ -104,8 +106,10 @@ struct StreakScene: View {
                                     .font(Font.fredoka(.bold, size: 24))
                                     .foregroundColor(.white)
                             )
+                            .addBorder(.black, width: 1.5, cornerRadius: 24)
                     }
                     .buttonStyle(NeumorphicPress())
+                    
                     .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
                     .padding(.top, 40)
                 }
@@ -113,14 +117,14 @@ struct StreakScene: View {
             .offset(y: -145)
         }
         .alert(isPresented: $triggerRating) {
-            Alert(title: Text(""), message: Text("🧑‍🌾 Are you enjoying MindGarden so far?"),
+            Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
                   primaryButton: .default(Text("Yes!")) {
-                    if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                        dismiss()
-                    }
-                  },
+                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                    SKStoreReviewController.requestReview(in: scene)
+                                dismiss()
+                }
+            },
                   secondaryButton: .default(Text("No")) {
-                    
                     dismiss()
             })
         }
@@ -148,6 +152,10 @@ struct StreakScene: View {
 //        }
 
         .background(Clr.darkWhite)
+        .fullScreenCover(isPresented: $showNextSteps) {
+            NextSteps()
+                .environmentObject(viewRouter)
+        }
     }
     private func dismiss() {
         withAnimation {
@@ -156,7 +164,13 @@ struct StreakScene: View {
                 viewRouter.previousPage = .garden
                 viewRouter.currentPage = .pricing
             } else {
-                viewRouter.currentPage = .garden
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
+                    showNextSteps = true
+                } else {
+                    showNextSteps = true
+//                    viewRouter.previousPage = .garden
+//                    viewRouter.currentPage = .garden
+                }
             }
         }
     }
@@ -174,7 +188,7 @@ struct StreakScene: View {
 
 struct StreakScene_Previews: PreviewProvider {
     static var previews: some View {
-        StreakScene()
+        StreakScene(showStreak: .constant(true))
             .environmentObject(BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
     }
 }

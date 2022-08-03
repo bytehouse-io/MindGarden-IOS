@@ -355,9 +355,7 @@ class MeditationViewModel: ObservableObject {
         
         let duration = selectedMeditation?.duration ?? 0
         
-        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" && !UserDefaults.standard.bool(forKey: "review") {
-            shouldStreakUpdate = false
-        }
+
         
         if ((forwardCounter > 2 && duration <= 120) || (forwardCounter > 6) || (selectedMeditation?.id == 22 && forwardCounter >= 1)) {
             reward = 0
@@ -382,6 +380,9 @@ class MeditationViewModel: ObservableObject {
             }
         } else {
             reward = selectedMeditation?.reward ?? 0
+            shouldStreakUpdate = true
+        }
+        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" && !UserDefaults.standard.bool(forKey: "review") {
             shouldStreakUpdate = true
         }
         return reward
