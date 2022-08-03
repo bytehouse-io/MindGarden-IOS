@@ -341,12 +341,7 @@ class GardenViewModel: ObservableObject {
         if let year = self.grid[date.get(.year)] {
             if let month = year[date.get(.month)] {
                 if let day = month[date.get(.day)] {
-                    if var values = day[key] as? [Any] {
-                        values.append(saveValue)
-                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
-                    } else { // first of that type today
-                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
-                    }
+                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
                 } else { // first save of type that day
                     self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
                 }
