@@ -195,7 +195,19 @@ class GardenViewModel: ObservableObject {
                         totalMoods[singleMood] = 1
                     }
                 }
+            } else if let moods = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.moods] as? [String] { // legacy data
+                mood = Mood.getMood(str: moods[moods.count - 1])
+                for forMood in moods {
+                    let singleMood = Mood.getMood(str: forMood)
+                    if var count = totalMoods[singleMood] {
+                        count += 1
+                        totalMoods[singleMood] = count
+                    } else {
+                        totalMoods[singleMood] = 1
+                    }
+                }
             }
+            
             if let gratitudez = grid[Date().get(.year)]?[strMonth]?[String(day)]?["gratitudes"] as? [String] {
                 gratitudes += gratitudez.count
             }
@@ -225,8 +237,12 @@ class GardenViewModel: ObservableObject {
 
             if let moods = grid[selYear]?[String(selMon)]?[selDay]?[K.defaults.moods] as? [String] {
                 mood = Mood.getMood(str: moods[moods.count - 1])
+            } else if  let moods = grid[selYear]?[String(selMon)]?[selDay]?[K.defaults.moods] as? [[String: String]] {
+                let moodObj = moods[moods.count - 1]
+                mood = Mood.getMood(str: moodObj["mood"] ?? "none")
             }
-            let dayString = Date().intToAbrev(weekDay: Int(lastFive[day].get(.weekday)) ?? 1 )
+            
+            let dayString = Date().intToAbrev(weekDay: Int(lastFive[day].get(.weekday)) ?? 1)
             returnFive.append((dayString, plant,mood))
         }
 
@@ -341,12 +357,7 @@ class GardenViewModel: ObservableObject {
         if let year = self.grid[date.get(.year)] {
             if let month = year[date.get(.month)] {
                 if let day = month[date.get(.day)] {
-                    if var values = day[key] as? [Any] {
-                        values.append(saveValue)
-                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
-                    } else { // first of that type today
-                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
-                    }
+                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
                 } else { // first save of type that day
                     self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
                 }

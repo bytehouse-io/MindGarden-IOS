@@ -52,75 +52,135 @@ struct StartDayView: View {
         let hour = Calendar.current.component( .hour, from:Date() )
         VStack {
             HStack {
-                Text(hour > 16 ? "Relfect on your day" : "Start your day")
+                Text(hour > 16 ? "Relfect on your day" : isMeditationDone ? "Well Done! Let's Reflect Later" : "Start your day" )
                     .foregroundColor(Clr.brightGreen)
-                    .font(Font.fredoka(.bold, size: 24))
+                    .font(Font.fredoka(.bold, size: 20))
+                    .minimumScaleFactor(0.05)
+                    .lineLimit(1)
                     .padding(.top,5)
                 Spacer()
             }
             
             HStack {
-                VStack {
+                VStack(spacing:0) {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isDailyMood ? Clr.darkWhite : Clr.brightGreen)
-                        .frame(width:28,height: 28)
-                    Rectangle()
-                        .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
-                        .frame(width: 6)
-                        .frame(maxHeight:.infinity)
-                        .scaleEffect(CGSize(width: 1.0, height: 1.2))
-                    Rectangle()
-                        .fill(isDailyMood ? Clr.black2 : Clr.brightGreen)
-                        .frame(width:6)
-                        .frame(maxHeight:.infinity)
-                        .scaleEffect(CGSize(width: 1.0, height: 1.2))
+                        .frame(width:24,height: 24)
+                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
+                        .zIndex(1)
+                    Group {
+                        if isDailyMood {
+                            DottedLine()
+                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
+                                .fill(Clr.black2)
+                                .opacity(0.5)
+                                .offset(x:1)
+                                
+                        } else {
+                            Rectangle()
+                                .fill(Clr.brightGreen)
+                        }
+                    }
+                    .frame(width: 4)
+                    .frame(maxHeight:.infinity)
+                    .padding(.bottom,isDailyMood ? 2 : 0)
+                    Group {
+                        if isDailyMood {
+                            DottedLine()
+                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
+                                .fill(Clr.black2)
+                                .opacity(0.5)
+                                .offset(x:1)
+                        } else {
+                            Rectangle()
+                                .fill(Clr.brightGreen)
+                        }
+                    }
+                    .frame(width: 4)
+                    .frame(maxHeight:.infinity)
+                    .padding(.top,isDailyMood ? 2 : 0)
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isGratitudeDone ? Clr.brightGreen : Clr.darkWhite)
-                        .frame(width:28,height: 28)
-                    Rectangle()
-                        .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
-                        .frame(width:6)
-                        .frame(maxHeight:.infinity)
-                        .scaleEffect(CGSize(width: 1.0, height: 1.2))
-                    Rectangle()
-                        .fill(isGratitudeDone ? Clr.brightGreen : Clr.black2 )
-                        .frame(width: 6)
-                        .frame(maxHeight:.infinity)
-                        .scaleEffect(CGSize(width: 1.0, height: 1.2))
+                        .frame(width:24,height: 24)
+                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
+                        .zIndex(1)
+                    Group {
+                        if isGratitudeDone {
+                            Rectangle()
+                                .fill(Clr.brightGreen)
+                        } else {
+                            DottedLine()
+                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
+                                .fill(Clr.black2)
+                                .opacity(0.5)
+                                .offset(x:1)
+                        }
+                    }
+                    .frame(width: 4)
+                    .frame(maxHeight:.infinity)
+                    .padding(.bottom,isGratitudeDone ? 0 : 2)
+                    Group {
+                        if isGratitudeDone {
+                            Rectangle()
+                                .fill(Clr.brightGreen)
+                        } else {
+                            DottedLine()
+                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
+                                .fill(Clr.black2)
+                                .opacity(0.5)
+                                .offset(x:1)
+                        }
+                    }
+                    .frame(width: 4)
+                    .frame(maxHeight:.infinity)
+                    .padding(.top,isGratitudeDone ? 0 : 2)
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
-                        .frame(width:28,height: 28)
+                        .frame(width:24,height: 24)
+                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
                     Spacer()
                         .frame(height:30)
-                }.padding(.vertical,70)
+                }.padding(.vertical,60)
                 .neoShadow()
                 VStack(spacing:30) {
-                    ZStack {
-                        Img.whiteClouds
-                            .resizable()
-                            .frame(height:170)
-                            .aspectRatio(contentMode: .fill)
-                            .opacity(0.95)
-                        if isDailyMood {
-                            SelectMood
-                        } else {
-                            DailyMood
+                Button {
+                    
+                } label: {
+                        ZStack {
+                            Img.whiteClouds
+                                .resizable()
+                                .frame(height:170)
+                                .aspectRatio(contentMode: .fill)
+                                .opacity(0.95)
+                            if isDailyMood {
+                                SelectMood
+                            } else {
+                                DailyMood
+                            }
                         }
-                    }
-                    .frame(width: UIScreen.screenWidth * 0.775)
-                    .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                    .padding(.horizontal, 12)
-                    .shadow(color: .black.opacity(0.25), radius: 1, x:  3 , y: 3)
-                    .opacity(isDailyMood ? 1 : 0.5)
-                    .offset(y: playEntryAnimation ? 0 : 100)
-                    .opacity(playEntryAnimation ? 1 : 0)
-                    .animation(.spring().delay(0.3), value: playEntryAnimation)
+                        .frame(width: UIScreen.screenWidth * 0.775)
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                        .padding(.horizontal, 12)
+                        .opacity(isDailyMood ? 1 : 0.5)
+                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .opacity(playEntryAnimation ? 1 : 0)
+                        .animation(.spring().delay(0.3), value: playEntryAnimation)
+                        .onTapGesture {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                if !isDailyMood {
+                                    NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+                                }
+                            }
+                        }
+                }.buttonStyle(ScalePress())
+                
                  
                     
                     Button {

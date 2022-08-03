@@ -12,6 +12,7 @@ import Combine
 
 var placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
 var placeholderQuestion = "Reflect on how you feel"
+
 struct JournalView: View, KeyboardReadable {
     @State private var text: String = placeholderReflection
     @State private var contentKeyVisible: Bool = true
@@ -25,6 +26,9 @@ struct JournalView: View, KeyboardReadable {
     @State private var coin = 0
     @State var question = ""
     @State var recs = [-4,71,23]
+    
+    @available(iOS 15.0, *)
+    @FocusState private var isFocused: Bool
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -90,7 +94,24 @@ struct JournalView: View, KeyboardReadable {
                                 .addBorder(.black, width: 1.5, cornerRadius: 16)
                                 .neoShadow()
                             ScrollView(.vertical, showsIndicators: false) {
-                                if #available(iOS 14.0, *) {
+                                if #available(iOS 15.0, *) {
+                                    TextEditor(text: $text)
+                                        .frame(height:240, alignment: .leading)
+                                        .disableAutocorrection(false)
+                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+                                        .focused($isFocused)
+                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                            withAnimation {
+                                                contentKeyVisible = newIsKeyboardVisible
+                                            }
+                                        }.onTapGesture {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            if text == placeholderReflection {
+                                                text = ""
+                                            }
+                                        }
+                                } else if #available(iOS 14.0, *) {
                                     TextEditor(text: $text)
                                         .frame(height:240, alignment: .leading)
                                         .disableAutocorrection(false)
@@ -234,6 +255,11 @@ struct JournalView: View, KeyboardReadable {
                 }
             }
             .onAppear {
+                if #available(iOS 15.0, *) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        isFocused = true
+                    }
+                }
                 recs = Meditation.getRecsFromMood(selectedMood: userModel.selectedMood)
                 question = placeholderQuestion
                 UITextView.appearance().backgroundColor = .clear

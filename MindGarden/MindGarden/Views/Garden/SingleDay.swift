@@ -264,6 +264,7 @@ struct SingleDay: View {
                                 Analytics.shared.log(event: .onboarding_finished_single_course)
                                 UserDefaults.standard.setValue(false, forKey: "introLink")
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                viewRouter.currentPage = .authentication
                             }
                         } label: {
                             Capsule()
@@ -285,7 +286,6 @@ struct SingleDay: View {
                                 fromPage = "single"
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 showOnboardingModal = false
-                                viewRouter.currentPage = .authentication
                             }
                         } label: {
                             Text("Not Now")
