@@ -28,9 +28,7 @@ struct NextSteps: View {
                     ReminderView(playAnim: $playAnim)
                         .padding(.bottom, playAnim ? height * -0.25 : 24)
           
-                    Button {
-       
-                    } label: {
+                    Button { } label: {
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -60,7 +58,6 @@ struct NextSteps: View {
                                 }
                             }.buttonStyle(ScalePress())
                              .position(x: width * 0.65, y: height * 0.15)
-               
 
                             VStack {
                                 HStack {

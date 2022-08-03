@@ -167,9 +167,8 @@ struct StreakScene: View {
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                     showNextSteps = true
                 } else {
-                    showNextSteps = true
-//                    viewRouter.previousPage = .garden
-//                    viewRouter.currentPage = .garden
+                    viewRouter.previousPage = .garden
+                    viewRouter.currentPage = .garden
                 }
             }
         }
