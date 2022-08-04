@@ -547,7 +547,7 @@ struct ContentView: View {
                     }
                 } else {
                     withAnimation {
-                        viewRouter.currentPage = .learn
+                        selectedTab = .search
                     }
                 }
             }

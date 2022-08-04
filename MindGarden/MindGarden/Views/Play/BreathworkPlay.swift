@@ -234,16 +234,14 @@ struct BreathworkPlay : View {
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
-                        timerCount += 1
-                        withAnimation(.linear(duration: 1.0)) {
-                            progress = timerCount/Double(totalTime)
-                            print(progress, timerCount, totalTime, "bick back")
+                        DispatchQueue.main.async {
+                            withAnimation(.linear(duration: 0.95)) {
+                                progress = timerCount/Double(totalTime)
+                            }
                         }
+                        timerCount += 1
                     } else {
                         timer.invalidate()
-                        withAnimation {
-                            viewRouter.currentPage = .finished
-                        }
                     }
                 }
             }
@@ -318,6 +316,10 @@ struct BreathworkPlay : View {
                     noOfSequence -= 1
                     fadeAnimation = false
                 }
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                viewRouter.currentPage = .finished
             }
         }
     }
