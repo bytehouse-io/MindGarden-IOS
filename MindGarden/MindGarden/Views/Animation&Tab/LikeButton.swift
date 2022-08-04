@@ -37,7 +37,7 @@ struct LikeButton : View {
         Image(systemName: isLiked ? "suit.heart.fill" : "suit.heart")
             .font(.system(size: size))
             .foregroundColor(isLiked ? .red : .red)
-            .scaleEffect(startAnimation && !isLiked ? 0 : 1)
+            .scaleEffect(isTapped ? 0 : 1)
             .background(
                 ZStack{
                     Circle()
@@ -47,32 +47,41 @@ struct LikeButton : View {
                         .frame(width: size, height: size)
                         .scaleEffect(bgAnimation ? 2.2 : 0)
                     
-                    ZStack {
-                        let colors: [Color] = [.red, .purple, .green, .yellow, .pink]
-                        ForEach(1...6, id: \.self) {index in
-                            Circle()
-                                .fill(colors.randomElement() ?? Clr.darkgreen)
-                                .frame(width: 12, height: 12)
-                                .offset(x: fireworkAnimation ? 80 : 0)
-                                .rotationEffect(.init(degrees: Double(index) * 60))
+                    if isLiked {
+                        ZStack {
+                            let colors: [Color] = [.red, .purple, .green, .yellow, .pink]
+                            ForEach(1...6, id: \.self) {index in
+                                Circle()
+                                    .fill(colors.randomElement() ?? Clr.darkgreen)
+                                    .frame(width: 12, height: 12)
+                                    .offset(x: fireworkAnimation ? 80 : 0)
+                                    .rotationEffect(.init(degrees: Double(index) * 60))
+                            }
+                            ForEach(1...6, id: \.self) {index in
+                                Circle()
+                                    .fill(colors.randomElement() ?? Clr.darkgreen)
+                                    .frame(width: 8, height: 8)
+                                    .offset(x: fireworkAnimation ? 64 : 0)
+                                    .rotationEffect(.init(degrees: Double(index) * 60))
+                                    .rotationEffect(.init(degrees: -45))
+                            }
                         }
-                        ForEach(1...6, id: \.self) {index in
-                            Circle()
-                                .fill(colors.randomElement() ?? Clr.darkgreen)
-                                .frame(width: 8, height: 8)
-                                .offset(x: fireworkAnimation ? 64 : 0)
-                                .rotationEffect(.init(degrees: Double(index) * 60))
-                                .rotationEffect(.init(degrees: -45))
-                        }
+                            .opacity(fireworkAnimation ? 0 : 1)
                     }
-                    .opacity(isLiked ? 1 : 0)
-                    .opacity(fireworkAnimation ? 0 : 1)
                 }
             )
             .contentShape(Rectangle())
             .onTapGesture {
                 withAnimation {
                     isLiked.toggle()
+                }
+                withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5)) {
+                isTapped = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5)) {
+                    isTapped = false
+                    }
                 }
                 heartPressed()
                 action()
@@ -98,9 +107,7 @@ struct LikeButton : View {
         if startAnimation {
             return
         }
-        
-        isTapped.toggle()
-        
+                
         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.6)) {
             
             startAnimation = true
