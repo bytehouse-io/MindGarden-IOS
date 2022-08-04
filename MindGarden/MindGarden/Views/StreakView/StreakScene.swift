@@ -93,7 +93,11 @@ struct StreakScene: View {
                         } else {
                             if !UserDefaults.standard.bool(forKey: "tappedRate") {
                                 if launchNum == 1 || launchNum == 3 || launchNum == 5 || launchNum == 7  {
-                                    triggerRating.toggle()
+                                    if !UserDefaults.standard.bool(forKey: "reviewedApp") {
+                                        triggerRating.toggle()
+                                    } else {
+                                        dismiss()
+                                    }
                                 }
                             }
                         }
@@ -119,6 +123,7 @@ struct StreakScene: View {
         .alert(isPresented: $triggerRating) {
             Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
                   primaryButton: .default(Text("Yes!")) {
+                UserDefaults.standard.setValue(true, forKey: "reviewedApp")
                 if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
                     SKStoreReviewController.requestReview(in: scene)
                                 dismiss()
@@ -157,9 +162,10 @@ struct StreakScene: View {
                 .environmentObject(viewRouter)
         }
     }
+    
     private func dismiss() {
         withAnimation {
-            if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 {
+            if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 || bonusModel.streakNumber == 2 ||  UserDefaults.standard.integer(forKey: "launchNumber") == 10  {
                 fromPage = ""
                 viewRouter.previousPage = .garden
                 viewRouter.currentPage = .pricing

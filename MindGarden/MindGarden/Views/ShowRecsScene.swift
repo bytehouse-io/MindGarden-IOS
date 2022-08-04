@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ShowRecsScene: View {
-    let mood: Mood
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @State private var animateRow = false
-    var meditations: [Meditation]
+    var meditations: [Int]
+    
     var body: some View {
         GeometryReader { g in
             let width = g.size.width
@@ -21,66 +21,39 @@ struct ShowRecsScene: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
                 VStack(alignment: .center) {
-                    HStack(spacing: 0) {
-                        VStack(alignment: .center, spacing: 0)  {
-                            HStack {
-                                Text("Based on your mood")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.bold, size: 26))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
-                                Mood.getMoodImage(mood: mood)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 25)
-                            }.frame(width: abs(width * 0.8), alignment: .leading)
-                            Text("We recommend these: ")
-                                .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.regular, size: 22))
-                                .frame(width: abs(width * 0.79), alignment: .leading)
-                        }
-                        if K.isSmall() {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 22))
-                                .foregroundColor(Clr.black1)
-                                .onTapGesture {
-                                    Analytics.shared.log(event: .mood_recs_not_now)
-                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                    impact.impactOccurred()
-                                    withAnimation {  presentationMode.wrappedValue.dismiss() }
-                                }
-                        }
-                    }.padding(.top)
-                    .frame(width: abs(width * 0.79), alignment: .leading)
-                    ForEach(0...3, id: \.self) { index in
-                        
-                        RecRow(width: width, meditation: meditations[index], meditationModel: meditationModel, viewRouter: viewRouter, isWeekly: false)
-                            .padding(.top, 10)
-                            .animation(Animation.easeInOut(duration: 1.5).delay(3))
-                            .opacity(animateRow ? 1 : 0)
-                            .onAppear {
-                                withAnimation {
-                                    animateRow = true
-                                }
-                            }
-                    }
                     HStack {
-                        Button {
-                            Analytics.shared.log(event: .mood_recs_not_now)
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                            withAnimation {  presentationMode.wrappedValue.dismiss()  }
-                        } label: {
-                            HStack {
-                                Text("Not Now")
-                                    .foregroundColor(.black)
-                                    .font(Font.fredoka(.semiBold, size: 20))
-                            }.frame(width: g.size.width * 0.40, height: 40, alignment: .center)
-                            .background(Clr.yellow)
-                            .cornerRadius(25)
-                        }.padding(.top)
-                        .buttonStyle(NeumorphicPress())
-                    }.frame(width: g.size.width, alignment: .center)
+                        CloseButton() {
+                            presentationMode.wrappedValue.dismiss()
+                        }.padding(.leading, 32)
+                        .padding(.top)
+                        Spacer()
+                        Text("Your Favorites")
+                            .foregroundColor(Clr.black2)
+                            .font(Font.fredoka(.bold, size: 20))
+                            .padding(.top)
+                        Spacer()
+                        CloseButton() {
+                        }.opacity(0)
+                        .padding(.trailing, 32)
+                    }.padding(.top)
+                    .frame(width: width, alignment: .center)
+                    
+                    ScrollView(showsIndicators: false) {
+                        ForEach(0...max(0, meditations.count - 1), id: \.self) { index in
+                            let isBreath =  Breathwork.breathworks.contains(where: { work in
+                                work.id == meditations[index]
+                            })
+                            MeditationRow(id: meditations[index], isBreathwork: isBreath)
+                                .padding(.top, 10)
+                                .animation(Animation.easeInOut(duration: 1.5).delay(3))
+                                .opacity(animateRow ? 1 : 0)
+                                .onAppear {
+                                    withAnimation {
+                                        animateRow = true
+                                    }
+                                }.padding(.horizontal, 32)
+                        }
+                    }.frame(width: width, alignment: .center)
                 }
             }
         }
@@ -199,6 +172,6 @@ struct RecRow: View {
 
 struct ShowRecsScene_Previews: PreviewProvider {
     static var previews: some View {
-        ShowRecsScene(mood: Mood.stressed, meditations: [Meditation]())
+        ShowRecsScene(meditations: [0])
     }
 }

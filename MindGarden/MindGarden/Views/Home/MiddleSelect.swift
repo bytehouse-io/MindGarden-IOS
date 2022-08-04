@@ -284,12 +284,14 @@ struct MiddleSelect: View {
                     }
                     
                     LikeButton(isLiked: isFavorited, size:25.0) {
-                        Analytics.shared.log(event: .middle_tapped_row_favorite)
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        model.favorite(id: meditation.id)
-                        isFavorited.toggle()
+                        if state != .locked {
+                            Analytics.shared.log(event: .middle_tapped_row_favorite)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            model.favorite(id: meditation.id)
+                            isFavorited.toggle()
+                        }
                     }
-                }.opacity(state == .checked ? 0.5 : 1)
+                }.opacity(state == .locked ? 0.5 : 1)
             }
             .padding(5)
             .frame(width: width)

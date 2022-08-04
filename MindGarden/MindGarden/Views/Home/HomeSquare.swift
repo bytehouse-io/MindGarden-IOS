@@ -66,7 +66,7 @@ struct HomeSquare: View {
                                 .padding(.top, 5)
                                 .foregroundColor(Clr.lightTextGray)
                                 HStack(spacing: 4) {
-                                    Image(systemName: "person.fill")
+                                    Image(systemName: isBreath ? "eye" : "person.fill")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 10)
@@ -81,7 +81,6 @@ struct HomeSquare: View {
                                 Spacer()
                             }.padding(.leading, isSmaller ? 15 : 20)
                                 .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
-                                .offset(y: isBreath ? -10 : 0)
                             Group {
                                 if isBreath {
                                     breathWork.img

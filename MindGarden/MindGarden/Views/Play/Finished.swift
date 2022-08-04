@@ -334,8 +334,12 @@ struct Finished: View {
                         case 36...70: minutesMed = 60
                         default: minutesMed = selectedBreath.duration * model.totalBreaths
                         }
+                        if minutesMed >= 30 {
+                            userModel.finishedMeditation(id: String(selectedBreath.id))
+                        }
                     }
                     session[K.defaults.duration] = String(minutesMed)
+
                 } else {
                     session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                     session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)

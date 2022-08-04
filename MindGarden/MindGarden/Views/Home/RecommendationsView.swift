@@ -11,12 +11,14 @@ struct RecommendationsView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
     @State private var playAnim = false
     let width = UIScreen.screenWidth
     @State private var playEntryAnimation = false
     @Binding var recs: [Int]
     @Binding var coin: Int
     @State private var isOnboarding = false
+    @State private var moodCoins = 1
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -46,7 +48,7 @@ struct RecommendationsView: View {
                                 .scaleEffect(2))
                             VStack(alignment:.leading, spacing: 0) {
                                 HStack {
-                                    ( Text("You earned")  .foregroundColor(.white) + Text("  +\(20 + coin)  ").foregroundColor(Clr.brightGreen) + Text("coins")  .foregroundColor(.white))
+                                    ( Text("You earned")  .foregroundColor(.white) + Text("  +\(moodCoins + coin)  ").foregroundColor(Clr.brightGreen) + Text("coins")  .foregroundColor(.white))
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .padding()
                                         .offset(x: 24)
@@ -66,7 +68,7 @@ struct RecommendationsView: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 30)
-                                            Text("+20")
+                                            Text("+\(moodCoins)")
                                                 .foregroundColor(Clr.brightGreen)
                                                 .font(Font.fredoka(.semiBold, size: 20)) +
                                             Text(" Mood Check")
@@ -105,6 +107,15 @@ struct RecommendationsView: View {
                 .padding(.horizontal,32)
             }.disabled(isOnboarding)
         }.onAppear() {
+            if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
+                if moods.count == 1 {
+                    moodCoins = 20
+                } else {
+                    moodCoins = max(20/((moods.count - 1) * 3), 1)
+                }
+            } else {
+                moodCoins = 20
+            }
             withAnimation(.spring()) {
                 playAnim = true
                 playEntryAnimation = true
@@ -149,11 +160,11 @@ struct RecommendationsView: View {
             }.frame(height:50)
             .padding(.bottom,20)
             ForEach(0..<3) { idx in
-                MeditationRow(id: recs[idx], isBreathwork: idx == 0, idx: idx)
-                    .padding(.vertical,5)
-                    .offset(y: playEntryAnimation ? 0 : 100)
-                    .opacity(playEntryAnimation ? 1 : 0)
-                    .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
+                    MeditationRow(id: recs[idx], isBreathwork: idx == 0)
+                        .padding(.vertical,5)
+                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .opacity(playEntryAnimation ? 1 : 0)
+                        .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
             }
             HStack {
                 Spacer()
@@ -186,21 +197,37 @@ struct RecommendationsView: View {
             }.buttonStyle(NeoPress())
         }
     }
+}
+
+struct MeditationRow: View {
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var medModel: MeditationViewModel
+    var id:Int
+    var isBreathwork: Bool
+    @State var meditation: Meditation = Meditation.allMeditations[0]
+    @State var breathwork: Breathwork = Breathwork.breathworks[0]
     
-    struct MeditationRow: View {
-        @EnvironmentObject var viewRouter: ViewRouter
-        var id:Int
-        var isBreathwork: Bool
-        var idx: Int
-        @State var meditation: Meditation = Meditation.allMeditations[0]
-        @State var breathwork: Breathwork = Breathwork.breathworks[0]
-        
-        var body: some View {
+    var body: some View {
+        Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation {
+                if isBreathwork {
+                    medModel.selectedBreath = breathwork
+                    viewRouter.currentPage = .breathMiddle
+                } else {
+                    medModel.selectedMeditation = meditation
+                    if meditation.type == .course {
+                        viewRouter.currentPage = .middle
+                    } else {
+                        viewRouter.currentPage = .play
+                    }
+                }
+            }
+        } label: {
             ZStack {
                 Rectangle()
                     .fill(Clr.darkWhite)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                    .neoShadow()
                 HStack(spacing:0) {
                     VStack(alignment:.leading,spacing:3) {
                         Text(isBreathwork ? breathwork.title : meditation.title)
@@ -212,7 +239,7 @@ struct RecommendationsView: View {
                             .padding(.vertical, 5)
                             .lineLimit(2)
                             .offset(y:!isBreathwork && meditation.title.count > 19 ? 5 : 0)
-                        HStack {
+                        HStack(spacing: 7) {
                             Image(systemName: isBreathwork ? "wind" : "speaker.wave.3.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -225,7 +252,7 @@ struct RecommendationsView: View {
                         }.padding(.vertical,0)
                             .frame(width: UIScreen.screenWidth/2.5, alignment: .leading)
 
-                            HStack {
+                        HStack(spacing: 5){
                                 Image(systemName: isBreathwork ? breathwork.color.image : "timer")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -235,7 +262,7 @@ struct RecommendationsView: View {
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(Clr.black2.opacity(0.5))
                                     .padding(.vertical,0)
-                                Text("•")
+                                Text(" • ")
                                     .font(Font.fredoka(.bold, size: 16))
                                     .foregroundColor(Clr.black2.opacity(0.5))
                                     .padding(.vertical,0)
@@ -271,24 +298,24 @@ struct RecommendationsView: View {
                     }.frame(width: 80, height: 80)
                         .offset(y: 2)
                 }
-                .frame(height: 100, alignment: .center)
+                .frame(height: 95, alignment: .center)
                 .offset(y: -7)
                 .padding(.horizontal, 30)
                 .padding(.vertical, 20)
-            }.onAppear {
-                if isBreathwork {
-                    if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
-                        breathwork = breath
-                    }
-                } else {
-                    if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
-                        meditation = med
-                    }
+            }
+        }.buttonStyle(BonusPress())
+      .onAppear {
+            if isBreathwork {
+                if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
+                    breathwork = breath
+                }
+            } else {
+                if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
+                    meditation = med
                 }
             }
         }
     }
-
 }
 
 

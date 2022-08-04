@@ -105,9 +105,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     withAnimation {
                                         UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                        if !fromOnboarding {
-                                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                        }
+                            
                                         goToHome()
                                     }
                                 })
@@ -131,9 +129,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     withAnimation {
                                         UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                        if !fromOnboarding {
-                                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                        }
                                         goToHome()
                                     }
                                 })
@@ -209,9 +204,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                if !fromOnboarding {
-                                                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                                }
                                                 goToHome()
                                             }
                                         })
@@ -235,9 +227,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                if !fromOnboarding {
-                                                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                                }
                                                 goToHome()
                                             }
                                         })
@@ -280,9 +269,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             UserDefaults.standard.setValue(1, forKey: "day")
         }
         
-        if !fromOnboarding {
-            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-        }
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
             if fromOnboarding {
@@ -363,9 +349,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                     if googleIsNew {
                         createUser()
                     } else {
-                        if !fromOnboarding {
-                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                        }                    }
+               }
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                         goToHome()
@@ -532,7 +516,7 @@ extension AuthenticationViewModel {
         if let favorites = UserDefaults.standard.array(forKey: K.defaults.favorites) as? [Int] {
             favs = favorites
         }
-        var uniquePlants = ["White Daisy", "Red Tulips"]
+        var uniquePlants = ["White Daisy", "Red Tulip"]
         if let plantArr = UserDefaults.standard.array(forKey: K.defaults.plants) as? [String]{
              uniquePlants = Array<String>(Set(plantArr))
         }
@@ -564,7 +548,7 @@ extension AuthenticationViewModel {
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
+                    UserDefaults.standard.setValue(["White Daisy", "Red Tulip"], forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("432hz", forKey: "sound")
                     self.userModel.getSelectedPlant()
                     self.userModel.name = UserDefaults.standard.string(forKey: "name") ?? ""

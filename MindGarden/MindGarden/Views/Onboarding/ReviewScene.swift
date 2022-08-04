@@ -187,7 +187,7 @@ struct ReviewScene: View {
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
                             Analytics.shared.log(event: .review_tapped_tutorial)
-                            
+                            fromOnboarding = true
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             fromPage = "onboarding2"

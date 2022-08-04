@@ -259,12 +259,12 @@ struct SingleDay: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                fromPage = "singleIntro"
                                 showOnboardingModal = false
                                 Analytics.shared.log(event: .onboarding_finished_single_course)
                                 UserDefaults.standard.setValue(false, forKey: "introLink")
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                viewRouter.currentPage = .authentication
+                                meditationModel.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
+                                viewRouter.currentPage = .middle
                             }
                         } label: {
                             Capsule()
@@ -316,9 +316,19 @@ struct SingleDay: View {
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [[String: String]] {
                 self.moods = moods
             }
+            
+            
             if let gratitudes = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["gratitudes"] as? [String] {
                 self.gratitudes = gratitudes
+            } else if let grats = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["journals"] as? [[String: String]] {
+                self.gratitudes = []
+                for grat in grats {
+                    if let gratitude = grat["gratitude"] {
+                        self.gratitudes?.append(gratitude)
+                    }
+                }
             }
+            
             if let sessions = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.sessions] as? [[String: String]] {
                 self.sessions = sessions
                 self.totalSessions = sessions.count

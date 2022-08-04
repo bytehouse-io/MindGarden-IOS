@@ -16,6 +16,7 @@ struct MoodElaborate: View {
     @State private var selectedSubMood: String = ""
     @State private var playEntryAnimation = false
     @State private var showDetail = false
+    
     let columns = [
             GridItem(.flexible()),
             GridItem(.flexible()),
@@ -75,13 +76,19 @@ struct MoodElaborate: View {
                                         UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
                                     }
                                     
+                                    if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
+                                        userModel.coins += max(20/(moods.count * 3), 1)
+                                    } else {
+                                        userModel.coins += 20
+                                    }
+                                    
                                     Amplitude.instance().logEvent("mood_elaborate", withEventProperties: ["elaboration": item])
                                     var moodSession = [String: String]()
                                     moodSession["timeStamp"] = Date.getTime()
                                     moodSession["elaboration"] = item
                                     userModel.elaboration = item
                                     moodSession["mood"] = userModel.selectedMood.title
-                                    userModel.coins += 20
+                                
                                     gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
                                 
                                     viewRouter.currentPage = .journal

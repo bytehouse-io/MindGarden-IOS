@@ -35,7 +35,7 @@ struct PricingView: View {
     @State private var ios14 = true
     @State private var showProfile: Bool = false
 
-    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Total # of Meditations", "30", "Infinite"), ("Total # of Gratitudes", "30", "Infinite"), ("Total # of Mood Checks", "30", "Infinite"),("Access to Widgets", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
+    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Meditations per month", "30", "Infinite"), ("Journals per month", "30", "Infinite"), ("Mood Checks per month", "30", "Infinite"),("Access to all Breathworks", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
             GeometryReader { g in
                 let width = g.size.width
@@ -388,6 +388,7 @@ struct PricingView: View {
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
+                
                 Purchases.shared.offerings { [self] (offerings, error) in
                     if let offerings = offerings {
                         let offer = offerings.current

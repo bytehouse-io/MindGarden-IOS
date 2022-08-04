@@ -9,6 +9,8 @@ import SwiftUI
 // Font sizes: 12, 16, 28
 struct HomeViewDashboard: View {
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
     @Binding var showModal : Bool
     @Binding var totalBonuses : Int
     @Binding var greeting : String
@@ -16,6 +18,7 @@ struct HomeViewDashboard: View {
     @Binding var activeSheet: Sheet?
     @Binding var showIAP: Bool
     @State var streakNumber: Int
+    @State var showRecFavs = false
     let height = 20.0
     var body: some View {
         let width = UIScreen.screenWidth
@@ -134,11 +137,42 @@ struct HomeViewDashboard: View {
                             .foregroundColor(Clr.black2)
                     }
                     Spacer()
+                    HStack {
+                        if !userModel.completedMeditations.isEmpty {
+                            Button {
+                                withAnimation {
+                                    showRecFavs = true
+                                }
+                            } label: {
+                                Image(systemName: "clock.arrow.circlepath")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25)
+                                    .foregroundColor(Clr.darkGray)
+                            }
+                        }
+                        if medModel.favoritedMeditations.isEmpty {
+                            Button {
+                                withAnimation {
+                                    showRecFavs = true
+                                }
+                            } label: {
+                                Image(systemName: "heart")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25)
+                                    .foregroundColor(Clr.darkGray)
+                            }
+                        }
+                    }.padding(.trailing, 32)
+                     .offset(y: -16)
                 }
                 .padding(.top,20)
             }
             .padding(.horizontal, 24)
             .padding(.top)
+        }.sheet(isPresented: $showRecFavs) {
+            ShowRecsScene(meditations: userModel.completedMeditations.compactMap({ Int($0)}))
         }
     }
 }

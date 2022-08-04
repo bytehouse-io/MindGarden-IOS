@@ -110,7 +110,7 @@ struct JournalView: View, KeyboardReadable {
                                             if text == placeholderReflection {
                                                 text = ""
                                             }
-                                        }
+                                        }.disabled(fromProfile)
                                 } else if #available(iOS 14.0, *) {
                                     TextEditor(text: $text)
                                         .frame(height:240, alignment: .leading)
@@ -169,7 +169,9 @@ struct JournalView: View, KeyboardReadable {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                showPrompts = true
+                                if !fromProfile {
+                                    showPrompts = true
+                                }
                             }
                         } label: {
                             Text("Prompts")
@@ -179,56 +181,57 @@ struct JournalView: View, KeyboardReadable {
                                 .padding(.trailing)
                         }.frame(height: 35)
                             .neoShadow()
-                        Button {
-                            if !text.isEmpty && text != placeholderReflection {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                var num = UserDefaults.standard.integer(forKey: "numGrads")
-                                num += 1
-                                let identify = AMPIdentify()
-                                    .set("num_gratitudes", value: NSNumber(value: num))
-                                Amplitude.instance().identify(identify ?? AMPIdentify())
-                                if num == 30 {
-                                    userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
-                                    userModel.buyPlant(unlockedStrawberry: true)
-                                    userModel.triggerAnimation = true
-                                }
-                                UserDefaults.standard.setValue(num, forKey: "numGrads")
-                                Analytics.shared.log(event: .gratitude_tapped_done)
-                                gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
-                                withAnimation {
-                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                                        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                        if !fromProfile {
+                            Button {
+                                if !text.isEmpty && text != placeholderReflection {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    var num = UserDefaults.standard.integer(forKey: "numGrads")
+                                    num += 1
+                                    let identify = AMPIdentify()
+                                        .set("num_gratitudes", value: NSNumber(value: num))
+                                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                                    if num == 30 {
+                                        userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
+                                        userModel.buyPlant(unlockedStrawberry: true)
+                                        userModel.triggerAnimation = true
                                     }
+                                    UserDefaults.standard.setValue(num, forKey: "numGrads")
                                     Analytics.shared.log(event: .gratitude_tapped_done)
-                                    var journalObj = [String: String]()
-                                    journalObj["timeStamp"] = Date.getTime()
-                                    journalObj["gratitude"] = text
-                                    journalObj["question"] =  placeholderQuestion
-                                    userModel.coins += coin
-                                    gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
-                                    if moodFirst {
-                                        showRecs = true
-                                        moodFirst = false
-                                    } else {
-                                        viewRouter.currentPage = .meditate
-                                    }                            }
-                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
-                                placeholderQuestion = "Reflect on how you feel"
+                                    gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
+                                    withAnimation {
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                                        }
+                                        Analytics.shared.log(event: .gratitude_tapped_done)
+                                        var journalObj = [String: String]()
+                                        journalObj["timeStamp"] = Date.getTime()
+                                        journalObj["gratitude"] = text
+                                        journalObj["question"] =  placeholderQuestion
+                                        userModel.coins += coin
+                                        gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
+                                        if moodFirst {
+                                            showRecs = true
+                                            moodFirst = false
+                                        } else {
+                                            viewRouter.currentPage = .meditate
+                                        }                            }
+                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+                                    placeholderQuestion = "Reflect on how you feel"
+                                }
+                            } label: {
+                                HStack {
+                                    Text("Done")
+                                        .foregroundColor(.white)
+                                        .font(Font.fredoka(.semiBold, size: 20))
+                                        .padding()
+                                }
+                                .frame(width:120, height: 35)
+                                .background(Clr.brightGreen.neoShadow())
+                                .cornerRadius(24)
+                                .addBorder(.black, width: 1.5, cornerRadius: 24)
                             }
-                        } label: {
-                            HStack {
-                                Text("Done")
-                                    .foregroundColor(.white)
-                                    .font(Font.fredoka(.semiBold, size: 20))
-                                    .padding()
-                            }
-                            .frame(width:120, height: 35)
-                            .background(Clr.brightGreen.neoShadow())
-                            .cornerRadius(24)
-                            .addBorder(.black, width: 1.5, cornerRadius: 24)
-                        }
-                        .buttonStyle(NeoPress())
-                        
+                            .buttonStyle(NeoPress())
+                        }                        
                     }.KeyboardAwarePadding()
                         .padding(.bottom)
                     Spacer()
@@ -238,18 +241,22 @@ struct JournalView: View, KeyboardReadable {
         }.frame(width: UIScreen.screenWidth - 60, alignment: .leading)
             .offset(x: -5)
             .onChange(of:text) { text in
+                var divider = 1
+                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                    divider = gratitudes.count * 3
+                }
                 if text.count >= 10 && text.count < 25 {
-                    coin = 5
+                    coin = max(1,5/divider)
                 } else if text.count >= 25 && text.count < 50 {
-                    coin = 10
+                    coin = max(1,10/divider)
                 } else if text.count >= 50 && text.count < 100 {
-                    coin = 20
+                    coin = max(1,20/divider)
                 } else if text.count >= 100 && text.count < 200 {
-                    coin = 30
+                    coin = max(1,30/divider)
                 } else if text.count >= 200 && text.count < 300 {
-                    coin = 40
+                    coin = max(1,40/divider)
                 } else if text.count >= 300 {
-                    coin = 50
+                    coin = max(1,50/divider)
                 } else {
                     coin = 0
                 }
@@ -272,6 +279,9 @@ struct JournalView: View, KeyboardReadable {
                 RecommendationsView(recs: $recs, coin: $coin)
             }
             .transition(.move(edge: .trailing))
+            .onDisappear {
+                fromProfile = false
+            }
     }
 }
 

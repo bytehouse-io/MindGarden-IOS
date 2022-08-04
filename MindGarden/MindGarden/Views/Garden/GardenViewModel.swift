@@ -23,7 +23,7 @@ class GardenViewModel: ObservableObject {
     @Published var totalMins = 0
     @Published var totalSessions = 0
     @Published var favoritePlants = [String: Int]()
-    @Published var recentMeditations: [Meditation] = []
+    @Published var recentMeditations: [Int] = []
     @Published var gratitudes = 0
     @Published var lastFive =  [(String, Plant?,Mood?)]()
     @Published var entireHistory = [([Int], [[String: String]])]()
@@ -251,7 +251,7 @@ class GardenViewModel: ObservableObject {
 
     func updateSelf() {
         if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
-            self.recentMeditations = Meditation.allMeditations.filter({ med in defaultRecents.contains(med.id) }).reversed()
+            self.recentMeditations = defaultRecents.reversed()
         }
 
         if let email = Auth.auth().currentUser?.email {
@@ -357,7 +357,13 @@ class GardenViewModel: ObservableObject {
         if let year = self.grid[date.get(.year)] {
             if let month = year[date.get(.month)] {
                 if let day = month[date.get(.day)] {
-                    self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
+                    if var values = day[key] as? [Any] {
+                        //["plantSelected" : "coogie", "meditationId":3]
+                        values.append(saveValue)
+                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = values
+                    } else {
+                        self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)]?[key] = [saveValue]
+                    }
                 } else { // first save of type that day
                     self.grid[date.get(.year)]?[date.get(.month)]?[date.get(.day)] = [key: [saveValue]]
                 }

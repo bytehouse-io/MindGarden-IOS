@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import WidgetKit
 
+var fromProfile = false
 struct ProfilePage: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -38,7 +39,7 @@ struct ProfilePage: View {
                             .font(Font.fredoka(.medium, size: 24))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
-                        Text("\(UserDefaults.standard.integer(forKey: "launchNumber")) Mindful Days")
+                        Text("\(UserDefaults.standard.integer(forKey: "launchNumber")) Mindful Day" + (UserDefaults.standard.integer(forKey: "launchNumber") == 1 ? "" : "s"))
                             .font(Font.fredoka(.regular, size: 20))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
@@ -91,6 +92,9 @@ struct ProfilePage: View {
             }
         }.fullScreenCover(isPresented: $showJournal) {
             JournalView()
+                .frame(width: UIScreen.screenWidth)
+                .edgesIgnoringSafeArea(.all)
+                .background(Clr.darkWhite)
         }
     }
     
@@ -223,6 +227,7 @@ struct ProfilePage: View {
                     withAnimation {
                         placeholderQuestion = question
                         placeholderReflection = reflection
+                        fromProfile = true
                         showJournal = true
                     }
                 }
@@ -258,7 +263,7 @@ struct ProfilePage: View {
                             .frame(width: 25)
                         (Text("\(count)")
                             .font(Font.fredoka(.bold, size: 28))
-                         + (img == Img.streak ? img == Img.flowers ? Text(" plants") : Text(" days") : Text("x"))
+                         + (img == Img.streak ? img == Img.flowers ? Text(" plants") : Text(" day" + (count == 1 ? "" : "s")) : Text("x"))
                             .font(Font.fredoka(.regular, size: 16)))
                         .minimumScaleFactor(0.7)
                         .foregroundColor(Clr.black2)

@@ -73,11 +73,10 @@ struct StartDayView: View {
                     Group {
                         if isDailyMood {
                             DottedLine()
-                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
+                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
                                 .fill(Clr.black2)
                                 .opacity(0.5)
                                 .offset(x:1)
-                                
                         } else {
                             Rectangle()
                                 .fill(Clr.brightGreen)
@@ -337,7 +336,6 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
-            gardenModel.updateSelf()
             DispatchQueue.main.async {
                 let weekDays = getAllDaysOfTheCurrentWeek()
                 getAllGratitude(weekDays:weekDays)

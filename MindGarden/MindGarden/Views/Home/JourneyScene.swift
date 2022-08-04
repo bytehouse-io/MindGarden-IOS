@@ -36,7 +36,7 @@ struct JourneyScene: View {
             } else {
                 VStack {
                     if model.roadMaplevel == 6 {
-                        ( Text("🗺 Roadmap ")
+                        ( Text("🧭 Roadmap ")
                             .foregroundColor(Clr.black2)
                           + Text("Final Level")
                             .foregroundColor(Clr.darkgreen))
@@ -44,7 +44,7 @@ struct JourneyScene: View {
                         .padding(.top, 30)
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     } else {
-                        ( Text("🗺 Roadmap Level: ")
+                        ( Text("🧭 Roadmap Level: ")
                             .foregroundColor(Clr.black2)
                           + Text("\(model.roadMaplevel)")
                             .foregroundColor(Clr.darkgreen))
@@ -60,7 +60,7 @@ struct JourneyScene: View {
                                 let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
                                 VStack(spacing:5) {
                                     DottedLine()
-                                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
+                                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
                                         .opacity((idx == 0) ? 0 : 0.5)
                                         .frame(width:2)
                                     if isLocked {

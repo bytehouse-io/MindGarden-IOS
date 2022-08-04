@@ -51,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"] , forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
-            UserDefaults.standard.setValue(["White Daisy", "Red Tulips"], forKey: K.defaults.plants)
+            UserDefaults.standard.setValue(["White Daisy", "Red Tulip"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
             UserDefaults.standard.setValue("432hz", forKey: "sound")
             UserDefaults.standard.setValue(50, forKey: "coins")

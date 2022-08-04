@@ -473,13 +473,7 @@ struct ContentView: View {
         case .moodCheck:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if UserDefaults.standard.integer(forKey: "numMoods") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
-                withAnimation {
-                    Analytics.shared.log(event: .plus_tapped_mood_to_pricing)
-                    fromPage = "plusMood"
-                    viewRouter.currentPage = .pricing
-                }
-            } else {
+        
                 Analytics.shared.log(event: .plus_tapped_mood)
                 
                 if isOnboarding {
@@ -492,17 +486,11 @@ struct ContentView: View {
                         addMood = true
                     }
                 }
-            }
+            
         case .gratitude:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if UserDefaults.standard.integer(forKey: "numGrads") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
-                Analytics.shared.log(event: .plus_tapped_gratitude_to_pricing)
-                withAnimation {
-                    fromPage = "plusGratitude"
-                    viewRouter.currentPage = .pricing
-                }
-            } else {
+   
                 Analytics.shared.log(event: .plus_tapped_gratitude)
                 
                 if isOnboarding {
@@ -513,16 +501,10 @@ struct ContentView: View {
                     ///Ashvin : Hide popup with animation
                     viewRouter.currentPage = .journal
                 }
-            }
+        
         case .meditate:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if UserDefaults.standard.integer(forKey: "numMeds") >= 30 && !UserDefaults.standard.bool(forKey: "isPro") {
-                withAnimation {
-                    fromPage = "plusMeditation"
-                    viewRouter.currentPage = .pricing
-                }
-            } else {
                 Analytics.shared.log(event: .plus_tapped_meditate)
                 if isOnboarding {
                     Analytics.shared.log(event: .onboarding_finished_meditation)
@@ -547,7 +529,7 @@ struct ContentView: View {
                         viewRouter.currentPage = .learn
                     }
                 }
-            }
+            
         case .none:
             break
         }

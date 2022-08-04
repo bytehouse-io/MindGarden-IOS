@@ -76,20 +76,31 @@ struct Garden: View {
                                         userModel.selectedPlant?.head
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
+                                            .frame(width: 25, height: 25)
+
                                     }
-                                    .frame(height: 25)
-                                }
-                                Image(systemName: "gearshape.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Clr.brightGreen)
-                                    .frame(height: 25)
-                                    .onTapGesture {
-                                        Analytics.shared.log(event: .garden_tapped_settings)
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    .frame(width: 35, height: 20)
+                                    .roundedCapsule()
+                                }.buttonStyle(NeoPress())
+                                Button {
+                                    Analytics.shared.log(event: .garden_tapped_settings)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
                                         gardenSettings = true
                                         activeSheet = .profile
                                     }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "gearshape.fill")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(Clr.black2)
+                                            .frame(width: 20, height: 20)
+                                    }      .frame(width: 35, height: 20)
+                                        .roundedCapsule()
+                                }
+                          
+                                .buttonStyle(NeoPress())
                             }
                         }.frame(width: gp.size.width * 0.85)
                         .padding(.bottom, -10)
@@ -541,12 +552,6 @@ struct Garden: View {
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)
-            .popover(isPresented: $showStreak) {
-                StreakScene(showStreak: $showStreak)
-            }
-            .onTapGesture {
-                showStreak = true
-            }
         }
     }
     private func getFavoritePlants() {

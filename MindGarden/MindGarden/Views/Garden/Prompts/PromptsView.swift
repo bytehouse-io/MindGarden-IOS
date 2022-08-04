@@ -72,40 +72,53 @@ struct PromptsView: View {
                     VStack(spacing: -20) {
                         ForEach(selectedPrompts, id: \.self) { prompt in
                         Button {
-                            question = prompt.description
-                            withAnimation {
-                                presentationMode.wrappedValue.dismiss()
+                            if !UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture {
+                                
+                            } else {
+                                question = prompt.description
+                                withAnimation {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+
                             }
                         } label: {
                             ZStack {
-                                Rectangle()
-                                    .fill(Clr.darkWhite)
-                                    .frame(height: UIScreen.screenHeight * 0.1, alignment: .center)
+                     
+                                ZStack {
+                                    Rectangle()
+                                        .fill(Clr.darkWhite)
+                                        .frame(height: UIScreen.screenHeight * 0.1, alignment: .center)
+                                        .cornerRadius(16)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 16)
+                                        .neoShadow()
+                                    HStack(spacing:0) {
+                                        prompt.img
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 60, height: 60)
+                                            .padding()
+                                            .padding(.horizontal,0)
+                                            .offset(x: -5)
+                                        VStack(alignment:.leading) {
+                                            Text(prompt.title)
+                                                .font(Font.fredoka(.semiBold, size: 20))
+                                                .foregroundColor(Clr.black2)
+                                                .multilineTextAlignment(.leading)
+                                            Text(prompt.description)
+                                                .font(Font.fredoka(.medium, size: 12))
+                                                .foregroundColor(Clr.black2)
+                                                .multilineTextAlignment(.leading)
+                                        }.frame(width: UIScreen.screenWidth * 0.55, alignment: .leading)
+                                    }
+                                    .frame(width: UIScreen.screenWidth - 96, height: UIScreen.screenHeight * 0.1, alignment: .center)
                                     .cornerRadius(16)
-                                    .addBorder(.black, width: 1.5, cornerRadius: 16)
-                                    .neoShadow()
-                                HStack(spacing:0) {
-                                    prompt.img
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 60, height: 60)
-                                        .padding()
-                                        .padding(.horizontal,0)
-                                        .offset(x: -5)
-                                    VStack(alignment:.leading) {
-                                        Text(prompt.title)
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                            .foregroundColor(Clr.black2)
-                                            .multilineTextAlignment(.leading)
-                                        Text(prompt.description)
-                                            .font(Font.fredoka(.medium, size: 12))
-                                            .foregroundColor(Clr.black2)
-                                            .multilineTextAlignment(.leading)
-                                    }.frame(width: UIScreen.screenWidth * 0.55, alignment: .leading)
-                                }
-                                .frame(width: UIScreen.screenWidth - 96, height: UIScreen.screenHeight * 0.1, alignment: .center)
-                                .cornerRadius(16)
-                                .padding()
+                                    .padding()
+                                }.opacity(!UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture ? 0.5 : 1)
+                                Img.lockIcon
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25, height: 25)
+                                    .position(x: UIScreen.screenWidth - 110, y: 0)
                             }
                         }
                         .padding(5)
