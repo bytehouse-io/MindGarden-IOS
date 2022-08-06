@@ -8,6 +8,7 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Firebase
 
 
 struct Provider: IntentTimelineProvider {
@@ -70,6 +71,8 @@ struct MindGardenWidgetEntryView : View {
                 SmallWidget(streak: streak)
             case .systemMedium:
                 NewMediumWidget()
+                    .environmentObject(MeditationViewModel())
+                    .environmentObject(GardenViewModel())
             case .systemLarge:
                 LargeWidget()
             default:
@@ -319,6 +322,10 @@ struct Plnt: Identifiable {
 @main
 struct MindGardenWidget: Widget {
     let kind: String = "MindGardenWidget"
+    
+    init() {
+        FirebaseApp.configure()
+    }
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in

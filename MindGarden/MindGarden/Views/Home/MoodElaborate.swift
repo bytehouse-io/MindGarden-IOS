@@ -61,6 +61,7 @@ struct MoodElaborate: View {
                             Button {
                                 moodFirst = true
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(userModel.selectedMood.title, forKey: "logMood")
                                 withAnimation {
                                     selectedSubMood = item
                                     var num = UserDefaults.standard.integer(forKey: "numMoods")

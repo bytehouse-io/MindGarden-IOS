@@ -77,6 +77,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         UNUserNotificationCenter.current().delegate = self
         // Add state change listener for Firebase Authentication
         Purchases.shared.delegate = self
+        
+        do {
+        try Auth.auth().useUserAccessGroup("M5757NXZKD.io.bytehouse.mindgarden")
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if let uid = user?.email {
                 // identify Purchases SDK with new Firebase user

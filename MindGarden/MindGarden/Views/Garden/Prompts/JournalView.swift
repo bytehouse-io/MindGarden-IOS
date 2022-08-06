@@ -193,6 +193,7 @@ struct JournalView: View, KeyboardReadable {
                                     userModel.triggerAnimation = true
                                 }
                                 UserDefaults.standard.setValue(num, forKey: "numGrads")
+                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
                                 Analytics.shared.log(event: .gratitude_tapped_done)
                                 gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
                                 withAnimation {

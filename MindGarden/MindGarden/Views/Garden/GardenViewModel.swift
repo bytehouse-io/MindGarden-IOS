@@ -31,6 +31,7 @@ class GardenViewModel: ObservableObject {
     @Published var numMeds = 0
     @Published var numMoods = 0
     @Published var numGrads = 0
+    @Published var lastLogMood:Mood?
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -352,6 +353,16 @@ class GardenViewModel: ObservableObject {
             self.grid[date.get(.year)] = [date.get(.month): [date.get(.day): [key: [saveValue]]]]
         }
 
+    }
+    
+    func getLastLogMood() {
+        var day = Int(Date().get(.day)) ?? 0
+        while(day>0) {
+            if let mds = grid[Date().get(.year)]?[Date().get(.month)]?["\(day)"]?["moods"]  as? [[String: String]] {
+                lastLogMood = Mood.getMood(str: mds[mds.count - 1]["mood"] ?? "okay")
+            }
+            day = day - 1
+        }
     }
 }
 
