@@ -83,7 +83,7 @@ struct MediumWidgetRow: View {
                                                 .font(Font.fredoka(.regular, size: 12))
                                                 .opacity(0)
                                                 .padding(.horizontal,0)
-                                            getMoodImage()
+                                            Mood.getMoodImage(mood: gardenModel.getLastLogMood())
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(height:15)
@@ -108,7 +108,7 @@ struct MediumWidgetRow: View {
         if let lastDate = userDefaults?.value(forKey: "lastJournel") as? String {
             return lastDate
         }
-        return ""
+        return Date().toString(withFormat: "MMM dd, yyyy")
     }
     
     private func getMoodImage()->Image{

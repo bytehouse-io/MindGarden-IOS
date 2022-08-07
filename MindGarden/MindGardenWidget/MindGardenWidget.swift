@@ -86,6 +86,9 @@ struct MindGardenWidgetEntryView : View {
                 dayTime = false
             }
             extractData()
+            Timer.scheduledTimer(withTimeInterval: 3600.0, repeats: true) { timer in
+                WidgetCenter.shared.reloadAllTimelines()
+            }
         }
     }
 

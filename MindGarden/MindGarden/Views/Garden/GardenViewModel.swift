@@ -31,7 +31,6 @@ class GardenViewModel: ObservableObject {
     @Published var numMeds = 0
     @Published var numMoods = 0
     @Published var numGrads = 0
-    @Published var lastLogMood:Mood?
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -355,14 +354,18 @@ class GardenViewModel: ObservableObject {
 
     }
     
-    func getLastLogMood() {
-        var day = Int(Date().get(.day)) ?? 0
-        while(day>0) {
-            if let mds = grid[Date().get(.year)]?[Date().get(.month)]?["\(day)"]?["moods"]  as? [[String: String]] {
-                lastLogMood = Mood.getMood(str: mds[mds.count - 1]["mood"] ?? "okay")
+    func getLastLogMood()-> Mood {
+        let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
+        if let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
+            var day = Int(Date().get(.day)) ?? 0
+            while(day>0) {
+                if let mds = grid[Date().get(.year)]?[Date().get(.month)]?["\(day)"]?["moods"]  as? [[String: String]] {
+                    return Mood.getMood(str: mds[mds.count - 1]["mood"] ?? "okay")
+                }
+                day = day - 1
             }
-            day = day - 1
         }
+        return Mood.okay
     }
 }
 
