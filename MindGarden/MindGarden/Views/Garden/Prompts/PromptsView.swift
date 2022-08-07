@@ -13,6 +13,8 @@ struct PromptsView: View {
     @State var selectedPrompts: [Journal] = []
     @State var selectedTab: PromptsTabType = .gratitude
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewRouter: ViewRouter
+
     
     var body: some View {
         ZStack {
@@ -59,7 +61,6 @@ struct PromptsView: View {
                                 .background(selectedTab == item.tabName ? Clr.yellow : Clr.darkWhite)
                                 .cornerRadius(16)
                                 .addBorder(.black, width: selectedTab == item.tabName ? 2 : 1, cornerRadius: 16)
-                
                             }
                             .frame(height:32)
                             .buttonStyle(NeumorphicPress())
@@ -73,7 +74,8 @@ struct PromptsView: View {
                         ForEach(selectedPrompts, id: \.self) { prompt in
                         Button {
                             if !UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture {
-                                
+                                fromPage = "journal"
+                                viewRouter.currentPage = .pricing
                             } else {
                                 question = prompt.description
                                 withAnimation {
@@ -83,7 +85,6 @@ struct PromptsView: View {
                             }
                         } label: {
                             ZStack {
-                     
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
@@ -114,11 +115,13 @@ struct PromptsView: View {
                                     .cornerRadius(16)
                                     .padding()
                                 }.opacity(!UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture ? 0.5 : 1)
-                                Img.lockIcon
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 25, height: 25)
-                                    .position(x: UIScreen.screenWidth - 110, y: 0)
+                                if !UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture {
+                                    Img.lockIcon
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 25, height: 25)
+                                        .position(x: UIScreen.screenWidth - 110, y: 40)
+                                }
                             }
                         }
                         .padding(5)

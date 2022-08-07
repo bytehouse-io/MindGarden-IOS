@@ -110,6 +110,7 @@ struct BreathworkPlay : View {
                         }
                     }
                 }.frame(height:size)
+                
                 VStack {
                     VStack(spacing:0) {
                         Img.grass
@@ -124,8 +125,7 @@ struct BreathworkPlay : View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(height:60)
-                                            .animation(Animation
-                                                        .spring(response: 0.3, dampingFraction: 3.0))
+                                            .animation(Animation.spring(response: 0.3, dampingFraction: 3.0))
                                             .transition(.opacity)
                                             .offset(y:-30)
                                     } else if progress > 0.5 && progress < 0.75 {
@@ -275,7 +275,6 @@ struct BreathworkPlay : View {
                 withAnimation(.linear(duration: Double(time))) {
                     bgAnimation = true
                 }
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             case "h":
                 title = time > 0 ? "Hold" : ""
             case "e":

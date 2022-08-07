@@ -19,6 +19,8 @@ struct HomeViewDashboard: View {
     @Binding var showIAP: Bool
     @State var streakNumber: Int
     @State var showRecFavs = false
+    @State var sheetType: [Int] = []
+    @State var sheetTitle: String = ""
     let height = 20.0
     var body: some View {
         let width = UIScreen.screenWidth
@@ -141,6 +143,8 @@ struct HomeViewDashboard: View {
                         if !userModel.completedMeditations.isEmpty {
                             Button {
                                 withAnimation {
+                                    sheetTitle = "Your Recents"
+                                    sheetType = userModel.completedMeditations.compactMap({ Int($0)}).reversed().unique()
                                     showRecFavs = true
                                 }
                             } label: {
@@ -151,9 +155,11 @@ struct HomeViewDashboard: View {
                                     .foregroundColor(Clr.darkGray)
                             }
                         }
-                        if medModel.favoritedMeditations.isEmpty {
+                        if !medModel.favoritedMeditations.isEmpty {
                             Button {
                                 withAnimation {
+                                    sheetTitle = "Your Favorites"
+                                    sheetType = medModel.favoritedMeditations.reversed()
                                     showRecFavs = true
                                 }
                             } label: {
@@ -172,7 +178,7 @@ struct HomeViewDashboard: View {
             .padding(.horizontal, 24)
             .padding(.top)
         }.sheet(isPresented: $showRecFavs) {
-            ShowRecsScene(meditations: userModel.completedMeditations.compactMap({ Int($0)}))
+            ShowRecsScene(meditations: sheetType, title: $sheetTitle)
         }
     }
 }

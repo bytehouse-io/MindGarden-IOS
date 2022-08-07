@@ -13,6 +13,8 @@ struct ShowRecsScene: View {
     @EnvironmentObject var meditationModel: MeditationViewModel
     @State private var animateRow = false
     var meditations: [Int]
+    @Binding var title: String
+    
     
     var body: some View {
         GeometryReader { g in
@@ -27,7 +29,7 @@ struct ShowRecsScene: View {
                         }.padding(.leading, 32)
                         .padding(.top)
                         Spacer()
-                        Text("Your Favorites")
+                        Text(title)
                             .foregroundColor(Clr.black2)
                             .font(Font.fredoka(.bold, size: 20))
                             .padding(.top)
@@ -172,6 +174,6 @@ struct RecRow: View {
 
 struct ShowRecsScene_Previews: PreviewProvider {
     static var previews: some View {
-        ShowRecsScene(meditations: [0])
+        ShowRecsScene(meditations: [0], title: .constant("favs"))
     }
 }

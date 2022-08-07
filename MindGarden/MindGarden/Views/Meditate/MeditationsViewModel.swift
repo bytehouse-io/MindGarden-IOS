@@ -299,7 +299,6 @@ class MeditationViewModel: ObservableObject {
 
         if let email = Auth.auth().currentUser?.email {
             //Read Data from firebase, for syncing
-            print(self.favoritedMeditations, "big")
             if self.favoritedMeditations.contains(where: { favId in favId == id }) {
                 self.favoritedMeditations.removeAll { med in
                     med == id
@@ -321,7 +320,7 @@ class MeditationViewModel: ObservableObject {
             }
         } else {
             if var favorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
-                if favorites.contains(where: { id in id == id }) {
+                if favorites.contains(where: { $0 == id }) {
                     favorites.removeAll { fbId in return fbId == id }
                     self.favoritedMeditations.removeAll { med in  med == id }
                 } else {
@@ -340,7 +339,10 @@ class MeditationViewModel: ObservableObject {
     func getReward() -> Int {
         var reward = 0
         if totalBreaths > 0 {
-            let totalSeconds = self.selectedBreath?.duration ?? 0 * totalBreaths
+            var totalSeconds = 0
+            if let duration = self.selectedBreath?.duration {
+                totalSeconds = totalBreaths * duration
+            }
             switch totalSeconds {
             case 10...23: reward = 5
             case 24...60: reward = 10

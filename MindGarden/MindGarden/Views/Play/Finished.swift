@@ -401,7 +401,7 @@ struct Finished: View {
     var heart: some View {
         ZStack {
             if model.isFavoritedLoaded {
-                LikeButton(isLiked: favorited, size:35) {
+                LikeButton(isLiked: model.isFavorited, size:35) {
                     likeAction()
                 }
             } else {

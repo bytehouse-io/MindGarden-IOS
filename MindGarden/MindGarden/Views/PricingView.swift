@@ -348,8 +348,8 @@ struct PricingView: View {
                             case "middle": viewRouter.currentPage = .middle
                             case "widget": viewRouter.currentPage = .meditate
                             case "discover": viewRouter.currentPage = .learn
+                            case "journal": viewRouter.currentPage = .learn
                             default: viewRouter.currentPage = viewRouter.previousPage
-
                             }
                         }
 //
@@ -592,6 +592,10 @@ struct PricingView: View {
                 event = event + "fromWidget"
             } else if fromPage == "lockedHome" {
                 event = event + "lockedHome"
+            } else if fromPage == "journal" {
+                event = event + "journal"
+            } else if fromPage == "streak" {
+                event = event + "streak"
             }
             return event
         }

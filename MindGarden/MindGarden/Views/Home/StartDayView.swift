@@ -179,9 +179,6 @@ struct StartDayView: View {
                             }
                         }
                 }.buttonStyle(ScalePress())
-                
-                 
-                    
                     Button {
 
                     } label: {
@@ -196,6 +193,8 @@ struct StartDayView: View {
                                         .padding([.top],16)
                                         .padding(.leading, isWeekStreakDone || !isGratitudeDone  ? 16 : -16)
                                         .offset(x: isWeekStreakDone || !isGratitudeDone  ? 0 : 32)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.05)
                                     Spacer()
                                     Img.streakViewPencil
                                         .resizable()
@@ -227,14 +226,12 @@ struct StartDayView: View {
                                                             .aspectRatio(contentMode: .fit)
                                                             .frame(height: 35)
                                                     }
-                                                }
-                                            
+                                                }                                            
                                             }
                                             .padding(.horizontal,3)
                                             .frame(maxWidth:.infinity)
                                         }
-                                    }
-                                    .padding(10)
+                                    }.padding(10)
                                 }
                                 .frame(height: 85)
                                 .background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 16))
@@ -339,6 +336,8 @@ struct StartDayView: View {
             DispatchQueue.main.async {
                 let weekDays = getAllDaysOfTheCurrentWeek()
                 getAllGratitude(weekDays:weekDays)
+                print(gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["journals"], "dpr")
+                print(gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"], "at all")
                 if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
                     if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
                         isDailyMood = false
@@ -346,11 +345,12 @@ struct StartDayView: View {
                     }
                 }
                 
-                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["journals"]  as? [[String: String]] {
                     if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
                         isGratitudeDone = true
                     }
                 }
+                
                 if let meditations = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["sessions"]  as? [[String: String]] {
                     if let meditation = meditations[meditations.count-1]["meditationId"], !meditation.isEmpty  {
                         isMeditationDone = true

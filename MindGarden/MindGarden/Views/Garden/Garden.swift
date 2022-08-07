@@ -487,7 +487,7 @@ struct Garden: View {
                                     .rotationEffect(.radians(.pi))
                                 
                             }
-                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? -125 : -75)
+                        }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? K.isSmall() ? -175 : -125 : -75)
                     }
                         switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
                         case "meditate":
@@ -495,7 +495,7 @@ struct Garden: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 125)
-                                .position(x: gp.size.width/2, y: gp.size.height/1.5)
+                                .position(x: gp.size.width/2, y: gp.size.height/1.3)
                         case "calendar":
                             Img.statRacoon
                                 .resizable()

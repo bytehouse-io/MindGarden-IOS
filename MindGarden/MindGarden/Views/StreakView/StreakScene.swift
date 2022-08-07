@@ -8,6 +8,7 @@
 import SwiftUI
 import StoreKit
 import Firebase
+import Amplitude
 
 struct StreakScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -123,13 +124,15 @@ struct StreakScene: View {
         .alert(isPresented: $triggerRating) {
             Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
                   primaryButton: .default(Text("Yes!")) {
+                Analytics.shared.log(event: .rating_tapped_yes)
                 UserDefaults.standard.setValue(true, forKey: "reviewedApp")
                 if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
                     SKStoreReviewController.requestReview(in: scene)
                                 dismiss()
                 }
             },
-                  secondaryButton: .default(Text("No")) {
+            secondaryButton: .default(Text("No")) {
+                    Analytics.shared.log(event: .rating_tapped_no)
                     dismiss()
             })
         }
@@ -139,13 +142,14 @@ struct StreakScene: View {
         .sheet(isPresented: $isSharePresented) {
             ShareView(img:img)
         }
-        .onAppear() {
+        .onAppearAnalytics(event: .screen_load_streak)
+        .onAppear {
+            Amplitude.instance().logEvent("streak_logged", withEventProperties: ["number": bonusModel.streakNumber])
             MGAudio.sharedInstance.stopSound()
             MGAudio.sharedInstance.playSounds(soundFileNames: ["fire_ignite.mp3","fire.mp3"])
             self.animate()
-
         }
-        .onDisappear() {
+        .onDisappear {
             MGAudio.sharedInstance.stopSound()
             timer?.invalidate()
         }
@@ -166,7 +170,7 @@ struct StreakScene: View {
     private func dismiss() {
         withAnimation {
             if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 || bonusModel.streakNumber == 2 ||  UserDefaults.standard.integer(forKey: "launchNumber") == 10  {
-                fromPage = ""
+                fromPage = "streak"
                 viewRouter.previousPage = .garden
                 viewRouter.currentPage = .pricing
             } else {

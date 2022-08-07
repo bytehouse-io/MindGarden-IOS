@@ -56,11 +56,6 @@ struct RecommendationsView: View {
                                 }
                                 HStack(spacing:20) {
                                     Img.coinBunch
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(.leading,16)
-                                        .frame(width: 100)
-                                        .offset(x: 24, y: -8)
                                     Spacer()
                                     VStack(alignment: .leading, spacing:10) {
                                         HStack {
@@ -127,7 +122,7 @@ struct RecommendationsView: View {
                     var count = 0
                     let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                         count += 1
-                        if count == 2 {
+                        if count == 3 {
                             timer.invalidate()
                             withAnimation {
                                 presentationMode.wrappedValue.dismiss()

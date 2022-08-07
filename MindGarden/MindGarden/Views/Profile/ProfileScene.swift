@@ -424,7 +424,7 @@ struct ProfileScene: View {
                                                             Text("Create an account").foregroundColor(.white).font(Font.fredoka(.bold, size: 24)))
                                                         .frame(height: 50)
                                                         .lineLimit(1)
-                                                        .addBorder(.black, width: 1.5, cornerRadius: 20)
+                                                        .addBorder(.black, width: 1.5, cornerRadius: 24)
                                                         .minimumScaleFactor(0.05)
                                                         .padding(.horizontal, 32)
                                                         .padding(.bottom, 20)

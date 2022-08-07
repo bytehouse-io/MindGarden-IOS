@@ -90,7 +90,7 @@ struct OnboardingScene: View {
                                     .padding(.horizontal)
                                     .multilineTextAlignment(.leading)
                             }.padding()
-                            .offset(y: -25)
+                            .offset(y: K.isSmall() ? 10 : -25)
                             Img.coloredPots
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

@@ -194,7 +194,7 @@ struct BreathMiddle: View {
                 Store(isShop: false)
             }
         }.onAppear {
-            medModel.checkIfFavorited()
+            medModel.updateSelf()
             if let breath = medModel.selectedBreath {
                 breathWork = breath
             }
@@ -203,14 +203,8 @@ struct BreathMiddle: View {
     
     var heart: some View {
         ZStack {
-            if medModel.isFavoritedLoaded {
-                LikeButton(isLiked: medModel.isFavorited) {
-                    likeAction()
-                }
-            } else {
-                LikeButton(isLiked: false) {
-                    likeAction()
-                }
+            LikeButton(isLiked: medModel.favoritedMeditations.contains(medModel.selectedBreath?.id ?? 0)) {
+                likeAction()
             }
         }
     }

@@ -73,7 +73,11 @@ struct ReminderView: View {
                                             if !UserDefaults.standard.bool(forKey: "showedNotif") {
                                                 OneSignal.promptForPushNotifications(userResponse: { accepted in
                                                     if accepted {
-                                                        Analytics.shared.log(event: .finished_set_reminder)
+                                                        if isNextSteps {
+                                                            Analytics.shared.log(event: .nextsteps_created_reminder)
+                                                        } else {
+                                                            Analytics.shared.log(event: .finished_set_reminder)
+                                                        }
                                                         NotificationHelper.addOneDay()
                                                         NotificationHelper.addThreeDay()
                                                         // UserDefaults.standard.setValue(true, forKey: "mindful")
@@ -102,7 +106,7 @@ struct ReminderView: View {
          
                 }
             }
-        }.frame(height: UIScreen.screenHeight * (playAnim ? 0 : 0.28))
+        }.frame(height: UIScreen.screenHeight * (playAnim ? 0 : (K.isSmall() ? 0.325 : 0.28)))
             .opacity(playAnim ? 0 : 1)
            .animation(.spring().delay(0.25), value: playAnim)
            .addBorder(.black, width: 1.5, cornerRadius: 32)

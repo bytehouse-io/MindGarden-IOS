@@ -43,9 +43,25 @@ struct NewUpdateModal: View {
                             .frame(width:  g.size.width * 0.85 * 0.4)
                             .padding()
                         HStack {
-                            Text("Just for coming back, we're offering you 50% off MindGarden Pro. This is one time offer!")
+                            Text("Just for coming back, you've unlocked a 50% off of Premium.")
                         }.multilineTextAlignment(.center)
-                        .font(Font.fredoka(.semiBold, size: 18))
+                        .font(Font.fredoka(.medium, size: 20))
+                        .foregroundColor(Clr.black2)
+                        .frame(width: g.size.width * 0.85 * 0.8)
+                        .padding(.bottom, 10)
+                        .padding(.top)
+                        HStack {
+                            Text("📈 Pro users are") + Text(" 3x more likely ").bold() + Text("to stick with meditation.")
+                        }.multilineTextAlignment(.center)
+                        .font(Font.fredoka(.medium, size: 20))
+                        .foregroundColor(Clr.black2)
+                        .frame(width: g.size.width * 0.85 * 0.8)
+                        .padding(.bottom, 10)
+                        .padding(.top)
+                        HStack {
+                            Text("")
+                        }.multilineTextAlignment(.center)
+                        .font(Font.fredoka(.medium, size: 20))
                         .foregroundColor(Clr.black2)
                         .frame(width: g.size.width * 0.85 * 0.8)
                         .padding(.bottom, 10)
@@ -91,7 +107,6 @@ struct NewUpdateModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                shown = false
                                 UserDefaults.standard.setValue(true, forKey: "14DayModal")
                                 fromInfluencer = ""
                                 fiftyOff = true
@@ -102,14 +117,13 @@ struct NewUpdateModal: View {
                                 .fill(Clr.darkgreen)
                                 .overlay(
                                     Text("Claim my 50% off")
-                                        .font(Font.fredoka(.bold, size: 18))
+                                        .font(Font.fredoka(.bold, size: 20))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
                                 )
-                                .frame(width: g.size.width * 0.6, height: g.size.height * 0.065)
+                                .frame(width: g.size.width * 0.7, height: 45)
                         }.buttonStyle(NeumorphicPress())
-                            .padding(.top)
                         Button {
                             Analytics.shared.log(event: .no_thanks_50)
                             withAnimation {

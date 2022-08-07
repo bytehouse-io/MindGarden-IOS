@@ -179,6 +179,8 @@ struct JournalView: View, KeyboardReadable {
                                 .foregroundColor(Clr.redGradientBottom)
                                 .multilineTextAlignment(.center)
                                 .padding(.trailing)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
                         }.frame(height: 35)
                             .neoShadow()
                         if !fromProfile {
@@ -188,7 +190,7 @@ struct JournalView: View, KeyboardReadable {
                                     var num = UserDefaults.standard.integer(forKey: "numGrads")
                                     num += 1
                                     let identify = AMPIdentify()
-                                        .set("num_gratitudes", value: NSNumber(value: num))
+                                        .set("num_journals", value: NSNumber(value: num))
                                     Amplitude.instance().identify(identify ?? AMPIdentify())
                                     if num == 30 {
                                         userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
@@ -197,7 +199,6 @@ struct JournalView: View, KeyboardReadable {
                                     }
                                     UserDefaults.standard.setValue(num, forKey: "numGrads")
                                     Analytics.shared.log(event: .gratitude_tapped_done)
-                                    gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
                                     withAnimation {
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)

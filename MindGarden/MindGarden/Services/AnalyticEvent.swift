@@ -121,6 +121,25 @@ enum AnalyticEvent {
     case challenge_tapped_x //
     case challenge_tapped_accept //
     
+    //MARK: - Mood Check
+    
+    //MARK: - Journal
+    
+    //MARK: - Recommendations
+    
+    //MARK: - Breathwork
+    
+    //MARK: - Next Steps
+    case screen_load_nextsteps
+    case nextsteps_created_reminder
+    case nextsteps_tapped_save_progress
+    case nextsteps_tapped_done
+    
+    //MARK: - Streak
+    case screen_load_streak
+    case rating_tapped_yes
+    case rating_tapped_no
+    
     // bonus modal
     case home_tapped_bonus //
     case home_tapped_pro
@@ -838,6 +857,17 @@ extension AnalyticEvent {
         case .user_from_influencer: return "user_from_influencer"
         case .discover_tapped_journey_med: return "discover_tapped_journey_med"
         case .home_tapped_journey_med: return "home_tapped_journey_med"
+            
+        //MARK: - Next Steps
+        case .screen_load_nextsteps: return "screen_load_nextsteps"
+        case .nextsteps_created_reminder: return "nextsteps_created_reminder"
+        case .nextsteps_tapped_save_progress: return "nextsteps_tapped_save_progress"
+        case .nextsteps_tapped_done: return "nextsteps_tapped_done"
+            
+        //MARK: - Streak
+        case .screen_load_streak: return "screen_load_streak" //
+        case .rating_tapped_yes: return "rating_tapped_yes" //
+        case .rating_tapped_no: return "rating_tapped_no" //
         }
     }
 }

@@ -7,10 +7,10 @@
 
 import SwiftUI
 
+var isNextSteps = false
 struct NextSteps: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @Environment(\.presentationMode) var presentationMode
-
     @State private var playAnim = false
     var body: some View {
         ZStack {
@@ -26,8 +26,7 @@ struct NextSteps: View {
                         .foregroundColor(Clr.black2)
                         .padding(.vertical, 40)
                     ReminderView(playAnim: $playAnim)
-                        .padding(.bottom, playAnim ? height * -0.25 : 24)
-          
+                        .padding(.bottom, playAnim ? height * -0.25 : 24)          
                     Button { } label: {
                         ZStack {
                             Rectangle()
@@ -49,13 +48,7 @@ struct NextSteps: View {
                                             }
                                         )
                                         .padding(.horizontal, 8)
-                                }.onTapGesture {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        presentationMode.wrappedValue.dismiss()
-                                        viewRouter.currentPage = .authentication
-                                    }
-                                }
+                                }.onTapGesture { signUp() }
                             }.buttonStyle(ScalePress())
                              .position(x: width * 0.65, y: height * 0.15)
 
@@ -80,14 +73,8 @@ struct NextSteps: View {
                             }.padding([.horizontal, .bottom], 24)
                             .offset(y: -10)
                         }.frame(height: height * 0.2, alignment: .leading)
-                            .onTapGesture {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    presentationMode.wrappedValue.dismiss()
-                                    viewRouter.currentPage = .authentication
-                                }
-                    }.buttonStyle(ScalePress())
-                        }
+                            .onTapGesture {  signUp() }
+                        }.buttonStyle(ScalePress())
                     Spacer()
 
                 }.padding(.horizontal, 32)
@@ -101,6 +88,7 @@ struct NextSteps: View {
             }
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                Analytics.shared.log(event: .nextsteps_tapped_done)
                 withAnimation {
                     presentationMode.wrappedValue.dismiss()
                     viewRouter.currentPage = .garden
@@ -125,6 +113,22 @@ struct NextSteps: View {
             .padding(.horizontal, 32)
             .position(x: UIScreen.screenWidth/2, y: UIScreen.screenHeight - 100)
         }.frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight)
+        .onAppearAnalytics(event: .screen_load_nextsteps)
+        .onAppear {
+            isNextSteps = true
+        }
+        .onDisappear {
+            isNextSteps = false
+        }
+    }
+    
+    private func signUp() {
+        Analytics.shared.log(event: .nextsteps_tapped_save_progress)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        withAnimation {
+            presentationMode.wrappedValue.dismiss()
+            viewRouter.currentPage = .authentication
+        }
     }
 }
 

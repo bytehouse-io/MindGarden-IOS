@@ -46,8 +46,7 @@ struct HomeViewScroll: View {
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
                     JourneyScene(userModel: userModel)
-                    Spacer().frame(height:80)
-            }.padding(.bottom, height * 0.23)
+            }.padding(.bottom, height * 0.1)
             }.frame(height: height)
         }.onAppear {
         }

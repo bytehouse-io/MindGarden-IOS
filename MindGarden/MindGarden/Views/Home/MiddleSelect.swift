@@ -183,7 +183,7 @@ struct MiddleSelect: View {
         .animation(tappedMeditation ? nil : .default)
         .onAppear {
             model.selectedBreath = nil
-            model.checkIfFavorited()
+            model.updateSelf()
             if let id =  model.selectedMeditations.lastIndex(where: { ($0.type == .lesson || $0.type == .single_and_lesson) && userModel.completedMeditations.contains(String($0.id)) && $0.belongsTo != "Timed Meditation" && $0.belongsTo != "Open-ended Meditation"}) {
                 lastPlayed = id
             }
@@ -207,14 +207,8 @@ struct MiddleSelect: View {
     
     var heart: some View {
         ZStack {
-            if model.isFavoritedLoaded {
-                LikeButton(isLiked: model.isFavorited) {
-                    likeAction()
-                }
-            } else {
-                LikeButton(isLiked: false) {
-                    likeAction()
-                }
+            LikeButton(isLiked: model.favoritedMeditations.contains(model.selectedMeditation?.id ?? 0)) {
+                likeAction()
             }
         }
     }
