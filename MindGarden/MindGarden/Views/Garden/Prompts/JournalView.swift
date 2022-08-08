@@ -94,40 +94,63 @@ struct JournalView: View, KeyboardReadable {
                                 .addBorder(.black, width: 1.5, cornerRadius: 16)
                                 .neoShadow()
                             ScrollView(.vertical, showsIndicators: false) {
-                                if #available(iOS 15.0, *) {
-                                    TextEditor(text: $text)
-                                        .frame(height:240, alignment: .leading)
-                                        .disableAutocorrection(false)
-                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
-                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
-                                        .focused($isFocused)
-                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                            withAnimation {
-                                                contentKeyVisible = newIsKeyboardVisible
-                                            }
-                                        }.onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if text == placeholderReflection {
-                                                text = ""
-                                            }
-                                        }.disabled(fromProfile)
-                                } else if #available(iOS 14.0, *) {
-                                    TextEditor(text: $text)
-                                        .frame(height:240, alignment: .leading)
-                                        .disableAutocorrection(false)
-                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
-                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
-                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                            withAnimation {
-                                                contentKeyVisible = newIsKeyboardVisible
-                                            }
-                                        }.onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if text == placeholderReflection {
-                                                text = ""
-                                            }
-                                        }
+                                Group {
+                                    if #available(iOS 15.0, *) {
+                                        TextEditor(text: $text)
+                                            .focused($isFocused)
+                                    } else if #available(iOS 14.0, *) {
+                                        TextEditor(text: $text )
+                                    }
                                 }
+                                .frame(height:240, alignment: .leading)
+                                .disableAutocorrection(false)
+                                .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+                                .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                    withAnimation {
+                                        contentKeyVisible = newIsKeyboardVisible
+                                    }
+                                }.onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    if text == placeholderReflection {
+                                        text = ""
+                                    }
+                                }
+                                
+                                //                                if #available(iOS 15.0, *) {
+                                //                                    TextEditor(text: $text)
+                                //                                        .frame(height:240, alignment: .leading)
+                                //                                        .disableAutocorrection(false)
+                                //                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                //                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+                                //                                        .focused($isFocused)
+                                //                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                //                                            withAnimation {
+                                //                                                contentKeyVisible = newIsKeyboardVisible
+                                //                                            }
+                                //                                        }.onTapGesture {
+                                //                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                //                                            if text == placeholderReflection {
+                                //                                                text = ""
+                                //                                            }
+                                //                                        }
+                                //                                } else if #available(iOS 14.0, *) {
+                                //                                    TextEditor(text: $text )
+                                //                                        .frame(height:240, alignment: .leading)
+                                //                                        .disableAutocorrection(false)
+                                //                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                //                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+                                //                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                //                                            withAnimation {
+                                //                                                contentKeyVisible = newIsKeyboardVisible
+                                //                                            }
+                                //                                        }.onTapGesture {
+                                //                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                //                                            if text == placeholderReflection {
+                                //                                                text = ""
+                                //                                            }
+                                //                                        }
+                                //                                }
                             }
                         }
                         .transition(.move(edge: .leading))
@@ -227,20 +250,20 @@ struct JournalView: View, KeyboardReadable {
                                     placeholderQuestion = "Reflect on how you feel"
                                 }
                             }
-                            } label: {
-                                HStack {
-                                    Text("Done")
-                                        .foregroundColor(.white)
-                                        .font(Font.fredoka(.semiBold, size: 20))
-                                        .padding()
-                                }
-                                .frame(width:120, height: 35)
-                                .background(Clr.brightGreen.neoShadow())
-                                .cornerRadius(24)
-                                .addBorder(.black, width: 1.5, cornerRadius: 24)
+                        } label: {
+                            HStack {
+                                Text("Done")
+                                    .foregroundColor(.white)
+                                    .font(Font.fredoka(.semiBold, size: 20))
+                                    .padding()
                             }
-                            .buttonStyle(NeoPress())
-                        }.KeyboardAwarePadding()
+                            .frame(width:120, height: 35)
+                            .background(Clr.brightGreen.neoShadow())
+                            .cornerRadius(24)
+                            .addBorder(.black, width: 1.5, cornerRadius: 24)
+                        }
+                        .buttonStyle(NeoPress())
+                    }.KeyboardAwarePadding()
                         .padding(.bottom)
                     Spacer()
                         .frame(height:50)
@@ -248,25 +271,28 @@ struct JournalView: View, KeyboardReadable {
             }.padding(.horizontal, 5)
         }.frame(width: UIScreen.screenWidth - 60, alignment: .leading)
             .offset(x: -5)
-            .onChange(of:text) { text in
+            .onChange(of:text) { txt in
                 var divider = 1
                 if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
                     divider = gratitudes.count * 3
-                }
-                if text.count >= 10 && text.count < 25 {
-                    coin = max(1,5/divider)
-                } else if text.count >= 25 && text.count < 50 {
-                    coin = max(1,10/divider)
-                } else if text.count >= 50 && text.count < 100 {
-                    coin = max(1,20/divider)
-                } else if text.count >= 100 && text.count < 200 {
-                    coin = max(1,30/divider)
-                } else if text.count >= 200 && text.count < 300 {
-                    coin = max(1,40/divider)
-                } else if text.count >= 300 {
-                    coin = max(1,50/divider)
-                } else {
-                    coin = 0
+                    if text.contains(placeholderReflection) {
+                        self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
+                    }
+                    if text.count >= 10 && text.count < 25 {
+                        coin = max(1,5/divider)
+                    } else if text.count >= 25 && text.count < 50 {
+                        coin = max(1,10/divider)
+                    } else if text.count >= 50 && text.count < 100 {
+                        coin = max(1,20/divider)
+                    } else if text.count >= 100 && text.count < 200 {
+                        coin = max(1,30/divider)
+                    } else if text.count >= 200 && text.count < 300 {
+                        coin = max(1,40/divider)
+                    } else if text.count >= 300 {
+                        coin = max(1,50/divider)
+                    } else {
+                        coin = 0
+                    }
                 }
             }
             .onAppear {
@@ -292,6 +318,7 @@ struct JournalView: View, KeyboardReadable {
             }
     }
 }
+
 
 
 
