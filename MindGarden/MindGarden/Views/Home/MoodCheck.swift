@@ -85,18 +85,17 @@ struct MoodCheck: View {
 
     ///Ashvin : Show popup with animation method
     func save() {
-        var num = UserDefaults.standard.integer(forKey: "numMoods")
-        num += 1
-        UserDefaults.standard.setValue(num, forKey: "numMoods")
-        let identify = AMPIdentify()
-            .set("num_moods", value: NSNumber(value: num))
-        Amplitude.instance().identify(identify ?? AMPIdentify())
         withAnimation(.easeOut(duration: 0.25)) {
             shown = false
             userModel.selectedMood = moodSelected
             viewRouter.currentPage = .mood
         }
-    }
+        Analytics.shared.log(event: .mood_tapped_done)
+        #if !targetEnvironment(simulator)
+                Amplitude.instance().logEvent("tapped_mood", withEventProperties: ["selected_mood": moodSelected.title])
+        #endif
+                print("logging, \("tapped_mood_\(moodSelected.title)")")
+            }
 
         private func showPopupWithAnimation(completion: @escaping () -> ()) {
             withAnimation(.easeIn(duration:0.14)){

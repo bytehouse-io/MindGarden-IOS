@@ -339,7 +339,11 @@ struct Finished: View {
                         }
                     }
                     session[K.defaults.duration] = String(minutesMed)
-
+                    //Log Analytics
+                    #if !targetEnvironment(simulator)
+                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title])
+                    #endif
+                     print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
                 } else {
                     session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
                     session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
@@ -347,16 +351,18 @@ struct Finished: View {
                     if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
                         userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
                     }
+                    //Log Analytics
+                    #if !targetEnvironment(simulator)
+                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
+                    #endif
+                     print("logging, \("finMed_\(model.selectedMeditation?.returnEventName() ?? "")")")
                 }
-                
                 session["timeStamp"] = Date.getTime()
-
                 reward = model.getReward()
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3
                 }
-                
-                
+                                
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
                     if model.shouldStreakUpdate {
@@ -382,16 +388,6 @@ struct Finished: View {
                     OneSignal.sendTag("firstMeditation", value: "true")
                 }
                 
-         
-             
-
-                //Log Analytics
-                #if !targetEnvironment(simulator)
-                 Firebase.Analytics.logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", parameters: [:])
-                 AppsFlyerLib.shared().logEvent("finished_\(model.selectedMeditation?.returnEventName() ?? "")", withValues: [AFEventParamContent: "true"])
-                Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
-                #endif
-                 print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
             }
             .onAppearAnalytics(event: .screen_load_finished)
 

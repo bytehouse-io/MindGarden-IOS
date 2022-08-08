@@ -10,7 +10,7 @@ import Lottie
 import Amplitude
 import Combine
 
-var placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+var placeholderReflection = ""
 var placeholderQuestion = "Reflect on how you feel"
 
 struct JournalView: View, KeyboardReadable {
@@ -49,7 +49,7 @@ struct JournalView: View, KeyboardReadable {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
                         CloseButton() {
                             withAnimation {
-                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+//                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                                 placeholderQuestion = "Reflect on how you feel"
                                 presentationMode.wrappedValue.dismiss()
                                 viewRouter.currentPage = viewRouter.previousPage
@@ -104,7 +104,7 @@ struct JournalView: View, KeyboardReadable {
                                 }
                                 .frame(height:240, alignment: .leading)
                                 .disableAutocorrection(false)
-                                .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                .foregroundColor(Clr.black2)
                                 .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
                                 .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                                     withAnimation {
@@ -112,45 +112,10 @@ struct JournalView: View, KeyboardReadable {
                                     }
                                 }.onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if text == placeholderReflection {
-                                        text = ""
-                                    }
+//                                    if text == placeholderReflection {
+//                                        text = ""
+//                                    }
                                 }
-                                
-                                //                                if #available(iOS 15.0, *) {
-                                //                                    TextEditor(text: $text)
-                                //                                        .frame(height:240, alignment: .leading)
-                                //                                        .disableAutocorrection(false)
-                                //                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
-                                //                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
-                                //                                        .focused($isFocused)
-                                //                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                //                                            withAnimation {
-                                //                                                contentKeyVisible = newIsKeyboardVisible
-                                //                                            }
-                                //                                        }.onTapGesture {
-                                //                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                //                                            if text == placeholderReflection {
-                                //                                                text = ""
-                                //                                            }
-                                //                                        }
-                                //                                } else if #available(iOS 14.0, *) {
-                                //                                    TextEditor(text: $text )
-                                //                                        .frame(height:240, alignment: .leading)
-                                //                                        .disableAutocorrection(false)
-                                //                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
-                                //                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
-                                //                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                //                                            withAnimation {
-                                //                                                contentKeyVisible = newIsKeyboardVisible
-                                //                                            }
-                                //                                        }.onTapGesture {
-                                //                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                //                                            if text == placeholderReflection {
-                                //                                                text = ""
-                                //                                            }
-                                //                                        }
-                                //                                }
                             }
                         }
                         .transition(.move(edge: .leading))
@@ -207,7 +172,7 @@ struct JournalView: View, KeyboardReadable {
                         }.frame(height: 35)
                             .neoShadow()
                         Button {
-                            if !text.isEmpty && text != placeholderReflection {
+                            if !text.isEmpty{
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 var num = UserDefaults.standard.integer(forKey: "numGrads")
                                 num += 1
@@ -245,7 +210,7 @@ struct JournalView: View, KeyboardReadable {
                                         } else {
                                             viewRouter.currentPage = .meditate
                                         }                            }
-                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+//                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                                     placeholderQuestion = "Reflect on how you feel"
                                 }
                             }
@@ -271,13 +236,18 @@ struct JournalView: View, KeyboardReadable {
         }.frame(width: UIScreen.screenWidth - 60, alignment: .leading)
             .offset(x: -5)
             .onChange(of:text) { txt in
+                //                if text.contains(placeholderReflection) {
+                //                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
+                //                }
                 var divider = 1
                 if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
-                    divider = gratitudes.count * 3          
+                    divider = gratitudes.count * 3
                 }
+                
                 if text.contains(placeholderReflection) {
                     self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
                 }
+                
                 if text.count >= 10 && text.count < 25 {
                     coin = max(1,5/divider)
                 } else if text.count >= 25 && text.count < 50 {

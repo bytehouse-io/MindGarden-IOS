@@ -123,10 +123,23 @@ enum AnalyticEvent {
     case challenge_tapped_accept //
     
     //MARK: - Mood Check
+    case screen_load_mood_elaborate
     
     //MARK: - Journal
+    case screen_load_journal
+    case journal_tapped_done
+    case journal_tapped_prompts
+    case journal_tapped_shuffle
     
     //MARK: - Recommendations
+
+    case screen_load_recs //
+    case onboarding_load_recs //
+    case onboarding_tapped_30_second //
+    case recommendations_tapped_breath //
+    case recommendations_tapped_med //
+    case recommendations_tapped_x //
+    case recs_tapped_see_more
     
     //MARK: - Breathwork
     
@@ -215,6 +228,7 @@ enum AnalyticEvent {
     case finished_tapped_gratitude //
     case finished_tapped_mood //
     case finished_set_reminder //
+  
     
     //MARK: - Discover
     case screen_load_discover
@@ -695,7 +709,24 @@ extension AnalyticEvent {
         case .screen_load_streak: return "screen_load_streak" //
         case .rating_tapped_yes: return "rating_tapped_yes" //
         case .rating_tapped_no: return "rating_tapped_no" //
-            
+        
+        //MARK: - Recs
+        case .screen_load_recs: return "screen_load_recs"
+        case .onboarding_load_recs: return "onboarding_load_recs"
+        case .recs_tapped_see_more: return "recs_tapped_see_more"
+        case .onboarding_tapped_30_second: return "onboarding_tapped_30_second"
+        case .recommendations_tapped_breath: return "recommendations_tapped_breath"
+        case .recommendations_tapped_med: return "recommendations_tapped_med"
+        case .recommendations_tapped_x: return "recommendations_tapped_med"
+        
+        //MARK: - Mood
+        case .screen_load_mood_elaborate: return "screen_load_mood_elaborate"
+        
+        //MARK: - Journal
+        case .screen_load_journal: return "screen_load_journal"
+        case .journal_tapped_done: return "journal_tapped_done"
+        case .journal_tapped_prompts: return "journal_tapped_prompts"
+        case .journal_tapped_shuffle: return "journal_tapped_shuffle"
         }
     }
 }

@@ -177,7 +177,7 @@ struct Home: View {
                     }
                 }
 
-                if (UserDefaults.standard.integer(forKey: "launchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
+                if (UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
                     showUpdateModal = true
                     userModel.show50Off = false
                     UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")

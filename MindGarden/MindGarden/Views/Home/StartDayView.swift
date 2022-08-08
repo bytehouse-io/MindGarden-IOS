@@ -63,6 +63,7 @@ struct StartDayView: View {
             
             HStack {
                 VStack(spacing:0) {
+                    Spacer()
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -73,7 +74,7 @@ struct StartDayView: View {
                     Group {
                         if isDailyMood {
                             DottedLine()
-                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
+                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
                                 .fill(Clr.black2)
                                 .opacity(0.5)
                                 .offset(x:1)
@@ -82,24 +83,25 @@ struct StartDayView: View {
                                 .fill(Clr.brightGreen)
                         }
                     }
-                    .frame(width: 4)
+                    .frame(width: 2)
                     .frame(maxHeight:.infinity)
-                    .padding(.bottom,isDailyMood ? 2 : 0)
-                    Group {
-                        if isDailyMood {
-                            DottedLine()
-                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
-                                .fill(Clr.black2)
-                                .opacity(0.5)
-                                .offset(x:1)
-                        } else {
-                            Rectangle()
-                                .fill(Clr.brightGreen)
-                        }
-                    }
-                    .frame(width: 4)
-                    .frame(maxHeight:.infinity)
-                    .padding(.top,isDailyMood ? 2 : 0)
+                    .padding(.top,isDailyMood ? 12 : 0)
+                    .padding(.bottom,isDailyMood ? 4 : 0)
+//                    Group {
+//                        if isDailyMood {
+//                            DottedLine()
+//                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
+//                                .fill(Clr.black2)
+//                                .opacity(0.5)
+//                                .offset(x:1)
+//                        } else {
+//                            Rectangle()
+//                                .fill(Clr.brightGreen)
+//                        }
+//                    }
+//                    .frame(width: 2)
+//                    .frame(maxHeight:.infinity)
+//                    .padding(.top,isDailyMood ? 2 : 0)
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -113,36 +115,38 @@ struct StartDayView: View {
                                 .fill(Clr.brightGreen)
                         } else {
                             DottedLine()
-                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
+                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
                                 .fill(Clr.black2)
                                 .opacity(0.5)
                                 .offset(x:1)
                         }
                     }
-                    .frame(width: 4)
+                    .frame(width: 2)
                     .frame(maxHeight:.infinity)
-                    .padding(.bottom,isGratitudeDone ? 0 : 2)
-                    Group {
-                        if isGratitudeDone {
-                            Rectangle()
-                                .fill(Clr.brightGreen)
-                        } else {
-                            DottedLine()
-                                .stroke(style: StrokeStyle(lineWidth: 4, dash: [8]))
-                                .fill(Clr.black2)
-                                .opacity(0.5)
-                                .offset(x:1)
-                        }
-                    }
-                    .frame(width: 4)
-                    .frame(maxHeight:.infinity)
-                    .padding(.top,isGratitudeDone ? 0 : 2)
+                    .padding(.top,isGratitudeDone ? 0 : 12)
+                    .padding(.bottom,isGratitudeDone ? 0 : 4)
+//                    Group {
+//                        if isGratitudeDone {
+//                            Rectangle()
+//                                .fill(Clr.brightGreen)
+//                        } else {
+//                            DottedLine()
+//                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
+//                                .fill(Clr.black2)
+//                                .opacity(0.5)
+//                                .offset(x:1)
+//                        }
+//                    }
+//                    .frame(width: 2)
+//                    .frame(maxHeight:.infinity)
+//                    .padding(.top,isGratitudeDone ? 0 : 2)
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .foregroundColor(isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
+                    Spacer()
                     Spacer()
                         .frame(height:30)
                 }.padding(.vertical,60)

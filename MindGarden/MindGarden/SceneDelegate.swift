@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-//        UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         Analytics.shared.log(event: .launchedApp)
         playSound(soundName: "background")
@@ -156,7 +156,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
         }
-
+        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        launchNum += 1
+        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
+        print("hurricane")
         if UserDefaults.standard.bool(forKey: "reddit") && !UserDefaults.standard.bool(forKey: "redditOne") {
             SceneDelegate.userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
                 p.title == "Apples"

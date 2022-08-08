@@ -71,7 +71,11 @@ struct MoodElaborate: View {
                                     let identify = AMPIdentify()
                                         .set("num_moods", value: NSNumber(value: num))
                                     Amplitude.instance().identify(identify ?? AMPIdentify())
-                                    Analytics.shared.log(event: .mood_tapped_done)
+#if !targetEnvironment(simulator)
+                                    Amplitude.instance().logEvent("tapped_mood", withEventProperties: ["selected_mood": item])
+#endif
+                                    print("logging, \("tapped_mood_\(item)")")
+                                    
                                     
                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                         UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
@@ -127,5 +131,6 @@ struct MoodElaborate: View {
                 playEntryAnimation = true
             }
         }
+        .onAppearAnalytics(event: .screen_load_mood_elaborate)
     }
 }

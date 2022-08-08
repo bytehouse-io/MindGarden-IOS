@@ -19,7 +19,7 @@ struct RecommendationsView: View {
     @Binding var coin: Int
     @State private var isOnboarding = false
     @State private var moodCoins = 1
-    @State private var startBlinking = false
+    @State private var rowOpacity = 1.0
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -36,7 +36,12 @@ struct RecommendationsView: View {
                                 .font(Font.fredoka(.semiBold, size: 28))
                             Spacer()
                             CloseButton() {
-                                withAnimation { viewRouter.currentPage = .meditate }
+                                withAnimation {
+                                    Analytics.shared.log(event: .recommendations_tapped_x)
+                                    if !isOnboarding {
+                                        viewRouter.currentPage = .meditate
+                                    }
+                                }
                             }
                         }.padding(5)
                             .padding(.bottom,10)
@@ -106,7 +111,7 @@ struct RecommendationsView: View {
                     Spacer()
                 }
                 .padding(.horizontal,32)
-            }.disabled(isOnboarding)
+            }
         }.onAppear() {
             if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
                 if moods.count == 1 {
@@ -124,6 +129,7 @@ struct RecommendationsView: View {
             
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
                 if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
+                    Analytics.shared.log(event: .onboarding_load_recs)
                     isOnboarding = true
                     var count = 0
                     let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -131,13 +137,13 @@ struct RecommendationsView: View {
                         if count == 2 {
                             timer.invalidate()
                             withAnimation {
-                                startBlinking.toggle()
-                                presentationMode.wrappedValue.dismiss()
-                                viewRouter.currentPage = .meditate
+                                rowOpacity = 0.2
                             }
                         }
                     }
                 }
+            } else {
+                Analytics.shared.log(event: .screen_load_recs)
             }
         }
     }
@@ -166,15 +172,15 @@ struct RecommendationsView: View {
                     MeditationRow(id: 22, isBreathwork: false)
                         .padding(.vertical,5)
                         .offset(y: playEntryAnimation ? 0 : 100)
-                        .opacity(playEntryAnimation ? 1 : 0)
-                        .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
-                        
+                        .opacity(rowOpacity)
+                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: rowOpacity)
                 } else {
                     MeditationRow(id: recs[idx], isBreathwork: idx == 0)
                         .padding(.vertical,5)
                         .offset(y: playEntryAnimation ? 0 : 100)
                         .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
+                        .disabled(isOnboarding)
                 }
             }
             HStack {
@@ -185,6 +191,7 @@ struct RecommendationsView: View {
                 Spacer()
             }
             Button {
+                Analytics.shared.log(event: .recs_tapped_see_more)
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     viewRouter.currentPage = .learn
@@ -220,16 +227,24 @@ struct MeditationRow: View {
     
     var body: some View {
         Button {
+          
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 if isBreathwork {
                     medModel.selectedBreath = breathwork
                     viewRouter.currentPage = .breathMiddle
+                    Analytics.shared.log(event: .recommendations_tapped_breath)
                 } else {
+                    if id != 22 {
+                        Analytics.shared.log(event: .recommendations_tapped_med)
+                    }
                     medModel.selectedMeditation = meditation
                     if meditation.type == .course {
                         viewRouter.currentPage = .middle
                     } else {
+                        if id == 22 {
+                            Analytics.shared.log(event: .onboarding_tapped_30_second)
+                        }
                         viewRouter.currentPage = .play
                     }
                 }

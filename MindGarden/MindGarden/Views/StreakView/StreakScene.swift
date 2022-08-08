@@ -87,7 +87,7 @@ struct StreakScene: View {
 //                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
 //                    .padding(.top, 50)
                     Button {
-                        let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+                        let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
                         if Auth.auth().currentUser?.email == nil && launchNum >= 2 {
                             fromPage = "garden"
                             viewRouter.currentPage = .authentication
@@ -169,7 +169,7 @@ struct StreakScene: View {
     
     private func dismiss() {
         withAnimation {
-            if UserDefaults.standard.integer(forKey: "launchNumber") == 2 || UserDefaults.standard.integer(forKey: "launchNumber") == 5 || bonusModel.streakNumber == 2 ||  UserDefaults.standard.integer(forKey: "launchNumber") == 10  {
+            if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 2 || UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 5 || bonusModel.streakNumber == 2 ||  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 10  {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
                 viewRouter.currentPage = .pricing
