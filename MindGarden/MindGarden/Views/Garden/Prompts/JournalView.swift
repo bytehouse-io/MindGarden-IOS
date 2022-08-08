@@ -94,40 +94,63 @@ struct JournalView: View, KeyboardReadable {
                                 .addBorder(.black, width: 1.5, cornerRadius: 16)
                                 .neoShadow()
                             ScrollView(.vertical, showsIndicators: false) {
-                                if #available(iOS 15.0, *) {
-                                    TextEditor(text: $text)
-                                        .frame(height:240, alignment: .leading)
-                                        .disableAutocorrection(false)
-                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
-                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
-                                        .focused($isFocused)
-                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                            withAnimation {
-                                                contentKeyVisible = newIsKeyboardVisible
-                                            }
-                                        }.onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if text == placeholderReflection {
-                                                text = ""
-                                            }
-                                        }
-                                } else if #available(iOS 14.0, *) {
-                                    TextEditor(text: $text)
-                                        .frame(height:240, alignment: .leading)
-                                        .disableAutocorrection(false)
-                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
-                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
-                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                            withAnimation {
-                                                contentKeyVisible = newIsKeyboardVisible
-                                            }
-                                        }.onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            if text == placeholderReflection {
-                                                text = ""
-                                            }
-                                        }
+                                Group {
+                                    if #available(iOS 15.0, *) {
+                                        TextEditor(text: $text)
+                                            .focused($isFocused)
+                                    } else if #available(iOS 14.0, *) {
+                                        TextEditor(text: $text )
+                                    }
                                 }
+                                .frame(height:240, alignment: .leading)
+                                .disableAutocorrection(false)
+                                .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+                                .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+                                .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                    withAnimation {
+                                        contentKeyVisible = newIsKeyboardVisible
+                                    }
+                                }.onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    if text == placeholderReflection {
+                                        text = ""
+                                    }
+                                }
+                                
+//                                if #available(iOS 15.0, *) {
+//                                    TextEditor(text: $text)
+//                                        .frame(height:240, alignment: .leading)
+//                                        .disableAutocorrection(false)
+//                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+//                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+//                                        .focused($isFocused)
+//                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+//                                            withAnimation {
+//                                                contentKeyVisible = newIsKeyboardVisible
+//                                            }
+//                                        }.onTapGesture {
+//                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                            if text == placeholderReflection {
+//                                                text = ""
+//                                            }
+//                                        }
+//                                } else if #available(iOS 14.0, *) {
+//                                    TextEditor(text: $text )
+//                                        .frame(height:240, alignment: .leading)
+//                                        .disableAutocorrection(false)
+//                                        .foregroundColor(text == placeholderReflection ? Clr.lightGray : Clr.black2)
+//                                        .padding(EdgeInsets(top: 15, leading: 15, bottom: -20, trailing: 15))
+//                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+//                                            withAnimation {
+//                                                contentKeyVisible = newIsKeyboardVisible
+//                                            }
+//                                        }.onTapGesture {
+//                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                            if text == placeholderReflection {
+//                                                text = ""
+//                                            }
+//                                        }
+//                                }
                             }
                         }
                         .transition(.move(edge: .leading))
@@ -238,7 +261,10 @@ struct JournalView: View, KeyboardReadable {
             }.padding(.horizontal, 5)
         }.frame(width: UIScreen.screenWidth - 60, alignment: .leading)
             .offset(x: -5)
-            .onChange(of:text) { text in
+            .onChange(of:text) { txt in
+                if text.contains(placeholderReflection) {
+                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
+                }
                 if text.count >= 10 && text.count < 25 {
                     coin = 5
                 } else if text.count >= 25 && text.count < 50 {
