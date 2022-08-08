@@ -206,6 +206,10 @@ class MeditationViewModel: ObservableObject {
             }
         }
         filtedMeds = filtedMeds.filter { med in med.type != .lesson && med.isNew == false}
+        if filtedMeds.isEmpty {
+            filtedMeds = Meditation.allMeditations.filter {  med in med.type != .lesson && med.isNew == false                
+            }
+        }
         switch UserDefaults.standard.string(forKey: "reason") {
         case "Sleep better":
             if Calendar.current.component( .hour, from:Date() ) >= 18 {

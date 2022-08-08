@@ -43,6 +43,7 @@ struct LoadingIllusion: View {
                 .padding(50)
             }
         }.onAppear() {
+            Analytics.shared.log(event: .onboarding_loading_illusion)
             meditateTimer = Timer.scheduledTimer(withTimeInterval: time, repeats: true) { timer in
                 withAnimation(.easeOut) {
                     index += 1

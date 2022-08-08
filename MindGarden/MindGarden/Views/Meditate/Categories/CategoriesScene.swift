@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Amplitude
 
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
@@ -322,7 +323,7 @@ struct CategoriesScene: View {
         var body: some View {
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                Analytics.shared.log(event: AnalyticEvent.getCategory(category: category.value))
+                Amplitude.instance().logEvent("search_selected_category", withEventProperties: ["category": category.value])
                 withAnimation {
                     selected = category                    
                 }

@@ -188,7 +188,7 @@ struct JournalView: View, KeyboardReadable {
                                 .frame(width:25)
                                 .padding(.trailing)
                         }
-                        
+
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
@@ -222,7 +222,6 @@ struct JournalView: View, KeyboardReadable {
                                 UserDefaults.standard.setValue(num, forKey: "numGrads")
                                 UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
                                 Analytics.shared.log(event: .gratitude_tapped_done)
-                                gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
                                 withAnimation {
                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                                         UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
@@ -274,25 +273,25 @@ struct JournalView: View, KeyboardReadable {
             .onChange(of:text) { txt in
                 var divider = 1
                 if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
-                    divider = gratitudes.count * 3
-                    if text.contains(placeholderReflection) {
-                        self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
-                    }
-                    if text.count >= 10 && text.count < 25 {
-                        coin = max(1,5/divider)
-                    } else if text.count >= 25 && text.count < 50 {
-                        coin = max(1,10/divider)
-                    } else if text.count >= 50 && text.count < 100 {
-                        coin = max(1,20/divider)
-                    } else if text.count >= 100 && text.count < 200 {
-                        coin = max(1,30/divider)
-                    } else if text.count >= 200 && text.count < 300 {
-                        coin = max(1,40/divider)
-                    } else if text.count >= 300 {
-                        coin = max(1,50/divider)
-                    } else {
-                        coin = 0
-                    }
+                    divider = gratitudes.count * 3          
+                }
+                if text.contains(placeholderReflection) {
+                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
+                }
+                if text.count >= 10 && text.count < 25 {
+                    coin = max(1,5/divider)
+                } else if text.count >= 25 && text.count < 50 {
+                    coin = max(1,10/divider)
+                } else if text.count >= 50 && text.count < 100 {
+                    coin = max(1,20/divider)
+                } else if text.count >= 100 && text.count < 200 {
+                    coin = max(1,30/divider)
+                } else if text.count >= 200 && text.count < 300 {
+                    coin = max(1,40/divider)
+                } else if text.count >= 300 {
+                    coin = max(1,50/divider)
+                } else {
+                    coin = 0
                 }
             }
             .onAppear {

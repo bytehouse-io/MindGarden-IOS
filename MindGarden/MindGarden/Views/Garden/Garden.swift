@@ -467,7 +467,6 @@ struct Garden: View {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                                         Analytics.shared.log(event: .onboarding_finished_calendar)
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
-                                                        
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                                         UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
                                                         tileOpacity = 0.2

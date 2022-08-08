@@ -336,8 +336,6 @@ struct StartDayView: View {
             DispatchQueue.main.async {
                 let weekDays = getAllDaysOfTheCurrentWeek()
                 getAllGratitude(weekDays:weekDays)
-                print(gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["journals"], "dpr")
-                print(gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"], "at all")
                 if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
                     if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
                         isDailyMood = false

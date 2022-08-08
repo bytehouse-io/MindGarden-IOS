@@ -19,6 +19,7 @@ struct RecommendationsView: View {
     @Binding var coin: Int
     @State private var isOnboarding = false
     @State private var moodCoins = 1
+    @State private var startBlinking = false
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -56,6 +57,11 @@ struct RecommendationsView: View {
                                 }
                                 HStack(spacing:20) {
                                     Img.coinBunch
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding(.leading,16)
+                                        .frame(width: 100)
+                                        .offset(x: 24, y: -8)
                                     Spacer()
                                     VStack(alignment: .leading, spacing:10) {
                                         HStack {
@@ -122,9 +128,10 @@ struct RecommendationsView: View {
                     var count = 0
                     let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                         count += 1
-                        if count == 3 {
+                        if count == 2 {
                             timer.invalidate()
                             withAnimation {
+                                startBlinking.toggle()
                                 presentationMode.wrappedValue.dismiss()
                                 viewRouter.currentPage = .meditate
                             }
@@ -155,11 +162,20 @@ struct RecommendationsView: View {
             }.frame(height:50)
             .padding(.bottom,20)
             ForEach(0..<3) { idx in
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && idx == 0  { // onboarding
+                    MeditationRow(id: 22, isBreathwork: false)
+                        .padding(.vertical,5)
+                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .opacity(playEntryAnimation ? 1 : 0)
+                        .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
+                        
+                } else {
                     MeditationRow(id: recs[idx], isBreathwork: idx == 0)
                         .padding(.vertical,5)
                         .offset(y: playEntryAnimation ? 0 : 100)
                         .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
+                }
             }
             HStack {
                 Spacer()
@@ -304,6 +320,8 @@ struct MeditationRow: View {
                 if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
                     breathwork = breath
                 }
+                
+                
             } else {
                 if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
                     meditation = med
