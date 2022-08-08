@@ -6,5 +6,9 @@
 	<array>
 		<string>group.io.bytehouse.mindgarden.widget</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)io.bytehouse.mindgarden</string>
+	</array>
 </dict>
 </plist>

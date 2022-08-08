@@ -38,7 +38,7 @@ struct RealTrees: View {
                     }
                 }.padding(.top, 15)
                 HStack {
-                    Text("Trees planted \nby you")
+                    Text("Trees planted by you")
                         .font(Font.fredoka(.regular, size: 20))
                         .foregroundColor(Clr.black2)
                         .lineSpacing(3)

@@ -183,19 +183,26 @@ struct JournalView: View, KeyboardReadable {
                                 .lineLimit(1)
                         }.frame(height: 35)
                             .neoShadow()
-                        if !fromProfile {
-                            Button {
-                                if !text.isEmpty && text != placeholderReflection {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    var num = UserDefaults.standard.integer(forKey: "numGrads")
-                                    num += 1
-                                    let identify = AMPIdentify()
-                                        .set("num_journals", value: NSNumber(value: num))
-                                    Amplitude.instance().identify(identify ?? AMPIdentify())
-                                    if num == 30 {
-                                        userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
-                                        userModel.buyPlant(unlockedStrawberry: true)
-                                        userModel.triggerAnimation = true
+                        Button {
+                            if !text.isEmpty && text != placeholderReflection {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                var num = UserDefaults.standard.integer(forKey: "numGrads")
+                                num += 1
+                                let identify = AMPIdentify()
+                                    .set("num_gratitudes", value: NSNumber(value: num))
+                                Amplitude.instance().identify(identify ?? AMPIdentify())
+                                if num == 30 {
+                                    userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
+                                    userModel.buyPlant(unlockedStrawberry: true)
+                                    userModel.triggerAnimation = true
+                                }
+                                UserDefaults.standard.setValue(num, forKey: "numGrads")
+                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
+                                Analytics.shared.log(event: .gratitude_tapped_done)
+                                gardenModel.save(key: K.defaults.journals, saveValue: text, coins: userModel.coins)
+                                withAnimation {
+                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                                        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                                     }
                                     UserDefaults.standard.setValue(num, forKey: "numGrads")
                                     Analytics.shared.log(event: .gratitude_tapped_done)
@@ -219,6 +226,7 @@ struct JournalView: View, KeyboardReadable {
                                     placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                                     placeholderQuestion = "Reflect on how you feel"
                                 }
+                            }
                             } label: {
                                 HStack {
                                     Text("Done")
@@ -232,8 +240,7 @@ struct JournalView: View, KeyboardReadable {
                                 .addBorder(.black, width: 1.5, cornerRadius: 24)
                             }
                             .buttonStyle(NeoPress())
-                        }                        
-                    }.KeyboardAwarePadding()
+                        }.KeyboardAwarePadding()
                         .padding(.bottom)
                     Spacer()
                         .frame(height:50)

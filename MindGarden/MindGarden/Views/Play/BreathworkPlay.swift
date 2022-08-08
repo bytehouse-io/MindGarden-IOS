@@ -42,6 +42,7 @@ struct BreathworkPlay : View {
     
     @State var isPaused = false
     @Binding var showPlay:Bool
+    @State var isVibrate = false
     
     let breathWork: Breathwork?
     
@@ -234,16 +235,17 @@ struct BreathworkPlay : View {
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
-                        timerCount += 1
-                        withAnimation(.linear(duration: 1.0)) {
-                            progress = timerCount/Double(totalTime)
-                            print(progress, timerCount, totalTime, "bick back")
+                        if isVibrate {
+                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                         }
+                        DispatchQueue.main.async {
+                            withAnimation(.linear(duration: 0.95)) {
+                                progress = timerCount/Double(totalTime)
+                            }
+                        }
+                        timerCount += 1
                     } else {
                         timer.invalidate()
-                        withAnimation {
-                            viewRouter.currentPage = .finished
-                        }
                     }
                 }
             }
@@ -271,13 +273,16 @@ struct BreathworkPlay : View {
         if noOfSequence > 0 && !isPaused {
             switch status.lowercased() {
             case "i":
+                isVibrate = true
                 title = "Inhale"
                 withAnimation(.linear(duration: Double(time))) {
                     bgAnimation = true
                 }
             case "h":
+                isVibrate = false
                 title = time > 0 ? "Hold" : ""
             case "e":
+                isVibrate = false
                 title = "Exhale"
                 withAnimation(.linear(duration: Double(time))) {
                     bgAnimation = false
@@ -317,6 +322,11 @@ struct BreathworkPlay : View {
                     noOfSequence -= 1
                     fadeAnimation = false
                 }
+            }
+        } else {
+            isVibrate = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                viewRouter.currentPage = .finished
             }
         }
     }

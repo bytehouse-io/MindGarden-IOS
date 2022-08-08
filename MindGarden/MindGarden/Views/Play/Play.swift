@@ -62,6 +62,7 @@ struct Play: View {
                                 UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? backArrow.opacity(0) : backArrow.opacity(1)
                                 Spacer()
                                 Text(model.selectedMeditation?.title ?? "")
+                                    .foregroundColor(Clr.black2)
                                     .padding(.leading, 10)
                                 Spacer()
                                 HStack{sound; heart}
