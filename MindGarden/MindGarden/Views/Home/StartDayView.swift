@@ -78,12 +78,13 @@ struct StartDayView: View {
                                 .fill(Clr.black2)
                                 .opacity(0.5)
                                 .offset(x:1)
+                                .frame(width: 2)
                         } else {
                             Rectangle()
                                 .fill(Clr.brightGreen)
+                                .frame(width: 4)
                         }
                     }
-                    .frame(width: 2)
                     .frame(maxHeight:.infinity)
                     .padding(.top,isDailyMood ? 12 : 0)
                     .padding(.bottom,isDailyMood ? 4 : 0)
@@ -113,16 +114,17 @@ struct StartDayView: View {
                         if isGratitudeDone {
                             Rectangle()
                                 .fill(Clr.brightGreen)
+                                .frame(width: 4)
                         } else {
                             DottedLine()
                                 .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
                                 .fill(Clr.black2)
                                 .opacity(0.5)
                                 .offset(x:1)
+                                .frame(width: 2)
                         }
                     }
-                    .frame(width: 2)
-                    .frame(maxHeight:.infinity)
+                        .frame(maxHeight:.infinity)
                     .padding(.top,isGratitudeDone ? 0 : 12)
                     .padding(.bottom,isGratitudeDone ? 0 : 4)
 //                    Group {
@@ -130,7 +132,7 @@ struct StartDayView: View {
 //                            Rectangle()
 //                                .fill(Clr.brightGreen)
 //                        } else {
-//                            DottedLine()
+//                             DottedLine()
 //                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
 //                                .fill(Clr.black2)
 //                                .opacity(0.5)

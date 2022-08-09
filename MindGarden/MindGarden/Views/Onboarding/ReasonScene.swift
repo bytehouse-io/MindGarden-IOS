@@ -167,7 +167,7 @@ struct ReasonScene: View {
                             .font(Font.fredoka(.semiBold, size: K.isSmall() ? 18 : 20))
                             .foregroundColor(selected.contains(where: { $0.id == reason.id }) ? .white : Clr.black2)
                             .padding()
-                            .frame(width: width * (K.isSmall() ? 0.6 : 0.5), alignment: .leading)
+                            .frame(width: width * 0.5, alignment: .leading)
                             .lineLimit(2)
                             .minimumScaleFactor(0.05)
                         reason.img

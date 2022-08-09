@@ -282,7 +282,7 @@ struct ProfileScene: View {
                                                                     .frame(height: 40)
                                                             }
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 300 : 340) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
+                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 340 : 380) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
 
                                                     Text("I want to help")
                                                         .font(Font.fredoka(.regular, size: 20))

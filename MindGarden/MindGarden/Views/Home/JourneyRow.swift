@@ -57,7 +57,7 @@ struct JourneyRow: View {
                             Text(meditation.title)
                                 .lineLimit(3)
                                 .minimumScaleFactor(0.05)
-                                .foregroundColor(Clr.darkgreen)
+                                .foregroundColor(Clr.brightGreen)
                                 .font(Font.fredoka(.bold, size: 20))
                             HStack(spacing: 3) {
                                 Image(systemName: "speaker.wave.2.fill")

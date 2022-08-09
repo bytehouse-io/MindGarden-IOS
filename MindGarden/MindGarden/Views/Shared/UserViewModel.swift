@@ -11,6 +11,7 @@ import Firebase
 import FirebaseFirestore
 import Purchases
 import WidgetKit
+import Amplitude
 
 class UserViewModel: ObservableObject {
     @Published var ownedPlants: [Plant] = [Plant(title: "White Daisy", price: 100, selected: false, description: "With their white petals and yellow centers, white daisies symbolize innocence and the other classic daisy traits, such as babies, motherhood, hope, and new beginnings.", packetImage: Img.daisyPacket, one: Img.daisy1, two: Img.daisy2, coverImage: Img.daisy3, head: Img.daisyHead, badge: Img.daisyBadge),  Plant(title: "Red Tulip", price: 900, selected: false, description: "🌷 Red Tulips are a genus of spring-blooming perennial herbaceous bulbiferous geophytes. Red tulips symbolize eternal love, undying love, perfect love, true love.", packetImage: Img.redTulipsPacket, one: Img.redTulips1, two: Img.redTulips2,  coverImage: Img.redTulips3, head: Img.redTulipsHead, badge: Img.redTulipsBadge)]
@@ -333,6 +334,9 @@ class UserViewModel: ObservableObject {
             UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
             WidgetCenter.shared.reloadAllTimelines()
         } else {
+            let identify = AMPIdentify()
+                .set("plan_type", value: NSString(utf8String: "free"))
+            Amplitude.instance().identify(identify ?? AMPIdentify())
             if UserDefaults.standard.bool(forKey: "freeTrial") && !UserDefaults.standard.bool(forKey: "freeTrialTo50"){
                 // cancelled free trial
                 show50Off = true

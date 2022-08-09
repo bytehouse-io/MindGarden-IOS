@@ -29,7 +29,7 @@ extension View {
     @ViewBuilder
     func wrappedInScrollView(when condition: Bool) -> some View {
         if condition && !K.hasNotch() {
-            ScrollView(showsIndicators: false) {
+            ScrollView(.vertical, showsIndicators: false) {
                 self
             }
         } else {

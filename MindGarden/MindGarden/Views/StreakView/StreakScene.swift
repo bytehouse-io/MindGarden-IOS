@@ -87,6 +87,7 @@ struct StreakScene: View {
 //                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
 //                    .padding(.top, 50)
                     Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
                         if Auth.auth().currentUser?.email == nil && launchNum >= 2 {
                             fromPage = "garden"
@@ -99,7 +100,11 @@ struct StreakScene: View {
                                     } else {
                                         dismiss()
                                     }
+                                } else {
+                                    dismiss()
                                 }
+                            } else {
+                                dismiss()
                             }
                         }
                     } label: {
@@ -110,11 +115,8 @@ struct StreakScene: View {
                                 Text("Continue")
                                     .font(Font.fredoka(.bold, size: 24))
                                     .foregroundColor(.white)
-                            )
-                            .addBorder(.black, width: 1.5, cornerRadius: 24)
-                    }
-                    .buttonStyle(NeumorphicPress())
-                    
+                            ).addBorder(.black, width: 1.5, cornerRadius: 24)
+                    }.buttonStyle(NeumorphicPress())
                     .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
                     .padding(.top, 40)
                 }

@@ -286,10 +286,6 @@ struct ContentView: View {
                                     //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                                     //onboarding userdefault should be equal to signedUp because we just completed it.
                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp"  {
-                                        LottieView(fileName: "side-arrow")
-                                            .frame(width: 75, height: 25)
-                                            .padding(.horizontal)
-                                            .offset(x: -20, y: UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "signedUp" ? geometry.size.height * (K.hasNotch()  ? -0.075 : -0.2) : UserDefaults.standard.string(forKey: K.defaults.onboarding) ?? "" == "gratitude" ? geometry.size.height * (K.hasNotch()  ? 0.075 : 0.0) : geometry.size.height * (K.hasNotch()  ? 0.025 : -0.1))
                                         VStack {
                                             switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
                                             case "signedUp":

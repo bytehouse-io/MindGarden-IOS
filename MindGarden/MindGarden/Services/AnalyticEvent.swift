@@ -130,6 +130,7 @@ enum AnalyticEvent {
     case journal_tapped_done
     case journal_tapped_prompts
     case journal_tapped_shuffle
+    case journal_tapped_x
     
     //MARK: - Recommendations
 
@@ -727,6 +728,8 @@ extension AnalyticEvent {
         case .journal_tapped_done: return "journal_tapped_done"
         case .journal_tapped_prompts: return "journal_tapped_prompts"
         case .journal_tapped_shuffle: return "journal_tapped_shuffle"
+        case .journal_tapped_x: return "journal_tapped_x"
+
         }
     }
 }

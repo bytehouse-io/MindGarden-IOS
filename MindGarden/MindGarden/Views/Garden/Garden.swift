@@ -385,7 +385,7 @@ struct Garden: View {
                                 }
                                 .padding()
                                 .neoShadow()
-                                .frame(width:UIScreen.screenWidth * 0.165, height: UIScreen.screenHeight * (K.isSmall () ? 0.17 : 0.15))
+                                .frame(width:UIScreen.screenWidth * 0.165, height: UIScreen.screenHeight * (K.isSmall () ? 0.17 : 0.16))
                                 .offset(x: playEntryAnimation ? 0 : 400)
                                 .animation(animation.delay(0.2), value: playEntryAnimation)
                             }

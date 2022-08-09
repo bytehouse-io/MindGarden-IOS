@@ -341,7 +341,7 @@ struct Finished: View {
                     session[K.defaults.duration] = String(minutesMed)
                     //Log Analytics
                     #if !targetEnvironment(simulator)
-                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title])
+                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
                     #endif
                      print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
                 } else {
@@ -368,6 +368,7 @@ struct Finished: View {
                     if model.shouldStreakUpdate {
                         bonusModel.updateStreak()
                     }
+                    
                     if !userModel.ownedPlants.contains(where: { plt in  plt.title == "Cherry Blossoms"}) && UserDefaults.standard.bool(forKey: "unlockedCherry") {
                         userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
                             p.title == "Cherry Blossoms"

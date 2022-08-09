@@ -356,6 +356,7 @@ class MeditationViewModel: ObservableObject {
             case 241...301: reward = 35
             default: reward = 0
             }
+            shouldStreakUpdate = true
             return reward
         }
         

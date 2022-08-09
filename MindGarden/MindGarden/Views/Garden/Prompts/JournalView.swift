@@ -49,6 +49,7 @@ struct JournalView: View, KeyboardReadable {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
                         CloseButton() {
                             withAnimation {
+                                Analytics.shared.log(event: .journal_tapped_x)
 //                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                                 placeholderQuestion = "Reflect on how you feel"
                                 presentationMode.wrappedValue.dismiss()
@@ -128,20 +129,23 @@ struct JournalView: View, KeyboardReadable {
                 VStack {
                     Spacer()
                     HStack {
-                        Text("\(coin)")
-                            .font(Font.fredoka(.semiBold, size: 20))
-                            .foregroundColor(.black)
-                        Img.coin
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 20, height:20)
-                            .foregroundColor(.black)
-                            .neoShadow()
-                        
+                        if !fromProfile {
+                            Text("\(coin)")
+                                .font(Font.fredoka(.semiBold, size: 20))
+                                .foregroundColor(.black)
+                            Img.coin
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height:20)
+                                .foregroundColor(.black)
+                                .neoShadow()
+                            
+                        }               
                         Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
+                                Analytics.shared.log(event: .journal_tapped_shuffle)
                                 question = Journal.prompts.shuffled()[0].description
                             }
                         } label: {
@@ -152,12 +156,13 @@ struct JournalView: View, KeyboardReadable {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width:25)
                                 .padding(.trailing)
-                        }
+                        }.disabled(fromProfile)
 
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 if !fromProfile {
+                                    Analytics.shared.log(event: .journal_tapped_prompts)
                                     showPrompts = true
                                 }
                             }
@@ -248,16 +253,18 @@ struct JournalView: View, KeyboardReadable {
                     self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
                 }
                 
-                if text.count >= 10 && text.count < 25 {
+                if text.count >= 5 && text.count < 10 {
                     coin = max(1,5/divider)
-                } else if text.count >= 25 && text.count < 50 {
+                } else if text.count >= 10 && text.count < 25 {
                     coin = max(1,10/divider)
-                } else if text.count >= 50 && text.count < 100 {
+                } else if text.count >= 25 && text.count < 50 {
                     coin = max(1,20/divider)
-                } else if text.count >= 100 && text.count < 200 {
+                } else if text.count >= 50 && text.count < 100 {
                     coin = max(1,30/divider)
-                } else if text.count >= 200 && text.count < 300 {
+                } else if text.count >= 100 && text.count < 200 {
                     coin = max(1,40/divider)
+                } else if text.count >= 200 && text.count < 300 {
+                    coin = max(1,50/divider)
                 } else if text.count >= 300 {
                     coin = max(1,50/divider)
                 } else {
@@ -285,6 +292,7 @@ struct JournalView: View, KeyboardReadable {
             .onDisappear {
                 fromProfile = false
             }
+            .onAppearAnalytics(event: .screen_load_journal)
     }
 }
 

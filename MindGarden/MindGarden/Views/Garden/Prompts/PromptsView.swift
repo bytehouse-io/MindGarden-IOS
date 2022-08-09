@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Amplitude
 
 struct PromptsView: View {
     
@@ -44,6 +45,11 @@ struct PromptsView: View {
                         ForEach(promptsTabList) { item in
                             Button {
                                 withAnimation {
+                        #if !targetEnvironment(simulator)
+                                    Amplitude.instance().logEvent("prompts_tapped_tab", withEventProperties: ["tab": item.tabName])
+                        #endif
+                                    print("logging, \("prompts_tab_\(item.tabName)")")
+                                    
                                     selectedTab = item.tabName
                                     selectedPrompts = Journal.prompts.filter({ prompt in
                                         prompt.category == selectedTab
@@ -77,18 +83,21 @@ struct PromptsView: View {
                                 fromPage = "journal"
                                 viewRouter.currentPage = .pricing
                             } else {
+                            #if !targetEnvironment(simulator)
+                                Amplitude.instance().logEvent("prompt_selected", withEventProperties: ["prompts": prompt.title])
+                            #endif
+                                print("logging, \("prompt_\(prompt.title)")")
                                 question = prompt.description
                                 withAnimation {
                                     presentationMode.wrappedValue.dismiss()
                                 }
-
                             }
                         } label: {
                             ZStack {
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
-                                        .frame(height: UIScreen.screenHeight * 0.1, alignment: .center)
+                                        .frame(width: UIScreen.screenWidth * 0.85, height: UIScreen.screenHeight * 0.115, alignment: .center)
                                         .cornerRadius(16)
                                         .addBorder(.black, width: 1.5, cornerRadius: 16)
                                         .neoShadow()
@@ -109,9 +118,11 @@ struct PromptsView: View {
                                                 .font(Font.fredoka(.medium, size: 12))
                                                 .foregroundColor(Clr.black2)
                                                 .multilineTextAlignment(.leading)
-                                        }.frame(width: UIScreen.screenWidth * 0.55, alignment: .leading)
+                                                .lineLimit(3)
+                                                .frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
+                                        }.frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
                                     }
-                                    .frame(width: UIScreen.screenWidth - 96, height: UIScreen.screenHeight * 0.1, alignment: .center)
+                                    .frame(width: UIScreen.screenWidth * 0.85, height: UIScreen.screenHeight * 0.115, alignment: .center)
                                     .cornerRadius(16)
                                     .padding()
                                 }.opacity(!UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture ? 0.5 : 1)

@@ -213,6 +213,7 @@ struct RecommendationsView: View {
                     }
                 }
             }.buttonStyle(NeoPress())
+            .disabled(isOnboarding)
         }
     }
 }
@@ -226,8 +227,7 @@ struct MeditationRow: View {
     @State var breathwork: Breathwork = Breathwork.breathworks[0]
     
     var body: some View {
-        Button {
-          
+        Button {          
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 if isBreathwork {

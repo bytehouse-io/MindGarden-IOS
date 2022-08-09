@@ -499,6 +499,9 @@ struct PricingView: View {
                                                     ])
                     Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
                     Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
+                    let identify = AMPIdentify()
+                        .set("plan_type", value: NSString(utf8String: "monthly"))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
                 } else {
                     AppsFlyerLib.shared().logEvent(name: event, values:
                                                                     [
@@ -506,6 +509,9 @@ struct PricingView: View {
                                                                     ])
                     Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
                     Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
+                    let identify = AMPIdentify()
+                        .set("plan_type", value: NSString(utf8String: "yearly"))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
                 }
                 AppsFlyerLib.shared().logEvent(name: event2, values:
                                                                 [
