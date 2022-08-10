@@ -18,6 +18,7 @@ import OneSignal
 import Purchases
 import Paywall
 import CryptoKit
+import WidgetKit
 
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
@@ -204,7 +205,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                goToHome()
+                                                getData()
                                             }
                                         })
                                     }
@@ -227,7 +228,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             withAnimation {
                                                 UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
                                                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                                                goToHome()
+                                                getData()
                                             }
                                         })
                                     }
@@ -260,13 +261,11 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                 .set("sign_up_date", value: NSString(utf8String: dateFormatter.string(from: Date())))
             Amplitude.instance().identify(identify ?? AMPIdentify())
             OneSignal.sendTag("signedUp", value: "true")
+            Analytics.shared.log(event: .authentication_signup_successful)
         } else {
+            Analytics.shared.log(event: .authentication_signin_successful)
             UserDefaults.standard.setValue(true, forKey: "showedChallenge")
-            UserDefaults.standard.setValue(true, forKey: "day1")
-            UserDefaults.standard.setValue(true, forKey: "day2")
-            UserDefaults.standard.setValue(true, forKey: "day3")
             UserDefaults.standard.setValue(false, forKey: "newUser")
-            UserDefaults.standard.setValue(1, forKey: "day")
         }
         
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -278,7 +277,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                 viewRouter.currentPage = .meditate
             }
         }
-        Analytics.shared.log(event: isSignUp ? .authentication_signup_successful : .authentication_signin_successful)
     }
 
      func signInWithGoogle() {
@@ -348,11 +346,12 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 } else {
                     if googleIsNew {
                         createUser()
+                        goToHome()
                     } else {
-               }
+                        getData()
+                    }
                     withAnimation {
                         UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                        goToHome()
                     }
                     alertError = false
                 }
@@ -410,17 +409,16 @@ extension AuthenticationViewModel {
                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
                 return
             }
-            getData()
             alertError = false
             withAnimation {
                 UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 if isSignUp {
-    
+                    
                 } else {
+                    getData()
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                 }
                 UserDefaults.standard.setValue("432hz", forKey: "sound")
-                goToHome()
             }
         }
     }
@@ -548,17 +546,16 @@ extension AuthenticationViewModel {
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    UserDefaults.standard.setValue(["White Daisy", "Red Tulip"], forKey: K.defaults.selectedPlant)
                     UserDefaults.standard.setValue("432hz", forKey: "sound")
                     self.userModel.getSelectedPlant()
                     self.userModel.name = UserDefaults.standard.string(forKey: "name") ?? ""
                 }
             }
         }
+        
         userModel.name = UserDefaults.standard.string(forKey: "name") ?? "hg"
         userModel.joinDate = formatter.string(from: Date())
         userModel.referredStack = "\(date)+0"
-        userModel.checkIfPro()
     }
 
     func getData() {
@@ -598,9 +595,27 @@ extension AuthenticationViewModel {
                             UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
                         }
                     }
+                    Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: email)
+                    DispatchQueue.main.async {
+                        Purchases.shared.logIn(email) { info, bool, error in
+                            if info?.entitlements.all["isPro"]?.isActive == true {
+                                print("godfather2", bool)
+                                UserDefaults.standard.setValue(true, forKey: "isPro")
+                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                                WidgetCenter.shared.reloadAllTimelines()
+                            }
+                            self.userModel.updateSelf()
+                            SceneDelegate.gardenModel.updateSelf()
+                            SceneDelegate.bonusModel.updateBonus()
+                            SceneDelegate.medModel.updateSelf()
+                            SceneDelegate.medModel.getUserMap()
+                            self.goToHome()
+                        }
+                    }
                 }
             }
         }
+ 
     }
 }
 

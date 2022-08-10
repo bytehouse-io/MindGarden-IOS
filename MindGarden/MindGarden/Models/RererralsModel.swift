@@ -43,8 +43,8 @@ struct ReferralItem: Identifiable {
     
     var subTitle: String {
         switch self.tabName {
-        case .ref1: return "Unlock a rare venus fly trap when you invite your first friend"
-        case .ref2: return "In order for a referral to go through, your friend must create an account"
+        case .ref1: return "Unlock a rare venus fly trap when you invite your first friend (They must signup with email using your link)"
+        case .ref2: return "In order for a referral to go through, your friend must create an account using your link"
         case .ref3: return "Email us a screenshot team@mindgarden.io, and we'll mail you our pack for free!"
         }
     }

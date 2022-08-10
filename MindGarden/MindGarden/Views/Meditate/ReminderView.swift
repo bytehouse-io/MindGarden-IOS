@@ -103,7 +103,6 @@ struct ReminderView: View {
                             }.padding(.horizontal, 30)
                         }.frame(height: 75)
                     }
-         
                 }
             }
         }.frame(height: UIScreen.screenHeight * (playAnim ? 0 : (K.isSmall() ? 0.325 : 0.28)))
@@ -111,11 +110,6 @@ struct ReminderView: View {
            .animation(.spring().delay(0.25), value: playAnim)
            .addBorder(.black, width: 1.5, cornerRadius: 32)
            .shadow(color: .black.opacity(0.25), radius: 1, x:  3 , y: 3)
-           .onTapGesture {
-               withAnimation {
-                   playAnim.toggle()
-               }
-           }
     }
     
     private func promptNotification() {
@@ -130,9 +124,6 @@ struct ReminderView: View {
                 }
                 if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
                     NotificationHelper.addThreeDay()
-                }
-                if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
-                    NotificationHelper.addOnboarding()
                 }
 
                 if UserDefaults.standard.bool(forKey: "freeTrial")  {
@@ -165,6 +156,7 @@ struct ReminderView: View {
                     }
                 }
                 isToggled = false
+                return
             case .denied:
                 UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                 Analytics.shared.log(event: .notification_go_to_settings)
@@ -174,7 +166,9 @@ struct ReminderView: View {
                     }
                 }
                 isToggled = false
+                return
             default:
+                print("testing")
                 break
             }
         })

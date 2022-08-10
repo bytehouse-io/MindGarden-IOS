@@ -65,11 +65,15 @@ struct HomeViewDashboard: View {
                                             .frame(width: 10)
                                     }.frame(width: 15)
                                 }
-                                Img.coin
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20, height:20)
-                                    .foregroundColor(.black)
+                                if userModel.coins >= 1000 && totalBonuses > 0 {
+                                    
+                                } else {
+                                    Img.coin
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20, height:20)
+                                        .foregroundColor(.black)
+                                }
                                 Text("\(userModel.coins)")
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)

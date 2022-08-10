@@ -124,7 +124,7 @@ struct PlantTile: View {
                             .neoShadow()
                     }
                 }
-            }
+            }.opacity(isBadge && !isOwned ? 0.55 : 1)
     }
 }
 

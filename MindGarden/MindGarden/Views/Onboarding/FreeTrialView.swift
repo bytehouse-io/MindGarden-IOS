@@ -154,9 +154,7 @@ struct FreeTrialView: View {
                 Analytics.shared.log(event: .pricing_notif_accepted)
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()
-                NotificationHelper.addOnboarding()
                 NotificationHelper.freeTrial()
-                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
             } else {
                 Analytics.shared.log(event: .pricing_notif_denied)
                 let current = UNUserNotificationCenter.current()

@@ -269,7 +269,6 @@ struct ReviewScene: View {
                                 NotificationHelper.addOneDay()
                                 NotificationHelper.addThreeDay()
                                 NotificationHelper.addOnboarding()
-                                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
                             } else {
                                 notifications = "Off"
                                 Analytics.shared.log(event: .review_notification_off)

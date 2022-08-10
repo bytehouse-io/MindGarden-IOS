@@ -424,7 +424,7 @@ struct Garden: View {
                                     }
                                     Spacer()
                                 }
-                            }.frame(maxWidth: gp.size.width * (sizeCategory > .large ? 1 : 0.85), maxHeight: 150)
+                            }.frame(width: gp.size.width * (sizeCategory > .large ? 1 : 0.85), height: 150)
                         }.padding(.top, 15)
                             .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
                             .offset(y: playEntryAnimation ? 0 : 400)
@@ -667,12 +667,12 @@ struct FavoritePlant: View {
             HStack {
                 Text("\(title)")
                     .font(Font.fredoka(.regular, size: 12))
-                    .lineLimit(2)
+                    .lineLimit(1)
                     .minimumScaleFactor(0.05)
                 Text("\(count)").bold()
                     .font(Font.fredoka(.bold, size: 16))
             }.padding(.top, 8)
-        }.frame(width: 70, height: 120)
+        }.frame(width: 100, height: 120)
             .padding(10)
     }
 }

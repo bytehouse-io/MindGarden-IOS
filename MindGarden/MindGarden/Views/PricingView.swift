@@ -68,7 +68,7 @@ struct PricingView: View {
                              + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
                                 .font(Font.fredoka(.bold, size: 24))
                              +
-                             Text(fiftyOff ? " (limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : " & get 1% happier everyday"))
+                             Text(fiftyOff ? "\n(limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : " & get 1% happier everyday"))
                                 .font(Font.fredoka(.semiBold, size: 24))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)

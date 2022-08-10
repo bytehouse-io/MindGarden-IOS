@@ -128,7 +128,6 @@ struct ExperienceScene: View {
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()
                 NotificationHelper.addOnboarding()
-                NotificationHelper.addUnlockedFeature(title: "🔑 Learn Page has unlocked!", body: "We recommend starting with Understanding Mindfulness")
             } else {
                 Analytics.shared.log(event: .onboarding_notification_off)
                 

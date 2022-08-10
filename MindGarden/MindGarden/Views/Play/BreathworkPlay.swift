@@ -42,12 +42,30 @@ struct BreathworkPlay : View {
     
     @State var isPaused = false
     @Binding var showPlay:Bool
-    @State var isVibrate = false
     
     let breathWork: Breathwork?
     
     @State var timer: Timer?
     @State var durationTimer: Timer?
+    
+    @State private var scale = 0.0
+    @State private var duration: TimeInterval = 0
+    private let startScale = 1.0
+    private let endScale = 2.0
+    @State var callerTimer: Timer?
+
+    private var remainingDuration: RemainingDurationProvider<Double> {
+        { currentScale in
+            let remainingDuration = duration * (1 - (currentScale - startScale) / (endScale - startScale))
+            playAnimation(timeRemain: title == "Hold" ? Double(durationCounter) : remainingDuration)
+           return remainingDuration
+        }
+      }
+    
+    private let animation: AnimationWithDurationProvider = { duration in
+        .linear(duration: duration)
+      }
+    
     var body: some View {
         ZStack(alignment:.top) {
             if medModel.selectedBreath?.color == .sleep {
@@ -91,7 +109,13 @@ struct BreathworkPlay : View {
                         .fill(breathWork?.color.secondary.opacity(0.4) ?? Clr.calmsSecondary)
                         .frame(width:size/2)
                         .clipShape(Circle())
-                        .scaleEffect(bgAnimation ? 2 : 1)
+                        .scaleEffect(scale)
+                        .pausableAnimation(binding: $scale,
+                                                     targetValue: endScale,
+                                                     remainingDuration: remainingDuration,
+                                                     animation: animation,
+                                                     paused: $isPaused)
+                    
                     ZStack {
                         Circle()
                             .foregroundColor(breathWork?.color.secondary)
@@ -103,7 +127,7 @@ struct BreathworkPlay : View {
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.1)
-                            Text("  \(durationCounter)  ")
+                            Text("  \(durationCounter > 0 ? durationCounter : 1)  ")
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(.white)
                                 .opacity(fadeAnimation ? 0 : 1)
@@ -171,12 +195,10 @@ struct BreathworkPlay : View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                // TODO when paused
-                                if !isPaused {
-                                    isPaused = true
-                                } else {
-                                    isPaused = false
-                                    playAnimation()
+                                isPaused.toggle()
+                                if isPaused {
+                                    durationTimer?.invalidate()
+                                    callerTimer?.invalidate()
                                 }
                             }
                         } label : {
@@ -234,15 +256,15 @@ struct BreathworkPlay : View {
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
-                        if isVibrate {
+                        if title == "Inhale" {
                         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                         }
+                        timerCount += 1
                         DispatchQueue.main.async {
                             withAnimation(.linear(duration: 0.95)) {
                                 progress = timerCount/Double(totalTime)
                             }
                         }
-                        timerCount += 1
                     } else {
                         timer.invalidate()
                     }
@@ -258,75 +280,96 @@ struct BreathworkPlay : View {
         .onDisappear() {
             timer?.invalidate()
             durationTimer?.invalidate()
+            callerTimer?.invalidate()
         }
         .onTapGesture {
             toggleControllPanel()
         }
         
     }
-    
-    private func playAnimation() {
-        let time =  breathWork?.sequence[sequenceCounter].0 ?? 0
-        let status = breathWork?.sequence[sequenceCounter].1 ?? "I"
-        
-        if noOfSequence > 0 && !isPaused {
-            switch status.lowercased() {
-            case "i":
-                isVibrate = true
-                title = "Inhale"
-                withAnimation(.linear(duration: Double(time))) {
-                    bgAnimation = true
-                }
-            case "h":
-                isVibrate = false
-                title = time > 0 ? "Hold" : ""
-            case "e":
-                isVibrate = false
-                title = "Exhale"
-                withAnimation(.linear(duration: Double(time))) {
-                    bgAnimation = false
-                }
-                medModel.totalBreaths += 1
-            default: break
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(time)) {
+
+    private func playAnimation(timeRemain:Double = 0.0) {
+        guard !isPaused  else { return }
+        if noOfSequence > 0 {
+            let time =  timeRemain>0 ? timeRemain : Double(breathWork?.sequence[sequenceCounter].0 ?? 0)
+            let status = breathWork?.sequence[sequenceCounter].1 ?? "I"
+            setBreath(status: status, time: Double(time), isResumed:timeRemain>0)
+            callerTimer = Timer.scheduledTimer(withTimeInterval: time, repeats: false) { timer in
+                checkSequence()
                 playAnimation()
             }
-            durationTimer = nil
-            if time > 0 {
-                fadeAnimation = true
-                withAnimation(.linear(duration: 0.5)) {
-                    fadeAnimation = false
-                    durationCounter = time
-                }
-                durationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                    fadeAnimation = true
-                    withAnimation(.linear(duration: 0.5)) {
-                        fadeAnimation = false
-                        durationCounter -= 1
-                    }
-                    if durationCounter<=1 {
-                        timer.invalidate()
-                    }
-                }
-            }
             
-            if sequenceCounter < (breathWork?.sequence.count ?? 0)-1 {
-                sequenceCounter += 1
-            } else {
-                sequenceCounter = 0
-                fadeAnimation = true
-                withAnimation(.linear(duration: 1.0)) {
-                    noOfSequence -= 1
-                    fadeAnimation = false
-                }
+            if time > 0 {
+                setupCoountDown(time: time)
             }
-        } else {
-            isVibrate = false
+        }
+        else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 viewRouter.currentPage = .finished
             }
+        }
+    }
+    
+    private func setBreath(status:String, time:Double, isResumed:Bool) {
+        switch status.lowercased() {
+        case "i" :
+            title = "Inhale"
+            duration = Double(time)
+            if !isResumed {
+                scale =  startScale
+                withAnimation(.linear(duration: time)) {
+                    scale = 2.0
+                }
+            }
+        case "h":
+            title = time > 0 ? "Hold" : ""
+        case "e":
+            title = "Exhale"
+            duration = time
+            if !isResumed {
+                scale = endScale
+                withAnimation(.linear(duration: time)) {
+                    scale = 1.0
+                }
+            }
+        default: break
+        }
+    }
+    
+    private func setupCoountDown(time:Double){
+        guard !isPaused  else { return }
+        durationTimer = nil
+        if time > 0 {
+            fadeAnimation = true
+            withAnimation(.linear(duration: 0.5)) {
+                fadeAnimation = false
+                durationCounter =  Int(floor(time))
+            }
+            durationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                if self.isPaused {
+                    timer.invalidate()
+                    return
+                }
+                fadeAnimation = true
+                withAnimation(.linear(duration: 0.5)) {
+                    fadeAnimation = false
+                    durationCounter -= 1
+                }
+                if durationCounter<=1 {
+                    timer.invalidate()
+                }
+            }
+        }
+    }
+    
+    private func checkSequence(){
+        guard !isPaused  else { return }
+        if sequenceCounter < (breathWork?.sequence.count ?? 0)-1 {
+            sequenceCounter += 1
+        } else {
+            sequenceCounter = 0
+            medModel.totalBreaths += 1
+            noOfSequence -= 1
         }
     }
     

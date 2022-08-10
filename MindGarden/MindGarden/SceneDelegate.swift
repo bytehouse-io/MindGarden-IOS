@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     static let userModel = UserViewModel()
     static let gardenModel = GardenViewModel()
+    static let medModel = MeditationViewModel()
     static let bonusModel = BonusViewModel(userModel: userModel, gardenModel: gardenModel)
     let router = ViewRouter()
     let formatter: DateFormatter = {
@@ -68,18 +69,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
 
-        let medModel = MeditationViewModel()
         
         let profileModel = ProfileViewModel()
         let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
-        let firebaseAPI = FirebaseAPI(medModel: medModel)
+        let firebaseAPI = FirebaseAPI(medModel: SceneDelegate.medModel)
 
         SceneDelegate.userModel.updateSelf()
         SceneDelegate.gardenModel.updateSelf()
-        firebaseAPI.fetchMeditations(meditationModel: medModel)
+        firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
         firebaseAPI.fetchCourses()
-        medModel.updateSelf()
-        medModel.getUserMap()
+        SceneDelegate.medModel.updateSelf()
+        SceneDelegate.medModel.getUserMap()
 
 
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
@@ -93,7 +93,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         let rootHost = UIHostingController(rootView: contentView
                                             .environmentObject(router)
-                                            .environmentObject(medModel)
+                                            .environmentObject(SceneDelegate.medModel)
                                             .environmentObject(SceneDelegate.userModel)
                                             .environmentObject(SceneDelegate.gardenModel))
         

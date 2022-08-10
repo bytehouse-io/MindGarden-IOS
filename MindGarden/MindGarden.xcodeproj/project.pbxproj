@@ -28,6 +28,7 @@
 		582B303227EF3D960026DD16 /* ShareStreakModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B302F27EF3D960026DD16 /* ShareStreakModel.swift */; };
 		5836FA71281C1DAC001AB151 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5836FA70281C1DAC001AB151 /* ReminderView.swift */; };
 		58375DBF28633F6900D2EFEF /* CircleLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58375DBE28633F6900D2EFEF /* CircleLoading.swift */; };
+		5838E9E828A2C9FF002B4AD0 /* StopableAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5838E9E728A2C9FF002B4AD0 /* StopableAnimation.swift */; };
 		584837152851B93900900C80 /* LeaveFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584837142851B93900900C80 /* LeaveFeedback.swift */; };
 		585A4E5E27FC8BB400443F72 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585A4E5D27FC8BB400443F72 /* Buttons.swift */; };
 		586E7DA428409F42007E0695 /* DiscoverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586E7DA328409F42007E0695 /* DiscoverScene.swift */; };
@@ -313,6 +314,7 @@
 		582B302F27EF3D960026DD16 /* ShareStreakModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareStreakModel.swift; sourceTree = "<group>"; };
 		5836FA70281C1DAC001AB151 /* ReminderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		58375DBE28633F6900D2EFEF /* CircleLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleLoading.swift; sourceTree = "<group>"; };
+		5838E9E728A2C9FF002B4AD0 /* StopableAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopableAnimation.swift; sourceTree = "<group>"; };
 		584837142851B93900900C80 /* LeaveFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveFeedback.swift; sourceTree = "<group>"; };
 		585A4E5D27FC8BB400443F72 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		586E7DA328409F42007E0695 /* DiscoverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScene.swift; sourceTree = "<group>"; };
@@ -1200,6 +1202,7 @@
 				FE04A804279CD77400799A07 /* SaveProgressModal.swift */,
 				FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */,
 				88A15834288C816300892774 /* NextSteps.swift */,
+				5838E9E728A2C9FF002B4AD0 /* StopableAnimation.swift */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -1765,6 +1768,7 @@
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
 				FE7938592787691E00773B23 /* WidgetModal.swift in Sources */,
+				5838E9E828A2C9FF002B4AD0 /* StopableAnimation.swift in Sources */,
 				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				88E3D3222866261C00B71809 /* LoadingIllusion.swift in Sources */,

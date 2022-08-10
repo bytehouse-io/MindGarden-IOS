@@ -75,7 +75,7 @@ struct ProfileScene: View {
                                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                                 VStack(alignment: .center, spacing: 0) {
                                     HStack {
-                                        Text("Dante")
+                                        Text(UserDefaults.standard.string(forKey: K.defaults.name) ?? "")
                                             .font(Font.fredoka(.semiBold, size: 20))
                                             .foregroundColor(Clr.black2)
                                         Spacer()
