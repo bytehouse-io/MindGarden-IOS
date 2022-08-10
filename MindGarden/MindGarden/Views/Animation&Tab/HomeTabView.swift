@@ -37,7 +37,9 @@ struct HomeTabView: View {
                 .padding(.bottom,15)
         }.onChange(of: selectedTab) { value in
             showPopup = false
-            setSelectedTab(selectedTab: value)
+            DispatchQueue.main.async {
+                setSelectedTab(selectedTab: value)
+            }
         }
     }
     
