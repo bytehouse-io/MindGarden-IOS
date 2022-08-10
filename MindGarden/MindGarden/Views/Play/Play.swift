@@ -105,30 +105,33 @@ struct Play: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: model.lastSeconds ? width/3 : width/5, height: model.lastSeconds ? height/5 : height/7)
-                                                .animation(.easeIn(duration: 2.0))
+                                                .animation(.easeOut(duration: 2.0))
+                                                .transition(.opacity)
                                                 .offset(y: 20)
                                         }
-                                    } else if model.secondsRemaining <= model.totalTime * 0.5 || (model.secondsRemaining >= 200 && model.selectedMeditation?.duration == -1) {
+                                } else if model.secondsRemaining <= model.totalTime * 0.5 || (model.secondsRemaining >= 200 && model.selectedMeditation?.duration == -1) {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .animation(.easeIn(duration: 2.0))
-                                            .frame(width: width/4, height: height/6)
+                                            .animation(Animation.spring(response: 0.3, dampingFraction: 3.0))
+                                            .transition(.opacity)
+                                            .frame(width: width/5, height: height/7)
                                             .offset(y: 40)
                                         
                                     } else if model.secondsRemaining <= model.totalTime * 0.75 || (model.secondsRemaining >= 100 && model.selectedMeditation?.duration == -1) {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .animation(.easeIn(duration: 2.0))
+                                            .animation(Animation.spring(response: 0.3, dampingFraction: 3.0))
                                             .frame(width: width/6, height: height/8)
+                                            .transition(.opacity)
                                             .offset(y: 70)
                                     } else {
                                         model.playImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .animation(.easeIn(duration: 1.0))
-                                            .frame(width: 40, height: 40)
+                                            .frame(width: 30, height: 30)
                                             .offset(y: 85)
                                     }
                                 }
@@ -174,7 +177,6 @@ struct Play: View {
                                             .aspectRatio(contentMode: .fit)
                                             .foregroundColor(Clr.brightGreen)
                                             .frame(width: 35)
-                                            .padding(.leading, 5)
                                     }
                                 }
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {

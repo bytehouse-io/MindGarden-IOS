@@ -44,6 +44,7 @@ struct PromptsView: View {
                     HStack {
                         ForEach(promptsTabList) { item in
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                         #if !targetEnvironment(simulator)
                                     Amplitude.instance().logEvent("prompts_tapped_tab", withEventProperties: ["tab": item.tabName])
@@ -79,6 +80,7 @@ struct PromptsView: View {
                     VStack(spacing: -20) {
                         ForEach(selectedPrompts, id: \.self) { prompt in
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if !UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture {
                                 fromPage = "journal"
                                 viewRouter.currentPage = .pricing

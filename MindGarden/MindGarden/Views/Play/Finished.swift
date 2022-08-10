@@ -263,7 +263,7 @@ struct Finished: View {
                                         } else {
                                             viewRouter.currentPage = .garden
                                         }
-                                    }
+                                }
                                 }
                         }
                         .zIndex(100)
@@ -279,7 +279,6 @@ struct Finished: View {
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
-                    
 //                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
 //                        .offset(y: showUnlockedModal ? 0 : g.size.height)
 //                        .animation(.default, value: showUnlockedModal)

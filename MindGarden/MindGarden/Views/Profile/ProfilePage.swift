@@ -45,7 +45,7 @@ struct ProfilePage: View {
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
                         HStack(alignment: .center, spacing: 5) {
                             ProfileBox(img: Img.veryGood, count:  gardenModel.numMoods)
-                            ProfileBox(img: Img.meditateTurtle, count:  gardenModel.numMeds)
+                            ProfileBox(img: Img.meditatingTurtle, count:  gardenModel.numMeds)
                             ProfileBox(img: Img.streak, count: UserDefaults.standard.integer(forKey: "longestStreak"))
                         }.padding(.top)
                         HStack(alignment: .center, spacing: 5) {
@@ -178,6 +178,8 @@ struct ProfilePage: View {
                         Text(elaboration)
                             .font(Font.fredoka(.medium, size: 14))
                             .foregroundColor(Clr.black2)
+                            .minimumScaleFactor(0.05)
+                            .lineLimit(1)
                             .padding(.horizontal, 25)
                             .padding(.vertical, 8)
                             .overlay(

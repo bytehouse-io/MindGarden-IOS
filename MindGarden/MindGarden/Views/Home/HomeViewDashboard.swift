@@ -142,6 +142,7 @@ struct HomeViewDashboard: View {
                     HStack {
                         if !userModel.completedMeditations.isEmpty {
                             Button {
+                                Analytics.shared.log(event: .home_tapped_recents)
                                 withAnimation {
                                     sheetTitle = "Your Recents"
                                     sheetType = userModel.completedMeditations.compactMap({ Int($0)}).reversed().unique()
@@ -157,6 +158,7 @@ struct HomeViewDashboard: View {
                         }
                         if !medModel.favoritedMeditations.isEmpty {
                             Button {
+                                Analytics.shared.log(event: .home_tapped_favorites)
                                 withAnimation {
                                     sheetTitle = "Your Favorites"
                                     sheetType = medModel.favoritedMeditations.reversed()

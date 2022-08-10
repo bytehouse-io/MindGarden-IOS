@@ -108,17 +108,19 @@ enum AnalyticEvent {
     case home_tapped_plant_select //
     case home_selected_plant //
     case home_tapped_categories //
-    case home_tapped_sound //
     case home_tapped_profile //
     case home_tapped_recents //
     case home_tapped_favorites //
-    case home_tapped_featured //
     case home_tapped_recent_meditation //
     case home_tapped_favorite_meditation //
+    case home_tapped_featured_breath //
+    case home_tapped_featured_meditation //
+    case home_selected_mood //
+    case home_tapped_mood
+    case home_tapped_journal
     case home_tapped_new_meditation //
     case home_tapped_weekly_meditation //
     case home_tapped_locked_meditation //
-    case home_tapped_real_tree //
     case challenge_tapped_x //
     case challenge_tapped_accept //
     
@@ -251,6 +253,8 @@ enum AnalyticEvent {
     //MARK: - Profile
     case screen_load_profile //
     case profile_tapped_profile //
+    case profile_tapped_background_on
+    case profile_tapped_background_off
     case profile_tapped_settings //
     case profile_tapped_email //
     case profile_tapped_reddit //
@@ -323,7 +327,7 @@ enum AnalyticEvent {
     case mood_toggle_recs_off
     case mood_toggle_recs_on
     case mood_recs_not_now
-    case mood_tapped_done //
+    case plus_selected_mood //
     case mood_tapped_cancel //
     case mood_tapped_meditation_rec //
     //gratitude
@@ -503,11 +507,13 @@ extension AnalyticEvent {
         case .home_tapped_pro: return "home_tapped_pro"
         case .home_selected_plant: return "home_selected_plant"
         case .home_tapped_categories: return "home_tapped_categories"
-        case .home_tapped_sound: return "home_tapped_sound"
         case .home_tapped_profile: return "home_tapped_profile"
         case .home_tapped_recents: return "home_tapped_recents"
         case .home_tapped_favorites: return "home_tapped_favorites"
-        case .home_tapped_featured: return "home_tapped_featured"
+        case .home_tapped_featured_breath: return "home_tapped_featured_breath"
+        case .home_tapped_featured_meditation: return "home_tapped_featured_meditation"
+        case .home_tapped_mood: return "home_tapped_mood"
+        case .home_tapped_journal: return "home_tapped_journal"
         case .home_tapped_recent_meditation: return "home_tapped_recent_meditation"
         case .home_tapped_favorite_meditation: return "home_tapped_favorite_meditation"
         case .home_tapped_bonus: return "home_tapped_bonus"
@@ -516,7 +522,7 @@ extension AnalyticEvent {
         case .home_claim_thirty: return "home_claim_thirty"
         case .home_tapped_new_meditation: return "home_tapped_new_meditation"
         case .home_tapped_weekly_meditation: return "home_tapped_weekly_meditation"
-        case .home_tapped_real_tree: return "home_tapped_real_tree"
+        case .home_selected_mood: return "home_selected_mood"
         case .challenge_tapped_x: return "challenge_tapped_x"
         case .challenge_tapped_accept: return "challenge_tapped_accept"
         case .IAP_tapped_freeze: return "IAP_tapped_freeze"
@@ -599,6 +605,8 @@ extension AnalyticEvent {
         case .profile_tapped_garden: return "profile_tapped_garden"
         case .profile_tapped_garden_date_on: return "profile_tapped_garden_date_on"
         case .profile_tapped_garden_date_off: return "profile_tapped_garden_date_off"
+        case .profile_tapped_background_on: return "profile_tapped_background_on"
+        case .profile_tapped_background_off: return "profile_tapped_background_off"
         case .screen_load_categories: return "screen_load_categories"
         case .categories_tapped_square: return "categories_tapped_square"
         case .categories_tapped_unguided: return "categories_tapped_unguided"
@@ -630,7 +638,7 @@ extension AnalyticEvent {
         case .mood_tapped_veryGood: return "mood_tapped_veryGood"
         case .mood_tapped_bad: return "mood_tapped_bad"
         case .mood_tapped_veryBad: return "mood_tapped_veryBad"
-        case .mood_tapped_done: return "mood_tapped_done"
+        case .plus_selected_mood: return "plus_selected_mood"
         case .mood_tapped_cancel: return "mood_tapped_cancel"
         case  .mood_recs_not_now: return "mood_recs_not_now"
         case .mood_tapped_meditation_rec: return "mood_tapped_meditation_rec"

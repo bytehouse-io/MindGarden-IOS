@@ -50,11 +50,11 @@ struct NotificationHelper {
         var modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
         if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
             if hour < 18 {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 4, to: Date())
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
             } else if hour > 20 {
                 modifiedDate = Calendar.current.date(byAdding: .hour, value: 12, to: Date())
             } else {
-                modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
+                modifiedDate = Calendar.current.date(byAdding: .hour, value: 14, to: Date())
             }
         } else {
             if hour < 11 {

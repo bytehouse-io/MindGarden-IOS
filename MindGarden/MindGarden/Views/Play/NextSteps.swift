@@ -33,7 +33,9 @@ struct NextSteps: View {
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(32)
                                 .addBorder(.black, width: 1.5,  cornerRadius: 32)
-                            Button { } label: {
+                            Button {
+                                
+                            } label: {
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.brightGreen)

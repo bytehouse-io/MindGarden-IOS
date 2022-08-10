@@ -38,6 +38,7 @@ struct BreathMiddle: View {
                 VStack {
                     HStack {
                         Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             Analytics.shared.log(event: .breathwrk_middle_tapped_back)
                             withAnimation {
                                 viewRouter.currentPage = viewRouter.previousPage
@@ -53,7 +54,7 @@ struct BreathMiddle: View {
                                         .frame(width: 15)
                                 )
                         }.buttonStyle(NeoPress())
-                            .offset(x: -5, y: 5)
+                        .offset(x: -5, y: 5)
                         Spacer()
                         HStack {
                             Button {

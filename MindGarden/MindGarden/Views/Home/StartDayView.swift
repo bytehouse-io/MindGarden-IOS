@@ -270,6 +270,7 @@ struct StartDayView: View {
                         VStack(spacing:5) {
                             HStack(spacing: 15) {
                                 Button {
+                                    Analytics.shared.log(event: .home_tapped_featured_breath)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         medModel.selectedBreath = medModel.featuredBreathwork
@@ -283,7 +284,7 @@ struct StartDayView: View {
                                 }.buttonStyle(ScalePress())
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        Analytics.shared.log(event: .home_tapped_featured)
+                                        Analytics.shared.log(event: .home_tapped_featured_meditation)
                                         withAnimation {
                                             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
                                                 viewRouter.currentPage = .pricing
@@ -423,6 +424,19 @@ struct StartDayView: View {
                 HStack(alignment:.top) {
                     ForEach(Mood.allMoodCases(), id: \.id) { item in
                         Button {
+                            Analytics.shared.log(event: .home_selected_mood)
+                            switch item {
+                            case .angry: Analytics.shared.log(event: .mood_tapped_angry)
+                            case .sad: Analytics.shared.log(event: .mood_tapped_sad)
+                            case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
+                            case .okay: Analytics.shared.log(event: .mood_tapped_okay)
+                            case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                            case .bad: Analytics.shared.log(event: .mood_tapped_bad)
+                            case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
+                            case .good: Analytics.shared.log(event: .mood_tapped_good)
+                            case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
+                            case .none: Analytics.shared.log(event: .mood_tapped_cancel)
+                            }
                             withAnimation {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 userModel.selectedMood = item

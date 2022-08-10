@@ -219,8 +219,10 @@ struct ProfileScene: View {
                                                                     if let player = player {
                                                                         if player.isPlaying {
                                                                             player.pause()
+                                                                            Analytics.shared.log(event: .profile_tapped_background_on)
                                                                             backgroundMusicOn = false
                                                                         } else {
+                                                                            Analytics.shared.log(event: .profile_tapped_background_off)
                                                                             player.play()
                                                                             backgroundMusicOn = true
                                                                         }

@@ -90,11 +90,7 @@ struct MoodCheck: View {
             userModel.selectedMood = moodSelected
             viewRouter.currentPage = .mood
         }
-        Analytics.shared.log(event: .mood_tapped_done)
-        #if !targetEnvironment(simulator)
-                Amplitude.instance().logEvent("tapped_mood", withEventProperties: ["selected_mood": moodSelected.title])
-        #endif
-                print("logging, \("tapped_mood_\(moodSelected.title)")")
+        Analytics.shared.log(event: .plus_selected_mood)
             }
 
         private func showPopupWithAnimation(completion: @escaping () -> ()) {

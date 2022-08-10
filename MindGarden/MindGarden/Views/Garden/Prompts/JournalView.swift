@@ -26,6 +26,7 @@ struct JournalView: View, KeyboardReadable {
     @State private var coin = 0
     @State var question = ""
     @State var recs = [-4,71,23]
+    @State var divider = 1
     
     @available(iOS 15.0, *)
     @FocusState private var isFocused: Bool
@@ -244,10 +245,7 @@ struct JournalView: View, KeyboardReadable {
                 //                if text.contains(placeholderReflection) {
                 //                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
                 //                }
-                var divider = 1
-                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
-                    divider = gratitudes.count * 3
-                }
+        
                 
                 if text.contains(placeholderReflection) {
                     self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
@@ -272,6 +270,9 @@ struct JournalView: View, KeyboardReadable {
                 }
             }
             .onAppear {
+                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                    divider = gratitudes.count * 3
+                }
                 if #available(iOS 15.0, *) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         isFocused = true

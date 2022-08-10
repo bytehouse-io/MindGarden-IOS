@@ -115,7 +115,7 @@ struct StreakScene: View {
                                 Text("Continue")
                                     .font(Font.fredoka(.bold, size: 24))
                                     .foregroundColor(.white)
-                            ).addBorder(.black, width: 1.5, cornerRadius: 24)
+                            ).addBorder(.black, width: 1.5, cornerRadius: 26)
                     }.buttonStyle(NeumorphicPress())
                     .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
                     .padding(.top, 40)
@@ -171,7 +171,11 @@ struct StreakScene: View {
     
     private func dismiss() {
         withAnimation {
-            if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 2 || UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 5 || bonusModel.streakNumber == 2 ||  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 10  {
+//            viewRouter.previousPage = .garden
+//            viewRouter.currentPage = .pricing
+            let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
+
+            if launchNum == 2 || launchNum == 4 || launchNum == 6 || launchNum == 8 {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
                 viewRouter.currentPage = .pricing

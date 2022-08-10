@@ -53,7 +53,7 @@ struct HomeViewHeader: View {
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
-                                Analytics.shared.log(event: .home_tapped_sound)
+//                                Analytics.shared.log(event: .home_tapped_sound)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 
                                 if let player = player {
@@ -136,7 +136,6 @@ struct HomeViewHeader: View {
                                             .offset(x: -5)
                                     }.offset(x: -5)
                                         .onTapGesture {
-                                            Analytics.shared.log(event: .home_tapped_real_tree)
                                             withAnimation {
                                                 userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
                                                     plt.title == "Real Tree"

@@ -459,7 +459,6 @@ class BonusViewModel: ObservableObject {
     
     private func updateLongest() {
         if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
-            
             if longestStreak < streakNumber {
                 UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
             }
