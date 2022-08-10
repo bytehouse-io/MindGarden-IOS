@@ -178,6 +178,9 @@ struct JournalView: View, KeyboardReadable {
                             .neoShadow()
                         Button {
                             if !text.isEmpty{
+                                if #available(iOS 15.0, *) {
+                                    isFocused = false
+                                }
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 var num = UserDefaults.standard.integer(forKey: "numGrads")
                                 num += 1
@@ -192,31 +195,33 @@ struct JournalView: View, KeyboardReadable {
                                 UserDefaults.standard.setValue(num, forKey: "numGrads")
                                 UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
                                 Analytics.shared.log(event: .gratitude_tapped_done)
-                                withAnimation {
-                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                                        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                                    }
-                                    UserDefaults.standard.setValue(num, forKey: "numGrads")
-                                    Analytics.shared.log(event: .gratitude_tapped_done)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     withAnimation {
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                                         }
+                                        UserDefaults.standard.setValue(num, forKey: "numGrads")
                                         Analytics.shared.log(event: .gratitude_tapped_done)
-                                        var journalObj = [String: String]()
-                                        journalObj["timeStamp"] = Date.getTime()
-                                        journalObj["gratitude"] = text
-                                        journalObj["question"] =  placeholderQuestion
-                                        userModel.coins += coin
-                                        gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
-                                        if moodFirst {
-                                            showRecs = true
-                                            moodFirst = false
-                                        } else {
-                                            viewRouter.currentPage = .meditate
-                                        }                            }
-//                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
-                                    placeholderQuestion = "Reflect on how you feel"
+                                        withAnimation {
+                                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                                                UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                                            }
+                                            Analytics.shared.log(event: .gratitude_tapped_done)
+                                            var journalObj = [String: String]()
+                                            journalObj["timeStamp"] = Date.getTime()
+                                            journalObj["gratitude"] = text
+                                            journalObj["question"] =  placeholderQuestion
+                                            userModel.coins += coin
+                                            gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
+                                            if moodFirst {
+                                                showRecs = true
+                                                moodFirst = false
+                                            } else {
+                                                viewRouter.currentPage = .meditate
+                                            }                            }
+                                        //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+                                        placeholderQuestion = "Reflect on how you feel"
+                                    }
                                 }
                             }
                         } label: {
@@ -291,6 +296,9 @@ struct JournalView: View, KeyboardReadable {
             .transition(.move(edge: .trailing))
             .onDisappear {
                 fromProfile = false
+                if #available(iOS 15.0, *) {
+                    isFocused = false
+                }
             }
             .onAppearAnalytics(event: .screen_load_journal)
     }
