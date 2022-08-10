@@ -38,6 +38,7 @@ struct Play: View {
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
     @State var isDeviceLocked = false
+    @State var isSleep = false
     private let audioSession = AVAudioSession.sharedInstance()
     
     init() {
@@ -49,7 +50,7 @@ struct Play: View {
                 GeometryReader { g in
                     let width = g.size.width
                     let height = g.size.height
-                    if model.selectedMeditation?.category == .sleep {
+                    if isSleep {
                         Clr.darkMode.edgesIgnoringSafeArea(.all)
                     } else {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all)
@@ -62,7 +63,7 @@ struct Play: View {
                                 UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? backArrow.opacity(0) : backArrow.opacity(1)
                                 Spacer()
                                 Text(model.selectedMeditation?.title ?? "")
-                                    .foregroundColor(Clr.black2)
+                                    .foregroundColor(isSleep ? Clr.brightGreen : Clr.black2)
                                     .padding(.leading, 10)
                                 Spacer()
                                 HStack{sound; heart}
@@ -85,10 +86,18 @@ struct Play: View {
                                         .frame(width: K.isPad() ? 480 : 230)
                                         .foregroundColor(Clr.darkWhite)
                                         .shadow(color: .black.opacity(0.35), radius: 20.0, x: 10, y: 5)
-                                    Img.backgroundCircle
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 230)
+                                    if isSleep {
+                                        Img.nightBackground
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 230)
+                                    } else {
+                                        Img.backgroundCircle
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 230)
+                                    }
+                           
                                     //four different plant stages
                                     if model.secondsRemaining <= model.totalTime * 0.25 || (model.secondsRemaining >= 300 && model.selectedMeditation?.duration == -1) { //secoond
                                         withAnimation {
@@ -126,7 +135,7 @@ struct Play: View {
                                 .frame(width: K.isPad() ? 500 : 250)
                             }
                             Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
-                                .foregroundColor(Clr.black1)
+                                .foregroundColor(isSleep ? Clr.brightGreen : Clr.black1)
                                 .font(Font.fredoka(.bold, size: 60))
                                 .frame(width: UIScreen.screenWidth)
                                 .animation(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? nil : Animation.easeIn(duration: 0.5))
@@ -137,9 +146,9 @@ struct Play: View {
                                     } label: {
                                         ZStack {
                                             Circle()
-                                                .fill(Clr.darkWhite)
+                                                .fill(isSleep ? Clr.black2 : Clr.darkWhite)
                                                 .frame(width: 70)
-                                                .neoShadow()
+                                                .neoShadow(darkMode: isSleep)
                                             VStack {
                                                 Image(systemName: "backward.fill")
                                                     .foregroundColor(Clr.brightGreen)
@@ -157,9 +166,9 @@ struct Play: View {
                                 } label: {
                                     ZStack {
                                         Circle()
-                                            .fill(Clr.darkWhite)
+                                            .fill(isSleep ? Clr.black2 : Clr.darkWhite)
                                             .frame(width: 90)
-                                            .neoShadow()
+                                            .neoShadow(darkMode: isSleep)
                                         Image(systemName: timerStarted ? "pause.fill" : "play.fill")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
@@ -174,9 +183,9 @@ struct Play: View {
                                     } label: {
                                         ZStack {
                                             Circle()
-                                                .fill(Clr.darkWhite)
+                                                .fill(isSleep ? Clr.black2 : Clr.darkWhite)
                                                 .frame(width: 70)
-                                                .neoShadow()
+                                                .neoShadow(darkMode: isSleep)
                                             VStack {
                                                 Image(systemName: "forward.fill")
                                                     .foregroundColor(Clr.brightGreen)
@@ -218,7 +227,9 @@ struct Play: View {
                         .animation(.default)
                 }
             }
-
+            .onAppear {
+                isSleep = model.selectedMeditation?.category == .sleep
+            }
             .onChange(of: model.secondsRemaining) { value in
                 guard isTraceTimeMannual else { return }
 

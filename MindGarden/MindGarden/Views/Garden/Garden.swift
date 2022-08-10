@@ -385,7 +385,7 @@ struct Garden: View {
                                 }
                                 .padding()
                                 .neoShadow()
-                                .frame(width:UIScreen.screenWidth * 0.165, height: UIScreen.screenHeight * (K.isSmall () ? 0.17 : 0.15))
+                                .frame(width:UIScreen.screenWidth * 0.165, height: UIScreen.screenHeight * (K.isSmall () ? 0.17 : 0.16))
                                 .offset(x: playEntryAnimation ? 0 : 400)
                                 .animation(animation.delay(0.2), value: playEntryAnimation)
                             }
@@ -467,7 +467,6 @@ struct Garden: View {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                                         Analytics.shared.log(event: .onboarding_finished_calendar)
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
-                                                        
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                                         UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
                                                         tileOpacity = 0.2

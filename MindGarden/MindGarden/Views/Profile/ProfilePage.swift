@@ -39,7 +39,7 @@ struct ProfilePage: View {
                             .font(Font.fredoka(.medium, size: 24))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)
-                        Text("\(UserDefaults.standard.integer(forKey: "launchNumber")) Mindful Day" + (UserDefaults.standard.integer(forKey: "launchNumber") == 1 ? "" : "s"))
+                        Text("\(UserDefaults.standard.integer(forKey: "dailyLaunchNumber")) Mindful Day" + (UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 1 ? "" : "s"))
                             .font(Font.fredoka(.regular, size: 20))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)

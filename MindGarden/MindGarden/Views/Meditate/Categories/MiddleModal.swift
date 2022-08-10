@@ -146,7 +146,7 @@ struct MiddleModal: View {
                                             .minimumScaleFactor(0.5)
                                     )
                                     .frame(height: 40)
-                                    .addBorder(.black, width: 1.5, cornerRadius: 24)
+                                    .addBorder(.black, width: 1.5, cornerRadius: 20)
                             }.buttonStyle(NeoPress())
                                 .padding([.horizontal, .bottom])
                                 .padding(.horizontal, 8)

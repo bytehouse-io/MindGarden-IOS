@@ -150,20 +150,20 @@ class MeditationViewModel: ObservableObject {
 
         if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                if UserDefaults.standard.integer(forKey: "launchNumber") <= 6 {
+                if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 6 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
                 } else {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 && !UserDefaults.standard.bool(forKey: "10days") {
+                    if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 && !UserDefaults.standard.bool(forKey: "10days") {
                         featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 105 })
                     } else {
                         setFeaturedReason()
                     }
                 }
             } else {
-                if UserDefaults.standard.integer(forKey: "launchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
+                if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 105 })
                 } else {
-                    if UserDefaults.standard.integer(forKey: "launchNumber") <= 18 && !UserDefaults.standard.bool(forKey: "intermediateCourse") {
+                    if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 18 && !UserDefaults.standard.bool(forKey: "intermediateCourse") {
                         featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 14 })
                     } else {
                         setFeaturedReason()
@@ -171,7 +171,7 @@ class MeditationViewModel: ObservableObject {
                 }
             }
         } else {
-            if UserDefaults.standard.integer(forKey: "launchNumber") <= 3 {
+            if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 3 {
                 featuredMeditation = Meditation.allMeditations.first(where: { med in
                     med.id == 2
                 })
@@ -206,6 +206,10 @@ class MeditationViewModel: ObservableObject {
             }
         }
         filtedMeds = filtedMeds.filter { med in med.type != .lesson && med.isNew == false}
+        if filtedMeds.isEmpty {
+            filtedMeds = Meditation.allMeditations.filter {  med in med.type != .lesson && med.isNew == false                
+            }
+        }
         switch UserDefaults.standard.string(forKey: "reason") {
         case "Sleep better":
             if Calendar.current.component( .hour, from:Date() ) >= 18 {
@@ -352,6 +356,7 @@ class MeditationViewModel: ObservableObject {
             case 241...301: reward = 35
             default: reward = 0
             }
+            shouldStreakUpdate = true
             return reward
         }
         

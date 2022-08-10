@@ -97,7 +97,7 @@ struct BreathworkPlay : View {
                     }
                 }
                 .frame(width: UIScreen.screenWidth * 0.85)
-                .padding()
+                .padding([.top, .horizontal])
                 .opacity(showPanel ? 1 : 0)
                 .disabled(!showPanel)
                 ZStack {
@@ -141,6 +141,7 @@ struct BreathworkPlay : View {
                         Img.grass
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(minWidth: UIScreen.screenWidth * 0.8, minHeight: 100)
                             .overlay(
                                 plantView
                             ).background(
@@ -176,7 +177,6 @@ struct BreathworkPlay : View {
                                     }
                                 }
                             )
-                            .frame(maxWidth:.infinity)
                         ZStack {
                             GeometryReader { geometry in
                                 Rectangle()
@@ -190,7 +190,7 @@ struct BreathworkPlay : View {
                             }
                         }.frame(height:15)
                     }
-                    .padding(.top,150)
+                    .padding(.top, UIScreen.screenHeight * (K.isSmall() ? 0.1 : 0.2))
                     VStack {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -210,7 +210,6 @@ struct BreathworkPlay : View {
                                             .font(Font.fredoka(.medium, size: 20))
                                             .foregroundColor(Clr.black2)
                                     ).addBorder(.black, width: 1, cornerRadius: 30)
-                               
                             }
                         }
                         .frame(height:50)
@@ -229,7 +228,7 @@ struct BreathworkPlay : View {
 //                                .underline()
 //                        }.padding(.top)
                     }
-                    .padding(.vertical)
+                    .padding(K.isSmall() ? .bottom : .vertical)
                     .disabled(!showPanel)
                     .opacity(showPanel ? 1.0 : 0.0)
                 }.padding(.horizontal,30)

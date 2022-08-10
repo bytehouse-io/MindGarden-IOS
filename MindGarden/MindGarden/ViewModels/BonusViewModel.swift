@@ -12,6 +12,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import WidgetKit
 import Storyly
+import Amplitude
 
 var updatedStreak = false
 var showWidgetTip = false
@@ -279,7 +280,7 @@ class BonusViewModel: ObservableObject {
     }
     
     private func updateLaunchNumber() {
-        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        var launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
 
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
@@ -321,7 +322,10 @@ class BonusViewModel: ObservableObject {
         } else if  Date() - formatter.date(from: self.lastStreakDate)! > 172800 {
             launchNum += 1
         }
-        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
+        UserDefaults.standard.setValue(launchNum, forKey: "dailyLaunchNumber")
+        let identify = AMPIdentify()
+            .set("dailyLaunchNumber", value: NSNumber(value: launchNum))
+        Amplitude.instance().identify(identify ?? AMPIdentify())
     }
     
     
@@ -455,9 +459,11 @@ class BonusViewModel: ObservableObject {
     
     private func updateLongest() {
         if let longestStreak =  UserDefaults.standard.value(forKey: "longestStreak") as? Int {
-            if longestStreak <= streakNumber {
+            
+            if longestStreak < streakNumber {
                 UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
             }
+            
             UserDefaults.standard.setValue(true, forKey: "updatedStreak")
         } else {
             UserDefaults.standard.setValue(1, forKey: "longestStreak")

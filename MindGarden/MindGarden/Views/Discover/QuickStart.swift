@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Amplitude
 
 struct QuickStart: View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -22,6 +23,7 @@ struct QuickStart: View {
                         .frame(height:16)
                     ForEach(quickStartTabList) { item in
                         Button {
+                            Amplitude.instance().logEvent("discover_selected_category", withEventProperties: ["category": item.title])
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation(.linear(duration: 0.3)) {
                                 category = item.title
