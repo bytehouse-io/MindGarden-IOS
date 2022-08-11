@@ -118,6 +118,7 @@ class GardenViewModel: ObservableObject {
                 .set("meditation_sessions", value: NSNumber(value: numMeds))
             identify?
                 .set("journal_sessions", value: NSNumber(value: numGrads))
+            UserDefaults.standard.setValue(numGrads, forKey: "numGrads")
             identify?
                 .set("mood_sessions", value: NSNumber(value: numMoods))
             Amplitude.instance().identify(identify ?? AMPIdentify())

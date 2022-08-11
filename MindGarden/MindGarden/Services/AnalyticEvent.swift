@@ -109,6 +109,8 @@ enum AnalyticEvent {
     case home_selected_plant //
     case home_tapped_categories //
     case home_tapped_profile //
+    case home_tapped_journal //
+    case home_tapped_mood //
     case home_tapped_recents //
     case home_tapped_favorites //
     case home_tapped_recent_meditation //
@@ -116,8 +118,6 @@ enum AnalyticEvent {
     case home_tapped_featured_breath //
     case home_tapped_featured_meditation //
     case home_selected_mood //
-    case home_tapped_mood
-    case home_tapped_journal
     case home_tapped_new_meditation //
     case home_tapped_weekly_meditation //
     case home_tapped_locked_meditation //
@@ -172,25 +172,27 @@ enum AnalyticEvent {
     case IAP_tapped_chest
 
     //MARK: - Store
-    case screen_load_store //
+    case screen_load_shop_page
     case store_tapped_plant_tile //
     case store_tapped_purchase_modal_buy //
     case store_tapped_confirm_modal_confirm //
     case store_tapped_confirm_modal_cancel //
     case store_tapped_success_modal_okay //
-    case store_tapped_store_option //
-    case store_tapped_badges_option //
     case store_tapped_rate_app //
     case store_tapped_refer_friend //
     case store_tapped_reddit //
     case store_tapped_go_pro
     case store_tapped_badge_tile
     case store_animation_continue //
-    case store_tapped_real_tree_option //
     case store_tapped_buy_real_tree //
     case store_bought_real_tree //
     case notification_success_store //
     case notification_settings_store //
+    case screen_load_plant_select
+    case selected_plant
+    case screen_load_badge
+    case screen_load_store
+    case screen_load_real_tree
     
 
     //MARK: - Middle
@@ -324,12 +326,9 @@ enum AnalyticEvent {
     case mood_tapped_veryGood //
     case mood_tapped_bad //
     case mood_tapped_veryBad
-    case mood_toggle_recs_off
-    case mood_toggle_recs_on
-    case mood_recs_not_now
     case plus_selected_mood //
-    case mood_tapped_cancel //
-    case mood_tapped_meditation_rec //
+    case mood_tapped_x //
+    
     //gratitude
     case plus_tapped_gratitude
     case plus_tapped_gratitude_to_pricing
@@ -531,18 +530,20 @@ extension AnalyticEvent {
         case .home_tapped_IAP: return "home_tapped_IAP"
         case .screen_load_store: return "screen_load_store"
         case .store_tapped_plant_tile: return "store_tapped_plant_tile"
+        case .screen_load_plant_select: return "screen_load_plant_select"
+        case .selected_plant: return "selected_plant"
+        case .screen_load_badge: return "screen_load_badge"
+        case .screen_load_shop_page: return "screen_load_shop_page"
+        case .screen_load_real_tree: return "screen_load_real_tree"
         case .store_tapped_purchase_modal_buy: return "store_tapped_purchase_modal_buy"
         case .store_tapped_confirm_modal_confirm: return "store_tapped_confirm_modal_confirm"
         case .store_tapped_confirm_modal_cancel: return "store_tapped_confirm_modal_cancel"
         case .store_tapped_success_modal_okay: return "store_tapped_success_modal_okay"
-        case .store_tapped_store_option: return "store_tapped_store_option"
-        case .store_tapped_badges_option: return "store_tapped_badges_option"
         case .store_tapped_rate_app: return "store_tapped_rate_app"
         case .store_tapped_refer_friend: return "store_tapped_refer_friend"
         case .store_tapped_go_pro: return "store_tapped_go_pro"
         case .store_tapped_reddit: return "store_tapped_reddit"
         case .store_tapped_badge_tile: return "store_tapped_badge_tile"
-        case  .store_tapped_real_tree_option: return "store_tapped_real_tree_option"
         case .store_tapped_buy_real_tree: return "store_tapped_buy_real_tree"
         case .store_animation_continue: return "store_animation_continue"
         case .notification_success_store: return "notification_success_store"
@@ -627,8 +628,6 @@ extension AnalyticEvent {
         case .tabs_tapped_plus: return "tabs_tapped_plus"
         case .tabs_tapped_search: return "tabs_tapped_search"
         case .plus_tapped_mood: return "plus_tapped_mood"
-        case .mood_toggle_recs_on: return "mood_toggle_recs_on"
-        case .mood_toggle_recs_off: return "mood_toggle_recs_off"
         case .mood_tapped_angry: return "mood_tapped_angry"
         case .mood_tapped_sad: return "mood_tapped_sad"
         case .mood_tapped_okay: return "mood_tapped_okay"
@@ -639,9 +638,7 @@ extension AnalyticEvent {
         case .mood_tapped_bad: return "mood_tapped_bad"
         case .mood_tapped_veryBad: return "mood_tapped_veryBad"
         case .plus_selected_mood: return "plus_selected_mood"
-        case .mood_tapped_cancel: return "mood_tapped_cancel"
-        case  .mood_recs_not_now: return "mood_recs_not_now"
-        case .mood_tapped_meditation_rec: return "mood_tapped_meditation_rec"
+        case .mood_tapped_x: return "mood_tapped_x"
         case .plus_tapped_gratitude: return "plus_tapped_gratitude"
         case .plus_tapped_mood_to_pricing: return "plus_tapped_mood_to_pricing"
         case .plus_tapped_gratitude_to_pricing: return "plus_tapped_gratitude_to_pricing"

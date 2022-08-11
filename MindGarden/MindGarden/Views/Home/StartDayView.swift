@@ -177,6 +177,7 @@ struct StartDayView: View {
                         .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(0.3), value: playEntryAnimation)
                         .onTapGesture {
+                            Analytics.shared.log(event: .home_tapped_mood)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 if !isDailyMood {
@@ -257,6 +258,7 @@ struct StartDayView: View {
                             .opacity(playEntryAnimation ? 1 : 0)
                             .animation(.spring().delay(0.275), value: playEntryAnimation)
                             .onTapGesture {
+                                Analytics.shared.log(event: .home_tapped_journal)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     userModel.elaboration = ""
@@ -435,7 +437,7 @@ struct StartDayView: View {
                             case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
                             case .good: Analytics.shared.log(event: .mood_tapped_good)
                             case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
-                            case .none: Analytics.shared.log(event: .mood_tapped_cancel)
+                            case .none: Analytics.shared.log(event: .mood_tapped_x)
                             }
                             withAnimation {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()

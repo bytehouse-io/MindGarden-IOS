@@ -29,9 +29,9 @@ struct Meditation: Hashable {
         return lhs.id == rhs.id
     }
 
-    static var lockedMeditations = [20, 21, 25,37,39,40,49,50,51,52,53,54,91,78,90,87,81,77,84, 105, 82, 107,14, 104, 108, 88, 92, 26, 75, 80, 83, 15,16,17,18,19,20,21, 38, 40, 41, 42, 43, 44, 45, 46, 47,48,49, 50, 51, 37, 16]
+    static var lockedMeditations = [20, 21, 25,37,39,40,49,50,51,54,78,90,87,81,77, 105,14, 104, 88, 92, 26, 75, 15,16,17,18,19,20,21, 38, 40, 41, 42, 43, 44, 45, 46, 47,48,49, 50, 51, 37, 16, 36]
     static var popularMeditations = [77, 92, 89, 105, 108, 104, 90, 85, 24]
-    static var morningMeds = [53, 49, 50]
+    static var morningMeds = [53, 49, 50, 84]
     func returnEventName() -> String {
         return self.title.replacingOccurrences(of: "?", with: "").replacingOccurrences(of: "&", with: "x").replacingOccurrences(of: "-", with: "")
             .replacingOccurrences(of: ",", with: "_")
@@ -46,7 +46,6 @@ struct Meditation: Hashable {
             med.type != .lesson && med.id != 22 && med.id != 55 && med.id != 56  }
         
         if !UserDefaults.standard.bool(forKey: "isPro") {
-            
             filtedMeds = filtedMeds.filter({ med in
                 return !lockedMeditations.contains(where: {$0 == med.id})
             })
@@ -56,7 +55,10 @@ struct Meditation: Hashable {
             filtedMeds = filtedMeds.filter { med in
                 med.id != 53 && med.id != 49
             }
+        } else {
+            
         }
+        
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 retMeds.append(allMeditations.first(where: { $0.id == 6 })!)
@@ -65,6 +67,14 @@ struct Meditation: Hashable {
             }
         } else {
             retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
+        }
+        
+        if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
+            if  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 {
+                filtedMeds = filtedMeds.filter({ med in  med.duration <= 360  })
+            } else if  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 20 {
+                filtedMeds = filtedMeds.filter({ med in  med.duration <= 700  })
+            }
         }
         var breathWork = 0
         switch selectedMood {
@@ -77,7 +87,7 @@ struct Meditation: Hashable {
             }
         case .okay, .happy, .good, .veryGood:
             if Calendar.current.component( .hour, from:Date() ) < 12 { // daytime meds only
-                retMeds += filtedMeds.filter { med in Meditation.morningMeds.contains(med.id) }
+                retMeds += filtedMeds.filter { med in Meditation.morningMeds.contains(med.id) || med.category == .growth || med.category == .confidence }
             } else {
                 retMeds += filtedMeds.filter { med in  med.category == .growth || med.category == .confidence }
             }
@@ -88,6 +98,9 @@ struct Meditation: Hashable {
                 med.category == .anxiety || med.category == .sadness
             }
         case .none: break
+        }
+        if retMeds.count < 3 {
+            retMeds += filtedMeds.filter { med in !retMeds.contains(med) }
         }
         retMeds.shuffle()
         var finalMeds = [breathWork]

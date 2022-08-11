@@ -151,8 +151,6 @@
 	<dict/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Share Your Progress</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Help us improve MindGarden + reach more people</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fredoka-Regular.ttf</string>

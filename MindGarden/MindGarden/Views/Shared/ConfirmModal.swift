@@ -61,6 +61,7 @@ struct ConfirmModal: View {
 //                                        }) {
 //                                        }
                                         showPlantAnimation = true
+                                        
                                     } else {
                                         userModel.buyPlant()
                                         showPlantAnimation = true

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import OneSignal
+import Amplitude
 
 struct Store: View {
     @EnvironmentObject var userModel: UserViewModel
@@ -137,6 +138,7 @@ struct Store: View {
                                                 PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
                                             } else if (plant.title != "Real Tree") {
                                                 Button {
+                                     
                                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                     if isShop {
                                                         userModel.willBuyPlant = plant
@@ -144,6 +146,7 @@ struct Store: View {
                                                             showModal = true
                                                         }
                                                     } else {
+                                                        Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
                                                         UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
                                                         userModel.selectedPlant = plant
                                                     }
@@ -199,6 +202,7 @@ struct Store: View {
                                                             showModal = true
                                                         }
                                                     } else {
+                                                        Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
                                                         UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
                                                         userModel.selectedPlant = plant
                                                         Analytics.shared.log(event: .home_selected_plant)
@@ -282,6 +286,11 @@ struct Store: View {
             Alert(title: Text("Success"), message: Text("🚀 Your Purchase was Successful!"), dismissButton: .default(Text("OK")))
         }
         .onAppear {
+            if !isShop {
+                Analytics.shared.log(event: .screen_load_plant_select)
+            } else {
+                Analytics.shared.log(event:. screen_load_shop_page)
+            }
             //            let _ = storylyViewProgrammatic.openStory(storyGroupId: 41611, play: .StoryGroup)
             DispatchQueue.main.async {
                 isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
@@ -305,7 +314,11 @@ struct Store: View {
         }
         .onDisappear {
             UserDefaults.standard.setValue(true, forKey: "showTip")
-        }.onAppearAnalytics(event: .screen_load_store)
+        }.onAppear {
+            if isShop {
+                
+            }
+        }
     }
     
     private func promptNotif() {

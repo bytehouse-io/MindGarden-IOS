@@ -392,10 +392,12 @@ class UserViewModel: ObservableObject {
             if !unlockedStrawberry {
                 self.coins -= willBuyPlant?.price ?? 0
                 selectedPlant = willBuyPlant
+                Amplitude.instance().logEvent("store_bought_plant", withEventProperties: ["plant": plant.title])
             }
             
             if unlockedStrawberry {
                 triggerAnimation = true
+                Amplitude.instance().logEvent("badge_unlocked_plant", withEventProperties: ["plant": plant.title])
             }
             
             ownedPlants.append(plant)

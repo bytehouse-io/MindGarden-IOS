@@ -74,8 +74,6 @@ struct RecRow: View {
         Button {
             if isWeekly {
                 Analytics.shared.log(event: .home_tapped_weekly_meditation)
-            } else {
-                Analytics.shared.log(event: .mood_tapped_meditation_rec)
             }
 
             presentationMode.wrappedValue.dismiss()

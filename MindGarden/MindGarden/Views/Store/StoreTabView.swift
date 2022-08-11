@@ -33,9 +33,11 @@ struct StoreTab: View {
                                 selectedTab = item.tabName
                                 withAnimation {
                                     if selectedTab == .store {
-                                        Analytics.shared.log(event: .store_tapped_store_option)
+                                        Analytics.shared.log(event: .screen_load_store)
                                     } else if selectedTab == .badge {
-                                        Analytics.shared.log(event: .store_tapped_badges_option)
+                                        Analytics.shared.log(event: .screen_load_badge)
+                                    } else {
+                                        Analytics.shared.log(event: .screen_load_real_tree)
                                     }
                                 }
                             }

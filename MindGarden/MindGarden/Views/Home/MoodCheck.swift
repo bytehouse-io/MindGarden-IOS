@@ -139,7 +139,7 @@ struct SingleMood: View {
                     case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
                     case .good: Analytics.shared.log(event: .mood_tapped_good)
                     case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
-                    case .none: Analytics.shared.log(event: .mood_tapped_cancel)
+                    case .none: Analytics.shared.log(event: .mood_tapped_x)
                     }
                     if moodSelected == mood {
                         moodSelected = .none

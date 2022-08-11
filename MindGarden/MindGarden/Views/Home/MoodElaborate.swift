@@ -36,6 +36,7 @@ struct MoodElaborate: View {
                     Spacer()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
                         CloseButton() {
+                            Analytics.shared.log(event: .mood_tapped_x)
                             withAnimation {
                                 viewRouter.currentPage = .meditate
                             }
