@@ -34,7 +34,7 @@ struct QuickStartMenuItem: Identifiable {
     static func getName(str: String) -> QuickStartType {
         switch str {
         case  "New Meditations": return .newMeditations
-        case "3 Minutes": return .minutes3
+        case "< 3 Minutes": return .minutes3
         case "5 Minutes": return .minutes5
         case "10 Minutes": return .minutes10
         case "15-20 Minutes": return .minutes20
@@ -53,7 +53,7 @@ struct QuickStartMenuItem: Identifiable {
     var name: String {
         switch title {
         case .newMeditations: return "New Meditations"
-        case .minutes3: return "3 Minutes"
+        case .minutes3: return "< 3 Minutes"
         case .minutes5: return "5 Minutes"
         case .minutes10: return "10 Minutes"
         case .minutes20: return "15-20 Minutes"

@@ -43,7 +43,15 @@ struct Meditation: Hashable {
     static func getRecsFromMood(selectedMood: Mood) -> [Int] {
         var retMeds: [Meditation] = []
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && !lockedMeditations.contains(where: {$0 == med.id})}
+            med.type != .lesson && med.id != 22 && med.id != 55 && med.id != 56  }
+        
+        if !UserDefaults.standard.bool(forKey: "isPro") {
+            
+            filtedMeds = filtedMeds.filter({ med in
+                return !lockedMeditations.contains(where: {$0 == med.id})
+            })
+        }
+        
         if Calendar.current.component(.hour, from: Date()) > 11 { // night time
             filtedMeds = filtedMeds.filter { med in
                 med.id != 53 && med.id != 49
@@ -61,22 +69,22 @@ struct Meditation: Hashable {
         var breathWork = 0
         switch selectedMood {
         case .stressed, .veryBad:
-            retMeds += allMeditations.filter { med in  med.category == .anxiety || med.category == .sadness }
+            retMeds += filtedMeds.filter { med in  med.category == .anxiety || med.category == .sadness }
             breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
         case .angry:
-            retMeds += allMeditations.filter { med in
+            retMeds += filtedMeds.filter { med in
                 med.id == 24 || med.id == 42 || med.id == 25 || med.id == 15 || med.id == 50
             }
         case .okay, .happy, .good, .veryGood:
             if Calendar.current.component( .hour, from:Date() ) < 12 { // daytime meds only
-                retMeds += allMeditations.filter { med in Meditation.morningMeds.contains(med.id) }
+                retMeds += filtedMeds.filter { med in Meditation.morningMeds.contains(med.id) }
             } else {
-                retMeds += allMeditations.filter { med in  med.category == .growth || med.category == .confidence }
+                retMeds += filtedMeds.filter { med in  med.category == .growth || med.category == .confidence }
             }
             breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
 
         case .sad, .bad:
-            retMeds += allMeditations.filter { med in
+            retMeds += filtedMeds.filter { med in
                 med.category == .anxiety || med.category == .sadness
             }
         case .none: break

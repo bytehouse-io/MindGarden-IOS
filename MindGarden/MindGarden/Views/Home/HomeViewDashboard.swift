@@ -146,6 +146,7 @@ struct HomeViewDashboard: View {
                     HStack {
                         if !userModel.completedMeditations.isEmpty {
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .home_tapped_recents)
                                 withAnimation {
                                     sheetTitle = "Your Recents"
@@ -162,6 +163,7 @@ struct HomeViewDashboard: View {
                         }
                         if !medModel.favoritedMeditations.isEmpty {
                             Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 Analytics.shared.log(event: .home_tapped_favorites)
                                 withAnimation {
                                     sheetTitle = "Your Favorites"

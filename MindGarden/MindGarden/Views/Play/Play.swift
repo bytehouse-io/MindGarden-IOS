@@ -504,6 +504,12 @@ struct Play: View {
             .font(.system(size: 24))
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
+                if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                    if let player = player {
+                        player.play()
+                    }
+                }
+                
                 withAnimation {
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -729,32 +735,38 @@ struct NatureModal: View {
                                     }
                             }.frame(width: 30, height: 30)
                         }.padding(20)
-                        HStack {
-                            SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                        Spacer()
+                        VStack {
+                            HStack {
+                                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            }
+                            HStack {
+                                SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            }
+                            HStack {
+                                SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                                SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                            }
                         }
-                        HStack {
-                            SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                        }
-                        HStack {
-                            SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                        }
+                        Spacer()
+
                         GeometryReader { geometry in
                             Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
                                 .accentColor(Clr.darkgreen)
                         }.frame(height: 30)
                             .padding(.horizontal, 30)
                             .padding(.top)
+                        Spacer()
                         Text("Bell Volume")
                             .foregroundColor(Clr.black2)
                             .font(Font.fredoka(.semiBold, size: 20))
@@ -766,6 +778,7 @@ struct NatureModal: View {
                         }.frame(height: 30)
                             .padding(.horizontal, 30)
                             .padding(.top, 10)
+                        Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {

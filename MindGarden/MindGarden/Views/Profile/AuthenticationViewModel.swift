@@ -118,7 +118,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 isLoading = false
                                 return
                             } else { // login
-                                Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                     if (error != nil) {
                                         alertError = true
                                         alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
@@ -216,7 +216,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         isLoading = false
                                         return
                                     } else { // login
-                                        Auth.auth().signIn(with: credential, completion: { (user, error) in
+                                        Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                             if (error != nil) {
                                                 alertError = true
                                                 alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
@@ -596,6 +596,8 @@ extension AuthenticationViewModel {
                         }
                     }
                     Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: email)
+                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                    UserDefaults.standard.setValue("432hz", forKey: "sound")
                     DispatchQueue.main.async {
                         Purchases.shared.logIn(email) { info, bool, error in
                             if info?.entitlements.all["isPro"]?.isActive == true {

@@ -78,9 +78,17 @@ struct BreathworkPlay : View {
                     .frame(height: K.hasNotch() ? 50 : 25)
                 HStack {
                     Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                            if let player = player {
+                                player.play()
+                            }
+                        }
+                        
                         withAnimation(.linear) {
                             viewRouter.currentPage = viewRouter.previousPage
                         }
+                        
                     } label: {
                         Image(systemName: "arrow.left.circle.fill")
                             .resizable()
@@ -243,6 +251,35 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
+            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                if let player = player {
+                    player.stop()
+                }
+            }
+            if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+                if defaultSound != "noSound"  {
+                    selectedSound = Sound.getSound(str: defaultSound)
+                    let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
+                    backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                    backgroundPlayer.delegate = self.del
+                    backgroundPlayer.prepareToPlay()
+                    if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
+                        backgroundPlayer.volume = vol
+                        sliderData.sliderValue = vol
+                    } else {
+                        backgroundPlayer.volume = 0.3
+                        sliderData.sliderValue = 0.3
+                    }
+                    sliderData.setPlayer(player: self.backgroundPlayer!)
+                    backgroundPlayer.numberOfLoops = -1
+                    backgroundPlayer.play()
+                } else {
+                    let url = Bundle.main.path(forResource: "", ofType: "mp3")
+                    backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                }
+            }
+
+            
             medModel.checkIfFavorited()
             if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {
                 userModel.selectedPlant = Plant.allPlants.first(where: { plant in
@@ -257,7 +294,7 @@ struct BreathworkPlay : View {
                 if !isPaused {
                     if timerCount < Double(totalTime) {
                         if title == "Inhale" {
-                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
                         }
                         timerCount += 1
                         DispatchQueue.main.async {
@@ -408,6 +445,7 @@ struct BreathworkPlay : View {
             .foregroundColor(Clr.lightGray)
             .onTapGesture {
                 withAnimation {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     showNatureModal = true
                 }
             }
