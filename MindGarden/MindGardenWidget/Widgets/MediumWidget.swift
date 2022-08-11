@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 enum MediumType {
     case journel, meditate, logmood, breathwork
@@ -25,15 +24,19 @@ enum MediumType {
 }
 
 struct NewMediumWidget: View {
+    
+    @State var lastDate:String
+    @State var lastMood:String
+    
     var body: some View {
         VStack(spacing:0) {
             HStack(spacing:0) {
-                MediumWidgetRow(type: .journel)
-                MediumWidgetRow(type: .meditate)
+                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .journel)
+                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .meditate)
             }
             HStack(spacing:0) {
-                MediumWidgetRow(type: .logmood)
-                MediumWidgetRow(type: .breathwork)
+                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .logmood)
+                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .breathwork)
             }
 
         }
@@ -44,14 +47,12 @@ struct NewMediumWidget: View {
 
 struct MediumWidgetRow: View {
     
-    @EnvironmentObject var medModel: MeditationViewModel
-    @EnvironmentObject var gardenModel: GardenViewModel
+    @State var lastDate:String
+    @State var lastMood:String
+    
     @State var type:MediumType
     let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
-    
-    init(type:MediumType) {
-        self.type = type
-    }
+
     
     var body: some View {
         ZStack {
@@ -83,7 +84,7 @@ struct MediumWidgetRow: View {
                                                 .font(Font.fredoka(.regular, size: 12))
                                                 .opacity(0)
                                                 .padding(.horizontal,0)
-                                            Mood.getMoodImage(mood: gardenModel.getLastLogMood())
+                                            getMoodImage()
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(height:15)
@@ -104,18 +105,8 @@ struct MediumWidgetRow: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
     }
     
-    private func getJournelDate()->String{
-        if let lastDate = userDefaults?.value(forKey: "lastJournel") as? String {
-            return lastDate
-        }
-        return Date().toString(withFormat: "MMM dd, yyyy")
-    }
-    
     private func getMoodImage()->Image{
-        if let mood = userDefaults?.value(forKey: "logMood") as? String {
-            return Mood.getMoodImage(mood: Mood.getMood(str: mood))
-        }
-        return Mood.getMoodImage(mood: .okay)
+        return Mood.getMoodImage(mood: Mood.getMood(str: lastMood))
     }
     
     private func getImage() -> Image {
@@ -123,13 +114,15 @@ struct MediumWidgetRow: View {
         case .journel:
             return Image("mediumWidgetJournel")
         case .meditate:
-            return medModel.featuredMeditation?.img ?? Image("mediumWidgetTurtle")
+            return Image("mediumWidgetTurtle")
         case .logmood:
             return Image("mediumWidgetMood")
         case .breathwork:
-            return medModel.featuredBreathwork.img
+            return Image("mediumWidgetBreathwork")
         }
     }
+    
+    
     
     private func getSubtile() -> String{
         switch type {
@@ -137,13 +130,13 @@ struct MediumWidgetRow: View {
             if let lastJournel = UserDefaults.standard.value(forKey: "lastJournel") as? String {
                 return lastJournel
             }
-            return "Last: \(getJournelDate())"
+            return "Last: \(lastDate)"
         case .meditate:
-            return medModel.featuredMeditation?.title ?? ""
+            return "Presence & Gratitude"
         case .logmood:
             return "Last Check:"
         case .breathwork:
-            return medModel.featuredBreathwork.title
+            return "Unwind"
         }
     }
 }
