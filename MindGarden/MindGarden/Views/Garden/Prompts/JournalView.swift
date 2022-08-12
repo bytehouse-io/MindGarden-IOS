@@ -84,7 +84,7 @@ struct JournalView: View, KeyboardReadable {
                 GeometryReader { g in
                     VStack(spacing: 0) {
                         Text(question)
-                            .font(Font.fredoka(.semiBold, size: 24))
+                            .font(Font.fredoka(.semiBold, size: 20))
                             .foregroundColor(Clr.black2)
                             .lineLimit(3)
                             .frame(width: UIScreen.screenWidth - 60, alignment: .leading)

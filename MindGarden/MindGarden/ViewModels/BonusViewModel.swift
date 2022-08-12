@@ -470,35 +470,35 @@ class BonusViewModel: ObservableObject {
     }
     
     private func progressiveDisclosure(lastStreakDate: String) {
-        if formatter.date(from: lastStreakDate)! - Date() <= 0 {
-            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
-            UserDefaults.standard.setValue(dte,forKey: "ltd")
-            if UserDefaults.standard.bool(forKey: "day1") {
-                if UserDefaults.standard.bool(forKey: "day2") {
-                    if UserDefaults.standard.bool(forKey: "day3") {
-                        if UserDefaults.standard.bool(forKey: "day4") {
-                            
-                        } else { //fourth day back unlock plusCoins
-                            
-                            UserDefaults.standard.setValue(true, forKey: "day4")
-                            UserDefaults.standard.setValue(4, forKey: "day")
-                        }
-                    } else { // third day back
-                        showWidgetTip = true
-                        UserDefaults.standard.setValue(true, forKey: "day3")
-                        UserDefaults.standard.setValue(3, forKey: "day")
-                    }
-                } else { // second day back
-                    NotificationHelper.addUnlockedFeature(title: "⚙️ Widget has been unlocked", body: "Add it to your home screen!")
-                    UserDefaults.standard.setValue(true, forKey: "day2")
-                    UserDefaults.standard.setValue(2, forKey: "day")
-                }
-            } else { // first day back
-                NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
-                UserDefaults.standard.setValue(true, forKey: "day1")
-                UserDefaults.standard.setValue(1, forKey: "day")
-            }
-        }
+//        if formatter.date(from: lastStreakDate)! - Date() <= 0 {
+//            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
+//            UserDefaults.standard.setValue(dte,forKey: "ltd")
+//            if UserDefaults.standard.bool(forKey: "day1") {
+//                if UserDefaults.standard.bool(forKey: "day2") {
+//                    if UserDefaults.standard.bool(forKey: "day3") {
+//                        if UserDefaults.standard.bool(forKey: "day4") {
+//
+//                        } else { //fourth day back unlock plusCoins
+//
+//                            UserDefaults.standard.setValue(true, forKey: "day4")
+//                            UserDefaults.standard.setValue(4, forKey: "day")
+//                        }
+//                    } else { // third day back
+//                        showWidgetTip = true
+//                        UserDefaults.standard.setValue(true, forKey: "day3")
+//                        UserDefaults.standard.setValue(3, forKey: "day")
+//                    }
+//                } else { // second day back
+//                    NotificationHelper.addUnlockedFeature(title: "⚙️ Widget has been unlocked", body: "Add it to your home screen!")
+//                    UserDefaults.standard.setValue(true, forKey: "day2")
+//                    UserDefaults.standard.setValue(2, forKey: "day")
+//                }
+//            } else { // first day back
+//                NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
+//                UserDefaults.standard.setValue(true, forKey: "day1")
+//                UserDefaults.standard.setValue(1, forKey: "day")
+//            }
+//        }
         createProgressiveCountdown()
     }
 

@@ -13,6 +13,7 @@ import Amplitude
 import Firebase
 import OneSignal
 
+var moodFromFinished = false
 struct Finished: View {
     var bonusModel: BonusViewModel
     var model: MeditationViewModel
@@ -134,6 +135,7 @@ struct Finished: View {
                                                             .cornerRadius(24)
                                                             .addBorder(.black, width: 1.5, cornerRadius: 24)
                                                             .onTapGesture {
+                                                                moodFromFinished = true
                                                                 withAnimation(.easeOut) {
                                                                     hideConfetti = true
                                                                     Analytics.shared.log(event: .home_tapped_categories)

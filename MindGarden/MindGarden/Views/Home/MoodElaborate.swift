@@ -96,8 +96,12 @@ struct MoodElaborate: View {
                                     moodSession["mood"] = userModel.selectedMood.title
                                 
                                     gardenModel.save(key: "moods", saveValue: moodSession, coins: userModel.coins)
-                                
-                                    viewRouter.currentPage = .journal
+                                    if moodFromFinished {
+                                        viewRouter.currentPage = .garden
+                                        moodFromFinished = false
+                                    } else {
+                                        viewRouter.currentPage = .journal
+                                    }
                                 }
                             } label: {
                                 ZStack {

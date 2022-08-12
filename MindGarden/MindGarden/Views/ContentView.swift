@@ -336,7 +336,7 @@ struct ContentView: View {
                                             .font(Font.fredoka(.bold, size: 28))
                                             .foregroundColor(Clr.darkgreen)
                                             .padding(.bottom, -5)
-                                        Text("You just got 50 coins!")
+                                        Text("You just got 500 coins!")
                                             .font(Font.fredoka(.medium, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .multilineTextAlignment(.center)

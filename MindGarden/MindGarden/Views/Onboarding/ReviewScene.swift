@@ -119,7 +119,7 @@ struct ReviewScene: View {
                                 experience.0
                                     .resizable() 
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.175, height: width * 0.175)
+                                    .frame(width: width * 0.15, height: width * 0.15, alignment: .leading)
                                     .padding()
                                 VStack(alignment: .leading) {
                                     Text("Your experience level")
@@ -181,6 +181,7 @@ struct ReviewScene: View {
                                         }
                                     }
                                 }.frame(width: width * 0.5, alignment: .leading)
+                                 .offset(x: -5)
                             }
                         }
                         Spacer()

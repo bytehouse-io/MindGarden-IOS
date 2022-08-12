@@ -36,15 +36,15 @@ struct ReferralItem: Identifiable {
     var title : String {
         switch self.tabName {
         case .ref1: return "Your 1st Friend Invited"
-        case .ref2: return "Every Friend Invited = +50 free coins"
+        case .ref2: return "Every Friend Invited = +500 free coins"
         case .ref3: return "5 Friends = Limited Edition Sticker Pack"
         }
     }
     
     var subTitle: String {
         switch self.tabName {
-        case .ref1: return "Unlock a rare venus fly trap when you invite your first friend (They must signup with email using your link)"
-        case .ref2: return "In order for a referral to go through, your friend must create an account using your link"
+        case .ref1: return "Unlock a rare venus fly trap when you invite your first friend and they sign up"
+        case .ref2: return "In order for a referral to go through, your friend must signup with email using your link"
         case .ref3: return "Email us a screenshot team@mindgarden.io, and we'll mail you our pack for free!"
         }
     }

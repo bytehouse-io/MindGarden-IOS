@@ -482,7 +482,7 @@ extension AuthenticationViewModel {
                         let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: dte ?? Date())
                         let newDateString = dateFormatter.string(from: newDate ?? Date())
                         refStack += 1
-                        coins += 50
+                        coins += 500
                         let referredStack = newDateString+"+"+String(refStack)
                         db.collection(K.userPreferences).document(referredEmail)
                             .updateData([

@@ -342,32 +342,6 @@ class UserViewModel: ObservableObject {
                 show50Off = true
             }
             
-            if !UserDefaults.standard.bool(forKey: "promoCode") {
-                UserDefaults.standard.setValue(false, forKey: "isPro")
-                if referredStack != "" {
-                    let plusIndex = referredStack.indexInt(of: "+") ?? 0
-                    if dateFormatter.date(from: referredStack.substring(to: plusIndex)) ?? Date() > Date() {
-                        UserDefaults.standard.setValue(true, forKey: "isPro")
-                    } else {
-                        UserDefaults.standard.setValue(false, forKey: "isPro")
-                    }
-                }
-                
-                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
-                WidgetCenter.shared.reloadAllTimelines()
-                
-                //                    if let email = Auth.auth().currentUser?.email {
-                //                        Firestore.firestore().collection(K.userPreferences).document(email).updateData([
-                //                            "isPro": isPro,
-                //                        ]) { (error) in
-                //                            if let e = error {
-                //                                print("There was a issue saving data to firestore \(e) ")
-                //                            } else {
-                //                                print("Succesfully saved user is pro")
-                //                            }
-                //                        }
-                //                    }
-            }
         }
     }
     }

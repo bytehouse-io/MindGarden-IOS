@@ -46,8 +46,10 @@ struct MoodCheck: View {
                                         .cornerRadius(17)
                                         .neoShadow()
                                 ).onTapGesture {
+                                    moodFromFinished = false
                                     withAnimation { shown.toggle() }
                                 }.offset(x: -5, y: 10)
+                                .disabled(UserDefaults.standard.bool(forKey: "signedUp"))
                         }.frame(width: g.size.width * 0.85, alignment: .leading)
      
                         Text("How are you feeling right now?")

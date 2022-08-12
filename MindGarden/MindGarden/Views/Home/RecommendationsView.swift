@@ -102,7 +102,7 @@ struct RecommendationsView: View {
                                 Spacer()
                             }
                         }
-                        .frame(width: width * 0.85, height:175)
+                        .frame(width: width * 0.875, height:175)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                     }
                     
@@ -126,7 +126,7 @@ struct RecommendationsView: View {
                 playAnim = true
                 playEntryAnimation = true
             }
-            
+
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
                 if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
                     Analytics.shared.log(event: .onboarding_load_recs)
@@ -154,21 +154,22 @@ struct RecommendationsView: View {
                 Text("Today’s Meditations")
                     .foregroundColor(Clr.brightGreen)
                     .font(Font.fredoka(.semiBold, size: 20))
+                    .padding(.leading, 10)
                 Spacer()
-            }
+            }.frame(width: UIScreen.screenWidth * 0.875)
             HStack(spacing:16) {
                 Mood.getMoodImage(mood: userModel.selectedMood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height:50)
-                Text("Based on how your feeling, we chose these for you:")
+                Text("Based on how you're feeling, we chose these for you:")
                     .foregroundColor(Clr.black2)
                     .font(Font.fredoka(.regular, size: 20))
                     .multilineTextAlignment(.leading)
-            }.frame(height:50)
+            }.frame(width: UIScreen.screenWidth * 0.875, height:50)
             .padding(.bottom,20)
             ForEach(0..<3) { idx in
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && idx == 0  { // onboarding
+                if isOnboarding && idx == 0  { // onboarding
                     MeditationRow(id: 22, isBreathwork: false)
                         .padding(.vertical,5)
                         .offset(y: playEntryAnimation ? 0 : 100)
@@ -213,6 +214,8 @@ struct RecommendationsView: View {
                     }
                 }
             }.buttonStyle(NeoPress())
+                .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
+                .offset(x: 5)
             .disabled(isOnboarding)
         }
     }
@@ -254,17 +257,18 @@ struct MeditationRow: View {
                 Rectangle()
                     .fill(Clr.darkWhite)
                     .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                    .frame(width: UIScreen.screenWidth * 0.875)
                 HStack(spacing:0) {
                     VStack(alignment:.leading,spacing:3) {
                         Text(isBreathwork ? breathwork.title : meditation.title)
                             .font(Font.fredoka(.semiBold, size: 20))
-                            .frame(width: UIScreen.screenWidth * 0.5, height: !isBreathwork
+                            .frame(width: UIScreen.screenWidth * ( meditation.title == "30 Second Meditation" ? 0.525 : 0.5), height: !isBreathwork
                                    && meditation.title.count > 20 ? 55 : 25, alignment: .leading)
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.leading)
                             .padding(.vertical, 5)
-                            .lineLimit(2)
                             .offset(y:!isBreathwork && meditation.title.count > 19 ? 5 : 0)
+                            .lineLimit(2)
                         HStack(spacing: 7) {
                             Image(systemName: isBreathwork ? "wind" : "speaker.wave.3.fill")
                                 .resizable()
@@ -276,7 +280,8 @@ struct MeditationRow: View {
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical,0)
                         }.padding(.vertical,0)
-                            .frame(width: UIScreen.screenWidth/2.5, alignment: .leading)
+                            .frame(width: UIScreen.screenWidth/2.25, alignment: .leading)
+                            .offset(x: 5)
 
                         HStack(spacing: 5){
                                 Image(systemName: isBreathwork ? breathwork.color.image : "timer")
@@ -302,7 +307,8 @@ struct MeditationRow: View {
                                     .foregroundColor(Clr.black2.opacity(0.5))
                                     .padding(.vertical,0)
                             }.padding(.vertical,0)
-                            .frame(width: UIScreen.screenWidth/2.25, alignment: .leading)
+                            .frame(width: UIScreen.screenWidth/2.1, alignment: .leading)
+                            .offset(x: 5)
                     }
                     Spacer()
                     Group {

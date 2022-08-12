@@ -56,7 +56,9 @@ struct Meditation: Hashable {
                 med.id != 53 && med.id != 49
             }
         } else {
-            
+            filtedMeds = filtedMeds.filter { med in
+                med.category != .sleep
+            }
         }
         
         if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
@@ -71,11 +73,12 @@ struct Meditation: Hashable {
         
         if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 {
-                filtedMeds = filtedMeds.filter({ med in  med.duration <= 360  })
+                filtedMeds = filtedMeds.filter({ med in  med.duration <= 360 && med.category != .unguided  })
             } else if  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 20 {
-                filtedMeds = filtedMeds.filter({ med in  med.duration <= 700  })
+                filtedMeds = filtedMeds.filter({ med in  med.duration <= 700 && med.category != .unguided  })
             }
         }
+        
         var breathWork = 0
         switch selectedMood {
         case .stressed, .veryBad:
