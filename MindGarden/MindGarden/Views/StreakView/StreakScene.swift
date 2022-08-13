@@ -178,7 +178,11 @@ struct StreakScene: View {
             if launchNum == 2 || launchNum == 4 || launchNum == 6 || launchNum == 8 {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
-                viewRouter.currentPage = .pricing
+                if !UserDefaults.standard.bool(forKey: "isPro") {
+                    viewRouter.currentPage = .pricing
+                } else {
+                    viewRouter.currentPage = .garden
+                }
             } else {
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                     showNextSteps = true

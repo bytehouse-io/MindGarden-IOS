@@ -334,6 +334,7 @@ class UserViewModel: ObservableObject {
             UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
             WidgetCenter.shared.reloadAllTimelines()
         } else {
+            UserDefaults.standard.setValue(false, forKey: "isPro")
             let identify = AMPIdentify()
                 .set("plan_type", value: NSString(utf8String: "free"))
             Amplitude.instance().identify(identify ?? AMPIdentify())

@@ -174,7 +174,7 @@ struct BreathMiddle: View {
                             
                             (Text("💡 Tip: ").bold() + Text(breathWork.tip))
                                 .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(Clr.black2)
+                                .foregroundColor(Clr.darkGray)
                                 .frame(width: width - 60, height: 70, alignment: .leading)
                             //MARK: - Recommended Use
                             VStack(alignment: .leading, spacing: 10) {

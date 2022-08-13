@@ -121,7 +121,7 @@ struct JournalView: View, KeyboardReadable {
                             }
                         }
                         .transition(.move(edge: .leading))
-                        .frame(height: g.size.height * (question == placeholderQuestion ? 0.4 : (question.count >= 64 ? 0.35 : question.count >= 32 ? 0.4 : 0.45)))
+                        .frame(height: g.size.height * (question == placeholderQuestion ? 0.4 : (question.count >= 64 ? 0.325 : question.count >= 32 ? 0.375 : 0.425)))
                         .padding(.top, 15)
                     }
                 }
@@ -200,7 +200,6 @@ struct JournalView: View, KeyboardReadable {
                                             UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
                                         }
                                         UserDefaults.standard.setValue(num, forKey: "numGrads")
-                                        Analytics.shared.log(event: .gratitude_tapped_done)
                                         withAnimation {
                                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
                                                 UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
@@ -281,7 +280,7 @@ struct JournalView: View, KeyboardReadable {
                         isFocused = true
                     }
                 }
-                recs = Meditation.getRecsFromMood(selectedMood: userModel.selectedMood)
+                recs = Meditation.getRecsFromMood(selectedMood: userModel.selectedMood, elaboration: userModel.elaboration)
                 question = placeholderQuestion
                 UITextView.appearance().backgroundColor = .clear
             }

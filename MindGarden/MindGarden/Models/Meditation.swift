@@ -40,7 +40,7 @@ struct Meditation: Hashable {
             .lowercased()
     }
 
-    static func getRecsFromMood(selectedMood: Mood) -> [Int] {
+    static func getRecsFromMood(selectedMood: Mood, elaboration: String = "") -> [Int] {
         var retMeds: [Meditation] = []
         var filtedMeds = Meditation.allMeditations.filter { med in
             med.type != .lesson && med.id != 22 && med.id != 55 && med.id != 56  }
@@ -94,14 +94,20 @@ struct Meditation: Hashable {
             } else {
                 retMeds += filtedMeds.filter { med in  med.category == .growth || med.category == .confidence }
             }
-            breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
+            breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm || breath.id == -2 }).shuffled()[0].id
 
         case .sad, .bad:
+            breathWork = Breathwork.breathworks.filter({ breath in   breath.color == .calm }).shuffled()[0].id
             retMeds += filtedMeds.filter { med in
                 med.category == .anxiety || med.category == .sadness
             }
         case .none: break
         }
+        
+        if elaboration == "😴 Tired" {
+            breathWork = -2
+        }
+        
         if retMeds.count < 3 {
             retMeds += filtedMeds.filter { med in !retMeds.contains(med) }
         }

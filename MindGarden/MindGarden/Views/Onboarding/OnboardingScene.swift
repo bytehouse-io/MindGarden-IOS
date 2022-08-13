@@ -74,7 +74,7 @@ struct OnboardingScene: View {
                                 Group {
                                     Text("Just")
                                         .foregroundColor(Clr.black2) +
-                                    Text(" Gamification")
+                                    Text(" Gamification.")
                                         .foregroundColor(Clr.brightGreen)
                                 }
                                 .font(Font.fredoka(.bold, size: 32))

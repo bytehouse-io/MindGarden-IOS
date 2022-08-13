@@ -123,6 +123,7 @@ struct PromptsView: View {
                                                 .lineLimit(3)
                                                 .frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
                                         }.frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
+                                            .offset(x: -5)
                                     }
                                     .frame(width: UIScreen.screenWidth * 0.85, height: UIScreen.screenHeight * 0.115, alignment: .center)
                                     .cornerRadius(16)
@@ -133,7 +134,7 @@ struct PromptsView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 25, height: 25)
-                                        .position(x: UIScreen.screenWidth - 110, y: 40)
+                                        .position(x: UIScreen.screenWidth - 70, y: 40)
                                 }
                             }
                         }

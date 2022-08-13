@@ -106,8 +106,13 @@ struct RealTrees: View {
                         .foregroundColor(Clr.black2)
                      + Text(" Learn More")
                         .font(Font.fredoka(.semiBold, size: 16))
-                        .foregroundColor(Clr.darkgreen))
+                        .foregroundColor(Clr.darkgreen)
+                    )
                     .frame(width: width * 0.8)
+                    .onTapGesture {
+                        guard let url = URL(string: "https://trees.org/our-work/") else { return }
+                        UIApplication.shared.open(url)
+                    }
                     Spacer()
                 }.frame(width: width * 0.85)
             }.padding(.bottom, 50)
