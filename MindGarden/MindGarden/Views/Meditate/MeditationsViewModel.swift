@@ -179,6 +179,8 @@ class MeditationViewModel: ObservableObject {
                 setFeaturedReason()
             }
         }
+        saveFeaturedBreathwork()
+        saveFeaturedMeditation()
     }
 
     private func setFeaturedReason() {
@@ -240,6 +242,14 @@ class MeditationViewModel: ObservableObject {
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         }
+        saveFeaturedMeditation()
+    }
+    private func saveFeaturedBreathwork() {
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(featuredBreathwork.id, forKey: "featuredBreathwork")
+    }
+    
+    private func saveFeaturedMeditation() {
+        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(featuredMeditation?.id, forKey: "featuredMeditation")
     }
 
     private func getRecommendedMeds() {

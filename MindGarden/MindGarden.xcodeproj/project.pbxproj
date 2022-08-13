@@ -51,6 +51,7 @@
 		58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE8127C779E200254AC2 /* PlusMenuView.swift */; };
 		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
+		58B5AA9B28A79F8200BDC379 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5AA9A28A79F8200BDC379 /* ImageLoader.swift */; };
 		58BAD4DD2818FCE5005BBB9A /* ReferralScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */; };
 		58BAD4E12819AB3B005BBB9A /* RererralsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */; };
 		58C052E22805DF3E007B4D2B /* HomeViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C052E12805DF3E007B4D2B /* HomeViewHeader.swift */; };
@@ -337,6 +338,7 @@
 		58A9EE8127C779E200254AC2 /* PlusMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenuView.swift; sourceTree = "<group>"; };
 		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		58B5AA9A28A79F8200BDC379 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralScene.swift; sourceTree = "<group>"; };
 		58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RererralsModel.swift; sourceTree = "<group>"; };
 		58C052E12805DF3E007B4D2B /* HomeViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewHeader.swift; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				5898541428954E0C002999A0 /* SmallWidget.swift */,
 				5898541628954E33002999A0 /* MediumWidget.swift */,
 				5898541828954E4C002999A0 /* LargeWidget.swift */,
+				58B5AA9A28A79F8200BDC379 /* ImageLoader.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -1720,6 +1723,7 @@
 				5898541928954E4C002999A0 /* LargeWidget.swift in Sources */,
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
 				58DB9A77289D7BB900F930DE /* GardenViewModel.swift in Sources */,
+				58B5AA9B28A79F8200BDC379 /* ImageLoader.swift in Sources */,
 				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
 				58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */,
