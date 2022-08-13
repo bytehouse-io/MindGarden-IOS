@@ -333,6 +333,7 @@ class UserViewModel: ObservableObject {
             UserDefaults.standard.setValue(true, forKey: "isPro")
             UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
             WidgetCenter.shared.reloadAllTimelines()
+            buyBonsai()
         } else {
             UserDefaults.standard.setValue(false, forKey: "isPro")
             let identify = AMPIdentify()

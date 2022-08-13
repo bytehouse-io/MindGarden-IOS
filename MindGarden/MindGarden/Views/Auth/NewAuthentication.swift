@@ -27,8 +27,8 @@ struct NewAuthentication: View {
     
     init(viewModel: AuthenticationViewModel) {
         self.viewModel = viewModel
-        self.viewModel.isSignUp = true
     }
+    
     var body: some View {
         NavigationView {
             

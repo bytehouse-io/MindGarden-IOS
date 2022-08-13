@@ -7,12 +7,61 @@
 
 import SwiftUI
 
+struct MediumEntry {
+    let lastDate:String
+    let lastMood:String
+    let meditationId:Int?
+    let breathworkId:Int?
+    
+    var moodImage:Image {
+        return Mood.getMoodImage(mood: Mood.getMood(str: lastMood))
+    }
+    
+    var meditation:Meditation {
+        return Meditation.allMeditations.first(where: { $0.id == meditationId } ) ?? Meditation.allMeditations.first!
+    }
+    
+    var breathWork:Breathwork {
+        return Breathwork.breathworks.first(where: { $0.id == breathworkId } ) ?? Breathwork.breathworks.first!
+    }
+    
+    func getImage(type:MediumType) -> Any? {
+        switch type {
+        case .journel:
+            return Image("mediumWidgetJournel")
+        case .meditate:
+            if meditation.imgURL != "" {
+                return nil
+            } else {
+                return meditation.img
+            }
+        case .logmood:
+            return Image("mediumWidgetMood")
+        case .breathwork:
+            return breathWork.img
+        }
+    }
+    
+    func getSubtile(type:MediumType) -> String{
+        switch type {
+        case .journel:
+            return "Last: \(lastDate)"
+        case .meditate:
+            return meditation.title
+        case .logmood:
+            return "Last Check:"
+        case .breathwork:
+            return breathWork.title
+        }
+    }
+}
+
 enum MediumType {
     case journel, meditate, logmood, breathwork
     var title: String {
         switch self {
         case .journel:
-            return "Journel"
+            return "journal"
         case .meditate:
             return "Meditate"
         case .logmood:
@@ -25,18 +74,17 @@ enum MediumType {
 
 struct NewMediumWidget: View {
     
-    @State var lastDate:String
-    @State var lastMood:String
+   let mediumEntry:MediumEntry
     
     var body: some View {
         VStack(spacing:0) {
             HStack(spacing:0) {
-                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .journel)
-                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .meditate)
+                MediumWidgetRow(mediumEntry:mediumEntry, type: .journel)
+                MediumWidgetRow(mediumEntry:mediumEntry, type: .meditate)
             }
             HStack(spacing:0) {
-                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .logmood)
-                MediumWidgetRow(lastDate: lastDate, lastMood: lastMood, type: .breathwork)
+                MediumWidgetRow(mediumEntry:mediumEntry, type: .logmood)
+                MediumWidgetRow(mediumEntry:mediumEntry, type: .breathwork)
             }
 
         }
@@ -47,12 +95,8 @@ struct NewMediumWidget: View {
 
 struct MediumWidgetRow: View {
     
-    @State var lastDate:String
-    @State var lastMood:String
-    
+    let mediumEntry:MediumEntry
     @State var type:MediumType
-    let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
-
     
     var body: some View {
         ZStack {
@@ -60,17 +104,24 @@ struct MediumWidgetRow: View {
                 .fill(Color("darkWhite"))
                 .addBorder(Color.black, width: 1.5, cornerRadius: 20)
             HStack {
-                getImage()
+                if let img = mediumEntry.getImage(type: type) as? Image {
+                    img
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width:35)
+                } else {
+                    AsyncImage(url: URL(string: mediumEntry.meditation.imgURL)!,
+                                      placeholder: { Text("...") },
+                                      image: { Image(uiImage: $0).resizable() })
+                              .frame(idealHeight: UIScreen.main.bounds.width / 2 * 3)
+                }
                 VStack(alignment:.leading) {
                     Text(type.title)
                         .font(Font.fredoka(.bold, size: 16))
                         .foregroundColor(Color("black2"))
                         .padding(.bottom,1)
                     HStack {
-                        Text(getSubtile())
+                        Text(mediumEntry.getSubtile(type: type))
                             .lineLimit(1)
                             .font(Font.fredoka(.regular, size: 10))
                             .foregroundColor(Color("black2"))
@@ -79,12 +130,12 @@ struct MediumWidgetRow: View {
                                 HStack {
                                     if type == .logmood {
                                         HStack(spacing:0){
-                                            Text(getSubtile())
+                                            Text(mediumEntry.getSubtile(type: type))
                                                 .lineLimit(1)
                                                 .font(Font.fredoka(.regular, size: 12))
                                                 .opacity(0)
                                                 .padding(.horizontal,0)
-                                            getMoodImage()
+                                            mediumEntry.moodImage
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(height:15)
@@ -103,40 +154,5 @@ struct MediumWidgetRow: View {
         .background(Color("darkWhite").cornerRadius(20).neoShadow())
         .padding(5)
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-    }
-    
-    private func getMoodImage()->Image{
-        return Mood.getMoodImage(mood: Mood.getMood(str: lastMood))
-    }
-    
-    private func getImage() -> Image {
-        switch type {
-        case .journel:
-            return Image("mediumWidgetJournel")
-        case .meditate:
-            return Image("mediumWidgetTurtle")
-        case .logmood:
-            return Image("mediumWidgetMood")
-        case .breathwork:
-            return Image("mediumWidgetBreathwork")
-        }
-    }
-    
-    
-    
-    private func getSubtile() -> String{
-        switch type {
-        case .journel:
-            if let lastJournel = UserDefaults.standard.value(forKey: "lastJournel") as? String {
-                return lastJournel
-            }
-            return "Last: \(lastDate)"
-        case .meditate:
-            return "Presence & Gratitude"
-        case .logmood:
-            return "Last Check:"
-        case .breathwork:
-            return "Unwind"
-        }
     }
 }

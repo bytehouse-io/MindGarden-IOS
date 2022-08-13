@@ -14,11 +14,11 @@ import Amplitude
 struct Provider: IntentTimelineProvider {
     let gridd = [String: [String:[String:[String:Any]]]]()
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, isPro: false,lastLogDate: Date().toString(withFormat: "MMM dd, yyyy"), lastLogMood: "", configuration: ConfigurationIntent())
+        SimpleEntry(configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, isPro: false,lastLogDate: Date().toString(withFormat: "MMM dd, yyyy"), lastLogMood: "", configuration: configuration)
+        let entry = SimpleEntry(configuration: configuration)
         completion(entry)
     }
 
@@ -32,12 +32,15 @@ struct Provider: IntentTimelineProvider {
         let streakNumber = userDefaults?.integer(forKey: "streakNumber")
         let isPro = userDefaults?.bool(forKey: "isPro")
         
-        let lastLogDate = userDefaults?.value(forKey: "lastJournel") as? String ?? ""
-        let lastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? ""
+        let lastLogDate = userDefaults?.value(forKey: "lastJournel") as? String ?? Date().toString(withFormat: "MMM dd, yyyy")
+        let lastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? "okay"
+        
+        let meditation = userDefaults?.integer(forKey: "featuredMeditation")
+        let breathwork = userDefaults?.integer(forKey: "featuredBreathwork")
         
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood,  configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation, breathWorkId: breathwork)
             entries.append(entry)
         }
 
@@ -47,13 +50,15 @@ struct Provider: IntentTimelineProvider {
 }
 
 struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let grid: [String: [String:[String:[String:Any]]]]
-    let streakNumber: Int
-    let isPro: Bool
-    let lastLogDate: String
-    let lastLogMood: String
+    var date: Date = Date()
+    var grid = [String: [String:[String:[String:Any]]]]()
+    var streakNumber: Int = 0
+    var isPro: Bool = false
+    var lastLogDate: String = Date().toString(withFormat: "MMM dd, yyyy")
+    var lastLogMood: String = "okay"
     let configuration: ConfigurationIntent
+    var meditationId: Int?
+    var breathWorkId: Int?
 }
 
 struct MindGardenWidgetEntryView : View {
@@ -76,7 +81,7 @@ struct MindGardenWidgetEntryView : View {
             case .systemSmall:
                 SmallWidget(streak: entry.streakNumber)
             case .systemMedium:
-                NewMediumWidget(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood)
+                NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId))
             case .systemLarge:
                 LargeWidget()
             default:
@@ -336,14 +341,13 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
 struct MindGardenWidget_Previews: PreviewProvider {
     static var previews: some View {
-        MindGardenWidgetEntryView(entry: SimpleEntry(date: Date(), grid: [String: [String:[String:[String:Any]]]]()
-                                                     , streakNumber: 1, isPro: true, lastLogDate: Date().toString(withFormat: "MMM dd, yyyy"), lastLogMood: "", configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
+        MindGardenWidgetEntryView(entry: SimpleEntry(configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

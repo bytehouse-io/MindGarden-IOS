@@ -130,6 +130,7 @@ struct SingleMood: View {
         ZStack {
             VStack(spacing: 2) {
                 Button {
+                    Analytics.shared.log(event: .mood_tapped_done)
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     switch mood {
                     case .angry: Analytics.shared.log(event: .mood_tapped_angry)

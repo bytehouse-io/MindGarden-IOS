@@ -328,6 +328,7 @@ enum AnalyticEvent {
     case mood_tapped_veryBad
     case plus_selected_mood //
     case mood_tapped_x //
+    case mood_tapped_done //
     
     //gratitude
     case plus_tapped_gratitude
@@ -639,6 +640,7 @@ extension AnalyticEvent {
         case .mood_tapped_veryBad: return "mood_tapped_veryBad"
         case .plus_selected_mood: return "plus_selected_mood"
         case .mood_tapped_x: return "mood_tapped_x"
+        case .mood_tapped_done: return "mood_tapped_done"
         case .plus_tapped_gratitude: return "plus_tapped_gratitude"
         case .plus_tapped_mood_to_pricing: return "plus_tapped_mood_to_pricing"
         case .plus_tapped_gratitude_to_pricing: return "plus_tapped_gratitude_to_pricing"

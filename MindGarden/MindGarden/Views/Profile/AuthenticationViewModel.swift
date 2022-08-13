@@ -23,7 +23,6 @@ import WidgetKit
 class AuthenticationViewModel: NSObject, ObservableObject {
     @ObservedObject var viewRouter: ViewRouter
     @ObservedObject var userModel: UserViewModel
-    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var forgotEmail: String = ""
@@ -33,7 +32,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var isSignUp: Bool = true
     @Published var falseAppleId: Bool = false
     @Published var checked = true
-    @Published
     var currentNonce: String?
     var googleIsNew: Bool = true
     let db = Firestore.firestore()
