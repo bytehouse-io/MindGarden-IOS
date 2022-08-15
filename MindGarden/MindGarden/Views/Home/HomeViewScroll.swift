@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeViewScroll: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
+
     @State var gardenModel: GardenViewModel
     @Binding var showModal : Bool
     @Binding var showMiddleModal : Bool
@@ -18,7 +20,6 @@ struct HomeViewScroll: View {
     @Binding var attempts : Int
     @Binding var showIAP : Bool
     @State var userModel: UserViewModel
-    @EnvironmentObject var bonusModel: BonusViewModel
     @State private var isRecent = true
 
     let width = UIScreen.screenWidth
@@ -31,7 +32,7 @@ struct HomeViewScroll: View {
             //MARK: - scroll view
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 7) {
-                    HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: bonusModel.streakNumber)
+                    HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
                     StartDayView()
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")

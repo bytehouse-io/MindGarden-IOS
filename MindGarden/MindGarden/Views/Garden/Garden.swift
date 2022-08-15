@@ -311,7 +311,7 @@ struct Garden: View {
                                     HStack {
                                         StatBox(label: "Journals", img: Img.streakPencil, value: "\(gardenModel.gratitudes)")
                                         StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                                        StatBox(label: "Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(min: Double(gardenModel.totalMins/60), isNewLine: true))")
+                                        StatBox(label: "Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(seconds: Double(gardenModel.totalMins), isNewLine: true))")
                                     }
                                     .frame(height:60)
                                     ZStack {
@@ -488,6 +488,7 @@ struct Garden: View {
                             }
                         }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? K.isSmall() ? -175 : -125 : -75)
                     }
+                    if isOnboarding {
                         switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
                         case "meditate":
                             Img.calendarRacoon
@@ -509,6 +510,7 @@ struct Garden: View {
                                 .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
                         default: EmptyView()
                         }
+                    }      
                     // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
                 Spacer().frame(height:80)
@@ -526,7 +528,9 @@ struct Garden: View {
                     }
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                        isOnboarding = true
+                        if gardenModel.numMeds + gardenModel.numMeds >= 1 {
+                            isOnboarding = true
+                        }
                         if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                         }
@@ -548,6 +552,7 @@ struct Garden: View {
                     StreakScene(showStreak: $showStreak)
                 case .mood:
                     EmptyView()
+                default: EmptyView()
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)

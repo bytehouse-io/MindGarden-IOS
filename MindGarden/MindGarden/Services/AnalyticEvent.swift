@@ -19,7 +19,8 @@ enum AnalyticEvent {
     case onboarding_tapped_sign_in //
     case onboarding_tapped_allowed_att
     case onboarding_tapped_denied_att
-    case onboarding_loading_illusion
+    case onboarding_loading_illusion // 
+    case show_onboarding_rating //
 
     //experience
     case screen_load_experience //
@@ -446,6 +447,7 @@ extension AnalyticEvent {
         case .onboarding_tapped_sign_in: return "onboarding_tapped_sign_in"
         case .onboarding_tapped_allowed_att: return "onboarding_tapped_allowed_att"
         case .onboarding_tapped_denied_att: return "onboarding_tapped_denied_att"
+        case .show_onboarding_rating: return "show_onboarding_rating"
         case .screen_load_experience: return "screen_load_experience"
         case .experience_tapped_none: return "experience_tapped_none"
         case .experience_tapped_some: return "experience_tapped_some"

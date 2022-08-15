@@ -27,6 +27,7 @@ var searchScreen = false
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var authModel: AuthenticationViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
@@ -45,6 +46,7 @@ struct Home: View {
     @State var activeSheet: Sheet?
     @State private var showChallenge = false
     @State private var showMoodElaborate = true
+    @State private var showAuth = false
     
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -98,6 +100,7 @@ struct Home: View {
             .fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
             }
+
             .sheet(item: $activeSheet) { item in
                 switch item {
                 case .profile:
@@ -131,7 +134,9 @@ struct Home: View {
         }
 
         .onAppear {
-            viewRouter.previousPage = .meditate
+            let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
+
+            fromPage = "profile"
             tappedSignOut = false
             if showProfile {
                 activeSheet = .profile
@@ -145,6 +150,7 @@ struct Home: View {
     
             userModel.checkIfPro()
             DispatchQueue.main.async {
+                
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
@@ -181,6 +187,12 @@ struct Home: View {
                     showUpdateModal = true
                     userModel.show50Off = false
                     UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")
+                }
+                
+                if Auth.auth().currentUser?.email == nil && launchNum == 1 && !UserDefaults.standard.bool(forKey: "authx") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")){
+                    fromPage = "profile"
+                    viewRouter.previousPage = .meditate
+                    viewRouter.currentPage = .authentication
                 }
                 // coins = userModel.coins
                 // self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)

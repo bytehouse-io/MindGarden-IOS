@@ -34,6 +34,8 @@ struct StatBox: View {
                         .font(Font.fredoka(.semiBold, size: 16))
                         .minimumScaleFactor(0.7)
                         .foregroundColor(Clr.black2)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.05)
                 }
                 .padding(.bottom,10)
                 .padding(.horizontal, 5)

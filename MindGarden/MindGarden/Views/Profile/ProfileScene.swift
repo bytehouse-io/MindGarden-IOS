@@ -94,7 +94,7 @@ struct ProfileScene: View {
                                     
                                     }.frame(width: width * 0.8)
                                     .padding()
-                                    .padding(.top)
+                                    .padding(.top, 40)
                                     ProfileTab(selectedTab: $selection)
                                         .frame(width: width * 0.85)
                                     if showNotification || showGarden && selection == .settings {

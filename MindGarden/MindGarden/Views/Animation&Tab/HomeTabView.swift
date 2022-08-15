@@ -23,13 +23,11 @@ struct HomeTabView: View {
                 .ignoresSafeArea()
                 .opacity(showPopup ? 0.5 : 0)
                 .onTapGesture {
-                    if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
                         DispatchQueue.main.async {
                             withAnimation(.spring()) {
                                 showPopup.toggle()
                             }
-                        }
-                    }
+                        }                    
                 }
             TabButtonView(selectedTab:$selectedTab, isOnboarding:$isOnboarding)
                 .padding([.bottom, .horizontal], 20)

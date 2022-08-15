@@ -136,12 +136,13 @@ struct Play: View {
                                     }
                                 }
                                 .frame(width: K.isPad() ? 500 : 250)
-                            }
+                            }.offset(y: 25)
                             Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
                                 .foregroundColor(isSleep ? Clr.brightGreen : Clr.black1)
                                 .font(Font.fredoka(.bold, size: 60))
                                 .frame(width: UIScreen.screenWidth)
                                 .animation(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? nil : Animation.easeIn(duration: 0.5))
+                                .offset(y: 50)
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {

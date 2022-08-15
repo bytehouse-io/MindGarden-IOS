@@ -119,7 +119,7 @@ struct SingleDay: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.5)
                         HStack(spacing: 15) {
-                            VStack(spacing: 25) {
+                            VStack(spacing: 10) {
                                 ZStack(alignment: .leading) {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
@@ -128,7 +128,7 @@ struct SingleDay: View {
                                     VStack(alignment:.center, spacing:5){
                                         Text("Total Mins")
                                             .font(Font.fredoka(.regular, size: 16))
-                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.horizontal, 5)
                                             .padding(.top,10)
                                         HStack(spacing:25) {
@@ -136,25 +136,26 @@ struct SingleDay: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 30)
-                                            Text(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)")
+                                                .offset(x: 3)
+                                            Text(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60) min")
                                                 .font(Font.fredoka(.bold, size: 20))
                                                 .minimumScaleFactor(0.7)
                                                 .foregroundColor(Clr.black2)
+                                                .offset(x: -5)
                                         }
                                         .padding(.bottom,10)
-                                        .padding(.horizontal, 5)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                    }
-                                }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    }.padding(.horizontal, 15)
+                                }.frame(width: g.size.width * 0.38)
                                 ZStack(alignment: .leading) {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
                                         .addBorder(.black, width: 1.5, cornerRadius: 14)
                                         .neoShadow()
-                                    VStack(alignment:.center, spacing:5){
+                                    VStack(alignment:.leading, spacing:5){
                                         Text("Total Sessions")
                                             .font(Font.fredoka(.regular, size: 16))
-                                            .frame(maxWidth: .infinity, alignment: .center)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.horizontal, 5)
                                             .padding(.top,10)
                                         HStack(spacing:15) {
@@ -162,16 +163,16 @@ struct SingleDay: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 30)
+                                                .offset(x: 3)
                                             Text("\(totalSessions)")
                                                 .font(Font.fredoka(.bold, size: 20))
                                                 .minimumScaleFactor(0.7)
                                                 .foregroundColor(Clr.black2)
                                         }
                                         .padding(.bottom,10)
-                                        .padding(.horizontal, 5)
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                    }
-                                }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    }.padding(.horizontal, 15)
+                                }.frame(width: g.size.width * 0.38)
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
@@ -182,6 +183,7 @@ struct SingleDay: View {
                                         Text("Moods:")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.fredoka(.regular, size: 16))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(5)
                                         HStack(spacing: 0) {
                                             ForEach(self.moods ?? [["mood": "none"]], id: \.self) { mood in
@@ -192,12 +194,12 @@ struct SingleDay: View {
                                                         .padding(5)
                                                 }
                                             }
-                                        }.frame(height: g.size.height * 0.07)
-                                    }
+                                        }.frame(maxWidth: .infinity, maxHeight: g.size.height * 0.07, alignment: .leading)
+                                    }.padding(.horizontal, 15)
                                 }
-                                .padding(.horizontal, 5)
+                                .frame(width: g.size.width * 0.38)
                             }
-                            .frame(maxWidth: g.size.width * 0.38)
+                            .frame(maxWidth: g.size.width * 0.4)
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
@@ -205,9 +207,10 @@ struct SingleDay: View {
                                     .addBorder(.black, width: 1.5, cornerRadius: 14)
                                     .neoShadow()
                                 VStack(spacing: 5){
-                                    Text("Reflections:")
+                                    Text("✏️ Reflections:")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.semiBold, size: 16))
+                                        .offset(y: 5)
                                     ScrollView(showsIndicators: false) {
                                         ForEach(self.gratitudes ?? ["No reflections written this day"], id: \.self) { gratitude in
                                             Text(gratitude)

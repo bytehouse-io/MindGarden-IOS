@@ -8,19 +8,27 @@
 import SwiftUI
 
 class Helper: NSObject {
-    class func minuteandhours (min : Double, isNewLine : Bool = false) -> String {
+    class func minuteandhours (seconds : Double, isNewLine : Bool = false) -> String {
+        let min = seconds / 60
         let hour = Int(min / 60)
         let minute = Int(min) % 60
+        
+ 
+        
         if hour > 0 && minute > 0 {
-            return "\((hour == 1) ? "\(hour) H" : "\(hour) H") \(isNewLine ? "\n" : "")\((minute == 1) ? "\(minute) m" : "\(minute) m")"
+            return "\((hour == 1) ? "\(hour)H" : "\(hour)H") \(isNewLine ? "\n" : "")\((minute == 1) ? "\(minute)m" : "\(minute)m")"
         }
         else if(hour > 0){
-            return (hour == 1) ? "\(hour) H" : "\(hour) H"
+            return (hour == 1) ? "\(hour)H" : "\(hour)H"
         }
-        else if(minute > 0){
-            return (minute == 1) ? "\(minute) m" : "\(minute) m"
+        else if(minute > 0) {
+            return (minute == 1) ? "\(minute)m" : "\(minute)m"
         }
-        return "0 m"
+        if seconds > 0 {
+            return "0.5m"
+        } else {
+            return "0 m"
+        }
     }
 
 }

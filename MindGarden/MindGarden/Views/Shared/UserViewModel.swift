@@ -191,17 +191,11 @@ class UserViewModel: ObservableObject {
             }
         } else {
             if let plants = UserDefaults.standard.value(forKey: K.defaults.plants) as? [String] {
-                self.ownedPlants = Plant.plants.filter({ plant in
+                self.ownedPlants = Plant.allPlants.filter({ plant in
                     return plants.contains(where: { str in
                         plant.title == str
                     })
-                })
-                let badgePlants = Plant.badgePlants.filter({ plant in
-                    return plants.contains(where: { str in
-                        plant.title == str
-                    })
-                })
-                    self.ownedPlants += badgePlants
+                })          
             }
             
             if let name = UserDefaults.standard.string(forKey: K.defaults.name) {

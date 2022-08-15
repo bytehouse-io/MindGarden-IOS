@@ -91,6 +91,10 @@ struct ContentView: View {
                                     case .meditate:
                                         Home()
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .disabled(isOnboarding)
+                                            .environmentObject(profileModel)
+                                            .environmentObject(bonusModel)
+                                            .environmentObject(authModel)
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                                                     showPopupWithAnimation {
@@ -98,9 +102,6 @@ struct ContentView: View {
                                                     }
                                                 }
                                             }
-                                            .disabled(isOnboarding)
-                                            .environmentObject(profileModel)
-                                            .environmentObject(bonusModel)
                                     case .garden:
                                         Garden()
                                             .frame(height: geometry.size.height + 10)
@@ -269,14 +270,13 @@ struct ContentView: View {
                                         .transition(.opacity)
                                 }
                                 .onTapGesture {
-                                    if !isOnboarding {
                                         withAnimation {
                                             hidePopupWithAnimation {
                                                 addMood = false
                                                 addGratitude = false
                                             }
                                         }
-                                    }
+                                    
                                 }
                                 ZStack {
                                     HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter, selectedTab: $selectedTab, showPopup: $showPopUp, isOnboarding:$isOnboarding)

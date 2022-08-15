@@ -89,23 +89,11 @@ struct StreakScene: View {
                     Button {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
-                        if Auth.auth().currentUser?.email == nil && launchNum >= 2 {
+                        if Auth.auth().currentUser?.email == nil && (launchNum == 5 || launchNum == 7 || launchNum == 9) {
                             fromPage = "garden"
                             viewRouter.currentPage = .authentication
                         } else {
-                            if !UserDefaults.standard.bool(forKey: "tappedRate") {
-                                if launchNum == 1 || launchNum == 3 || launchNum == 5 || launchNum == 7  {
-                                    if !UserDefaults.standard.bool(forKey: "reviewedApp") {
-                                        triggerRating.toggle()
-                                    } else {
-                                        dismiss()
-                                    }
-                                } else {
-                                    dismiss()
-                                }
-                            } else {
-                                dismiss()
-                            }
+                            dismiss()
                         }
                     } label: {
                         Capsule()
@@ -123,21 +111,7 @@ struct StreakScene: View {
             }
             .offset(y: -145)
         }
-        .alert(isPresented: $triggerRating) {
-            Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
-                  primaryButton: .default(Text("Yes!")) {
-                Analytics.shared.log(event: .rating_tapped_yes)
-                UserDefaults.standard.setValue(true, forKey: "reviewedApp")
-                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                    SKStoreReviewController.requestReview(in: scene)
-                                dismiss()
-                }
-            },
-            secondaryButton: .default(Text("No")) {
-                    Analytics.shared.log(event: .rating_tapped_no)
-                    dismiss()
-            })
-        }
+
         .onChange(of: isSharePresented) { value in
             showButtons = !value
         }
@@ -163,10 +137,7 @@ struct StreakScene: View {
 //        }
 
         .background(Clr.darkWhite)
-        .fullScreenCover(isPresented: $showNextSteps) {
-            NextSteps()
-                .environmentObject(viewRouter)
-        }
+
     }
     
     private func dismiss() {
@@ -174,7 +145,6 @@ struct StreakScene: View {
 //            viewRouter.previousPage = .garden
 //            viewRouter.currentPage = .pricing
             let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
-
             if launchNum == 2 || launchNum == 4 || launchNum == 6 || launchNum == 8 {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
@@ -184,12 +154,8 @@ struct StreakScene: View {
                     viewRouter.currentPage = .garden
                 }
             } else {
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                    showNextSteps = true
-                } else {
                     viewRouter.previousPage = .garden
                     viewRouter.currentPage = .garden
-                }
             }
         }
     }

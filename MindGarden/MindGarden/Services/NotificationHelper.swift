@@ -27,7 +27,7 @@ struct NotificationHelper {
             return formatter
         }()
         var id = "oneDay"
-        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+        if UserDefaults.standard.integer(forKey: "numSessions") < 1 {
             id = "streakNotStarted"
             if UserDefaults.standard.integer(forKey: "longestStreak") <= 1 {
                 id = "streakNotStarted"
@@ -48,7 +48,7 @@ struct NotificationHelper {
         content.sound = UNNotificationSound.default
         let hour = Calendar.current.component( .hour, from:Date() )
         var modifiedDate = Calendar.current.date(byAdding: .second, value: 5, to: Date())
-        if UserDefaults.standard.integer(forKey: "numMeds") < 1 {
+        if UserDefaults.standard.integer(forKey: "numSessions") < 1 {
             if hour < 18 {
                 modifiedDate = Calendar.current.date(byAdding: .hour, value: 20, to: Date())
             } else if hour > 20 {
@@ -87,7 +87,7 @@ struct NotificationHelper {
     }
     static func generateNotif(notif: UNMutableNotificationContent) -> UNMutableNotificationContent {
         let content = notif
-        if UserDefaults.standard.integer(forKey: "numMeds") >= 2 {
+        if UserDefaults.standard.integer(forKey: "numSessions") >= 2 {
             if UserDefaults.standard.integer(forKey: "longestStreak") >= 1 {
                 if let attachment = UNNotificationAttachment.getAttachment(identifier: "firefox", imageName: "firefox") {
                     content.attachments = [attachment]

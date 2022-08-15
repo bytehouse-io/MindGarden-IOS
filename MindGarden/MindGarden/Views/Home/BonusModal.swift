@@ -102,7 +102,6 @@ struct BonusModal: View {
                                             place = .button2
                                             playCoinAnimation()
                                             streakCoins = true
-                                            coins += 30
                                             Analytics.shared.log(event: .home_claim_seven)
                                             bonusModel.saveSeven()
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -125,7 +124,6 @@ struct BonusModal: View {
                                             playCoinAnimation()
                                             self.streakCoins = true
                                             Analytics.shared.log(event: .home_claim_thirty)
-                                            coins += 100
                                             bonusModel.saveThirty()
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                                 self.streakCoins.toggle()
@@ -196,7 +194,7 @@ struct BonusModal: View {
                         .renderingMode(.original)
                         .aspectRatio(contentMode: .fit)
                         .frame(width: width * 0.06)
-                    Text(weekly ? "30" : "100")
+                    Text(weekly ? "300" : "1000")
                         .foregroundColor(Clr.black1)
                         .font(Font.fredoka(.semiBold, size: 16))
                     Spacer()

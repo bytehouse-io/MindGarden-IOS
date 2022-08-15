@@ -53,7 +53,7 @@ struct NotificationScene: View {
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        viewRouter.progressValue -= 0.25
+                                        viewRouter.progressValue -= 0.2
                                         if fromSettings {
                                             presentationMode.wrappedValue.dismiss()
                                         } else if tappedTurnOn {
@@ -304,7 +304,7 @@ struct NotificationScene: View {
                         presentationMode.wrappedValue.dismiss()
                     } else {
                         if !tappedTurnOn {
-                            viewRouter.progressValue += 0.25
+                            viewRouter.progressValue += 0.2
                         }
                         viewRouter.currentPage = .review
                     }

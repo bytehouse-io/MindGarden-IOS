@@ -32,7 +32,6 @@ struct PlusButtonPopup: View {
                         }.zIndex(1)
                         Button {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            if !isOnboarding || UserDefaults.standard.bool(forKey: "review")  {
                                 DispatchQueue.main.async {
                                     withAnimation(.spring()) {
                                         DispatchQueue.main.async {
@@ -40,7 +39,7 @@ struct PlusButtonPopup: View {
                                         }
                                     }
                                 }
-                            }
+                            
                         } label: {
                             PlusButtonShape(cornerRadius: buttonRadius)
                                 .fill(Clr.darkWhite)

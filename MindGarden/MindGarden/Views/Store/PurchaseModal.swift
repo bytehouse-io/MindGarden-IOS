@@ -205,8 +205,11 @@ struct PurchaseModal: View {
                                     if !UserDefaults.standard.bool(forKey: "reddit") {
                                         UserDefaults.standard.setValue(true, forKey: "reddit")
                                     }
-                                case "🙏 Write 30 Gratitudes":
-                                    NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+                                case "✏️ 30 Journal Entries":
+                                    withAnimation {
+                                        viewRouter.previousPage = .shop
+                                        viewRouter.currentPage = .journal
+                                    }
                                 default:
                                     withAnimation {
                                         viewRouter.currentPage = .learn

@@ -196,7 +196,8 @@ struct BreathworkPlay : View {
                                     .frame(width:geometry.size.width*progress, height:15)
                                     .cornerRadius(25,corners: [.bottomLeft, .bottomRight])
                             }
-                        }.frame(height:15)
+                        }.frame(height:15, alignment: .top)
+                        .offset(y: -3)
                     }
                     .padding(.top, UIScreen.screenHeight * (K.isSmall() ? 0.1 : 0.2))
                     VStack {

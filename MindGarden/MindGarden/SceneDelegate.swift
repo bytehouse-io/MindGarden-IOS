@@ -39,7 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
 
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+//        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         Analytics.shared.log(event: .launchedApp)
         playSound(soundName: "background")

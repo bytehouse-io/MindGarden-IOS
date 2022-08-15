@@ -33,6 +33,8 @@ struct MoodCheck: View {
                                 .foregroundColor(Clr.darkGray)
                                 .padding(.top, 35)
                             Spacer()
+                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+            
                             Image(systemName: "xmark")
                                 .resizable()
                                 .renderingMode(.template)
@@ -50,6 +52,8 @@ struct MoodCheck: View {
                                     withAnimation { shown.toggle() }
                                 }.offset(x: -5, y: 10)
                                 .disabled(UserDefaults.standard.bool(forKey: "signedUp"))
+                                
+                            }
                         }.frame(width: g.size.width * 0.85, alignment: .leading)
      
                         Text("How are you feeling right now?")

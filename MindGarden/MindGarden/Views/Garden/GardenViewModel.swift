@@ -114,6 +114,7 @@ class GardenViewModel: ObservableObject {
                 .set("breathwork_sessions", value: NSNumber(value: numBreaths))
             identify?
                 .set("meditation_sessions", value: NSNumber(value: numMeds))
+            UserDefaults.standard.setValue((numBreaths + numMeds), forKey: "numSessions")
             identify?
                 .set("journal_sessions", value: NSNumber(value: numGrads))
             UserDefaults.standard.setValue(numGrads, forKey: "numGrads")

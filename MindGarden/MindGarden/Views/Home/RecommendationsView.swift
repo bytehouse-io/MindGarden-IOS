@@ -35,14 +35,17 @@ struct RecommendationsView: View {
                                 .foregroundColor(Clr.brightGreen)
                                 .font(Font.fredoka(.semiBold, size: 28))
                             Spacer()
-                            CloseButton() {
-                                withAnimation {
-                                    Analytics.shared.log(event: .recommendations_tapped_x)
-                                    if !isOnboarding {
-                                        viewRouter.currentPage = .meditate
+                            if !isOnboarding {
+                                CloseButton() {
+                                    withAnimation {
+                                        Analytics.shared.log(event: .recommendations_tapped_x)
+                                        if !isOnboarding {
+                                            viewRouter.currentPage = .meditate
+                                        }
                                     }
                                 }
                             }
+           
                         }.padding(5)
                             .padding(.bottom,10)
                             .zIndex(2)
@@ -134,7 +137,7 @@ struct RecommendationsView: View {
                     var count = 0
                     let _  = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                         count += 1
-                        if count == 2 {
+                        if count == 1 {
                             timer.invalidate()
                             withAnimation {
                                 rowOpacity = 0.2
@@ -184,6 +187,7 @@ struct RecommendationsView: View {
                         .disabled(isOnboarding)
                 }
             }
+            if !isOnboarding {
             HStack {
                 Spacer()
                 Text("OR")
@@ -191,32 +195,35 @@ struct RecommendationsView: View {
                     .font(Font.fredoka(.medium, size: 16))
                 Spacer()
             }
-            Button {
-                Analytics.shared.log(event: .recs_tapped_see_more)
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                withAnimation {
-                    viewRouter.currentPage = .learn
-                }
-            } label: {
-                ZStack {
-                    Capsule()
-                        .fill(Clr.yellow)
-                        .frame(height: 44)
-                        .addBorder(Color.black, width: 1.5, cornerRadius: 22)
-                    HStack {
-                        Text("See More")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.bold, size: 16))
-                        Image(systemName: "arrow.right")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height:16)
+            
+                Button {
+                    Analytics.shared.log(event: .recs_tapped_see_more)
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    withAnimation {
+                        viewRouter.currentPage = .learn
                     }
-                }
-            }.buttonStyle(NeoPress())
-                .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
-                .offset(x: 5)
-            .disabled(isOnboarding)
+                } label: {
+                    ZStack {
+                        Capsule()
+                            .fill(Clr.yellow)
+                            .frame(height: 44)
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 22)
+                        HStack {
+                            Text("See More")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.bold, size: 16))
+                            Image(systemName: "arrow.right")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:16)
+                        }
+                    }
+                }.buttonStyle(NeoPress())
+                    .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
+                    .offset(x: 5)
+                .disabled(isOnboarding)
+            }
+  
         }
     }
 }

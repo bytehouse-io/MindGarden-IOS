@@ -16,7 +16,6 @@ struct NewAuthentication: View {
     @EnvironmentObject var bonusModel: BonusViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
     @ObservedObject var viewModel: AuthenticationViewModel
-    @State private var showEmailForms = false
     @State private var showProfile = false
     @State private var isEmailValid = true
     @State private var showFields = false
@@ -30,11 +29,10 @@ struct NewAuthentication: View {
     }
     
     var body: some View {
-        NavigationView {
-            
+        NavigationView {            
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
-            
+                
                 VStack(spacing: 15) {
                     
                     Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign in" : "Create a profile to save your progress")
@@ -49,8 +47,8 @@ struct NewAuthentication: View {
                             LottieView(fileName: "turtle")
                                 .offset(x: 75, y: -95)
                         }.frame(width: UIScreen.screenWidth, height: 125, alignment: .center)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
+                        //                            .resizable()
+                        //                            .aspectRatio(contentMode: .fit)
                     } else {
                         if showFields && !tappedSignOut {
                             Button {
@@ -215,14 +213,14 @@ struct NewAuthentication: View {
                         }
                     }
                     .frame(height: 60)
-                        .oldShadow()
-                        .disabled(viewModel.falseAppleId)
-                        .frame(width: UIScreen.screenWidth * 0.8)
-                        .padding(10)
+                    .oldShadow()
+                    .disabled(viewModel.falseAppleId)
+                    .frame(width: UIScreen.screenWidth * 0.8)
+                    .padding(10)
                     Button {
                         Analytics.shared.log(event: .authentication_tapped_google)
                         viewModel.signInWithGoogle()
-
+                        
                     } label: {
                         VStack {
                             if showFields && viewModel.isSignUp == false {
@@ -235,26 +233,26 @@ struct NewAuthentication: View {
                                     .aspectRatio(contentMode: .fill)
                             }
                         }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 60)
-                        .oldShadow()
+                            .oldShadow()
                     }
                     
                     if !tappedSignOut && !showFields {
                         Button {
                             Analytics.shared.log(event: .tapped_already_have_account)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                if !viewModel.isSignUp && showFields {
-                                    withAnimation {
-                                        viewModel.isSignUp = true
-                                        showFields = true
-                                    }
-                                } else {
-                                    withAnimation {
-                                        print("tapped here")
-                                        tappedSignIn = true
-                                        viewModel.isSignUp = false
-                                        showFields = true
-                                    }                             
+                            if !viewModel.isSignUp && showFields {
+                                withAnimation {
+                                    viewModel.isSignUp = true
+                                    showFields = true
                                 }
+                            } else {
+                                withAnimation {
+                                    print("tapped here")
+                                    tappedSignIn = true
+                                    viewModel.isSignUp = false
+                                    showFields = true
+                                }                             
+                            }
                             
                             
                         } label: {
@@ -265,20 +263,20 @@ struct NewAuthentication: View {
                                     .underline()
                             }
                         }.frame(width: 250, alignment: .center)
-                        .padding(.top, 10)
+                            .padding(.top, 10)
                     }
-                }.padding(.top, 75)
+                }.padding(.top, 50)
             }
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarItems(leading:
                                     Img.topBranch
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.screenWidth * 0.6, height: 250)
-                                    .padding(.leading, -20)
-                                    .offset(y: -10)
-                                    .opacity(focusedText ? 0.1 : 1),
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: UIScreen.screenWidth * 0.6, height: 250)
+                .padding(.leading, -20)
+                .offset(x: -15, y: -30)
+                .opacity(focusedText ? 0.1 : 1),
                                 trailing:     Button {
                 withAnimation {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -327,14 +325,9 @@ struct NewAuthentication: View {
                 viewModel.forgotPassword()
             }
         }))
-        .sheet(isPresented: $showEmailForms) {
-            Authentication(viewModel: viewModel)
-                .environmentObject(medModel)
-                .environmentObject(userModel)
-                .environmentObject(gardenModel)
-        }
         .onAppearAnalytics(event: .screen_load_newAuthenticaion)
         .onAppear {
+            UserDefaults.standard.setValue(true, forKey: "authx")
             if tappedSignOut {
                 viewModel.isSignUp = false
                 showFields = true

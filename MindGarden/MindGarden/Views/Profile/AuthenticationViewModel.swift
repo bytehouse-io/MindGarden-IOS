@@ -523,7 +523,7 @@ extension AuthenticationViewModel {
         
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
-                "name": UserDefaults.standard.string(forKey: "name") ?? "hg",
+                "name": UserDefaults.standard.string(forKey: "name") ?? "Name",
                 "coins": UserDefaults.standard.integer(forKey: "coins"),
                 "joinDate": UserDefaults.standard.string(forKey: "joinDate") ?? "",
                 "totalSessions": UserDefaults.standard.integer(forKey: "allTimeSessions"),
@@ -551,7 +551,7 @@ extension AuthenticationViewModel {
             }
         }
         
-        userModel.name = UserDefaults.standard.string(forKey: "name") ?? "hg"
+        userModel.name = UserDefaults.standard.string(forKey: "name") ?? "name"
         userModel.joinDate = formatter.string(from: Date())
         userModel.referredStack = "\(date)+0"
     }

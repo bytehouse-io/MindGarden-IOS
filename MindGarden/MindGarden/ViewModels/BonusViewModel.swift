@@ -314,7 +314,6 @@ class BonusViewModel: ObservableObject {
             UserDefaults.standard.setValue(true, forKey: "plusCoins")
             updateTips(tip: "Tip Potion Shop")
         }
-       
         
         if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {
             launchNum += 1

@@ -36,6 +36,7 @@ struct HomeSquare: View {
                                 Text(isBreath ? breathWork.title : meditation.title)
                                     .frame(width: width * 0.225, alignment: .leading)
                                     .font(Font.fredoka(.semiBold, size: isBreath ? 18 : 16))
+                                    .multilineTextAlignment(.leading)
                                     .foregroundColor(Clr.black2)
                                     .minimumScaleFactor(0.05)
                                     .lineLimit(3)

@@ -30,6 +30,8 @@ struct Finished: View {
     @State private var hideConfetti = false
     @State private var showStreak = false
     @State private var ios14 = true
+    @State private var triggerRating = false
+    @State private var showRating = false
     @Environment(\.sizeCategory) var sizeCategory
 
     var minsMed: Int {
@@ -259,13 +261,28 @@ struct Finished: View {
                                     Analytics.shared.log(event: .finished_tapped_finished)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        if updatedStreak && model.shouldStreakUpdate {
-                                            showStreak.toggle()
-                                            updatedStreak = false
+                                        let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
+                                        if launchNum == 1 && (gardenModel.numMeds + gardenModel.numBreaths) == 1 && !showRating {
+                                            Analytics.shared.log(event: .show_onboarding_rating)
+                                            showRating = true
+                                            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                                                SKStoreReviewController.requestReview(in: scene)
+                                            }
+                                        } else if !showRating {
+                                            if launchNum == 2 || launchNum == 4 || launchNum == 7 || launchNum == 9  {
+                                                showRating = true
+                                                if !UserDefaults.standard.bool(forKey: "reviewedApp") {
+                                                    triggerRating.toggle()
+                                                } else {
+                                                    dismiss()
+                                                }
+                                            } else {
+                                                dismiss()
+                                            }
                                         } else {
-                                            viewRouter.currentPage = .garden
+                                            dismiss()
                                         }
-                                }
+                                    }
                                 }
                         }
                         .zIndex(100)
@@ -299,6 +316,7 @@ struct Finished: View {
                 model.lastSeconds = false
                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+                    print("numSession", UserDefaults.standard.integer(forKey: "numSessions"))
                     NotificationHelper.addOneDay()
                 }
                 if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
@@ -309,6 +327,7 @@ struct Finished: View {
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
         { _ in }
             .onAppear {
+                
                 if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                     if let player = player {
                         player.play()
@@ -392,7 +411,21 @@ struct Finished: View {
                 
             }
             .onAppearAnalytics(event: .screen_load_finished)
-
+            .alert(isPresented: $triggerRating) {
+                Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
+                      primaryButton: .default(Text("Yes!")) {
+                    Analytics.shared.log(event: .rating_tapped_yes)
+                    UserDefaults.standard.setValue(true, forKey: "reviewedApp")
+                    showRating = true
+                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: scene)
+                    }
+                },
+                      secondaryButton: .default(Text("No")) {
+                    Analytics.shared.log(event: .rating_tapped_no)
+                    dismiss()
+                })
+            }
     }
 
 
@@ -408,6 +441,15 @@ struct Finished: View {
                 }
             }
         }
+    }
+    private func dismiss() {
+        if updatedStreak && model.shouldStreakUpdate {
+            showStreak.toggle()
+            updatedStreak = false
+        } else {
+            viewRouter.currentPage = .garden
+        }
+
     }
     
     private func likeAction(){

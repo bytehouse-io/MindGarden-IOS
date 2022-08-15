@@ -17,7 +17,7 @@ struct HomeViewDashboard: View {
     @State var name : String
     @Binding var activeSheet: Sheet?
     @Binding var showIAP: Bool
-    @State var streakNumber: Int
+    @Binding var streakNumber: Int
     @State var showRecFavs = false
     @State var sheetType: [Int] = []
     @State var sheetTitle: String = ""
@@ -127,6 +127,8 @@ struct HomeViewDashboard: View {
                         Text("\(streakNumber) " + (K.isSmall() ? "" : "day") + (streakNumber != 1 ? "s" : ""))
                             .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.gardenRed)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.05)
                     }
                     .frame(height:height)
                     .roundedCapsule(color: .clear)
