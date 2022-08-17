@@ -35,12 +35,12 @@ struct Provider: IntentTimelineProvider {
         let lastLogDate = userDefaults?.value(forKey: "lastJournel") as? String ?? Date().toString(withFormat: "MMM dd, yyyy")
         let lastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? "okay"
         
-        let meditation = userDefaults?.integer(forKey: "featuredMeditation")
-        let breathwork = userDefaults?.integer(forKey: "featuredBreathwork")
+        let meditation = userDefaults?.value(forKey: "featuredMeditation") as? Int
+        let breathwork = userDefaults?.value(forKey: "featuredBreathwork") as? Int
         
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation, breathWorkId: breathwork)
+            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1)
             entries.append(entry)
         }
 
@@ -57,8 +57,8 @@ struct SimpleEntry: TimelineEntry {
     var lastLogDate: String = Date().toString(withFormat: "MMM dd, yyyy")
     var lastLogMood: String = "okay"
     let configuration: ConfigurationIntent
-    var meditationId: Int?
-    var breathWorkId: Int?
+    var meditationId: Int = 1
+    var breathWorkId: Int = -1
 }
 
 struct MindGardenWidgetEntryView : View {

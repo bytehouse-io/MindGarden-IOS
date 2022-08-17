@@ -415,6 +415,9 @@ struct BreathworkPlay : View {
                 withAnimation(.linear(duration: 0.5)) {
                     fadeAnimation = false
                     durationCounter -= 1
+                    if title == "Hold" {
+                        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                    }
                 }
                 if durationCounter<=1 {
                     timer.invalidate()
