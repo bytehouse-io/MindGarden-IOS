@@ -9,6 +9,7 @@ import SwiftUI
 import AVKit
 import MediaPlayer
 import AudioToolbox
+import CoreHaptics
 
 struct BreathworkPlay : View {
     @EnvironmentObject var viewRouter: ViewRouter
@@ -53,6 +54,7 @@ struct BreathworkPlay : View {
     private let startScale = 1.0
     private let endScale = 2.0
     @State var callerTimer: Timer?
+    @State private var engine: CHHapticEngine?
 
     private var remainingDuration: RemainingDurationProvider<Double> {
         { currentScale in
@@ -206,6 +208,7 @@ struct BreathworkPlay : View {
                             withAnimation {
                                 isPaused.toggle()
                                 if isPaused {
+                                    engine?.stop()
                                     durationTimer?.invalidate()
                                     callerTimer?.invalidate()
                                 }
@@ -252,6 +255,12 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
+            do {
+                engine = try CHHapticEngine()
+            } catch let error {
+                print(error)
+            }
+            
             if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                 if let player = player {
                     player.stop()
@@ -294,9 +303,6 @@ struct BreathworkPlay : View {
             timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
                 if !isPaused {
                     if timerCount < Double(totalTime) {
-                        if title == "Inhale" {
-//                        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-                        }
                         timerCount += 1
                         DispatchQueue.main.async {
                             withAnimation(.linear(duration: 0.95)) {
@@ -359,6 +365,11 @@ struct BreathworkPlay : View {
                     scale = 2.0
                 }
             }
+            do {
+                try playHapticContinuousWithParameters(time: TimeInterval(time))
+            } catch let error {
+                print(error)
+            }
         case "h":
             title = time > 0 ? "Hold" : ""
         case "e":
@@ -372,6 +383,18 @@ struct BreathworkPlay : View {
             }
         default: break
         }
+    }
+    
+    private func playHapticContinuousWithParameters(time:TimeInterval) throws {
+        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0)
+        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1.0)
+        let event = CHHapticEvent(eventType: .hapticContinuous, parameters: [intensity, sharpness], relativeTime: 0, duration: time)
+        
+        let pattern = try CHHapticPattern(events: [event], parameters: [])
+        let player = try engine?.makePlayer(with: pattern)
+        
+        try engine?.start()
+        try player?.start(atTime: 0)
     }
     
     private func setupCoountDown(time:Double){
