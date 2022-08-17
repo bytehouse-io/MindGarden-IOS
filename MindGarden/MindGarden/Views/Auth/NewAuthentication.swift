@@ -34,8 +34,7 @@ struct NewAuthentication: View {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 15) {
-                    
-                    Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign in" : "Create a profile to save your progress")
+                    Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign Back In" : "Create a profile to save your progress")
                         .foregroundColor(Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 28))
                         .multilineTextAlignment(.center)
@@ -50,27 +49,32 @@ struct NewAuthentication: View {
                         //                            .resizable()
                         //                            .aspectRatio(contentMode: .fit)
                     } else {
-                        if showFields && !tappedSignOut {
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    showFields = false
-                                }
-                            } label: {
-                                Capsule()
-                                    .fill(Clr.darkWhite)
-                                    .padding(.horizontal)
-                                    .overlay(
-                                        Text("Go Back")
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                            .foregroundColor(Clr.darkgreen)
-                                    )
-                                    .frame(width: UIScreen.screenWidth * 0.35, height: 50)
-                            }
-                            .buttonStyle(NeumorphicPress())
-                            .offset(y: -45)
-                        }
                         VStack(spacing: 0) {
+                            if !UserDefaults.standard.bool(forKey: "loggedIn") {
+                                if showFields && !tappedSignOut {
+                                    Button {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            showFields = false
+                                        }
+                                        fromPage = ""
+                                    } label: {
+                                        Capsule()
+                                            .fill(Clr.darkWhite)
+                                            .padding(.horizontal)
+                                            .overlay(
+                                                
+                                                Text(viewModel.isSignUp ? "Go Back" : "or Create an Account")
+                                                    .font(Font.fredoka(.regular, size: 20))
+                                                    .foregroundColor(Clr.darkgreen)
+                                            )
+                                            .frame(width: UIScreen.screenWidth * (viewModel.isSignUp ? 0.35 : 0.7), height: 40)
+                                    }
+                                    .buttonStyle(NeumorphicPress())
+                                    .offset(y: -45)
+                                    .padding(.top, fromPage == "update" ? -35 : 0)
+                                }
+                            }
                             ZStack(alignment: .leading) {
                                 RoundedRectangle(cornerRadius: 24)
                                     .fill(Clr.darkWhite)
@@ -265,7 +269,9 @@ struct NewAuthentication: View {
                         }.frame(width: 250, alignment: .center)
                             .padding(.top, 10)
                     }
-                }.padding(.top, 50)
+                }
+                .frame(height: UIScreen.screenHeight/1.75)
+                .padding(.top, 50)
             }
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle("", displayMode: .inline)
@@ -291,12 +297,14 @@ struct NewAuthentication: View {
                             viewRouter.currentPage = .middle
                         } else if fromPage == "onboarding" {
                             viewRouter.currentPage = .onboarding
+                        } else if fromPage == "update" {
+                            viewRouter.currentPage = .meditate
                         } else {
                             viewRouter.currentPage = .garden
                         }
                     }
                 }
-            }label: {
+            } label: {
                 ZStack {
                     Circle()
                         .fill(Clr.darkWhite)
@@ -309,13 +317,14 @@ struct NewAuthentication: View {
                 }
             }.frame(width: 40, height: 40)
                 .buttonStyle(BonusPress())
+                .opacity(UserDefaults.standard.bool(forKey: "loggedIn") ? 0 : 1)
             )
             .navigationBarBackButtonHidden(true)
         }
         
         .alert(isPresented: $viewModel.alertError) {
-            Alert(title: Text("Something went wrong"), message:
-                    Text(viewModel.alertMessage)
+            Alert(title: Text(viewModel.alertMessage), message:
+                    Text("Please try again, or contact team@mindgarden.io")
                   , dismissButton: .default(Text("Got it!")))
         }
         .alert(isPresented: $showForgotAlert, TextAlert(title: "Reset Password", action: {
@@ -327,13 +336,22 @@ struct NewAuthentication: View {
         }))
         .onAppearAnalytics(event: .screen_load_newAuthenticaion)
         .onAppear {
-            UserDefaults.standard.setValue(true, forKey: "authx")
+            if fromPage == "profile" {
+                UserDefaults.standard.setValue(true, forKey: "authx")
+            }
+            
             if tappedSignOut {
+                viewModel.isSignUp = false
+                showFields = true
+            }
+            
+            if fromPage == "update" {
                 viewModel.isSignUp = false
                 showFields = true
             }
         }
         .onDisappear {
+            fromPage = ""
             showFields = false
         }
         .transition(.opacity)

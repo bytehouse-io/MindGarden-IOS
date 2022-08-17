@@ -252,6 +252,7 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
+            playSound()
             if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                 if let player = player {
                     player.stop()
@@ -325,7 +326,12 @@ struct BreathworkPlay : View {
         }
         
     }
-
+    private func playSound(){
+            AudioServicesPlaySystemSoundWithCompletion(1011){
+                playSound()
+            }
+        }
+    
     private func playAnimation(timeRemain:Double = 0.0) {
         guard !isPaused  else { return }
         if noOfSequence > 0 {
@@ -347,7 +353,7 @@ struct BreathworkPlay : View {
             }
         }
     }
-    
+     
     private func setBreath(status:String, time:Double, isResumed:Bool) {
         switch status.lowercased() {
         case "i" :

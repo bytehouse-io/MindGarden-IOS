@@ -262,13 +262,7 @@ struct Finished: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
-                                        if launchNum == 1 && (gardenModel.numMeds + gardenModel.numBreaths) == 1 && !showRating {
-                                            Analytics.shared.log(event: .show_onboarding_rating)
-                                            showRating = true
-                                            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                                                SKStoreReviewController.requestReview(in: scene)
-                                            }
-                                        } else if !showRating {
+                                        if !showRating {
                                             if launchNum == 2 || launchNum == 4 || launchNum == 7 || launchNum == 9  {
                                                 showRating = true
                                                 if !UserDefaults.standard.bool(forKey: "reviewedApp") {

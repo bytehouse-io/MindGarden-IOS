@@ -154,6 +154,7 @@ class UserViewModel: ObservableObject {
                                 plant.title == str
                             })
                         })
+                        UserDefaults.standard.setValue(fbPlants, forKey: "plants")
                     }
                     
                     if let stack = document["referredStack"] as? String {

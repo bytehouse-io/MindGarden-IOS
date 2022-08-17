@@ -21,6 +21,8 @@ enum AnalyticEvent {
     case onboarding_tapped_denied_att
     case onboarding_loading_illusion // 
     case show_onboarding_rating //
+    case update_triggered_auth //
+    case show_onboarding_auth //
 
     //experience
     case screen_load_experience //
@@ -738,6 +740,9 @@ extension AnalyticEvent {
         case .journal_tapped_prompts: return "journal_tapped_prompts"
         case .journal_tapped_shuffle: return "journal_tapped_shuffle"
         case .journal_tapped_x: return "journal_tapped_x"
+            
+        case .update_triggered_auth: return "update_triggered_auth"
+        case .show_onboarding_auth: return "show_onboarding_auth"
 
         }
     }

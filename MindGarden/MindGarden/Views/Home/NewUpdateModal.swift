@@ -40,7 +40,7 @@ struct NewUpdateModal: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .cornerRadius(26)
-                            .frame(width:  g.size.width * 0.85 * 0.4)
+                            .frame(width:  g.size.width * 0.85 * 0.5)
                             .padding()
                         HStack {
                             Text("Just for coming back, you've unlocked a 50% off of Premium.")

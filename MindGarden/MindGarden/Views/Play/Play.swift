@@ -64,7 +64,7 @@ struct Play: View {
                                 Spacer()
                                 Text(model.selectedMeditation?.title ?? "")
                                     .foregroundColor(isSleep ? Clr.brightGreen : Clr.black2)
-                                    .padding(.leading, 10)
+                                    .padding(.leading, 20)
                                 Spacer()
                                 HStack{sound; heart}
                                     .padding(.trailing)

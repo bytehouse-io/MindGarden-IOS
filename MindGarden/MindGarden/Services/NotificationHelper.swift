@@ -144,12 +144,12 @@ struct NotificationHelper {
             modifiedDate = Calendar.current.date(byAdding: .second, value: 12, to: Date())
         } else if hour > 18 {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 3, to: Date())
-            content.title = "Finish Onboarding Gardener"
-            content.body = "You're almost there! 🌱 Join 3458 others growing their gardens and start your first session"
+            content.title =  "\(UserDefaults.standard.bool(forKey: "review") ? "Start your first meditation" : "Finish Onboarding Gardener!")"
+            content.body = "You're almost there! 🌱 Join 3458 others growing their gardens today"
         } else {
             modifiedDate = Calendar.current.date(byAdding: .hour, value: 2, to: Date())
-            content.title = "Finish Onboarding Gardener!"
-            content.body = "You're almost there! 🌱 Join 3458 others growing their gardens and start your first session"
+            content.title = "\(UserDefaults.standard.bool(forKey: "review") ? "Start your first meditation" : "Finish Onboarding Gardener!")"
+            content.body = "You're almost there! 🌱 Join 3458 others growing their gardens today"
         }
      
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: modifiedDate ?? Date())

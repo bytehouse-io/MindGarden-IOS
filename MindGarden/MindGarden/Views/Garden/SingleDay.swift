@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 //TODO - fix iphone 8 bug, selectedplant bug.
 struct SingleDay: View {
     @EnvironmentObject var gardenModel: GardenViewModel
@@ -261,6 +262,7 @@ struct SingleDay: View {
                             .frame(height: 50)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            
                             withAnimation {
                                 showOnboardingModal = false
                                 Analytics.shared.log(event: .onboarding_finished_single_course)
@@ -268,9 +270,11 @@ struct SingleDay: View {
                                 UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
                                 viewRouter.currentPage = .middle
+                                showRating()
                             }
                         } label: {
                             Capsule()
+                            
                                 .fill(Clr.darkgreen)
                                 .overlay(
                                     Text("Start Day 1 of Course")
@@ -284,11 +288,10 @@ struct SingleDay: View {
                          .frame(height: 45)
                          .padding(.top, 25)
                         Button {
-                            
                             withAnimation {
                                 fromPage = "single"
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                showOnboardingModal = false
+                                showRating()
                             }
                         } label: {
                             Text("Not Now")
@@ -314,7 +317,6 @@ struct SingleDay: View {
                 if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                 }
-                UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
             }
             if let moods = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.moods] as? [[String: String]] {
                 self.moods = moods
@@ -383,7 +385,17 @@ struct SingleDay: View {
             .padding(.top, 60)
         }
     }
-
+    
+    private func showRating() {
+        if (gardenModel.numMeds + gardenModel.numBreaths) == 1 {
+            Analytics.shared.log(event: .show_onboarding_rating)
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+                showOnboardingModal = false
+            }
+        }
+    }
+    
     private func updateSession() {
         plant = Plant.allPlants.first(where: { plant in
             return plant.title == sessions?[sessionCounter][K.defaults.plantSelected]
