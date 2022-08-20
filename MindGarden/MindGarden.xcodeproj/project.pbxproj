@@ -101,7 +101,6 @@
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		88661F8B28528DA50052B9B0 /* firefox.png in Resources */ = {isa = PBXBuildFile; fileRef = 88661F8A28528DA50052B9B0 /* firefox.png */; };
-		8871EF9A2868D5BE00E28616 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871EF992868D5BE00E28616 /* LikeButton.swift */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C578528637EA300CCE5F2 /* AppTrackingTransparency.framework */; };
 		8884A994284A75E200B0B315 /* flame.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A993284A75E200B0B315 /* flame.json */; };
@@ -1328,7 +1327,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					FE39A0A627711644007A3E82 = {
 						CreatedOnToolsVersion = 13.1;
@@ -1876,7 +1875,6 @@
 				58D6FB4D286CBEF5003EA6A7 /* JournalView.swift in Sources */,
 				FEB6AF9A265D95F500224BFD /* ContentView.swift in Sources */,
 				88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */,
-				8871EF9A2868D5BE00E28616 /* LikeButton.swift in Sources */,
 				585A4E5E27FC8BB400443F72 /* Buttons.swift in Sources */,
 				FE683F37269E47D1009A66DF /* LoadingView.swift in Sources */,
 				FEA7FBE426B0DF5A0073C62D /* Plant.swift in Sources */,
