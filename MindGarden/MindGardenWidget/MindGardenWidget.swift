@@ -25,7 +25,7 @@ struct Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = [] 
-        let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
+        let userDefaults = UserDefaults(suiteName: K.widgetDefault)
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()

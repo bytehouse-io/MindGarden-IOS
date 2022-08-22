@@ -601,7 +601,7 @@ extension AuthenticationViewModel {
                             if info?.entitlements.all["isPro"]?.isActive == true {
                                 print("godfather2", bool)
                                 UserDefaults.standard.setValue(true, forKey: "isPro")
-                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+                                UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
                                 WidgetCenter.shared.reloadAllTimelines()
                             }
                             self.userModel.updateSelf()

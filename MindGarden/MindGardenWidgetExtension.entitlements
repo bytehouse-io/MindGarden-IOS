@@ -5,6 +5,7 @@
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.io.bytehouse.mindgarden.widget</string>
+		<string>group.M5757NXZKD.io.bytehouse.mindgarden.widget</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

@@ -262,7 +262,7 @@ class GardenViewModel: ObservableObject {
                 if let document = snapshot, document.exists {
                     if let gardenGrid = document[K.defaults.gardenGrid] as? [String: [String:[String:[String:Any]]]] {
                         self.grid = gardenGrid
-                        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+                        UserDefaults(suiteName: K.widgetDefault)?.setValue(self.grid, forKey: "grid")
                         WidgetCenter.shared.reloadAllTimelines()
                     }
                     self.getLastFive()
@@ -289,7 +289,7 @@ class GardenViewModel: ObservableObject {
             }
             self.populateMonth()
             self.getRecentMeditations()
-            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+            UserDefaults(suiteName: K.widgetDefault)?.setValue(self.grid, forKey: "grid")
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
@@ -347,7 +347,7 @@ class GardenViewModel: ObservableObject {
     
     private func updateData(completionHandler: ()->Void = { }, key: String) {
         UserDefaults.standard.setValue(self.grid, forKey: "grid")
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(self.grid, forKey: "grid")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(self.grid, forKey: "grid")
         WidgetCenter.shared.reloadAllTimelines()
         self.populateMonth()
         self.getLastFive()
@@ -380,7 +380,7 @@ class GardenViewModel: ObservableObject {
     }
     
     func getLastLogMood()-> Mood {
-        let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
+        let userDefaults = UserDefaults(suiteName: K.widgetDefault)
         if let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] {
             var day = Int(Date().get(.day)) ?? 0
             while(day>0) {
