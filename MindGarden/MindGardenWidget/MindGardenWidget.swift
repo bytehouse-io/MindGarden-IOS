@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import Intents
 import Amplitude
+import Firebase
 
 
 struct Provider: IntentTimelineProvider {
@@ -83,7 +84,8 @@ struct MindGardenWidgetEntryView : View {
             case .systemMedium:
                 NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId))
             case .systemLarge:
-                LargeWidget()
+                LargeWidget(grid:entry.grid)
+                    .environmentObject(GardenViewModel())
             default:
                 Text("Some other WidgetFamily in the future.")
             }
@@ -334,6 +336,10 @@ struct Plnt: Identifiable {
 @main
 struct MindGardenWidget: Widget {
     let kind: String = "MindGardenWidget"
+    
+    init(){
+        FirebaseApp.configure()
+    }
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
