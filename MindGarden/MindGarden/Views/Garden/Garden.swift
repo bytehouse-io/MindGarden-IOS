@@ -39,6 +39,62 @@ struct Garden: View {
     @State private var playEntryAnimation = false
     private let animation = Animation.interpolatingSpring(stiffness: 50, damping: 26)
     
+    
+    enum MonthlyState: String, CaseIterable {
+        var id: String { return self.rawValue }
+        
+        case curruntStreak
+        case breathwork
+        case meditations
+        case reflections
+        case totaltime
+        
+        var color:Color {
+            switch self {
+            case .curruntStreak:
+                return Clr.redGradientBottom
+            case .breathwork:
+                return Clr.brightGreen
+            case .meditations:
+                return Clr.brightGreen
+            case .reflections:
+                return Clr.brightGreen
+            case .totaltime:
+                return .black
+            }
+        }
+        
+        var image:Image {
+            switch self {
+            case .curruntStreak:
+                return Img.streak
+            case .breathwork:
+                return Img.breathIcon
+            case .meditations:
+                return Img.meditatingTurtle
+            case .reflections:
+                return Img.streakPencil
+            case .totaltime:
+                return Img.alarmClock
+            }
+        }
+        
+        var title:String {
+            switch self {
+            case .curruntStreak:
+                return "Current Streak"
+            case .breathwork:
+                return "Breathwork"
+            case .meditations:
+                return "Meditations"
+            case .reflections:
+                return "Reflections"
+            case .totaltime:
+                return "Total Time"
+            }
+        }
+    }
+    
     var body: some View {
         GeometryReader { gp in
             ScrollView(showsIndicators: false) {
@@ -298,99 +354,10 @@ struct Garden: View {
                         .neoShadow()
                         .offset(y: playEntryAnimation ? 0 : 200)
                         .animation(animation.delay(0.1), value: playEntryAnimation)
-                            .padding(5)
+                        .padding(5)
                         
-                        Text("Monthly Stats")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
-                            .offset(x: playEntryAnimation ? UIScreen.screenWidth * -0.25 - 5 : -400, y: 25)
-                            .animation(animation.delay(0.4), value: playEntryAnimation)
-                        HStack(spacing: 15) {
-                            HStack(spacing: 10) {
-                                VStack {
-                                    HStack {
-                                        StatBox(label: "Journals", img: Img.streakPencil, value: "\(gardenModel.gratitudes)")
-                                        StatBox(label: "Sessions", img: Img.iconSessions, value: "\(gardenModel.totalSessions)")
-                                        StatBox(label: "Minutes", img: Img.iconTotalTime, value: "\(Helper.minuteandhours(seconds: Double(gardenModel.totalMins), isNewLine: true))")
-                                    }
-                                    .frame(height:60)
-                                    ZStack {
-                                        Rectangle()
-                                            .fill(Clr.darkWhite)
-                                            .neoShadow()
-                                            .addBorder(.black, width: 1.5, cornerRadius: 16)
-                                        HStack {
-                                            Img.streak
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding()
-                                                .padding(.trailing,0)
-                                                .frame(width: 100)
-                                                .offset(x: 5)
-                                            VStack(spacing: 20) {
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(.black, lineWidth: 1.5)
-                                                    .background(Clr.yellow.cornerRadius(8))
-                                                    .overlay(
-                                                        VStack {
-                                                            Text("Current Streak")
-                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.fredoka(.regular, size: 12))
-                                                            Text(currentStreak)
-                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.fredoka(.bold, size: 20))
-                                                        }
-                                                    )
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(.black, lineWidth: 1.5)
-                                                    .background(Clr.yellow.cornerRadius(8))
-                                                    .overlay(
-                                                        VStack {
-                                                            Text("Longest Streak")
-                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.fredoka(.regular, size: 12))
-                                                            Text("\(UserDefaults.standard.integer(forKey: "longestStreak"))")
-                                                                .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                                                .font(Font.fredoka(.bold, size: 20))
-                                                        }
-                                                    )
-                                            }
-                                            .padding(.vertical)
-                                            .padding(.trailing)
-                                        }
-                                    }.frame(height:150)
-                                        .padding(.top,5)
-                                }
-                                .padding(.vertical)
-                                .padding(.trailing,5)
-                                .offset(x: playEntryAnimation ? 0 : -400)
-                                .animation(animation.delay(0.4), value: playEntryAnimation)
-                                ZStack {
-                                    Rectangle()
-                                        .fill(Clr.darkWhite)
-                                        .addBorder(.black, width: 1.5, cornerRadius: 16)
-                                        .neoShadow()
-                                    VStack(spacing:5) {
-                                        Text("Moods")
-                                            .foregroundColor(Clr.black2)
-                                            .font(Font.fredoka(.semiBold, size: 12))
-                                            .offset(y: -7)
-                                        MoodImage(mood: .veryGood, value: gardenModel.totalMoods[.veryGood] ?? 0)
-                                        MoodImage(mood: .good, value: gardenModel.totalMoods[.good] ?? 0)
-                                        MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
-                                        MoodImage(mood: .bad, value: gardenModel.totalMoods[.bad] ?? 0)
-                                        MoodImage(mood: .veryBad, value: gardenModel.totalMoods[.veryBad] ?? 0)
-                                    }
-                                    .padding(15)
-                                }
-                                .padding()
-                                .neoShadow()
-                                .frame(width:UIScreen.screenWidth * 0.165, height: UIScreen.screenHeight * (K.isSmall () ? 0.17 : 0.16))
-                                .offset(x: playEntryAnimation ? 0 : 400)
-                                .animation(animation.delay(0.2), value: playEntryAnimation)
-                            }
-                        }.frame(width:UIScreen.screenWidth*0.85)
-                            .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                        monthlyStateView
+                        
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants")
                                 .foregroundColor(Clr.black2)
@@ -552,12 +519,101 @@ struct Garden: View {
                     StreakScene(showStreak: $showStreak)
                 case .mood:
                     EmptyView()
-                default: EmptyView()
                 }
             }
             .onAppearAnalytics(event: .screen_load_garden)
         }
     }
+    
+    var monthlyStateView: some View {
+        VStack(spacing:5) {
+            VStack(spacing:5) {
+                HStack {
+                    Text("Monthly Stats")
+                        .foregroundColor(Clr.black2)
+                        .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
+                        .padding(.leading,25)
+                    Spacer()
+                    Image(systemName: "chevron.forward")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width:10)
+                        .foregroundColor(Clr.black2)
+                        .padding(.trailing,20)
+                        .opacity(0.5)
+                }
+                .padding(.top,20)
+                HStack(spacing: 15) {
+                    ZStack {
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .addBorder(.black, width: 1.5, cornerRadius: 16)
+                            .neoShadow()
+                            .frame(width:UIScreen.screenWidth * 0.46)
+                        VStack(spacing:0) {
+                            ForEach(MonthlyState.allCases, id: \.id) { state in
+                                HStack(spacing:15) {
+                                    state.image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width:20)
+                                    Text(state.title)
+                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
+                                        .font(Font.fredoka(.regular, size: 12))
+                                        .frame(maxWidth:.infinity,alignment:.leading)
+                                    Text(getStateValue(type:state))
+                                        .foregroundColor(state.color)
+                                        .font(Font.fredoka(.bold, size: 16))
+                                }
+                                .padding(.vertical,3)
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+                    ZStack {
+                        Rectangle()
+                            .fill(Clr.darkWhite)
+                            .addBorder(.black, width: 1.5, cornerRadius: 16)
+                            .neoShadow()
+                        VStack(spacing:0) {
+                            MoodImage(mood: .veryGood, value: gardenModel.totalMoods[.veryGood] ?? 0)
+                            MoodImage(mood: .good, value: gardenModel.totalMoods[.good] ?? 0)
+                            MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
+                            MoodImage(mood: .bad, value: gardenModel.totalMoods[.bad] ?? 0)
+                            MoodImage(mood: .veryBad, value: gardenModel.totalMoods[.veryBad] ?? 0)
+                        }
+                        .padding(.vertical)
+                    }
+                    .padding(.trailing,20)
+                    .neoShadow()
+                }
+                .padding([.horizontal,.bottom],20)
+            }.frame(width:UIScreen.screenWidth*0.85)
+            .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+        }.background(
+            Rectangle()
+                .fill(Clr.darkWhite)
+                .neoShadow()
+                .addBorder(.black, width: 1.5, cornerRadius: 16)
+        )
+
+    }
+    
+    private func getStateValue(type:MonthlyState) -> String {
+        switch type {
+        case .curruntStreak:
+            return self.currentStreak
+        case .breathwork:
+            return "\(gardenModel.numBreaths)"
+        case .meditations:
+            return "\(gardenModel.numMeds)"
+        case .reflections:
+            return "\(gardenModel.gratitudes)"
+        case .totaltime:
+            return "\(Helper.minuteandhours(seconds: Double(gardenModel.totalMins), isNewLine: false))"
+        }
+    }
+    
     private func getFavoritePlants() {
         topThreePlants = [FavoritePlant]()
         let topThreeStrings = gardenModel.favoritePlants.sorted { $0.value > $1.value }.prefix(3)
@@ -611,11 +667,12 @@ struct MoodImage: View {
                 .padding(.leading, 2)
             Text(String(value))
                 .font(Font.fredoka(.semiBold, size: 16))
-                .foregroundColor(Clr.black2)
+                .foregroundColor(mood.color)
                 .lineLimit(1)
                 .frame(width: 15)
                 .minimumScaleFactor(0.5)
                 .multilineTextAlignment(.center)
+                .padding(.leading, 10)
         }.frame(height:30)
     }
 }
