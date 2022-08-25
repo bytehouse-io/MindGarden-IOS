@@ -595,7 +595,10 @@ struct Garden: View {
                 .fill(Clr.darkWhite)
                 .neoShadow()
                 .addBorder(.black, width: 1.5, cornerRadius: 16)
-        )
+        ).onTapGesture {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            activeSheet = .profile
+        }
 
     }
     
