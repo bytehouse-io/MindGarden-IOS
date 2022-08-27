@@ -20,6 +20,7 @@
 		5810EB632847971800DD4D25 /* JourneyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5810EB622847971800DD4D25 /* JourneyScene.swift */; };
 		581EF8852874636A0058C7E4 /* MoodElaborate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581EF8842874636A0058C7E4 /* MoodElaborate.swift */; };
 		581EF8872875CC7E0058C7E4 /* MoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581EF8862875CC7E0058C7E4 /* MoodModel.swift */; };
+		5820EEA428B8E1B1002DC784 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9BE35627434023004FEBF0 /* String+Extensions.swift */; };
 		5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5822E586286186C000DB0AFC /* waterdrops.mp3 */; };
 		5822E58B286216C300DB0AFC /* NewAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5822E58A286216C200DB0AFC /* NewAuthentication.swift */; };
 		58266E2528798797008594E0 /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58266E2428798797008594E0 /* RecommendationsView.swift */; };
@@ -1724,6 +1725,7 @@
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
 				58DB9A77289D7BB900F930DE /* GardenViewModel.swift in Sources */,
 				58B5AA9B28A79F8200BDC379 /* ImageLoader.swift in Sources */,
+				5820EEA428B8E1B1002DC784 /* String+Extensions.swift in Sources */,
 				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
 				58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */,

@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         Purchases.shared.delegate = self
         
         do {
-        try Auth.auth().useUserAccessGroup("M5757NXZKD.io.bytehouse.mindgarden")
+            try Auth.auth().useUserAccessGroup(K.widgetDefault)
         } catch {
             print(error.localizedDescription)
         }
