@@ -539,7 +539,7 @@ struct PricingView: View {
         }
         UserDefaults.standard.setValue(true, forKey: "bonsai")
         UserDefaults.standard.setValue(true, forKey: "isPro")
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
         userWentPro = true
         if fromPage != "onboarding2" {

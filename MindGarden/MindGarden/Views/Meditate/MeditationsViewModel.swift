@@ -245,11 +245,11 @@ class MeditationViewModel: ObservableObject {
         saveFeaturedMeditation()
     }
     private func saveFeaturedBreathwork() {
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(featuredBreathwork.id, forKey: "featuredBreathwork")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(featuredBreathwork.id, forKey: "featuredBreathwork")
     }
     
     private func saveFeaturedMeditation() {
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(featuredMeditation?.id, forKey: "featuredMeditation")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(featuredMeditation?.id, forKey: "featuredMeditation")
     }
 
     private func getRecommendedMeds() {

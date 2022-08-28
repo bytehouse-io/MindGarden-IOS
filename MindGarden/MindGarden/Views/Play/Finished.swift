@@ -241,6 +241,7 @@ struct Finished: View {
                             }
                         Spacer()
                         Button {
+                            gardenModel.updateSelf()
                         } label: {
                             Capsule()
                                 .fill(Clr.yellow)

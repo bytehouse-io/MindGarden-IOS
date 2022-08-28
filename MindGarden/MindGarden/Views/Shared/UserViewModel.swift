@@ -326,7 +326,7 @@ class UserViewModel: ObservableObject {
     Purchases.shared.purchaserInfo { [self] (purchaserInfo, error) in
         if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
             UserDefaults.standard.setValue(true, forKey: "isPro")
-            UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(true, forKey: "isPro")
+            UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
             WidgetCenter.shared.reloadAllTimelines()
             buyBonsai()
         } else {

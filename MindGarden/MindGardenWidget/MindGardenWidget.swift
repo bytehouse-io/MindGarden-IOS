@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import Intents
 import Amplitude
+import Firebase
 
 
 struct Provider: IntentTimelineProvider {
@@ -24,7 +25,7 @@ struct Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = [] 
-        let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
+        let userDefaults = UserDefaults(suiteName: K.widgetDefault)
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
@@ -83,7 +84,8 @@ struct MindGardenWidgetEntryView : View {
             case .systemMedium:
                 NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId))
             case .systemLarge:
-                LargeWidget()
+                LargeWidget(grid:entry.grid)
+                    .environmentObject(GardenViewModel())
             default:
                 Text("Some other WidgetFamily in the future.")
             }
@@ -334,6 +336,10 @@ struct Plnt: Identifiable {
 @main
 struct MindGardenWidget: Widget {
     let kind: String = "MindGardenWidget"
+    
+    init(){
+        FirebaseApp.configure()
+    }
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
@@ -341,7 +347,7 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 

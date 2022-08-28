@@ -193,7 +193,7 @@ struct JournalView: View, KeyboardReadable {
                                     userModel.buyPlant(unlockedStrawberry: true)
                                     userModel.triggerAnimation = true
                                 }
-                                UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
+                                UserDefaults(suiteName: K.widgetDefault)?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     withAnimation {
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {

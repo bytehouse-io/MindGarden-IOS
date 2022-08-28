@@ -208,6 +208,7 @@ struct NewAuthentication: View {
                             .padding(.top, 20)
                             .buttonStyle(NeumorphicPress())
                             .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
+                        
                     }
                     VStack {
                         if showFields && viewModel.isSignUp == false {

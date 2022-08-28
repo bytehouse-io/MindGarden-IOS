@@ -423,8 +423,8 @@ class BonusViewModel: ObservableObject {
             updateLongest()
         }
         
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(streakNumber, forKey: "streakNumber")
-        UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(streakNumber, forKey: "streakNumber")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(UserDefaults.standard.bool(forKey:"isPro"), forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
 
         return lastStreakDate
