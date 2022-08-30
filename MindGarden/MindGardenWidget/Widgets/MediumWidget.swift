@@ -30,15 +30,16 @@ struct MediumEntry {
         case .journel:
             return Image("mediumWidgetJournel")
         case .meditate:
-            if meditation.imgURL != "" {
-                return nil
-            } else {
-                return meditation.img
-            }
+            return Image("meditatingTurtle")
+//            if meditation.imgURL != "" {
+//                return Image("meditatingTurtle")
+//            } else {
+//                return meditation.img
+//            }
         case .logmood:
             return Image("mediumWidgetMood")
         case .breathwork:
-            return breathWork.img
+            return Image("mediumWidgetBreathwork")
         }
     }
     
@@ -109,12 +110,13 @@ struct MediumWidgetRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width:35)
-                } else {
-                    AsyncImage(url: URL(string: mediumEntry.meditation.imgURL)!,
-                                      placeholder: { Text("...") },
-                                      image: { Image(uiImage: $0).resizable() })
-                              .frame(idealHeight: UIScreen.main.bounds.width / 2 * 3)
                 }
+//                } else {
+//                    AsyncImage(url: URL(string: mediumEntry.meditation.imgURL)!,
+//                                      placeholder: { Text("...") },
+//                                      image: { Image(uiImage: $0).resizable() })
+//                              .frame(idealHeight: UIScreen.main.bounds.width / 2 * 3)
+//                }
                 VStack(alignment:.leading) {
                     Text(type.title)
                         .font(Font.fredoka(.bold, size: 16))
