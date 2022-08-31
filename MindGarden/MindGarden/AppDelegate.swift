@@ -96,6 +96,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
                 })
             }
         }
+         
+        if UserDefaults.standard.value(forKey: "vibrationMode") == nil {
+            UserDefaults.standard.set(true, forKey: "vibrationMode")
+        }
         
         return true
     }
