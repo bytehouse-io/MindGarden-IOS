@@ -74,7 +74,7 @@ struct BreathworkPlay : View {
             if medModel.selectedBreath?.color == .sleep {
                 Clr.darkMode.edgesIgnoringSafeArea(.all)
             } else {
-                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                AnimatedBackground(colors:[Clr.yellow, breathWork?.color.secondary ?? Clr.calmsSecondary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
             }
             VStack {
                 Spacer()

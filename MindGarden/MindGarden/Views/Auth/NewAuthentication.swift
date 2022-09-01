@@ -343,7 +343,7 @@ struct NewAuthentication: View {
             
             if fromPage == "update" {
                 viewModel.isSignUp = false
-                showFields = true
+                showFields = false
             }
         }
         .onDisappear {

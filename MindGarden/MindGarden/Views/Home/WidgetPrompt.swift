@@ -34,12 +34,12 @@ struct WidgetPrompt: View {
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
                             .padding()
-                        
-                        Img.widgetPrompt
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: geomatry.size.height*0.4)
-                            .cornerRadius(20).padding(.bottom, 20)
+//
+//                        Img.widgetPrompt
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: geomatry.size.height*0.4)
+//                            .cornerRadius(20).padding(.bottom, 20)
                         AddWidgetView
                     }
                     
@@ -157,13 +157,13 @@ struct WidgetPrompt: View {
     private func getImage()->Image {
         switch currentStep {
         case 0 :
-            return Img.widgetStep1
+            return Img.sleepingSloth
         case 1 :
-            return Img.widgetStep2
+            return Img.sleepingSloth
         case 2 :
-            return Img.widgetStep3
+            return Img.sleepingSloth
         default :
-            return Img.widgetStep4
+            return Img.sleepingSloth
         }
     }
     

@@ -351,6 +351,11 @@ public enum Img {
   public static let wave = Image("wave")
   public static let whiteClouds = Image("whiteClouds")
   public static let widgetExample = Image("widgetExample")
+  public static let widgetPrompt = Image("widgetPrompt")
+  public static let widgetStep1 = Image("widgetStep1")
+  public static let widgetStep2 = Image("widgetStep2")
+  public static let widgetStep3 = Image("widgetStep3")
+  public static let widgetStep4 = Image("widgetStep4")
   public static let yellowBubble = Image("yellowBubble")
   public static let youngTree = Image("youngTree")
 }
