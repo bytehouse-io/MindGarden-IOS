@@ -707,6 +707,7 @@ struct NatureModal: View {
     var player: AVAudioPlayer?
     @Binding var sliderData: SliderData
     @Binding var bellSlider: SliderData
+    @State var vibrationOn = true
 
     var  body: some View {
         GeometryReader { g in
@@ -737,48 +738,10 @@ struct NatureModal: View {
                             }.frame(width: 30, height: 30)
                         }.padding(20)
                         Spacer()
-                        VStack {
-                            HStack {
-                                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            }
-                            HStack {
-                                SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            }
-                            HStack {
-                                SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                                SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
-                            }
-                        }
+                        SoundView
                         Spacer()
-
-                        GeometryReader { geometry in
-                            Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
-                                .accentColor(Clr.darkgreen)
-                        }.frame(height: 30)
-                            .padding(.horizontal, 30)
-                            .padding(.top)
-                        Spacer()
-                        Text("Bell Volume")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.semiBold, size: 20))
-                            .multilineTextAlignment(.center)
-                            .padding(.top)
-                        GeometryReader { geometry in
-                            Slider(value: self.$bellSlider.sliderValue, in: 0.0...1.0, step: 0.01)
-                                .accentColor(Clr.darkgreen)
-                        }.frame(height: 30)
-                            .padding(.horizontal, 30)
-                            .padding(.top, 10)
+                        BellVolumeView
+                        VibrationView
                         Spacer()
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -787,6 +750,7 @@ struct NatureModal: View {
                             }
                             UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
                             UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
+                            UserDefaults.standard.set(vibrationOn, forKey: "vibrationMode")
                         } label: {
                             ZStack {
                                 Capsule()
@@ -802,7 +766,7 @@ struct NatureModal: View {
                         }
                         .neoShadow()
                         .animation(.default)
-                        .padding(15)                        
+                        .padding(15)
                     }.frame(width: g.size.width * 0.85, height: g.size.height * 0.7, alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(32)
@@ -810,7 +774,72 @@ struct NatureModal: View {
                 }
                 Spacer()
             }
+            .onAppear {
+                if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
+                    vibrationOn = vibration
+                }
+            }
         }
+    }
+    
+    var  SoundView: some View {
+        VStack {
+            HStack {
+                SoundButton(type: .nature, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .rain, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .night, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .beach, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .fire, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+            }
+            HStack {
+                SoundButton(type: .music, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .flute, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .guitar, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .piano1, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .piano2, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+            }
+            HStack {
+                SoundButton(type: .fourThirtyTwo, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .theta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .beta, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+                SoundButton(type: .alpha, selectedType: $sound, change: self.change, player: player, sliderData: $sliderData)
+            }
+        }
+    }
+    
+    var  BellVolumeView: some View {
+        VStack {
+            GeometryReader { geometry in
+                Slider(value: self.$sliderData.sliderValue, in: 0.0...3.0, step: 0.03)
+                    .accentColor(Clr.darkgreen)
+            }.frame(height: 30)
+                .padding(.horizontal, 30)
+                .padding(.top)
+            Spacer()
+            Text("Bell Volume")
+                .foregroundColor(Clr.black2)
+                .font(Font.fredoka(.semiBold, size: 20))
+                .multilineTextAlignment(.center)
+                .padding(.top)
+            GeometryReader { geometry in
+                Slider(value: self.$bellSlider.sliderValue, in: 0.0...1.0, step: 0.01)
+                    .accentColor(Clr.darkgreen)
+            }.frame(height: 30)
+                .padding(.horizontal, 30)
+                .padding(.top, 10)
+        }
+    }
+    
+    var  VibrationView: some View {
+        HStack {
+            Text("Vibration")
+                .font(Font.fredoka(.bold, size: 20))
+                .foregroundColor(Clr.black2)
+            Spacer()
+            Toggle("", isOn: $vibrationOn)
+                .toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+        }.padding()
+            .padding(.horizontal,20)
     }
 }
 

@@ -55,6 +55,7 @@ struct BreathworkPlay : View {
     private let endScale = 2.0
     @State var callerTimer: Timer?
     @State private var engine: CHHapticEngine?
+    @State var playVibration = false
 
     private var remainingDuration: RemainingDurationProvider<Double> {
         { currentScale in
@@ -255,6 +256,11 @@ struct BreathworkPlay : View {
                 .animation(.default)
         }
         .onAppear {
+            
+            if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
+                playVibration = vibration
+            }
+            
             do {
                 engine = try CHHapticEngine()
             } catch let error {
@@ -371,10 +377,12 @@ struct BreathworkPlay : View {
                     scale = 2.0
                 }
             }
-            do {
-                try playHapticContinuousWithParameters(time: TimeInterval(time))
-            } catch let error {
-                print(error)
+            if playVibration {
+                do {
+                    try playHapticContinuousWithParameters(time: TimeInterval(time))
+                } catch let error {
+                    print(error)
+                }
             }
         case "h":
             title = time > 0 ? "Hold" : ""
@@ -421,7 +429,7 @@ struct BreathworkPlay : View {
                 withAnimation(.linear(duration: 0.5)) {
                     fadeAnimation = false
                     durationCounter -= 1
-                    if title == "Hold" {
+                    if title == "Hold", playVibration {
                         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
                     }
                 }
