@@ -34,9 +34,11 @@ struct PricingView: View {
     @State private var trialLength = 3
     @State private var ios14 = true
     @State private var showProfile: Bool = false
+    @State private var showLoading: Bool = false
 
     let items = [("Regular vs\n Pro", "😔", "🤩"), ("Meditations per month", "30", "Infinite"), ("Journals per month", "30", "Infinite"), ("Mood Checks per month", "30", "Infinite"),("Access to all Breathworks", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
     var body: some View {
+        LoadingView(isShowing: $showLoading) {
             GeometryReader { g in
                 let width = g.size.width
                 let height = g.size.height
@@ -384,6 +386,7 @@ struct PricingView: View {
                     }.position(x: g.size.width - 50, y: 75)
                     .buttonStyle(NeoPress())
                 }
+                }
             }.onAppear {
                 if #available(iOS 15.0, *) {
                     ios14 = false
@@ -486,7 +489,9 @@ struct PricingView: View {
         default: break
         }
 
+        showLoading = true
         Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
+            showLoading = false
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
                 let event = logEvent()
                 let revenue = AMPRevenue().setProductIdentifier(event)

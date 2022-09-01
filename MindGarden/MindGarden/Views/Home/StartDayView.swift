@@ -180,9 +180,7 @@ struct StartDayView: View {
                             Analytics.shared.log(event: .home_tapped_mood)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                if !isDailyMood {
-                                    NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
-                                }
+                                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
                             }
                         }
                 }.buttonStyle(ScalePress())

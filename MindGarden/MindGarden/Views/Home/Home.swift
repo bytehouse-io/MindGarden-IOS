@@ -134,8 +134,7 @@ struct Home: View {
         }
 
         .onAppear {
-
-
+            viewRouter.previousPage = .meditate
             fromPage = "profile"
             tappedSignOut = false
             if showProfile {
@@ -191,12 +190,10 @@ struct Home: View {
                 if UserDefaults.standard.integer(forKey: "launchNumber") >= 2 && Auth.auth().currentUser?.email == nil && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
                     authModel.isSignUp = false
                     fromPage = "update"
-                    viewRouter.previousPage = .meditate
                     viewRouter.currentPage = .authentication
                     Analytics.shared.log(event: .update_triggered_auth)
                 } else if Auth.auth().currentUser?.email == nil && !UserDefaults.standard.bool(forKey: "authx") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) {
                     fromPage = "profile"
-                    viewRouter.previousPage = .meditate
                     viewRouter.currentPage = .authentication
                     Analytics.shared.log(event: .show_onboarding_auth)
                 }

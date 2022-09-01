@@ -218,7 +218,6 @@ struct ProfilePage: View {
                             question = fbQuestion
                         }
                     }
-                    
                     // legacy data
                     
                     if let theTime = data["timeStamp"] {

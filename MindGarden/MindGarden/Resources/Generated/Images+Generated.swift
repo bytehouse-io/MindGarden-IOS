@@ -313,6 +313,7 @@ public enum Img {
   public static let sheep = Image("sheep")
   public static let signUpImage = Image("signUpImage")
   public static let siwg = Image("siwg")
+  public static let sleepingSloth = Image("sleepingSloth")
   public static let spaceship = Image("spaceship")
   public static let star = Image("star")
   public static let starfish = Image("starfish")

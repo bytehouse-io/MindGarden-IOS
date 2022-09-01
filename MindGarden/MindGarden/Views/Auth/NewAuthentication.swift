@@ -34,47 +34,46 @@ struct NewAuthentication: View {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 15) {
-                    Text(tappedRefer ? "Sign Up to Refer" : showFields ? viewModel.isSignUp ? "Sign Up with Email" : "Sign Back In" : "Create a profile to save your progress")
+                    Text(tappedRefer ? "Sign Up to Refer" : viewModel.isSignUp ? "Create a profile to save your progress" : "Sign Back In"  )
                         .foregroundColor(Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 28))
                         .multilineTextAlignment(.center)
                         .frame(width: UIScreen.screenWidth * 0.8, height: 150)
                         .offset(y: -45)
                     if !showFields {
-                        Spacer()
                         HStack {
                             LottieView(fileName: "turtle")
-                                .offset(x: 75, y: -95)
+                                .offset(x: 75, y: -75)
                         }.frame(width: UIScreen.screenWidth, height: 125, alignment: .center)
                         //                            .resizable()
                         //                            .aspectRatio(contentMode: .fit)
                     } else {
                         VStack(spacing: 0) {
-                            if !UserDefaults.standard.bool(forKey: "loggedIn") {
-                                if showFields && !tappedSignOut {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            showFields = false
-                                        }
-                                        fromPage = ""
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.darkWhite)
-                                            .padding(.horizontal)
-                                            .overlay(
-                                                
-                                                Text(viewModel.isSignUp ? "Go Back" : "or Create an Account")
-                                                    .font(Font.fredoka(.regular, size: 20))
-                                                    .foregroundColor(Clr.darkgreen)
-                                            )
-                                            .frame(width: UIScreen.screenWidth * (viewModel.isSignUp ? 0.35 : 0.7), height: 40)
-                                    }
-                                    .buttonStyle(NeumorphicPress())
-                                    .offset(y: -45)
-                                    .padding(.top, fromPage == "update" ? -35 : 0)
-                                }
-                            }
+//                            if !UserDefaults.standard.bool(forKey: "loggedIn") {
+//                                if showFields && !tappedSignOut {
+//                                    Button {
+//                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                        withAnimation {
+//                                            showFields = false
+//                                        }
+//                                        fromPage = ""
+//                                    } label: {
+//                                        Capsule()
+//                                            .fill(Clr.darkWhite)
+//                                            .padding(.horizontal)
+//                                            .overlay(
+//
+//                                                Text(viewModel.isSignUp ? "Go Back" : "or Create an Account")
+//                                                    .font(Font.fredoka(.regular, size: 20))
+//                                                    .foregroundColor(Clr.darkgreen)
+//                                            )
+//                                            .frame(width: UIScreen.screenWidth * (viewModel.isSignUp ? 0.35 : 0.7), height: 40)
+//                                    }
+//                                    .buttonStyle(NeumorphicPress())
+//                                    .offset(y: -45)
+//                                    .padding(.top, fromPage == "update" ? -35 : 0)
+//                                }
+//                            }
                             ZStack(alignment: .leading) {
                                 RoundedRectangle(cornerRadius: 24)
                                     .fill(Clr.darkWhite)
@@ -181,12 +180,42 @@ struct NewAuthentication: View {
                                 }
                         }
                     }
+        
+                    VStack {
+                        if viewModel.isSignUp == false {
+                            viewModel.siwa
+                        } else {
+                            viewModel.suwa
+                        }
+                    }
+                    .frame(height: 60)
+                    .oldShadow()
+                    .disabled(viewModel.falseAppleId)
+                    .frame(width: UIScreen.screenWidth * 0.8)
+                    .padding(10)
+                    .padding(.top, 25)
+                    Button {
+                        Analytics.shared.log(event: .authentication_tapped_google)
+                        viewModel.signInWithGoogle()
+                    } label: {
+                        VStack {
+                            if viewModel.isSignUp == false {
+                                Img.siwg
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                            } else {
+                                Img.suwg
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                            }
+                        }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 60)
+                            .oldShadow()
+                    }
                     if !showFields  {
                         Button {
                             withAnimation {
                                 Analytics.shared.log(event: .authentication_tapped_signup_email)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                viewModel.isSignUp = true
                                 showFields = true
                             }
                         } label: {
@@ -199,7 +228,7 @@ struct NewAuthentication: View {
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 20)
                                             .foregroundColor(Clr.darkgreen)
-                                        Text("Sign up with Email")
+                                        Text((viewModel.isSignUp ? "Sign up" : "Sign in") + " with Email")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.semiBold, size: 20))
                                     }.offset(x: -20)
@@ -208,71 +237,37 @@ struct NewAuthentication: View {
                             .padding(.top, 20)
                             .buttonStyle(NeumorphicPress())
                             .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
-                        
                     }
-                    VStack {
-                        if showFields && viewModel.isSignUp == false {
-                            viewModel.siwa
-                        } else {
-                            viewModel.suwa
-                        }
-                    }
-                    .frame(height: 60)
-                    .oldShadow()
-                    .disabled(viewModel.falseAppleId)
-                    .frame(width: UIScreen.screenWidth * 0.8)
-                    .padding(10)
-                    Button {
-                        Analytics.shared.log(event: .authentication_tapped_google)
-                        viewModel.signInWithGoogle()
-                        
-                    } label: {
-                        VStack {
-                            if showFields && viewModel.isSignUp == false {
-                                Img.siwg
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                            } else {
-                                Img.suwg
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                            }
-                        }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 60)
-                            .oldShadow()
-                    }
-                    
-                    if !tappedSignOut && !showFields {
+
+                    if !tappedSignOut && !UserDefaults.standard.bool(forKey: "loggedIn") {
                         Button {
                             Analytics.shared.log(event: .tapped_already_have_account)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            if !viewModel.isSignUp && showFields {
+                            if !viewModel.isSignUp {
                                 withAnimation {
                                     viewModel.isSignUp = true
-                                    showFields = true
                                 }
                             } else {
                                 withAnimation {
-                                    print("tapped here")
                                     tappedSignIn = true
                                     viewModel.isSignUp = false
-                                    showFields = true
-                                }                             
+                                }
                             }
                             
                             
                         } label: {
                             VStack {
-                                Text(!viewModel.isSignUp && showFields ? "Create an account" : "Already have an account")
+                                Text(!viewModel.isSignUp ? "Create an account" : "Already have an account")
                                     .font(Font.fredoka(.semiBold, size: 20))
                                     .foregroundColor(.gray)
                                     .underline()
                             }
-                        }.frame(width: 250, alignment: .center)
-                            .padding(.top, 10)
+                        }.frame(width: 250, height: 50, alignment: .center)
+                            .padding(.top, 25)
                     }
                 }
-                .frame(height: UIScreen.screenHeight/1.75)
-                .padding(.top, 50)
+                .frame(height: UIScreen.screenHeight/1)
+                .padding(.top, 25)
             }
             .edgesIgnoringSafeArea(.bottom)
             .navigationBarTitle("", displayMode: .inline)

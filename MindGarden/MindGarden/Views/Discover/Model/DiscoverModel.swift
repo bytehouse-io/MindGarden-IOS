@@ -36,7 +36,7 @@ struct MenuItem: Identifiable {
         switch self.tabName {
         case .journey: return "Journey"
         case .quickStart: return "Quick Start"
-        case .learn: return "Learn"
+        case .learn: return "Library"
         case .store: return "Store"
         case .badge: return "Badge"
         case .realTree: return "Real Tree"
