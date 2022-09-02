@@ -101,6 +101,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
             UserDefaults.standard.set(true, forKey: "vibrationMode")
         }
         
+        if UserDefaults.standard.value(forKey: "backgroundAnimation") == nil {
+            UserDefaults.standard.set(false, forKey: "backgroundAnimation")
+        }
+        
         return true
     }
     
