@@ -134,8 +134,7 @@ struct Home: View {
         }
 
         .onAppear {
-            let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
-
+            viewRouter.previousPage = .meditate
             fromPage = "profile"
             tappedSignOut = false
             if showProfile {
@@ -150,7 +149,6 @@ struct Home: View {
     
             userModel.checkIfPro()
             DispatchQueue.main.async {
-                
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
@@ -182,18 +180,24 @@ struct Home: View {
                         UserDefaults.standard.setValue(false, forKey: "happinessLink")
                     }
                 }
-
+                                
                 if (UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
                     showUpdateModal = true
                     userModel.show50Off = false
                     UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")
                 }
                 
-                if Auth.auth().currentUser?.email == nil && launchNum == 1 && !UserDefaults.standard.bool(forKey: "authx") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")){
-                    fromPage = "profile"
-                    viewRouter.previousPage = .meditate
+                if UserDefaults.standard.integer(forKey: "launchNumber") >= 2 && Auth.auth().currentUser?.email == nil && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
+                    authModel.isSignUp = false
+                    fromPage = "update"
                     viewRouter.currentPage = .authentication
+                    Analytics.shared.log(event: .update_triggered_auth)
+                } else if Auth.auth().currentUser?.email == nil && !UserDefaults.standard.bool(forKey: "authx") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) {
+                    fromPage = "profile"
+                    viewRouter.currentPage = .authentication
+                    Analytics.shared.log(event: .show_onboarding_auth)
                 }
+                
                 // coins = userModel.coins
                 // self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }

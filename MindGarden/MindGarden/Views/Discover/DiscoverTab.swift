@@ -43,7 +43,7 @@ struct DiscoverTab: View {
                                 .foregroundColor(selectedTab == item.tabName ? .white : .white)
                                 .multilineTextAlignment(.center)
                                 .padding(.leading, item.name == "Courses" ? 10 : 0)
-                                .padding(.trailing, item.name == "Learn" ? 10 : 0)
+                                .padding(.trailing, selectedTab != .learn && item.name == "Library" ? 5 : 0)
                         }.foregroundColor(selectedTab == item.tabName ? .white : .white)
                         .frame(maxWidth: .infinity)
                     }

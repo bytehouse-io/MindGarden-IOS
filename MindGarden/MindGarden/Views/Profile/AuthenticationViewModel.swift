@@ -68,7 +68,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                     case let appleIDCredential as ASAuthorizationAppleIDCredential:
                         guard let nonce = currentNonce else {
                             alertError = true
-                            alertMessage = "Please try again using a different email or method"
+                            alertMessage = "Email is already in use. Use the sign in page"
                             return
                         }
                         guard let appleIDToken = appleIDCredential.identityToken else {
@@ -86,7 +86,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                         if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId")  { // new user
                             if !isSignUp { // login
                                 alertError = true
-                                alertMessage = "Email is not associated with account, please try using a different sign in method"
+                                alertMessage = "Email is already in use. Use the sign in page"
                                 UserDefaults.standard.set(true, forKey: "falseAppleId")
                                 isLoading = false
                                 falseAppleId = true
@@ -95,7 +95,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                     if (error != nil) {
                                         alertError = true
-                                        alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                        alertMessage = error?.localizedDescription ?? "Email is already in use. Use the sign in page"
                                         isLoading = false
                                         return
                                     }
@@ -112,14 +112,14 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                         } else { // used this id before
                             if isSignUp {
                                 alertError = true
-                                alertMessage = "Please use the login page"
+                                alertMessage = "Please use the sign in page"
                                 isLoading = false
                                 return
                             } else { // login
                                 Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                     if (error != nil) {
                                         alertError = true
-                                        alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                        alertMessage = error?.localizedDescription ?? "Email is already in use. Use the sign in page"
                                         isLoading = false
                                         print(error?.localizedDescription ?? "high roe")
                                         return
@@ -167,7 +167,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                             case let appleIDCredential as ASAuthorizationAppleIDCredential:
                                 guard let nonce = currentNonce else {
                                     alertError = true
-                                    alertMessage = "Please try again using a different email or method"
+                                    alertMessage = "Email not associated with an account"
                                     return
                                 }
                                 guard let appleIDToken = appleIDCredential.identityToken else {
@@ -185,7 +185,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId")  { // new user
                                     if !isSignUp { // login
                                         alertError = true
-                                        alertMessage = "Email is not associated with account, please try using a different sign in method"
+                                        alertMessage = "Email is not associated with account"
                                         UserDefaults.standard.set(true, forKey: "falseAppleId")
                                         isLoading = false
                                         falseAppleId = true
@@ -194,7 +194,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                         Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                             if (error != nil) {
                                                 alertError = true
-                                                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                                alertMessage = error?.localizedDescription ?? "Email is not associated with account"
                                                 isLoading = false
                                                 return
                                             }
@@ -210,16 +210,15 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                 } else { // used this id before
                                     if isSignUp {
                                         alertError = true
-                                        alertMessage = "Please use the login page"
+                                        alertMessage = "Email is not associated with account"
                                         isLoading = false
                                         return
                                     } else { // login
                                         Auth.auth().signIn(with: credential, completion: { [self] (user, error) in
                                             if (error != nil) {
                                                 alertError = true
-                                                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                                                alertMessage = error?.localizedDescription ?? "Email is not associated with account"
                                                 isLoading = false
-                                                print(error?.localizedDescription ?? "high roe")
                                                 return
                                             }
 
@@ -339,7 +338,7 @@ extension AuthenticationViewModel: GIDSignInDelegate {
                 isLoading = false
                 if let _ = error {
                     alertError = true
-                    alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                    alertMessage = error?.localizedDescription ?? "Email not associated with an account"
                     isLoading = false
                 } else {
                     if googleIsNew {
@@ -387,7 +386,7 @@ extension AuthenticationViewModel {
             isLoading = false
             if error != nil  {
                 alertError = true
-                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                alertMessage = error?.localizedDescription ?? "Please use the sign in page"
                 return
             }
             createUser()
@@ -404,7 +403,7 @@ extension AuthenticationViewModel {
 //            isLoading = false
             if error != nil {
                 alertError = true
-                alertMessage = error?.localizedDescription ?? "Please try again using a different email or method"
+                alertMessage = error?.localizedDescription ?? "Email not associated with an account, try Sign In With Apple"
                 return
             }
             alertError = false

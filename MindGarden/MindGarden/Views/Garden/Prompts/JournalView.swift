@@ -129,6 +129,8 @@ struct JournalView: View, KeyboardReadable {
             ZStack(alignment:.top) {
                 VStack {
                     Spacer()
+                    if !fromProfile {
+
                     HStack {
                         if !fromProfile {
                             Text("\(coin)")
@@ -177,6 +179,7 @@ struct JournalView: View, KeyboardReadable {
                                 .lineLimit(1)
                         }.frame(height: 35)
                             .neoShadow()
+                 
                         Button {
                             if !text.isEmpty{
                                 if #available(iOS 15.0, *) {
@@ -208,7 +211,7 @@ struct JournalView: View, KeyboardReadable {
                                             var journalObj = [String: String]()
                                             journalObj["timeStamp"] = Date.getTime()
                                             journalObj["gratitude"] = text
-                                            journalObj["question"] =  placeholderQuestion
+                                            journalObj["question"] =  question
                                             userModel.coins += coin
                                             gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
                                             if moodFirst {
@@ -237,6 +240,7 @@ struct JournalView: View, KeyboardReadable {
                         .buttonStyle(NeoPress())
                     }.KeyboardAwarePadding()
                         .padding(.bottom)
+                    }
                     Spacer()
                         .frame(height:50)
                 }
@@ -272,6 +276,9 @@ struct JournalView: View, KeyboardReadable {
                 }
             }
             .onAppear {
+                if !fromProfile {
+                    text = ""
+                }
                 if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
                     divider = gratitudes.count * 3
                 }

@@ -74,7 +74,7 @@ struct BreathworkPlay : View {
             if medModel.selectedBreath?.color == .sleep {
                 Clr.darkMode.edgesIgnoringSafeArea(.all)
             } else {
-                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                AnimatedBackground(colors:[Clr.yellow, breathWork?.color.secondary ?? Clr.calmsSecondary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
             }
             VStack {
                 Spacer()
@@ -272,6 +272,7 @@ struct BreathworkPlay : View {
                     player.stop()
                 }
             }
+            
             if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
                 if defaultSound != "noSound"  {
                     selectedSound = Sound.getSound(str: defaultSound)
@@ -337,7 +338,12 @@ struct BreathworkPlay : View {
         }
         
     }
-
+    private func playSound(){
+            AudioServicesPlaySystemSoundWithCompletion(1011){
+                playSound()
+            }
+        }
+    
     private func playAnimation(timeRemain:Double = 0.0) {
         guard !isPaused  else { return }
         if noOfSequence > 0 {
@@ -359,7 +365,7 @@ struct BreathworkPlay : View {
             }
         }
     }
-    
+     
     private func setBreath(status:String, time:Double, isResumed:Bool) {
         switch status.lowercased() {
         case "i" :

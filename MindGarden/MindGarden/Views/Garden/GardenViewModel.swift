@@ -31,6 +31,7 @@ class GardenViewModel: ObservableObject {
     @Published var numMeds = 0
     @Published var numMoods = 0
     @Published var numGrads = 0
+    @Published var mindfulDays = 0
     var allTimeMinutes = 0
     var allTimeSessions = 0
     var placeHolders = 0
@@ -48,6 +49,7 @@ class GardenViewModel: ObservableObject {
         numGrads = 0
         numMeds = 0
         numBreaths = 0
+        mindfulDays = 0
         var yearSortDict = [String: [[[String:String]]]]()
         
         for (key,value) in grid {
@@ -57,6 +59,7 @@ class GardenViewModel: ObservableObject {
                 if let singleDay = value[String(mo)]{
                     let days = singleDay.keys.sorted { Int($0) ?? 1 > Int($1) ?? 1 }
                     for day in days { // we can improve performance by stopping when we get the last two different sessions
+                        mindfulDays += 1
                         var dataArr = [[String: String]]()
                         if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {  for sess in sessions { // sort by timestamp here
                                 if let id = Int(sess["meditationId"] ?? "0") {

@@ -350,7 +350,7 @@ struct Garden: View {
                         }
                         .background(Clr.darkWhite)
                         .cornerRadius(16)
-                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+//                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                         .neoShadow()
                         .offset(y: playEntryAnimation ? 0 : 200)
                         .animation(animation.delay(0.1), value: playEntryAnimation)
@@ -369,7 +369,7 @@ struct Garden: View {
                                     .addBorder(.black, width: 1.5, cornerRadius: 16)
                                     .neoShadow()
                                     .frame(maxWidth: gp.size.width * 0.85)
-                                HStack(spacing: 20){
+                                HStack(spacing: 5){
                                     Spacer()
                                     if topThreePlants.isEmpty {
                                         Text("You have no favorite plants")
@@ -489,15 +489,17 @@ struct Garden: View {
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
             }.onAppear {
+                viewRouter.previousPage = .garden
                 DispatchQueue.main.async {
                     withAnimation {
                         playEntryAnimation = true
                     }
                     getFavoritePlants()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                        if gardenModel.numMeds + gardenModel.numMeds >= 1 {
+                        if gardenModel.numMeds + gardenModel.numBreaths >= 1 {
                             isOnboarding = true
                         }
+                        
                         if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                         }
@@ -727,17 +729,19 @@ struct FavoritePlant: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(8)
+                .frame(height: 90)
                 .overlay(RoundedRectangle(cornerRadius: 14)
                     .stroke(Clr.darkgreen))
             HStack {
                 Text("\(title)")
                     .font(Font.fredoka(.regular, size: 12))
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .minimumScaleFactor(0.05)
                 Text("\(count)").bold()
-                    .font(Font.fredoka(.bold, size: 16))
+                    .font(Font.fredoka(.bold, size: 20))
             }.padding(.top, 8)
-        }.frame(width: 100, height: 120)
+            .frame(width: 70, height: 30)
+        }.frame(height: 120)
             .padding(10)
     }
 }

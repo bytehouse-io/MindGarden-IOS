@@ -229,6 +229,7 @@ struct RecommendationsView: View {
 }
 
 struct MeditationRow: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var medModel: MeditationViewModel
     var id:Int
@@ -240,6 +241,8 @@ struct MeditationRow: View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
+                viewRouter.previousPage = .meditate
+                presentationMode.wrappedValue.dismiss()
                 if isBreathwork {
                     medModel.selectedBreath = breathwork
                     viewRouter.currentPage = .breathMiddle

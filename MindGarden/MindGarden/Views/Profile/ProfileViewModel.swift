@@ -33,13 +33,6 @@ class ProfileViewModel: ObservableObject {
     }
 
     func signOut() {
-        let defaults = UserDefaults.standard
-        let dictionary = defaults.dictionaryRepresentation()
-        dictionary.keys.forEach { key in
-            if key != "com.revenuecat.userdefaults.appUserID.new"  {
-                defaults.removeObject(forKey: key)
-            }
-        }
         do { try Auth.auth().signOut() }
         catch { print("already logged out") }        
         UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)

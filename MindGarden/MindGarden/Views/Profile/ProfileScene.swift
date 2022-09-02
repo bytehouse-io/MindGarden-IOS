@@ -570,6 +570,7 @@ struct ProfileScene: View {
                 numRefs = Int(userModel.referredStack.substring(from: plusIndex + 1)) ?? 0
             }
         }.onDisappear {
+            fromProfile = false
             gardenSettings = false
         }
     }
