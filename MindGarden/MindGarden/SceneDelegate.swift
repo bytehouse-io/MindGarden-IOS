@@ -74,7 +74,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let firebaseAPI = FirebaseAPI(medModel: SceneDelegate.medModel)
 
         SceneDelegate.userModel.updateSelf()
-        SceneDelegate.gardenModel.updateSelf()
         firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
         firebaseAPI.fetchCourses()
         SceneDelegate.medModel.updateSelf()
@@ -153,6 +152,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        SceneDelegate.gardenModel.updateSelf()
         if let _ = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {} else {
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")

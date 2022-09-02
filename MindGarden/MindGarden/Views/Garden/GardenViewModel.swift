@@ -11,7 +11,21 @@ import FirebaseFirestore
 import Foundation
 import WidgetKit
 import Amplitude
+import SwiftUI
 
+struct StreakItem : Identifiable {
+    var id = UUID()
+    var title: String
+    var streak: Bool
+    var gratitude: String = ""
+    var question: String = ""
+}
+
+struct DailyMoodItem : Identifiable {
+    var id = UUID()
+    var title: String
+    var dailyMood: Image
+}
 
 class GardenViewModel: ObservableObject {
     @Published var grid = [String: [String:[String:[String:Any]]]]()
@@ -36,7 +50,27 @@ class GardenViewModel: ObservableObject {
     var allTimeSessions = 0
     var placeHolders = 0
     let db = Firestore.firestore()
+        
+    // StartDayView (needs to update on scenewillenterforeground)
+    @Published var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
+                                          StreakItem(title: "M", streak: false),
+                                          StreakItem(title: "T", streak: false),
+                                          StreakItem(title: "W", streak: false),
+                                          StreakItem(title: "T", streak: false),
+                                          StreakItem(title: "F", streak: false),
+                                          StreakItem(title: "S", streak: false)]
     
+    @Published var dailyMoodList:[DailyMoodItem] = [DailyMoodItem(title: "S", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "M", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "W", dailyMood: Img.emptyMood),
+                                                DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "F", dailyMood: Img.emptyMood),
+                                             DailyMoodItem(title: "S", dailyMood: Img.emptyMood)]
+    @Published var isGratitudeDone = false
+    @Published var isMeditationDone = false
+    @Published var isWeekStreakDone = false
+    @Published var isMoodDone = false
 
     init() {
         selectedMonth = (Int(Date().get(.month)) ?? 1)
@@ -138,6 +172,69 @@ class GardenViewModel: ObservableObject {
             }
             return date1[2] > date2[2]
         }
+    }
+    func updateStartDay() {
+        let weekDays = getAllDaysOfTheCurrentWeek()
+        getAllGratitude(weekDays:weekDays)
+        
+        if let moods = grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
+            if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
+                isMoodDone = true
+                for i in 0..<weekDays.count {
+                    let day = weekDays[i]
+                    if let moods = grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?["moods"]  as? [[String: String]] {
+                        let mood = Mood.getMood(str: moods[moods.count - 1]["mood"] ?? "okay")
+                        dailyMoodList[i].dailyMood = Mood.getMoodImage(mood: mood)
+                    }
+                }
+            }
+        }
+        
+        if let gratitudes = grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["journals"]  as? [[String: String]] {
+            if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
+                isGratitudeDone = true
+            }
+        }
+        
+        if let meditations = grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["sessions"]  as? [[String: String]] {
+            if let meditation = meditations[meditations.count-1]["meditationId"], !meditation.isEmpty  {
+                isMeditationDone = true
+            }
+        }
+        
+    }
+    private func getAllDaysOfTheCurrentWeek() -> [Date] {
+        var calendar = Calendar.autoupdatingCurrent
+        calendar.firstWeekday = 1
+        let today = calendar.startOfDay(for: Date())
+        var week = [Date]()
+        if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
+            for i in 0...6 {
+                if let day = calendar.date(byAdding: .day, value: i, to: weekInterval.start) {
+                    week += [day]
+                }
+            }
+        }
+        return week
+    }
+    
+    
+    private func getAllGratitude(weekDays:[Date]) {
+        for i in 0..<weekDays.count {
+            let day = weekDays[i]
+            if let gratitudes = grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                if let gratitude = gratitudes[gratitudes.count-1]["gratitude"] {
+                    streakList[i].gratitude = gratitude
+                    if gratitude.count > 0 {
+                        streakList[i].streak = true
+                    }
+                }
+                if let question = gratitudes[gratitudes.count-1]["question"] {
+                    streakList[i].question = question
+                }
+            }
+        }
+        isWeekStreakDone = streakList.filter { $0.streak }.count == 7
     }
 
     func populateMonth() {
@@ -277,6 +374,7 @@ class GardenViewModel: ObservableObject {
                     }
                     self.populateMonth()
                     self.getRecentMeditations()
+                    self.updateStartDay()
                 }
             }
         } else {
