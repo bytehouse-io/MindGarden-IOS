@@ -77,6 +77,7 @@ struct HomeViewDashboard: View {
                                 Text("\(userModel.coins)")
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)
+                                    .minimumScaleFactor(0.1)
                             }
                             .frame(width: width * 0.2, height:height)
                             .roundedCapsule()
@@ -91,6 +92,7 @@ struct HomeViewDashboard: View {
                                 Text("\(userModel.coins)")
                                     .font(Font.fredoka(.medium, size: 16))
                                     .foregroundColor(.black)
+                                    .minimumScaleFactor(0.1)
                             }
                             .frame(width: width * 0.2, height:height)
                             .roundedCapsule()
