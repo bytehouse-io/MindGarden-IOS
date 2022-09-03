@@ -72,7 +72,7 @@ struct BreathworkPlay : View {
     
     var body: some View {
         ZStack(alignment:.top) {
-            if medModel.selectedBreath?.color == .sleep, !backgroundAnimationOn {
+            if medModel.selectedBreath?.color == .sleep || !backgroundAnimationOn {
                 Clr.darkMode.edgesIgnoringSafeArea(.all)
             } else {
                 AnimatedBackground(colors:[Clr.yellow, breathWork?.color.secondary ?? Clr.calmsSecondary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
