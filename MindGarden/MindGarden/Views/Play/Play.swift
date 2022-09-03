@@ -80,7 +80,7 @@ struct Play: View {
                                         .foregroundColor(Clr.superLightGray)
                       
                                     Circle()
-                                        .trim(from: 0.0, to: CGFloat(min(self.progressValue, 1.0)))
+                                        .trim(from: 0.0, to: self.progressValue > 1.0 ? 1.0 : CGFloat(self.progressValue))
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
                                         .foregroundColor(Clr.brightGreen)
                                         .rotationEffect(Angle(degrees: 270.0))
