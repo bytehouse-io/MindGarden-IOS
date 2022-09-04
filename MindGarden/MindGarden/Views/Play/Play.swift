@@ -224,7 +224,7 @@ struct Play: View {
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                     }
-                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider)
+                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn:.constant(false))
                         .offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
                     TutorialModal(show: $showTutorialModal)
@@ -709,7 +709,8 @@ struct NatureModal: View {
     var player: AVAudioPlayer?
     @Binding var sliderData: SliderData
     @Binding var bellSlider: SliderData
-    @State var vibrationOn = true
+    @Binding var vibrationOn:Bool
+    @Binding var backgroundAnimationOn:Bool
 
     var  body: some View {
         GeometryReader { g in
@@ -744,7 +745,7 @@ struct NatureModal: View {
                         Spacer()
                         BellVolumeView
                         VibrationView
-                        Spacer()
+                        BackgroundAnimation
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
@@ -753,6 +754,7 @@ struct NatureModal: View {
                             UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
                             UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
                             UserDefaults.standard.set(vibrationOn, forKey: "vibrationMode")
+                            UserDefaults.standard.set(backgroundAnimationOn, forKey: "backgroundAnimation")
                         } label: {
                             ZStack {
                                 Capsule()
@@ -779,6 +781,10 @@ struct NatureModal: View {
             .onAppear {
                 if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
                     vibrationOn = vibration
+                }
+                
+                if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+                    backgroundAnimationOn = bgAnimation
                 }
             }
         }
@@ -835,12 +841,24 @@ struct NatureModal: View {
     var  VibrationView: some View {
         HStack {
             Text("Vibration")
-                .font(Font.fredoka(.bold, size: 20))
+                .font(Font.fredoka(.bold, size: 18))
                 .foregroundColor(Clr.black2)
             Spacer()
             Toggle("", isOn: $vibrationOn)
                 .toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-        }.padding()
+        }
+            .padding(.horizontal,20)
+    }
+    
+    var  BackgroundAnimation: some View {
+        HStack {
+            Text("Background Animation")
+                .font(Font.fredoka(.bold, size: 18))
+                .foregroundColor(Clr.black2)
+            Spacer()
+            Toggle("", isOn: $backgroundAnimationOn)
+                .toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+        }
             .padding(.horizontal,20)
     }
 }

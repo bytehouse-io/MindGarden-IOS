@@ -7,17 +7,22 @@
 import SwiftUI
 
 enum ReasonType: String {
+    case morePresent
+    case improveMood
     case sleep
     case focus
     case anxiety
-    case trying
+    case tryingItOut
 }
 
 var reasonList = [
-    ReasonItem(type:.sleep),
+    ReasonItem(type:.morePresent),
+    ReasonItem(type:.improveMood),
+
     ReasonItem(type:.focus),
     ReasonItem(type:.anxiety),
-    ReasonItem(type:.trying),
+    ReasonItem(type:.sleep),
+    ReasonItem(type:.tryingItOut),
 ]
 
 struct ReasonItem: Identifiable, Hashable {
@@ -26,39 +31,43 @@ struct ReasonItem: Identifiable, Hashable {
     
     var img: Image {
         switch self.type {
-        case .sleep: return Img.moon
+        case .sleep: return Img.sleepingSloth
         case .focus: return Img.target
         case .anxiety: return Img.heart
-        case .trying: return Img.magnifyingGlass
+        case .morePresent: return Img.meditatingRacoon
+        case .improveMood: return Img.good
+        case .tryingItOut: return Img.magnifyingGlass
         }
     }
     
-    var tag: String {
-        switch self.type {
-        case .sleep: return "sleepBetter"
-        case .focus: return "focused"
-        case .anxiety: return "anxiety"
-        case .trying: return "trying"
-        }
-    }
-    
+//    var tag: String {
+//        switch self.type {
+//        case .sleep: return "sleepBetter"
+//        case .focus: return "focused"
+//        case .anxiety: return "anxiety"
+//        case .tryingItOut: return "trying"
+//        }
+//    }
+
     var title: String {
         switch self.type {
-        case .sleep: return "Sleep better"
+        case .morePresent: return "Be more present"
+        case .improveMood: return "Improve mood"
         case .focus: return "Get more focused"
         case .anxiety: return "Managing Stress & Anxiety"
-        case .trying: return "Just trying it out"
+        case .sleep: return "Sleep better"
+        case .tryingItOut: return "Just trying it out"
         }
     }
-    
-
     
     var event: AnalyticEvent {
         switch self.type {
         case .sleep: return .reason_tapped_sleep
         case .focus: return .reason_tapped_focus
         case .anxiety: return .reason_tapped_stress
-        case .trying: return .reason_tapped_trying
+        case .improveMood: return .reason_tapped_improveMood
+        case .morePresent: return .reason_tapped_bePresent
+        case .tryingItOut: return .reason_tapped_trying
         }
     }
 }

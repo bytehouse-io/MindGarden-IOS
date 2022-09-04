@@ -12,6 +12,8 @@ import Amplitude
 var arr = [String]()
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ReasonScene: View {
+    var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: 5), count: 2)
+
     @State var selected: [ReasonItem] = []
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
@@ -48,9 +50,13 @@ struct ReasonScene: View {
                                 .padding(.horizontal)
                                 .frame(height: 50)
                                 .padding(.bottom, 15)
-                            ForEach(reasonList) { reason in
-                                SelectionRow(width: width, height: height, reason: reason, selected: $selected)
-                            }
+                            
+                            LazyVGrid(columns: gridItemLayout) {
+                                ForEach(reasonList, id: \.self) { reason in
+                                    SelectionRow(width: width, height: height, reason: reason, selected: $selected)
+                                }
+                            }.frame(width: width * 0.9)
+                    
                             Button {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                     MGAudio.sharedInstance.stopSound()
@@ -112,7 +118,7 @@ struct ReasonScene: View {
         @State var reason: ReasonItem
         @Binding var selected: [ReasonItem]
         @Environment(\.colorScheme) var colorScheme
-
+        
         var body: some View {
             Button {
                 MGAudio.sharedInstance.playBubbleSound()
@@ -157,27 +163,41 @@ struct ReasonScene: View {
                 ZStack {
                     Rectangle()
                         .fill(selected.contains(where: { $0.id == reason.id }) ? Clr.brightGreen : Clr.darkWhite)
-                        .cornerRadius(20)
-                        .frame(height: height * (K.isSmall() ? 0.11 : 0.125))
-                        .addBorder(.black, width: 1.5, cornerRadius: 20)
-                        .padding(.horizontal)
-                        .padding(.vertical, 8)
-                    HStack(spacing: 50) {
+                    VStack(spacing: -10) {
                         Text(reason.title)
-                            .font(Font.fredoka(.semiBold, size: K.isSmall() ? 18 : 20))
+                            .font(Font.fredoka(.semiBold, size: K.isSmall() ? 16 : 20))
                             .foregroundColor(selected.contains(where: { $0.id == reason.id }) ? .white : Clr.black2)
-                            .padding()
-                            .frame(width: width * 0.5, alignment: .leading)
+                            .padding(.horizontal)
+                            .frame(width: width * 0.375, height: height * 0.085, alignment: .top)
                             .lineLimit(2)
-                            .minimumScaleFactor(0.05)
+                            .minimumScaleFactor(0.5)
                         reason.img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: width * 0.15)
-                            .offset(x: -20)
-                    }
-                }
+                            .frame(width: width * 0.18, alignment: .top)
+                    }.padding()
+                }.frame(width: width * 0.4, height: height * (K.isSmall() ? 0.08 : 0.185))
+                    .cornerRadius(20)
+                    .addBorder(.black, width: 1.5, cornerRadius: 20)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+
             }.buttonStyle(NeumorphicPress())
+        }
+    }
+}
+
+enum Reason {
+    case morePresent, focus, reduceStress, tryingItOut, improveMood, sleep
+   
+    var title: String {
+        switch self {
+        case .morePresent: return "Be more present"
+        case .improveMood: return "Improve mood"
+        case .focus: return "Improve focus"
+        case .reduceStress: return "Reduce stress & anxiety"
+        case .sleep: return "Sleep better"
+        case .tryingItOut: return "Just trying it out"
         }
     }
 }

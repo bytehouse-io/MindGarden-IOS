@@ -249,6 +249,7 @@ public enum Img {
   public static let loadingyour = Image("loadingyour")
   public static let lockIcon = Image("lockIcon")
   public static let magnifyingGlass = Image("magnifyingGlass")
+  public static let meditatingRacoon = Image("meditatingRacoon")
   public static let meditatingTurtle = Image("meditatingTurtle")
   public static let mgGuestPass = Image("mgGuestPass")
   public static let mgLogo = Image("mgLogo")

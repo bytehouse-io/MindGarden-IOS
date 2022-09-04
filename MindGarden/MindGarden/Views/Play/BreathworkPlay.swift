@@ -56,6 +56,7 @@ struct BreathworkPlay : View {
     @State var callerTimer: Timer?
     @State private var engine: CHHapticEngine?
     @State var playVibration = false
+    @State var backgroundAnimationOn = false
 
     private var remainingDuration: RemainingDurationProvider<Double> {
         { currentScale in
@@ -71,7 +72,7 @@ struct BreathworkPlay : View {
     
     var body: some View {
         ZStack(alignment:.top) {
-            if medModel.selectedBreath?.color == .sleep {
+            if medModel.selectedBreath?.color == .sleep, !backgroundAnimationOn {
                 Clr.darkMode.edgesIgnoringSafeArea(.all)
             } else {
                 AnimatedBackground(colors:[Clr.yellow, breathWork?.color.secondary ?? Clr.calmsSecondary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
@@ -251,7 +252,7 @@ struct BreathworkPlay : View {
                     .opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
             }
-            NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider)
+            NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: $playVibration, backgroundAnimationOn:$backgroundAnimationOn)
                 .offset(y: showNatureModal ? 0 : UIScreen.screenHeight)
                 .animation(.default)
         }
@@ -259,6 +260,10 @@ struct BreathworkPlay : View {
             
             if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
                 playVibration = vibration
+            }
+            
+            if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+                backgroundAnimationOn = bgAnimation
             }
             
             do {

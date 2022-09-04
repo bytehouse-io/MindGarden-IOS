@@ -294,12 +294,14 @@ struct ReviewScene: View {
 
                 if UserDefaults.standard.string(forKey: "experience") != nil {
                 switch UserDefaults.standard.string(forKey: "experience") {
-                    case "Meditate often":
+                    case Experience.often.title:
                         experience = (Img.redTulips3, "is high")
-                    case "Have tried to meditate":
+                    case Experience.nowAndThen.title:
                         experience = (Img.redTulips2, "is low")
-                    case "Have never meditated":
-                        experience = (Img.redTulips1, "is none")
+                    case Experience.fewTimes.title:
+                        experience = (Img.redTulips2, "is low")
+                    case Experience.never.title:
+                        experience = (Img.seed, "is none")
                     default: break
                 }
                 }

@@ -4,6 +4,19 @@
 //
 //  Created by Dante Kim on 8/7/21.
 //
+enum Experience {
+    case often, nowAndThen, fewTimes, never
+    
+    var title: String {
+        switch self {
+        case .often: return "I practice often"
+        case .nowAndThen: return "I practice now and then"
+        case .fewTimes: return "I've tried a few times"
+        case .never: return "I've never practiced"
+        }
+    }
+}
+
 
 import SwiftUI
 // https://feed.podbean.com/mindgarden/feed.xml
@@ -61,7 +74,7 @@ struct Meditation: Hashable {
             }
         }
         
-        if UserDefaults.standard.string(forKey: "experience") == "Have tried to meditate" ||  UserDefaults.standard.string(forKey: "experience") == "Have never meditated" {
+        if UserDefaults.standard.string(forKey: "experience") != Experience.never.title && UserDefaults.standard.string(forKey: "experience") != "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 retMeds.append(allMeditations.first(where: { $0.id == 6 })!)
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
@@ -71,7 +84,7 @@ struct Meditation: Hashable {
             retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
         }
         
-        if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
+        if UserDefaults.standard.string(forKey: "experience") != Experience.often.title && UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 {
                 filtedMeds = filtedMeds.filter({ med in  med.duration <= 360 && med.category != .unguided  })
             } else if  UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 20 {

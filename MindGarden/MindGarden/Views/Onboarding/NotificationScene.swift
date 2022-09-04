@@ -8,6 +8,7 @@
 import SwiftUI
 import OneSignal
 import Amplitude
+import Lottie
 
 struct NotificationScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -89,6 +90,7 @@ struct NotificationScene: View {
                                 .offset(y: -20)
                                 .lineLimit(3)
                                 .minimumScaleFactor(0.05)
+                                .frame(width: width * 0.85)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
@@ -137,6 +139,7 @@ struct NotificationScene: View {
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
+                            LottieAnimationView(filename: "turtleNotification", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
                             Img.turtleLetter
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -193,7 +196,7 @@ struct NotificationScene: View {
                                         }
                                     }
                             }
-                        }.frame(width: width * 0.9)
+                        }.frame(width: width * 0.85)
                         .padding(.top, 5)
                     }
 

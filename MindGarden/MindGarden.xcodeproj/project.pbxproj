@@ -125,6 +125,7 @@
 		88CF8E6F287CDF7800BA89B9 /* ProfileTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */; };
 		88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
+		88D39D9828C3E8C3001C66F7 /* turtleNotification.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39D9728C3E8C2001C66F7 /* turtleNotification.json */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
 		88D4C5D927FA468800CBB956 /* yogi.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D4C5D827FA468700CBB956 /* yogi.json */; };
@@ -398,6 +399,7 @@
 		88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBar.swift; sourceTree = "<group>"; };
 		88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
+		88D39D9728C3E8C2001C66F7 /* turtleNotification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotification.json; path = ../../../../../../Downloads/turtleNotification.json; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		88D4C5D627F6439A00CBB956 /* StorylyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorylyManager.swift; sourceTree = "<group>"; };
 		88D4C5D827FA468700CBB956 /* yogi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yogi.json; sourceTree = "<group>"; };
@@ -820,6 +822,7 @@
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
 				882738D227E2D75D00F8D4D0 /* first_part.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
+				88D39D9728C3E8C2001C66F7 /* turtleNotification.json */,
 				8884A993284A75E200B0B315 /* flame.json */,
 				8884A995284BDBBC00B0B315 /* flame 1.json */,
 				8884A997284BDBCA00B0B315 /* flame 2.json */,
@@ -1458,6 +1461,7 @@
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
 				88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */,
 				8897F12B283BEAC100F4E158 /* educatedRacoon.png in Resources */,
+				88D39D9828C3E8C3001C66F7 /* turtleNotification.json in Resources */,
 				FEB6AF9C265D95F700224BFD /* Assets.xcassets in Resources */,
 				88F36ABD27DFBE900060FD8E /* guitar.mp3 in Resources */,
 				88164779287D0D4C00C2B6D4 /* background.mp3 in Resources */,
@@ -1958,7 +1962,6 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-
 				MARKETING_VERSION = 1.71;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
