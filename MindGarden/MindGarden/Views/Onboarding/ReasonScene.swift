@@ -32,17 +32,20 @@ struct ReasonScene: View {
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
-                            HStack {
-                                Img.topBranch
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.screenWidth * 0.6)
-                                    .padding(.leading, -20)
-                                    .offset(x: -20, y: -35)
-                                Spacer()
+                            if !K.isSmall() {
+                                HStack {
+                                    Img.topBranch
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.screenWidth * 0.6)
+                                        .padding(.leading, -20)
+                                        .offset(x: -20, y: -15)
+                                    Spacer()
+                                }
                             }
+
                             Text("What brings you to MindGarden?")
-                                .font(Font.fredoka(.bold, size: 28))
+                                .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
@@ -176,7 +179,7 @@ struct ReasonScene: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.18, alignment: .top)
                     }.padding()
-                }.frame(width: width * 0.4, height: height * (K.isSmall() ? 0.08 : 0.185))
+                }.frame(width: width * 0.4, height: height * (K.isSmall() ? 0.18 : 0.185))
                     .cornerRadius(20)
                     .addBorder(.black, width: 1.5, cornerRadius: 20)
                     .padding(.horizontal)

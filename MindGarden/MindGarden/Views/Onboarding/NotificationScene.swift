@@ -139,7 +139,7 @@ struct NotificationScene: View {
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
-                            LottieAnimationView(filename: "turtleNotification", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
+                            LottieAnimationView(filename: "turtleNotification", loopMode: LottieLoopMode.autoReverse, isPlaying: .constant(true))
                             Img.turtleLetter
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)

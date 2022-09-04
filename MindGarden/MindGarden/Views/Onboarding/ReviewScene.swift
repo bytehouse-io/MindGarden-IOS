@@ -35,12 +35,14 @@ struct ReviewScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(spacing: 0) {
                         HStack {
-                            Img.topBranch
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: UIScreen.screenWidth * 0.6)
-                                .padding(.leading, -20)
-                                .offset(y: -10)
+                            if !K.isSmall() {
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
+                            }
                             Spacer()
                         }.edgesIgnoringSafeArea(.all)
                         Spacer()
@@ -52,7 +54,6 @@ struct ReviewScene: View {
                             .minimumScaleFactor(0.05)
                             .frame(width: width * 0.75)
                         ZStack {
-                            
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(14)
@@ -257,7 +258,7 @@ struct ReviewScene: View {
                                     .underline()
                                     .font(Font.fredoka(.regular, size: 18))
                                     .foregroundColor(.gray)
-                                    .padding(.top, 35)
+                                    .padding(.top, K.isSmall() ? 10 : 35)
                         }
                     }
                 }

@@ -30,14 +30,16 @@ struct ExperienceScene: View {
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
-                            HStack {
-                                Img.topBranch
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.screenWidth * 0.6)
-                                    .padding(.leading, -20)
-                                    .offset(x: -20, y: -10)
-                                Spacer()
+                            if !K.isSmall() {
+                                HStack {
+                                    Img.topBranch
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.screenWidth * 0.6)
+                                        .padding(.leading, -20)
+                                        .offset(x: -20, y: -15)
+                                    Spacer()
+                                }
                             }
                             Text("What is your experience \nwith meditation?")
                                 .font(Font.fredoka(.semiBold, size: 28))
@@ -48,6 +50,8 @@ struct ExperienceScene: View {
                                 .padding(.horizontal)
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
+                                .frame(height: 50)
+                                .padding(.bottom, 15)
                             SelectionRow(width: width, height: height, title: Experience.often.title, img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: Experience.nowAndThen.title, img: Img.redTulips2, selected: $selected)
                             SelectionRow(width: width, height: height, title: Experience.fewTimes.title, img: Img.redTulips1, selected: $selected)

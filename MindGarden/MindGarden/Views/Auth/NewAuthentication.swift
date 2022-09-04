@@ -38,8 +38,8 @@ struct NewAuthentication: View {
                         .foregroundColor(Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 28))
                         .multilineTextAlignment(.center)
-                        .frame(width: UIScreen.screenWidth * 0.8, height: 150)
-                        .offset(y: -45)
+                        .frame(width: UIScreen.screenWidth * 0.8, height: K.isSmall() ? 100 : 150)
+                        .offset(y: K.isSmall() ? -25 : -45)
                     if !showFields {
                         HStack {
                             LottieView(fileName: "turtle")
@@ -74,6 +74,7 @@ struct NewAuthentication: View {
 //                                    .padding(.top, fromPage == "update" ? -35 : 0)
 //                                }
 //                            }
+                            
                             ZStack(alignment: .leading) {
                                 RoundedRectangle(cornerRadius: 24)
                                     .fill(Clr.darkWhite)
@@ -193,7 +194,7 @@ struct NewAuthentication: View {
                     .disabled(viewModel.falseAppleId)
                     .frame(width: UIScreen.screenWidth * 0.8)
                     .padding(10)
-                    .padding(.top, 25)
+                    .padding(.top, K.isSmall() ? 0 : 25)
                     Button {
                         Analytics.shared.log(event: .authentication_tapped_google)
                         viewModel.signInWithGoogle()
@@ -263,7 +264,7 @@ struct NewAuthentication: View {
                                     .underline()
                             }
                         }.frame(width: 250, height: 50, alignment: .center)
-                            .padding(.top, 25)
+                            .padding(.top, K.isSmall() ? 10 : 25)
                     }
                 }
                 .frame(height: UIScreen.screenHeight/1)
@@ -278,7 +279,7 @@ struct NewAuthentication: View {
                 .frame(width: UIScreen.screenWidth * 0.6, height: 250)
                 .padding(.leading, -20)
                 .offset(x: -15, y: -30)
-                .opacity(focusedText ? 0.1 : 1),
+                .opacity(K.isSmall() ? 0 : focusedText ?  0.1 : 1),
                                 trailing:     Button {
                 withAnimation {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
