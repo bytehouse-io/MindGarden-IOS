@@ -70,4 +70,16 @@ struct ReasonItem: Identifiable, Hashable {
         case .tryingItOut: return .reason_tapped_trying
         }
     }
+    
+    static func getImage(str: String) -> Image {
+        switch str {
+        case "Sleep better": return Img.sleepingSloth
+        case "Get more focused": return Img.target
+        case "Managing Stress & Anxiety": return Img.heart
+        case "Be more present": return Img.meditatingRacoon
+        case "Improve mood": return Img.good
+        case "Just trying it out": return Img.magnifyingGlass
+        default: return Img.magnifyingGlass
+        }
+    }
 }

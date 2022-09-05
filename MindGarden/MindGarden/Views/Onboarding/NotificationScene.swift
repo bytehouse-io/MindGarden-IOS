@@ -164,10 +164,11 @@ struct NotificationScene: View {
                                 Capsule()
                                     .fill(Clr.darkWhite)
                                     .overlay(
-                                        Text(fromSettings ? "Turn On" : "Continue")
+                                        Text(fromSettings ? "Turn On" : "Finish 👉")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
                                     )
+                                    .addBorder(.black, width: 1.5, cornerRadius: 24)
                             }.frame(height: 50)
                                 .padding(5)
                                 .buttonStyle(NeumorphicPress())

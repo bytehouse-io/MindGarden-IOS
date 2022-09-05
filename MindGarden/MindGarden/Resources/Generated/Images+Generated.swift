@@ -202,6 +202,7 @@ public enum Img {
   public static let flowers = Image("flowers")
   public static let foxStudy = Image("foxStudy")
   public static let freezestreak = Image("freezestreak")
+  public static let gardenBackground = Image("gardenBackground")
   public static let gardenCalender = Image("gardenCalender")
   public static let gnome = Image("gnome")
   public static let grass = Image("grass")

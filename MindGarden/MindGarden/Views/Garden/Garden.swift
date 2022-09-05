@@ -43,7 +43,7 @@ struct Garden: View {
     enum MonthlyState: String, CaseIterable {
         var id: String { return self.rawValue }
         
-        case curruntStreak
+        case currentStreak
         case breathwork
         case meditations
         case reflections
@@ -51,7 +51,7 @@ struct Garden: View {
         
         var color:Color {
             switch self {
-            case .curruntStreak:
+            case .currentStreak:
                 return Clr.redGradientBottom
             case .breathwork:
                 return Clr.brightGreen
@@ -66,7 +66,7 @@ struct Garden: View {
         
         var image:Image {
             switch self {
-            case .curruntStreak:
+            case .currentStreak:
                 return Img.streak
             case .breathwork:
                 return Img.breathIcon
@@ -81,7 +81,7 @@ struct Garden: View {
         
         var title:String {
             switch self {
-            case .curruntStreak:
+            case .currentStreak:
                 return "Current Streak"
             case .breathwork:
                 return "Breathwork"
@@ -115,8 +115,8 @@ struct Garden: View {
                         //                    }
                         HStack {
                             Text("👨‍🌾 Your MindGarden")
-                                .font(Font.fredoka(.semiBold, size: 22))
-                                .foregroundColor(Clr.brightGreen)
+                                .font(Font.fredoka(.bold, size: 22))
+                                .foregroundColor(.white)
                                 .padding()
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
@@ -137,7 +137,7 @@ struct Garden: View {
                                     }
                                     .frame(width: 35, height: 20)
                                     .roundedCapsule()
-                                }.buttonStyle(NeoPress())
+                                }.buttonStyle(ScalePress())
                                 Button {
                                     Analytics.shared.log(event: .garden_tapped_settings)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -156,18 +156,18 @@ struct Garden: View {
                                         .roundedCapsule()
                                 }
                           
-                                .buttonStyle(NeoPress())
+                                .buttonStyle(ScalePress())
                             }
                         }.frame(width: gp.size.width * 0.85)
                         .padding(.bottom, -10)
                         .offset(x: -10)
                         
 
-                        Text("Calendar/Garden")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
-                            .offset(x: UIScreen.screenWidth * -0.25 + 10, y: playEntryAnimation ? 10 : 400)
-                            .animation(animation.delay(0.4), value: playEntryAnimation)
+//                        Text("Calendar/Garden")
+//                            .foregroundColor(.black)
+//                            .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
+//                            .offset(x: UIScreen.screenWidth * -0.25 + 10, y: playEntryAnimation ? 10 : 400)
+//                            .animation(animation.delay(0.4), value: playEntryAnimation)
                         ZStack(alignment: .center) {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -351,7 +351,7 @@ struct Garden: View {
                         .background(Clr.darkWhite)
                         .cornerRadius(16)
 //                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                        .neoShadow()
+                        .rightShadow()
                         .offset(y: playEntryAnimation ? 0 : 200)
                         .animation(animation.delay(0.1), value: playEntryAnimation)
                         .padding(5)
@@ -360,14 +360,14 @@ struct Garden: View {
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Favorite Plants")
-                                .foregroundColor(Clr.black2)
+                                .foregroundColor(.black)
                                 .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
                                 .padding(.leading, gp.size.width * 0.075 - 25)
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
-                                    .addBorder(.black, width: 1.5, cornerRadius: 16)
-                                    .neoShadow()
+                                    .cornerRadius(16)
+                                    .rightShadow()
                                     .frame(maxWidth: gp.size.width * 0.85)
                                 HStack(spacing: 5){
                                     Spacer()
@@ -549,7 +549,8 @@ struct Garden: View {
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
-                            .addBorder(.black, width: 1.5, cornerRadius: 16)
+//                            .addBorder(.black, width: 1.5, cornerRadius: 16)
+                            .cornerRadius(8)
                             .neoShadow()
                             .frame(width:UIScreen.screenWidth * 0.46)
                         VStack(spacing:0) {
@@ -575,7 +576,7 @@ struct Garden: View {
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
-                            .addBorder(.black, width: 1.5, cornerRadius: 16)
+                            .cornerRadius(8)
                             .neoShadow()
                         VStack(spacing:0) {
                             MoodImage(mood: .veryGood, value: gardenModel.totalMoods[.veryGood] ?? 0)
@@ -585,9 +586,7 @@ struct Garden: View {
                             MoodImage(mood: .veryBad, value: gardenModel.totalMoods[.veryBad] ?? 0)
                         }
                         .padding(.vertical)
-                    }
-                    .padding(.trailing,20)
-                    .neoShadow()
+                    }.padding(.trailing,20)
                 }
                 .padding([.horizontal,.bottom],20)
             }.frame(width:UIScreen.screenWidth*0.85)
@@ -595,8 +594,9 @@ struct Garden: View {
         }.background(
             Rectangle()
                 .fill(Clr.darkWhite)
-                .neoShadow()
-                .addBorder(.black, width: 1.5, cornerRadius: 16)
+                .rightShadow()
+                .cornerRadius(16)
+//                .addBorder(.black, width: 1.5, cornerRadius: 16)
         ).onTapGesture {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             activeSheet = .profile
@@ -606,7 +606,7 @@ struct Garden: View {
     
     private func getStateValue(type:MonthlyState) -> String {
         switch type {
-        case .curruntStreak:
+        case .currentStreak:
             return self.currentStreak
         case .breathwork:
             return "\(gardenModel.numBreaths)"

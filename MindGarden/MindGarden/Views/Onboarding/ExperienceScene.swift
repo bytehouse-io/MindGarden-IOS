@@ -30,7 +30,7 @@ struct ExperienceScene: View {
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
-                            if !K.isSmall() {
+                            if !K.isSmall() && K.hasNotch() {
                                 HStack {
                                     Img.topBranch
                                         .resizable()
@@ -40,9 +40,11 @@ struct ExperienceScene: View {
                                         .offset(x: -20, y: -15)
                                     Spacer()
                                 }
+                            } else {
+                                Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
-                                .font(Font.fredoka(.semiBold, size: 28))
+                                .font(Font.fredoka(.bold, size: 28))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)

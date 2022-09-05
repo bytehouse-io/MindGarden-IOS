@@ -33,7 +33,7 @@ struct NewAuthentication: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all)
                 
-                VStack(spacing: 15) {
+                VStack(spacing: 10) {
                     Text(tappedRefer ? "Sign Up to Refer" : viewModel.isSignUp ? "Create a profile to save your progress" : "Sign Back In"  )
                         .foregroundColor(Clr.black2)
                         .font(Font.fredoka(.semiBold, size: 28))

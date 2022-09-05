@@ -32,6 +32,35 @@ struct HomeViewScroll: View {
             //MARK: - scroll view
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 7) {
+                    HStack(spacing: 15) {
+                        Button {
+                            Analytics.shared.log(event: .home_tapped_profile)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            activeSheet = .profile
+                        } label: {
+                            Image(systemName: "line.3.horizontal")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height:20)
+                                .foregroundColor(.black)
+                                .roundedCapsule()
+                        }.buttonStyle(BonusPress())
+                        ZStack {
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .cornerRadius(16)
+                                .frame(width: width * 0.75, height: 100, alignment: .center)
+                                .addBorder(.black, width: 1.5, cornerRadius: 16)
+                                .oldShadow()
+                            Stories()
+                                .frame(width: width * 0.725, height: K.isSmall() ? 70 : 95, alignment: .trailing)
+                                .padding(30)
+                                .offset(y: K.isSmall() ? 3 : 8)
+                        }.frame(width: width * 0.75, height: 100, alignment: .center)
+                    }.frame(width: width * 0.85)
+                        .offset(x: width * -0.025)
+                    .padding(.top, 40)
+       
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
                     StartDayView()
                     HStack(spacing: 15) {

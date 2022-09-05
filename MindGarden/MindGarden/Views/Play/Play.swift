@@ -39,6 +39,7 @@ struct Play: View {
     @State var timerSeconds = 0.0
     @State var isDeviceLocked = false
     @State var isSleep = false
+    @State var backgroundAnimationOn = false
     private let audioSession = AVAudioSession.sharedInstance()
     
     init() {
@@ -47,7 +48,7 @@ struct Play: View {
 
     var body: some View {
             ZStack {
-                if isSleep {
+                if isSleep || !backgroundAnimationOn {
                     Clr.darkMode.edgesIgnoringSafeArea(.all)
                 } else {
                     AnimatedBackground(colors:[Clr.yellow, Clr.yellow, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
@@ -79,7 +80,7 @@ struct Play: View {
                                         .foregroundColor(Clr.superLightGray)
                       
                                     Circle()
-                                        .trim(from: 0.0, to: CGFloat(min(self.progressValue, 1.0)))
+                                        .trim(from: 0.0, to: self.progressValue > 1.0 ? 1.0 : CGFloat(self.progressValue))
                                         .stroke(style: StrokeStyle(lineWidth: 20.0, lineCap: .round, lineJoin: .round))
                                         .foregroundColor(Clr.brightGreen)
                                         .rotationEffect(Angle(degrees: 270.0))
@@ -224,7 +225,7 @@ struct Play: View {
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
                     }
-                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn:.constant(false))
+                    NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn: $backgroundAnimationOn)
                         .offset(y: showNatureModal ? 0 : g.size.height)
                         .animation(.default)
                     TutorialModal(show: $showTutorialModal)
@@ -245,7 +246,6 @@ struct Play: View {
 //                    self.progressValue = Double(1 - (model.secondsRemaining/model.totalTime))
 //                }
             }
-        .transition(.move(edge: .trailing))
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onChange(of: viewRouter.currentPage) { value in
@@ -256,6 +256,11 @@ struct Play: View {
         }
         
         .onAppear {
+            
+            if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+                backgroundAnimationOn = bgAnimation
+            }
+            
             model.selectedBreath = nil
             if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                 if let player = player {
