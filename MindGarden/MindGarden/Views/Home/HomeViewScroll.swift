@@ -77,7 +77,7 @@ struct HomeViewScroll: View {
                     .padding(30)
                     JourneyScene(userModel: userModel)
             }.padding(.bottom, height * 0.1)
-            }.frame(height: height)
+            }.frame(height: height + (K.isSmall() ? 125 : 0))
         }.onAppear {
         }
     }

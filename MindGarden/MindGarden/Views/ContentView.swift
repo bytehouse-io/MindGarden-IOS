@@ -325,7 +325,7 @@ struct ContentView: View {
                                             }
                                         }
                                     }
-                                }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.075) : 0)
+                                }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0)
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
