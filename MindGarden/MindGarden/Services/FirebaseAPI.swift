@@ -146,8 +146,9 @@ struct FirebaseAPI {
                     if Meditation.allMeditations.contains(where: { med in  med.id != medId }) {
                         Meditation.allMeditations.append(newMed)
                     }
-                    medModel.getFeaturedMeditation()
                 }
+                medModel.getFeaturedMeditation()
+                medModel.getUserMap()
             }
         }
     }

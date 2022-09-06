@@ -286,6 +286,9 @@ struct Store: View {
             Alert(title: Text("Success"), message: Text("🚀 Your Purchase was Successful!"), dismissButton: .default(Text("OK")))
         }
         .onAppear {
+            if swipedTrees {
+                tabType = .realTree
+            }
             if !isShop {
                 Analytics.shared.log(event: .screen_load_plant_select)
             } else {

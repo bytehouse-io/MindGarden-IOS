@@ -292,6 +292,7 @@ struct SingleDay: View {
                                 fromPage = "single"
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 showRating()
+                                showOnboardingModal = false
                             }
                         } label: {
                             Text("Not Now")

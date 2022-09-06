@@ -108,13 +108,11 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
-        getFeaturedMeditation()
-        getRecommendedMeds()
     }
 
     func getFeaturedMeditation()  {
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56}
         if !UserDefaults.standard.bool(forKey: "isPro") {
             filtedMeds = filtedMeds.filter { med in
                 return !Meditation.lockedMeditations.contains(med.id)
@@ -221,22 +219,24 @@ class MeditationViewModel: ObservableObject {
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         case "Get more focused":
-            filtedMeds = filtedMeds.filter { med in
+            var focusedMeds = filtedMeds.filter { med in
                 med.category == .focus
             }
-            let randomInt = Int.random(in: 0..<filtedMeds.count)
-            featuredMeditation = filtedMeds[randomInt]
+            if focusedMeds.isEmpty {  focusedMeds = filtedMeds }
+            let randomInt = Int.random(in: 0..<focusedMeds.count)
+            featuredMeditation = focusedMeds[randomInt]
         case "Managing Stress & Anxiety":
             filtedMeds = filtedMeds.filter { med in
-                med.category == .anxiety
+                med.category == .anxiety || med.category == .sadness
             }
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         case "Just trying it out":
             filtedMeds = filtedMeds.filter { med in
-                med.category == .beginners
+                med.category == .beginners || med.category == .growth
             }
             let randomInt = Int.random(in: 0..<filtedMeds.count)
+            featuredMeditation = filtedMeds[randomInt]
         default:
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
@@ -446,12 +446,16 @@ class MeditationViewModel: ObservableObject {
                     roadMapArr = expArr[i]
                 }
             default:
-                if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i  {
-                    roadMaplevel = i + 2
-                    roadMapArr = begArr[i+1]
+                if roadMaplevel == 6 || userCoinCollectedLevel == 6 {
+                    return
                 } else {
-                    roadMaplevel = i + 1
-                    roadMapArr = begArr[i]
+                    if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i  {
+                        roadMaplevel = i + 2
+                        roadMapArr = begArr[i+1]
+                    } else {
+                        roadMaplevel = i + 1
+                        roadMapArr = begArr[i]
+                    }
                 }
             }
         }

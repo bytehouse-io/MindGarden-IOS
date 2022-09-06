@@ -520,6 +520,11 @@ extension AuthenticationViewModel {
             compMeds = comMeds
         }
         
+        var storySegs = [""]
+        if let storySegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+            storySegs = storySegments
+        }
+        
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": UserDefaults.standard.string(forKey: "name") ?? "Name",
@@ -538,7 +543,9 @@ extension AuthenticationViewModel {
                 K.defaults.dailyBonus: UserDefaults.standard.string(forKey: K.defaults.dailyBonus) ?? "",
                 "referredStack": "\(date)+0",
                 "isPro": UserDefaults.standard.bool(forKey: "isPro"),
-                "favorited": favs
+                "favorited": favs,
+                "storySegments": storySegs,
+                K.defaults.userCoinCollectedLevel: UserDefaults.standard.integer(forKey: K.defaults.userCoinCollectedLevel)
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -557,8 +564,7 @@ extension AuthenticationViewModel {
 
     func getData() {
         UserDefaults.standard.setValue(true, forKey: "day7")
-        UserDefaults.standard.setValue(["Bijan 10", "Quote 10", "Tale 10"], forKey: "oldSegments")
-        UserDefaults.standard.setValue(["Bijan 10", "Quote 10", "Tale 10"], forKey: "storySegments")
+       
         UserDefaults.standard.setValue(true, forKey: "signedIn")
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
@@ -584,6 +590,12 @@ extension AuthenticationViewModel {
                     if let experience = document["experience"] {
                         UserDefaults.standard.setValue(experience, forKey: "experience")
                     }
+                    
+                    if let storySegs = document["storySegments"] {
+                        UserDefaults.standard.setValue(storySegs, forKey: "oldSegments")
+                        UserDefaults.standard.setValue(storySegs, forKey: "storySegments")
+                    }
+                    
                     if let stack = document["referredStack"] as? String {
                         let plusIndex = stack.indexInt(of: "+") ?? 0
                         let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
@@ -598,7 +610,6 @@ extension AuthenticationViewModel {
                     DispatchQueue.main.async {
                         Purchases.shared.logIn(email) { info, bool, error in
                             if info?.entitlements.all["isPro"]?.isActive == true {
-                                print("godfather2", bool)
                                 UserDefaults.standard.setValue(true, forKey: "isPro")
                                 UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
                                 WidgetCenter.shared.reloadAllTimelines()
@@ -607,7 +618,6 @@ extension AuthenticationViewModel {
                             SceneDelegate.gardenModel.updateSelf()
                             SceneDelegate.bonusModel.updateBonus()
                             SceneDelegate.medModel.updateSelf()
-                            SceneDelegate.medModel.getUserMap()
                             self.goToHome()
                         }
                     }

@@ -164,7 +164,7 @@ struct NotificationScene: View {
                                 Capsule()
                                     .fill(Clr.darkWhite)
                                     .overlay(
-                                        Text(fromSettings ? "Turn On" : "Finish 👉")
+                                        Text(fromSettings ? "Turn On" : "🔔 Set Reminder")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
                                     )

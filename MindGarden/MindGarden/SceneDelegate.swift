@@ -32,6 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var playOnActive = false
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+
+        
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (seef `application:configurationForConnectingSceneSession` instead).
@@ -49,8 +51,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(randomInt, forKey: "abTest")
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             playSound(soundName: "background")
-            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
-            UserDefaults.standard.setValue(["New Users", "Bijan 1", "Quote 1", "Tale 1", "Tip New Users", "trees for the future"] , forKey: "storySegments")
+            UserDefaults.standard.setValue(["New Users", "intro/day 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["New Users", "intro/day 1", "Tip New Users", "trees for the future"], forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy", "Red Tulip"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -77,7 +79,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
         firebaseAPI.fetchCourses()
         SceneDelegate.medModel.updateSelf()
-        SceneDelegate.medModel.getUserMap()
 
 
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
@@ -154,8 +155,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         SceneDelegate.gardenModel.updateSelf()
         if let _ = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {} else {
-            UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
-            UserDefaults.standard.setValue(["Bijan 1", "Quote 1", "Tale 1", "trees for the future", "tip potion shop"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["New Users", "intro/day 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["New Users", "intro/day 1", "Tip New Users", "trees for the future"], forKey: "storySegments")
         }
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         launchNum += 1

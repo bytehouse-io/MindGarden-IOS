@@ -64,7 +64,7 @@ struct Meditation: Hashable {
             })
         }
         
-        if Calendar.current.component(.hour, from: Date()) > 11 { // night time
+        if Calendar.current.component(.hour, from: Date()) > 20 { // night time
             filtedMeds = filtedMeds.filter { med in
                 med.id != 53 && med.id != 49
             }

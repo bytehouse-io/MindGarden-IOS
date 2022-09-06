@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
+
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         // Appsflyer
         AppsFlyerLib.shared().appsFlyerDevKey = "MuYPR9jvHqxu7TzZCrTNcn"
@@ -91,10 +92,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
                     if let e = error {
                         print("Sign in error: \(e.localizedDescription)")
                     } else {
+                        
                         print("User \(uid) signed in")
                     }
                 })
             }
+        }
+        
+        let isFirstLaunch = UserDefaults.isFirstLaunch()
+        print(isFirstLaunch, "isFirstLaunch")
+        
+        if isFirstLaunch {
+            UserDefaults.deleteAll()
+            do {
+                try Auth.auth().signOut()
+            }
+            catch { print("already logged out") }
         }
          
         if UserDefaults.standard.value(forKey: "vibrationMode") == nil {

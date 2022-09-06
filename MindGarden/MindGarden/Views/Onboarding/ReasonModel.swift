@@ -35,7 +35,7 @@ struct ReasonItem: Identifiable, Hashable {
         case .focus: return Img.target
         case .anxiety: return Img.heart
         case .morePresent: return Img.meditatingRacoon
-        case .improveMood: return Img.good
+        case .improveMood: return Img.happyPandaFace
         case .tryingItOut: return Img.magnifyingGlass
         }
     }
@@ -77,7 +77,7 @@ struct ReasonItem: Identifiable, Hashable {
         case "Get more focused": return Img.target
         case "Managing Stress & Anxiety": return Img.heart
         case "Be more present": return Img.meditatingRacoon
-        case "Improve mood": return Img.good
+        case "Improve mood": return Img.happyPandaFace
         case "Just trying it out": return Img.magnifyingGlass
         default: return Img.magnifyingGlass
         }

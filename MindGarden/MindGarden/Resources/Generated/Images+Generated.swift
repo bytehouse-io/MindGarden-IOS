@@ -210,6 +210,7 @@ public enum Img {
   public static let greenChest = Image("greenChest")
   public static let hand = Image("hand")
   public static let hands = Image("hands")
+  public static let happyPandaFace = Image("happyPandaFace")
   public static let happySunflower = Image("happySunflower")
   public static let heart = Image("heart")
   public static let house = Image("house")

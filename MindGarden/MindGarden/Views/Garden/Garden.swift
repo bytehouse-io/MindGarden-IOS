@@ -304,9 +304,9 @@ struct Garden: View {
                                 
                                 HStack {
                                     Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
-                                        .font(Font.fredoka(.regular, size: 20))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                         .foregroundColor(Clr.black2)
-                                        .padding(.leading)
+                                        .padding(.leading, 12)
                                     Spacer()
                                     Button {
                                         withAnimation {
@@ -479,7 +479,7 @@ struct Garden: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 125)
-                                .position(x: gp.size.width/2, y: gp.size.height/3)
+                                .position(x: gp.size.width/2, y: gp.size.height/3.25)
                         case "stats":
                             Img.calendarRacoon
                                 .resizable()

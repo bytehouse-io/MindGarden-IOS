@@ -51,7 +51,6 @@ struct HomeViewScroll: View {
                                 .cornerRadius(16)
                                 .frame(width: width * 0.75, height: 100, alignment: .center)
                                 .addBorder(.black, width: 1.5, cornerRadius: 16)
-                                .oldShadow()
                             Stories()
                                 .frame(width: width * 0.725, height: K.isSmall() ? 70 : 95, alignment: .trailing)
                                 .padding(30)
@@ -75,7 +74,6 @@ struct HomeViewScroll: View {
                     }
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
-                    JourneyScene(userModel: userModel)
             }.padding(.bottom, height * 0.1)
             }.frame(height: height + (K.isSmall() ? 125 : 0))
         }.onAppear {

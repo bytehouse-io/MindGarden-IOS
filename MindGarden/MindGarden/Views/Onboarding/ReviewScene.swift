@@ -33,7 +33,7 @@ struct ReviewScene: View {
                 let height = g.size.height
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack(spacing: 0) {
+                    VStack(spacing: 5) {
                         HStack {
                             if !K.isSmall() && K.hasNotch() {
                                 Img.topBranch
@@ -59,25 +59,25 @@ struct ReviewScene: View {
                                 .cornerRadius(14)
                                 .frame(width: width * 0.75, height: width * (arr.count == 1 ? 0.22 : arr.count == 2 ? 0.4 : arr.count == 3 ? 0.55 : 0.5))
                                 .neoShadow()
-                            VStack(alignment: .leading, spacing: -15) {
+                            VStack(alignment: .leading, spacing: 0) {
                                 ForEach(Array(zip(arr.indices, arr)), id: \.0) { idx, item in
                                     HStack {
                                         ReasonItem.getImage(str: item)
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(width: width * 0.15, height: width * 0.15)
+                                            .frame(width: width * 0.125, height: width * 0.125)
                                             .padding(10)
                                         VStack(alignment: .leading) {
                                             if idx == 0 {
                                                 Text("Your aim is to")
                                                     .foregroundColor(.gray)
-                                                    .font(Font.fredoka(.regular, size: 16))
+                                                    .font(Font.fredoka(.regular, size: 20))
                                                     .lineLimit(1)
                                                     .minimumScaleFactor(0.05)
                                             }
-                                            Text(item == "Managing Stress & Anxiety" ? "Manage stress/anxiety" : item)
+                                            Text(item == "Managing Stress & Anxiety" ? " stress/anxiety" : item)
                                                 .foregroundColor(Clr.black1)
-                                                .font(Font.fredoka(.semiBold, size: 16))
+                                                .font(Font.fredoka(.semiBold, size: 20))
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                         }.frame(width: width * 0.5, alignment: .leading)
@@ -210,7 +210,7 @@ struct ReviewScene: View {
                                 .background(Clr.yellow)
                                 .cornerRadius(24)
                                 .addBorder(.black, width: 1.5,  cornerRadius: 24)
-                        }.padding()
+                        }.padding(20)
                             .buttonStyle(NeumorphicPress())
                      
                         Button {
@@ -233,7 +233,7 @@ struct ReviewScene: View {
                                     .underline()
                                     .font(Font.fredoka(.regular, size: 16))
                                     .foregroundColor(.gray)
-                                    .padding(.top, K.isSmall() ? 10 : 35)
+                                    .padding(.top, K.isSmall() ? 10 : 20)
                         }
                     }
                 }

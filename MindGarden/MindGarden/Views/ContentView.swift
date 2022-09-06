@@ -423,6 +423,14 @@ struct ContentView: View {
             selectedTab = .garden
             viewRouter.currentPage = .garden
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("trees")))
+        { _ in
+            withAnimation {
+                selectedTab = .shop
+                swipedTrees = true
+                viewRouter.currentPage = .shop
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("store")))
         { _ in
             selectedTab = .shop

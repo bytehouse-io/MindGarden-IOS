@@ -29,6 +29,7 @@ class UserViewModel: ObservableObject {
     @Published var showPlantAnimation = false
     @Published var showCoinAnimation = false
     @Published var completedMeditations: [String] = []
+    @Published var journeyProgress: [String] = []
     @Published var show50Off = false
     @Published var referredCoins: Int = 0
     @Published var name: String = ""
@@ -184,6 +185,7 @@ class UserViewModel: ObservableObject {
                     
                     if let level = document[K.defaults.userCoinCollectedLevel] as? Int {
                         self.userCoinCollectedLevel = level
+                        SceneDelegate.medModel.getUserMap()
                         UserDefaults.standard.setValue(level, forKey: K.defaults.userCoinCollectedLevel)
                     }
                     
@@ -218,6 +220,7 @@ class UserViewModel: ObservableObject {
             
             if let level = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int {
                 self.userCoinCollectedLevel = level
+                SceneDelegate.medModel.getUserMap()
             }
             if let finJourney = UserDefaults.standard.value(forKey: "finishedJourney") as? Bool {
                 self.journeyFinished = finJourney
