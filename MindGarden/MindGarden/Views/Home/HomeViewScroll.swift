@@ -32,19 +32,11 @@ struct HomeViewScroll: View {
             //MARK: - scroll view
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 7) {
-                    HStack(spacing: 15) {
-                        Button {
-                            Analytics.shared.log(event: .home_tapped_profile)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            activeSheet = .profile
-                        } label: {
-                            Image(systemName: "line.3.horizontal")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height:20)
-                                .foregroundColor(.black)
-                                .roundedCapsule()
-                        }.buttonStyle(BonusPress())
+                    HStack(spacing: 0) {
+                        HStack {
+                            FloatingMenu(showModal:$showModal, activeSheet: $activeSheet, totalBonuses:$totalBonuses)
+                            Spacer()
+                        }.zIndex(1)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -59,9 +51,9 @@ struct HomeViewScroll: View {
                     }.frame(width: width * 0.85)
                         .offset(x: width * -0.025)
                     .padding(.top, 40)
+                    .zIndex(1)
        
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
-                        .zIndex(1)
                     StartDayView()
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")

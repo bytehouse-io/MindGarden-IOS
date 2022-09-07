@@ -50,7 +50,7 @@ struct FloatingMenu: View {
     @Binding var totalBonuses : Int
     
     @State var isOpen = false
-    @State var width = 50.0
+    @State var width = 60.0
     @State var scale = 0.0
     @State var offset = 0
     var body: some View {
@@ -75,7 +75,7 @@ struct FloatingMenu: View {
         .onChange(of: isOpen) { newVal in
             if newVal {
                 scale = 0.0
-                offset = -100
+                offset = -50
                 DispatchQueue.main.async {
                     withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
                         scale = 1.0

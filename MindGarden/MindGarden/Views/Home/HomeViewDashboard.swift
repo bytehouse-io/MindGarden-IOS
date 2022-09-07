@@ -26,10 +26,6 @@ struct HomeViewDashboard: View {
         let width = UIScreen.screenWidth
         ZStack {
             VStack {
-                HStack {
-                    FloatingMenu(showModal:$showModal, activeSheet: $activeSheet, totalBonuses:$totalBonuses)
-                    Spacer()
-                }.zIndex(1)
 
                 HStack {
                     VStack(alignment:.leading) {
