@@ -9,7 +9,7 @@ import SwiftUI
 
 
 enum MenuType: String, CaseIterable {
-    case profile,bonus,favourite,recent,plantselect
+    case profile,bonus,favorites,recent,plantselect
     var id: String { return self.rawValue }
     
     var image:Image {
@@ -18,7 +18,7 @@ enum MenuType: String, CaseIterable {
             return Img.menuProfile
         case .bonus:
             return Img.coin
-        case .favourite:
+        case .favorites:
             return Img.menuFavourite
         case .recent:
             return Img.menuRecent
@@ -33,7 +33,7 @@ enum MenuType: String, CaseIterable {
             return 1.0
         case .bonus:
             return 2.0
-        case .favourite:
+        case .favorites:
             return 3.0
         case .recent:
             return 4.0
@@ -53,41 +53,69 @@ struct FloatingMenu: View {
     @State var width = 60.0
     @State var scale = 0.0
     @State var offset = 0
+    @State var rotation = 0.0
     var body: some View {
         ZStack(alignment:.top) {
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 DispatchQueue.main.async {
-                    withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
-                        isOpen.toggle()
-                    }
+                    isOpen.toggle()
                 }
             } label: {
-                let image =  isOpen ? Img.menuClose : Img.menu
-                
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width:width)
-            }.rotationEffect(Angle(degrees: isOpen ?  180 : 0))
-                .buttonStyle(ScalePress())
+                if isOpen {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height:20)
+                        .foregroundColor(.white)
+                        .padding(12)
+                        .background(Capsule().fill(Clr.redGradientBottom))
+                        .overlay(Capsule().stroke(.black, lineWidth: 1))
+                } else {
+                    Group {
+                        if totalBonuses > 0 {
+                            Image(systemName: "line.3.horizontal")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height:20)
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(Capsule().fill(Clr.yellow))
+                                .overlay(Capsule().stroke(.black, lineWidth: 1))
+                                .overlay(badgeIcon)
+                                .wiggling1()
+                        } else {
+                            Image(systemName: "line.3.horizontal")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height:20)
+                                .foregroundColor(.black)
+                                .padding(12)
+                                .background(Capsule().fill(Clr.yellow))
+                                .overlay(Capsule().stroke(.black, lineWidth: 1))
+                                .overlay(badgeIcon)
+                        }
+                    }
+                }
+            }.rotationEffect(Angle(degrees: rotation))
         }
         .onChange(of: isOpen) { newVal in
             if newVal {
                 scale = 0.0
                 offset = -50
+                rotation = 0.0
                 DispatchQueue.main.async {
                     withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
                         scale = 1.0
                         offset = 0
+                        rotation = 90
                     }
                 }
             } else {
+                rotation = 0.0
                 scale = 1.0
-                offset = 0
                 DispatchQueue.main.async {
                     withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
-                        offset = -20
                         scale = 0.0
                     }
                 }
@@ -107,24 +135,27 @@ struct FloatingMenu: View {
                 .frame(width: UIScreen.screenWidth*2.5, height: UIScreen.screenHeight*3, alignment: .center)
         )
         .overlay(menuItem)
-        .overlay(
-            ZStack {
-                if totalBonuses > 0 {
-                    HStack(spacing:0) {
-                        ZStack {
-                            Circle().frame(height: 16)
-                                .foregroundColor(Clr.redGradientBottom)
-                            Text("\(totalBonuses)")
-                                .font(Font.fredoka(.medium, size: 12))
-                                .foregroundColor(.white)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.005)
-                                .frame(width: 10)
-                        }.frame(width: 15)
-                    }
+        
+    }
+    var badgeIcon: some View {
+        ZStack {
+            if totalBonuses > 0, !isOpen {
+                HStack(spacing:0) {
+                    ZStack {
+                        Circle()
+                            .frame(width:20, height: 20)
+                            .foregroundColor(Clr.redGradientBottom)
+                            .overlay(Capsule().stroke(.black, lineWidth: 1))
+                        Text("\(totalBonuses)")
+                            .font(Font.fredoka(.medium, size: 12))
+                            .foregroundColor(.white)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.005)
+                            .frame(width: 10)
+                    }.frame(width: 15)
                 }
-            }.offset(x:width/3,y:-width/3)
-        )
+            }
+        }.offset(x:width/3.5,y:-width/3.5)
     }
     
     var menuItem: some View {
@@ -137,35 +168,12 @@ struct FloatingMenu: View {
                     }
                 } label: {
                     HStack {
-                        HStack(spacing:0) {
-                            state.image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height:20)
-                                .padding([.leading,.vertical],10)
-                                .padding(.trailing,10)
-                            Group {
-                                if state == .bonus {
-                                    Text("\(userModel.coins)")
-                                } else {
-                                    Text(getTitle(type:state))
-                                }
-                            }
-                            .font(Font.fredoka(.medium, size: 16))
-                            .foregroundColor(Clr.black2)
-                            .padding([.trailing,.vertical],10)
-                        }
-                        .background(
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .addBorder(.black, cornerRadius: 25)
-                                .frame(height: 35)
-                        )
                         if totalBonuses > 0, state == .bonus {
                             HStack(spacing:0) {
                                 ZStack {
-                                    Circle().frame(height: 16)
+                                    Circle().frame(width:20,height: 20)
                                         .foregroundColor(Clr.redGradientBottom)
+                                        .overlay(Capsule().stroke(.black, lineWidth: 1))
                                     Text("\(totalBonuses)")
                                         .font(Font.fredoka(.medium, size: 12))
                                         .foregroundColor(.white)
@@ -180,13 +188,37 @@ struct FloatingMenu: View {
                                     .foregroundColor(Clr.black2)
                                     .padding([.trailing,.vertical],10)
                             }
-                            
                             .background(
                                 Rectangle()
                                     .fill(Clr.yellow)
                                     .addBorder(.black, cornerRadius: 25)
                                     .frame(height: 35)
                             ).wiggling1()
+                        } else {
+                            HStack(spacing:0) {
+                                state.image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height:20)
+                                    .padding([.leading,.vertical],10)
+                                    .padding(.trailing,10)
+                                Group {
+                                    if state == .bonus {
+                                        Text("\(userModel.coins)")
+                                    } else {
+                                        Text(getTitle(type:state))
+                                    }
+                                }
+                                .font(Font.fredoka(.medium, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .padding([.trailing,.vertical],10)
+                            }
+                            .background(
+                                Rectangle()
+                                    .fill(Clr.yellow)
+                                    .addBorder(.black, cornerRadius: 25)
+                                    .frame(height: 35)
+                            )
                         }
                     }.frame(height: 30)
                         .scaleEffect(scale, anchor: .leading)
@@ -216,7 +248,7 @@ struct FloatingMenu: View {
                     showModal = true
                 }
             }
-        case .favourite:
+        case .favorites:
             //TODO: implement faourites tap event
             break
         case .recent:
@@ -234,8 +266,8 @@ struct FloatingMenu: View {
             return "Profile"
         case .bonus:
             return "Bonus!"
-        case .favourite:
-            return "Favourites"
+        case .favorites:
+            return "Favorites"
         case .recent:
             return "Recent"
         case .plantselect:
