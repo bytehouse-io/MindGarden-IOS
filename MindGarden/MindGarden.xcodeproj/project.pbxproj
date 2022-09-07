@@ -89,6 +89,7 @@
 		58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E419A82898E65C0042F492 /* CategoryModel.swift */; };
 		58E419AB2898E75E0042F492 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
 		58E419AC2898EBA70042F492 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CE267E8D98006558A2 /* Util.swift */; };
+		58E6570428C7440500546D11 /* FloatingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E6570328C7440500546D11 /* FloatingMenu.swift */; };
 		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
@@ -126,7 +127,7 @@
 		88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
 		88D39D9A28C3EBA0001C66F7 /* onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39D9928C3EBA0001C66F7 /* onboarding.json */; };
-		88D39D9D28C7B51F001C66F7 /* turtleNotification.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39D9C28C7B51F001C66F7 /* turtleNotification.json */; };
+		88D39D9F28C91A09001C66F7 /* turtleNotification.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39D9E28C91A09001C66F7 /* turtleNotification.json */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
 		88D4C5D927FA468800CBB956 /* yogi.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D4C5D827FA468700CBB956 /* yogi.json */; };
@@ -364,6 +365,7 @@
 		58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathworkPlay.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
 		58E419A82898E65C0042F492 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		58E6570328C7440500546D11 /* FloatingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMenu.swift; sourceTree = "<group>"; };
 		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
@@ -401,7 +403,7 @@
 		88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
 		88D39D9928C3EBA0001C66F7 /* onboarding.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = onboarding.json; path = ../../../../../../Downloads/onboarding.json; sourceTree = "<group>"; };
-		88D39D9C28C7B51F001C66F7 /* turtleNotification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotification.json; path = ../../../../../../Downloads/turtleNotification.json; sourceTree = "<group>"; };
+		88D39D9E28C91A09001C66F7 /* turtleNotification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotification.json; path = ../../../../../../Downloads/turtleNotification.json; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		88D4C5D627F6439A00CBB956 /* StorylyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorylyManager.swift; sourceTree = "<group>"; };
 		88D4C5D827FA468700CBB956 /* yogi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yogi.json; sourceTree = "<group>"; };
@@ -821,9 +823,9 @@
 				58266E2628798E30008594E0 /* party.json */,
 				589DCB072873401B005A8D7E /* turtle.json */,
 				58D5C0F327FB675A00454937 /* background.json */,
+				88D39D9E28C91A09001C66F7 /* turtleNotification.json */,
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
 				882738D227E2D75D00F8D4D0 /* first_part.json */,
-				88D39D9C28C7B51F001C66F7 /* turtleNotification.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
 				88D39D9928C3EBA0001C66F7 /* onboarding.json */,
 				8884A993284A75E200B0B315 /* flame.json */,
@@ -862,6 +864,7 @@
 				581EF8842874636A0058C7E4 /* MoodElaborate.swift */,
 				581EF8862875CC7E0058C7E4 /* MoodModel.swift */,
 				584401E828BA434700CD0432 /* WidgetPrompt.swift */,
+				58E6570328C7440500546D11 /* FloatingMenu.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1421,13 +1424,13 @@
 				88F4BF89286B6ED6000C6E0B /* Fredoka-Light.ttf in Resources */,
 				88661F8B28528DA50052B9B0 /* firefox.png in Resources */,
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
-				88D39D9D28C7B51F001C66F7 /* turtleNotification.json in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
 				589DCB082873401B005A8D7E /* turtle.json in Resources */,
 				888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */,
 				88F4BF85286B6ED6000C6E0B /* Fredoka-Bold.ttf in Resources */,
 				58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */,
+				88D39D9F28C91A09001C66F7 /* turtleNotification.json in Resources */,
 				58D5C0F427FB675A00454937 /* background.json in Resources */,
 				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
 				58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */,
@@ -1774,6 +1777,7 @@
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				589DCB0628732975005A8D7E /* StartDayView.swift in Sources */,
+				58E6570428C7440500546D11 /* FloatingMenu.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
 				58D6FB4A286CBDAB003EA6A7 /* PromptsView.swift in Sources */,

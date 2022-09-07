@@ -30,21 +30,25 @@ struct HomeViewScroll: View {
     var body: some View {
         ZStack(alignment: .top) {
             //MARK: - scroll view
+       
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 7) {
-                    HStack(spacing: 15) {
-                        Button {
-                            Analytics.shared.log(event: .home_tapped_profile)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            activeSheet = .profile
-                        } label: {
-                            Image(systemName: "line.3.horizontal")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height:20)
-                                .foregroundColor(.black)
-                                .roundedCapsule()
-                        }.buttonStyle(BonusPress())
+                    HStack {
+                        Img.topBranch
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: UIScreen.screenWidth * 0.6)
+                            .padding(.leading, -20)
+                            .offset(x: -20, y: -60)
+                        Spacer()
+                    }
+                    VStack {
+ 
+                    HStack(spacing: 0) {
+                        HStack {
+                            FloatingMenu(showModal:$showModal, activeSheet: $activeSheet, totalBonuses:$totalBonuses)
+                            Spacer()
+                        }.zIndex(1)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -59,6 +63,7 @@ struct HomeViewScroll: View {
                     }.frame(width: width * 0.85)
                         .offset(x: width * -0.025)
                     .padding(.top, 40)
+                    .zIndex(1)
        
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
                     StartDayView()
@@ -74,7 +79,8 @@ struct HomeViewScroll: View {
                     }
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding(30)
-            }.padding(.bottom, height * 0.1)
+                    }.offset(y: -height * 0.05)
+            }.padding(.bottom)
             }.frame(height: height + (K.isSmall() ? 125 : 0))
         }.onAppear {
         }

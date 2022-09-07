@@ -48,7 +48,7 @@ struct NotificationScene: View {
                                 .offset(y: -10)
                             Spacer()
                             Image(systemName: "arrow.backward")
-                                .font(.system(size: 22))
+                                .font(.system(size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .padding()
                                 .onTapGesture {
@@ -98,14 +98,14 @@ struct NotificationScene: View {
                                 }
                             } label: {
                                 Rectangle()
-                                    .fill(Clr.yellow)
+                                    .fill(Clr.darkWhite)
                                     .cornerRadius(12)
                                     .frame(width: width * 0.6, height: 75)
                                     .overlay(
                                         HStack {
                                             Text("\(displayedTime)")
                                                 .font(Font.fredoka(.bold, size: 40))
-                                                .foregroundColor(.black)
+                                                .foregroundColor(Clr.black2)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                             Spacer()
@@ -121,7 +121,7 @@ struct NotificationScene: View {
                                 showActionSheet = true
                             } label: {
                                 Rectangle()
-                                    .fill(Clr.yellow)
+                                    .fill(Clr.darkWhite)
                                     .cornerRadius(12)
                                     .frame(width: width * 0.6, height: 50)
                                     .overlay(
@@ -140,13 +140,8 @@ struct NotificationScene: View {
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
                             LottieAnimationView(filename: "turtleNotification", loopMode: LottieLoopMode.autoReverse, isPlaying: .constant(true))
-                            Img.turtleLetter
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .neoShadow()
-                                .frame(width: g.size.width * 0.35)
+                                .frame(width: g.size.width * 0.6)
                             Spacer()
-                         
                             Button {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -162,7 +157,7 @@ struct NotificationScene: View {
                                 }
                             } label: {
                                 Capsule()
-                                    .fill(Clr.darkWhite)
+                                    .fill(Clr.yellow)
                                     .overlay(
                                         Text(fromSettings ? "Turn On" : "🔔 Set Reminder")
                                             .foregroundColor(Clr.darkgreen)

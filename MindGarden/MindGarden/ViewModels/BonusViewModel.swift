@@ -288,9 +288,6 @@ class BonusViewModel: ObservableObject {
                 UserDefaults.standard.setValue(true, forKey: "referTip")
                 updateTips(tip: "Tip Referrals")
             }
-        } else if launchNum == 4 && !UserDefaults.standard.bool(forKey: "singleTile") && !UserDefaults.standard.bool(forKey: "onboarded") {
-            UserDefaults.standard.setValue(true, forKey: "singleTile")
-            updateTips(tip: "Tip Tile")
         } else if launchNum >= 2 && !UserDefaults.standard.bool(forKey: "remindersOn") {
             UserDefaults.standard.setValue(true, forKey: "remindersOn")
             updateTips(tip: "Tip Reminders")

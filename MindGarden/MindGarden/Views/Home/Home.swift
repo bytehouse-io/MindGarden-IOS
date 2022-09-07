@@ -57,6 +57,7 @@ struct Home: View {
         NavigationView {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
+ 
                 GeometryReader { g in
                     HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel)
                         .padding(.top, -20)
@@ -114,6 +115,7 @@ struct Home: View {
             .alert(isPresented: $wentPro) {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
+
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
         { _ in
