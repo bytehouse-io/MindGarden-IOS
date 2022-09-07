@@ -39,6 +39,8 @@ enum AnalyticEvent {
     case reason_tapped_focus
     case reason_tapped_stress
     case reason_tapped_trying
+    case reason_tapped_improveMood
+    case reason_tapped_bePresent
     case reason_tapped_continue
 
     //MARK: - Review
@@ -462,6 +464,8 @@ extension AnalyticEvent {
         case .reason_tapped_focus: return "reason_tapped_focus"
         case .reason_tapped_stress: return "reason_tapped_stress"
         case .reason_tapped_trying: return "reason_tapped_trying"
+        case .reason_tapped_improveMood: return "reason_tapped_improveMood"
+        case .reason_tapped_bePresent: return "reason_tapped_bePresent"
         case .reason_tapped_continue: return "reason_tapped_continue"
         case .screen_load_name: return "screen_load_name"
         case .name_tapped_continue: return "name_tapped_continue"

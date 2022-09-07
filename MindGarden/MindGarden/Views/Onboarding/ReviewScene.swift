@@ -33,14 +33,16 @@ struct ReviewScene: View {
                 let height = g.size.height
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack(spacing: 0) {
+                    VStack(spacing: 5) {
                         HStack {
-                            Img.topBranch
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: UIScreen.screenWidth * 0.6)
-                                .padding(.leading, -20)
-                                .offset(y: -10)
+                            if !K.isSmall() && K.hasNotch() {
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
+                            }
                             Spacer()
                         }.edgesIgnoringSafeArea(.all)
                         Spacer()
@@ -52,59 +54,33 @@ struct ReviewScene: View {
                             .minimumScaleFactor(0.05)
                             .frame(width: width * 0.75)
                         ZStack {
-                            
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(14)
                                 .frame(width: width * 0.75, height: width * (arr.count == 1 ? 0.22 : arr.count == 2 ? 0.4 : arr.count == 3 ? 0.55 : 0.5))
-                            
                                 .neoShadow()
-                            VStack(alignment: .leading, spacing: -15){
-                                HStack {
-                                    aim.0
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: width * 0.15, height: width * 0.15)
-                                        .padding(10)
-                                    VStack(alignment: .leading) {
-                                        Text("Your aim is to")
-                                            .foregroundColor(.gray)
-                                            .font(Font.fredoka(.regular, size: 20))
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.05)
-                                        Text("\(aim.1)")
-                                            .foregroundColor(Clr.black1)
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.05)
-                                    }.frame(width: width * 0.5, alignment: .leading)
-                                }
-                                if arr.count > 1 {
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(Array(zip(arr.indices, arr)), id: \.0) { idx, item in
                                     HStack {
-                                        aim2.0
+                                        ReasonItem.getImage(str: item)
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(width: width * (arr.count == 1 ? 0.2 : 0.15), height: width * (arr.count == 1 ? 0.2 : 0.15))
+                                            .frame(width: width * 0.125, height: width * 0.125)
                                             .padding(10)
-                                        Text("\(aim2.1)")
-                                            .foregroundColor(Clr.black1)
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.05)
-                                    }
-                                }
-                                if arr.count > 2 {
-                                    HStack {
-                                        aim3.0
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: width * (arr.count == 1 ? 0.2 : 0.15), height: width * (arr.count == 1 ? 0.2 : 0.15))
-                                            .padding(10)
-                                        Text("\(aim3.1)")
-                                            .foregroundColor(Clr.black1)
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                            .lineLimit(1)
-                                            .minimumScaleFactor(0.05)
+                                        VStack(alignment: .leading) {
+                                            if idx == 0 {
+                                                Text("Your aim is to")
+                                                    .foregroundColor(.gray)
+                                                    .font(Font.fredoka(.regular, size: 20))
+                                                    .lineLimit(1)
+                                                    .minimumScaleFactor(0.05)
+                                            }
+                                            Text(item == "Managing Stress & Anxiety" ? " stress/anxiety" : item)
+                                                .foregroundColor(Clr.black1)
+                                                .font(Font.fredoka(.semiBold, size: 20))
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
+                                        }.frame(width: width * 0.5, alignment: .leading)
                                     }
                                 }
                             }
@@ -119,17 +95,17 @@ struct ReviewScene: View {
                                 experience.0
                                     .resizable() 
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.15, height: width * 0.15, alignment: .leading)
+                                    .frame(width: width * 0.125, height: width * 0.125, alignment: .leading)
                                     .padding()
                                 VStack(alignment: .leading) {
                                     Text("Your experience level")
                                         .foregroundColor(.gray)
-                                        .font(Font.fredoka(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 16))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                     Text("\(experience.1)")
                                         .foregroundColor(Clr.black1)
-                                        .font(Font.fredoka(.semiBold, size: 22))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
@@ -145,19 +121,19 @@ struct ReviewScene: View {
                                 Img.bell
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.15, height: width * 0.2)
+                                    .frame(width: width * 0.125, height: width * 0.175)
                                     .padding()
                                     .padding(.trailing)
                                 VStack(alignment: .leading, spacing: 0) {
                                     Text("Your notifcations are")
                                         .foregroundColor(.gray)
-                                        .font(Font.fredoka(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 16))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                     HStack {
                                         Text("\(notifications)")
                                             .foregroundColor(Clr.black1)
-                                            .font(Font.fredoka(.semiBold, size: 22))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                         if notifications == "Off" {
                                             Button {
                                                 MGAudio.sharedInstance.playBubbleSound()
@@ -227,14 +203,14 @@ struct ReviewScene: View {
                             HStack {
                                 Text("MindGarden Tutorial  👉🏻")
                                     .foregroundColor(Clr.darkgreen)
-                                    .font(Font.fredoka(.semiBold, size: 18))
+                                    .font(Font.fredoka(.semiBold, size: 16))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.05)
                             }.frame(width: g.size.width * 0.75, height: g.size.height/16)
                                 .background(Clr.yellow)
                                 .cornerRadius(24)
                                 .addBorder(.black, width: 1.5,  cornerRadius: 24)
-                        }.padding()
+                        }.padding(20)
                             .buttonStyle(NeumorphicPress())
                      
                         Button {
@@ -255,9 +231,9 @@ struct ReviewScene: View {
                         } label: {
                                 Text("Explore myself")
                                     .underline()
-                                    .font(Font.fredoka(.regular, size: 18))
+                                    .font(Font.fredoka(.regular, size: 16))
                                     .foregroundColor(.gray)
-                                    .padding(.top, 35)
+                                    .padding(.top, K.isSmall() ? 10 : 20)
                         }
                     }
                 }
@@ -270,38 +246,18 @@ struct ReviewScene: View {
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
             .onAppear {
-                for (idx,str) in arr.enumerated() {
-                    switch str {
-                        case "Sleep better":
-                            if idx == 0 { aim = (Img.moon, "Sleep better") }
-                            else if idx == 1 { aim2 = (Img.moon, "Sleep better") }
-                            else if idx == 2 { aim3 = (Img.moon, "Sleep better") }
-                        case "Get more focused":
-                            if idx == 0 {  aim = (Img.target, "Increase focus") }
-                            else if idx == 1 { aim2 = (Img.target, "Increase focus") }
-                            else if idx == 2 { aim3 = (Img.target, "Increase focus") }
-                        case "Managing Stress & Anxiety":
-                            if idx == 0 {  aim = (Img.heart, "Control anxiety") }
-                            else if idx == 1 { aim2 = (Img.heart, "Control anxiety") }
-                            else if idx == 2 { aim3 = (Img.heart, "Control anxiety") }
-                        case "Just trying it out":
-                            if idx == 0 {  aim = (Img.magnifyingGlass, "Just trying it out") }
-                            else if idx == 1 { aim2 = (Img.magnifyingGlass, "Just trying it out") }
-                            else if idx == 2 { aim3 = (Img.magnifyingGlass, "Just trying it out") }
-                        default: break
-                    }
-                }
-
                 if UserDefaults.standard.string(forKey: "experience") != nil {
                 switch UserDefaults.standard.string(forKey: "experience") {
-                    case "Meditate often":
+                    case Experience.often.title:
                         experience = (Img.redTulips3, "is high")
-                    case "Have tried to meditate":
+                    case Experience.nowAndThen.title:
                         experience = (Img.redTulips2, "is low")
-                    case "Have never meditated":
-                        experience = (Img.redTulips1, "is none")
+                    case Experience.fewTimes.title:
+                        experience = (Img.redTulips2, "is low")
+                    case Experience.never.title:
+                        experience = (Img.seed, "is none")
                     default: break
-                }
+                    }
                 }
                 if UserDefaults.standard.value(forKey: K.defaults.meditationReminder) != nil {
                     notifications = "On"

@@ -77,7 +77,7 @@ struct DiscoverScene: View {
             switch selectedTab {
             case .journey:
                 ZStack {
-                    ScrollView {
+                    ScrollView(showsIndicators: false) {
                         JourneyScene(userModel: userModel)
                         Spacer().frame(height:120)
                     }

@@ -8,6 +8,7 @@
 import SwiftUI
 import OneSignal
 import Amplitude
+import Lottie
 
 struct NotificationScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -89,6 +90,7 @@ struct NotificationScene: View {
                                 .offset(y: -20)
                                 .lineLimit(3)
                                 .minimumScaleFactor(0.05)
+                                .frame(width: width * 0.85)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
@@ -137,6 +139,7 @@ struct NotificationScene: View {
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
+                            LottieAnimationView(filename: "turtleNotification", loopMode: LottieLoopMode.autoReverse, isPlaying: .constant(true))
                             Img.turtleLetter
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -161,10 +164,11 @@ struct NotificationScene: View {
                                 Capsule()
                                     .fill(Clr.darkWhite)
                                     .overlay(
-                                        Text(fromSettings ? "Turn On" : "Continue")
+                                        Text(fromSettings ? "Turn On" : "🔔 Set Reminder")
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
                                     )
+                                    .addBorder(.black, width: 1.5, cornerRadius: 24)
                             }.frame(height: 50)
                                 .padding(5)
                                 .buttonStyle(NeumorphicPress())
@@ -193,7 +197,7 @@ struct NotificationScene: View {
                                         }
                                     }
                             }
-                        }.frame(width: width * 0.9)
+                        }.frame(width: width * 0.85)
                         .padding(.top, 5)
                     }
 

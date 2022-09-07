@@ -61,7 +61,16 @@ struct ContentView: View {
                 ZStack {
                     GeometryReader { geometry in
                         ZStack {
-                            Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                            if viewRouter.currentPage == .garden && K.hasNotch() {
+                                Img.gardenBackground
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+//                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .transition(.opacity)
+                            } else {
+                                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                            }
                             Rectangle()
                                 .fill(Color.gray)
                                 .zIndex(100)
@@ -104,7 +113,7 @@ struct ContentView: View {
                                             }
                                     case .garden:
                                         Garden()
-                                            .frame(height: geometry.size.height + 10)
+                                            .frame(height: geometry.size.height)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .onAppear {
                                                     showPopUpOption = false
@@ -113,6 +122,7 @@ struct ContentView: View {
                                             }
                                             .environmentObject(bonusModel)
                                             .environmentObject(profileModel)
+                                            .offset(y: K.hasNotch() ? -70 : 0)
                                     case .shop:
                                         Store()
                                             .frame(height: geometry.size.height + 10)
@@ -196,7 +206,7 @@ struct ContentView: View {
                                 } else {
                                     // Fallback on earlier versions
                                 }
-                                
+                                //MARK: - onboarding progress indicator
                                 if viewRouter.currentPage == .notification || viewRouter.currentPage == .experience || viewRouter.currentPage == .name  || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
                                         ZStack(alignment: .leading) {
                                             Rectangle()
@@ -315,7 +325,7 @@ struct ContentView: View {
                                             }
                                         }
                                     }
-                                }
+                                }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0)
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
@@ -412,6 +422,14 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.garden)) { _ in
             selectedTab = .garden
             viewRouter.currentPage = .garden
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("trees")))
+        { _ in
+            withAnimation {
+                selectedTab = .shop
+                swipedTrees = true
+                viewRouter.currentPage = .shop
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("store")))
         { _ in

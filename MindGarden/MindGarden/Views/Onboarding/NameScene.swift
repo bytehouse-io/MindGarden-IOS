@@ -37,6 +37,7 @@ struct NameScene: View {
                                         MGAudio.sharedInstance.playBubbleSound()
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
+                                            arr = []
                                             viewRouter.progressValue -= 0.1
                                             viewRouter.currentPage = .reason
                                         }

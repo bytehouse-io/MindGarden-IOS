@@ -23,7 +23,7 @@ enum Sheet: Identifiable {
     }
 }
 var searchScreen = false
-
+var swipedTrees = false
 struct Home: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
@@ -72,12 +72,6 @@ struct Home: View {
                             }
                         Spacer()
                     }
-                    PurchaseModal(shown: $showPurchase, showConfirm: $confirmModal)
-                        .offset(y: showPurchase ? -35 : g.size.height)
-                        .opacity(confirmModal ? 0.3 : 1)
-                        .environmentObject(bonusModel)
-                        .environmentObject(profileModel)
-                        .animation(.default, value: showPurchase)
                     ConfirmModal(shown: $confirmModal, showMainModal: $showPurchase)
                         .offset(y: confirmModal ? 0 : g.size.height)
                         .animation(.default, value: confirmModal)
@@ -92,11 +86,9 @@ struct Home: View {
                     NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
-                    ChallengeModal(shown: $showChallenge)
-                        .offset(y: showChallenge ? 0 : g.size.height)
-                        .animation(.default, value: showChallenge)
                 }
             }
+     
             .fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
             }
@@ -141,26 +133,19 @@ struct Home: View {
                 activeSheet = .profile
                 showProfile = false
             }
-//            if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
-//                let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
-//                storylyViewProgrammatic.resume()
-//                UserDefaults.standard.setValue(true, forKey: "firstStory")
-//            }
+            if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
+                let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
+                storylyViewProgrammatic.resume()
+                UserDefaults.standard.setValue(true, forKey: "firstStory")
+            }
+
+            UserDefaults.standard.setValue(true, forKey: "firstStory")
     
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
-                
-//                if launchedApp {
-//                    gardenModel.updateSelf()
-//                    launchedApp = false
-//                    var num = UserDefaults.standard.integer(forKey: "shownFive")
-//                    num += 1
-//                    UserDefaults.standard.setValue(num, forKey: "shownFive")
-//                    model.getFeaturedMeditation()
-//                }
                 
                 if userWentPro {
                     wentPro = userWentPro
@@ -217,7 +202,7 @@ struct Home: View {
                 if (UserDefaults.standard.bool(forKey: "review") || UserDefaults.standard.string(forKey: "onboarding") == "done") && !UserDefaults.standard.bool(forKey: "showedChallenge") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Change `2.0` to the desired number of seconds.
                        // Code you want to be delayed
-                        showChallenge = true
+//                        showChallenge = true
                     }
                 }
             }
@@ -229,17 +214,7 @@ struct Home: View {
                 activeSheet = .profile
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("trees")))
-        { _ in
-            withAnimation {
-                withAnimation {
-                    userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
-                        plt.title == "Real Tree"
-                    })
-                    showPurchase = true
-                }
-            }
-        }
+ 
 
     }
 }

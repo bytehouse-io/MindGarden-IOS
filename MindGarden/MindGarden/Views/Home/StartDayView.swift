@@ -8,51 +8,23 @@
 import SwiftUI
 import Lottie
 
-struct StreakItem : Identifiable {
-    var id = UUID()
-    var title: String
-    var streak: Bool
-    var gratitude: String = ""
-    var question: String = ""
-}
 
-struct DailyMoodItem : Identifiable {
-    var id = UUID()
-    var title: String
-    var dailyMood: Image
-}
 struct StartDayView: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    @State private var isDailyMood = true
-    @State private var isGratitudeDone = false
-    @State private var isMeditationDone = false
+
+
     @State private var playEntryAnimation = false
-    @State private var isWeekStreakDone = false
-    @State var streakList:[StreakItem] = [StreakItem(title: "S", streak: false),
-                                          StreakItem(title: "M", streak: false),
-                                          StreakItem(title: "T", streak: false),
-                                          StreakItem(title: "W", streak: false),
-                                          StreakItem(title: "T", streak: false),
-                                          StreakItem(title: "F", streak: false),
-                                          StreakItem(title: "S", streak: false)]
-    
-    @State var dailyMoodList:[DailyMoodItem] = [DailyMoodItem(title: "S", dailyMood: Img.emptyMood),
-                                             DailyMoodItem(title: "M", dailyMood: Img.emptyMood),
-                                             DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
-                                             DailyMoodItem(title: "W", dailyMood: Img.emptyMood),
-                                                DailyMoodItem(title: "T", dailyMood: Img.emptyMood),
-                                             DailyMoodItem(title: "F", dailyMood: Img.emptyMood),
-                                             DailyMoodItem(title: "S", dailyMood: Img.emptyMood)]
+
     var body: some View {
         let width = UIScreen.screenWidth
         let height = UIScreen.screenHeight
         let hour = Calendar.current.component( .hour, from:Date() )
         VStack {
             HStack {
-                Text(hour > 16 ? "Relfect on your day" : isMeditationDone ? "Well Done! Let's Reflect Later" : "Start your day" )
+                Text(hour > 16 ? "Relfect on your day" : gardenModel.isMeditationDone ? "Well Done! Let's Reflect Later" : "Start your day" )
                     .foregroundColor(Clr.brightGreen)
                     .font(Font.fredoka(.bold, size: 20))
                     .minimumScaleFactor(0.05)
@@ -67,12 +39,12 @@ struct StartDayView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(isDailyMood ? Clr.darkWhite : Clr.brightGreen)
+                        .foregroundColor(!gardenModel.isMoodDone ? Clr.darkWhite : Clr.brightGreen)
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
                         .zIndex(1)
                     Group {
-                        if isDailyMood {
+                        if !gardenModel.isMoodDone  {
                             DottedLine()
                                 .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
                                 .fill(Clr.black2)
@@ -86,8 +58,8 @@ struct StartDayView: View {
                         }
                     }
                     .frame(maxHeight:.infinity)
-                    .padding(.top,isDailyMood ? 12 : 0)
-                    .padding(.bottom,isDailyMood ? 4 : 0)
+                    .padding(.top, !gardenModel.isMoodDone  ? 12 : 0)
+                    .padding(.bottom,!gardenModel.isMoodDone  ? 4 : 0)
 //                    Group {
 //                        if isDailyMood {
 //                            DottedLine()
@@ -106,12 +78,12 @@ struct StartDayView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(isGratitudeDone ? Clr.brightGreen : Clr.darkWhite)
+                        .foregroundColor(gardenModel.isGratitudeDone ? Clr.brightGreen : Clr.darkWhite)
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
                         .zIndex(1)
                     Group {
-                        if isGratitudeDone {
+                        if gardenModel.isGratitudeDone {
                             Rectangle()
                                 .fill(Clr.brightGreen)
                                 .frame(width: 4)
@@ -124,9 +96,9 @@ struct StartDayView: View {
                                 .frame(width: 2)
                         }
                     }
-                        .frame(maxHeight:.infinity)
-                    .padding(.top,isGratitudeDone ? 0 : 12)
-                    .padding(.bottom,isGratitudeDone ? 0 : 4)
+                    .frame(maxHeight:.infinity)
+                    .padding(.top,gardenModel.isGratitudeDone ? 0 : 12)
+                    .padding(.bottom,gardenModel.isGratitudeDone ? 0 : 4)
 //                    Group {
 //                        if isGratitudeDone {
 //                            Rectangle()
@@ -145,7 +117,7 @@ struct StartDayView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .foregroundColor(isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
+                        .foregroundColor(gardenModel.isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
                         .frame(width:24,height: 24)
                         .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
                     Spacer()
@@ -163,7 +135,7 @@ struct StartDayView: View {
                                 .frame(height:170)
                                 .aspectRatio(contentMode: .fill)
                                 .opacity(0.95)
-                            if isDailyMood {
+                            if !gardenModel.isMoodDone {
                                 SelectMood
                             } else {
                                 DailyMood
@@ -172,7 +144,7 @@ struct StartDayView: View {
                         .frame(width: UIScreen.screenWidth * 0.775)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                         .padding(.horizontal, 12)
-                        .opacity(isDailyMood ? 1 : 0.5)
+                        .opacity(!gardenModel.isMoodDone ? 1 : 0.5)
                         .offset(y: playEntryAnimation ? 0 : 100)
                         .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(0.3), value: playEntryAnimation)
@@ -192,12 +164,12 @@ struct StartDayView: View {
                             VStack {
                                 HStack(spacing:0) {
                                     Spacer()
-                                    Text(isWeekStreakDone ? "Wow! Perfect this week!" : isGratitudeDone ? "📈 Confidence, Clarity, Inspiration" : "Answer today’s Journal Prompt")
+                                    Text(gardenModel.isWeekStreakDone ? "Wow! Perfect this week!" : gardenModel.isGratitudeDone ? "📈 Confidence, Clarity, Inspiration" : "Answer today’s Journal Prompt")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .padding([.top],16)
-                                        .padding(.leading, isWeekStreakDone || !isGratitudeDone  ? 16 : -16)
-                                        .offset(x: isWeekStreakDone || !isGratitudeDone  ? 0 : 32)
+                                        .padding(.leading, gardenModel.isWeekStreakDone || !gardenModel.isGratitudeDone  ? 16 : -16)
+                                        .offset(x: gardenModel.isWeekStreakDone || !gardenModel.isGratitudeDone  ? 0 : 32)
                                         .lineLimit(2)
                                         .minimumScaleFactor(0.05)
                                     Spacer()
@@ -214,7 +186,7 @@ struct StartDayView: View {
                                 Spacer()
                                 VStack {
                                     HStack(alignment:.top) {
-                                        ForEach(streakList, id: \.id) { item in
+                                        ForEach(gardenModel.streakList, id: \.id) { item in
                                             VStack(spacing:5) {
                                                 Text(item.title)
                                                     .foregroundColor(Clr.black2)
@@ -263,7 +235,7 @@ struct StartDayView: View {
                                     viewRouter.currentPage = .journal
                                 }
                             }
-                            .opacity(isGratitudeDone ? 0.5 : 1)
+                            .opacity(gardenModel.isGratitudeDone ? 0.5 : 1)
                     }.buttonStyle(ScalePress() )
                   
                     ZStack {
@@ -303,7 +275,7 @@ struct StartDayView: View {
                                             .opacity(playEntryAnimation ? 1 : 0)
                                             .animation(.spring().delay(0.3), value: playEntryAnimation)
                                     }.buttonStyle(ScalePress())
-                            }.opacity(isMeditationDone ? 0.5 : 1)
+                            }.opacity(gardenModel.isMeditationDone ? 0.5 : 1)
                             HStack {
                                 Spacer()
                                 Text("Breathwork")
@@ -334,85 +306,29 @@ struct StartDayView: View {
         .onReceive(gardenModel.$grid){ grid in
             if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
                 if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
-                    isGratitudeDone = true
+                    gardenModel.isGratitudeDone = true
                 }
             }
         }
         .padding(.horizontal, 26)
         .onAppear() {
-            DispatchQueue.main.async {
-                let weekDays = getAllDaysOfTheCurrentWeek()
-                getAllGratitude(weekDays:weekDays)
-                if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {
-                    if let mood = moods[moods.count - 1]["mood"], !mood.isEmpty {
-                        isDailyMood = false
-                        getMoods(weekDays:weekDays)
-                    }
-                }
-                
-                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["journals"]  as? [[String: String]] {
-                    if let gratitude = gratitudes[gratitudes.count-1]["gratitude"], !gratitude.isEmpty  {
-                        isGratitudeDone = true
-                    }
-                }
-                
-                if let meditations = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["sessions"]  as? [[String: String]] {
-                    if let meditation = meditations[meditations.count-1]["meditationId"], !meditation.isEmpty  {
-                        isMeditationDone = true
-                    }
-                }
-                    
-                
-                withAnimation {
-                    playEntryAnimation = true
-                }
-            }
+            updateStartDay()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("updateStart"))) { _ in
+            updateStartDay()
         }
     }
     
-    private func getAllGratitude(weekDays:[Date]) {
-        for i in 0..<weekDays.count {
-            let day = weekDays[i]
-            if let gratitudes = gardenModel.grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?[K.defaults.journals]  as? [[String: String]] {
-                if let gratitude = gratitudes[gratitudes.count-1]["gratitude"] {
-                    streakList[i].gratitude = gratitude
-                    if gratitude.count > 0 {
-                        streakList[i].streak = true
-                    }
-                }
-                if let question = gratitudes[gratitudes.count-1]["question"] {
-                    streakList[i].question = question
-                }
-            }
-        }
-        isWeekStreakDone = streakList.filter { $0.streak }.count == 7
-    }
-    
-    private func getMoods(weekDays:[Date]) {
-        for i in 0..<weekDays.count {
-            let day = weekDays[i]
-            if let moods = gardenModel.grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?["moods"]  as? [[String: String]] {
-                let mood = Mood.getMood(str: moods[moods.count - 1]["mood"] ?? "okay")
-                dailyMoodList[i].dailyMood = Mood.getMoodImage(mood: mood)
-            }
+    private func updateStartDay() {
+        withAnimation {
+            playEntryAnimation = true
         }
     }
     
-    private func getAllDaysOfTheCurrentWeek() -> [Date] {
-        var calendar = Calendar.autoupdatingCurrent
-        calendar.firstWeekday = 1
-        let today = calendar.startOfDay(for: Date())
-        var week = [Date]()
-        if let weekInterval = calendar.dateInterval(of: .weekOfYear, for: today) {
-            for i in 0...6 {
-                if let day = calendar.date(byAdding: .day, value: i, to: weekInterval.start) {
-                    week += [day]
-                }
-            }
-        }
-        return week
-    }
+
     
+    
+
     var SelectMood: some View {
         VStack {
             Spacer()
@@ -467,7 +383,7 @@ struct StartDayView: View {
 //                    .font(Font.fredoka(.semiBold, size: 16))
 //                    .offset(y: 8)
                 HStack(alignment:.top) {
-                    ForEach(dailyMoodList, id: \.id) { item in
+                    ForEach(gardenModel.dailyMoodList, id: \.id) { item in
                         VStack(spacing:5) {
                             Text(item.title)
                                 .foregroundColor(Clr.black2)

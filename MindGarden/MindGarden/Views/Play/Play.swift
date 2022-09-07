@@ -48,12 +48,15 @@ struct Play: View {
 
     var body: some View {
             ZStack {
-                if isSleep || !backgroundAnimationOn {
+                if isSleep && !backgroundAnimationOn  {
                     Clr.darkMode.edgesIgnoringSafeArea(.all)
+                } else if !backgroundAnimationOn {
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all)
                 } else {
                     AnimatedBackground(colors:[Clr.yellow, Clr.yellow, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
                         .animation(.default)
                 }
+                
                 GeometryReader { g in
                     let width = g.size.width
                     let height = g.size.height

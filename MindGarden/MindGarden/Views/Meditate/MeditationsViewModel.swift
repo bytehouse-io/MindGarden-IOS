@@ -108,13 +108,11 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
-        getFeaturedMeditation()
-        getRecommendedMeds()
     }
 
     func getFeaturedMeditation()  {
         var filtedMeds = Meditation.allMeditations.filter { med in
-            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56  && med.type != .weekly}
+            med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56}
         if !UserDefaults.standard.bool(forKey: "isPro") {
             filtedMeds = filtedMeds.filter { med in
                 return !Meditation.lockedMeditations.contains(med.id)
@@ -148,7 +146,7 @@ class MeditationViewModel: ObservableObject {
         
  
 
-        if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
+        if UserDefaults.standard.string(forKey: "experience") != Experience.often.title && UserDefaults.standard.string(forKey: "experience") != "Meditate often"  {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 6 {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 6 })
@@ -221,20 +219,21 @@ class MeditationViewModel: ObservableObject {
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         case "Get more focused":
-            filtedMeds = filtedMeds.filter { med in
+            var focusedMeds = filtedMeds.filter { med in
                 med.category == .focus
             }
-            let randomInt = Int.random(in: 0..<filtedMeds.count)
-            featuredMeditation = filtedMeds[randomInt]
+            if focusedMeds.isEmpty {  focusedMeds = filtedMeds }
+            let randomInt = Int.random(in: 0..<focusedMeds.count)
+            featuredMeditation = focusedMeds[randomInt]
         case "Managing Stress & Anxiety":
             filtedMeds = filtedMeds.filter { med in
-                med.category == .anxiety
+                med.category == .anxiety || med.category == .sadness
             }
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         case "Just trying it out":
             filtedMeds = filtedMeds.filter { med in
-                med.category == .beginners
+                med.category == .beginners || med.category == .growth
             }
             let randomInt = Int.random(in: 0..<filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
@@ -269,7 +268,7 @@ class MeditationViewModel: ObservableObject {
             }
         }
         
-        if UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
+        if UserDefaults.standard.string(forKey: "experience") != Experience.often.title  && UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
                 filteredMeds = filteredMeds.filter { med in med.type != .lesson && med.id != 22 && med.type != .weekly}
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
@@ -438,26 +437,30 @@ class MeditationViewModel: ObservableObject {
                     roadMaplevel = i + 1
                     roadMapArr = expArr[i]
                 }
-            case "Have tried to meditate":
-                if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i {
+            case Experience.often.title:
+                if expArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i {
                     roadMaplevel = i + 2
-                    roadMapArr = begArr[i+1]
+                    roadMapArr = expArr[i+1]
                 } else {
                     roadMaplevel = i + 1
-                    roadMapArr = begArr[i]
+                    roadMapArr = expArr[i]
                 }
-            case "Have never meditated":
-                if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i  {
-                    roadMaplevel = i + 2
-                    roadMapArr = begArr[i+1]
+            default:
+                if roadMaplevel == 6 || userCoinCollectedLevel == 6 {
+                    return
                 } else {
-                    roadMaplevel = i + 1
-                    roadMapArr = begArr[i]
+                    if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i  {
+                        roadMaplevel = i + 2
+                        roadMapArr = begArr[i+1]
+                    } else {
+                        roadMaplevel = i + 1
+                        roadMapArr = begArr[i]
+                    }
                 }
-            default: break
             }
         }
     }
+    
     
     var completedMeditation: [Int] {
         let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []

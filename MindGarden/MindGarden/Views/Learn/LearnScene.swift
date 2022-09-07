@@ -106,9 +106,9 @@ struct LearnScene: View {
                                     }
                                 }.frame(height: height * 0.325 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
-                            }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
+                            }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
                         }
-                    }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
+                    }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
                     .padding(.top, 40)
                     ZStack {
                         Rectangle()
@@ -137,9 +137,9 @@ struct LearnScene: View {
                                     }
                                 }.frame(height: height * 0.325 + 15)
                                     .padding([.leading, .trailing], g.size.width * 0.07)
-                            }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
+                            }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
                         }
-                    }.frame(width: width * 0.85, height: height * 0.325, alignment: .center)
+                    }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
                     .padding(.top, 40)
                     Spacer()
                     .frame(height: 60)
@@ -227,49 +227,9 @@ struct LearnScene: View {
                     .overlay(
                         VStack(alignment: .leading, spacing: 0) {
                             UrlImageView(urlString: course.img)
-                                .scaledToFill()
-                                .cornerRadius(16, corners: [.topRight, .topLeft])
-                                .frame(width: width * 0.5, height: height * 0.16)
-                            Spacer()
-                            HStack(spacing: 5) {
-                                Image(systemName: "clock")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color.gray)
-                                    .frame(width: 12)
-                                    .padding([.leading, .top], 10)
-                                Text("\(course.duration) mins")
-                                    .font(Font.fredoka(.medium, size: 14))
-                                    .foregroundColor(.gray)
-                                    .padding([.top, .trailing], 10)
-                                if completedCourses.contains(where: {$0 == course.id}) {
-                                    Capsule()
-                                        .fill(Clr.yellow)
-                                        .overlay(
-                                            HStack {
-                                                Text("Completed")
-                                                    .font(Font.fredoka(.semiBold, size: 10))
-                                                    .minimumScaleFactor(0.05)
-                                                    .lineLimit(1)
-                                                    .foregroundColor(.black)
-                                                Image(systemName: "checkmark.seal.fill")
-                                                    .foregroundColor(Clr.brightGreen)
-                                                    .frame(width: 20)
-                                            }.padding(3)
-                                        ).neoShadow()
-                                        .padding(3)
-                                        .offset(x: -5)
-                                }
-                            }.frame(height: 25)
-                            .offset(y: -4)
-                  
-                            Text("\(course.description)")
-                                .font(Font.fredoka(.medium, size: 12))
-                                .foregroundColor(Clr.black1)
-                                .padding(.horizontal, 10)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.5)
-                            Spacer()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(16)
+                                .frame(width: width * 0.55, height: height * 0.2)
                         }.onTapGesture {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                             if course.category == "meditation" {
@@ -282,7 +242,9 @@ struct LearnScene: View {
                         }
                     )
             }.buttonStyle(NeumorphicPress())
-            .frame(width: width * 0.5, height: height * 0.25)
+            .frame(width: width * 0.55, height: height * 0.175)
+            .cornerRadius(16)
+
             
         }
     }

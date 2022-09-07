@@ -23,12 +23,14 @@ struct Stories: UIViewRepresentable {
         storylyViewProgrammatic.storyGroupTextFont = UIFont(name: "fredoka-Medium", size: 12)!
         storylyViewProgrammatic.storyGroupTextColor = UIColor.systemGray
 
-        storylyViewProgrammatic.storyGroupSize = "small"
+        storylyViewProgrammatic.storyGroupSize = "custom"
+        storylyViewProgrammatic.storyGroupIconStyling = StoryGroupIconStyling(height: 55, width: 55, cornerRadius: 27.5)
+
         storylyViewProgrammatic.delegate = StorylyManager.shared
-        storylyViewProgrammatic.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        storylyViewProgrammatic.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         storylyViewProgrammatic.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         storylyViewProgrammatic.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        storylyViewProgrammatic.storyGroupListStyling = StoryGroupListStyling(edgePadding: 0, paddingBetweenItems: 10)
+        storylyViewProgrammatic.storyGroupListStyling = StoryGroupListStyling(edgePadding: 15, paddingBetweenItems: 5)
         return view
     }
     

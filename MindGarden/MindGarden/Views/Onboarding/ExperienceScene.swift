@@ -30,17 +30,21 @@ struct ExperienceScene: View {
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
-                            HStack {
-                                Img.topBranch
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.screenWidth * 0.6)
-                                    .padding(.leading, -20)
-                                    .offset(x: -20, y: -10)
+                            if !K.isSmall() && K.hasNotch() {
+                                HStack {
+                                    Img.topBranch
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.screenWidth * 0.6)
+                                        .padding(.leading, -20)
+                                        .offset(x: -20, y: -15)
+                                    Spacer()
+                                }
+                            } else {
                                 Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
-                                .font(Font.fredoka(.semiBold, size: 28))
+                                .font(Font.fredoka(.bold, size: 28))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
@@ -48,9 +52,12 @@ struct ExperienceScene: View {
                                 .padding(.horizontal)
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
-                            SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
+                                .frame(height: 50)
+                                .padding(.bottom, 15)
+                            SelectionRow(width: width, height: height, title: Experience.often.title, img: Img.redTulips3, selected: $selected)
+                            SelectionRow(width: width, height: height, title: Experience.nowAndThen.title, img: Img.redTulips2, selected: $selected)
+                            SelectionRow(width: width, height: height, title: Experience.fewTimes.title, img: Img.redTulips1, selected: $selected)
+                            SelectionRow(width: width, height: height, title: Experience.never.title, img: Img.seed, selected: $selected)
                             Spacer()
                             Button {
                                 MGAudio.sharedInstance.playBubbleSound()
@@ -58,13 +65,16 @@ struct ExperienceScene: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
                                     switch selected {
-                                    case "Meditate often":
+                                    case Experience.often.title:
                                         OneSignal.sendTag("often", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_alot)
-                                    case "Have tried to meditate":
+                                    case Experience.fewTimes.title:
                                         OneSignal.sendTag("tried", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_some)
-                                    case "Have never meditated":
+                                    case Experience.nowAndThen.title:
+                                        OneSignal.sendTag("tried", value: "true")
+                                        Analytics.shared.log(event: .experience_tapped_some)
+                                    case Experience.never.title:
                                         OneSignal.sendTag("never", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_none)
                                     default:
@@ -155,14 +165,14 @@ struct ExperienceScene: View {
                     Rectangle()
                         .fill(selected == title ? Clr.brightGreen : Clr.darkWhite)
                         .cornerRadius(20)
-                        .frame(height: height * 0.15)
+                        .frame(height: height * 0.125)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 20)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
 
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.fredoka(.semiBold, size: 24, relativeTo: .subheadline))
+                            .font(Font.fredoka(.semiBold, size: 20, relativeTo: .subheadline))
                             .foregroundColor(selected == title ?  Color.white : Clr.black2)
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)
@@ -171,8 +181,8 @@ struct ExperienceScene: View {
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: width * 0.15, height: height * 0.125)
-                            .offset(x: -20)
+                            .frame(width: width * 0.125, height: height * (title == Experience.never.title ? 0.04 : 0.1))
+                            .offset(x: -20, y: title == Experience.fewTimes.title || title == Experience.never.title ? 10 : 0)
                     }
                 }
             }.buttonStyle(NeumorphicPress())
@@ -185,3 +195,5 @@ struct ExperienceScene_Previews: PreviewProvider {
         ExperienceScene()
     }
 }
+
+

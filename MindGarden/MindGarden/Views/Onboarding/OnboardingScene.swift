@@ -10,6 +10,7 @@ import Paywall
 import OneSignal
 import Purchases
 import Amplitude
+import Lottie
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -19,7 +20,7 @@ struct OnboardingScene: View {
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
-
+    var title = "Meditate."
     @State private var showAuth = false
     init() {
         if #available(iOS 14.0, *) {
@@ -29,12 +30,12 @@ struct OnboardingScene: View {
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
-    let title = "Not magic."
-    let subtitles = "Meditate. Journal. Grow. Thrive with MindGarden & have fun."
+
     var body: some View {
         NavigationView {
             GeometryReader { g in
                 let width = g.size.height
+                let height = g.size.height
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack {
@@ -65,85 +66,73 @@ struct OnboardingScene: View {
                         Spacer()
                         Spacer()
                         VStack(spacing:0) {
-                            VStack(alignment:.leading) {
-                                Text(title)
-                                    .font(Font.fredoka(.bold, size: 32))
-                                    .padding(.horizontal)
-                                    .foregroundColor(Clr.black2)
-                                    .multilineTextAlignment(.leading)
-                                Group {
-                                    Text("Just")
-                                        .foregroundColor(Clr.black2) +
-                                    Text(" Gamification.")
-                                        .foregroundColor(Clr.brightGreen)
-                                }
-                                .font(Font.fredoka(.bold, size: 32))
-                                    .padding(.horizontal)
-                                    .multilineTextAlignment(.leading)
-                                    .padding(.bottom,10)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
-                                Text(subtitles)
-                                    .font(Font.fredoka(.semiBold, size: 20))
-                                    .foregroundColor(Clr.black1)
-                                    .lineSpacing(10)
-                                    .padding(.horizontal)
-                                    .multilineTextAlignment(.leading)
-                            }.padding()
-                            .offset(y: K.isSmall() ? 10 : -25)
-                            Img.coloredPots
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.4)
-                                .padding()
-                                .neoShadow()
+                            VStack {
+                                Text("Meditate.")
+                                    .foregroundColor(Clr.healthSecondary)
+                                    .frame(width: width * 0.4 , alignment: .leading)
+                                Text("Journal.")
+                                    .foregroundColor(Clr.brightGreen)
+                                    .frame(width: width * 0.4, alignment: .leading)
+                                Text("Grow.")
+                                    .foregroundColor(Clr.energySecondary)
+                                    .frame(width: width * 0.4, alignment: .leading)
+                            }
+                                .multilineTextAlignment(.leading)
+                                .font(Font.fredoka(.bold, size: 40))
+                                .offset(y: K.isSmall() ?  height * 0.1 : height * 0.15)
+                            LottieAnimationView(filename: "onboarding", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
+                                .frame(width: width * 0.45)
+                                .offset(y: height * -0.15)
                         }
+                        .foregroundColor(Clr.brightGreen)
+                        //                        font(Font.fredoka(.bold, size: 32))
                         .padding(.horizontal)
-                        
-                        Button {
-                            MGAudio.sharedInstance.playBubbleSound()
-                            Analytics.shared.log(event: .onboarding_tapped_continue)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation(.easeOut(duration: 0.4)) {
-                                DispatchQueue.main.async {
-                                    viewRouter.progressValue = 0.2
-                                    viewRouter.currentPage = .experience
+                        VStack {
+                            Button {
+                                MGAudio.sharedInstance.playBubbleSound()
+                                Analytics.shared.log(event: .onboarding_tapped_continue)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation(.easeOut(duration: 0.4)) {
+                                    DispatchQueue.main.async {
+                                        viewRouter.progressValue = 0.2
+                                        viewRouter.currentPage = .experience
+                                    }
                                 }
-                            }
-                            if let onesignalId = OneSignal.getDeviceState().userId {
-                                   Purchases.shared.setOnesignalID(onesignalId)
-                            }
-                        } label: {
-                            Rectangle()
-                                .fill(Clr.yellow)
-                                .overlay(
-                                    Text("Start Growing 👉")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.fredoka(.bold, size: 20))
-                                ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
-                        }.frame(width:UIScreen.screenWidth*0.8, height: 50)
-                            .padding()
-                        .buttonStyle(BonusPress())
-                        Button {
-                            MGAudio.sharedInstance.playBubbleSound()
-                            Analytics.shared.log(event: .onboarding_tapped_sign_in)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            tappedSignIn = true
-                            withAnimation {
-                                fromPage = "onboarding"
-                                tappedSignOut = true
-                                authModel.isSignUp = false
-                                viewRouter.currentPage = .authentication
-                            }
-                        } label: {
-                            Text("Already have an account")
-                                .underline()
-                                .font(Font.fredoka(.semiBold, size: 18))
-                                .foregroundColor(.gray)
-                        }.frame(height: 30)
-                            .padding([.horizontal,.bottom])
-                            .offset(y: 25)
-                        .buttonStyle(BonusPress())
+                                if let onesignalId = OneSignal.getDeviceState().userId {
+                                    Purchases.shared.setOnesignalID(onesignalId)
+                                }
+                            } label: {
+                                Rectangle()
+                                    .fill(Clr.yellow)
+                                    .overlay(
+                                        Text("Start Growing 👉")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(Font.fredoka(.bold, size: 20))
+                                    ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
+                            }.frame(width:UIScreen.screenWidth*0.8, height: 50)
+                                .padding()
+                                .buttonStyle(BonusPress())
+                            Button {
+                                MGAudio.sharedInstance.playBubbleSound()
+                                Analytics.shared.log(event: .onboarding_tapped_sign_in)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                tappedSignIn = true
+                                withAnimation {
+                                    fromPage = "onboarding"
+                                    tappedSignOut = true
+                                    authModel.isSignUp = false
+                                    viewRouter.currentPage = .authentication
+                                }
+                            } label: {
+                                Text("Already have an account")
+                                    .underline()
+                                    .font(Font.fredoka(.semiBold, size: 18))
+                                    .foregroundColor(.gray)
+                            }.frame(height: 30)
+                                .padding([.horizontal,.bottom])
+                                .offset(y: 25)
+                                .buttonStyle(BonusPress())
+                        }.offset(y: height * -0.1)
                         Spacer()
                     }
                 }

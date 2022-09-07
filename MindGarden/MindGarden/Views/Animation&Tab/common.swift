@@ -41,7 +41,7 @@ extension View {
     
     func roundedCapsule(color:Color = Clr.yellow) -> some View {
         self
-            .padding(8)
+            .padding(12)
             .background(Capsule().fill(color).darkShadow())
             .overlay(Capsule().stroke(.black, lineWidth: 1))
     }

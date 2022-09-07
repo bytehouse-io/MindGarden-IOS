@@ -26,12 +26,12 @@ struct JourneyScene: View {
                     .frame(width: abs(width * 0.825), alignment: .leading)
                 VStack {
                     LottieView(fileName: "sloth")
-                        .offset(x: -50)
+                        .offset(x: -65)
                 }.frame(width: 100, height: 100)
-                Text("Only 1% complete the roadmap.\nKeep it up!")
+                Text("Only 1% complete the roadmap.\n Email team@mindgarden.io with  a screenshot, we'd like to give you gift.\n-💚 MindGarden Team")
                     .font(Font.fredoka(.medium, size: 20))
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 60)
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 140)
                     .frame(width: abs(width * 0.825), alignment: .center)
             } else {
                 VStack {
@@ -53,7 +53,7 @@ struct JourneyScene: View {
                         .frame(width: abs(width * 0.825), alignment: .leading)
                     }
                     ForEach(model.roadMapArr.indices) { idx in
-                        if idx != model.roadMapArr.count {
+                        if idx != model.roadMapArr.count && idx < model.roadMapArr.count {
                             HStack(spacing: 10) {
                                 let item = model.roadMapArr[idx]
                                 let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
@@ -92,7 +92,9 @@ struct JourneyScene: View {
                         if model.roadMaplevel <= 6 && isAward {
                             userModel.updateCoins(plusCoins: model.roadMaplevel < 2 ? 1000 : model.roadMaplevel > 4 ? 1500 :  1250)
                             if model.roadMaplevel == 6 {
+                                userModel.journeyFinished = true
                                 userModel.finishedJourney()
+                                isAward = false
                             } else {
                                 model.getUserMap()
                                 isAward = false

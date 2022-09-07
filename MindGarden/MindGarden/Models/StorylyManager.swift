@@ -7,9 +7,11 @@
 import Storyly
 import Foundation
 import Amplitude
+import Firebase
 
 class StorylyManager: StorylyDelegate {
     static var shared = StorylyManager()
+    let db = Firestore.firestore()
 
        func storylyLoaded(_ storylyView: Storyly.StorylyView,
                           storyGroupList: [Storyly.StoryGroup],
@@ -66,12 +68,16 @@ class StorylyManager: StorylyDelegate {
                    let components = story.title.components(separatedBy: " ")
                    Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
                    var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
-                   if story.title.lowercased().contains("bijan")  {
+                   var unique = Array(Set(storyArray ?? [""]))
+
+                   if story.title.lowercased().contains("intro/day")  {
                        Analytics.shared.log(event: .story_bijan_opened)
                        storyArray?.removeAll(where: { str in
-                           str.lowercased().contains("bijan")
+                           str.lowercased().contains("intro/day")
                        })
                       storyArray =  updateComps(components: components, segs: storyArray)
+                      unique = Array(Set(storyArray ?? [""]))
+                      saveToFirebase(unique: unique)
                    } else if story.title.lowercased() == "#4" || story.title.lowercased().contains("tip") {
                        Analytics.shared.log(event: .story_tip_opened)
                        storyArray?.removeAll(where: { str in
@@ -83,6 +89,7 @@ class StorylyManager: StorylyDelegate {
                        let unique = Array(storySegments)
                        UserDefaults.standard.setValue(unique, forKey: "storySegments")
                        UserDefaults.standard.setValue(unique, forKey: "oldSegments")
+                       saveToFirebase(unique: unique)
                        return
                    } else if story.title.lowercased().contains("trees for the future") {
                        storyArray?.removeAll(where: { str in
@@ -90,44 +97,37 @@ class StorylyManager: StorylyDelegate {
                        })
 //                       storylyViewProgrammatic.dismiss(animated: true)
                        UserDefaults.standard.setValue(storyArray, forKey: "storySegments")
+                       saveToFirebase(unique: storyArray ?? [""])
                        return
-                    } else if story.title.lowercased().contains("quote") {
-                       Analytics.shared.log(event: .story_quote_opened)
-                       storyArray?.removeAll(where: { str in
-                           str.lowercased().contains("quote")
-                       })
-                       storyArray = updateComps(components: components, segs: storyArray)
-                   } else if story.title.lowercased().contains("tale")  {
-                       Analytics.shared.log(event: .story_comic_opened)
-                       storyArray?.removeAll(where: { str in
-                           str.lowercased().contains("tale")
-                       })
-                       storyArray = updateComps(components: components, segs: storyArray)
-                   } else if story.title.lowercased().contains("journal") {
-                       Analytics.shared.log(event: .story_journal_opened)
-                   } else if story.title.lowercased().contains("sleep") {
-                       Analytics.shared.log(event: .story_comic_opened)
-                       storyArray?.removeAll(where: { str in
-                           str.lowercased().contains("sleep")
-                       })
-                       storyArray = updateComps(components: components, segs: storyArray)
-                   }
-          
-                   let unique = Array(Set(storyArray ?? [""]))
-                   UserDefaults.standard.setValue(unique, forKey: "storySegments")
+                    }
+                   unique = Array(Set(storyArray ?? [""]))
+                    UserDefaults.standard.setValue(unique, forKey: "storySegments")
                }
            }
        }
+    
+    private func saveToFirebase(unique: [String]) {
+        if let email = Auth.auth().currentUser?.email {
+            //Read Data from firebase, for syncing
+            self.db.collection(K.userPreferences).document(email).updateData([
+                "storySegments": unique,
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved meditations")
+                }
+            }
+        }
+    }
+    
     private func updateComps(components: [String], segs: [String]?) -> [String]? {
         var segments = segs
         if let num = Int(components[1]) {
             let count = num + 1
             var finalStr = components[0]
-            if count == 21 {
-                finalStr = "finalUser"
-            } else {
-                finalStr += " " + String(count)
-            }
+            finalStr += " " + String(count)
+            
             segments?.append(finalStr)
         }
         return segments
