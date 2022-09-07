@@ -591,7 +591,9 @@ extension AuthenticationViewModel {
                         UserDefaults.standard.setValue(experience, forKey: "experience")
                     }
                     
-                    if let storySegs = document["storySegments"] {
+                    if let storySegs = document["storySegments"] as? [String] {
+                        storySegments = Set(storySegs)
+                        StorylyManager.refresh()
                         UserDefaults.standard.setValue(storySegs, forKey: "oldSegments")
                         UserDefaults.standard.setValue(storySegs, forKey: "storySegments")
                     }
