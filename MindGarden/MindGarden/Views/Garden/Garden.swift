@@ -43,7 +43,7 @@ struct Garden: View {
     enum MonthlyState: String, CaseIterable {
         var id: String { return self.rawValue }
         
-        case curruntStreak
+        case currentstreak
         case breathwork
         case meditations
         case reflections
@@ -51,7 +51,7 @@ struct Garden: View {
         
         var color:Color {
             switch self {
-            case .curruntStreak:
+            case .currentstreak:
                 return Clr.redGradientBottom
             case .breathwork:
                 return Clr.brightGreen
@@ -66,7 +66,7 @@ struct Garden: View {
         
         var image:Image {
             switch self {
-            case .curruntStreak:
+            case .currentstreak:
                 return Img.streak
             case .breathwork:
                 return Img.breathIcon
@@ -81,7 +81,7 @@ struct Garden: View {
         
         var title:String {
             switch self {
-            case .curruntStreak:
+            case .currentstreak:
                 return "Current Streak"
             case .breathwork:
                 return "Breathwork"
@@ -606,7 +606,7 @@ struct Garden: View {
     
     private func getStateValue(type:MonthlyState) -> String {
         switch type {
-        case .curruntStreak:
+        case .currentstreak:
             return self.currentStreak
         case .breathwork:
             return "\(gardenModel.numBreaths)"

@@ -33,6 +33,7 @@ struct HomeViewScroll: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 7) {
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
+                        .zIndex(1)
                     StartDayView()
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")

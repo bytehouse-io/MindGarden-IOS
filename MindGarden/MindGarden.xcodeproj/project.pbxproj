@@ -89,6 +89,7 @@
 		58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E419A82898E65C0042F492 /* CategoryModel.swift */; };
 		58E419AB2898E75E0042F492 /* Meditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AD26BF17A8002CF8C2 /* Meditation.swift */; };
 		58E419AC2898EBA70042F492 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA592CE267E8D98006558A2 /* Util.swift */; };
+		58E6570428C7440500546D11 /* FloatingMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E6570328C7440500546D11 /* FloatingMenu.swift */; };
 		58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E82A54283E870200E224D4 /* CurrentStreak.swift */; };
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
@@ -362,6 +363,7 @@
 		58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathworkPlay.swift; sourceTree = "<group>"; };
 		58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScroll.swift; sourceTree = "<group>"; };
 		58E419A82898E65C0042F492 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		58E6570328C7440500546D11 /* FloatingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingMenu.swift; sourceTree = "<group>"; };
 		58E82A54283E870200E224D4 /* CurrentStreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentStreak.swift; sourceTree = "<group>"; };
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
@@ -856,6 +858,7 @@
 				581EF8842874636A0058C7E4 /* MoodElaborate.swift */,
 				581EF8862875CC7E0058C7E4 /* MoodModel.swift */,
 				584401E828BA434700CD0432 /* WidgetPrompt.swift */,
+				58E6570328C7440500546D11 /* FloatingMenu.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1766,6 +1769,7 @@
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				589DCB0628732975005A8D7E /* StartDayView.swift in Sources */,
+				58E6570428C7440500546D11 /* FloatingMenu.swift in Sources */,
 				FEB85FEA26710C08008CDAA4 /* PreviewAllDevices.swift in Sources */,
 				FED212562741C554006E478E /* SnapCarousel.swift in Sources */,
 				58D6FB4A286CBDAB003EA6A7 /* PromptsView.swift in Sources */,
@@ -1958,7 +1962,6 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-
 				MARKETING_VERSION = 1.71;
 				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
