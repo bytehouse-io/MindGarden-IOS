@@ -288,28 +288,12 @@ class BonusViewModel: ObservableObject {
                 UserDefaults.standard.setValue(true, forKey: "referTip")
                 updateTips(tip: "Tip Referrals")
             }
-        } else if launchNum == 4 && !UserDefaults.standard.bool(forKey: "singleTile") && !UserDefaults.standard.bool(forKey: "onboarded") {
-            UserDefaults.standard.setValue(true, forKey: "singleTile")
-            updateTips(tip: "Tip Tile")
         } else if launchNum >= 2 && !UserDefaults.standard.bool(forKey: "remindersOn") {
             UserDefaults.standard.setValue(true, forKey: "remindersOn")
             updateTips(tip: "Tip Reminders")
-        } else if launchNum == 3 && !UserDefaults.standard.bool(forKey: "allMeditations") {
-            UserDefaults.standard.setValue(true, forKey: "allMeditations")
-            updateTips(tip: "Tip Meditations")
         } else if showWidgetTip && !UserDefaults.standard.bool(forKey: "widgetTip") {
             UserDefaults.standard.setValue(true, forKey: "widgetTip")
             updateTips(tip: "Tip Widget")
-        } else if launchNum == 30 {
-            var storySegs = UserDefaults.standard.array(forKey: "storySegments") as? [String]
-            storySegs?.removeAll(where: { str in
-                str.lowercased().contains("new users")
-            })
-            UserDefaults.standard.setValue(storySegs, forKey: "storySegments")
-            if let segs = storySegs {
-                storySegments = Set(segs)
-                StorylyManager.refresh()
-            }
         } else if UserDefaults.standard.bool(forKey: "day4") && !UserDefaults.standard.bool(forKey: "plusCoins") {
             UserDefaults.standard.setValue(true, forKey: "plusCoins")
             updateTips(tip: "Tip Potion Shop")

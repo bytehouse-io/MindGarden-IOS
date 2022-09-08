@@ -127,7 +127,7 @@
 		88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
 		88D39D9A28C3EBA0001C66F7 /* onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39D9928C3EBA0001C66F7 /* onboarding.json */; };
-		88D39D9D28C7B51F001C66F7 /* turtleNotification.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39D9C28C7B51F001C66F7 /* turtleNotification.json */; };
+		88D39DA128CA26F8001C66F7 /* turtleNotification.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39DA028CA26F8001C66F7 /* turtleNotification.json */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
 		88D4C5D927FA468800CBB956 /* yogi.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D4C5D827FA468700CBB956 /* yogi.json */; };
@@ -201,7 +201,6 @@
 		FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5160270A36FB000118E8 /* AnalyticServices.swift */; };
 		FE6B5163270B9E05000118E8 /* NewUpdateModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */; };
 		FE6FBFA827ADC00400F05A66 /* KeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FBFA727ADC00400F05A66 /* KeyboardModifier.swift */; };
-		FE7938592787691E00773B23 /* WidgetModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7938582787691D00773B23 /* WidgetModal.swift */; };
 		FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE962F112674651F002365A6 /* Color+Extensions.swift */; };
 		FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9815FD26E54DC200A4992D /* ExperienceScene.swift */; };
 		FE98160026E559E000A4992D /* NotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9815FF26E559E000A4992D /* NotificationScene.swift */; };
@@ -403,7 +402,7 @@
 		88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
 		88D39D9928C3EBA0001C66F7 /* onboarding.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = onboarding.json; path = ../../../../../../Downloads/onboarding.json; sourceTree = "<group>"; };
-		88D39D9C28C7B51F001C66F7 /* turtleNotification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotification.json; path = ../../../../../../Downloads/turtleNotification.json; sourceTree = "<group>"; };
+		88D39DA028CA26F8001C66F7 /* turtleNotification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotification.json; path = ../../../../../../Downloads/turtleNotification.json; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		88D4C5D627F6439A00CBB956 /* StorylyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorylyManager.swift; sourceTree = "<group>"; };
 		88D4C5D827FA468700CBB956 /* yogi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yogi.json; sourceTree = "<group>"; };
@@ -479,7 +478,6 @@
 		FE6B5160270A36FB000118E8 /* AnalyticServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticServices.swift; sourceTree = "<group>"; };
 		FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUpdateModal.swift; sourceTree = "<group>"; };
 		FE6FBFA727ADC00400F05A66 /* KeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardModifier.swift; sourceTree = "<group>"; };
-		FE7938582787691D00773B23 /* WidgetModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModal.swift; sourceTree = "<group>"; };
 		FE962F112674651F002365A6 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FE9815FD26E54DC200A4992D /* ExperienceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceScene.swift; sourceTree = "<group>"; };
 		FE9815FF26E559E000A4992D /* NotificationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScene.swift; sourceTree = "<group>"; };
@@ -785,7 +783,6 @@
 				FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */,
 				FEC3FFCA26F1219F009F58EE /* MailView.swift */,
 				FE39A0BB2772A038007A3E82 /* MindfulScene.swift */,
-				FE7938582787691D00773B23 /* WidgetModal.swift */,
 				584837142851B93900900C80 /* LeaveFeedback.swift */,
 				88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */,
 				88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */,
@@ -825,13 +822,13 @@
 				58D5C0F327FB675A00454937 /* background.json */,
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
 				882738D227E2D75D00F8D4D0 /* first_part.json */,
-				88D39D9C28C7B51F001C66F7 /* turtleNotification.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
 				88D39D9928C3EBA0001C66F7 /* onboarding.json */,
 				8884A993284A75E200B0B315 /* flame.json */,
 				8884A995284BDBBC00B0B315 /* flame 1.json */,
 				8884A997284BDBCA00B0B315 /* flame 2.json */,
 				88D4C5D827FA468700CBB956 /* yogi.json */,
+				88D39DA028CA26F8001C66F7 /* turtleNotification.json */,
 				8862586A27C4369D0093D18C /* check2.json */,
 				88D4C5DA27FA468C00CBB956 /* sloth.json */,
 				FED7437327A734E700435D0A /* coins.json */,
@@ -1424,7 +1421,6 @@
 				88F4BF89286B6ED6000C6E0B /* Fredoka-Light.ttf in Resources */,
 				88661F8B28528DA50052B9B0 /* firefox.png in Resources */,
 				FE9B408026A65A41000DF00C /* fire.mp3 in Resources */,
-				88D39D9D28C7B51F001C66F7 /* turtleNotification.json in Resources */,
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
 				589DCB082873401B005A8D7E /* turtle.json in Resources */,
@@ -1440,6 +1436,7 @@
 				88D4C5DB27FA468C00CBB956 /* sloth.json in Resources */,
 				8884A998284BDBCA00B0B315 /* flame 2.json in Resources */,
 				58C8BE322804AACA00075FD2 /* plantUnlock.mp3 in Resources */,
+				88D39DA128CA26F8001C66F7 /* turtleNotification.json in Resources */,
 				58266E2728798E30008594E0 /* party.json in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
 				88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */,
@@ -1787,7 +1784,6 @@
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
-				FE7938592787691E00773B23 /* WidgetModal.swift in Sources */,
 				5838E9E828A2C9FF002B4AD0 /* StopableAnimation.swift in Sources */,
 				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,

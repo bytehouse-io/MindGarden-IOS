@@ -18,6 +18,7 @@ class ProfileViewModel: ObservableObject {
     @Published var totalMins: Int = 0
     @Published var totalSessions: Int = 0
     @Published var name: String = ""
+    @Published var showWidget: Bool = false
 
     init() {}
 

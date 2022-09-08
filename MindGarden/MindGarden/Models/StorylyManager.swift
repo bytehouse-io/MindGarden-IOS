@@ -11,7 +11,6 @@ import Firebase
 
 class StorylyManager: StorylyDelegate {
     static var shared = StorylyManager()
-    let db = Firestore.firestore()
 
        func storylyLoaded(_ storylyView: Storyly.StorylyView,
                           storyGroupList: [Storyly.StoryGroup],
@@ -55,8 +54,7 @@ class StorylyManager: StorylyDelegate {
        func storylyUserInteracted(_ storylyView: Storyly.StorylyView,
                                   storyGroup: Storyly.StoryGroup,
                                   story: Storyly.Story,
-                                  storyComponent: Storyly.StoryComponent) {
-       }
+                                  storyComponent: Storyly.StoryComponent) {}
 
        func storylyEvent(_ storylyView: Storyly.StorylyView,
                          event: Storyly.StorylyEvent,
@@ -65,21 +63,17 @@ class StorylyManager: StorylyDelegate {
                          storyComponent: Storyly.StoryComponent?) {
            if let story = story {
                if !story.seen {
+                    Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
                    let components = story.title.components(separatedBy: " ")
-                   Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
                    var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
                    var unique = Array(Set(storyArray ?? [""]))
-
                    if story.title.lowercased().contains("intro/day")  {
-                       Analytics.shared.log(event: .story_bijan_opened)
                        storyArray?.removeAll(where: { str in
                            str.lowercased().contains("intro/day")
                        })
                       storyArray =  updateComps(components: components, segs: storyArray)
                       unique = Array(Set(storyArray ?? [""]))
-                      saveToFirebase(unique: unique)
                    } else if story.title.lowercased() == "#4" || story.title.lowercased().contains("tip") {
-                       Analytics.shared.log(event: .story_tip_opened)
                        storyArray?.removeAll(where: { str in
                            str.lowercased().contains("tip")
                        })
@@ -89,7 +83,6 @@ class StorylyManager: StorylyDelegate {
                        let unique = Array(storySegments)
                        UserDefaults.standard.setValue(unique, forKey: "storySegments")
                        UserDefaults.standard.setValue(unique, forKey: "oldSegments")
-                       saveToFirebase(unique: unique)
                        return
                    } else if story.title.lowercased().contains("trees for the future") {
                        storyArray?.removeAll(where: { str in
@@ -97,7 +90,6 @@ class StorylyManager: StorylyDelegate {
                        })
 //                       storylyViewProgrammatic.dismiss(animated: true)
                        UserDefaults.standard.setValue(storyArray, forKey: "storySegments")
-                       saveToFirebase(unique: storyArray ?? [""])
                        return
                     }
                    unique = Array(Set(storyArray ?? [""]))
@@ -106,16 +98,16 @@ class StorylyManager: StorylyDelegate {
            }
        }
     
-    private func saveToFirebase(unique: [String]) {
+     static func saveToFirebase(unique: [String]) {
         if let email = Auth.auth().currentUser?.email {
             //Read Data from firebase, for syncing
-            self.db.collection(K.userPreferences).document(email).updateData([
+            Firestore.firestore().collection(K.userPreferences).document(email).updateData([
                 "storySegments": unique,
             ]) { (error) in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    print("Succesfully saved meditations")
+                    print("Succesfully saved stories")
                 }
             }
         }
@@ -139,36 +131,44 @@ class StorylyManager: StorylyDelegate {
             return formatter
         }()
         
-        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
-            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
-            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
-//                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
-                StorylyManager.updateSegments(segs: oldSegments)
-            }
-            return
-        }
+//        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
+//            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
+//            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+////                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
+//                StorylyManager.updateSegments(segs: oldSegments)
+//            }
+//            return
+//        }
 //
 //         start with today
-//        let cal = NSCalendar.current
-//        var date = cal.startOfDay(for: Date())
-//        var arrDates = [Date]()
-//        arrDates.append(Date())
-//        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
-//        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
-//        let userDate = UserDefaults.standard.string(forKey: "userDate")!
-
-        if (Date() - formatter.date(from: userDate)! >= 86400 && Date() - formatter.date(from: userDate)! <= 172800) {
+        let cal = NSCalendar.current
+        var date = cal.startOfDay(for: Date())
+        var arrDates = [Date]()
+        arrDates.append(Date())
+        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
+        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
+        let userDate = UserDefaults.standard.string(forKey: "userDate")!
+        
+        let lastOpenedDate = formatter.date(from: userDate)!.setTime(hour: 00, min: 00, sec: 00)
+        let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
+        let interval = currentDate.interval(ofComponent: .day, fromDate: lastOpenedDate ?? Date())
+        
+        if (interval >= 1 && interval < 2) {  // update streak number and date
             UserDefaults.standard.setValue(Date(), forKey: "userDate")
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
                 UserDefaults.standard.setValue(newSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: newSegments)
+                StorylyManager.saveToFirebase(unique: newSegments)
             }
-        } else if  Date() - formatter.date(from: userDate)! > 172800 {
+            
+        } else if interval >= 2 { //broke streak
             UserDefaults.standard.setValue(Date(), forKey: "userDate")
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
                 UserDefaults.standard.setValue(newSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: newSegments)
+                StorylyManager.saveToFirebase(unique: newSegments)
             }
+            
         } else {
             if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
 //                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")

@@ -8,45 +8,45 @@
 import SwiftUI
 
 struct WidgetPrompt: View {
-    
+    @ObservedObject var profileModel: ProfileViewModel
     @State private var showNext = false
     @State private var currentStep = 0
     @State private var playAnim = false
+    
     var body: some View {
         GeometryReader { geomatry in
             ZStack(alignment:.bottom) {
-                Color.black.opacity(0.5)
+                Color.clear.opacity(0.5)
                 VStack {
                     Spacer()
-                        .frame(height: 10)
-                    
+                        .frame(height: 10)                    
                     if showNext {
                         NextButtonView
                     } else {
                         
-                        Text("MindGarden")
-                            .font(Font.fredoka(.bold, size: 20))
+                        Text("New MindGarden Widgets!")
+                            .font(Font.fredoka(.bold, size: 28))
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
                         
-                        Text("Add MindGarden widget to your home screen")
-                            .font(Font.fredoka(.medium, size: 16))
+                        Text("Stay motivated. Add your garden to your home screen")
+                            .font(Font.fredoka(.medium, size: 20))
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
-                            .padding()
-//
-//                        Img.widgetPrompt
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(height: geomatry.size.height*0.4)
-//                            .cornerRadius(20).padding(.bottom, 20)
+                            .frame(width:UIScreen.screenWidth*0.8)
+                            .padding([.horizontal, .bottom])
+                        Img.widgetPrompt
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: geomatry.size.height*0.4)
+                            .cornerRadius(20).padding(.bottom, 20)
                         AddWidgetView
                     }
                     
                     Spacer()
                         .frame(height:20)
                 }
-                .frame(width: geomatry.size.width, height: geomatry.size.height*0.75)
+                .frame(width: geomatry.size.width, height: geomatry.size.height*0.8)
                 .background(Clr.darkWhite)
                 .cornerRadius(20, corners:[.topLeft,.topRight])
                 
@@ -80,20 +80,18 @@ struct WidgetPrompt: View {
             }
             .frame(width:UIScreen.screenWidth*0.8, height: 40)
             .buttonStyle(NeumorphicPress())
+            .padding(.top)
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 noThanksTap()
             } label: {
-                Rectangle()
-                    .fill(Clr.yellow)
-                    .overlay(
-                        Text("No Thanks")
-                            .foregroundColor(Clr.darkgreen)
-                            .font(Font.fredoka(.bold, size: 20))
-                    ).addBorder(Color.black, width: 1.5, cornerRadius: 20)
+                Text("No Thanks")
+                    .font(Font.fredoka(.bold, size: 20))
+                    .foregroundColor(Clr.darkGray)
             }
-            .frame(width:UIScreen.screenWidth*0.8, height: 40)
             .buttonStyle(NeumorphicPress())
+            .padding()
+            .offset(y: 10)
             Spacer()
                 .frame(height:20)
         }
@@ -116,14 +114,14 @@ struct WidgetPrompt: View {
                         ForEach(0...3, id: \.self) {index in
                             ZStack {
                                 Circle()
-                                    .fill(Clr.darkgreen)
+                                    .fill(currentStep == index ? Clr.brightGreen : Clr.darkGray)
                                     .frame(width: 40, height: 40)
                                 Text("\(index + 1)")
                                     .foregroundColor(.white)
                                     .font(Font.fredoka(.bold, size: 20))
                             }.scaleEffect(currentStep == index ? 1.2 : 1.0)
                             if index != 3 {
-                            Spacer()
+                                Spacer()
                             }
                         }
                     }
@@ -133,22 +131,24 @@ struct WidgetPrompt: View {
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     withAnimation {
-                        currentStep+=1
-                        if currentStep == 4 {
+                        if currentStep == 3 {
                             finishAllSteps()
+                        } else {
+                            currentStep+=1
                         }
                     }
                 } label: {
                     Rectangle()
                         .fill(Clr.yellow)
                         .overlay(
-                            Text("Next")
+                            Text(currentStep == 3 ? "Done" : "Next")
                                 .foregroundColor(Clr.darkgreen)
                                 .font(Font.fredoka(.bold, size: 20))
                         ).addBorder(Color.black, width: 1.5, cornerRadius: 20)
                 }
                 .frame(width:UIScreen.screenWidth*0.8, height: 40)
                 .buttonStyle(NeumorphicPress())
+          
                 Spacer()
                     .frame(height:40)
             }
@@ -157,20 +157,28 @@ struct WidgetPrompt: View {
     private func getImage()->Image {
         switch currentStep {
         case 0 :
-            return Img.sleepingSloth
+            return Img.widgetStep1
         case 1 :
-            return Img.sleepingSloth
+            return Img.widgetStep2
         case 2 :
-            return Img.sleepingSloth
+            return Img.widgetStep3
         default :
-            return Img.sleepingSloth
+            return Img.widgetStep4
         }
     }
     
-    private func noThanksTap(){
-        //TODO: no thanks button tap event
+     func noThanksTap(){
+         Analytics.shared.log(event: .widget_tapped_no_thanks)
+        UserDefaults.standard.setValue(true, forKey: "showWidget")
+        withAnimation {
+            profileModel.showWidget = false
+        }
     }
-    private func finishAllSteps(){
-        //TODO: finish All Steps
+     func finishAllSteps(){
+         Analytics.shared.log(event: .widget_tapped_finished)
+         UserDefaults.standard.setValue(true, forKey: "showWidget")
+         withAnimation {
+             profileModel.showWidget = false
+         }
     }
 }

@@ -238,6 +238,7 @@ public enum Img {
   public static let six = Image("six")
   public static let theta = Image("theta")
   public static let investMg = Image("investMg")
+  public static let journeyBackground = Image("journeyBackground")
   public static let juiceBoxes = Image("juiceBoxes")
   public static let kidStudying = Image("kidStudying")
   public static let kiwi = Image("kiwi")

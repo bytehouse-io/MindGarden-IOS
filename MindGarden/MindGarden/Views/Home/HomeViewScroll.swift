@@ -30,8 +30,20 @@ struct HomeViewScroll: View {
     var body: some View {
         ZStack(alignment: .top) {
             //MARK: - scroll view
+       
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 7) {
+                    HStack {
+                        Img.topBranch
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: UIScreen.screenWidth * 0.6)
+                            .padding(.leading, -20)
+                            .offset(x: -20, y: -60)
+                        Spacer()
+                    }
+                    VStack {
+ 
                     HStack(spacing: 0) {
                         HStack {
                             FloatingMenu(showModal:$showModal, activeSheet: $activeSheet, totalBonuses:$totalBonuses)
@@ -66,8 +78,9 @@ struct HomeViewScroll: View {
                             .foregroundColor(.gray)
                     }
                     .frame(width: width * 0.8, height: height * 0.06)
-                    .padding(30)
-            }.padding(.bottom, height * 0.1)
+                    .padding([.vertical, .top], 30)
+                    }.offset(y: -height * 0.125)
+            }.padding(.bottom)
             }.frame(height: height + (K.isSmall() ? 125 : 0))
         }.onAppear {
         }

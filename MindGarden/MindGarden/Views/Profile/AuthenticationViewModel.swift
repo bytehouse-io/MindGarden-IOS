@@ -414,6 +414,7 @@ extension AuthenticationViewModel {
                 } else {
                     getData()
                     UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+
                 }
                 UserDefaults.standard.setValue("432hz", forKey: "sound")
             }
@@ -564,7 +565,7 @@ extension AuthenticationViewModel {
 
     func getData() {
         UserDefaults.standard.setValue(true, forKey: "day7")
-       
+        UserDefaults.standard.setValue(true, forKey: "showWidget")
         UserDefaults.standard.setValue(true, forKey: "signedIn")
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
@@ -591,7 +592,9 @@ extension AuthenticationViewModel {
                         UserDefaults.standard.setValue(experience, forKey: "experience")
                     }
                     
-                    if let storySegs = document["storySegments"] {
+                    if let storySegs = document["storySegments"] as? [String] {
+                        storySegments = Set(storySegs)
+                        StorylyManager.refresh()
                         UserDefaults.standard.setValue(storySegs, forKey: "oldSegments")
                         UserDefaults.standard.setValue(storySegs, forKey: "storySegments")
                     }

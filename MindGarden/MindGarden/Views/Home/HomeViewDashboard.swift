@@ -23,7 +23,6 @@ struct HomeViewDashboard: View {
     @State var sheetTitle: String = ""
     let height = 20.0
     var body: some View {
-        let width = UIScreen.screenWidth
         ZStack {
             VStack {
 
@@ -37,50 +36,10 @@ struct HomeViewDashboard: View {
                             .foregroundColor(Clr.black2)
                     }
                     Spacer()
-                    HStack {
-                        if !userModel.completedMeditations.isEmpty {
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .home_tapped_recents)
-                                withAnimation {
-                                    sheetTitle = "Your Recents"
-                                    sheetType = userModel.completedMeditations.compactMap({ Int($0)}).reversed().unique()
-                                    showRecFavs = true
-                                }
-                            } label: {
-                                Image(systemName: "clock.arrow.circlepath")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 25)
-                                    .foregroundColor(Clr.darkGray)
-                            }
-                        }
-                        if !medModel.favoritedMeditations.isEmpty {
-                            Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .home_tapped_favorites)
-                                withAnimation {
-                                    sheetTitle = "Your Favorites"
-                                    sheetType = medModel.favoritedMeditations.reversed()
-                                    showRecFavs = true
-                                }
-                            } label: {
-                                Image(systemName: "heart")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 25)
-                                    .foregroundColor(Clr.darkGray)
-                            }
-                        }
-                    }.padding(.trailing, 32)
-                     .offset(y: -16)
                 }
                 .padding(.top,20)
             }
             .padding(.horizontal, 24)
-            .padding(.top)
-        }.sheet(isPresented: $showRecFavs) {
-            ShowRecsScene(meditations: sheetType, title: $sheetTitle)
         }
     }
 }

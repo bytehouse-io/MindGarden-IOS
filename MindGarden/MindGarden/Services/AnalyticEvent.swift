@@ -375,6 +375,8 @@ enum AnalyticEvent {
     case story_tip_opened
     
     case no_thanks_50
+    case widget_tapped_no_thanks
+    case widget_tapped_finished
 }
 
 extension AnalyticEvent {
@@ -747,6 +749,10 @@ extension AnalyticEvent {
             
         case .update_triggered_auth: return "update_triggered_auth"
         case .show_onboarding_auth: return "show_onboarding_auth"
+            
+        //MARK: - widget
+        case .widget_tapped_no_thanks: return "widget_tapped_no_thanks"
+        case .widget_tapped_finished: return "widget_tapped_finished"
 
         }
     }
