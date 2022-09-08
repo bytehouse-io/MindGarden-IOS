@@ -29,7 +29,7 @@ struct StartDayView: View {
                     .font(Font.fredoka(.bold, size: 20))
                     .minimumScaleFactor(0.05)
                     .lineLimit(1)
-                    .padding(.top,5)
+                    .padding(.bottom, 15)
                 Spacer()
             }
             

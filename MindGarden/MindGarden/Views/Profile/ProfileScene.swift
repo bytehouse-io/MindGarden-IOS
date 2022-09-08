@@ -272,7 +272,10 @@ struct ProfileScene: View {
                                                             Divider()
                                                             Row(title: "Add Widget", img: Image(systemName: "gearshape.fill"), action: {
                                                                 Analytics.shared.log(event: .profile_tapped_add_widget)
-                                                                profileModel.showWidget = true
+                                                                withAnimation {
+                                                                    presentationMode.wrappedValue.dismiss()
+                                                                    profileModel.showWidget = true
+                                                                }
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             if let _ = Auth.auth().currentUser?.email {

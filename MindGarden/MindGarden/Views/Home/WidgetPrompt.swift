@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WidgetPrompt: View {
-    @EnvironmentObject var profileModel: ProfileViewModel
+    @ObservedObject var profileModel: ProfileViewModel
     @State private var showNext = false
     @State private var currentStep = 0
     @State private var playAnim = false
@@ -16,11 +16,10 @@ struct WidgetPrompt: View {
     var body: some View {
         GeometryReader { geomatry in
             ZStack(alignment:.bottom) {
-                Color.black.opacity(0.5)
+                Color.clear.opacity(0.5)
                 VStack {
                     Spacer()
-                        .frame(height: 10)
-                    
+                        .frame(height: 10)                    
                     if showNext {
                         NextButtonView
                     } else {
@@ -132,16 +131,17 @@ struct WidgetPrompt: View {
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     withAnimation {
-                        currentStep+=1
-                        if currentStep == 4 {
+                        if currentStep == 3 {
                             finishAllSteps()
+                        } else {
+                            currentStep+=1
                         }
                     }
                 } label: {
                     Rectangle()
                         .fill(Clr.yellow)
                         .overlay(
-                            Text(currentStep == 4 ? "Done" : "Next")
+                            Text(currentStep == 3 ? "Done" : "Next")
                                 .foregroundColor(Clr.darkgreen)
                                 .font(Font.fredoka(.bold, size: 20))
                         ).addBorder(Color.black, width: 1.5, cornerRadius: 20)
