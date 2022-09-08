@@ -46,7 +46,6 @@ struct ProfileScene: View {
     @State private var tappedRate = false
     @State private var showSpinner = false
     @State private var showMindful = false
-    @State private var showWidget = false
     @State private var deleteAccount = false
     @Environment(\.sizeCategory) var sizeCategory
     @Environment(\.presentationMode) var presentationMode
@@ -273,7 +272,7 @@ struct ProfileScene: View {
                                                             Divider()
                                                             Row(title: "Add Widget", img: Image(systemName: "gearshape.fill"), action: {
                                                                 Analytics.shared.log(event: .profile_tapped_add_widget)
-                                                                showWidget = true
+                                                                profileModel.showWidget = true
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             if let _ = Auth.auth().currentUser?.email {
@@ -440,15 +439,7 @@ struct ProfileScene: View {
                                 }
                                     .frame(width: width, height: height)
                                     .background(Clr.darkWhite)
-                                if showWidget {
-                                    Color.black
-                                        .opacity(0.3)
-                                        .edgesIgnoringSafeArea(.all)
-                                    Spacer()
-                                }
-                                WidgetModal(shown: $showWidget)
-                                    .offset(y: showWidget ? 0 : g.size.height)
-                                    .animation(.default, value: showWidget)
+ 
                             }
                         }
                     .onAppear {

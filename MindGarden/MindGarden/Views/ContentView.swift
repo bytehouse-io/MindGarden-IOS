@@ -36,6 +36,7 @@ struct ContentView: View {
     @State private var showSplash = true
     @State private var goShinny = false
     @State private var progressWidth = 0.0
+
     
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -330,7 +331,11 @@ struct ContentView: View {
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(32)
-                                    .offset(y: addMood ?( geometry.size.height/(K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)                            
+                                    .offset(y: addMood ?( geometry.size.height/(K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)
+                                WidgetPrompt()
+                                    .offset(y: profileModel.showWidget ? 0 : geometry.size.height + 75)
+                                    .animation(.default, value: profileModel.showWidget)
+                                    .environmentObject(profileModel)
                                 BottomSheet(
                                     isOpen: $userModel.showCoinAnimation,
                                     maxHeight: geometry.size.height * (K.isSmall() ? 0.75 : 0.6),
@@ -385,6 +390,10 @@ struct ContentView: View {
         }
 
         .onAppear {
+            if !UserDefaults.standard.bool(forKey: "showWidget") {
+                profileModel.showWidget = true
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
                 withAnimation(.linear(duration: 0.5)) {
                     showSplash.toggle()

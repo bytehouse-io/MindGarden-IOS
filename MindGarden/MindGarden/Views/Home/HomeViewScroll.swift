@@ -78,8 +78,8 @@ struct HomeViewScroll: View {
                             .foregroundColor(.gray)
                     }
                     .frame(width: width * 0.8, height: height * 0.06)
-                    .padding(30)
-                    }.offset(y: -height * 0.05)
+                    .padding([.vertical, .top], 30)
+                    }.offset(y: -height * 0.125)
             }.padding(.bottom)
             }.frame(height: height + (K.isSmall() ? 125 : 0))
         }.onAppear {

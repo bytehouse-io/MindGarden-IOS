@@ -170,6 +170,6 @@ struct MiddleModal: View {
 
 struct MiddleModalPreview: PreviewProvider {
     static var previews: some View {
-        WidgetModal(shown: .constant(true))
+        MiddleModal(shown: .constant(true))
     }
 }

@@ -201,7 +201,6 @@
 		FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5160270A36FB000118E8 /* AnalyticServices.swift */; };
 		FE6B5163270B9E05000118E8 /* NewUpdateModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */; };
 		FE6FBFA827ADC00400F05A66 /* KeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FBFA727ADC00400F05A66 /* KeyboardModifier.swift */; };
-		FE7938592787691E00773B23 /* WidgetModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7938582787691D00773B23 /* WidgetModal.swift */; };
 		FE962F122674651F002365A6 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE962F112674651F002365A6 /* Color+Extensions.swift */; };
 		FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9815FD26E54DC200A4992D /* ExperienceScene.swift */; };
 		FE98160026E559E000A4992D /* NotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE9815FF26E559E000A4992D /* NotificationScene.swift */; };
@@ -479,7 +478,6 @@
 		FE6B5160270A36FB000118E8 /* AnalyticServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticServices.swift; sourceTree = "<group>"; };
 		FE6B5162270B9E03000118E8 /* NewUpdateModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUpdateModal.swift; sourceTree = "<group>"; };
 		FE6FBFA727ADC00400F05A66 /* KeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardModifier.swift; sourceTree = "<group>"; };
-		FE7938582787691D00773B23 /* WidgetModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModal.swift; sourceTree = "<group>"; };
 		FE962F112674651F002365A6 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FE9815FD26E54DC200A4992D /* ExperienceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceScene.swift; sourceTree = "<group>"; };
 		FE9815FF26E559E000A4992D /* NotificationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScene.swift; sourceTree = "<group>"; };
@@ -785,7 +783,6 @@
 				FEBF22CB26DECA93002572E2 /* ProfileViewModel.swift */,
 				FEC3FFCA26F1219F009F58EE /* MailView.swift */,
 				FE39A0BB2772A038007A3E82 /* MindfulScene.swift */,
-				FE7938582787691D00773B23 /* WidgetModal.swift */,
 				584837142851B93900900C80 /* LeaveFeedback.swift */,
 				88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */,
 				88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */,
@@ -1787,7 +1784,6 @@
 				FEAA837826927B9400E4C62F /* AuthenticationViewModel.swift in Sources */,
 				FE17B8AE26BF17A8002CF8C2 /* Meditation.swift in Sources */,
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
-				FE7938592787691E00773B23 /* WidgetModal.swift in Sources */,
 				5838E9E828A2C9FF002B4AD0 /* StopableAnimation.swift in Sources */,
 				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,

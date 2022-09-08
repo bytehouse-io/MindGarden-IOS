@@ -9,7 +9,7 @@ import SwiftUI
 
 
 enum MenuType: String, CaseIterable {
-    case profile,bonus,favorites,recent,plantselect
+    case bonus, profile,recent,favorites, plantselect
     var id: String { return self.rawValue }
     
     var image:Image {
@@ -45,6 +45,7 @@ enum MenuType: String, CaseIterable {
 
 struct FloatingMenu: View {
     @EnvironmentObject var userModel: UserViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
     @Binding var showModal : Bool
     @Binding var activeSheet: Sheet?
     @Binding var totalBonuses : Int
@@ -54,6 +55,10 @@ struct FloatingMenu: View {
     @State var scale = 0.0
     @State var offset = 0
     @State var rotation = 0.0
+    @State var sheetTitle: String = ""
+    @State var showRecFavs = false
+    @State var sheetType: [Int] = []
+
     var body: some View {
         ZStack(alignment:.top) {
             Button {
@@ -66,10 +71,10 @@ struct FloatingMenu: View {
                     Image(systemName: "xmark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 20, height:20)
+                        .frame(width: 15, height:15)
                         .foregroundColor(.white)
                         .padding(12)
-                        .background(Capsule().fill(Clr.redGradientBottom))
+                        .background(Capsule().fill(Clr.redGradientBottom).opacity(0.85))
                         .overlay(Capsule().stroke(.black, lineWidth: 1))
                 } else {
                     Group {
@@ -135,6 +140,9 @@ struct FloatingMenu: View {
                 .frame(width: UIScreen.screenWidth*2.5, height: UIScreen.screenHeight*3, alignment: .center)
         )
         .overlay(menuItem)
+        .sheet(isPresented: $showRecFavs) {
+            ShowRecsScene(meditations: sheetType, title: $sheetTitle)
+        }
         
     }
     var badgeIcon: some View {
@@ -159,8 +167,9 @@ struct FloatingMenu: View {
     }
     
     var menuItem: some View {
-        VStack(alignment:.leading,spacing:15) {
+        VStack(alignment:.leading, spacing:20) {
             ForEach(MenuType.allCases, id: \.id) { state in
+                if (state != .favorites || (state == .favorites && !medModel.favoritedMeditations.isEmpty)) && (state != .recent || (state == .recent && !userModel.completedMeditations.isEmpty)) {
                 Button {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     DispatchQueue.main.async {
@@ -185,7 +194,7 @@ struct FloatingMenu: View {
                                     .padding(.trailing,10)
                                 Text(getTitle(type:state))
                                     .font(Font.fredoka(.medium, size: 16))
-                                    .foregroundColor(Clr.black2)
+                                    .foregroundColor(Clr.redGradientBottom)
                                     .padding([.trailing,.vertical],10)
                             }
                             .background(
@@ -210,7 +219,7 @@ struct FloatingMenu: View {
                                     }
                                 }
                                 .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(Clr.black2)
+                                .foregroundColor( Clr.black2)
                                 .padding([.trailing,.vertical],10)
                             }
                             .background(
@@ -226,9 +235,10 @@ struct FloatingMenu: View {
                     
                 }
                 .buttonStyle(ScalePress())
+                }
             }
         }.frame(width: 300, alignment: .leading)
-            .offset(x:100,y:140)
+            .offset(x:100,y:160)
 //            .opacity(isOpen ? 1.0 : 0.0)
     }
     
@@ -249,10 +259,21 @@ struct FloatingMenu: View {
                 }
             }
         case .favorites:
-            //TODO: implement faourites tap event
+            Analytics.shared.log(event: .home_tapped_favorites)
+            withAnimation {
+                sheetTitle = "Your Favorites"
+                sheetType = medModel.favoritedMeditations.reversed()
+                showRecFavs = true
+            }
+  
             break
         case .recent:
-            //TODO: implement recent tap event
+            Analytics.shared.log(event: .home_tapped_recents)
+            withAnimation {
+                sheetTitle = "Your Recents"
+                sheetType = userModel.completedMeditations.compactMap({ Int($0)}).reversed().unique()
+                showRecFavs = true
+            }
             break
         case .plantselect:
             Analytics.shared.log(event: .home_tapped_plant_select)

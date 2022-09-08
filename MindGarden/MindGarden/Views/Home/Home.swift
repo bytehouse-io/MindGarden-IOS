@@ -87,6 +87,7 @@ struct Home: View {
                     NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
+                
                 }
             }
      
