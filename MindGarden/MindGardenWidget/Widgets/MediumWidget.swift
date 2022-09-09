@@ -62,7 +62,7 @@ enum MediumType {
     var title: String {
         switch self {
         case .journel:
-            return "journal"
+            return "Journal"
         case .meditate:
             return "Meditate"
         case .logmood:
@@ -104,6 +104,7 @@ struct MediumWidgetRow: View {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color("darkWhite"))
                 .addBorder(Color.black, width: 1.5, cornerRadius: 20)
+            Link(destination: URL(string: "\(type.title)://io.bytehouse.mindgarden")!)  {
             HStack {
                 if let img = mediumEntry.getImage(type: type) as? Image {
                     img
@@ -152,6 +153,7 @@ struct MediumWidgetRow: View {
                     }
                 }.frame(maxWidth:.infinity, maxHeight: .infinity)
             }.padding(10)
+            }
         }
         .background(Color("darkWhite").cornerRadius(20).neoShadow())
         .padding(5)

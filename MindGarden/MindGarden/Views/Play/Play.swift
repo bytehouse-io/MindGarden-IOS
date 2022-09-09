@@ -780,6 +780,7 @@ struct NatureModal: View {
                         .neoShadow()
                         .animation(.default)
                         .padding(15)
+                        .offset(y: -10)
                     }.frame(width: g.size.width * 0.85, height: g.size.height * 0.7, alignment: .center)
                     .background(Clr.darkWhite)
                     .cornerRadius(32)

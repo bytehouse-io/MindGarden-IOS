@@ -203,7 +203,7 @@ class GardenViewModel: ObservableObject {
         }
         
     }
-    private func getAllDaysOfTheCurrentWeek() -> [Date] {
+    func getAllDaysOfTheCurrentWeek() -> [Date] {
         var calendar = Calendar.autoupdatingCurrent
         calendar.firstWeekday = 1
         let today = calendar.startOfDay(for: Date())
@@ -219,7 +219,7 @@ class GardenViewModel: ObservableObject {
     }
     
     
-    private func getAllGratitude(weekDays:[Date]) {
+    func getAllGratitude(weekDays:[Date]) {
         for i in 0..<weekDays.count {
             let day = weekDays[i]
             if let gratitudes = grid[day.get(.year)]?[day.get(.month)]?[day.get(.day)]?[K.defaults.journals]  as? [[String: String]] {

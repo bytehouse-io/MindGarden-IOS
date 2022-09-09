@@ -25,13 +25,14 @@ struct WidgetPrompt: View {
                     } else {
                         
                         Text("New MindGarden Widgets!")
-                            .font(Font.fredoka(.bold, size: 28))
+                            .font(Font.fredoka(.bold, size: K.isSmall() ? 20 : 28))
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
                         
                         Text("Stay motivated. Add your garden to your home screen")
-                            .font(Font.fredoka(.medium, size: 20))
+                            .font(Font.fredoka(.medium, size: K.isSmall() ? 16 : 20))
                             .foregroundColor(Clr.black2)
+                            .lineLimit(2)
                             .multilineTextAlignment(.center)
                             .frame(width:UIScreen.screenWidth*0.8)
                             .padding([.horizontal, .bottom])
