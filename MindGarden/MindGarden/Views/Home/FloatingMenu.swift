@@ -71,7 +71,7 @@ struct FloatingMenu: View {
                     Image(systemName: "xmark")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 15, height:15)
+                        .frame(width: 20, height:20)
                         .foregroundColor(.white)
                         .padding(12)
                         .background(Capsule().fill(Clr.redGradientBottom).opacity(0.85))

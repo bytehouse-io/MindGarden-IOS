@@ -196,6 +196,7 @@ struct JournalView: View, KeyboardReadable {
                                     userModel.buyPlant(unlockedStrawberry: true)
                                     userModel.triggerAnimation = true
                                 }
+                                gardenModel.isGratitudeDone = true
                                 UserDefaults(suiteName: K.widgetDefault)?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     withAnimation {
