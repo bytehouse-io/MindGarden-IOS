@@ -14,10 +14,10 @@ struct StartDayView: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-
-
+    
+    
     @State private var playEntryAnimation = false
-
+    
     var body: some View {
         let width = UIScreen.screenWidth
         let height = UIScreen.screenHeight
@@ -118,22 +118,35 @@ struct StartDayView: View {
                     Spacer()
                         .frame(height:30)
                 }.padding(.vertical,60)
-                .neoShadow()
+                    .neoShadow()
                 VStack(spacing:30) {
-                Button {
-                    
-                } label: {
+                    Button {
+                        
+                    } label: {
                         ZStack {
                             Img.whiteClouds
                                 .resizable()
-                                .frame(height:170)
                                 .aspectRatio(contentMode: .fill)
+                                .frame(height:150)
                                 .opacity(0.95)
-                            if !gardenModel.isMoodDone {
-                                SelectMood
-                            } else {
-                                DailyMood
-                            }
+                            VStack(alignment:.leading,spacing:0) {
+                                VStack(alignment:.leading) {
+                                    Text("Mood Check")
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.fredoka(.bold, size: 20))
+                                        .padding([.top],16)
+                                    Text("How are you feeling?")
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.fredoka(.semiBold, size: 12))
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.05)
+                                }.padding(.leading,10)
+                                if !gardenModel.isMoodDone {
+                                    SelectMood.frame(height: 85)
+                                } else {
+                                    DailyMood
+                                }
+                            }.padding(.horizontal)
                         }
                         .frame(width: UIScreen.screenWidth * 0.775)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
@@ -149,16 +162,15 @@ struct StartDayView: View {
                                 NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
                             }
                         }
-                }.buttonStyle(ScalePress())
+                    }.buttonStyle(ScalePress())
                     Button {
-
+                        
                     } label: {
                         ZStack {
                             Img.journelBG
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                             VStack(spacing:0) {
-                                Spacer()
                                 HStack(spacing:0) {
                                     VStack(alignment:.leading) {
                                         Text("Journal")
@@ -306,7 +318,7 @@ struct StartDayView: View {
                             .animation(.spring().delay(0.275), value: playEntryAnimation)
                             .opacity(gardenModel.isMeditationDone ? 0.5 : 1)
                     }.buttonStyle(ScalePress() )
-                  
+                    
                     ZStack {
                         VStack(spacing:5) {
                             HStack(spacing: 15) {
@@ -323,27 +335,27 @@ struct StartDayView: View {
                                         .opacity(playEntryAnimation ? 1 : 0)
                                         .animation(.spring().delay(0.3), value: playEntryAnimation)
                                 }.buttonStyle(ScalePress())
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        Analytics.shared.log(event: .home_tapped_featured_meditation)
-                                        withAnimation {
-                                            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
-                                                viewRouter.currentPage = .pricing
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    Analytics.shared.log(event: .home_tapped_featured_meditation)
+                                    withAnimation {
+                                        if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
+                                            viewRouter.currentPage = .pricing
+                                        } else {
+                                            medModel.selectedMeditation = medModel.featuredMeditation
+                                            if medModel.featuredMeditation?.type == .course {
+                                                viewRouter.currentPage = .middle
                                             } else {
-                                                medModel.selectedMeditation = medModel.featuredMeditation
-                                                if medModel.featuredMeditation?.type == .course {
-                                                    viewRouter.currentPage = .middle
-                                                } else {
-                                                    viewRouter.currentPage = .play
-                                                }
+                                                viewRouter.currentPage = .play
                                             }
                                         }
-                                    } label: {
-                                        HomeSquare(width: width - 50, height: height * 0.7, meditation: medModel.featuredMeditation ?? Meditation.allMeditations[0], breathwork: nil)
-                                            .offset(y: playEntryAnimation ? 0 : 100)
-                                            .opacity(playEntryAnimation ? 1 : 0)
-                                            .animation(.spring().delay(0.3), value: playEntryAnimation)
-                                    }.buttonStyle(ScalePress())
+                                    }
+                                } label: {
+                                    HomeSquare(width: width - 50, height: height * 0.7, meditation: medModel.featuredMeditation ?? Meditation.allMeditations[0], breathwork: nil)
+                                        .offset(y: playEntryAnimation ? 0 : 100)
+                                        .opacity(playEntryAnimation ? 1 : 0)
+                                        .animation(.spring().delay(0.3), value: playEntryAnimation)
+                                }.buttonStyle(ScalePress())
                             }.opacity(gardenModel.isMeditationDone ? 0.5 : 1)
                             HStack {
                                 Spacer()
@@ -395,80 +407,67 @@ struct StartDayView: View {
             playEntryAnimation = true
         }
     }
-
+    
     var SelectMood: some View {
         VStack {
-            Spacer()
-            VStack {
-                Text("How are you feeling?")
-                    .foregroundColor(Clr.brightGreen)
-                    .font(Font.fredoka(.semiBold, size: 16))
-                    .offset(y: 8)
-                HStack(alignment:.top) {
-                    ForEach(Mood.allMoodCases(), id: \.id) { item in
-                        Button {
-                            Analytics.shared.log(event: .home_selected_mood)
-                            switch item {
-                            case .angry: Analytics.shared.log(event: .mood_tapped_angry)
-                            case .sad: Analytics.shared.log(event: .mood_tapped_sad)
-                            case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
-                            case .okay: Analytics.shared.log(event: .mood_tapped_okay)
-                            case .happy: Analytics.shared.log(event: .mood_tapped_happy)
-                            case .bad: Analytics.shared.log(event: .mood_tapped_bad)
-                            case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
-                            case .good: Analytics.shared.log(event: .mood_tapped_good)
-                            case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
-                            case .none: Analytics.shared.log(event: .mood_tapped_x)
-                            }
-                            withAnimation {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                userModel.selectedMood = item
-                                viewRouter.currentPage = .mood
-                            }
-                        } label: {
-                            VStack(spacing:0) {
-                                Mood.getMoodImage(mood: item)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(maxWidth: 70)
-                                    .padding(.horizontal, 4)
-                                    .padding(.bottom, 8)
-                            }
+            //                Text("How are you feeling?")
+            //                    .foregroundColor(Clr.brightGreen)
+            //                    .font(Font.fredoka(.semiBold, size: 16))
+            //                    .offset(y: 8)
+            HStack(alignment:.top) {
+                ForEach(Mood.allMoodCases(), id: \.id) { item in
+                    Button {
+                        Analytics.shared.log(event: .home_selected_mood)
+                        switch item {
+                        case .angry: Analytics.shared.log(event: .mood_tapped_angry)
+                        case .sad: Analytics.shared.log(event: .mood_tapped_sad)
+                        case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
+                        case .okay: Analytics.shared.log(event: .mood_tapped_okay)
+                        case .happy: Analytics.shared.log(event: .mood_tapped_happy)
+                        case .bad: Analytics.shared.log(event: .mood_tapped_bad)
+                        case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
+                        case .good: Analytics.shared.log(event: .mood_tapped_good)
+                        case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
+                        case .none: Analytics.shared.log(event: .mood_tapped_x)
+                        }
+                        withAnimation {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            userModel.selectedMood = item
+                            viewRouter.currentPage = .mood
+                        }
+                    } label: {
+                        VStack(spacing:0) {
+                            Mood.getMoodImage(mood: item)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: 85)
                         }
                     }
-                }.padding(10)
-            }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
+                }
+            }.padding(10)
         }
     }
     
     var DailyMood: some View {
         VStack {
-            Spacer()
-            VStack {
-//                Text("👍 Daily Mood Log Complete")
-//                    .foregroundColor(Clr.brightGreen)
-//                    .font(Font.fredoka(.semiBold, size: 16))
-//                    .offset(y: 8)
-                HStack(alignment:.top) {
-                    ForEach(gardenModel.dailyMoodList, id: \.id) { item in
-                        VStack(spacing:5) {
-                            Text(item.title)
-                                .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.semiBold, size: 12))
-                                .padding(.bottom, 4)
-                            VStack(spacing:0) {
-                                item.dailyMood
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                            }
+            HStack(alignment:.top) {
+                ForEach(gardenModel.dailyMoodList, id: \.id) { item in
+                    VStack(spacing:5) {
+                        Text(item.title)
+                            .foregroundColor(Clr.black2)
+                            .font(Font.fredoka(.semiBold, size: 12))
+                            .padding(.bottom, 4)
+                        VStack(spacing:0) {
+                            item.dailyMood
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
                         }
-                        .padding(.horizontal,2)
-                        .frame(maxWidth:.infinity)
                     }
-                }.padding(10)
+                    .padding(.horizontal,2)
+                    .frame(maxWidth:.infinity)
+                }
+            }.padding(10)
                 .padding(.vertical, 10)
-            }.background(Clr.darkWhite.addBorder(Color.black, width: 1.5, cornerRadius: 8))
-   
         }
     }
 }
@@ -485,7 +484,7 @@ struct HomeMeditationRow: View {
                 .padding(.vertical,10)
                 .addBorder(Color.black, width: 1.5, cornerRadius: 14)
                 .background(Clr.darkWhite.cornerRadius(14).neoShadow())
-                
+            
             VStack(spacing:0) {
                 HStack {
                     Text(title)
