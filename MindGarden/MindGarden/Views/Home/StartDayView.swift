@@ -60,21 +60,6 @@ struct StartDayView: View {
                     .frame(maxHeight:.infinity)
                     .padding(.top, !gardenModel.isMoodDone  ? 12 : 0)
                     .padding(.bottom,!gardenModel.isMoodDone  ? 4 : 0)
-//                    Group {
-//                        if isDailyMood {
-//                            DottedLine()
-//                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
-//                                .fill(Clr.black2)
-//                                .opacity(0.5)
-//                                .offset(x:1)
-//                        } else {
-//                            Rectangle()
-//                                .fill(Clr.brightGreen)
-//                        }
-//                    }
-//                    .frame(width: 2)
-//                    .frame(maxHeight:.infinity)
-//                    .padding(.top,isDailyMood ? 2 : 0)
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -99,21 +84,30 @@ struct StartDayView: View {
                     .frame(maxHeight:.infinity)
                     .padding(.top,gardenModel.isGratitudeDone ? 0 : 12)
                     .padding(.bottom,gardenModel.isGratitudeDone ? 0 : 4)
-//                    Group {
-//                        if isGratitudeDone {
-//                            Rectangle()
-//                                .fill(Clr.brightGreen)
-//                        } else {
-//                             DottedLine()
-//                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
-//                                .fill(Clr.black2)
-//                                .opacity(0.5)
-//                                .offset(x:1)
-//                        }
-//                    }
-//                    .frame(width: 2)
-//                    .frame(maxHeight:.infinity)
-//                    .padding(.top,isGratitudeDone ? 0 : 2)
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(gardenModel.isMeditationDone ? Clr.brightGreen : Clr.darkWhite)
+                        .frame(width:24,height: 24)
+                        .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
+                        .zIndex(1)
+                    Group {
+                        if gardenModel.isMeditationDone {
+                            Rectangle()
+                                .fill(Clr.brightGreen)
+                                .frame(width: 4)
+                        } else {
+                            DottedLine()
+                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
+                                .fill(Clr.black2)
+                                .opacity(0.5)
+                                .offset(x:1)
+                                .frame(width: 2)
+                        }
+                    }
+                    .frame(maxHeight:.infinity)
+                    .padding(.top,gardenModel.isMeditationDone ? 0 : 12)
+                    .padding(.bottom,gardenModel.isMeditationDone ? 0 : 4)
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -244,6 +238,74 @@ struct StartDayView: View {
                             }
                             .opacity(gardenModel.isGratitudeDone ? 0.5 : 1)
                     }.buttonStyle(ScalePress() )
+                    
+                    Button {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        Analytics.shared.log(event: .home_tapped_featured_meditation)
+                        withAnimation {
+                            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
+                                viewRouter.currentPage = .pricing
+                            } else {
+                                medModel.selectedMeditation = medModel.featuredMeditation
+                                if medModel.featuredMeditation?.type == .course {
+                                    viewRouter.currentPage = .middle
+                                } else {
+                                    viewRouter.currentPage = .play
+                                }
+                            }
+                        }
+                    } label: {
+                        ZStack {
+                            Img.shortVideoBG
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                            VStack(spacing:0) {
+                                Spacer()
+                                HStack(spacing:0) {
+                                    VStack(alignment:.leading) {
+                                        if gardenModel.isMeditationDone {
+                                            Text("✅ Day 1")
+                                                .foregroundColor(Clr.black2)
+                                                .font(Font.fredoka(.bold, size: 20))
+                                                .padding([.top],16)
+                                        } else {
+                                            Text("Short Video")
+                                                .foregroundColor(Clr.black2)
+                                                .font(Font.fredoka(.bold, size: 20))
+                                                .padding([.top],16)
+                                        }
+                                        Text("Understanding \nMeditation")
+                                            .foregroundColor(Clr.black1)
+                                            .font(Font.fredoka(.semiBold, size: 12))
+                                            .lineLimit(2)
+                                            .minimumScaleFactor(0.05)
+                                    }
+                                    Spacer()
+                                }
+                                HStack {
+                                    Spacer()
+                                    ZStack {
+                                        Rectangle().fill(Clr.yellow)
+                                        HStack {
+                                            Text("📷 Watch")
+                                                .foregroundColor(Clr.black2)
+                                                .font(Font.fredoka(.semiBold, size: 14))
+                                        }
+                                    }.frame(width:100, height: 40)
+                                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                                }
+                                .opacity(gardenModel.isMeditationDone ? 0 : 1)
+                                .frame(height: 85)
+                            }
+                            .padding(.horizontal,25)
+                        }.frame(width: UIScreen.screenWidth * 0.775, height: 150)
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                            .padding(.horizontal, 12)
+                            .offset(y: playEntryAnimation ? 0 : 100)
+                            .opacity(playEntryAnimation ? 1 : 0)
+                            .animation(.spring().delay(0.275), value: playEntryAnimation)
+                            .opacity(gardenModel.isMeditationDone ? 0.5 : 1)
+                    }.buttonStyle(ScalePress() )
                   
                     ZStack {
                         VStack(spacing:5) {
@@ -319,6 +381,8 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
+            gardenModel.updateSelf()
+            gardenModel.getAllGratitude(weekDays: gardenModel.getAllDaysOfTheCurrentWeek())
             updateStartDay()
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("updateStart"))) { _ in
