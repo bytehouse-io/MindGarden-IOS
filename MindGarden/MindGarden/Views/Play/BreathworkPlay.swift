@@ -72,8 +72,10 @@ struct BreathworkPlay : View {
     
     var body: some View {
         ZStack(alignment:.top) {
-            if medModel.selectedBreath?.color == .sleep || !backgroundAnimationOn {
+            if medModel.selectedBreath?.color == .sleep {
                 Clr.darkMode.edgesIgnoringSafeArea(.all)
+            } else if !backgroundAnimationOn {
+                Clr.darkWhite
             } else {
                 AnimatedBackground(colors:[Clr.yellow, breathWork?.color.secondary ?? Clr.calmsSecondary, Clr.darkWhite]).edgesIgnoringSafeArea(.all).blur(radius: 50).edgesIgnoringSafeArea(.all)
             }
@@ -445,7 +447,7 @@ struct BreathworkPlay : View {
         }
     }
     
-    private func checkSequence(){
+    private func checkSequence() {
         guard !isPaused  else { return }
         if sequenceCounter < (breathWork?.sequence.count ?? 0)-1 {
             sequenceCounter += 1

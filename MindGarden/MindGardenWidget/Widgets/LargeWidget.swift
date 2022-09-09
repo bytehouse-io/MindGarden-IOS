@@ -22,7 +22,7 @@ struct LargeWidget: View {
     let showTileDate = true
     var body: some View {
         GeometryReader { gp in
-            let width = gp.size.width*0.14
+            let width = gp.size.width*0.15
             ZStack {
                 HStack {
                     Spacer()

@@ -48,7 +48,7 @@ struct Play: View {
 
     var body: some View {
             ZStack {
-                if isSleep && !backgroundAnimationOn  {
+                if isSleep  {
                     Clr.darkMode.edgesIgnoringSafeArea(.all)
                 } else if !backgroundAnimationOn {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
@@ -748,6 +748,7 @@ struct NatureModal: View {
                                     }
                             }.frame(width: 30, height: 30)
                         }.padding(20)
+                        .offset(y: 20)
                         Spacer()
                         SoundView
                         Spacer()
