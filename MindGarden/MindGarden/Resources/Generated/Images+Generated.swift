@@ -292,6 +292,7 @@ public enum Img {
   public static let pencilIcon = Image("pencilIcon")
   public static let plane = Image("plane")
   public static let plantIcon = Image("plantIcon")
+  public static let pondBackground = Image("pond-background")
   public static let angryPot = Image("angryPot")
   public static let badPot = Image("badPot")
   public static let goodPot = Image("goodPot")

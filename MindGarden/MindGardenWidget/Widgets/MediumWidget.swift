@@ -71,6 +71,18 @@ enum MediumType {
             return "Breathwork"
         }
     }
+    var url: String {
+        switch self {
+        case .journel:
+            return "gratitude://io.bytehouse.mindgarden"
+        case .breathwork:
+            return "breathwork://io.bytehouse.mindgarden"
+        case .logmood:
+            return "mood://io.bytehouse.mindgarden"
+        default:
+            return "meditate://io.bytehouse.mindgarden"
+        }
+    }
 }
 
 struct NewMediumWidget: View {
@@ -104,7 +116,7 @@ struct MediumWidgetRow: View {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color("darkWhite"))
                 .addBorder(Color.black, width: 1.5, cornerRadius: 20)
-            Link(destination: URL(string: "\(type.title)://io.bytehouse.mindgarden")!)  {
+            Link(destination: URL(string: type.url)!)  {
             HStack {
                 if let img = mediumEntry.getImage(type: type) as? Image {
                     img

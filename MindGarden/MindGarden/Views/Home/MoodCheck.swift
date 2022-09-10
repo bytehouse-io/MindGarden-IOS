@@ -48,6 +48,7 @@ struct MoodCheck: View {
                                         .cornerRadius(17)
                                         .neoShadow()
                                 ).onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     moodFromFinished = false
                                     withAnimation { shown.toggle() }
                                 }.offset(x: -5, y: 10)

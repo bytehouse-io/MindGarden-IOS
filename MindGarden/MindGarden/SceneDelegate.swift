@@ -216,6 +216,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 NotificationCenter.default.post(name: Notification.Name("meditate"), object: nil)
             } else if context.url.scheme == "mood" || context.url.host == "mood" {
                 NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+            } else if context.url.scheme == "breathwork" || context.url.host == "breathwork" {
+                NotificationCenter.default.post(name: Notification.Name("breathwork"), object: nil)
             } else if context.url.scheme == "pro" || context.url.host == "pro" {
                 NotificationCenter.default.post(name: Notification.Name("pro"), object: nil)
             } else if context.url.scheme == "garden" || context.url.host == "garden" {

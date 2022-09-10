@@ -24,8 +24,7 @@ struct HomeViewDashboard: View {
     let height = 20.0
     var body: some View {
         ZStack {
-            VStack {
-
+            VStack(spacing: 30){
                 HStack {
                     VStack(alignment:.leading) {
                         Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")

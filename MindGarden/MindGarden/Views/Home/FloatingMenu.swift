@@ -46,6 +46,7 @@ enum MenuType: String, CaseIterable {
 struct FloatingMenu: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     @Binding var showModal : Bool
     @Binding var activeSheet: Sheet?
     @Binding var totalBonuses : Int
@@ -103,6 +104,7 @@ struct FloatingMenu: View {
                     }
                 }
             }.rotationEffect(Angle(degrees: rotation))
+            .buttonStyle(ScalePress())
         }
         .onChange(of: isOpen) { newVal in
             if newVal {
@@ -137,7 +139,7 @@ struct FloatingMenu: View {
                         }
                 }
             }
-                .frame(width: UIScreen.screenWidth*2.5, height: UIScreen.screenHeight*3, alignment: .center)
+                .frame(width: UIScreen.screenWidth*2.5, height: UIScreen.screenHeight*3.5, alignment: .center)
         )
         .overlay(menuItem)
         .sheet(isPresented: $showRecFavs) {

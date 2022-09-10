@@ -21,9 +21,10 @@ struct HomeViewScroll: View {
     @Binding var showIAP : Bool
     @State var userModel: UserViewModel
     @State private var isRecent = true
+    @State private var isOpen = false
 
     let width = UIScreen.screenWidth
-    let height = UIScreen.screenHeight - 100
+    let height = UIScreen.screenHeight
     
     @Environment(\.sizeCategory) var sizeCategory
     
@@ -32,7 +33,7 @@ struct HomeViewScroll: View {
             //MARK: - scroll view
        
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 7) {
+                VStack(spacing: 30) {
                     HStack {
                         Img.topBranch
                             .resizable()
@@ -47,26 +48,27 @@ struct HomeViewScroll: View {
                     HStack(spacing: 0) {
                         HStack {
                             FloatingMenu(showModal:$showModal, activeSheet: $activeSheet, totalBonuses:$totalBonuses)
+                                .edgesIgnoringSafeArea(.all)
                             Spacer()
                         }.zIndex(1)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(16)
-                                .frame(width: width * 0.75, height: 100, alignment: .center)
+                                .frame(width: width * 0.725, height: 100, alignment: .center)
                                 .addBorder(.black, width: 1.5, cornerRadius: 16)
                             Stories()
-                                .frame(width: width * 0.725, height: K.isSmall() ? 70 : 95, alignment: .trailing)
+                                .frame(width: width * 0.7, height: K.isSmall() ? 70 : 95, alignment: .trailing)
                                 .padding(30)
                                 .offset(y: K.isSmall() ? 3 : 8)
-                        }.frame(width: width * 0.75, height: 100, alignment: .center)
+                        }.frame(width: width * 0.725, height: 100, alignment: .center)
                     }.frame(width: width * 0.85)
                         .offset(x: width * -0.025)
                     .padding(.top, 40)
                     .zIndex(1)
        
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
-                    StartDayView()
+                    StartDayView().padding(.top, 5)
                     HStack(spacing: 15) {
                         Text("\(numberOfMeds)")
                             .font(Font.fredoka(.bold, size: 36))
@@ -80,9 +82,9 @@ struct HomeViewScroll: View {
                     .frame(width: width * 0.8, height: height * 0.06)
                     .padding([.vertical, .top], 30)
                     }.offset(y: -height * 0.125)
-            }.padding(.bottom)
+            }
             }.frame(height: height + (K.isSmall() ? 125 : 0))
-        }.onAppear {
+                .padding(.bottom)
         }
     }
 }

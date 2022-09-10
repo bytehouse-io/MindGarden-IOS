@@ -377,6 +377,10 @@ enum AnalyticEvent {
     case no_thanks_50
     case widget_tapped_no_thanks
     case widget_tapped_finished
+    case widget_tapped_breathwork
+    case widget_tapped_meditate
+    case widget_tapped_logMood
+    case widget_tapped_journal
 }
 
 extension AnalyticEvent {
@@ -753,7 +757,10 @@ extension AnalyticEvent {
         //MARK: - widget
         case .widget_tapped_no_thanks: return "widget_tapped_no_thanks"
         case .widget_tapped_finished: return "widget_tapped_finished"
-
+        case .widget_tapped_breathwork: return "widget_tapped_breathwork"
+        case .widget_tapped_meditate: return "widget_tapped_meditate"
+        case .widget_tapped_logMood: return "widget_tapped_logMood"
+        case .widget_tapped_journal: return "widget_tapped_journal"
         }
     }
 }

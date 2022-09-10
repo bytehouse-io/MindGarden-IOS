@@ -192,7 +192,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "444"
             endingLineNumber = "444"
-            landmarkName = "freezeStreak(interval:)"
+            landmarkName = "updateLongest()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

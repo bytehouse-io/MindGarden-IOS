@@ -26,7 +26,7 @@ struct ContentView: View {
     @State private var PopUpIn = false
     @State private var showPopUpOption = false
     @State private var showItems = false
-    var bonusModel: BonusViewModel
+    @ObservedObject var bonusModel: BonusViewModel
     @ObservedObject var profileModel: ProfileViewModel
     var authModel: AuthenticationViewModel
     @State var hasConnection = false
@@ -63,7 +63,7 @@ struct ContentView: View {
                     GeometryReader { geometry in
                         ZStack {
                             if viewRouter.currentPage == .garden && K.hasNotch() {
-                                Img.gardenBackground
+                                Img.pondBackground
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
 //                                    .frame(minWidth: 0, maxWidth: .infinity)
@@ -310,7 +310,7 @@ struct ContentView: View {
                                             }
                                         }
                                     }
-                                }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0)
+                                }.offset(y: (viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0) + 15)
                                 ZStack {
                                     Rectangle()
                                         .opacity(addMood || addGratitude || isOnboarding || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
@@ -421,15 +421,29 @@ struct ContentView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.gratitude))
-               { _ in addGratitude = true }
+               { _ in
+                   withAnimation {
+                       Analytics.shared.log(event: .widget_tapped_journal)
+                       viewRouter.currentPage = .journal
+                   }
+               }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.mood))
-                      { _ in addMood = true }
+                      { _ in
+                          Analytics.shared.log(event: .widget_tapped_meditate)
+                          withAnimation {
+                              addMood = true
+                          }
+                      }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.pro))
         { _ in
             fromPage = "widget"
-            viewRouter.currentPage = .pricing}
+            viewRouter.currentPage = .pricing
+            
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.meditate))
         { _ in
+            Analytics.shared.log(event: .widget_tapped_meditate)
+            selectedTab = .search
             viewRouter.currentPage = .learn
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.garden)) { _ in
@@ -448,6 +462,15 @@ struct ContentView: View {
         { _ in
             selectedTab = .shop
             viewRouter.currentPage = .shop
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("breathwork")))
+        { _ in
+            withAnimation {
+                Analytics.shared.log(event: .widget_tapped_breathwork)
+                middleToSearch = "Breathwork"
+                selectedTab = .search
+                viewRouter.currentPage = .learn
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("learn")))
         { _ in

@@ -60,7 +60,6 @@ struct Home: View {
  
                 GeometryReader { g in
                     HomeViewScroll(gardenModel: gardenModel, showModal: $showModal, showMiddleModal: $showMiddleModal, activeSheet: $activeSheet, totalBonuses: $bonusModel.totalBonuses, attempts: $attempts, showIAP: $showIAP, userModel: userModel)
-                        .padding(.top, -20)
                     if showModal || showUpdateModal || showMiddleModal || showIAP || showPurchase || showChallenge {
                         Color.black
                             .opacity(0.3)
