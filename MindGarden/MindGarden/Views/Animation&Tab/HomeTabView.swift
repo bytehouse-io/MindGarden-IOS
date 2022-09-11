@@ -30,9 +30,7 @@ struct HomeTabView: View {
                 }
             TabButtonView(selectedTab:$selectedTab, isOnboarding:$isOnboarding)
                 .padding([.bottom, .horizontal], 20)
-                .offset(y: 30)
             PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption, isOnboarding: $isOnboarding)
-                .offset(y: 30)
         }.onChange(of: selectedTab) { value in
             showPopup = false
             DispatchQueue.main.async {

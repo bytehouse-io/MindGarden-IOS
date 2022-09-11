@@ -52,7 +52,7 @@ struct PlusButtonPopup: View {
                         .frame(height:32)
                 }
             }
-            .offset(y: -20)
+            .offset(y: -40)
             .ignoresSafeArea()
             .onChange(of: showPopup) { value in
                 withAnimation(.easeInOut(duration: 0.1)) {

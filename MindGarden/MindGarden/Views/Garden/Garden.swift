@@ -357,6 +357,8 @@ struct Garden: View {
                         .padding(5)
                         
                         monthlyStateView
+                            .offset(x: playEntryAnimation ? 0 : 200)
+                            .animation(animation.delay(0.1), value: playEntryAnimation)
                         
                         ZStack {
                             Rectangle()
@@ -369,12 +371,10 @@ struct Garden: View {
                                     .foregroundColor(Clr.black2)
                                     .font(Font.fredoka(.semiBold, size: forceRefresh ? 20 : 20.1))
                                     .padding(.leading, gp.size.width * 0.075 - 25)
-                                    .padding(.top, 16)
+                                    .padding(.top, 8)
                                     .padding(.leading, 24)
                                 
-                                if topThreePlants.isEmpty {
-                                    Spacer()
-                                }
+                               Spacer()
                                 
                                 HStack(spacing: 5){
                                     Spacer()
@@ -491,7 +491,6 @@ struct Garden: View {
                     }      
                     // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
-                Spacer().frame(height:80)
             }.fullScreenCover(isPresented: $userModel.triggerAnimation) {
                 PlantGrowing()
             }
@@ -584,7 +583,7 @@ struct Garden: View {
                                 .padding(.vertical,3)
                                 .padding(.horizontal)
                             }
-                        }
+                        }.padding(.vertical, 16)
                     }
                     ZStack {
                         Rectangle()
@@ -597,9 +596,7 @@ struct Garden: View {
                             MoodImage(mood: .okay, value: gardenModel.totalMoods[.okay] ?? 0)
                             MoodImage(mood: .bad, value: gardenModel.totalMoods[.bad] ?? 0)
                             MoodImage(mood: .veryBad, value: gardenModel.totalMoods[.veryBad] ?? 0)
-                        }
-
-                        .padding(.vertical)
+                        }.padding(.vertical, 12)
                     }.padding(.trailing,20)
                 }
                 .padding([.horizontal,.bottom],20)

@@ -62,7 +62,6 @@ class StorylyManager: StorylyDelegate {
                          story: Storyly.Story?,
                          storyComponent: Storyly.StoryComponent?) {
            if let story = story {
-               if !story.seen {
                     Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
                    let components = story.title.components(separatedBy: " ")
                    var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
@@ -71,8 +70,11 @@ class StorylyManager: StorylyDelegate {
                        storyArray?.removeAll(where: { str in
                            str.lowercased().contains("intro/day")
                        })
+                       
+                       // case doesn't matter for setting storylabels
                       storyArray =  updateComps(components: components, segs: storyArray)
                       unique = Array(Set(storyArray ?? [""]))
+                      SceneDelegate.userModel.completedIntroDay = true
                    } else if story.title.lowercased() == "#4" || story.title.lowercased().contains("tip") {
                        storyArray?.removeAll(where: { str in
                            str.lowercased().contains("tip")
@@ -95,7 +97,7 @@ class StorylyManager: StorylyDelegate {
                    unique = Array(Set(storyArray ?? [""]))
                     UserDefaults.standard.setValue(unique, forKey: "storySegments")
                }
-           }
+           
        }
     
      static func saveToFirebase(unique: [String]) {
@@ -131,23 +133,23 @@ class StorylyManager: StorylyDelegate {
             return formatter
         }()
         
-//        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
-//            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
-//            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
-////                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
-//                StorylyManager.updateSegments(segs: oldSegments)
-//            }
-//            return
-//        }
-//
+        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
+            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
+            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+//                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
+                StorylyManager.updateSegments(segs: oldSegments)
+            }
+            return
+        }
+
 //         start with today
-        let cal = NSCalendar.current
-        var date = cal.startOfDay(for: Date())
-        var arrDates = [Date]()
-        arrDates.append(Date())
-        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
-        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
-        let userDate = UserDefaults.standard.string(forKey: "userDate")!
+//        let cal = NSCalendar.current
+//        var date = cal.startOfDay(for: Date())
+//        var arrDates = [Date]()
+//        arrDates.append(Date())
+//        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
+//        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
+//        let userDate = UserDefaults.standard.string(forKey: "userDate")!
         
         let lastOpenedDate = formatter.date(from: userDate)!.setTime(hour: 00, min: 00, sec: 00)
         let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()

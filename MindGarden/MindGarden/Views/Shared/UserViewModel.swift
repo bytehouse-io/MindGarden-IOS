@@ -37,6 +37,9 @@ class UserViewModel: ObservableObject {
     @Published var journeyFinished = false
     @Published var selectedMood: Mood = .none
     @Published var elaboration: String = ""
+    @Published var completedIntroDay = false
+    @Published var completedEntireCourse = false
+    @Published var completedDayTitle = ""
     private var validationCancellables: Set<AnyCancellable> = []
     var joinDate: String = ""
     var greeting: String = ""
@@ -52,6 +55,30 @@ class UserViewModel: ObservableObject {
         getSelectedPlant()
         getGreeting()
         updateTimeRemaining()
+        isIntroDone()
+    }
+    
+    func isIntroDone() {
+        // case where old = new means that it's not done, trigger is loaded for that day.
+        
+        if let oldSegs = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+            let oldIntroDay = oldSegs.first { seg in seg.contains("Intro/Day")  }
+            if let newSegs = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+                let newIntroDay = newSegs.first { seg in seg.contains("Intro/Day")  }
+                let components = oldIntroDay?.components(separatedBy: " ")
+                completedDayTitle = components?[1] ?? ""
+                if oldIntroDay == newIntroDay {
+                    if oldIntroDay == "Intro/Day 10" {
+                        completedEntireCourse = true
+                    } else {
+                        completedIntroDay = false
+                    }
+                // case where old != new => completed intro day course.
+                } else {
+                    completedIntroDay = true
+                }
+            }
+        }
     }
     
     func updateTimeRemaining() {

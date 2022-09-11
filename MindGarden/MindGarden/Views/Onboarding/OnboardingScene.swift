@@ -80,7 +80,7 @@ struct OnboardingScene: View {
                                 .multilineTextAlignment(.leading)
                                 .font(Font.fredoka(.bold, size: 40))
                                 .offset(y: K.isSmall() ?  height * 0.1 : height * 0.15)
-                            LottieAnimationView(filename: "onboarding", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
+                            LottieAnimationView(filename: "onboarding1", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
                                 .frame(width: width * 0.45)
                                 .offset(y: height * -0.15)
                         }

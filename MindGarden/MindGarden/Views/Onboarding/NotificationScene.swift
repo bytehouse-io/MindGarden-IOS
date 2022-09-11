@@ -139,8 +139,13 @@ struct NotificationScene: View {
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
-                            LottieAnimationView(filename: "turtleNotification", loopMode: LottieLoopMode.autoReverse, isPlaying: .constant(true))
-                                .frame(width: g.size.width * 0.6)
+                            Img.turtleLetter
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: g.size.width * 0.4)
+
+//                            LottieAnimationView(filename: "turtleNotif", loopMode: LottieLoopMode.autoReverse, isPlaying: .constant(true))
+//                                .frame(width: g.size.width * 0.6)
                             Spacer()
                             Button {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)

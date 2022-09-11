@@ -123,7 +123,7 @@ struct ContentView: View {
                                             }
                                             .environmentObject(bonusModel)
                                             .environmentObject(profileModel)
-                                            .offset(y: K.hasNotch() ? -70 : 0)
+                                            .offset(y: K.hasNotch() ? -70 : -20)
                                     case .shop:
                                         Store()
                                             .frame(height: geometry.size.height + 10)
@@ -269,9 +269,31 @@ struct ContentView: View {
                                 }
                             }.edgesIgnoringSafeArea(.all)
                             
+               
+                            
                             if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
                             ) {
-
+                                ZStack {
+                                    Rectangle()
+                                        .opacity(addMood || addGratitude || isOnboarding || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
+                                        .foregroundColor(Clr.black1)
+                                        .edgesIgnoringSafeArea(.all)
+                                        .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
+                                        .transition(.opacity)
+                                }
+                                .onTapGesture {
+                                        withAnimation {
+                                            hidePopupWithAnimation {
+                                                addMood = false
+                                                addGratitude = false
+                                                if profileModel.showWidget {
+                                                    profileModel.showWidget = false
+                                                    UserDefaults.standard.setValue(true, forKey: "showWidget")
+                                                }
+                                            }
+                                        }
+                                    
+                                }
 
                                 ZStack {
                                     HomeTabView(selectedOption:$selectedPopupOption, viewRouter:viewRouter, selectedTab: $selectedTab, showPopup: $showPopUp, isOnboarding:$isOnboarding)
@@ -311,27 +333,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0)
-                                ZStack {
-                                    Rectangle()
-                                        .opacity(addMood || addGratitude || isOnboarding || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
-                                        .foregroundColor(Clr.black1)
-                                        .edgesIgnoringSafeArea(.all)
-                                        .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
-                                        .transition(.opacity)
-                                }
-                                .onTapGesture {
-                                        withAnimation {
-                                            hidePopupWithAnimation {
-                                                addMood = false
-                                                addGratitude = false
-                                                if profileModel.showWidget {
-                                                    profileModel.showWidget = false
-                                                    UserDefaults.standard.setValue(true, forKey: "showWidget")
-                                                }
-                                            }
-                                        }
-                                    
-                                }
+                         
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
@@ -394,9 +396,6 @@ struct ContentView: View {
         }
 
         .onAppear {
-            if !UserDefaults.standard.bool(forKey: "showWidget") {
-                profileModel.showWidget = true
-            }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
                 withAnimation(.linear(duration: 0.5)) {

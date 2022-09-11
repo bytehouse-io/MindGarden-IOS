@@ -128,6 +128,9 @@ struct Home: View {
         }
 
         .onAppear {
+            if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done") {
+                profileModel.showWidget = true
+            }
             viewRouter.previousPage = .meditate
             fromPage = "profile"
             tappedSignOut = false

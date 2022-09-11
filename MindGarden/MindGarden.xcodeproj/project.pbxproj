@@ -126,6 +126,8 @@
 		88CF8E6F287CDF7800BA89B9 /* ProfileTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */; };
 		88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
+		88D39DA528CE717F001C66F7 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39DA428CE717D001C66F7 /* onboarding1.json */; };
+		88D39DA728CE720C001C66F7 /* turtleNotif.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39DA628CE720C001C66F7 /* turtleNotif.json */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
 		88D4C5D927FA468800CBB956 /* yogi.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D4C5D827FA468700CBB956 /* yogi.json */; };
@@ -399,6 +401,8 @@
 		88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBar.swift; sourceTree = "<group>"; };
 		88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
+		88D39DA428CE717D001C66F7 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = onboarding1.json; path = ../../../../../../Downloads/onboarding1.json; sourceTree = "<group>"; };
+		88D39DA628CE720C001C66F7 /* turtleNotif.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotif.json; path = ../../../../../../Downloads/turtleNotif.json; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		88D4C5D627F6439A00CBB956 /* StorylyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorylyManager.swift; sourceTree = "<group>"; };
 		88D4C5D827FA468700CBB956 /* yogi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yogi.json; sourceTree = "<group>"; };
@@ -813,12 +817,14 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				88D39DA428CE717D001C66F7 /* onboarding1.json */,
 				58266E2628798E30008594E0 /* party.json */,
 				589DCB072873401B005A8D7E /* turtle.json */,
 				58D5C0F327FB675A00454937 /* background.json */,
 				882738D427E2D76E00F8D4D0 /* second_part_loop.json */,
 				882738D227E2D75D00F8D4D0 /* first_part.json */,
 				8864293527E13B6400DB7564 /* fire.json */,
+				88D39DA628CE720C001C66F7 /* turtleNotif.json */,
 				8884A993284A75E200B0B315 /* flame.json */,
 				8884A995284BDBBC00B0B315 /* flame 1.json */,
 				8884A997284BDBCA00B0B315 /* flame 2.json */,
@@ -1417,6 +1423,7 @@
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
 				589DCB082873401B005A8D7E /* turtle.json in Resources */,
+				88D39DA528CE717F001C66F7 /* onboarding1.json in Resources */,
 				888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */,
 				88F4BF85286B6ED6000C6E0B /* Fredoka-Bold.ttf in Resources */,
 				58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */,
@@ -1444,6 +1451,7 @@
 				FEB6AF9F265D95F700224BFD /* Preview Assets.xcassets in Resources */,
 				88588042283C0293007AACC2 /* wavingTurtle.png in Resources */,
 				88F4BF86286B6ED6000C6E0B /* Fredoka-SemiBold.ttf in Resources */,
+				88D39DA728CE720C001C66F7 /* turtleNotif.json in Resources */,
 				8884A996284BDBBC00B0B315 /* flame 1.json in Resources */,
 				FEBA7E6F2677D46F00758E58 /* GoogleService-Info.plist in Resources */,
 				88F5CBBE27F0E6DA00744D9F /* bell.mp3 in Resources */,
