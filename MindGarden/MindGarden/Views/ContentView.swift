@@ -310,7 +310,7 @@ struct ContentView: View {
                                             }
                                         }
                                     }
-                                }.offset(y: (viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0) + 15)
+                                }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0)
                                 ZStack {
                                     Rectangle()
                                         .opacity(addMood || addGratitude || isOnboarding || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)

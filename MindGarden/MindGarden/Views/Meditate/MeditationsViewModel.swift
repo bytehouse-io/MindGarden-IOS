@@ -108,6 +108,7 @@ class MeditationViewModel: ObservableObject {
                 totalTime = secondsRemaining
             }
             .store(in: &validationCancellables)
+        getRecommendedMeds()
     }
 
     func getFeaturedMeditation()  {

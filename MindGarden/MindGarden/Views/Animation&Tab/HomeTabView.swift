@@ -18,7 +18,6 @@ struct HomeTabView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            
             VisualEffectView(effect: UIBlurEffect(style: .dark))
                 .ignoresSafeArea()
                 .opacity(showPopup ? 0.5 : 0)
@@ -27,12 +26,13 @@ struct HomeTabView: View {
                             withAnimation(.spring()) {
                                 showPopup.toggle()
                             }
-                        }                    
+                        }
                 }
             TabButtonView(selectedTab:$selectedTab, isOnboarding:$isOnboarding)
                 .padding([.bottom, .horizontal], 20)
+                .offset(y: 30)
             PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption, isOnboarding: $isOnboarding)
-                .padding(.bottom,15)
+                .offset(y: 30)
         }.onChange(of: selectedTab) { value in
             showPopup = false
             DispatchQueue.main.async {

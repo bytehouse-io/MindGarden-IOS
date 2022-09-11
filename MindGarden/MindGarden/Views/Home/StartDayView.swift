@@ -254,18 +254,8 @@ struct StartDayView: View {
                     
                     Button {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        Analytics.shared.log(event: .home_tapped_featured_meditation)
                         withAnimation {
-                            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains( medModel.featuredMeditation?.id ?? 0) {
-                                viewRouter.currentPage = .pricing
-                            } else {
-                                medModel.selectedMeditation = medModel.featuredMeditation
-                                if medModel.featuredMeditation?.type == .course {
-                                    viewRouter.currentPage = .middle
-                                } else {
-                                    viewRouter.currentPage = .play
-                                }
-                            }
+                            
                         }
                     } label: {
                         ZStack {

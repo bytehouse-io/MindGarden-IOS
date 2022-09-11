@@ -137,10 +137,10 @@ struct MiddleSelect: View {
                                             viewRouter.currentPage = .play
                                         }
                                     }
-                                    
                                 } label: {
                                     HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[0], breathwork: nil)
                                 }.buttonStyle(NeumorphicPress())
+                                
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[1].id) {
