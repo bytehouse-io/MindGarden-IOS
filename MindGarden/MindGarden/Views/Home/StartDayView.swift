@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Lottie
+import Amplitude
 
 
 struct StartDayView: View {
@@ -261,6 +262,8 @@ struct StartDayView: View {
                                 if !userModel.completedIntroDay {
                                     let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
                                     storylyViewProgrammatic.resume()
+                                    Analytics.shared.log(event: .home_tapped_introDay)
+                                    Amplitude.instance().logEvent("intro/day", withEventProperties: ["day" : userModel.completedDayTitle])
                                 }
                             }
                         } label: {

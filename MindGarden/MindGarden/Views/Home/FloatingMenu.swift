@@ -59,6 +59,7 @@ struct FloatingMenu: View {
     @State var sheetTitle: String = ""
     @State var showRecFavs = false
     @State var sheetType: [Int] = []
+    @State var offsetY = 160
 
     var body: some View {
         ZStack(alignment:.top) {
@@ -240,8 +241,15 @@ struct FloatingMenu: View {
                 }
             }
         }.frame(width: 300, alignment: .leading)
-            .offset(x:100,y:160)
+            .offset(x:100,y: CGFloat(offsetY))
 //            .opacity(isOpen ? 1.0 : 0.0)
+            .onAppear {
+                if userModel.completedMeditations.isEmpty && medModel.favoritedMeditations.isEmpty {
+                    offsetY = 105
+                } else if userModel.completedMeditations.isEmpty || medModel.favoritedMeditations.isEmpty {
+                    offsetY = 130
+                }
+            }
     }
     
     private func buttonAction(type:MenuType) {

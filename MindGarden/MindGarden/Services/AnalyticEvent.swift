@@ -107,12 +107,14 @@ enum AnalyticEvent {
     case screen_load_single
     case garden_tapped_settings
     case garden_tapped_plant_select
+    case garden_tapped_monthly_stats
 
     //MARK: - HOME
     case screen_load_home //
     case home_tapped_plant_select //
     case home_selected_plant //
     case home_tapped_categories //
+    case home_tapped_floatingMenu //
     case home_tapped_profile //
     case home_tapped_journal //
     case home_tapped_mood //
@@ -122,6 +124,7 @@ enum AnalyticEvent {
     case home_tapped_favorite_meditation //
     case home_tapped_featured_breath //
     case home_tapped_featured_meditation //
+    case home_tapped_introDay //
     case home_selected_mood //
     case home_tapped_new_meditation //
     case home_tapped_weekly_meditation //
@@ -516,6 +519,7 @@ extension AnalyticEvent {
         case .garden_tapped_single_previous_session: return "garden_tapped_single_previous_session"
         case .garden_tapped_settings: return "garden_tapped_settings"
         case .garden_tapped_plant_select: return "garden_tapped_plant_select"
+        case .garden_tapped_monthly_stats: return "garden_tapped_monthly_stats"
         case .screen_load_home: return "screen_load_home"
         case .home_tapped_plant_select: return "home_tapped_plant_select"
         case .home_tapped_pro: return "home_tapped_pro"
@@ -526,10 +530,12 @@ extension AnalyticEvent {
         case .home_tapped_favorites: return "home_tapped_favorites"
         case .home_tapped_featured_breath: return "home_tapped_featured_breath"
         case .home_tapped_featured_meditation: return "home_tapped_featured_meditation"
+        case .home_tapped_introDay: return "home_tapped_introDay"
         case .home_tapped_mood: return "home_tapped_mood"
         case .home_tapped_journal: return "home_tapped_journal"
         case .home_tapped_recent_meditation: return "home_tapped_recent_meditation"
         case .home_tapped_favorite_meditation: return "home_tapped_favorite_meditation"
+        case .home_tapped_floatingMenu: return "home_tapped_floatingMenu"
         case .home_tapped_bonus: return "home_tapped_bonus"
         case .home_claim_daily: return "home_claim_daily:"
         case .home_claim_seven: return "home_claim_seven"
