@@ -176,27 +176,25 @@ struct ReviewScene: View {
                                     Analytics.shared.log(event: .user_from_influencer)
                                     viewRouter.currentPage = .pricing
                                 } else {
-                                    showLoading = true
-//
-//                                    Paywall.present { info in
-//                                        Analytics.shared.log(event: .screen_load_superwall)
-//                                    } onDismiss: {  didPurchase, productId, paywallInfo in
-//                                        switch productId {
-//                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                        case "io.mindgarden.pro.yearly":
-//                                            Analytics.shared.log(event: .yearly_started_from_superwall)
-//                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
-//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
-//                                                NotificationHelper.freeTrial()
-//                                            }
-//                                        default: break
-//                                        }
-//                                        viewRouter.currentPage = .meditate
-//                                    } onFail: { error in
-//                                        viewRouter.currentPage = .pricing
-//                                    }
+                                    Paywall.present { info in
+                                        Analytics.shared.log(event: .screen_load_superwall)
+                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+                                        switch productId {
+                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        case "io.mindgarden.pro.yearly":
+                                            Analytics.shared.log(event: .yearly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                                NotificationHelper.freeTrial()
+                                            }
+                                        default: break
+                                        }
+                                        showLoading = true
+                                    } onFail: { error in
+                                        viewRouter.currentPage = .pricing
+                                    }
                                 }
                             }
                         } label: {
@@ -224,9 +222,26 @@ struct ReviewScene: View {
                                     Analytics.shared.log(event: .user_from_influencer)
                                     viewRouter.currentPage = .pricing
                                 } else {
-                                    showLoading = true
+                                    Paywall.present { info in
+                                        Analytics.shared.log(event: .screen_load_superwall)
+                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+                                        switch productId {
+                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        case "io.mindgarden.pro.yearly":
+                                            Analytics.shared.log(event: .yearly_started_from_superwall)
+                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                                NotificationHelper.freeTrial()
+                                            }
+                                        default: break
+                                        }
+                                        showLoading = true
+                                    } onFail: { error in
+                                        viewRouter.currentPage = .pricing
+                                    }
                                 }
-              
                             }
                         } label: {
                                 Text("Explore myself")

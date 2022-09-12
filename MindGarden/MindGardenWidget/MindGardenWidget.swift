@@ -84,7 +84,7 @@ struct MindGardenWidgetEntryView : View {
             case .systemMedium:
                 NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId))
             case .systemLarge:
-                LargeWidget(grid:entry.grid)
+                LargeWidget(streakNumber: entry.streakNumber, grid:entry.grid)
                     .environmentObject(GardenViewModel())
             default:
                 Text("Some other WidgetFamily in the future.")
@@ -339,12 +339,12 @@ struct MindGardenWidget: Widget {
     
     init(){
         FirebaseApp.configure()
-//        let accessGroup = K.widgetDefault
-//        do {
-//          try Auth.auth().useUserAccessGroup(accessGroup)
-//        } catch let error as NSError {
-//          print("Error changing user access group: %@", error)
-//        }
+        let accessGroup = K.widgetDefault
+        do {
+          try Auth.auth().useUserAccessGroup(accessGroup)
+        } catch let error as NSError {
+          print("Error changing user access group: %@", error)
+        }
     }
 
     var body: some WidgetConfiguration {
