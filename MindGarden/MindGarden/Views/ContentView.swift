@@ -417,6 +417,8 @@ struct ContentView: View {
                 selectedTab = .garden
             } else if (viewRouter.currentPage == .meditate && selectedTab != .meditate){
                 selectedTab = .meditate
+            } else if (viewRouter.currentPage == .learn && selectedTab != .search) {
+                selectedTab = .search
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.gratitude))
