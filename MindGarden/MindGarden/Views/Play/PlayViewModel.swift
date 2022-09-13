@@ -11,22 +11,22 @@ import OneSignal
 extension MeditationViewModel {
     //MARK: - timer
     func startCountdown() {
-        bellPlayer.prepareToPlay()
+        bellPlayer?.prepareToPlay()
 
         if selectedMeditation?.reward == -1 {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
                 self.secondsRemaining += 1
                 if secondsRemaining >= 60 {
                     switch selectedMeditation?.id {
-                    case 58: if secondsRemaining.truncatingRemainder(dividingBy: 60) == 0.0 { bellPlayer.play()}
-                    case 59:  if secondsRemaining.truncatingRemainder(dividingBy: 120) == 0.0 { bellPlayer.play()}
-                    case 60:  if secondsRemaining.truncatingRemainder(dividingBy: 300) == 0.0 { bellPlayer.play()}
-                    case 61: if secondsRemaining.truncatingRemainder(dividingBy: 600) == 0.0 { bellPlayer.play()}
-                    case 62:  if secondsRemaining.truncatingRemainder(dividingBy: 900) == 0.0 { bellPlayer.play()}
-                    case 63:  if secondsRemaining.truncatingRemainder(dividingBy: 1200) == 0.0 { bellPlayer.play()}
-                    case 64: if secondsRemaining.truncatingRemainder(dividingBy: 1500) == 0.0 { bellPlayer.play()}
-                    case 65: if secondsRemaining.truncatingRemainder(dividingBy: 1800) == 0.0 { bellPlayer.play()}
-                    case 66: if secondsRemaining.truncatingRemainder(dividingBy: 3600) == 0.0 { bellPlayer.play()}
+                    case 58: if secondsRemaining.truncatingRemainder(dividingBy: 60) == 0.0 { bellPlayer?.play()}
+                    case 59:  if secondsRemaining.truncatingRemainder(dividingBy: 120) == 0.0 { bellPlayer?.play()}
+                    case 60:  if secondsRemaining.truncatingRemainder(dividingBy: 300) == 0.0 { bellPlayer?.play()}
+                    case 61: if secondsRemaining.truncatingRemainder(dividingBy: 600) == 0.0 { bellPlayer?.play()}
+                    case 62:  if secondsRemaining.truncatingRemainder(dividingBy: 900) == 0.0 { bellPlayer?.play()}
+                    case 63:  if secondsRemaining.truncatingRemainder(dividingBy: 1200) == 0.0 { bellPlayer?.play()}
+                    case 64: if secondsRemaining.truncatingRemainder(dividingBy: 1500) == 0.0 { bellPlayer?.play()}
+                    case 65: if secondsRemaining.truncatingRemainder(dividingBy: 1800) == 0.0 { bellPlayer?.play()}
+                    case 66: if secondsRemaining.truncatingRemainder(dividingBy: 3600) == 0.0 { bellPlayer?.play()}
                     default: break
                     }
                 }
@@ -62,7 +62,7 @@ extension MeditationViewModel {
                     if secondsRemaining <= -1 {
                         if let med = self.selectedMeditation {
                             if med.id != 27 && med.id != 39 && med.id != 54 {
-                                bellPlayer.play()
+                                bellPlayer?.play()
                             }
                         }
 

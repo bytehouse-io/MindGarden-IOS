@@ -20,8 +20,8 @@ struct Play: View {
     }
     @State var timerStarted: Bool = true
     @State var favorited: Bool = false
-    @State var backgroundPlayer : AVAudioPlayer!
-    @State var mainPlayer: AVPlayer!
+    @State var backgroundPlayer : AVAudioPlayer?
+    @State var mainPlayer: AVPlayer?
     @State var data : Data = .init(count: 0)
     @State var title = ""
     @State var del = AVdelegate()
@@ -288,53 +288,58 @@ struct Play: View {
                 if defaultSound != "noSound"  {
                     selectedSound = Sound.getSound(str: defaultSound)
                     let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
-                    backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                    backgroundPlayer.delegate = self.del
-                    backgroundPlayer.prepareToPlay()
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                    backgroundPlayer?.delegate = self.del
+                    backgroundPlayer?.prepareToPlay()
                     if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
-                        backgroundPlayer.volume = vol
+                        backgroundPlayer?.volume = vol
                         sliderData.sliderValue = vol
                     } else {
-                        backgroundPlayer.volume = 0.3
+                        backgroundPlayer?.volume = 0.3
                         sliderData.sliderValue = 0.3
                     }
-                    sliderData.setPlayer(player: self.backgroundPlayer!)
-                    backgroundPlayer.numberOfLoops = -1
-                    backgroundPlayer.play()
+                    if let bgPlayer = self.backgroundPlayer {
+                        sliderData.setPlayer(player: bgPlayer)
+                    }
+                    backgroundPlayer?.numberOfLoops = -1
+                    backgroundPlayer?.play()
                 } else {
                     let url = Bundle.main.path(forResource: "", ofType: "mp3")
-                    backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
                 }
             }
 
 
             //bell at the end of a session
             let url = Bundle.main.path(forResource: "bell", ofType: "mp3")
-            model.bellPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-            model.bellPlayer.delegate = self.del
+            model.bellPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+            model.bellPlayer?.delegate = self.del
 
             if let bellVolume = UserDefaults.standard.value(forKey: "bellVolume") as? Float {
-                model.bellPlayer.volume = bellVolume
+                model.bellPlayer?.volume = bellVolume
                 bellSlider.sliderValue = bellVolume
             } else {
-                model.bellPlayer.volume = 0.5
+                model.bellPlayer?.volume = 0.5
                 bellSlider.sliderValue = 0.5
             }
-            bellSlider.setPlayer(player: model.bellPlayer)
+            
+            if let bplayer = model.bellPlayer {
+                bellSlider.setPlayer(player:bplayer)
+            }
 
             if model.selectedMeditation?.url != "" {
                 if  let url = URL(string: model.selectedMeditation?.url ?? "") {
                     let playerItem = AVPlayerItem(url: url)
                     self.mainPlayer = AVPlayer(playerItem: playerItem)
-                    mainPlayer.volume = 5
-                    mainPlayer.play()
+                    mainPlayer?.volume = 5
+                    mainPlayer?.play()
                     model.startCountdown()
                 }
             } else if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
                 let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3")
                 self.mainPlayer = AVPlayer(url: URL(fileURLWithPath: url!))
-                mainPlayer.volume = 5
-                mainPlayer.play()
+                mainPlayer?.volume = 5
+                mainPlayer?.play()
                 model.startCountdown()
             } else {
                 isTraceTimeMannual = true
@@ -437,9 +442,9 @@ struct Play: View {
         }
         let isMainPlayer = model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds) ?? 0))
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer.currentTime : backgroundPlayer.currentTime
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer?.currentTime : backgroundPlayer?.currentTime
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer.rate : backgroundPlayer.rate
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer?.rate : backgroundPlayer?.rate
         
         // Set the metadata
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
@@ -447,18 +452,18 @@ struct Play: View {
     
     private func StopPlaying(){
 //        self.progressValue = 1.0
-        if backgroundPlayer.isPlaying {
-            backgroundPlayer.stop()
+        if backgroundPlayer?.isPlaying ?? false {
+            backgroundPlayer?.stop()
         }
         if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
-            if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
-                self.mainPlayer.rate = 0
+            if (mainPlayer?.rate != 0 && mainPlayer?.error == nil) {
+                self.mainPlayer?.rate = 0
             }
         }
     }
     
     func goForward() {
-        let playerCurrentTime = CMTimeGetSeconds(mainPlayer!.currentTime())
+        let playerCurrentTime = CMTimeGetSeconds(mainPlayer?.currentTime() ?? CMTime.zero)
         let newTime = playerCurrentTime + 15
         
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
@@ -468,7 +473,7 @@ struct Play: View {
     }
 
     func goBackward() {
-        let playerCurrentTime = CMTimeGetSeconds(mainPlayer!.currentTime())
+        let playerCurrentTime = CMTimeGetSeconds(mainPlayer?.currentTime() ?? CMTime.zero)
             var newTime = playerCurrentTime - 15
 
             if newTime < 0 {
@@ -486,17 +491,17 @@ struct Play: View {
             return
         }
         if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
-            if (mainPlayer.rate != 0 && mainPlayer.error == nil) {
-                self.mainPlayer.rate = 0
+            if (mainPlayer?.rate != 0 && mainPlayer?.error == nil) {
+                self.mainPlayer?.rate = 0
             } else {
-                mainPlayer.play()
+                mainPlayer?.play()
             }
         }
 
-        if backgroundPlayer.isPlaying {
-            backgroundPlayer.pause()
+        if backgroundPlayer?.isPlaying ?? false {
+            backgroundPlayer?.pause()
         } else {
-            backgroundPlayer.play()
+            backgroundPlayer?.play()
         }
 
         if timerStarted {
@@ -630,15 +635,15 @@ struct Play: View {
 
 
      func changeSound() {
-         backgroundPlayer.stop()
+         backgroundPlayer?.stop()
         let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
          backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-         backgroundPlayer.delegate = self.del
-         backgroundPlayer.numberOfLoops = -1
-         backgroundPlayer.volume = sliderData.sliderValue
+         backgroundPlayer?.delegate = self.del
+         backgroundPlayer?.numberOfLoops = -1
+         backgroundPlayer?.volume = sliderData.sliderValue
         self.data = .init(count: 0)
-         backgroundPlayer.prepareToPlay()
-        self.backgroundPlayer.play()
+         backgroundPlayer?.prepareToPlay()
+        self.backgroundPlayer?.play()
         self.sliderData.setPlayer(player: backgroundPlayer!)
     }
 }

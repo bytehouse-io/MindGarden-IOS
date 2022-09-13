@@ -33,7 +33,7 @@ class MeditationViewModel: ObservableObject {
     //user needs to meditate at least 5 mins for plant
     var isOpenEnded = false
     var totalTime: Float = 0
-    var bellPlayer: AVAudioPlayer!
+    var bellPlayer: AVAudioPlayer?
     @Published var secondsRemaining: Float = 0
     @Published var secondsCounted: Float = 0
     //animation glitch with a picture so added this var to trigger it manually
