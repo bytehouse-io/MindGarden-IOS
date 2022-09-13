@@ -193,7 +193,7 @@ struct StartDayView: View {
                                 }
                                 if gardenModel.isGratitudeDone {
                                     VStack {
-                                        HStack(alignment:.top) {
+                                        HStack(alignment:.top, spacing: -3) {
                                             ForEach(gardenModel.streakList, id: \.id) { item in
                                                 VStack(spacing:5) {
                                                     Text(item.title)
@@ -204,12 +204,12 @@ struct StartDayView: View {
                                                             Img.streakPencil
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
-                                                                .frame(height: 35)
+                                                                .frame(height: 30)
                                                         } else {
                                                             Img.streakPencilUnselected
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
-                                                                .frame(height: 35)
+                                                                .frame(height: 30)
                                                         }
                                                     }
                                                 }
