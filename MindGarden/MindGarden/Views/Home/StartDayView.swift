@@ -396,7 +396,7 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
-            gardenModel.updateSelf()
+            gardenModel.updateStartDay()
             gardenModel.getAllGratitude(weekDays: gardenModel.getAllDaysOfTheCurrentWeek())
             updateStartDay()
         }
