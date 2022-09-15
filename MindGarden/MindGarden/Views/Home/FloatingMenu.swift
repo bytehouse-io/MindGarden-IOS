@@ -30,13 +30,13 @@ enum MenuType: String, CaseIterable {
     var delay:Double {
         switch self {
         case .profile:
-            return 1.0
-        case .bonus:
             return 2.0
+        case .bonus:
+            return 1.0
         case .favorites:
-            return 3.0
-        case .recent:
             return 4.0
+        case .recent:
+            return 3.0
         case .plantselect:
             return 5.0
         }
@@ -60,7 +60,9 @@ struct FloatingMenu: View {
     @State var showRecFavs = false
     @State var sheetType: [Int] = []
     @State var offsetY = 160
-
+    @State var isOpenAnimation = false
+    
+    let animation = Animation.spring()
     var body: some View {
         ZStack(alignment:.top) {
             Button {
@@ -109,23 +111,27 @@ struct FloatingMenu: View {
         }
         .onChange(of: isOpen) { newVal in
             if newVal {
-                scale = 0.0
                 offset = -50
                 rotation = 0.0
+                isOpenAnimation = false
                 DispatchQueue.main.async {
-                    withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
-                        scale = 1.0
+                    withAnimation(animation) {
                         offset = 0
                         rotation = 90
+                        isOpenAnimation = true
                     }
                 }
             } else {
                 rotation = 0.0
                 scale = 1.0
+                isOpenAnimation = true
                 DispatchQueue.main.async {
-                    withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
-                        scale = 0.0
+                    withAnimation(animation) {
+                        isOpenAnimation = false
                     }
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    scale = 0.0
                 }
             }
         }
@@ -134,9 +140,7 @@ struct FloatingMenu: View {
                 if isOpen {
                     Color.black.opacity(0.4)
                         .onTapGesture {
-                            withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
-                                isOpen = false
-                            }
+                            isOpen = false
                         }
                 }
             }
@@ -173,12 +177,14 @@ struct FloatingMenu: View {
         VStack(alignment:.leading, spacing:20) {
             ForEach(MenuType.allCases, id: \.id) { state in
                 if (state != .favorites || (state == .favorites && !medModel.favoritedMeditations.isEmpty)) && (state != .recent || (state == .recent && !userModel.completedMeditations.isEmpty)) {
-                Button {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    DispatchQueue.main.async {
-                        buttonAction(type: state)
-                    }
-                } label: {
+                    Button {
+                        if isOpen {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            DispatchQueue.main.async {
+                                buttonAction(type: state)
+                            }
+                        }
+                    } label: {
                     HStack {
                         if totalBonuses > 0, state == .bonus {
                             HStack(spacing:0) {
@@ -233,16 +239,17 @@ struct FloatingMenu: View {
                             )
                         }
                     }.frame(height: 30)
-                        .scaleEffect(scale, anchor: .leading)
-                        .offset(x:width/2,y:CGFloat(offset))
                     
                 }
                 .buttonStyle(ScalePress())
+                .scaleEffect(isOpen ? 1.0 : scale, anchor: .leading)
+                .offset(y:isOpenAnimation ? 0 : -((state.delay) * 40))
+                
                 }
             }
         }.frame(width: 300, alignment: .leading)
-            .offset(x:100,y: CGFloat(offsetY))
-//            .opacity(isOpen ? 1.0 : 0.0)
+            .opacity(isOpenAnimation ? 1.0 : 0.0)
+            .offset(x:(width*2)+10,y: CGFloat(offsetY))
             .onAppear {
                 if userModel.completedMeditations.isEmpty && medModel.favoritedMeditations.isEmpty {
                     offsetY = 105
@@ -253,9 +260,7 @@ struct FloatingMenu: View {
     }
     
     private func buttonAction(type:MenuType) {
-        withAnimation(.interpolatingSpring(stiffness: 50, damping: 26)) {
-            isOpen.toggle()
-        }
+        isOpen.toggle()
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         switch type {
         case .profile:
