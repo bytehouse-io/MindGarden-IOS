@@ -217,6 +217,7 @@ struct LearnScene: View {
         @Binding var showCourse: Bool
         @Binding var learnCourse: LearnCourse
         @Binding var completedCourses: [Int]
+        @State var completed = false
         var body: some View {
             Button {
 
@@ -226,6 +227,25 @@ struct LearnScene: View {
                     .cornerRadius(16)
                     .overlay(
                         VStack(alignment: .leading, spacing: 0) {
+                            if completed {
+                                Capsule()
+                                    .fill(Clr.yellow)
+                                    .overlay(
+                                        HStack {
+                                            Text("Completed")
+                                                .font(Font.fredoka(.semiBold, size: 12))
+                                                .minimumScaleFactor(0.05)
+                                                .lineLimit(1)
+                                                .foregroundColor(.black)
+                                            Image(systemName: "checkmark.seal.fill")
+                                                .foregroundColor(Clr.brightGreen)
+                                                .frame(width: 24)
+                                        }.padding(3)
+                                    ).neoShadow()
+                                    .padding(3)
+                                    .position(x: 0, y: 0)
+                            }
+                          
                             UrlImageView(urlString: course.img)
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(16)
@@ -244,7 +264,11 @@ struct LearnScene: View {
             }.buttonStyle(NeumorphicPress())
             .frame(width: width * 0.55, height: height * 0.175)
             .cornerRadius(16)
-
+            .opacity(completed ? 0.5 : 1)
+            .onAppear {
+                completed = completedCourses.contains(where: {$0 == course.id})
+            }
+            
             
         }
     }

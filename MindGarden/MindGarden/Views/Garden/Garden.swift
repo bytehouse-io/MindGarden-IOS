@@ -538,13 +538,6 @@ struct Garden: View {
     }
     
     var monthlyStateView: some View {
-        Button {
-            withAnimation {
-                Analytics.shared.log(event: .garden_tapped_monthly_stats)
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                activeSheet = .profile
-            }
-        } label: {
         VStack(spacing:5) {
             VStack(spacing:5) {
                 HStack {
@@ -614,7 +607,12 @@ struct Garden: View {
                 .fill(Clr.darkWhite)
                 .cornerRadius(16)
                 .rightShadow()
-        )
+        ).onTapGesture {
+            withAnimation {
+                Analytics.shared.log(event: .garden_tapped_monthly_stats)
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                activeSheet = .profile
+            }
         }
     }
     
