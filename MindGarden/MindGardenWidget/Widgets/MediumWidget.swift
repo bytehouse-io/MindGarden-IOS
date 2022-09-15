@@ -49,11 +49,11 @@ struct MediumEntry {
         case .journel:
             return "Last: \(lastDate)"
         case .meditate:
-            return meditation.title
+            return "Discover"
         case .logmood:
             return "Last Check:"
         case .breathwork:
-            return breathWork.title
+            return "Discover"
         }
     }
 }

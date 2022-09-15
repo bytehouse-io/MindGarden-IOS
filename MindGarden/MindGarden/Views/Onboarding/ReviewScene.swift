@@ -214,6 +214,14 @@ struct ReviewScene: View {
                         Button {
                             Analytics.shared.log(event: .review_tapped_explore)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            
+                            if let segments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+                                var newArr = segments
+                                newArr.append("non-tutorial")
+                                storySegments = Set(newArr)
+                                StorylyManager.refresh()
+                            }
+                            
                             UserDefaults.standard.setValue(true, forKey: "review")
                             UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
                             withAnimation {

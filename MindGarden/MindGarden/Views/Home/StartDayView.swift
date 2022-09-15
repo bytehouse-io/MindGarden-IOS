@@ -291,12 +291,12 @@ struct StartDayView: View {
                                     HStack(spacing:0) {
                                         VStack(alignment:.leading) {
                                             if userModel.completedIntroDay {
-                                                Text("✅ Intro/Day " + userModel.completedDayTitle)
+                                                Text(userModel.completedDayTitle == "10" ? "✅ Final Day" : ("✅ Intro/Day " + userModel.completedDayTitle))
                                                     .foregroundColor(Color.black)
                                                     .font(Font.fredoka(.bold, size: 24))
                                                     .padding([.top],16)
                                             } else {
-                                                Text("Intro/Day " + userModel.completedDayTitle)
+                                                Text(userModel.completedDayTitle == "10" ? "Final Day" : ("Intro/Day " + userModel.completedDayTitle))
                                                     .foregroundColor(Color.black)
                                                     .font(Font.fredoka(.bold, size: 24))
                                                     .padding([.top],16)

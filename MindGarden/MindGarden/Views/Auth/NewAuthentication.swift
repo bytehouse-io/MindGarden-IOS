@@ -350,6 +350,11 @@ struct NewAuthentication: View {
         .onDisappear {
             fromPage = ""
             showFields = false
+            if UserDefaults.standard.bool(forKey: "review") && !UserDefaults.standard.bool(forKey: "firstStory") {
+                let _ = storylyViewProgrammatic.openStory(storyGroupId: 58920, play: .StoryGroup)
+                storylyViewProgrammatic.resume()
+                UserDefaults.standard.setValue(true, forKey: "firstStory")
+            }
         }
         .transition(.opacity)
         

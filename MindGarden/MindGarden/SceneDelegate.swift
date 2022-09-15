@@ -43,7 +43,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
 //        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
-        fromInfluencer = "Mikah"
         Analytics.shared.log(event: .launchedApp)
         playSound(soundName: "background")
 
@@ -52,8 +51,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(randomInt, forKey: "abTest")
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             playSound(soundName: "background")
-            UserDefaults.standard.setValue(["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
-            UserDefaults.standard.setValue(["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: "storySegments")
+            UserDefaults.standard.setValue(["New Users", "Tip New Users", "trees for the future"], forKey: "oldSegments")
+            UserDefaults.standard.setValue(["New Users", "Tip New Users", "trees for the future"], forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
             UserDefaults.standard.setValue(["White Daisy", "Red Tulip"], forKey: K.defaults.plants)
             UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
@@ -155,10 +154,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         SceneDelegate.gardenModel.updateSelf()
-        if let _ = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {} else {
-            UserDefaults.standard.setValue(["New Users", "intro/day 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
-            UserDefaults.standard.setValue(["New Users", "intro/day 1", "Tip New Users", "trees for the future"], forKey: "storySegments")
-        }
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         launchNum += 1
         UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")

@@ -61,22 +61,36 @@ class UserViewModel: ObservableObject {
     func isIntroDone() {
         // case where old = new means that it's not done, trigger is loaded for that day.
         
-        if let oldSegs = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
-            let oldIntroDay = oldSegs.first { seg in seg.contains("Intro/Day")  }
-            if let newSegs = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                let newIntroDay = newSegs.first { seg in seg.contains("Intro/Day")  }
-                let components = oldIntroDay?.components(separatedBy: " ")
-                completedDayTitle = components?[1] ?? ""
-                if oldIntroDay == newIntroDay {
-                    if oldIntroDay == "Intro/Day 10" {
-                        completedEntireCourse = true
+        if let oldSegs = UserDefaults.standard.array(forKey: "oldSegments") as? [String] { // brand new users
+            if let oldIntroDay = oldSegs.first { seg in seg.lowercased().contains("intro/day")  } {
+                if let newSegs = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+                    let newIntroDay = newSegs.first { seg in seg.lowercased().contains("intro/day")  }
+                    let components = oldIntroDay.components(separatedBy: " ")
+                    completedDayTitle = components[1]
+                    if oldIntroDay == newIntroDay {
+                        if oldIntroDay.lowercased() == "intro/day 11" {
+                            completedEntireCourse = true
+                        } else {
+                            completedIntroDay = false
+                        }
+                    // case where old != new => completed intro day course.
                     } else {
-                        completedIntroDay = false
+                        completedIntroDay = true
                     }
-                // case where old != new => completed intro day course.
-                } else {
-                    completedIntroDay = true
                 }
+            } else { // old users
+                var arr = oldSegs
+                arr.append("intro/day 1")
+                UserDefaults.standard.setValue(arr, forKey: "oldSegments")
+                if let newSegs = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+                    var newArr = newSegs
+                    newArr.append("intro/day 1")
+                    UserDefaults.standard.setValue(newArr, forKey: "storySegments")
+                }
+                completedDayTitle = "1"
+                completedIntroDay = false
+                storySegments = Set(arr)
+                StorylyManager.refresh()
             }
         }
     }

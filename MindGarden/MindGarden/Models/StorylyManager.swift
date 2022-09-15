@@ -93,9 +93,22 @@ class StorylyManager: StorylyDelegate {
 //                       storylyViewProgrammatic.dismiss(animated: true)
                        UserDefaults.standard.setValue(storyArray, forKey: "storySegments")
                        return
-                    }
+                   } else if story.title.lowercased().contains("welcome!") {
+                       storyArray?.removeAll(where: { str in
+                           str.lowercased().contains("intro/day")
+                       })
+                       storySegments = Set(storyArray ?? [""])
+                       StorylyManager.refresh()
+                       
+                       let comps = ["intro/day", "1"]
+                       // case doesn't matter for setting storylabels
+                       storyArray =  updateComps(components: comps, segs: storyArray)
+                       unique = Array(Set(storyArray ?? [""]))
+                       SceneDelegate.userModel.completedIntroDay = true
+                   }
+               
                    unique = Array(Set(storyArray ?? [""]))
-                    UserDefaults.standard.setValue(unique, forKey: "storySegments")
+                   UserDefaults.standard.setValue(unique, forKey: "storySegments")
                }
            
        }
@@ -177,6 +190,7 @@ class StorylyManager: StorylyDelegate {
                 StorylyManager.updateSegments(segs: oldSegments)
             }
         }
+        SceneDelegate.userModel.isIntroDone()
     }
     
     static func updateSegments(segs: [String]) {

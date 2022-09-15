@@ -138,13 +138,9 @@ struct Home: View {
                 activeSheet = .profile
                 showProfile = false
             }
-            if (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) && !UserDefaults.standard.bool(forKey: "firstStory") && !UserDefaults.standard.bool(forKey: "signedIn") {
-                let _ = storylyViewProgrammatic.openStory(storyGroupId: 43505, play: .StoryGroup)
-                storylyViewProgrammatic.resume()
-                UserDefaults.standard.setValue(true, forKey: "firstStory")
-            }
+            
+        
 
-            UserDefaults.standard.setValue(true, forKey: "firstStory")
     
             userModel.checkIfPro()
             DispatchQueue.main.async {

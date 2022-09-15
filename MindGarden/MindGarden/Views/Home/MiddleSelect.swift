@@ -38,6 +38,7 @@ struct MiddleSelect: View {
                         Img.morningSun
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .frame(width: UIScreen.screenWidth * 0.9)
                         backButton.padding(.trailing, UIScreen.main.bounds.width/1.35)
                         heart
                             .padding(.leading, UIScreen.main.bounds.width/1.2)

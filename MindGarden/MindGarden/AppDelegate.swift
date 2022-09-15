@@ -115,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         }
         
         if UserDefaults.standard.value(forKey: "backgroundAnimation") == nil {
-            UserDefaults.standard.set(false, forKey: "backgroundAnimation")
+            UserDefaults.standard.set(true, forKey: "backgroundAnimation")
         }
         
         return true
