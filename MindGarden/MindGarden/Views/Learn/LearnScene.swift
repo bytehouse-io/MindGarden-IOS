@@ -226,12 +226,20 @@ struct LearnScene: View {
                     .fill(Clr.darkWhite)
                     .cornerRadius(16)
                     .overlay(
-                        VStack(alignment: .leading, spacing: 0) {
+                        ZStack {
+                            VStack(alignment: .leading, spacing: 0) {
+                             
+                              
+                                UrlImageView(urlString: course.img)
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(16)
+                                    .frame(width: width * 0.55, height: height * 0.2)
+                            }.opacity(completed ? 0.5 : 1)
                             if completed {
                                 Capsule()
                                     .fill(Clr.yellow)
                                     .overlay(
-                                        HStack {
+                                        HStack(spacing: 2) {
                                             Text("Completed")
                                                 .font(Font.fredoka(.semiBold, size: 12))
                                                 .minimumScaleFactor(0.05)
@@ -241,16 +249,14 @@ struct LearnScene: View {
                                                 .foregroundColor(Clr.brightGreen)
                                                 .frame(width: 24)
                                         }.padding(3)
-                                    ).neoShadow()
+                                    )
                                     .padding(3)
-                                    .position(x: 0, y: 0)
+                                    .frame(width: 100, height: 40)
+                                    .position(x: 70, y: 40)
+                                    .rightShadow()
                             }
-                          
-                            UrlImageView(urlString: course.img)
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(16)
-                                .frame(width: width * 0.55, height: height * 0.2)
-                        }.onTapGesture {
+                        }
+                      .onTapGesture {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                             if course.category == "meditation" {
                                 Analytics.shared.log(event: .learn_tapped_meditation_course)
@@ -264,7 +270,6 @@ struct LearnScene: View {
             }.buttonStyle(NeumorphicPress())
             .frame(width: width * 0.55, height: height * 0.175)
             .cornerRadius(16)
-            .opacity(completed ? 0.5 : 1)
             .onAppear {
                 completed = completedCourses.contains(where: {$0 == course.id})
             }
