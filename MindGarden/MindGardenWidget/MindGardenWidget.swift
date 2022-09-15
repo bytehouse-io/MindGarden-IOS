@@ -39,9 +39,12 @@ struct Provider: IntentTimelineProvider {
         let meditation = userDefaults?.value(forKey: "featuredMeditation") as? Int
         let breathwork = userDefaults?.value(forKey: "featuredBreathwork") as? Int
         
+//        let breathImg = Breathwork.breathworks.first(where: { $0.id == breathwork } ) ?? Breathwork.breathworks.first!
+//        let meditationImg = Meditation.allMeditations.first(where: { $0.id == meditation } ) ?? Meditation.allMeditations.first!
+        
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1)
+            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1/*,meditationImg: meditationImg.img, breathWorkImg:breathImg.img*/)
             entries.append(entry)
         }
 
@@ -60,6 +63,8 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     var meditationId: Int = 1
     var breathWorkId: Int = -1
+    var meditationImg: Image = Image("meditatingTurtle")
+    var breathWorkImg: Image = Image("mediumWidgetBreathwork")
 }
 
 struct MindGardenWidgetEntryView : View {
@@ -82,7 +87,7 @@ struct MindGardenWidgetEntryView : View {
             case .systemSmall:
                 SmallWidget(streak: entry.streakNumber)
             case .systemMedium:
-                NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId))
+                NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId, breathworkImg: entry.breathWorkImg, meditationImg: entry.meditationImg))
             case .systemLarge:
                 LargeWidget(streakNumber: entry.streakNumber, grid:entry.grid)
                     .environmentObject(GardenViewModel())

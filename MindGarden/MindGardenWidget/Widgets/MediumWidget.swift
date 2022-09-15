@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct MediumEntry {
     let lastDate:String
     let lastMood:String
     let meditationId:Int?
     let breathworkId:Int?
+    
+    let breathworkImg:Image?
+    let meditationImg:Image?
     
     var moodImage:Image {
         return Mood.getMoodImage(mood: Mood.getMood(str: lastMood))
@@ -30,16 +34,13 @@ struct MediumEntry {
         case .journel:
             return Image("mediumWidgetJournel")
         case .meditate:
-            return Image("meditatingTurtle")
-//            if meditation.imgURL != "" {
-//                return Image("meditatingTurtle")
-//            } else {
-//                return meditation.img
-//            }
+//            return Image("meditatingTurtle")
+            return meditation.img
         case .logmood:
             return Image("mediumWidgetMood")
         case .breathwork:
-            return Image("mediumWidgetBreathwork")
+//            return Image("mediumWidgetBreathwork")
+            return breathWork.img
         }
     }
     
