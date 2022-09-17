@@ -104,6 +104,7 @@
 		8862586B27C4369E0093D18C /* check2.json in Resources */ = {isa = PBXBuildFile; fileRef = 8862586A27C4369D0093D18C /* check2.json */; };
 		8864293627E13B6400DB7564 /* fire.json in Resources */ = {isa = PBXBuildFile; fileRef = 8864293527E13B6400DB7564 /* fire.json */; };
 		88661F8B28528DA50052B9B0 /* firefox.png in Resources */ = {isa = PBXBuildFile; fileRef = 88661F8A28528DA50052B9B0 /* firefox.png */; };
+		886D643D28D61CB300F5E804 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = 886D643C28D61CB200F5E804 /* onboarding1.json */; };
 		8876A60627C03C3B00A9622F /* LearnScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8876A60527C03C3B00A9622F /* LearnScene.swift */; };
 		887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C578528637EA300CCE5F2 /* AppTrackingTransparency.framework */; };
 		8884A994284A75E200B0B315 /* flame.json in Resources */ = {isa = PBXBuildFile; fileRef = 8884A993284A75E200B0B315 /* flame.json */; };
@@ -126,7 +127,6 @@
 		88CF8E6F287CDF7800BA89B9 /* ProfileTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */; };
 		88CF8E71287CE53B00BA89B9 /* ProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */; };
 		88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D3803B281F26D7003B0A3D /* ConfirmModal.swift */; };
-		88D39DA528CE717F001C66F7 /* onboarding1.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39DA428CE717D001C66F7 /* onboarding1.json */; };
 		88D39DA728CE720C001C66F7 /* turtleNotif.json in Resources */ = {isa = PBXBuildFile; fileRef = 88D39DA628CE720C001C66F7 /* turtleNotif.json */; };
 		88D4C5D527F63D8B00CBB956 /* Stories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D427F63D8B00CBB956 /* Stories.swift */; };
 		88D4C5D727F6439A00CBB956 /* StorylyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D4C5D627F6439A00CBB956 /* StorylyManager.swift */; };
@@ -380,6 +380,7 @@
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
 		8864293527E13B6400DB7564 /* fire.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fire.json; sourceTree = "<group>"; };
 		88661F8A28528DA50052B9B0 /* firefox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firefox.png; sourceTree = "<group>"; };
+		886D643C28D61CB200F5E804 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding1.json; sourceTree = "<group>"; };
 		8871EF992868D5BE00E28616 /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		8876A60527C03C3B00A9622F /* LearnScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnScene.swift; sourceTree = "<group>"; };
 		887C578528637EA300CCE5F2 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
@@ -401,7 +402,6 @@
 		88CF8E6E287CDF7800BA89B9 /* ProfileTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabBar.swift; sourceTree = "<group>"; };
 		88CF8E70287CE53B00BA89B9 /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		88D3803B281F26D7003B0A3D /* ConfirmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmModal.swift; sourceTree = "<group>"; };
-		88D39DA428CE717D001C66F7 /* onboarding1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = onboarding1.json; path = ../../../../../../Downloads/onboarding1.json; sourceTree = "<group>"; };
 		88D39DA628CE720C001C66F7 /* turtleNotif.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = turtleNotif.json; path = ../../../../../../Downloads/turtleNotif.json; sourceTree = "<group>"; };
 		88D4C5D427F63D8B00CBB956 /* Stories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stories.swift; sourceTree = "<group>"; };
 		88D4C5D627F6439A00CBB956 /* StorylyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorylyManager.swift; sourceTree = "<group>"; };
@@ -817,7 +817,7 @@
 		FE4D80E926ED4A3C002FE291 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				88D39DA428CE717D001C66F7 /* onboarding1.json */,
+				886D643C28D61CB200F5E804 /* onboarding1.json */,
 				58266E2628798E30008594E0 /* party.json */,
 				589DCB072873401B005A8D7E /* turtle.json */,
 				58D5C0F327FB675A00454937 /* background.json */,
@@ -1423,7 +1423,6 @@
 				FEB6AFA2265D95F700224BFD /* LaunchScreen.storyboard in Resources */,
 				88F36AC027DFBE900060FD8E /* piano2.mp3 in Resources */,
 				589DCB082873401B005A8D7E /* turtle.json in Resources */,
-				88D39DA528CE717F001C66F7 /* onboarding1.json in Resources */,
 				888A81AB283FF31A00E5D225 /* eduRacoon.png in Resources */,
 				88F4BF85286B6ED6000C6E0B /* Fredoka-Bold.ttf in Resources */,
 				58C8BE302804AAAE00075FD2 /* seedPacket.wav in Resources */,
@@ -1439,6 +1438,7 @@
 				58266E2728798E30008594E0 /* party.json in Resources */,
 				FED7437427A734E700435D0A /* coins.json in Resources */,
 				88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */,
+				886D643D28D61CB300F5E804 /* onboarding1.json in Resources */,
 				882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */,
 				FE9B407E26A65820000DF00C /* nature.mp3 in Resources */,
 				88F36ABC27DFBE900060FD8E /* flute.mp3 in Resources */,
