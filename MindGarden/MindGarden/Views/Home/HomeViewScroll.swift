@@ -42,6 +42,16 @@ struct HomeViewScroll: View {
                             .padding(.leading, -20)
                             .offset(x: -20, y: -60)
                         Spacer()
+                        HStack(alignment: .bottom) {
+                            Img.streak
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 24)
+                            Text("\(bonusModel.streakNumber)")
+                                .font(Font.fredoka(.medium, size: 24))
+                                .foregroundColor(Clr.healthSecondary)
+                            
+                        }.offset(x: -50, y: -30)
                     }
                     VStack {
  

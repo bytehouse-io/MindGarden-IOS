@@ -25,6 +25,7 @@ struct StreakScene: View {
     @State private var showButtons = true
     @State private var triggerRating = false
     @State private var showNextSteps = false
+    @State private var showBackground = false
     
     var subTitle : String {
         switch bonusModel.streakNumber {
@@ -47,6 +48,16 @@ struct StreakScene: View {
     
     var body: some View {
         ZStack {
+            if showBackground {
+                Img.pondBackground
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+//                                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .edgesIgnoringSafeArea(.all)
+                    .transition(.opacity)
+            } else {
+                Clr.darkWhite.edgesIgnoringSafeArea(.all)
+            }
             VStack(spacing: 0) {
                 Spacer()
                 ZStack {
@@ -151,9 +162,11 @@ struct StreakScene: View {
                 if !UserDefaults.standard.bool(forKey: "isPro") {
                     viewRouter.currentPage = .pricing
                 } else {
+                    showBackground.toggle()
                     viewRouter.currentPage = .garden
                 }
             } else {
+                    showBackground.toggle()
                     viewRouter.previousPage = .garden
                     viewRouter.currentPage = .garden
             }

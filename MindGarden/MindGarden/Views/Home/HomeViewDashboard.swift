@@ -11,6 +11,7 @@ struct HomeViewDashboard: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var bonusModel: BonusViewModel
     @Binding var showModal : Bool
     @Binding var totalBonuses : Int
     @Binding var greeting : String
@@ -27,9 +28,13 @@ struct HomeViewDashboard: View {
             VStack(spacing: 30){
                 HStack {
                     VStack(alignment:.leading) {
-                        Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
-                            .font(Font.fredoka(.regular, size: 20))
-                            .foregroundColor(Clr.darkGray)
+                        HStack {
+                            Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
+                                .font(Font.fredoka(.regular, size: 20))
+                                .foregroundColor(Clr.darkGray)
+
+                        }
+                   
                         Text("\(greeting), \(name)")
                             .font(Font.fredoka(.medium, size: 28))
                             .foregroundColor(Clr.black2)

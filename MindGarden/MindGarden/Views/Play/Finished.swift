@@ -377,7 +377,7 @@ struct Finished: View {
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3
                 }
-                if reward == 0 {
+                if reward == 0 && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
                     viewRouter.currentPage = .garden
                 }
                                 
@@ -386,6 +386,7 @@ struct Finished: View {
                     if model.shouldStreakUpdate {
                         bonusModel.updateStreak()
                     }
+                    
                     
                     if !userModel.ownedPlants.contains(where: { plt in  plt.title == "Cherry Blossoms"}) && UserDefaults.standard.bool(forKey: "unlockedCherry") {
                         userModel.willBuyPlant = Plant.badgePlants.first(where: { p in

@@ -121,6 +121,11 @@ struct WidgetPrompt: View {
                                     .foregroundColor(.white)
                                     .font(Font.fredoka(.bold, size: 20))
                             }.scaleEffect(currentStep == index ? 1.2 : 1.0)
+                                .onTapGesture {
+                                    withAnimation {
+                                        currentStep = index
+                                    }
+                                }
                             if index != 3 {
                                 Spacer()
                             }

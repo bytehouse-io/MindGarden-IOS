@@ -257,15 +257,7 @@ struct StartDayView: View {
                     }.buttonStyle(ScalePress() )
                     if !userModel.completedEntireCourse {
                         Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                if !userModel.completedIntroDay {
-                                    let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
-                                    storylyViewProgrammatic.resume()
-                                    Analytics.shared.log(event: .home_tapped_introDay)
-                                    Amplitude.instance().logEvent("intro/day", withEventProperties: ["day" : userModel.completedDayTitle])
-                                }
-                            }
+                      
                         } label: {
                             ZStack {
                                 Img.shortVideoBG
@@ -320,6 +312,18 @@ struct StartDayView: View {
                                 .opacity(playEntryAnimation ? 1 : 0)
                                 .animation(.spring().delay(0.275), value: playEntryAnimation)
                                 .opacity(userModel.completedIntroDay ? 0.5 : 1)
+                                .onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        if !userModel.completedIntroDay {
+                                            let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
+                                            print(userModel.completedDayTitle, "reviver")
+                                            storylyViewProgrammatic.resume()
+                                            Analytics.shared.log(event: .home_tapped_introDay)
+                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day" : userModel.completedDayTitle])
+                                        }
+                                    }
+                                }
                         }.buttonStyle(ScalePress() )
                     }
                     ZStack {
