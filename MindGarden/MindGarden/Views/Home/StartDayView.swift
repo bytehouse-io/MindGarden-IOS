@@ -34,7 +34,7 @@ struct StartDayView: View {
                 Spacer()
             }
             
-            HStack {
+            HStack(spacing: 0) {
                 VStack(spacing:0) {
                     Spacer()
                     Image(systemName: "checkmark.circle.fill")
@@ -384,11 +384,11 @@ struct StartDayView: View {
                             .padding(.top, 10)
                         }
                     }
-                    .frame(width: UIScreen.screenWidth * 0.775)
+                    .frame(width: UIScreen.screenWidth * 0.75)
                     .offset(y: playEntryAnimation ? 0 : 100)
                     .opacity(playEntryAnimation ? 1 : 0)
                     .animation(.spring().delay(0.3), value: playEntryAnimation)
-                }
+                }.padding(.leading, 12)
             }
         }
         .onReceive(gardenModel.$grid){ grid in
