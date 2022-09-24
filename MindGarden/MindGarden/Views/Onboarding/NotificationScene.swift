@@ -111,7 +111,7 @@ struct NotificationScene: View {
                                             Spacer()
                                             Image(systemName: "chevron.down")
                                                 .font(Font.title)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(Clr.black2)
                                         }.padding(.horizontal)
                                     )
                             }.buttonStyle(NeumorphicPress())
@@ -128,7 +128,7 @@ struct NotificationScene: View {
                                         HStack {
                                             Text("\(frequency)")
                                                 .font(Font.fredoka(.bold, size: 26))
-                                                .foregroundColor(.black)
+                                                .foregroundColor(Clr.black2)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                             Spacer()

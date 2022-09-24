@@ -30,7 +30,7 @@ struct Stories: UIViewRepresentable {
         storylyViewProgrammatic.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         storylyViewProgrammatic.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         storylyViewProgrammatic.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        storylyViewProgrammatic.storyGroupListStyling = StoryGroupListStyling(edgePadding: 15, paddingBetweenItems: 5)
+        storylyViewProgrammatic.storyGroupListStyling = StoryGroupListStyling(edgePadding: 10, paddingBetweenItems: 5)
         return view
     }
     

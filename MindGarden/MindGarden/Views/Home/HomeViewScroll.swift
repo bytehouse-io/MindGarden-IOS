@@ -55,7 +55,7 @@ struct HomeViewScroll: View {
                     }
                     VStack {
  
-                    HStack(spacing: 0) {
+                    HStack(spacing: -4) {
                         HStack {
                             FloatingMenu(showModal:$showModal, activeSheet: $activeSheet, totalBonuses:$totalBonuses)
                                 .edgesIgnoringSafeArea(.all)
@@ -77,6 +77,7 @@ struct HomeViewScroll: View {
                         .offset(x: width * -0.025)
                     .padding(.top, 40)
                     .zIndex(1)
+                    .offset(x: -4)
        
                     HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
                     StartDayView()

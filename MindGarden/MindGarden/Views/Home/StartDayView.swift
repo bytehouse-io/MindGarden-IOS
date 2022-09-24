@@ -145,7 +145,7 @@ struct StartDayView: View {
                                         .font(Font.fredoka(.medium, size: 16))
                                         .lineLimit(2)
                                         .minimumScaleFactor(0.05)
-                                }.padding(.leading,10)
+                                }.padding(.leading,16)
                                 if !gardenModel.isMoodDone {
                                     SelectMood.frame(height: 85)
                                 } else {
@@ -188,7 +188,7 @@ struct StartDayView: View {
                                             .font(Font.fredoka(.medium, size: 16))
                                             .lineLimit(2)
                                             .minimumScaleFactor(0.05)
-                                    }.padding(.leading,10)
+                                    }.padding(.leading,16)
                                     Spacer()
                                 }
                                 if gardenModel.isGratitudeDone {
@@ -299,7 +299,7 @@ struct StartDayView: View {
                                                 .font(Font.fredoka(.medium, size: 16))
                                                 .lineLimit(2)
                                                 .minimumScaleFactor(0.05)
-                                        }.padding([.leading, .top], 20)
+                                        }.padding([.leading, .top], 24)
                                         Spacer()
                                     }
                                     Spacer()

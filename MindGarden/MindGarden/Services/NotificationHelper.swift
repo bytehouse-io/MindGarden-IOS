@@ -308,6 +308,7 @@ struct NotificationHelper {
         center.removePendingNotificationRequests(withIdentifiers: identifiers)
     }
     
+    
     static func createMindfulNotifs() {
         // hours between 9 -> 22
         // 7 days a week
@@ -351,6 +352,44 @@ struct NotificationHelper {
                 } else { // present
                     scheduleNotification(at: createDate(weekday: weekday, hour: arr[randNum], minute: 30), weekDay: weekday, title: "Reminder to be Present", subtitle: present[randNotifType] , isMindful: true)
                 }
+            }
+        }
+    }
+    
+    //Create Date from picker selected value.
+    func createDate(weekday: Int, hour: Int, minute: Int, year: Int)->Date{
+
+        var components = DateComponents()
+        components.hour = hour
+        components.minute = minute
+        components.year = year
+        components.weekday = weekday // sunday = 1 ... saturday = 7
+        components.weekdayOrdinal = 10
+        components.timeZone = .current
+
+        let calendar = Calendar(identifier: .gregorian)
+        return calendar.date(from: components)!
+    }
+
+    //Schedule Notification with weekly bases.
+    func scheduleNotif(at date: Date, body: String, titles:String) {
+
+        let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerWeekly, repeats: true)
+
+        let content = UNMutableNotificationContent()
+        content.title = titles
+        content.body = body
+        content.sound = UNNotificationSound.default
+        content.categoryIdentifier = "todoList"
+
+        let request = UNNotificationRequest(identifier: "textNotification", content: content, trigger: trigger)
+
+        //UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().add(request) {(error) in
+            if let error = error {
+                print("Uh oh! We had an error: \(error)")
             }
         }
     }
