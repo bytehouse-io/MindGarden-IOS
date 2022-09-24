@@ -17,6 +17,7 @@ target 'MindGarden' do
    pod 'Firebase/DynamicLinks'
    pod 'Amplitude', '~> 8.5.0'
    pod 'Firebase/Crashlytics'
+   pod 'EnvoySDK'
    
    target 'MindGardenWidgetExtension' do
      pod 'FirebaseFirestore'
