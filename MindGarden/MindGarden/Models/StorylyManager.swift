@@ -129,15 +129,17 @@ class StorylyManager: StorylyDelegate {
     }
     
     private func updateComps(components: [String], segs: [String]?) -> [String]? {
-        var segments = segs
-        if let num = Int(components[1]) {
-            let count = num + 1
-            var finalStr = components[0]
-            finalStr += " " + String(count)
-            
-            segments?.append(finalStr)
+        if var segments = segs {
+            if let num = Int(components[1]) {
+                let count = num + 1
+                var finalStr = components[0]
+                finalStr += " " + String(count)
+                
+                segments.append(finalStr)
+            }
+            return segments
         }
-        return segments
+        return [""]
     }
     static func updateStories() {
         let formatter: DateFormatter = {
