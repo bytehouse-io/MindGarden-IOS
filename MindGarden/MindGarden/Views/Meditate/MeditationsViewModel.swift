@@ -159,7 +159,7 @@ class MeditationViewModel: ObservableObject {
                     }
                 }
             } else {
-                if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 &&                             !UserDefaults.standard.bool(forKey: "10days") {
+                if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 && !UserDefaults.standard.bool(forKey: "10days") {
                     featuredMeditation = Meditation.allMeditations.first(where: { med in med.id == 105 })
                 } else {
                     if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 18 && !UserDefaults.standard.bool(forKey: "intermediateCourse") {
@@ -211,7 +211,7 @@ class MeditationViewModel: ObservableObject {
             filtedMeds = Meditation.allMeditations.filter {  med in med.type != .lesson && med.isNew == false                
             }
         }
-        switch UserDefaults.standard.string(forKey: "reason") {
+        switch UserDefaults.standard.string(forKey: "reason") ?? "" {
         case "Sleep better":
             if Calendar.current.component( .hour, from:Date() ) >= 18 {
                 filtedMeds = filtedMeds.filter { med in // day time meds only

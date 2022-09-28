@@ -81,7 +81,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         SceneDelegate.medModel.updateSelf()
 
 
-        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
+        if let onBoarding = UserDefaults.standard.string(forKey: K.defaults.onboarding), onBoarding != "done" {
             SceneDelegate.bonusModel.totalBonuses = 1
             SceneDelegate.bonusModel.sevenDayProgress = 0.1
             SceneDelegate.bonusModel.thirtyDayProgress = 0.08
