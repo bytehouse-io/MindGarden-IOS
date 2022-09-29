@@ -129,6 +129,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height + 10)
                                             .environmentObject(bonusModel)
                                             .environmentObject(profileModel)
+                                            .environmentObject(userModel)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .learn:
                                         DiscoverScene()
@@ -176,6 +177,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height + 160)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
+                                            .environmentObject(viewRouter)
                                     case .authentication:
                                         NewAuthentication(viewModel: authModel)
                                             .frame(height: geometry.size.height)
