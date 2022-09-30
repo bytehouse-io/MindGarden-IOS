@@ -71,9 +71,9 @@ class BonusViewModel: ObservableObject {
         
 
         fiftyOffInterval = interval.stringFromTimeInterval()
-        self.fiftyOffTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
+        self.fiftyOffTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             interval -= 1
-            fiftyOffInterval = interval.stringFromTimeInterval()
+            self?.fiftyOffInterval = interval.stringFromTimeInterval()
             if interval <= 0 {
                 timer.invalidate()
             }
@@ -94,12 +94,12 @@ class BonusViewModel: ObservableObject {
         
 
         progressiveInterval = interval.stringFromTimeInterval()
-        self.progressiveTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] timer in
+        self.progressiveTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
             interval -= 1
-            progressiveInterval = interval.stringFromTimeInterval()
+            self?.progressiveInterval = interval.stringFromTimeInterval()
             if interval <= 0 {
                 timer.invalidate()
-                progressiveDisclosure(lastStreakDate: formatter.string(from: Date()))
+                self?.progressiveDisclosure(lastStreakDate: self?.formatter.string(from: Date()) ?? "")
             }
         }
     }
@@ -299,10 +299,10 @@ class BonusViewModel: ObservableObject {
             updateTips(tip: "Tip Potion Shop")
         }
         
-        if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - formatter.date(from: lastStreakDate)! <= 172800) {
+        if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - (formatter.date(from: self.lastStreakDate) ?? Date()) <= 172800) {
             launchNum += 1
             
-        } else if  Date() - formatter.date(from: self.lastStreakDate)! > 172800 {
+        } else if  Date() - (formatter.date(from: self.lastStreakDate) ?? Date()) > 172800 {
             launchNum += 1
         }
         UserDefaults.standard.setValue(launchNum, forKey: "dailyLaunchNumber")

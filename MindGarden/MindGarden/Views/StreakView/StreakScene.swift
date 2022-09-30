@@ -260,22 +260,22 @@ class BubbleEffectViewModel: ObservableObject{
         if timer != nil{
             timer?.invalidate()
         }
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { (timer) in
-            let bubble = BubbleViewModel(height: 50, width: 50, x: frameSize.width/2, y: self.viewBottom, color: .white, lifetime: lifetime)
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] (timer) in
+            let bubble = BubbleViewModel(height: 50, width: 50, x: frameSize.width/2, y: self?.viewBottom ?? 0.0, color: .white, lifetime: lifetime)
             //Add to array
-            self.bubbles.append(bubble)
+            self?.bubbles.append(bubble)
             //Get rid if the bubble at the end of its lifetime
-            Timer.scheduledTimer(withTimeInterval: bubble.lifetime, repeats: false, block: {_ in
-                self.bubbles.removeAll(where: {
+            Timer.scheduledTimer(withTimeInterval: bubble.lifetime, repeats: false, block: {  _ in
+                self?.bubbles.removeAll(where: {
                     $0.id == bubble.id
                 })
             })
-            if self.timerCount >= self.bubbleCount {
+            if self?.timerCount ?? 0 >= self?.bubbleCount ?? 0 {
                 //Stop when the bubbles will get cut off by screen
                 timer.invalidate()
-                self.timer = nil
+                self?.timer = nil
             }else{
-                self.timerCount += 1
+                self?.timerCount += 1
             }
         }
     }

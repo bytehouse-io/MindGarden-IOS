@@ -241,7 +241,7 @@ struct ProfilePage: View {
         timeFormatter.amSymbol = "AM"
         timeFormatter.pmSymbol = "PM"
         let convertedArray = dataArr
-            .map { return ($0, timeFormatter.date(from: $0["timeStamp"] ?? "12:00 AM")!) }
+            .map { return ($0, timeFormatter.date(from: $0["timeStamp"] ?? "12:00 AM") ?? Date()) }
             .sorted { $0.1 < $1.1 }
             .map(\.0)
         return convertedArray

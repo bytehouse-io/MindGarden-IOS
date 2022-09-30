@@ -38,7 +38,7 @@ class MeditationViewModel: ObservableObject {
     @Published var secondsCounted: Float = 0
     //animation glitch with a picture so added this var to trigger it manually
     @Published var lastSeconds: Bool = false
-    var timer: Timer = Timer()
+    var timer: Timer?
     var forwardCounter = 0
     var shouldStreakUpdate = false
     
@@ -61,6 +61,7 @@ class MeditationViewModel: ObservableObject {
     }
 
     init() {
+        timer = Timer()
         $selectedCategory
             .sink { [unowned self] value in
                 if value == .all {
