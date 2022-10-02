@@ -104,7 +104,7 @@ struct CloseButton: View {
                 .renderingMode(.template)
                 .foregroundColor(Clr.darkWhite)
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 35)
+                .frame(height: 30)
                 .background(Circle().foregroundColor(Clr.black2).padding(1))
         }.buttonStyle(NeoPress())
     }

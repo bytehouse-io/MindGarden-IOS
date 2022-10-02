@@ -40,6 +40,7 @@ class UserViewModel: ObservableObject {
     @Published var completedIntroDay = false
     @Published var completedEntireCourse = false
     @Published var completedDayTitle = ""
+    @Published var showDay1Complete = false
     private var validationCancellables: Set<AnyCancellable> = []
     var joinDate: String = ""
     var greeting: String = ""

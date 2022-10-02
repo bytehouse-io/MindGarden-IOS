@@ -92,7 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
                     if let e = error {
                         print("Sign in error: \(e.localizedDescription)")
                     } else {
-                        
                         print("User \(uid) signed in")
                     }
                 })
@@ -120,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         
         return true
     }
+
     
     
     func playSound(soundName: String) {

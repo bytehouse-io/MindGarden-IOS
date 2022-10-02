@@ -5,14 +5,13 @@
 //  Created by Dante Kim on 8/7/21.
 //
 enum Experience {
-    case often, nowAndThen, fewTimes, never
+    case often, nowAndThen, never
     
     var title: String {
         switch self {
-        case .often: return "I practice often"
-        case .nowAndThen: return "I practice now and then"
-        case .fewTimes: return "I've tried a few times"
-        case .never: return "I've never practiced"
+        case .often: return "Meditate often"
+        case .nowAndThen: return "Have tried to meditate"
+        case .never: return "Have never meditated"
         }
     }
 }

@@ -62,10 +62,11 @@ struct Finished: View {
                         VStack {
                             ZStack {
                                 Rectangle()
-                                    .fill(Clr.finishedGreen)
+                                    .fill(Clr.brightGreen)
                                     .frame(width: g.size
                                             .width/1, height: g.size.height/2)
                                     .offset(y: -g.size.height/6)
+                                    .opacity(0.35)
                                 Img.greenBlob
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -267,7 +268,11 @@ struct Finished: View {
                                             if launchNum == 2 || launchNum == 4 || launchNum == 7 || launchNum == 9  {
                                                 showRating = true
                                                 if !UserDefaults.standard.bool(forKey: "reviewedApp") {
-                                                    triggerRating.toggle()
+                                                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                                                        SKStoreReviewController.requestReview(in: scene)
+                                                    } else {
+                                                        dismiss()
+                                                    }
                                                 } else {
                                                     dismiss()
                                                 }
@@ -402,7 +407,7 @@ struct Finished: View {
                 // onboarding
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                     Analytics.shared.log(event: .onboarding_finished_meditation)
-                    UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
                     isOnboarding = true
                 } else {
                     OneSignal.sendTag("firstMeditation", value: "true")
@@ -414,11 +419,9 @@ struct Finished: View {
                 Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
                       primaryButton: .default(Text("Yes!")) {
                     Analytics.shared.log(event: .rating_tapped_yes)
-                    UserDefaults.standard.setValue(true, forKey: "reviewedApp")
                     showRating = true
-                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                        SKStoreReviewController.requestReview(in: scene)
-                    }
+                    UserDefaults.standard.setValue(true, forKey: "reviewedApp")
+   
                 },
                       secondaryButton: .default(Text("No")) {
                     Analytics.shared.log(event: .rating_tapped_no)

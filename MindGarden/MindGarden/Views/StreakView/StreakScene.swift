@@ -25,7 +25,6 @@ struct StreakScene: View {
     @State private var showButtons = true
     @State private var triggerRating = false
     @State private var showNextSteps = false
-    @State private var showBackground = false
     
     var subTitle : String {
         switch bonusModel.streakNumber {
@@ -48,16 +47,8 @@ struct StreakScene: View {
     
     var body: some View {
         ZStack {
-            if showBackground {
-                Img.pondBackground
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-//                                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                    .transition(.opacity)
-            } else {
-                Clr.darkWhite.edgesIgnoringSafeArea(.all)
-            }
+            Clr.darkWhite.edgesIgnoringSafeArea(.all)
+            
             VStack(spacing: 0) {
                 Spacer()
                 ZStack {
@@ -99,8 +90,7 @@ struct StreakScene: View {
 //                    .padding(.top, 50)
                     Button {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
-                        if Auth.auth().currentUser?.email == nil && (launchNum == 5 || launchNum == 7 || launchNum == 9) {
+                        if !SceneDelegate.profileModel.isLoggedIn && gardenModel.numMeds + gardenModel.numBreaths > 1  {
                             fromPage = "garden"
                             viewRouter.currentPage = .authentication
                         } else {
@@ -156,17 +146,15 @@ struct StreakScene: View {
 //            viewRouter.previousPage = .garden
 //            viewRouter.currentPage = .pricing
             let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
-            if launchNum == 2 || launchNum == 4 || launchNum == 6 || launchNum == 8 {
+            if launchNum % 3 == 0 && launchNum != 1 {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
                 if !UserDefaults.standard.bool(forKey: "isPro") {
                     viewRouter.currentPage = .pricing
                 } else {
-                    showBackground.toggle()
                     viewRouter.currentPage = .garden
                 }
             } else {
-                    showBackground.toggle()
                     viewRouter.previousPage = .garden
                     viewRouter.currentPage = .garden
             }

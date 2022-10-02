@@ -62,16 +62,8 @@ struct ContentView: View {
                 ZStack {
                     GeometryReader { geometry in
                         ZStack {
-                            if viewRouter.currentPage == .garden && K.hasNotch() {
-                                Img.pondBackground
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-//                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .edgesIgnoringSafeArea(.all)
-                                    .transition(.opacity)
-                            } else {
-                                Clr.darkWhite.edgesIgnoringSafeArea(.all)
-                            }
+                            Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                            
                             Rectangle()
                                 .fill(Color.gray)
                                 .zIndex(100)
@@ -107,8 +99,9 @@ struct ContentView: View {
                                             .environmentObject(authModel)
                                             .onAppear {
                                                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                                                    showPopupWithAnimation {
+                                                    withAnimation {
                                                         self.isOnboarding = true
+                                                        addMood = true
                                                     }
                                                 }
                                             }
@@ -275,7 +268,7 @@ struct ContentView: View {
                             ) {
                                 ZStack {
                                     Rectangle()
-                                        .opacity(addMood || addGratitude || isOnboarding || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
+                                        .opacity(addMood || addGratitude || isOnboarding || userModel.showDay1Complete || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
                                         .foregroundColor(Clr.black1)
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
@@ -302,37 +295,37 @@ struct ContentView: View {
                                         }
                                     //The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
                                     //onboarding userdefault should be equal to signedUp because we just completed it.
-                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp"  {
-                                        VStack {
-                                            switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
-                                            case "signedUp":
-                                                Img.moodTurtle
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                            case "mood":
-                                                Img.gratitudeTurtle
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                            case "gratitude":
-                                                Img.meditateTurtle
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                            default: EmptyView()
-                                            }
-                                        }
-                                        .offset(x:(playAnim ? 0 : -300))
-                                        .animation(.spring(), value: userModel.showCoinAnimation)
-                                        .frame(width: 200)
-                                        .position(x: 50, y: geometry.size.height/1.35)
-                                        .onAppear() {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                withAnimation(.spring()) {
-                                                    playAnim = true
-                                                }
-                                            }
-                                        }
-                                    }
-                                }.offset(y: viewRouter.currentPage == .garden ? (!K.hasNotch() ? 0 : UIScreen.screenHeight * -0.07) : 0)
+//                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp"  {
+//                                        VStack {
+//                                            switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
+//                                            case "signedUp":
+//                                                Img.moodTurtle
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fit)
+//                                            case "mood":
+//                                                Img.gratitudeTurtle
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fit)
+//                                            case "gratitude":
+//                                                Img.meditateTurtle
+//                                                    .resizable()
+//                                                    .aspectRatio(contentMode: .fit)
+//                                            default: EmptyView()
+//                                            }
+//                                        }
+//                                        .offset(x:(playAnim ? 0 : -300))
+//                                        .animation(.spring(), value: userModel.showCoinAnimation)
+//                                        .frame(width: 200)
+//                                        .position(x: 50, y: geometry.size.height/1.35)
+//                                        .onAppear() {
+//                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                                                withAnimation(.spring()) {
+//                                                    playAnim = true
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+                                }.offset(y: 16)
                          
                                 MoodCheck(shown: $addMood, showPopUp: $showPopUp, PopUpIn: $PopUpIn, showPopUpOption: $showPopUpOption, showItems: $showItems)
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
@@ -342,6 +335,60 @@ struct ContentView: View {
                                 WidgetPrompt(profileModel: profileModel)
                                     .offset(y: profileModel.showWidget ? 0 : geometry.size.height + 75)
                                     .animation(.default, value: profileModel.showWidget)
+                                BottomSheet(
+                                    isOpen: $userModel.showDay1Complete,
+                                    maxHeight: geometry.size.height * (K.isSmall() ? 1 : 0.75),
+                                    minHeight: 0.1,
+                                    trigger: {
+                                        Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
+                                        bonusModel.tripleBonus()
+                                    }
+                                ) {
+                                    VStack {
+                                        Img.completeRacoon
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 200)
+                                        HStack(alignment: .center){
+                                            Img.coin
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 30)
+                                            Text("500 Bonus Coins")
+                                                .font(Font.fredoka(.bold, size: 32))
+                                                .foregroundColor(Clr.darkgreen)
+                                        }
+                                        Text("You're a rockstar! That's \neverything for today")
+                                            .font(Font.fredoka(.medium, size: 20))
+                                            .foregroundColor(Clr.black2)
+                                            .multilineTextAlignment(.center)
+                                            .frame(height: 50)
+                                        Button {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            withAnimation {
+                                                Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
+                                                UserDefaults.standard.setValue(false, forKey: "introLink")
+                                                userModel.showDay1Complete = false
+                                                bonusModel.tripleBonus()
+                                            }
+                                        } label: {
+                                            Capsule()
+                                                .fill(Clr.darkgreen)
+                                                .overlay(
+                                                    Text("See you tomorrow")
+                                                        .font(Font.fredoka(.bold, size: 20))
+                                                         .foregroundColor(.white)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.1)
+                                                )
+                                        }.buttonStyle(NeumorphicPress())
+                                         .frame(height: 45)
+                                         .padding(.top, 32)
+                                    }.frame(width: geometry.size.width * 0.8, alignment: .center)
+                                    .offset(y: -25)
+                                    .padding()
+
+                                }.offset(y: geometry.size.height * 0.1)
                                 BottomSheet(
                                     isOpen: $userModel.showCoinAnimation,
                                     maxHeight: geometry.size.height * (K.isSmall() ? 0.75 : 0.6),

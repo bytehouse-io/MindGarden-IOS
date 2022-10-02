@@ -286,7 +286,7 @@ struct ProfileScene: View {
                                                                     .frame(height: 40)
                                                             }
                                                         }.padding()
-                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 340 : 380) + (Auth.auth().currentUser?.email != nil ? 95 : 15))
+                                                    }.frame(width: width * 0.75, height: (UserDefaults.standard.bool(forKey: "isPro") ? 340 : 380) + (SceneDelegate.profileModel.isLoggedIn ? 95 : 15))
 
                                                     Text("I want to help")
                                                         .font(Font.fredoka(.regular, size: 20))
@@ -584,7 +584,7 @@ struct ProfileScene: View {
 
     func actionSheet() {
         if selection == .referral {
-            if Auth.auth().currentUser?.email == nil {
+            if !SceneDelegate.profileModel.isLoggedIn {
                 tappedRefer = true
                 viewRouter.currentPage = .authentication
             }

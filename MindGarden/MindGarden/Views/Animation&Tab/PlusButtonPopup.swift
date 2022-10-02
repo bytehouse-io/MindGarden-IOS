@@ -24,7 +24,7 @@ struct PlusButtonPopup: View {
                     VStack(spacing:-10) {
                         ZStack {
                         PlusButtonShape(cornerRadius: popupRadius)
-                                .fill(Clr.darkWhite)
+                            .fill(Clr.darkWhite)
                             .plusPopupStyle(size: geometry.size, scale: scale)
                             
                             PlusMenuView(showPopup:$showPopup, selectedOption: $selectedOption, isOnboarding: $isOnboarding).cornerRadius(popupRadius)
@@ -52,7 +52,7 @@ struct PlusButtonPopup: View {
                         .frame(height:32)
                 }
             }
-            .offset(y: -40)
+            .offset(y: -24)
             .ignoresSafeArea()
             .onChange(of: showPopup) { value in
                 withAnimation(.easeInOut(duration: 0.1)) {

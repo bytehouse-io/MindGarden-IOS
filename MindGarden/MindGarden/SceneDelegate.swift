@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static let userModel = UserViewModel()
     static let gardenModel = GardenViewModel()
     static let medModel = MeditationViewModel()
+    static let profileModel = ProfileViewModel()
     static let bonusModel = BonusViewModel(userModel: userModel, gardenModel: gardenModel)
     let router = ViewRouter()
     let formatter: DateFormatter = {
@@ -71,14 +72,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
 
         
-        let profileModel = ProfileViewModel()
         let authModel =  AuthenticationViewModel(userModel:  SceneDelegate.userModel, viewRouter: router)
         let firebaseAPI = FirebaseAPI(medModel: SceneDelegate.medModel)
-
-        SceneDelegate.userModel.updateSelf()
-        firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
-        firebaseAPI.fetchCourses()
-        SceneDelegate.medModel.updateSelf()
+        
+        let _ = Auth.auth().addStateDidChangeListener { auth, user in
+            if let _ = user?.email {
+                print("goshard")
+                SceneDelegate.profileModel.isLoggedIn = true
+                SceneDelegate.userModel.updateSelf()
+                firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
+                firebaseAPI.fetchCourses()
+                SceneDelegate.medModel.updateSelf()
+            } else {
+                print("yumah")
+                SceneDelegate.profileModel.isLoggedIn = false
+                SceneDelegate.profileModel.isLoggedIn = true
+                SceneDelegate.userModel.updateSelf()
+                firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
+                firebaseAPI.fetchCourses()
+            }
+        }
+        
 
 
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" {
@@ -87,7 +101,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SceneDelegate.bonusModel.thirtyDayProgress = 0.08
         }
 
-        let contentView = ContentView(bonusModel:  SceneDelegate.bonusModel, profileModel: profileModel, authModel: authModel)
+        let contentView = ContentView(bonusModel:  SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
 
         // Use a UIHostingController as window root view controller.
         let rootHost = UIHostingController(rootView: contentView
@@ -124,7 +138,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
 
 
-        numberOfMeds = Int.random(in: 885..<911)
+        numberOfMeds = Int.random(in: 1085..<1111)
         launchedApp = true
         Analytics.shared.log(event: .sceneDidBecomeActive)
         SceneDelegate.bonusModel.updateBonus()

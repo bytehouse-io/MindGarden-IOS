@@ -12,7 +12,7 @@ import Amplitude
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
     @State private var selected: String = ""
-    @State private var showNotification = true
+    @State private var showNotification = false
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
@@ -53,11 +53,11 @@ struct ExperienceScene: View {
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
                                 .frame(height: 50)
-                                .padding(.bottom, 15)
+                                .padding(.bottom, 16)
+                            Spacer()
                             SelectionRow(width: width, height: height, title: Experience.often.title, img: Img.redTulips3, selected: $selected)
                             SelectionRow(width: width, height: height, title: Experience.nowAndThen.title, img: Img.redTulips2, selected: $selected)
-                            SelectionRow(width: width, height: height, title: Experience.fewTimes.title, img: Img.redTulips1, selected: $selected)
-                            SelectionRow(width: width, height: height, title: Experience.never.title, img: Img.seed, selected: $selected)
+                            SelectionRow(width: width, height: height, title: Experience.never.title, img: Img.redTulips1, selected: $selected)
                             Spacer()
                             Button {
                                 MGAudio.sharedInstance.playBubbleSound()
@@ -68,9 +68,6 @@ struct ExperienceScene: View {
                                     case Experience.often.title:
                                         OneSignal.sendTag("often", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_alot)
-                                    case Experience.fewTimes.title:
-                                        OneSignal.sendTag("tried", value: "true")
-                                        Analytics.shared.log(event: .experience_tapped_some)
                                     case Experience.nowAndThen.title:
                                         OneSignal.sendTag("tried", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_some)
@@ -165,7 +162,7 @@ struct ExperienceScene: View {
                     Rectangle()
                         .fill(selected == title ? Clr.brightGreen : Clr.darkWhite)
                         .cornerRadius(20)
-                        .frame(height: height * 0.125)
+                        .frame(height: height * 0.15)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 20)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
@@ -182,7 +179,7 @@ struct ExperienceScene: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.125, height: height * (title == Experience.never.title ? 0.04 : 0.1))
-                            .offset(x: -20, y: title == Experience.fewTimes.title || title == Experience.never.title ? 10 : 0)
+                            .offset(x: -20, y: title == Experience.never.title ? 10 : 0)
                     }
                 }
             }.buttonStyle(NeumorphicPress())

@@ -41,6 +41,8 @@ class GardenViewModel: ObservableObject {
     @Published var gratitudes = 0
     @Published var lastFive =  [(String, Plant?,Mood?)]()
     @Published var entireHistory = [([Int], [[String: String]])]()
+    @Published var monthlyBreaths = 0
+    @Published var monthlyMeds = 0
     @Published var numBreaths = 0
     @Published var numMeds = 0
     @Published var numMoods = 0
@@ -95,7 +97,8 @@ class GardenViewModel: ObservableObject {
                     for day in days { // we can improve performance by stopping when we get the last two different sessions
                         mindfulDays += 1
                         var dataArr = [[String: String]]()
-                        if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {  for sess in sessions { // sort by timestamp here
+                        if let sessions = singleDay[String(day)]?["sessions"] as? [[String: String]] {
+                            for sess in sessions { // sort by timestamp here
                                 if let id = Int(sess["meditationId"] ?? "0") {
                                     if id >= 0 {
                                         numMeds += 1
@@ -246,6 +249,8 @@ class GardenViewModel: ObservableObject {
         totalMoods = [Mood:Int]()
         favoritePlants = [String: Int]()
         gratitudes = 0
+        monthlyMeds = 0
+        monthlyBreaths = 0 
         var startsOnSunday = false
         let strMonth = String(selectedMonth)
         let numOfDays = Date().getNumberOfDays(month: strMonth, year: String(selectedYear))
@@ -281,9 +286,17 @@ class GardenViewModel: ObservableObject {
                     } else {
                         favoritePlants[plant] = 1
                     }
+                    if let id = Int(session["meditationId"] ?? "0") {
+                        if id >= 0 {
+                            monthlyMeds += 1
+                        } else {
+                            monthlyBreaths += 1
+                        }
+                    }
                 }
                 totalSessions += sessions.count
             }
+    
 
             if let moods = grid[String(selectedYear)]?[strMonth]?[String(day)]?[K.defaults.moods] as? [[String: String]] {
                 mood = Mood.getMood(str: moods[moods.count - 1]["mood"] ?? "bad")

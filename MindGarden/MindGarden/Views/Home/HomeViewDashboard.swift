@@ -41,9 +41,10 @@ struct HomeViewDashboard: View {
                     }
                     Spacer()
                 }
-                .padding(.top,20)
+                .padding(.top,32)
             }
             .padding(.horizontal, 24)
+            .padding(.bottom, 8)
         }
     }
 }

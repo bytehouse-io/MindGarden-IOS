@@ -35,7 +35,7 @@ struct ProfilePage: View {
             ScrollView(showsIndicators: false) {                
                 LazyVStack {
                     VStack(alignment: .center, spacing: 10) {
-                        Text("Your Entire Journey")
+                        Text("Your Journey / High Scores")
                             .font(Font.fredoka(.medium, size: 24))
                             .foregroundColor(Clr.black2)
                             .frame(width: UIScreen.screenWidth * 0.8, alignment: .leading)

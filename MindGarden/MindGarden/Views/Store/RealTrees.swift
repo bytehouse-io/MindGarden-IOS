@@ -94,7 +94,7 @@ struct RealTrees: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(height: 25)
-                                    Text("7000")
+                                    Text("1000")
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.medium, size: 20))
                                 }

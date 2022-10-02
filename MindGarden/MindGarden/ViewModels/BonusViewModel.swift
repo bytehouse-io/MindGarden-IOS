@@ -151,6 +151,27 @@ class BonusViewModel: ObservableObject {
             self.calculateProgress()
         }
     }
+    
+    func tripleBonus() {
+        userModel.coins += 500
+        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
+        if let email = Auth.auth().currentUser?.email {
+            self.db.collection(K.userPreferences).document(email).updateData([
+                K.defaults.coins: userModel.coins
+            ]) { (error) in
+                if let e = error {
+                    print("There was a issue saving data to firestore \(e) ")
+                } else {
+                    print("Succesfully saved seven")
+                    self.calculateProgress()
+                }
+            }
+        } else {
+            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
+            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
+            self.calculateProgress()
+        }
+    }
 
     func saveThirty() {
         userModel.coins += 1000
@@ -348,7 +369,7 @@ class BonusViewModel: ObservableObject {
     private func calculateStreak(lastStreakDate: String = "") -> String {
         var lastStreakDate = lastStreakDate
         
-        if (Auth.auth().currentUser?.email == nil)  {
+        if (!SceneDelegate.profileModel.isLoggedIn)  {
             streak = UserDefaults.standard.value(forKey: "streak") as? String
         }
         

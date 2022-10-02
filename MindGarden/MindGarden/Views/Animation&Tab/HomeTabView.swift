@@ -28,6 +28,7 @@ struct HomeTabView: View {
                             }
                         }
                 }
+                .offset(y: -16)
             TabButtonView(selectedTab:$selectedTab, isOnboarding:$isOnboarding)
                 .padding([.bottom, .horizontal], 20)
             PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption, isOnboarding: $isOnboarding)

@@ -129,7 +129,7 @@ private struct SafeAreaInsetsKey: EnvironmentKey {
 }
 
 extension EnvironmentValues {
-    
+
     var safeAreaInsets: EdgeInsets {
         self[SafeAreaInsetsKey.self]
     }

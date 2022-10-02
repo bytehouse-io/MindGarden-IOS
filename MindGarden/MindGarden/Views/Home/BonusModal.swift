@@ -59,8 +59,8 @@ struct BonusModal: View {
                                     place = .button1
                                     playCoinAnimation()
                                     Analytics.shared.log(event: .home_claim_daily)
-                                    bonusModel.saveDaily(plusCoins: 10)
-                                    coins += 10
+                                    bonusModel.saveDaily(plusCoins: 30)
+                                    coins += 30
                                     bonusModel.totalBonuses -= 1
                                 }
 
@@ -225,7 +225,7 @@ struct BonusModal: View {
                             .renderingMode(.original)
                             .aspectRatio(contentMode: .fit)
                             .frame(width: width * 0.07)
-                        Text("10")
+                        Text("30")
                             .foregroundColor(Clr.black1)
                             .font(Font.fredoka(.semiBold, size: 24))
                             .minimumScaleFactor(0.5)

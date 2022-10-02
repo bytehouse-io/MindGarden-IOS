@@ -199,7 +199,7 @@ struct ReviewScene: View {
                             }
                         } label: {
                             HStack {
-                                Text("MindGarden Tutorial  👉🏻")
+                                Text("Let's Go! 🏃‍♂️")
                                     .foregroundColor(Clr.darkgreen)
                                     .font(Font.fredoka(.semiBold, size: 16))
                                     .lineLimit(1)
@@ -211,53 +211,53 @@ struct ReviewScene: View {
                         }.padding(20)
                             .buttonStyle(NeumorphicPress())
                      
-                        Button {
-                            Analytics.shared.log(event: .review_tapped_explore)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            
-                            if let segments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                                var newArr = segments
-                                newArr.append("non-tutorial")
-                                storySegments = Set(newArr)
-                                StorylyManager.refresh()
-                            }
-                            
-                            UserDefaults.standard.setValue(true, forKey: "review")
-                            UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
-                            withAnimation {
-                                viewRouter.progressValue = 1
-                                if fromInfluencer != "" {
-                                    Analytics.shared.log(event: .user_from_influencer)
-                                    viewRouter.currentPage = .pricing
-                                } else {
-                                    Paywall.present { info in
-                                        Analytics.shared.log(event: .screen_load_superwall)
-                                    } onDismiss: {  didPurchase, productId, paywallInfo in
-                                        switch productId {
-                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                        case "io.mindgarden.pro.yearly":
-                                            Analytics.shared.log(event: .yearly_started_from_superwall)
-                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
-                                                NotificationHelper.freeTrial()
-                                            }
-                                        default: break
-                                        }
-                                        showLoading = true
-                                    } onFail: { error in
-                                        viewRouter.currentPage = .pricing
-                                    }
-                                }
-                            }
-                        } label: {
-                                Text("Explore myself")
-                                    .underline()
-                                    .font(Font.fredoka(.regular, size: 16))
-                                    .foregroundColor(.gray)
-                                    .padding(.top, K.isSmall() ? 10 : 20)
-                        }
+//                        Button {
+//                            Analytics.shared.log(event: .review_tapped_explore)
+//                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//
+//                            if let segments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+//                                var newArr = segments
+//                                newArr.append("non-tutorial")
+//                                storySegments = Set(newArr)
+//                                StorylyManager.refresh()
+//                            }
+//
+//                            UserDefaults.standard.setValue(true, forKey: "review")
+//                            UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+//                            withAnimation {
+//                                viewRouter.progressValue = 1
+//                                if fromInfluencer != "" {
+//                                    Analytics.shared.log(event: .user_from_influencer)
+//                                    viewRouter.currentPage = .pricing
+//                                } else {
+//                                    Paywall.present { info in
+//                                        Analytics.shared.log(event: .screen_load_superwall)
+//                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+//                                        switch productId {
+//                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                        case "io.mindgarden.pro.yearly":
+//                                            Analytics.shared.log(event: .yearly_started_from_superwall)
+//                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+//                                                NotificationHelper.freeTrial()
+//                                            }
+//                                        default: break
+//                                        }
+//                                        showLoading = true
+//                                    } onFail: { error in
+//                                        viewRouter.currentPage = .pricing
+//                                    }
+//                                }
+//                            }
+//                        } label: {
+//                                Text("Explore myself")
+//                                    .underline()
+//                                    .font(Font.fredoka(.regular, size: 16))
+//                                    .foregroundColor(.gray)
+//                                    .padding(.top, K.isSmall() ? 10 : 20)
+//                        }
                     }
                 }
             }
@@ -272,13 +272,12 @@ struct ReviewScene: View {
                 if UserDefaults.standard.string(forKey: "experience") != nil {
                 switch UserDefaults.standard.string(forKey: "experience") {
                     case Experience.often.title:
+                    
                         experience = (Img.redTulips3, "is high")
                     case Experience.nowAndThen.title:
                         experience = (Img.redTulips2, "is low")
-                    case Experience.fewTimes.title:
-                        experience = (Img.redTulips2, "is low")
                     case Experience.never.title:
-                        experience = (Img.seed, "is none")
+                        experience = (Img.redTulips1, "is none")
                     default: break
                     }
                 }

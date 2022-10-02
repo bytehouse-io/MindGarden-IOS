@@ -105,6 +105,7 @@ enum AnalyticEvent {
     case garden_tapped_single_next_session //
     case garden_tapped_single_previous_session //
     case screen_load_single
+    case screen_load_single_onboarding
     case garden_tapped_settings
     case garden_tapped_plant_select
     case garden_tapped_monthly_stats
@@ -125,6 +126,7 @@ enum AnalyticEvent {
     case home_tapped_featured_breath //
     case home_tapped_featured_meditation //
     case home_tapped_introDay //
+    case home_tapped_see_you_tomorrow
     case home_selected_mood //
     case home_tapped_new_meditation //
     case home_tapped_weekly_meditation //
@@ -134,6 +136,9 @@ enum AnalyticEvent {
     
     //MARK: - Mood Check
     case screen_load_mood_elaborate
+    case elaborate_tapped_edit
+    case elaborate_add_new_mood
+    case elaborate_delete_mood
     
     //MARK: - Journal
     case screen_load_journal
@@ -521,6 +526,7 @@ extension AnalyticEvent {
         case .garden_tapped_plant_select: return "garden_tapped_plant_select"
         case .garden_tapped_monthly_stats: return "garden_tapped_monthly_stats"
         case .screen_load_home: return "screen_load_home"
+        case .home_tapped_see_you_tomorrow: return "home_tapped_see_you_tomorrow"
         case .home_tapped_plant_select: return "home_tapped_plant_select"
         case .home_tapped_pro: return "home_tapped_pro"
         case .home_selected_plant: return "home_selected_plant"
@@ -703,6 +709,7 @@ extension AnalyticEvent {
         case .learn_tapped_life_course: return "learn_tapped_life_course"
         case .learn_finished_life_course: return "learn_finished_life_course"
         case .screen_load_single: return "screen_load_single"
+        case .screen_load_single_onboarding: return "screen_load_single_onboarding"
         case .screen_load_superwall: return "screen_load_superwall"
         case .yearly_started_from_superwall: return "yearly_started_from_superwall"
         case .monthly_started_from_superwall: return "monthly_started_from_superwall"
@@ -749,6 +756,9 @@ extension AnalyticEvent {
         
         //MARK: - Mood
         case .screen_load_mood_elaborate: return "screen_load_mood_elaborate"
+        case .elaborate_tapped_edit: return "elaborate_tapped_edit"
+        case .elaborate_add_new_mood: return "elaborate_add_new_mood"
+        case .elaborate_delete_mood: return "elaborate_delete_mood"
         
         //MARK: - Journal
         case .screen_load_journal: return "screen_load_journal"

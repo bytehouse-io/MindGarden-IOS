@@ -23,11 +23,6 @@ class ProfileViewModel: ObservableObject {
     init() {}
 
     func update(userModel: UserViewModel, gardenModel: GardenViewModel) {
-        if Auth.auth().currentUser != nil {
-            isLoggedIn = true
-        } else {
-            isLoggedIn = false
-        }
         self.signUpDate = userModel.joinDate
         self.name = userModel.name
         self.totalMins = gardenModel.allTimeMinutes

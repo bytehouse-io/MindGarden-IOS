@@ -36,6 +36,7 @@ struct Garden: View {
     var longestStreak : Int {
         (UserDefaults.standard.value(forKey: "longestStreak")) as? Int ?? 1
     }
+    
     @State private var playEntryAnimation = false
     private let animation = Animation.interpolatingSpring(stiffness: 50, damping: 26)
     
@@ -60,7 +61,7 @@ struct Garden: View {
             case .reflections:
                 return Clr.brightGreen
             case .totaltime:
-                return .black
+                return Clr.black2
             }
         }
         
@@ -97,8 +98,12 @@ struct Garden: View {
     
     var body: some View {
         GeometryReader { gp in
-            ScrollView(showsIndicators: false) {
-                ZStack {
+            ZStack {
+                Img.gardenBackground
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 32)
+                ScrollView(showsIndicators: false) {
                     VStack(alignment: .center, spacing: 20) {
                         //Version 2
                         //                    HStack(spacing: 40) {
@@ -116,7 +121,7 @@ struct Garden: View {
                         HStack {
                             Text("👨‍🌾 Your MindGarden")
                                 .font(Font.fredoka(.bold, size: 22))
-                                .foregroundColor(K.hasNotch() ? .white : Clr.black2)
+                                .foregroundColor(Color.white)
                                 .padding()
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
@@ -161,6 +166,7 @@ struct Garden: View {
                         }.frame(width: gp.size.width * 0.85)
                         .padding(.bottom, -10)
                         .offset(x: -10)
+                        .padding(.top)
                         
 
 //                        Text("Calendar/Garden")
@@ -183,7 +189,6 @@ struct Garden: View {
                                                 .fill(Clr.calenderSquare)
                                                 .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                 .border(.white, width: 1)
-                                                .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
                                         } else {
                                             if gardenModel.monthTiles[row]?[currentDate]?.0 != nil && gardenModel.monthTiles[row]?[currentDate]?.1 != nil {
                                                 // mood & plant both exist
@@ -193,7 +198,7 @@ struct Garden: View {
                                                     Rectangle()
                                                         .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                         .border(.white, width: 1)
-                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
 //                                                        .resizable()
@@ -221,7 +226,7 @@ struct Garden: View {
                                                     Rectangle()
                                                         .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue : Clr.calenderSquare)
                                                         .border(.white, width: 1)
-                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                     plantHead
 //                                                        .resizable()
@@ -237,7 +242,7 @@ struct Garden: View {
                                                                 }
                                                             }
                                                         )
-                                                        .opacity(isOnboarding ? tileOpacity : 1)
+                                                        .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
@@ -261,7 +266,6 @@ struct Garden: View {
                                                         .fill(Clr.calenderSquare)
                                                         .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
-                                                        .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" ? 0.5 : 1 : 1)
                                                         .overlay(
                                                             ZStack {
                                                                 if UserDefaults.standard.bool(forKey: "tileDates") {
@@ -281,25 +285,22 @@ struct Garden: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         day = col + (row * 7) + 1  - gardenModel.placeHolders
                                         if gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0?.title != "Ice Flower" {
-                                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" {
+                                            if !UserDefaults.standard.bool(forKey: "tappedTile") {
                                                 if (gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil || gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil)  {
                                                     Analytics.shared.log(event: .onboarding_finished_single)
                                                     showSingleModal = true
                                                     isOnboarding = false
-                                                    UserDefaults.standard.setValue("single", forKey: K.defaults.onboarding)
+                                                    UserDefaults.standard.setValue(true, forKey: "tappedTile")
                                                 }
                                             } else {
                                                 if day <= 31 && day >= 1 {
-                                                    if !isOnboarding {
                                                         showSingleModal = true
-                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                                 .padding(3)
-                                .opacity(isOnboarding ? (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ||  UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats") ? 1 : 0.1 : 1)
                                 .zIndex(-1000)
                                 
                                 HStack {
@@ -344,7 +345,6 @@ struct Garden: View {
                                     }
                                 }
                                 .padding(10)
-                                .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? 1 : 0.1 : 1)
                                 .padding(.bottom)
                             }.frame(width:UIScreen.screenWidth*0.85, alignment: .center)
                         }
@@ -355,8 +355,10 @@ struct Garden: View {
                         .offset(y: playEntryAnimation ? 0 : 200)
                         .animation(animation.delay(0.1), value: playEntryAnimation)
                         .padding(5)
+                        .padding(.vertical)
                         
                         monthlyStateView
+                            .padding(.vertical)
                             .offset(x: playEntryAnimation ? 0 : 200)
                             .animation(animation.delay(0.1), value: playEntryAnimation)
                         
@@ -374,7 +376,9 @@ struct Garden: View {
                                     .padding(.top, 8)
                                     .padding(.leading, 24)
                                 
-                               Spacer()
+                                if topThreePlants.isEmpty {
+                                    Spacer()
+                                }
                                 
                                 HStack(spacing: 5){
                                     Spacer()
@@ -403,10 +407,11 @@ struct Garden: View {
                                 }
                                 
                             }.frame(width: gp.size.width * (sizeCategory > .large ? 1 : 0.85), height: 200)
-                        }.padding(.top, 15)
-                            .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
+                        }.padding(.top, 8)
                             .offset(y: playEntryAnimation ? 0 : 400)
                             .animation(animation.delay(0.4), value: playEntryAnimation)
+                            .padding(.top)
+                            .padding(.bottom, 32)
                     }.padding(.horizontal, 24)
                         .padding(.vertical, 16)
                         .padding(.top, 32)
@@ -447,7 +452,6 @@ struct Garden: View {
                                                         UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
                                                         UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
-                                                        tileOpacity = 0.2
                                                         Analytics.shared.log(event: .onboarding_finished_stats)
                                                     }
                                                     forceRefresh.toggle()
@@ -505,11 +509,9 @@ struct Garden: View {
                         playEntryAnimation = true
                     }
                     getFavoritePlants()
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                        if gardenModel.numMeds + gardenModel.numBreaths >= 1 {
-                            isOnboarding = true
-                        }
-                        
+                    if !UserDefaults.standard.bool(forKey: "tappedTile") {
+                        isOnboarding = true
+                        tileOpacity = 0.2
                         if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                         }
@@ -554,7 +556,7 @@ struct Garden: View {
                         .foregroundColor(Clr.black2)
                         .padding(.trailing,20)
                         .opacity(0.5)
-                        .rightShadow()
+                        .neoShadow()
                 }
                 .padding(.top,20)
                 HStack(spacing: 15) {
@@ -573,23 +575,24 @@ struct Garden: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width:20)
                                     Text(state.title)
-                                        .foregroundColor(colorScheme == .dark ? .black : Clr.black2)
-                                        .font(Font.fredoka(.regular, size: 12))
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.fredoka(.medium, size: 12))
                                         .frame(maxWidth:.infinity,alignment:.leading)
                                     Text(getStateValue(type:state))
                                         .foregroundColor(state.color)
-                                        .font(Font.fredoka(.bold, size: 16))
+                                        .font(Font.fredoka(.semiBold, size: 16))
                                 }
                                 .padding(.vertical,3)
                                 .padding(.horizontal)
                             }
-                        }.padding(.vertical, 16)
+                        }
                     }
                     ZStack {
                         Rectangle()
                             .fill(Clr.darkWhite)
                             .cornerRadius(8)
                             .neoShadow()
+                            
                         VStack(spacing:0) {
                             MoodImage(mood: .veryGood, value: gardenModel.totalMoods[.veryGood] ?? 0)
                             MoodImage(mood: .good, value: gardenModel.totalMoods[.good] ?? 0)
@@ -601,7 +604,6 @@ struct Garden: View {
                 }
                 .padding([.horizontal,.bottom],20)
             }.frame(width:UIScreen.screenWidth*0.85)
-                .opacity(isOnboarding ? UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ? 1 : 0.1 : 1)
         }.background(
             Rectangle()
                 .fill(Clr.darkWhite)
@@ -621,9 +623,9 @@ struct Garden: View {
         case .currentStreak:
             return self.currentStreak
         case .breathwork:
-            return "\(gardenModel.numBreaths)"
+            return "\(gardenModel.monthlyBreaths)"
         case .meditations:
-            return "\(gardenModel.numMeds)"
+            return "\(gardenModel.monthlyMeds)"
         case .reflections:
             return "\(gardenModel.gratitudes)"
         case .totaltime:
@@ -703,7 +705,7 @@ struct MenuButton: View {
             Capsule()
                 .fill(isMonth ? Clr.gardenGreen : Clr.darkWhite)
                 .frame(width: 100, height: 35)
-                .neoShadow()
+                .rightShadow()
             Text(title)
                 .font(Font.fredoka(.regular, size: 16))
                 .foregroundColor(isMonth ? .white : Clr.black1)

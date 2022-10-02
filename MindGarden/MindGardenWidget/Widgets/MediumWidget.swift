@@ -34,13 +34,13 @@ struct MediumEntry {
         case .journel:
             return Image("mediumWidgetJournel")
         case .meditate:
-//            return Image("meditatingTurtle")
-            return meditation.img
+            return Image("meditatingTurtle")
+//            return meditation.img
         case .logmood:
             return Image("mediumWidgetMood")
         case .breathwork:
-//            return Image("mediumWidgetBreathwork")
-            return breathWork.img
+            return Image("mediumWidgetBreathwork")
+//            return breathWork.img
         }
     }
     

@@ -47,7 +47,6 @@ struct Home: View {
     @State private var showChallenge = false
     @State private var showMoodElaborate = true
     @State private var showAuth = false
-    
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -86,7 +85,7 @@ struct Home: View {
                     NewUpdateModal(shown: $showUpdateModal, showSearch: $showSearch)
                         .offset(y: showUpdateModal ? 0 : g.size.height)
                         .animation(.default, value: showUpdateModal)
-                
+               
                 }
             }
      
@@ -171,17 +170,6 @@ struct Home: View {
                     showUpdateModal = true
                     userModel.show50Off = false
                     UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")
-                }
-                
-                if UserDefaults.standard.integer(forKey: "launchNumber") >= 2 && Auth.auth().currentUser?.email == nil && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
-                    authModel.isSignUp = false
-                    fromPage = "update"
-                    viewRouter.currentPage = .authentication
-                    Analytics.shared.log(event: .update_triggered_auth)
-                } else if Auth.auth().currentUser?.email == nil && !UserDefaults.standard.bool(forKey: "authx") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.bool(forKey: "review")) {
-                    fromPage = "profile"
-                    viewRouter.currentPage = .authentication
-                    Analytics.shared.log(event: .show_onboarding_auth)
                 }
                 
                 // coins = userModel.coins

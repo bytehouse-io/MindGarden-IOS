@@ -16,7 +16,7 @@ struct StartDayView: View {
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     
-    
+    @State private var tileOpacity = 1.0
     @State private var playEntryAnimation = false
     
     var body: some View {
@@ -30,13 +30,40 @@ struct StartDayView: View {
                     .font(Font.fredoka(.bold, size: 20))
                     .minimumScaleFactor(0.05)
                     .lineLimit(1)
-                    .padding(.bottom, 15)
+                    .padding(.bottom, 32)
                 Spacer()
             }
             
             HStack(spacing: 0) {
                 VStack(spacing:0) {
                     Spacer()
+                    if !userModel.completedEntireCourse {
+                        Image(systemName: "checkmark.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(userModel.completedIntroDay ? Clr.brightGreen : Clr.darkWhite)
+                            .frame(width:24,height: 24)
+                            .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
+                            .zIndex(1)
+                        Group {
+                            if userModel.completedIntroDay {
+                                Rectangle()
+                                    .fill(Clr.brightGreen)
+                                    .frame(width: 4)
+                            } else {
+                                DottedLine()
+                                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
+                                    .fill(Clr.black2)
+                                    .opacity(0.5)
+                                    .offset(x:1)
+                                    .frame(width: 2)
+                            }
+                        }
+                        .frame(maxHeight:.infinity)
+                        .padding(.top, userModel.completedIntroDay ? 0 : 12)
+                        .padding(.bottom, userModel.completedIntroDay ? 0 : 4)
+                    }
+              
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -85,34 +112,7 @@ struct StartDayView: View {
                     .frame(maxHeight:.infinity)
                     .padding(.top,gardenModel.isGratitudeDone ? 0 : 12)
                     .padding(.bottom,gardenModel.isGratitudeDone ? 0 : 4)
-                  
-                    if !userModel.completedEntireCourse {
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(userModel.completedIntroDay ? Clr.brightGreen : Clr.darkWhite)
-                            .frame(width:24,height: 24)
-                            .addBorder(Color.black.opacity(0.2), width: 1.5, cornerRadius: 12)
-                            .zIndex(1)
-                        Group {
-                            if userModel.completedIntroDay {
-                                Rectangle()
-                                    .fill(Clr.brightGreen)
-                                    .frame(width: 4)
-                            } else {
-                                DottedLine()
-                                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [12]))
-                                    .fill(Clr.black2)
-                                    .opacity(0.5)
-                                    .offset(x:1)
-                                    .frame(width: 2)
-                            }
-                        }
-                        .frame(maxHeight:.infinity)
-                        .padding(.top, userModel.completedIntroDay ? 0 : 12)
-                        .padding(.bottom, userModel.completedIntroDay ? 0 : 4)
-                    }
-              
+                           
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -125,6 +125,79 @@ struct StartDayView: View {
                 }.padding(.vertical,60)
                     .neoShadow()
                 VStack(spacing:30) {
+                    if !userModel.completedEntireCourse {
+                        Button {
+                      
+                        } label: {
+                            ZStack {
+                                Img.shortVideoBG
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(height: 190)
+                                    .opacity(0.9)
+                                if !userModel.completedIntroDay {
+                                    HStack {
+                                        Spacer()
+                                        ZStack {
+                                            Rectangle().fill(Clr.yellow)
+                                            Text("📸 Watch")
+                                                .foregroundColor(Clr.black2)
+                                                .font(Font.fredoka(.semiBold, size: 16))
+                                        }.frame(width:100, height: 40)
+                                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                                    }
+                                    .frame(height: 85)
+                                    .position(x: 130, y: 140)
+                                }
+                                VStack(spacing:0) {
+                                    HStack(spacing:0) {
+                                        VStack(alignment:.leading) {
+                                            if userModel.completedIntroDay {
+                                                Text(userModel.completedDayTitle == "10" ? "✅ Final Day" : ("✅ Intro/Day " + userModel.completedDayTitle))
+                                                    .foregroundColor(Color.black)
+                                                    .font(Font.fredoka(.bold, size: 24))
+                                                    .padding([.top],16)
+                                            } else {
+                                                Text(userModel.completedDayTitle == "10" ? "Final Day" : ("Intro/Day " + userModel.completedDayTitle))
+                                                    .foregroundColor(Color.black)
+                                                    .font(Font.fredoka(.bold, size: 24))
+                                                    .padding([.top],16)
+                                            }
+                                            
+                                            Text("Understanding \nMeditation")
+                                                .foregroundColor(Color.black)
+                                                .font(Font.fredoka(.medium, size: 16))
+                                                .lineLimit(2)
+                                                .minimumScaleFactor(0.05)
+                                        }.padding([.leading, .top], 24)
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                }
+                                .padding(.horizontal,35)
+                            }.frame(width: UIScreen.screenWidth * 0.75, height: 170)
+                                .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                                .padding(.horizontal, 12)
+                                .offset(y: playEntryAnimation ? 0 : 100)
+                                .opacity(playEntryAnimation ? 1 : 0)
+                                .animation(.spring().delay(0.275), value: playEntryAnimation)
+                                .opacity(userModel.completedIntroDay ? 0.5 : 1)
+                                .onTapGesture {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        if !userModel.completedIntroDay {
+                                            let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
+                                            print(userModel.completedDayTitle, "reviver")
+                                            storylyViewProgrammatic.resume()
+                                            Analytics.shared.log(event: .home_tapped_introDay)
+                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day" : userModel.completedDayTitle])
+                                        }
+                                    }
+                                }
+                        }.buttonStyle(ScalePress() )
+                            .opacity(userModel.completedIntroDay ? 1 : tileOpacity)
+                            .animation(Animation.easeInOut(duration: 0.75).repeatForever(autoreverses:true), value: tileOpacity)
+                    }
                     Button {
                         
                     } label: {
@@ -236,6 +309,7 @@ struct StartDayView: View {
                                             .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                                     }
                                     .frame(height: 85)
+                                    .padding(.trailing, 12)
                                 }
                             }
                             .padding(.horizontal,35)
@@ -255,77 +329,7 @@ struct StartDayView: View {
                             }
                             .opacity(gardenModel.isGratitudeDone ? 0.5 : 1)
                     }.buttonStyle(ScalePress() )
-                    if !userModel.completedEntireCourse {
-                        Button {
-                      
-                        } label: {
-                            ZStack {
-                                Img.shortVideoBG
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(height: 190)
-                                    .opacity(0.9)
-                                if !userModel.completedIntroDay {
-                                    HStack {
-                                        Spacer()
-                                        ZStack {
-                                            Rectangle().fill(Clr.yellow)
-                                            Text("📸 Watch")
-                                                .foregroundColor(Clr.black2)
-                                                .font(Font.fredoka(.semiBold, size: 16))
-                                        }.frame(width:100, height: 40)
-                                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                                    }
-                                    .frame(height: 85)
-                                    .position(x: 140, y: 140)
-                                }
-                                VStack(spacing:0) {
-                                    HStack(spacing:0) {
-                                        VStack(alignment:.leading) {
-                                            if userModel.completedIntroDay {
-                                                Text(userModel.completedDayTitle == "10" ? "✅ Final Day" : ("✅ Intro/Day " + userModel.completedDayTitle))
-                                                    .foregroundColor(Color.black)
-                                                    .font(Font.fredoka(.bold, size: 24))
-                                                    .padding([.top],16)
-                                            } else {
-                                                Text(userModel.completedDayTitle == "10" ? "Final Day" : ("Intro/Day " + userModel.completedDayTitle))
-                                                    .foregroundColor(Color.black)
-                                                    .font(Font.fredoka(.bold, size: 24))
-                                                    .padding([.top],16)
-                                            }
-                                            
-                                            Text("Understanding \nMeditation")
-                                                .foregroundColor(Color.black)
-                                                .font(Font.fredoka(.medium, size: 16))
-                                                .lineLimit(2)
-                                                .minimumScaleFactor(0.05)
-                                        }.padding([.leading, .top], 24)
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                }
-                                .padding(.horizontal,35)
-                            }.frame(width: UIScreen.screenWidth * 0.75, height: 170)
-                                .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                                .padding(.horizontal, 12)
-                                .offset(y: playEntryAnimation ? 0 : 100)
-                                .opacity(playEntryAnimation ? 1 : 0)
-                                .animation(.spring().delay(0.275), value: playEntryAnimation)
-                                .opacity(userModel.completedIntroDay ? 0.5 : 1)
-                                .onTapGesture {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        if !userModel.completedIntroDay {
-                                            let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
-                                            print(userModel.completedDayTitle, "reviver")
-                                            storylyViewProgrammatic.resume()
-                                            Analytics.shared.log(event: .home_tapped_introDay)
-                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day" : userModel.completedDayTitle])
-                                        }
-                                    }
-                                }
-                        }.buttonStyle(ScalePress() )
-                    }
+                   
                     ZStack {
                         VStack(spacing:5) {
                             HStack(spacing: 15) {
@@ -400,6 +404,9 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
+            if !userModel.completedIntroDay && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && userModel.completedDayTitle == "1"  {
+                tileOpacity = 0.35
+            }
             gardenModel.updateStartDay()
             gardenModel.getAllGratitude(weekDays: gardenModel.getAllDaysOfTheCurrentWeek())
             updateStartDay()

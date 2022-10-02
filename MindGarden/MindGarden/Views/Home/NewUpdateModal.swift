@@ -138,7 +138,7 @@ struct NewUpdateModal: View {
                         .padding(20)
                     }
                     .font(Font.fredoka(.regular, size: 18))
-                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.66, alignment: .center)
+                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.7, alignment: .center)
                     .minimumScaleFactor(0.05)
                     .background(Clr.darkWhite)
                     .neoShadow()

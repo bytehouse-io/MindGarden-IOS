@@ -185,6 +185,7 @@ struct RecommendationsView: View {
                         .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
                         .disabled(isOnboarding)
+                        .opacity(isOnboarding ? 0.15 : 1)
                 }
             }
             if !isOnboarding {
