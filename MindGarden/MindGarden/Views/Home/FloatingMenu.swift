@@ -174,7 +174,7 @@ struct FloatingMenu: View {
     }
     
     var menuItem: some View {
-        VStack(alignment:.leading, spacing:20) {
+        VStack(alignment:.leading, spacing:0) {
             ForEach(MenuType.allCases, id: \.id) { state in
                 if (state != .favorites || (state == .favorites && !medModel.favoritedMeditations.isEmpty)) && (state != .recent || (state == .recent && !userModel.completedMeditations.isEmpty)) {
                     Button {
@@ -185,66 +185,14 @@ struct FloatingMenu: View {
                             }
                         }
                     } label: {
-                    HStack {
-                        if totalBonuses > 0, state == .bonus {
-                            HStack(spacing:0) {
-                                ZStack {
-                                    Circle().frame(width:20,height: 20)
-                                        .foregroundColor(Clr.redGradientBottom)
-                                        .overlay(Capsule().stroke(.black, lineWidth: 1))
-                                    Text("\(totalBonuses)")
-                                        .font(Font.fredoka(.medium, size: 12))
-                                        .foregroundColor(.white)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.005)
-                                        .frame(width: 10)
-                                }.frame(width: 15)
-                                    .padding([.leading,.vertical],10)
-                                    .padding(.trailing,10)
-                                Text(getTitle(type:state))
-                                    .font(Font.fredoka(.medium, size: 16))
-                                    .foregroundColor(Clr.redGradientBottom)
-                                    .padding([.trailing,.vertical],10)
-                            }
-                            .background(
-                                Rectangle()
-                                    .fill(Clr.yellow)
-                                    .addBorder(.black, cornerRadius: 25)
-                                    .frame(height: 35)
-                            ).wiggling1()
-                        } else {
-                            HStack(spacing:0) {
-                                state.image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height:20)
-                                    .padding([.leading,.vertical],10)
-                                    .padding(.trailing,10)
-                                Group {
-                                    if state == .bonus {
-                                        Text("\(userModel.coins)")
-                                    } else {
-                                        Text(getTitle(type:state))
-                                    }
-                                }
-                                .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor( Clr.black2)
-                                .padding([.trailing,.vertical],10)
-                            }
-                            .background(
-                                Rectangle()
-                                    .fill(Clr.yellow)
-                                    .addBorder(.black, cornerRadius: 25)
-                                    .frame(height: 35)
-                            )
-                        }
-                    }.frame(height: 30)
-                    
-                }
-                .buttonStyle(ScalePress())
-                .scaleEffect(isOpen ? 1.0 : scale, anchor: .leading)
-                .offset(y:isOpenAnimation ? 0 : -((state.delay) * 40))
-                
+                        MenuView(state: state, totalBonuses: $totalBonuses)
+                    }
+                    .buttonStyle(ScalePress())
+                    .scaleEffect(isOpen ? 1.0 : scale, anchor: .leading)
+                    .offset(y:isOpenAnimation ? 0 : -((state.delay) * 40))
+                } else {
+                    EmptyView()
+                        .frame(height:0)
                 }
             }
         }.frame(width: 300, alignment: .leading)
@@ -296,18 +244,84 @@ struct FloatingMenu: View {
         }
     }
     
-    private func getTitle(type:MenuType) -> String {
-        switch type {
-        case .profile:
-            return "Profile"
-        case .bonus:
-            return "Bonus!"
-        case .favorites:
-            return "Favorites"
-        case .recent:
-            return "Recent"
-        case .plantselect:
-            return "Plant Select"
+    struct MenuView: View {
+        var state:MenuType
+        @Binding var totalBonuses : Int
+        @EnvironmentObject var userModel: UserViewModel
+        @EnvironmentObject var medModel: MeditationViewModel
+        @EnvironmentObject var bonusModel: BonusViewModel
+        
+        var body: some View {
+            HStack {
+                if totalBonuses > 0, state == .bonus {
+                    HStack(spacing:0) {
+                        ZStack {
+                            Circle().frame(width:20,height: 20)
+                                .foregroundColor(Clr.redGradientBottom)
+                                .overlay(Capsule().stroke(.black, lineWidth: 1))
+                            Text("\(totalBonuses)")
+                                .font(Font.fredoka(.medium, size: 12))
+                                .foregroundColor(.white)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.005)
+                                .frame(width: 10)
+                        }.frame(width: 15)
+                            .padding([.leading,.vertical],10)
+                            .padding(.trailing,10)
+                        Text(getTitle(type:state))
+                            .font(Font.fredoka(.medium, size: 16))
+                            .foregroundColor(Clr.redGradientBottom)
+                            .padding([.trailing,.vertical],10)
+                    }
+                    .background(
+                        Rectangle()
+                            .fill(Clr.yellow)
+                            .addBorder(.black, cornerRadius: 25)
+                            .frame(height: 35)
+                    ).wiggling1()
+                }
+                else {
+                    HStack(spacing:0) {
+                        state.image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height:20)
+                            .padding([.leading,.vertical],10)
+                            .padding(.trailing,10)
+                        Group {
+                            if state == .bonus {
+                                Text("\(userModel.coins)")
+                            } else {
+                                Text(getTitle(type:state))
+                            }
+                        }
+                        .font(Font.fredoka(.medium, size: 16))
+                        .foregroundColor( Clr.black2)
+                        .padding([.trailing,.vertical],10)
+                    }
+                    .background(
+                        Rectangle()
+                            .fill(Clr.yellow)
+                            .addBorder(.black, cornerRadius: 25)
+                            .frame(height: 35)
+                    )
+                }
+            }
+        }
+        
+        private func getTitle(type:MenuType) -> String {
+            switch type {
+            case .profile:
+                return "Profile"
+            case .bonus:
+                return "Bonus!"
+            case .favorites:
+                return "Favorites"
+            case .recent:
+                return "Recent"
+            case .plantselect:
+                return "Plant Select"
+            }
         }
     }
 }

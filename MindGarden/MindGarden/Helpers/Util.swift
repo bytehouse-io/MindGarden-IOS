@@ -120,8 +120,8 @@ extension UIDevice {
         case 1792:
             return .iPhone_XR_11
         default:
-            assertionFailure("Unknown phone device detected!")
-            return .iPhone_6_6S_7_8_SE2
+//            assertionFailure("Unknown phone device detected!")
+            return .iPhone_XR_11
         }
     } else {
         assertionFailure("Unknown idiom device detected!")
