@@ -364,8 +364,14 @@ struct Play: View {
 //                    self.progressValue = timer < 0.001 ? 0.001 : timer
 //                }
             }
-            try! audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowAirPlay, .allowBluetoothA2DP])
-            try! self.audioSession.setActive(true)
+            
+            do {
+                try audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowAirPlay, .allowBluetoothA2DP])
+                try self.audioSession.setActive(true)
+            } catch {
+                print("failed to setup audio session category")
+            }
+            
             setupRemoteTransportControls()
             setupNowPlaying()
         }

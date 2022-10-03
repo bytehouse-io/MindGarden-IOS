@@ -426,7 +426,9 @@ class GardenViewModel: ObservableObject {
                 
                 if let document = snapshot, document.exists {
                     if let gardenGrid = document[K.defaults.gardenGrid] {
-                        self.grid = gardenGrid as! [String: [String:[String:[String:Any]]]]
+                        if let gd = gardenGrid as? [String: [String:[String:[String:Any]]]] {
+                            self.grid = gd
+                        }
                     }
                     self.saveToGrid(key: key, saveValue: saveValue, date: date)
                 }
