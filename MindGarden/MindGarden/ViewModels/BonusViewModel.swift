@@ -64,7 +64,7 @@ class BonusViewModel: ObservableObject {
         var interval = TimeInterval()
 
         if let fifty = UserDefaults.standard.string(forKey: "fiftyTimer") {
-            interval = formatter.date(from: fifty)! - Date()
+            interval = (formatter.date(from: fifty) ?? Date())  - Date()
         } else {
             interval = 7200
         }
@@ -87,7 +87,7 @@ class BonusViewModel: ObservableObject {
         var interval = TimeInterval()
 
         if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
-            interval = formatter.date(from: lastTutorialDate)! - Date()
+            interval = (formatter.date(from: lastTutorialDate) ?? Date()) - Date()
         } else {
             interval = 43200
         }
@@ -106,7 +106,7 @@ class BonusViewModel: ObservableObject {
 
     func saveDaily(plusCoins: Int) {
         userModel.coins += plusCoins
-        dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!)
+        dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date()) ?? Date())
         createDailyCountdown()
         UserDefaults.standard.setValue(self.dailyBonus, forKey: K.defaults.dailyBonus)
         UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
@@ -205,9 +205,9 @@ class BonusViewModel: ObservableObject {
             if UserDefaults.standard.bool(forKey: "newUser") {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
             }
-            progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!))
+            progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date()) ?? Date()))
         } else if UserDefaults.standard.bool(forKey: "newUser") {
-            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
+            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date()) ?? Date())
             UserDefaults.standard.setValue(dte, forKey: "ltd")
             progressiveDisclosure(lastStreakDate: dte)
         } else {
@@ -225,10 +225,10 @@ class BonusViewModel: ObservableObject {
                     self.totalBonuses = 0
                     if let streak = document["streak"] as? String {
                         self.streak = streak
-                        if let plus = self.streak?.firstIndex(of: "+") {
-                            self.streakNumber = Int(self.streak![..<plus])!
-                            let plusOffset = self.streak!.index(plus, offsetBy: 1)
-                            self.lastStreakDate = String(self.streak![plusOffset...])
+                        if let plus = self.streak?.firstIndex(of: "+"), let streak = self.streak  {
+                            self.streakNumber = Int(streak[..<plus]) ?? 0
+                            let plusOffset = streak.index(plus, offsetBy: 1)
+                            self.lastStreakDate = String(streak[plusOffset...])
                             self.updateLaunchNumber()
                         }
                     }
@@ -251,7 +251,7 @@ class BonusViewModel: ObservableObject {
                     }
                     
                     self.calculateProgress()
-                    if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
+                    if self.dailyBonus != "" && (self.formatter.date(from: self.dailyBonus) ?? Date()) - Date() > 0 {
                         self.createDailyCountdown()
                     }
                 }
@@ -263,10 +263,10 @@ class BonusViewModel: ObservableObject {
             }
             if let streak = UserDefaults.standard.value(forKey: "streak") as? String {
                 self.streak = streak
-                if let plus = self.streak?.firstIndex(of: "+") {
-                    self.streakNumber = Int(self.streak![..<plus])!
-                    let plusOffset = self.streak!.index(plus, offsetBy: 1)
-                    self.lastStreakDate = String(self.streak![plusOffset...])
+                if let plus = self.streak?.firstIndex(of: "+"), let streak = self.streak  {
+                    self.streakNumber = Int(streak[..<plus]) ?? 0
+                    let plusOffset = streak.index(plus, offsetBy: 1)
+                    self.lastStreakDate = String(streak[plusOffset...])
                 }
             } else {
                 lastStreakDate = formatter.string(from: Date())
@@ -282,7 +282,7 @@ class BonusViewModel: ObservableObject {
                 self.dailyBonus = dailyBonus
             }
             self.calculateProgress()
-            if self.dailyBonus != "" && self.formatter.date(from: self.dailyBonus)! - Date() > 0 {
+            if self.dailyBonus != "" && (self.formatter.date(from: self.dailyBonus) ?? Date()) - Date() > 0 {
                 self.createDailyCountdown()
             }
             self.updateLaunchNumber()
@@ -320,7 +320,7 @@ class BonusViewModel: ObservableObject {
             updateTips(tip: "Tip Potion Shop")
         }
         
-        if (Date() - formatter.date(from: lastStreakDate)! >= 86400 && Date() - (formatter.date(from: self.lastStreakDate) ?? Date()) <= 172800) {
+        if (Date() - (formatter.date(from: lastStreakDate) ?? Date()) >= 86400 && Date() - (formatter.date(from: self.lastStreakDate) ?? Date()) <= 172800) {
             launchNum += 1
             
         } else if  Date() - (formatter.date(from: self.lastStreakDate) ?? Date()) > 172800 {
@@ -373,13 +373,13 @@ class BonusViewModel: ObservableObject {
             streak = UserDefaults.standard.value(forKey: "streak") as? String
         }
         
-        if let plus = self.streak?.firstIndex(of: "+") {
-            self.streakNumber = Int(self.streak![..<plus])!
-            let plusOffset = self.streak!.index(plus, offsetBy: 1)
-            lastStreakDate = String(self.streak![plusOffset...])
+        if let plus = self.streak?.firstIndex(of: "+"), let streak = streak {
+            self.streakNumber = Int(streak[..<plus]) ?? 0
+            let plusOffset = streak.index(plus, offsetBy: 1)
+            lastStreakDate = String(streak[plusOffset...])
             
             // for new users only
-            let streakDate = formatter.date(from: lastStreakDate)!.setTime(hour: 00, min: 00, sec: 00)
+            let streakDate = (formatter.date(from: lastStreakDate) ?? Date()).setTime(hour: 00, min: 00, sec: 00)
             let currentDate = Date().setTime(hour: 00, min: 00, sec: 00) ?? Date()
             let interval = currentDate.interval(ofComponent: .day, fromDate: streakDate ?? Date())
             
@@ -509,7 +509,7 @@ class BonusViewModel: ObservableObject {
     private func calculateProgress() {
         totalBonuses = 0
         if self.dailyBonus != "" {
-            if (Date() - formatter.date(from: self.dailyBonus)! >= 0) {
+            if (Date() - (formatter.date(from: self.dailyBonus) ?? Date()) >= 0) {
                 self.totalBonuses += 1
                 NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
             }

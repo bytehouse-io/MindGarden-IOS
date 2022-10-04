@@ -96,7 +96,7 @@ struct HomeViewHeader: View {
                                         .fill(Color.red.opacity(0.7))
                                         .frame(width: 100, height: 25)
                                         .overlay(
-                                            Text("\(Date().intToMonth(num: Int(Date().get(.month))!)) Challenge")
+                                            Text("\(Date().intToMonth(num: Int(Date().get(.month)) ?? 0)) Challenge")
                                                 .font(Font.fredoka(.bold, size: 12))
                                                 .foregroundColor(.white)
                                                 .frame(height: 25, alignment: .center)

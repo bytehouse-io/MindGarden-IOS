@@ -55,7 +55,7 @@ struct BonusModal: View {
                         ZStack {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                                if bonusModel.dailyBonus == "" || (bonusModel.formatter.date(from: bonusModel.dailyBonus) ?? Date()) - Date() < 0 {
                                     place = .button1
                                     playCoinAnimation()
                                     Analytics.shared.log(event: .home_claim_daily)
@@ -219,7 +219,7 @@ struct BonusModal: View {
                     .cornerRadius(16)
                     .neoShadow()
                 HStack {
-                    if bonusModel.dailyBonus == "" || bonusModel.formatter.date(from: bonusModel.dailyBonus)! - Date() < 0 {
+                    if bonusModel.dailyBonus == "" || (bonusModel.formatter.date(from: bonusModel.dailyBonus) ?? Date()) - Date() < 0 {
                         Img.coin
                             .resizable()
                             .renderingMode(.original)

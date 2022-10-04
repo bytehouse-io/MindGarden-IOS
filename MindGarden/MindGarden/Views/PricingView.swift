@@ -500,7 +500,7 @@ struct PricingView: View {
                     AppsFlyerLib.shared().logEvent(name: event, values:
                                                     [
                                                         AFEventParamRevenue: price,
-                                                        AFEventParamCurrency:"\(Locale.current.currencyCode!)"
+                                                        AFEventParamCurrency:"\(String(describing: Locale.current.currencyCode))"
                                                     ])
                     Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
                     Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
@@ -534,7 +534,7 @@ struct PricingView: View {
     }
     private func userIsPro() {
         OneSignal.sendTag("userIsPro", value: "true")
-        if !userModel.ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })!) {
+        if !userModel.ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" }) ?? Plant.badgePlants[0]) {
             userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
             userModel.buyPlant(unlockedStrawberry: true)
             userModel.triggerAnimation = true
@@ -549,14 +549,15 @@ struct PricingView: View {
         userWentPro = true
         if fromPage != "onboarding2" {
             if let _ = Auth.auth().currentUser?.email {
-                let email = Auth.auth().currentUser?.email
-                Firestore.firestore().collection(K.userPreferences).document(email!).updateData([
-                    "isPro": true,
-                ]) { (error) in
-                    if let e = error {
-                        print("There was a issue saving data to firestore \(e) ")
-                    } else {
-                        print("Succesfully saved from pricing page")
+                if let email = Auth.auth().currentUser?.email {
+                    Firestore.firestore().collection(K.userPreferences).document(email).updateData([
+                        "isPro": true,
+                    ]) { (error) in
+                        if let e = error {
+                            print("There was a issue saving data to firestore \(e) ")
+                        } else {
+                            print("Succesfully saved from pricing page")
+                        }
                     }
                 }
             }

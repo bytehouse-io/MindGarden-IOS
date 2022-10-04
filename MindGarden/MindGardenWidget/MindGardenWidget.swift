@@ -44,7 +44,7 @@ struct Provider: IntentTimelineProvider {
 //        let meditationImg = Meditation.allMeditations.first(where: { $0.id == meditation } ) ?? Meditation.allMeditations.first!
         
         for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate) ?? Date()
             let entry = SimpleEntry(date: entryDate, grid: grid, streakNumber: streakNumber, isPro: isPro,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1/*,meditationImg: meditationImg.img, breathWorkImg:breathImg.img*/)
             entries.append(entry)
         }
