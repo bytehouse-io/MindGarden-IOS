@@ -10,16 +10,12 @@ import WidgetKit
 
 struct MediumEntry {
     let lastDate:String
-    let lastMood:String
+    let lastMood:Image
     let meditationId:Int?
     let breathworkId:Int?
     
     let breathworkImg:Image?
     let meditationImg:Image?
-    
-    var moodImage:Image {
-        return Mood.getMoodImage(mood: Mood.getMood(str: lastMood))
-    }
     
     var meditation:Meditation {
         return Meditation.allMeditations.first(where: { $0.id == meditationId } ) ?? Meditation.allMeditations.first!
@@ -125,12 +121,6 @@ struct MediumWidgetRow: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width:35)
                 }
-//                } else {
-//                    AsyncImage(url: URL(string: mediumEntry.meditation.imgURL)!,
-//                                      placeholder: { Text("...") },
-//                                      image: { Image(uiImage: $0).resizable() })
-//                              .frame(idealHeight: UIScreen.main.bounds.width / 2 * 3)
-//                }
                 VStack(alignment:.leading) {
                     Text(type.title)
                         .font(Font.fredoka(.bold, size: 16))
@@ -151,7 +141,7 @@ struct MediumWidgetRow: View {
                                                 .font(Font.fredoka(.regular, size: 12))
                                                 .opacity(0)
                                                 .padding(.horizontal,0)
-                                            mediumEntry.moodImage
+                                            getImage()
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(height:15)
@@ -171,5 +161,9 @@ struct MediumWidgetRow: View {
         .background(Color("darkWhite").cornerRadius(20).neoShadow())
         .padding(5)
         .frame(maxWidth:.infinity, maxHeight: .infinity)
+    }
+    
+    private func getImage() -> Image {
+            return mediumEntry.lastMood
     }
 }
