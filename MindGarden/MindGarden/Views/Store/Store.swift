@@ -76,66 +76,7 @@ struct Store: View {
                         RealTrees(buyRealTree: $showModal)
                     } else {
                         ScrollView(showsIndicators: false) {
-                            HStack(alignment: .top, spacing: 20) {
-                                VStack(alignment: .leading, spacing: -10) {
-                                    HStack {
-                                        if isShop {
-                                            Text(!(tabType == .store) ? "Badges\n🏆🎖🥇" : "🌻 Seed\nShop" )
-                                                .font(Font.fredoka(.bold, size: 32))
-                                                .minimumScaleFactor(0.005)
-                                                .lineLimit(2)
-                                                .multilineTextAlignment(.center)
-                                                .foregroundColor(Clr.black1)
-                                                .padding(.horizontal, isShop ? 25 : 10)
-                                                .frame(width: g.size.width * (isShop ? 0.4 : 0.25), alignment: .center)
-                                        }
-                                    }
-                                    if isShop && !(tabType == .store) {
-                                        ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count/2),  id: \.self) { plant in
-                                            Button {
-                                                Analytics.shared.log(event: .store_tapped_badge_tile)
-                                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                userModel.willBuyPlant = plant
-                                                withAnimation {
-                                                    showModal = true
-                                                }
-                                            } label: {
-                                                if userModel.ownedPlants.contains(plant) {
-                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true, isBadge: true)
-                                                } else {
-                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isBadge: true)
-                                                }
-                                            }.buttonStyle(NeumorphicPress())
-                                        }
-                                    } else {
-                                        ForEach(isShop ? Plant.packetPlants.prefix(Plant.packetPlants.count/2) : userModel.ownedPlants.prefix(userModel.ownedPlants.count/2), id: \.self)
-                                        { plant in
-                                            if (userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree") {
-                                                PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop, isOwned: true)
-                                            } else if (plant.title != "Real Tree") {
-                                                Button {
-                                     
-                                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                                    if isShop {
-                                                        userModel.willBuyPlant = plant
-                                                        withAnimation {
-                                                            showModal = true
-                                                        }
-                                                    } else {
-                                                        Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
-                                                        UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
-                                                        userModel.selectedPlant = plant
-                                                    }
-                                                } label: {
-                                                    PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                                }.buttonStyle(NeumorphicPress())
-                                            } else {
-                                                EmptyView()
-                                            }
-                                        }
-                                    }
-                                }
-                                
+                            HStack(alignment: .top, spacing: 20) {                                
                                 VStack {
                                     HStack {
                                         PlusCoins(coins: $userModel.coins)

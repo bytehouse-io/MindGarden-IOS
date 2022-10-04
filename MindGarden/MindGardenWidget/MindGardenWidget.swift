@@ -29,12 +29,13 @@ struct Provider: IntentTimelineProvider {
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]]
-        let streakNumber = userDefaults?.integer(forKey: "streakNumber")
-        let isPro = userDefaults?.bool(forKey: "isPro")
+        let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] ?? [:]
+        let streakNumber = userDefaults?.value(forKey: "streakNumber") as? Int ?? 1
+        let isPro = userDefaults?.value(forKey: "isPro") as? Bool ?? false
         
         let lastLogDate = userDefaults?.value(forKey: "lastJournel") as? String ?? Date().toString(withFormat: "MMM dd, yyyy")
-        let lastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? "okay"
+        let strLastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? "okay"
+        let lastLogMood = Mood.getMoodImage(mood: Mood.getMood(str: strLastLogMood))
         
         let meditation = userDefaults?.value(forKey: "featuredMeditation") as? Int
         let breathwork = userDefaults?.value(forKey: "featuredBreathwork") as? Int
@@ -44,7 +45,7 @@ struct Provider: IntentTimelineProvider {
         
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1/*,meditationImg: meditationImg.img, breathWorkImg:breathImg.img*/)
+            let entry = SimpleEntry(date: entryDate, grid: grid, streakNumber: streakNumber, isPro: isPro,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1/*,meditationImg: meditationImg.img, breathWorkImg:breathImg.img*/)
             entries.append(entry)
         }
 
@@ -59,7 +60,7 @@ struct SimpleEntry: TimelineEntry {
     var streakNumber: Int = 0
     var isPro: Bool = false
     var lastLogDate: String = Date().toString(withFormat: "MMM dd, yyyy")
-    var lastLogMood: String = "okay"
+    var lastLogMood: Image = Image("okay")
     let configuration: ConfigurationIntent
     var meditationId: Int = 1
     var breathWorkId: Int = -1
@@ -131,92 +132,6 @@ struct MindGardenWidgetEntryView : View {
                 Spacer()
             }
     }
-
-    struct MediumWidget: View {
-        let width: CGFloat
-        let height: CGFloat
-        @Binding var moods: [Mood: Int]
-        @Binding var gratitudes: Int
-        @Binding var streak: Int
-
-
-        var body: some View {
-            HStack(alignment: .center, spacing: 15 ) {
-                VStack(spacing: 15) {
-                    Link(destination: URL(string: "mood://io.bytehouse.mindgarden")!)  {
-                        MenuChoice(title: "Mood", img: Image(systemName: "face.smiling"), width: width)
-                            .frame(height: 30)
-                            .neoShadow()
-                    }
-                    Link(destination: URL(string: "gratitude://io.bytehouse.mindgarden")!)  {
-                        MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"), width: width)
-                            .frame(height: 30)
-                            .neoShadow()
-                    }
-                    Link(destination: URL(string: "meditate://io.bytehouse.mindgarden")!)  {
-                        MenuChoice(title: "Meditate", img: Image(systemName: "play"), width: width)
-                            .frame(height: 30)
-                            .neoShadow()
-                    }
-                }.padding(10)
-                    .frame(width: width * 0.4, height: height, alignment: .center)
-                ZStack {
-                    Rectangle()
-                        .fill(Color("brightGreen"))
-                        .cornerRadius(14)
-                        .shadow(radius: 5)
-                    VStack {
-                        Text("\(Date().getMonthName(month: Date().get(.month)))")
-                            .font(Font.fredoka(.bold, size: 14))
-                            .foregroundColor(Color.white)
-                            .offset(y: 5)
-                        HStack(spacing: 5) {
-//                             Image("streak")
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: width * 0.05)
-                            Text("Streak:")
-                                .font(Font.fredoka(.regular, size: 14))
-                                .foregroundColor(Color.white)
-                            Spacer()
-                            Text("\(streak)")
-                                .font(Font.fredoka(.bold, size: 16))
-                                .foregroundColor(Color.white)
-                        }.frame(width: width * 0.39, alignment: .leading)
-                        HStack(spacing: 5) {
-//                            Image("hands")
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: width * 0.05)
-                            Text("Gratitudes:")
-                                .font(Font.fredoka(.regular, size: 14))
-                                .foregroundColor(Color.white)
-                            Spacer()
-                            Text("\(gratitudes)")
-                                .font(Font.fredoka(.bold, size: 16))
-                                .foregroundColor(Color.white)
-                        }.frame(width: width * 0.39, alignment: .leading)
-                        HStack(spacing: 10) {
-                            Image("pots")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                            
-//                            SingleMood(mood: .happy, count: moods[.happy] ?? 0)
-//                            SingleMood(mood: .okay, count: moods[.okay] ?? 0)
-//                            SingleMood(mood: .stressed, count: moods[.stressed] ?? 0)
-//                            SingleMood(mood: .angry, count: moods[.angry] ?? 0)
-//                            SingleMood(mood: .sad, count: moods[.sad] ?? 0)
-                        }.frame(height: height * 0.25)
-                        .padding(.horizontal, 8)
-                        .offset(y: -2)
-                    }
-                }.frame(width: width * 0.45, height: height * 0.8, alignment: .center)
-                    .padding([.vertical])
-            }
-        }
-
-    }
-
 
     func extractData() {
 //       var monthTiles = [Int: [Int: (String?, Mood?)]]()
