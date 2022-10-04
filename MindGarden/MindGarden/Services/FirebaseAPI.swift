@@ -20,8 +20,8 @@ struct FirebaseAPI {
         db.collection("Learn Page").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
+            } else if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
                     var courseImg = ""
                     var courseDesc = ""
                     var courseDuration = ""
@@ -68,8 +68,8 @@ struct FirebaseAPI {
         db.collection("Meditations").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
+            } else if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
                     var medDuration = 0
                     var medAuthor = ""
                     var medImage = ""

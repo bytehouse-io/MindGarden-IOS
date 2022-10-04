@@ -75,12 +75,12 @@ struct Meditation: Hashable {
         
         if UserDefaults.standard.string(forKey: "experience") != Experience.never.title && UserDefaults.standard.string(forKey: "experience") != "Have never meditated" {
             if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
-                retMeds.append(allMeditations.first(where: { $0.id == 6 })!)
+                retMeds.append(allMeditations.first(where: { $0.id == 6 }) ?? allMeditations[0])
             } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
-                retMeds.append(allMeditations.first(where: { $0.id == 14 })!)
+                retMeds.append(allMeditations.first(where: { $0.id == 14 }) ?? allMeditations[0])
             }
         } else {
-            retMeds.append(allMeditations.first(where: { $0.id == 57 })!)
+            retMeds.append(allMeditations.first(where: { $0.id == 57 }) ?? allMeditations[0])
         }
         
         if UserDefaults.standard.string(forKey: "experience") != Experience.often.title && UserDefaults.standard.string(forKey: "experience") != "Meditate often" {

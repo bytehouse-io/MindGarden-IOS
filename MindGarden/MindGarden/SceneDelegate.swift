@@ -203,7 +203,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let incomingUrl = userActivity.webpageURL {
             let _ = DynamicLinks.dynamicLinks().handleUniversalLink(incomingUrl) { (dynamicLink, error) in
                 guard error == nil else {
-                    print("Found an error \(error!.localizedDescription)")
+                    print("Found an error \(String(describing: error?.localizedDescription))")
                     return
                 }
                 if let dynamicLink = dynamicLink {

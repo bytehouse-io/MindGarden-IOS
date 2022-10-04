@@ -72,12 +72,14 @@ extension UIView {
         let rect = self.bounds
         // create the context of bitmap
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-        let context: CGContext = UIGraphicsGetCurrentContext()!
-        self.layer.render(in: context)
-        // get a image from current context bitmap
-        let capturedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return capturedImage
+        if let context: CGContext = UIGraphicsGetCurrentContext() {
+            self.layer.render(in: context)
+            // get a image from current context bitmap
+            let capturedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+            UIGraphicsEndImageContext()
+            return capturedImage
+        }
+        return UIImage()
     }
 }
 

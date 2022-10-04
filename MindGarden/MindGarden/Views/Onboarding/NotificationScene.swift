@@ -291,16 +291,16 @@ struct NotificationScene: View {
 
                 if frequency == "Everyday" {
                     for i in 1...7 {
-                        let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
+                        let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0)
                         NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
                     }
                 } else if frequency == "Weekdays" {
                     for i in 2...6 {
-                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: i)
+                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0), weekDay: i)
                     }
                 } else { // weekend
-                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
-                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
+                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0), weekDay: 1)
+                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0), weekDay: 7)
                 }
              
                 DispatchQueue.main.async {

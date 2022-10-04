@@ -275,7 +275,7 @@ struct NotificationHelper {
            let formatter = DateFormatter()
            formatter.dateFormat = "MM/dd/yyyy hh:mm a"
            let calendar = Calendar(identifier: .gregorian)
-           return calendar.date(from: components)!
+           return calendar.date(from: components) ?? Date()
        }
 
        //Schedule Notification with weekly bases.
@@ -314,7 +314,7 @@ struct NotificationHelper {
         // 7 days a week
         // 5 notiftypes
         deleteMindfulNotifs()
-        var notifTypes = UserDefaults.standard.array(forKey: "notifTypes") as! [String]
+        var notifTypes = UserDefaults.standard.array(forKey: "notifTypes") as? [String] ?? []
         let frequency = UserDefaults.standard.integer(forKey: "frequency")
 
         var firstThird = Int.random(in: 8...12)
@@ -368,7 +368,7 @@ struct NotificationHelper {
         components.timeZone = .current
 
         let calendar = Calendar(identifier: .gregorian)
-        return calendar.date(from: components)!
+        return calendar.date(from: components) ?? Date()
     }
 
     //Schedule Notification with weekly bases.

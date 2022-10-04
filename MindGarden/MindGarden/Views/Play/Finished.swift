@@ -235,10 +235,11 @@ struct Finished: View {
                                     // No crash
                                 }
                                 let snap = self.takeScreenshot(origin: g.frame(in: .global).origin, size: g.size)
-                                let myURL = URL(string: "https://mindgarden.io")
-                                let objectToshare = [snap, myURL!] as [Any]
-                                let activityVC = UIActivityViewController(activityItems: objectToshare, applicationActivities: nil)
-                                UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                                if let myURL = URL(string: "https://mindgarden.io") {
+                                    let objectToshare = [snap, myURL] as [Any]
+                                    let activityVC = UIActivityViewController(activityItems: objectToshare, applicationActivities: nil)
+                                    UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+                                }
                             }
                         Spacer()
                         Button {

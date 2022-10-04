@@ -18,11 +18,11 @@ struct MediumEntry {
     let meditationImg:Image?
     
     var meditation:Meditation {
-        return Meditation.allMeditations.first(where: { $0.id == meditationId } ) ?? Meditation.allMeditations.first!
+        return Meditation.allMeditations.first(where: { $0.id == meditationId } ) ?? Meditation.allMeditations[0]
     }
     
     var breathWork:Breathwork {
-        return Breathwork.breathworks.first(where: { $0.id == breathworkId } ) ?? Breathwork.breathworks.first!
+        return Breathwork.breathworks.first(where: { $0.id == breathworkId } ) ?? Breathwork.breathworks[0]
     }
     
     func getImage(type:MediumType) -> Any? {

@@ -129,7 +129,7 @@ struct ChallengeModal: View {
         }.onAppear {
             let cal = NSCalendar.current
             var date = cal.startOfDay(for: Date())
-            date = cal.date(byAdding: Calendar.Component.day, value: 7, to: date)!
+            date = cal.date(byAdding: Calendar.Component.day, value: 7, to: date) ?? Date()
             
             challengeDate = formatter.string(from: date)
         }

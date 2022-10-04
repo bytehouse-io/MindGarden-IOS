@@ -55,7 +55,7 @@ class MeditationViewModel: ObservableObject {
         if let breath = selectedBreath {
             isFavorited = self.favoritedMeditations.contains(breath.id) ? true : false
         } else {
-            isFavorited = self.favoritedMeditations.contains(self.selectedMeditation!.id) ? true : false
+            isFavorited = self.favoritedMeditations.contains(self.selectedMeditation?.id ?? 1) ? true : false
         }
         isFavoritedLoaded = true
     }
@@ -138,7 +138,7 @@ class MeditationViewModel: ObservableObject {
             filtedMeds = filtedMeds.filter { med in
                 med.id != 53 && med.id != 49 && med.id != 84 && med.category == .sleep
             }
-            featuredBreathwork = Breathwork.breathworks.first { $0.id == -3 }! // calm
+            featuredBreathwork = Breathwork.breathworks.first { $0.id == -3 } ?? Breathwork.breathworks[0] // calm
         }
         if UserDefaults.standard.bool(forKey: "intermediateCourse") {
             filtedMeds = filtedMeds.filter { med in

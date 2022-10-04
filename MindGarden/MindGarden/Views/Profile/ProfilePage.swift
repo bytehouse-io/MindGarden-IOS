@@ -101,8 +101,8 @@ struct ProfilePage: View {
     struct DataRow: View {
         @State var type: String = ""
         @State var timeStamp: String = ""
-        @State var med: Meditation = Meditation.allMeditations.first!
-        @State var breathWork: Breathwork = Breathwork.breathworks.first!
+        @State var med: Meditation = Meditation.allMeditations[0]
+        @State var breathWork: Breathwork = Breathwork.breathworks[0]
         @State var mood: Image = Img.veryGood
         @State var elaboration: String = ""
         @State var question: String = ""

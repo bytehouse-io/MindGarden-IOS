@@ -199,7 +199,9 @@ struct ReferralScene: View {
                 print(error.localizedDescription)
                 return
             }
-            urlShare2 = shortURL!
+            if let shortURL = shortURL {
+                urlShare2 = shortURL
+            }
             isSharePresented = true
         }
     }

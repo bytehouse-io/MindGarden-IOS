@@ -17,7 +17,7 @@ struct UrlImageView: View {
     
     var body: some View {
             if (urlImageModel.image != nil) {
-                Image(uiImage: urlImageModel.image!)
+                Image(uiImage: urlImageModel.image ?? UIImage())
                     .resizable()
             } else {
                 ActivityIndicator.CircleLoadingView()
@@ -61,15 +61,16 @@ class UrlImageModel: ObservableObject {
             return
         }
         
-        let url = URL(string: urlString) ?? URL(string: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/How%20to%20practice%20Mindfulness%2Fslide1.png?alt=media&token=2bf32908-fb07-4c47-a9c4-e4bad5e44842")
-        let task = URLSession.shared.dataTask(with: url!, completionHandler: getImageFromResponse(data:response:error:))
-        task.resume()
+        if let url = URL(string: urlString) ?? URL(string: "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/How%20to%20practice%20Mindfulness%2Fslide1.png?alt=media&token=2bf32908-fb07-4c47-a9c4-e4bad5e44842") {
+            let task = URLSession.shared.dataTask(with: url, completionHandler: getImageFromResponse(data:response:error:))
+            task.resume()
+        }
     }
     
     
     func getImageFromResponse(data: Data?, response: URLResponse?, error: Error?) {
         guard error == nil else {
-            print("Error: \(error!)")
+            print("Error: \(String(describing: error))")
             return
         }
         guard let data = data else {
@@ -82,7 +83,7 @@ class UrlImageModel: ObservableObject {
                 return
             }
             
-            self.imageCache.set(forKey: self.urlString!, image: loadedImage)
+            self.imageCache.set(forKey: self.urlString ?? "", image: loadedImage)
             self.image = loadedImage
         }
     }

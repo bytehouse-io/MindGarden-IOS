@@ -144,7 +144,7 @@ struct ReminderView: View {
                 
                 for i in 1...7 {
                     let dateTime = dateFormatter.date(from: TimeInterval(time).secondsToHourMinFormat() ?? "12:54") ?? Date()
-                    let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
+                    let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0)
                     NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
                 }
             case .notDetermined:

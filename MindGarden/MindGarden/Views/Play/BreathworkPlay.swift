@@ -30,7 +30,7 @@ struct BreathworkPlay : View {
 
     
     // Background Settings
-    @State private var backgroundPlayer : AVAudioPlayer!
+    @State private var backgroundPlayer : AVAudioPlayer?
     @State private var del = AVdelegate()
     @State private var showNatureModal = false
     @State private var selectedSound: Sound? = .noSound
@@ -254,9 +254,11 @@ struct BreathworkPlay : View {
                     .opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
             }
-            NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: $playVibration, backgroundAnimationOn:$backgroundAnimationOn)
-                .offset(y: showNatureModal ? 0 : UIScreen.screenHeight)
-                .animation(.default)
+            if let backgroundPlayer = backgroundPlayer {
+                NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: $playVibration, backgroundAnimationOn:$backgroundAnimationOn)
+                    .offset(y: showNatureModal ? 0 : UIScreen.screenHeight)
+                    .animation(.default)
+            }
         }
         .onAppear {
             
@@ -283,23 +285,27 @@ struct BreathworkPlay : View {
             if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
                 if defaultSound != "noSound"  {
                     selectedSound = Sound.getSound(str: defaultSound)
-                    let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
-                    backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-                    backgroundPlayer.delegate = self.del
-                    backgroundPlayer.prepareToPlay()
+                    if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
+                        backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+                        backgroundPlayer?.delegate = self.del
+                        backgroundPlayer?.prepareToPlay()
+                    }
                     if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
-                        backgroundPlayer.volume = vol
+                        backgroundPlayer?.volume = vol
                         sliderData.sliderValue = vol
                     } else {
-                        backgroundPlayer.volume = 0.3
+                        backgroundPlayer?.volume = 0.3
                         sliderData.sliderValue = 0.3
                     }
-                    sliderData.setPlayer(player: self.backgroundPlayer!)
-                    backgroundPlayer.numberOfLoops = -1
-                    backgroundPlayer.play()
+                    if let backgroundPlayer = backgroundPlayer {
+                        sliderData.setPlayer(player: backgroundPlayer)
+                    }
+                    backgroundPlayer?.numberOfLoops = -1
+                    backgroundPlayer?.play()
                 } else {
-                    let url = Bundle.main.path(forResource: "", ofType: "mp3")
-                    backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
+                    if let url = Bundle.main.path(forResource: "", ofType: "mp3") {
+                        backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+                    }
                 }
             }
 
@@ -459,16 +465,19 @@ struct BreathworkPlay : View {
     }
     
     func changeSound() {
-        backgroundPlayer.stop()
-       let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3")
-        backgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: url!))
-        backgroundPlayer.delegate = self.del
-        backgroundPlayer.numberOfLoops = -1
-        backgroundPlayer.volume = sliderData.sliderValue
+        backgroundPlayer?.stop()
+        if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
+            backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+        }
+        backgroundPlayer?.delegate = self.del
+        backgroundPlayer?.numberOfLoops = -1
+        backgroundPlayer?.volume = sliderData.sliderValue
        self.data = .init(count: 0)
-        backgroundPlayer.prepareToPlay()
-       self.backgroundPlayer.play()
-       self.sliderData.setPlayer(player: backgroundPlayer!)
+        backgroundPlayer?.prepareToPlay()
+       self.backgroundPlayer?.play()
+        if let backgroundPlayer = backgroundPlayer {
+            self.sliderData.setPlayer(player: backgroundPlayer)
+        }
    }
     
     var plantView: some View {
