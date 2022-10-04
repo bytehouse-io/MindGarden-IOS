@@ -37,30 +37,6 @@ struct Store: View {
                         StoreTab(selectedTab: $tabType)
                             .frame(width: g.size.width * 0.85)
                             .padding(.top, 35)
-                        //                        HStack(spacing: 25) {
-                        //                            Spacer()
-                        //                            Button {
-                        //                                Analytics.shared.log(event: .store_tapped_store_option)
-                        //                                withAnimation {
-                        //                                    isStore = true
-                        //                                }
-                        //                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        //                            } label: {
-                        //                                MenuButton(title: "Store", isStore: isStore)
-                        //                            }
-                        //                            Button {
-                        //                                Analytics.shared.log(event: .store_tapped_badges_option)
-                        //                                withAnimation {
-                        //                                    isStore = false
-                        //                                }
-                        //                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        //                            } label: {
-                        //                                MenuButton(title: "Badges", isStore: !isStore)
-                        //                            }
-                        //                            Spacer()
-                        //                        }
-                        //                        .padding(.top, 35)
-                        //                        .zIndex(currentHightlight == 0 ? 50 : -4)
                     } else {
                         HStack {
                             Spacer()
@@ -94,7 +70,7 @@ struct Store: View {
                                 .opacity(0)
                             Spacer()
                             
-                        }.frame(width: g.size.width * 0.9, height: 45)                                                
+                        }.frame(width: g.size.width * 0.9, height: 45)
                     }
                     if tabType == .realTree {
                         RealTrees(buyRealTree: $showModal)
@@ -215,44 +191,14 @@ struct Store: View {
                                     }
                                     
                                 }
-                                if K.isPad() {
-                                    Spacer()
-                                }
+      
                             }.padding()
                         }.opacity(confirmModal ? 0.3 : 1)
                     }
                 }
                 if currentHightlight == 0 {
-                    VStack (spacing: 0) {
-                        Triangle()
-                            .fill(Clr.yellow)
-                            .frame(width: 40, height: 20)
-                        Rectangle()
-                            .fill(Clr.yellow)
-                            .frame(width: 300, height: 200)
-                            .overlay(
-                                VStack {
-                                    Text("🎖 Badges are plants that must be earned.\n🪴 Store plants can be bought with coins.")
-                                        .font(Font.fredoka(.medium, size: 20))
-                                        .lineLimit(4)
-                                        .minimumScaleFactor(0.05)
-                                        .multilineTextAlignment(.center)
-                                        .padding(.bottom, 5)
-                                        .foregroundColor(Color.black)
-                                    Text("Got it")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.fredoka(.bold, size: 22))
-                                        .onTapGesture {
-                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            withAnimation {
-                                                UserDefaults.standard.setValue(true, forKey: "storeTutorial")
-                                                currentHightlight = 1
-                                                showTip = true
-                                            }
-                                        }
-                                }.padding()
-                            ).cornerRadius(12)
-                    }.position(x: g.size.width/2, y: 180)
+                        triangleDisclosure
+                        .position(x: g.size.width/2, y: 180)
                         .opacity(currentHightlight == 0 ? 1 : 0)
                 }
                 
@@ -321,6 +267,39 @@ struct Store: View {
             if isShop {
                 
             }
+        }
+    }
+    
+    var triangleDisclosure: some View {
+        VStack (spacing: 0) {
+            Triangle()
+                .fill(Clr.yellow)
+                .frame(width: 40, height: 20)
+            Rectangle()
+                .fill(Clr.yellow)
+                .frame(width: 300, height: 200)
+                .overlay(
+                    VStack {
+                        Text("🎖 Badges are plants that must be earned.\n🪴 Store plants can be bought with coins.")
+                            .font(Font.fredoka(.medium, size: 20))
+                            .lineLimit(4)
+                            .minimumScaleFactor(0.05)
+                            .multilineTextAlignment(.center)
+                            .padding(.bottom, 5)
+                            .foregroundColor(Color.black)
+                        Text("Got it")
+                            .foregroundColor(Clr.darkgreen)
+                            .font(Font.fredoka(.bold, size: 22))
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    UserDefaults.standard.setValue(true, forKey: "storeTutorial")
+                                    currentHightlight = 1
+                                    showTip = true
+                                }
+                            }
+                    }.padding()
+                ).cornerRadius(12)
         }
     }
     

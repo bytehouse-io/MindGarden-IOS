@@ -127,6 +127,7 @@ struct Home: View {
         }
 
         .onAppear {
+            showUpdateModal = true
             if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done") {
                 profileModel.showWidget = true
             }
