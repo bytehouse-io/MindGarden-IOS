@@ -90,8 +90,8 @@ struct MindGardenWidgetEntryView : View {
             case .systemMedium:
                 NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId, breathworkImg: entry.breathWorkImg, meditationImg: entry.meditationImg))
             case .systemLarge:
-                LargeWidget(streakNumber: entry.streakNumber, grid:entry.grid)
-                    .environmentObject(GardenViewModel())
+                LargeWidget(streakNumber: entry.streakNumber, gardenModel: GardenViewModel(), grid:entry.grid)
+                
             default:
                 Text("Some other WidgetFamily in the future.")
             }
