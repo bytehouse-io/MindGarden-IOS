@@ -67,25 +67,25 @@ struct ProfilePage: View {
                         let someDateTime = Calendar.current.date(from: dateComponents)
                         let weekDay = dateFormatter.string(from: someDateTime ?? Date())
                         let daysData = sortData(dataArr: day.1) // sort by time
-                        Rectangle()
-                            .fill(Clr.darkWhite)
-                            .cornerRadius(14)
-                            .addBorder(.black,width:1.5, cornerRadius: 14)
-                            .neoShadow()
-                            .overlay(
-                                VStack {
-                                    Text("\(Date().intToMonth(num: date[1])) \(date[0]), \(currentYear == (date[2]) ? "" : String(date[2])) \(weekDay)")
-                                        .font(Font.fredoka(.medium, size: 20))
-                                        .foregroundColor(Clr.brightGreen)
-                                        .frame(width: width * 0.725, alignment: .leading)
-                                    ForEach(daysData, id: \.self) { data in // sessions, mood, journals for that day
-                                        VStack(spacing: 0) {
-                                            DataRow(data: data, showJournal: $showJournal)
-                                        }
-                                    }
-                                }.padding(15)
-                            ).frame(width: width * 0.85, height: CGFloat(daysData.count) * 70 + 60)
-                            .padding(16)
+                        
+                        VStack {
+                            Text("\(Date().intToMonth(num: date[1])) \(date[0]), \(currentYear == (date[2]) ? "" : String(date[2])) \(weekDay)")
+                                .font(Font.fredoka(.medium, size: 20))
+                                .foregroundColor(Clr.brightGreen)
+                                .frame(width: width * 0.725, alignment: .leading)
+                            ForEach(daysData, id: \.self) { data in // sessions, mood, journals for that day
+                                VStack(spacing: 20) {
+                                    DataRow(data: data, showJournal: $showJournal)
+                                }
+                            }
+                        }.padding(20)
+                        .background(
+                            Rectangle()
+                                .fill(Clr.darkWhite)
+                                .cornerRadius(14)
+                                .addBorder(.black,width:1.5, cornerRadius: 14)
+                                .neoShadow()
+                        )
                     }
                     }
                 }
@@ -111,127 +111,147 @@ struct ProfilePage: View {
         var data: [String: String]
         @Binding var showJournal: Bool
         @State var breathworkDuration: Int = 0
-        
+        @State var imageUrl: String?
         var body: some View {
-            HStack(alignment: .center, spacing: 0) {
-                Group {
-                    VStack {
-                        if type == "journal" {
-                            Img.pencil
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.08)
-                        } else if type == "meditation" {
-                            if med.imgURL != "" {
-                                UrlImageView(urlString: med.imgURL)
+            VStack {
+                HStack(alignment: .center, spacing: 0) {
+                    Group {
+                        VStack {
+                            if type == "journal" {
+                                Img.pencil
+                                    .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.1)
-                                    .padding(.trailing, -5)
-                            } else {
-                                med.img
+                                    .frame(width: width * 0.08)
+                            } else if type == "meditation" {
+                                if med.imgURL != "" {
+                                    UrlImageView(urlString: med.imgURL)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * 0.1)
+                                        .padding(.trailing, -5)
+                                } else {
+                                    med.img
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: width * 0.08)
+                                }
+                            } else if type == "breathwork" {
+                                breathWork.img
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: width * 0.08)
+                            } else if type == "mood" {
+                                mood
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.08)
                             }
-                        } else if type == "breathwork" {
-                            breathWork.img
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.08)
-                        } else if type == "mood" {
-                            mood
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.08)
+                        }
+                    }.padding(.trailing)
+                    if type == "meditation" {
+                        VStack(alignment: .leading) {
+                            Text("\((Int(med.duration/60) == 0 && med.duration != 0) ? "0.5" : "\(Int(med.duration/60))") mins  |  \(med.instructor)")
+                                .font(Font.fredoka(.regular, size: 14))
+                                .foregroundColor(Clr.darkGray)
+                            Text(med.title)
+                                .font(Font.fredoka(.medium, size: 14))
+                                .foregroundColor(Clr.black2)
+                        }
+                    } else if type == "breathwork" {
+                        VStack(alignment: .leading) {
+                            Text("\((Int(breathworkDuration/60) == 0 && breathworkDuration != 0) ? "0.5" : "\(Int(breathworkDuration/60))") mins  |  \(breathWork.color.name)")
+                                .font(Font.fredoka(.regular, size: 14))
+                                .foregroundColor(Clr.darkGray)
+                            Text(breathWork.title)
+                                .font(Font.fredoka(.medium, size: 14))
+                                .foregroundColor(Clr.black2)
+                        }
+                    } else if type == "journal" {
+                        VStack(alignment: .leading) {
+                            Text(question)
+                                .font(Font.fredoka(.regular, size: 14))
+                                .foregroundColor(Clr.darkGray)
+                            Text(reflection)
+                                .font(Font.fredoka(.medium, size: 14))
+                                .foregroundColor(Clr.black2)
+                        }
+                    } else {
+                        if elaboration != "" {
+                            Text(elaboration)
+                                .font(Font.fredoka(.medium, size: 14))
+                                .foregroundColor(Clr.black2)
+                                .minimumScaleFactor(0.05)
+                                .lineLimit(1)
+                                .padding(.horizontal, 25)
+                                .padding(.vertical, 8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(Color.black, lineWidth: 1.5)
+                                )
+                                .frame(minWidth: width * 0.175)
                         }
                     }
-                }.padding(.trailing)
-                if type == "meditation" {
-                    VStack(alignment: .leading) {
-                        Text("\((Int(med.duration/60) == 0 && med.duration != 0) ? "0.5" : "\(Int(med.duration/60))") mins  |  \(med.instructor)")
-                            .font(Font.fredoka(.regular, size: 14))
-                            .foregroundColor(Clr.darkGray)
-                        Text(med.title)
-                            .font(Font.fredoka(.medium, size: 14))
-                            .foregroundColor(Clr.black2)
-                    }
-                } else if type == "breathwork" {
-                    VStack(alignment: .leading) {
-                        Text("\((Int(breathworkDuration/60) == 0 && breathworkDuration != 0) ? "0.5" : "\(Int(breathworkDuration/60))") mins  |  \(breathWork.color.name)")
-                            .font(Font.fredoka(.regular, size: 14))
-                            .foregroundColor(Clr.darkGray)
-                        Text(breathWork.title)
-                            .font(Font.fredoka(.medium, size: 14))
-                            .foregroundColor(Clr.black2)
-                    }
-                } else if type == "journal" {
-                    VStack(alignment: .leading) {
-                        Text(question)
-                            .font(Font.fredoka(.regular, size: 14))
-                            .foregroundColor(Clr.darkGray)
-                        Text(reflection)
-                            .font(Font.fredoka(.medium, size: 14))
-                            .foregroundColor(Clr.black2)
-                    }
-                } else {
-                    if elaboration != "" {
-                        Text(elaboration)
-                            .font(Font.fredoka(.medium, size: 14))
-                            .foregroundColor(Clr.black2)
-                            .minimumScaleFactor(0.05)
-                            .lineLimit(1)
-                            .padding(.horizontal, 25)
-                            .padding(.vertical, 8)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 14)
-                                    .stroke(Color.black, lineWidth: 1.5)
-                            )
-                            .frame(minWidth: width * 0.175)
-                    }
-                }
-                
-                Spacer()
-                Text(timeStamp)
-                    .font(Font.fredoka(.regular, size: 14))
-                    .foregroundColor(Clr.black2)
-            }.frame(width: width * 0.75, height: type == "mood" ? 50 : 60, alignment: .leading)
-                .onAppear {
-                    if let medId = data["meditationId"] {
-                        if Int(medId) ?? 0 < 0 {
-                            type = "breathwork"
-                            breathworkDuration = Int(data["duration"] ?? "0") ?? 0
-                            breathWork = Breathwork.breathworks.first(where: { $0.id == Int(medId) }) ?? Breathwork.breathworks[0]
-                        } else {
-                            type = "meditation"
-                            med = Meditation.allMeditations.first(where: { $0.id == Int(medId) }) ?? Meditation.allMeditations[0]
-                        }
-                    } else if let fbMood = data["mood"] {
-                        type = "mood"
-                        mood = Mood.getMoodImage(mood: Mood.getMood(str: fbMood))
-                        if let elab = data["elaboration"] {
-                            elaboration = elab
-                        }
-                    } else if let journal = data["gratitude"] {
-                        type = "journal"
-                        reflection = journal
-                        if let fbQuestion = data["question"] {
-                            question = fbQuestion
-                        }
-                    }
-                    // legacy data
                     
-                    if let theTime = data["timeStamp"] {
-                        timeStamp = theTime
+                    Spacer()
+                    VStack {
+                        Text(timeStamp)
+                            .font(Font.fredoka(.regular, size: 14))
+                            .foregroundColor(Clr.black2)
+                        Spacer()
+                    }
+                }.frame(width: width * 0.75, alignment: .leading)
+                    .onAppear {
+                        if let medId = data["meditationId"] {
+                            if Int(medId) ?? 0 < 0 {
+                                type = "breathwork"
+                                breathworkDuration = Int(data["duration"] ?? "0") ?? 0
+                                breathWork = Breathwork.breathworks.first(where: { $0.id == Int(medId) }) ?? Breathwork.breathworks[0]
+                            } else {
+                                type = "meditation"
+                                med = Meditation.allMeditations.first(where: { $0.id == Int(medId) }) ?? Meditation.allMeditations[0]
+                            }
+                        } else if let fbMood = data["mood"] {
+                            type = "mood"
+                            mood = Mood.getMoodImage(mood: Mood.getMood(str: fbMood))
+                            if let elab = data["elaboration"] {
+                                elaboration = elab
+                            }
+                        } else if let journal = data["gratitude"] {
+                            type = "journal"
+                            reflection = journal
+                            if let fbQuestion = data["question"] {
+                                question = fbQuestion
+                            }
+                            
+                            if let img = data["image"], !img.isEmpty {
+                                imageUrl = img
+                            }
+                        }
+                        // legacy data
+                        
+                        if let theTime = data["timeStamp"] {
+                            timeStamp = theTime
+                        }
+                    }
+                    .onTapGesture {
+                        withAnimation {
+                            placeholderQuestion = question
+                            placeholderReflection = reflection
+                            fromProfile = true
+                            showJournal = true
+                        }
+                    }
+                if type == "journal" {
+                    if let img = imageUrl, !img.isEmpty {
+                        UrlImageView(urlString: img)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width:width * 0.65)
+                            .cornerRadius(14)
+                            .addBorder(.black,width:1.5, cornerRadius: 14)
+                            .neoShadow()
                     }
                 }
-                .onTapGesture {
-                    withAnimation {
-                        placeholderQuestion = question
-                        placeholderReflection = reflection
-                        fromProfile = true
-                        showJournal = true
-                    }
-                }
+            }
+            .padding(.bottom,20)
         }
     }
     

@@ -9,6 +9,7 @@ target 'MindGarden' do
    pod 'FirebaseFirestore'
    pod 'FirebaseAuth'
    pod 'Firebase'
+   pod 'Firebase/Storage'
    pod 'Amplitude-iOS', '~> 4.9.3'
    pod 'GoogleSignIn', '~> 5.0'
    pod 'lottie-ios'
@@ -17,7 +18,7 @@ target 'MindGarden' do
    pod 'Firebase/DynamicLinks'
    pod 'Amplitude', '~> 8.5.0'
    pod 'Firebase/Crashlytics'
-   pod 'EnvoySDK'
+   # pod 'EnvoySDK'
    
    target 'MindGardenWidgetExtension' do
      pod 'FirebaseFirestore'
