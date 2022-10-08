@@ -9,7 +9,10 @@ import SwiftUI
 import Firebase
 import WidgetKit
 
-var fromProfile = false
+struct JournelData: Identifiable  {
+    var id = UUID()
+    var data: [String:String]
+}
 struct ProfilePage: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -90,11 +93,6 @@ struct ProfilePage: View {
                     }
                 }
             }
-        }.fullScreenCover(isPresented: $showJournal) {
-            JournalView()
-                .frame(width: UIScreen.screenWidth)
-                .edgesIgnoringSafeArea(.all)
-                .background(Clr.darkWhite)
         }
     }
     
@@ -109,6 +107,7 @@ struct ProfilePage: View {
         @State var reflection: String = ""
         let width = UIScreen.screenWidth
         var data: [String: String]
+        @State var journeldata: JournelData?
         @Binding var showJournal: Bool
         @State var breathworkDuration: Int = 0
         @State var imageUrl: String?
@@ -232,12 +231,19 @@ struct ProfilePage: View {
                             timeStamp = theTime
                         }
                     }
+                    .fullScreenCover(item: $journeldata) { item in
+                        JournalView(data:item.data, fromProfile:true)
+                            .frame(width: UIScreen.screenWidth)
+                            .edgesIgnoringSafeArea(.all)
+                            .background(Clr.darkWhite)
+                    }
                     .onTapGesture {
                         withAnimation {
                             placeholderQuestion = question
                             placeholderReflection = reflection
-                            fromProfile = true
                             showJournal = true
+                            let jdata = JournelData(data:data)
+                            journeldata = jdata
                         }
                     }
                 if type == "journal" {

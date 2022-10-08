@@ -29,6 +29,10 @@ struct JournalView: View, KeyboardReadable {
     @State var recs = [-4,71,23]
     @State var divider = 1
     
+    @State private  var imgUrl: String?
+    var data: [String: String]?
+    @State var fromProfile = false
+    
     @available(iOS 15.0, *)
     @FocusState private var isFocused: Bool
     
@@ -128,7 +132,11 @@ struct JournalView: View, KeyboardReadable {
                                         }
                                         
                                         .frame(height: g.size.height * (question == placeholderQuestion ? 0.3 : (question.count >= 64 ? 0.225 : question.count >= 32 ? 0.275 : 0.325)))
-                                        if let img = inputImage, let image = Image(uiImage: img) {
+                                        if fromProfile, let img = imgUrl, !img.isEmpty {
+                                            UrlImageView(urlString: img)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height:200)
+                                        } else if let img = inputImage, let image = Image(uiImage: img) {
                                             image
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
@@ -178,6 +186,12 @@ struct JournalView: View, KeyboardReadable {
             .onAppear {
                 if !fromProfile {
                     text = ""
+                } else {
+                    if let journal = data?["gratitude"] {
+                        if let img = data?["image"], !img.isEmpty {
+                            imgUrl = img
+                        }
+                    }
                 }
                 if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
                     divider = gratitudes.count * 3
