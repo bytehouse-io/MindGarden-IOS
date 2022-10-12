@@ -56,6 +56,7 @@ struct ProfileScene: View {
     @State private var showFeedbackOption = false
     @State private var showFeedbackSheet = false
     @State private var selectedFeedback:FeedbackType = .helpMindGarden
+    @State private var showImage = false
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy h:mm a"
@@ -170,7 +171,32 @@ struct ProfileScene: View {
                                                     }, showNotif: $showNotif, showMindful: $showMindful)
                                                     .frame(height: 40)
                                                     .padding()
-//                                                    Divider()
+                                                    Divider()
+                                                    Button {
+                                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                    } label: {
+                                                        HStack() {
+                                                            Image(systemName: "bell.fill")
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fit)
+                                                                .frame(width: 25, height: 20)
+                                                                .foregroundColor(Clr.darkgreen)
+                                                                .padding(.trailing,10)
+                                                            Text("Image on Tile")
+                                                                .font(Font.fredoka(.medium, size: 20))
+                                                                .foregroundColor(Clr.black1)
+                                                            
+                                                            Spacer()
+                                                            Toggle("", isOn: $showImage)
+                                                                .onChange(of: showImage) { val in
+                                                                    UserDefaults.standard.setValue(val, forKey: "showJournalImage")
+                                                                }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
+                                                                .frame(width: UIScreen.main.bounds.width * 0.1)
+                                                        }
+                                                        .padding()
+                                                        .padding(.trailing,20)
+                                                    }
+                                                    .listRowBackground(Clr.darkWhite)
                                                     
                                                     //TODO turn on/off Vines
 //                                                    Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
@@ -535,6 +561,7 @@ struct ProfileScene: View {
                         .transition(.move(edge: .trailing))
             }
         }.onAppear {
+            showImage = UserDefaults.standard.bool(forKey: "showJournalImage")
             backgroundMusicOn = UserDefaults.standard.bool(forKey: "isPlayMusic")
             //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
             if tappedRefer {
