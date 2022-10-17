@@ -42,6 +42,10 @@ struct Play: View {
     @State var backgroundAnimationOn = false
     private let audioSession = AVAudioSession.sharedInstance()
     
+    @StateObject var envoyModel = EnvoyViewModel()
+    @State private var isSharePresented = false
+    @State private var giftUrl = URL(string: "https://mindgarden.io")
+    
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -72,7 +76,7 @@ struct Play: View {
                                     .foregroundColor(isSleep ? Clr.brightGreen : Clr.black2)
                                     .padding(.leading, 20)
                                 Spacer()
-                                HStack{sound; heart}
+                                HStack{shareButton; sound; heart}
                                     .padding(.trailing)
                             }.padding(.horizontal)
                             .padding(.top, height * 0.07)
@@ -249,6 +253,15 @@ struct Play: View {
 //                    self.progressValue = Double(1 - (model.secondsRemaining/model.totalTime))
 //                }
             }
+            .onChange(of: envoyModel.url) { url in
+                if !url.isEmpty {
+                    self.giftUrl = URL(string: url)
+                    isSharePresented = true
+                }
+            }
+            .sheet(isPresented: $isSharePresented) {
+                ReferralView(url: $giftUrl)
+            }
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onChange(of: viewRouter.currentPage) { value in
@@ -384,6 +397,13 @@ struct Play: View {
         }
     }
     
+    private func shareAction() {
+        let media = Media(source: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8", sourceIsRedirect: false, poster: "https://amazing/poster")
+        let common = Common(media: media)
+        let contentConfig = ContentConfig(contentType: "VIDEO", contentName: "Intro to Meditation", contentDescription: "Some amazing description", contentID: "1", common: common)
+        let envoyData = EnvoyData(userID: "1", contentConfig: contentConfig)
+        envoyModel.generateLink(body: envoyData)
+    }
     private func forwardAction() {
         model.forwardCounter += 1
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -525,6 +545,15 @@ struct Play: View {
 
 
     //MARK: - nav
+    var shareButton: some View {
+        Image(systemName: "square.and.arrow.up")
+            .font(.system(size: 24))
+            .foregroundColor(Clr.gardenGreen)
+            .onTapGesture {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                shareAction()
+            }
+    }
     var backArrow: some View {
         Image(systemName: "arrow.backward")
             .font(.system(size: 24))

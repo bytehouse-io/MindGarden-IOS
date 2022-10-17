@@ -46,6 +46,8 @@
 		5898541928954E4C002999A0 /* LargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5898541828954E4C002999A0 /* LargeWidget.swift */; };
 		589DCB0628732975005A8D7E /* StartDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589DCB0528732975005A8D7E /* StartDayView.swift */; };
 		589DCB082873401B005A8D7E /* turtle.json in Resources */ = {isa = PBXBuildFile; fileRef = 589DCB072873401B005A8D7E /* turtle.json */; };
+		58A2BD9028FD4D9D003B500A /* EnvoyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A2BD8F28FD4D9D003B500A /* EnvoyViewModel.swift */; };
+		58A2BD9228FD806A003B500A /* Envoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A2BD9128FD806A003B500A /* Envoy.swift */; };
 		58A9EE7B27C749C500254AC2 /* PlusButtonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */; };
 		58A9EE7C27C749C500254AC2 /* PlusButtonPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */; };
 		58A9EE7D27C749C500254AC2 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7727C749C500254AC2 /* common.swift */; };
@@ -337,6 +339,8 @@
 		5898541828954E4C002999A0 /* LargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeWidget.swift; sourceTree = "<group>"; };
 		589DCB0528732975005A8D7E /* StartDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDayView.swift; sourceTree = "<group>"; };
 		589DCB072873401B005A8D7E /* turtle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = turtle.json; sourceTree = "<group>"; };
+		58A2BD8F28FD4D9D003B500A /* EnvoyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvoyViewModel.swift; sourceTree = "<group>"; };
+		58A2BD9128FD806A003B500A /* Envoy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Envoy.swift; sourceTree = "<group>"; };
 		58A9EE7527C749C500254AC2 /* PlusButtonShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonShape.swift; sourceTree = "<group>"; };
 		58A9EE7627C749C500254AC2 /* PlusButtonPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlusButtonPopup.swift; sourceTree = "<group>"; };
 		58A9EE7727C749C500254AC2 /* common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -1108,6 +1112,7 @@
 			isa = PBXGroup;
 			children = (
 				FEBF22CD26E16B68002572E2 /* BonusViewModel.swift */,
+				58A2BD8F28FD4D9D003B500A /* EnvoyViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1124,6 +1129,7 @@
 				58BAD4E02819AB3B005BBB9A /* RererralsModel.swift */,
 				88B6ACB32870F2A400A1E042 /* Breathwork.swift */,
 				88A5D65C2895CD6D00EA535A /* Journal.swift */,
+				58A2BD9128FD806A003B500A /* Envoy.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1900,6 +1906,7 @@
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
 				FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */,
 				58C052E22805DF3E007B4D2B /* HomeViewHeader.swift in Sources */,
+				58A2BD9028FD4D9D003B500A /* EnvoyViewModel.swift in Sources */,
 				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
 				584837152851B93900900C80 /* LeaveFeedback.swift in Sources */,
 				58F5F04B2860D7E000207D92 /* FreeTrialView.swift in Sources */,
@@ -1918,6 +1925,7 @@
 				FE683F37269E47D1009A66DF /* LoadingView.swift in Sources */,
 				FEA7FBE426B0DF5A0073C62D /* Plant.swift in Sources */,
 				586E7DAD2841DF8B007E0695 /* QuickStartModel.swift in Sources */,
+				58A2BD9228FD806A003B500A /* Envoy.swift in Sources */,
 				88A5D65D2895CD6D00EA535A /* Journal.swift in Sources */,
 				FE683F3E26A0CAE1009A66DF /* MeditationsViewModel.swift in Sources */,
 				586E7DAB2841DF40007E0695 /* DiscoverModel.swift in Sources */,
