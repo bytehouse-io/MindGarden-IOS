@@ -54,7 +54,7 @@ struct APIClient {
 
 enum EnvoyDB {
     static let apiClient = APIClient()
-    static let baseUrl = URL(string: "https://osh7r2l4od.execute-api.eu-west-2.amazonaws.com/prod/partner/create-sandbox-link")
+    static let baseUrl = URL(string: "https://osh7r2l4od.execute-api.eu-west-2.amazonaws.com/prod/partner/create-link")
 }
 
 extension EnvoyDB {

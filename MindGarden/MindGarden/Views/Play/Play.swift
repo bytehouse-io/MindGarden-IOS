@@ -398,9 +398,17 @@ struct Play: View {
     }
     
     private func shareAction() {
-        let media = Media(source: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8", sourceIsRedirect: false, poster: "https://amazing/poster")
+        var media: Media
+        let poster = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80"
+        var title = model.selectedMeditation?.title ?? "Intro to Meditation"
+        var description = model.selectedMeditation?.description ?? "Intro to Meditation"
+        if let audiourl = model.selectedMeditation?.url  {
+             media = Media(source: audiourl, sourceIsRedirect: false, poster: poster)
+        } else {
+             media = Media(source: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8", sourceIsRedirect: false, poster: poster)
+        }
         let common = Common(media: media)
-        let contentConfig = ContentConfig(contentType: "VIDEO", contentName: "Intro to Meditation", contentDescription: "Some amazing description", contentID: "1", common: common)
+        let contentConfig = ContentConfig(contentType: "AUDIO", contentName: title, contentDescription: description, contentID: String(model.selectedMeditation?.id ?? 1), common: common)
         let envoyData = EnvoyData(userID: "1", contentConfig: contentConfig)
         envoyModel.generateLink(body: envoyData)
     }
