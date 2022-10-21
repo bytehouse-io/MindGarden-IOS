@@ -107,11 +107,9 @@ struct ContentView: View {
                                             }
                                     case .garden:
                                         Garden()
-                                            .frame(height: geometry.size.height)
-                                            .navigationViewStyle(StackNavigationViewStyle())
+                                            .frame(height: geometry.size.height - 50)
                                             .onAppear {
                                                     showPopUpOption = false
-//                                                    showPopUp = false
                                                     showItems = false
                                             }
                                             .environmentObject(bonusModel)
@@ -342,6 +340,7 @@ struct ContentView: View {
                                     maxHeight: geometry.size.height * (K.isSmall() ? 1 : 0.75),
                                     minHeight: 0.1,
                                     trigger: {
+                                        UserDefaults.standard.setValue(true, forKey: "500bonus")
                                         Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
                                         bonusModel.tripleBonus()
                                     }
@@ -369,7 +368,7 @@ struct ContentView: View {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
-                                                UserDefaults.standard.setValue(false, forKey: "introLink")
+                                                UserDefaults.standard.setValue(true, forKey: "500bonus")
                                                 userModel.showDay1Complete = false
                                                 bonusModel.tripleBonus()
                                             }

@@ -4,7 +4,6 @@ import SwiftUI
 
 /// Cases to reference for safely initializing images, like so: `Img.Onboarding.header`
 public enum Img {
-  public static let house = Image("House")
   public static let iceFlower = Image("Ice Flower")
   public static let bad = Image("bad")
   public static let good = Image("good")
@@ -194,6 +193,7 @@ public enum Img {
   public static let coloredPots = Image("coloredPots")
   public static let courses = Image("courses")
   public static let coverImage = Image("coverImage")
+  public static let discordicon = Image("discordicon")
   public static let discoverSearch = Image("discoverSearch")
   public static let educatedRacoon = Image("educatedRacoon")
   public static let eggs = Image("eggs")
@@ -214,6 +214,7 @@ public enum Img {
   public static let happyPandaFace = Image("happyPandaFace")
   public static let happySunflower = Image("happySunflower")
   public static let heart = Image("heart")
+  public static let house = Image("house")
   public static let icecream = Image("icecream")
   public static let alpha = Image("alpha")
   public static let beach = Image("beach")
@@ -327,6 +328,7 @@ public enum Img {
   public static let signUpImage = Image("signUpImage")
   public static let siwg = Image("siwg")
   public static let sleepingSloth = Image("sleepingSloth")
+  public static let smallWidget = Image("smallWidget")
   public static let spaceship = Image("spaceship")
   public static let star = Image("star")
   public static let starfish = Image("starfish")
@@ -348,6 +350,7 @@ public enum Img {
   public static let topBranch = Image("topBranch")
   public static let traffic = Image("traffic")
   public static let train = Image("train")
+  public static let tree1 = Image("tree1")
   public static let treeBadge = Image("treeBadge")
   public static let treeCover = Image("treeCover")
   public static let treePacket = Image("treePacket")

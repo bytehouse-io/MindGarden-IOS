@@ -90,8 +90,7 @@ struct MindGardenWidgetEntryView : View {
             case .systemMedium:
                 NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId, breathworkImg: entry.breathWorkImg, meditationImg: entry.meditationImg))
             case .systemLarge:
-                LargeWidget(streakNumber: entry.streakNumber, grid:entry.grid)
-                    .environmentObject(GardenViewModel())
+                LargeWidget(streakNumber: entry.streakNumber,gardenModel: GardenViewModel(), grid:entry.grid)
             default:
                 Text("Some other WidgetFamily in the future.")
             }
@@ -267,7 +266,7 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall])
     }
 }
 

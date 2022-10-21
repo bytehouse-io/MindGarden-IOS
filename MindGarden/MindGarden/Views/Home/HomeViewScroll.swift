@@ -42,15 +42,35 @@ struct HomeViewScroll: View {
                             .padding(.leading, -20)
                             .offset(x: -20, y: -60)
                         Spacer()
-                        HStack(alignment: .bottom) {
-                            Img.streak
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 24)
-                            Text("\(bonusModel.streakNumber)")
-                                .font(Font.fredoka(.medium, size: 24))
-                                .foregroundColor(Clr.healthSecondary)
-                            
+                        HStack(alignment: .bottom, spacing: 16) {
+                            HStack(alignment: .bottom, spacing: 7) {
+                                Img.streak
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 24)
+                                Text("\(bonusModel.streakNumber)")
+                                    .font(Font.fredoka(.medium, size: 24))
+                                    .foregroundColor(Clr.healthSecondary)
+                            }.onTapGesture {
+                                withAnimation {
+                                    Analytics.shared.log(event: .home_tapped_streak)
+                                    showModal = true
+                                }
+                            }                     
+                            HStack(alignment: .bottom, spacing: 3) {
+                                Img.realTree
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 28)
+                                Text("\(userModel.plantedTrees.count)")
+                                    .font(Font.fredoka(.medium, size: 24))
+                                    .foregroundColor(Clr.darkgreen)
+                            }.onTapGesture {
+                                withAnimation {
+                                    Analytics.shared.log(event: .home_tapped_real_tree)
+                                    NotificationCenter.default.post(name: Notification.Name("trees"), object: nil)
+                                }
+                            }
                         }.offset(x: -50, y: -30)
                     }
                     VStack {

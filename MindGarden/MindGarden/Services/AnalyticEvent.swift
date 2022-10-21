@@ -131,6 +131,8 @@ enum AnalyticEvent {
     case home_tapped_new_meditation //
     case home_tapped_weekly_meditation //
     case home_tapped_locked_meditation //
+    case home_tapped_streak
+    case home_tapped_real_tree
     case challenge_tapped_x //
     case challenge_tapped_accept //
     
@@ -193,7 +195,7 @@ enum AnalyticEvent {
     case store_tapped_success_modal_okay //
     case store_tapped_rate_app //
     case store_tapped_refer_friend //
-    case store_tapped_reddit //
+    case store_tapped_discord //
     case store_tapped_go_pro
     case store_tapped_badge_tile
     case store_animation_continue //
@@ -272,7 +274,7 @@ enum AnalyticEvent {
     case profile_tapped_background_off
     case profile_tapped_settings //
     case profile_tapped_email //
-    case profile_tapped_reddit //
+    case profile_tapped_discord //
     case profile_tapped_invite //
     case profile_tapped_notifications //
     case profile_tapped_instagram //
@@ -543,6 +545,8 @@ extension AnalyticEvent {
         case .home_tapped_favorite_meditation: return "home_tapped_favorite_meditation"
         case .home_tapped_floatingMenu: return "home_tapped_floatingMenu"
         case .home_tapped_bonus: return "home_tapped_bonus"
+        case .home_tapped_streak: return "home_tapped_streak"
+        case .home_tapped_real_tree: return "home_tapped_real_tree"
         case .home_claim_daily: return "home_claim_daily:"
         case .home_claim_seven: return "home_claim_seven"
         case .home_claim_thirty: return "home_claim_thirty"
@@ -569,7 +573,7 @@ extension AnalyticEvent {
         case .store_tapped_rate_app: return "store_tapped_rate_app"
         case .store_tapped_refer_friend: return "store_tapped_refer_friend"
         case .store_tapped_go_pro: return "store_tapped_go_pro"
-        case .store_tapped_reddit: return "store_tapped_reddit"
+        case .store_tapped_discord: return "store_tapped_discord"
         case .store_tapped_badge_tile: return "store_tapped_badge_tile"
         case .store_tapped_buy_real_tree: return "store_tapped_buy_real_tree"
         case .store_animation_continue: return "store_animation_continue"
@@ -611,7 +615,7 @@ extension AnalyticEvent {
         case .profile_tapped_profile: return "profile_tapped_profile"
         case .profile_tapped_settings: return "profile_tapped_settings"
         case .profile_tapped_email: return "profile_tapped_email"
-        case .profile_tapped_reddit: return "profile_tapped_reddit"
+        case .profile_tapped_discord: return "profile_tapped_discord"
         case .profile_tapped_invite: return "profile_tapped_invite"
         case .profile_tapped_notifications: return "profile_tapped_notifications"
         case .profile_tapped_instagram: return "profile_tapped_instagram"

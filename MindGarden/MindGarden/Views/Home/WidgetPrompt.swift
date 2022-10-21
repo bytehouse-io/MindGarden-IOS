@@ -24,22 +24,22 @@ struct WidgetPrompt: View {
                         NextButtonView
                     } else {
                         
-                        Text("New MindGarden Widgets!")
+                        Text("New MindGarden Widget")
                             .font(Font.fredoka(.bold, size: K.isSmall() ? 20 : 28))
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
                         
-                        Text("Stay motivated. Add your garden to your home screen")
+                        Text("🔥 Stay motivated. Keep your streak burning.")
                             .font(Font.fredoka(.medium, size: K.isSmall() ? 16 : 20))
                             .foregroundColor(Clr.black2)
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
                             .frame(width:UIScreen.screenWidth*0.8)
                             .padding([.horizontal, .bottom])
-                        Img.widgetPrompt
+                        Img.smallWidget
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: geomatry.size.height*0.4)
+                            .frame(height: geomatry.size.height*0.25)
                             .cornerRadius(20).padding(.bottom, 20)
                         AddWidgetView
                     }

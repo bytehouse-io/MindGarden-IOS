@@ -131,7 +131,7 @@ class StorylyManager: StorylyDelegate {
     private func updateComps(components: [String], segs: [String]?) -> [String]? {
         if var segments = segs {
             if let num = Int(components[1]) {
-                if components[0].lowercased() == "intro/day" && num == 1 {
+                if components[0].lowercased() == "intro/day" && num == 1 && !UserDefaults.standard.bool(forKey: "500bonus") {
                     SceneDelegate.userModel.showDay1Complete = true
                 }
                 let count = num + 1

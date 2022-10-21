@@ -157,7 +157,7 @@ struct PurchaseModal: View {
                                 .multilineTextAlignment(.leading)
                                 .frame(width: g.size.width * 0.7)
                             Text("🌱 You have planted: \(userModel.plantedTrees.count) trees")
-                                .font(Font.fredoka(.semiBold, size: 22))
+                                .font(Font.fredoka(.semiBold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: g.size.width * 0.7, alignment: .leading)
@@ -201,7 +201,7 @@ struct PurchaseModal: View {
                                     if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                         UIApplication.shared.open(url)
                                     }
-                                    Analytics.shared.log(event: .store_tapped_reddit)
+                                    Analytics.shared.log(event: .store_tapped_discord)
                                     if !UserDefaults.standard.bool(forKey: "reddit") {
                                         UserDefaults.standard.setValue(true, forKey: "reddit")
                                     }

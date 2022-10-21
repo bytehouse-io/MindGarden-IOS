@@ -174,7 +174,7 @@ struct FloatingMenu: View {
     }
     
     var menuItem: some View {
-        VStack(alignment:.leading, spacing:0) {
+        VStack(alignment:.leading, spacing:10) {
             ForEach(MenuType.allCases, id: \.id) { state in
                 if (state != .favorites || (state == .favorites && !medModel.favoritedMeditations.isEmpty)) && (state != .recent || (state == .recent && !userModel.completedMeditations.isEmpty)) {
                     Button {

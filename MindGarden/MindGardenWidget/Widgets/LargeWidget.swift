@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LargeWidget: View {
     @State var streakNumber: Int = 0
-    @EnvironmentObject var gardenModel: GardenViewModel
+    @StateObject var gardenModel: GardenViewModel
     var grid = [String: [String:[String:[String:Any]]]]()
     let columns = [
             GridItem(.flexible()),

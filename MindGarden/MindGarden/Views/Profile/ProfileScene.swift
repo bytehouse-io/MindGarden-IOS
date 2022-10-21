@@ -338,8 +338,8 @@ struct ProfileScene: View {
                                                             .neoShadow()
                                                         VStack {
                                                             Row(title: "Join the Community", img: Img.redditIcon, action: {
-                                                                Analytics.shared.log(event: .profile_tapped_reddit)
-                                                                if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
+                                                                Analytics.shared.log(event: .profile_tapped_discord)
+                                                                if let url = URL(string: "https://discord.gg/SZXnxtyBV5") {
                                                                     UIApplication.shared.open(url)
                                                                     UserDefaults.standard.setValue(true, forKey: "reddit")
                                                                 }

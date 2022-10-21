@@ -86,7 +86,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             } else {
                 print("yumah")
                 SceneDelegate.profileModel.isLoggedIn = false
-                SceneDelegate.profileModel.isLoggedIn = true
                 SceneDelegate.userModel.updateSelf()
                 firebaseAPI.fetchMeditations(meditationModel: SceneDelegate.medModel)
                 firebaseAPI.fetchCourses()

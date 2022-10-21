@@ -101,8 +101,8 @@ struct Garden: View {
             ZStack {
                 Img.gardenBackground
                     .resizable()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 32)
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .center, spacing: 20) {
                         //Version 2
