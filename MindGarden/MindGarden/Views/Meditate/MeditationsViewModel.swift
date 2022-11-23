@@ -408,9 +408,6 @@ class MeditationViewModel: ObservableObject {
     
     // Roadmap of meditations based on experience chosen during onboarding
     func getUserMap() {
-        let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
-        let completedInts = completedMeditation
-        
         let beg1 = [6, 107, 107, 82, 82]
         let beg2 = [105, 80, 80, 80, 104, 108, 92]
         let beg3 = [90, 91, 93, 109, 4, 4, 4]
@@ -424,15 +421,19 @@ class MeditationViewModel: ObservableObject {
         let exp4 = [58, 58, 58, 58, 58,58,  58,  58,  58, 58]
         let exp5 = [29, 29, 29, 29, 29, 29, 29, 29, 29]
         let exp6 = [30, 30, 30, 30, 31, 31, 32]
-    
-        let userCoinCollectedLevel = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int ?? 0
+        
         let begArr = [beg1, beg2, beg3, beg4, beg5, beg6]
         let expArr = [exp1, exp2, exp3, exp4, exp5, exp6]
+        setRoadMap(begArr: begArr, expArr: expArr)
+    }
+    func setRoadMap(begArr:[[Int]], expArr:[[Int]]){
+        let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
+        let userCoinCollectedLevel = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int ?? 0
         roadMapArr = begArr[0]
         for i in 0...userCoinCollectedLevel {
             switch selected {
             case "Meditate often":
-                if expArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i {
+                if i+1 < expArr.count, expArr[i].allSatisfy(completedMeditation.contains) && userCoinCollectedLevel != i {
                     roadMaplevel = i + 2
                     roadMapArr = expArr[i+1]
                 } else {
@@ -440,7 +441,7 @@ class MeditationViewModel: ObservableObject {
                     roadMapArr = expArr[i]
                 }
             case Experience.often.title:
-                if expArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i {
+                if i+1 < expArr.count, expArr[i].allSatisfy(completedMeditation.contains) && userCoinCollectedLevel != i {
                     roadMaplevel = i + 2
                     roadMapArr = expArr[i+1]
                 } else {
@@ -451,7 +452,7 @@ class MeditationViewModel: ObservableObject {
                 if roadMaplevel == 6 || userCoinCollectedLevel == 6 {
                     return
                 } else {
-                    if begArr[i].allSatisfy(completedInts.contains) && userCoinCollectedLevel != i  {
+                    if i+1 < begArr.count, begArr[i].allSatisfy(completedMeditation.contains) && userCoinCollectedLevel != i  {
                         roadMaplevel = i + 2
                         roadMapArr = begArr[i+1]
                     } else {
@@ -462,7 +463,6 @@ class MeditationViewModel: ObservableObject {
             }
         }
     }
-    
     
     var completedMeditation: [Int] {
         let completedMeditations = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String]  ?? []

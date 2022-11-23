@@ -437,7 +437,7 @@ struct PricingView: View {
 
     private func unlockPro() {
         var price = 0.0
-        var package = packagesAvailableForPurchase[0]
+        var package: Purchases.Package? = packagesAvailableForPurchase[0]
         var event2 = "_Started_From_All"
         var event3 = "cancelled_"
         switch selectedBox {
@@ -445,21 +445,21 @@ struct PricingView: View {
             if fiftyOff {
                 package = packagesAvailableForPurchase.last { (package) -> Bool in
                     return package.product.productIdentifier == "yearly_pro_14"
-                }!
+                }
                 price = yearlyPrice
                 event2 = "Yearly50" + event2
                 event3 += "yearly50"
             } else if fromInfluencer != "" {
                 package = packagesAvailableForPurchase.last { (package) -> Bool in
                     return package.product.productIdentifier == "io.mindgarden.pro.yearly14"
-                }!
+                }
                 price = yearlyPrice
                 event2 = "Yearly14" + event2
                 event3 += "yearly14"
             } else {
                 package = packagesAvailableForPurchase.last { (package) -> Bool in
                     return package.product.productIdentifier == "io.mindgarden.pro.yearly"
-                }!
+                }
                 price = yearlyPrice
                 event2 = "Yearly" + event2
                 event3 += "yearly"
@@ -469,14 +469,14 @@ struct PricingView: View {
         case "Lifetime":
             package = packagesAvailableForPurchase.last { (package) -> Bool in
                 return package.product.productIdentifier == "io.mindgarden.pro.lifetime"
-            }!
+            }
             price = lifePrice
             event2 = "Lifetime" + event2
             event3 += "lifetime"
         case "Monthly":
             package = packagesAvailableForPurchase.last { (package) -> Bool in
                 return package.product.productIdentifier == "io.mindgarden.pro.monthly"
-            }!
+            }
             price = monthlyPrice
             if fiftyOff {
                 event2 = "Monthly50" + event2
@@ -490,6 +490,7 @@ struct PricingView: View {
         }
 
         showLoading = true
+        guard let package = package else { return }
         Purchases.shared.purchasePackage(package) { [self] (transaction, purchaserInfo, error, userCancelled) in
             showLoading = false
             if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
