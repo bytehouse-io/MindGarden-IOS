@@ -106,6 +106,8 @@ struct MoodElaborate: View {
                                         var moodSession = [String: String]()
                                         moodSession["timeStamp"] = Date.getTime()
                                         moodSession["elaboration"] = item
+                                        UserDefaults.standard.setValue(userModel.selectedMood.title, forKey: "selectedMood")
+                                        UserDefaults.standard.setValue(item, forKey: "elaboration")
                                         userModel.elaboration = item
                                         moodSession["mood"] = userModel.selectedMood.title
                                     

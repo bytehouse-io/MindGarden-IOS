@@ -24,7 +24,7 @@ struct HomeTabView: View {
                 .onTapGesture {
                         DispatchQueue.main.async {
                             withAnimation(.spring()) {
-                                showPopup.toggle()
+                                    showPopup.toggle()
                             }
                         }
                 }

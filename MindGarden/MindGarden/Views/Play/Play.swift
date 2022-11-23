@@ -42,6 +42,10 @@ struct Play: View {
     @State var backgroundAnimationOn = false
     private let audioSession = AVAudioSession.sharedInstance()
     
+    @StateObject var envoyModel = EnvoyViewModel()
+    @State private var isSharePresented = false
+    @State private var giftUrl = URL(string: "https://mindgarden.io")
+    
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
     }
@@ -72,7 +76,7 @@ struct Play: View {
                                     .foregroundColor(isSleep ? Clr.brightGreen : Clr.black2)
                                     .padding(.leading, 20)
                                 Spacer()
-                                HStack{sound; heart}
+                                HStack{shareButton; sound; heart}
                                     .padding(.trailing)
                             }.padding(.horizontal)
                             .padding(.top, height * 0.07)
@@ -249,6 +253,15 @@ struct Play: View {
 //                    self.progressValue = Double(1 - (model.secondsRemaining/model.totalTime))
 //                }
             }
+            .onChange(of: envoyModel.url) { url in
+                if !url.isEmpty {
+                    self.giftUrl = URL(string: url)
+                    isSharePresented = true
+                }
+            }
+            .sheet(isPresented: $isSharePresented) {
+                ReferralView(url: $giftUrl)
+            }
         .animation(.easeIn)
         .onAppearAnalytics(event: .screen_load_play)
         .onChange(of: viewRouter.currentPage) { value in
@@ -384,6 +397,21 @@ struct Play: View {
         }
     }
     
+    private func shareAction() {
+        var media: Media
+        let poster = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80"
+        var title = model.selectedMeditation?.title ?? "Intro to Meditation"
+        var description = model.selectedMeditation?.description ?? "Intro to Meditation"
+        if let audiourl = model.selectedMeditation?.url  {
+             media = Media(source: audiourl, sourceIsRedirect: false, poster: poster)
+        } else {
+             media = Media(source: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8", sourceIsRedirect: false, poster: poster)
+        }
+        let common = Common(media: media)
+        let contentConfig = ContentConfig(contentType: "AUDIO", contentName: title, contentDescription: description, contentID: String(model.selectedMeditation?.id ?? 1), common: common)
+        let envoyData = EnvoyData(userID: "1", contentConfig: contentConfig)
+        envoyModel.generateLink(body: envoyData)
+    }
     private func forwardAction() {
         model.forwardCounter += 1
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -525,6 +553,15 @@ struct Play: View {
 
 
     //MARK: - nav
+    var shareButton: some View {
+        Image(systemName: "square.and.arrow.up")
+            .font(.system(size: 24))
+            .foregroundColor(Clr.gardenGreen)
+            .onTapGesture {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                shareAction()
+            }
+    }
     var backArrow: some View {
         Image(systemName: "arrow.backward")
             .font(.system(size: 24))

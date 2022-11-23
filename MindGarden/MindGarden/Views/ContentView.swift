@@ -98,10 +98,21 @@ struct ContentView: View {
                                             .environmentObject(bonusModel)
                                             .environmentObject(authModel)
                                             .onAppear {
-                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                                                     withAnimation {
                                                         self.isOnboarding = true
                                                         addMood = true
+                                                    }
+                                                } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                                                    self.isOnboarding = true
+                                                    moodFromFinished = false
+                                                    viewRouter.currentPage = .journal
+                                                    if let mood = UserDefaults.standard.string(forKey: "selectedMood") {
+                                                        userModel.selectedMood = Mood.getMood(str: mood)
+                                                        if let elab = UserDefaults.standard.string(forKey: "elaboration") {
+                                                            userModel.elaboration = elab
+                                                        }
+                                                        moodFirst = true
                                                     }
                                                 }
                                             }
@@ -273,11 +284,12 @@ struct ContentView: View {
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
                                         .transition(.opacity)
-                                }
-                                .onTapGesture {
+                                }.onTapGesture {
                                         withAnimation {
                                             hidePopupWithAnimation {
-                                                addMood = false
+                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+                                                    addMood = false
+                                                }
                                                 addGratitude = false
                                                 if profileModel.showWidget {
                                                     profileModel.showWidget = false
@@ -444,7 +456,6 @@ struct ContentView: View {
         }
 
         .onAppear {
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.8) {
                 withAnimation(.linear(duration: 0.5)) {
                     showSplash.toggle()
@@ -572,9 +583,7 @@ struct ContentView: View {
         case .moodCheck:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        
                 Analytics.shared.log(event: .plus_tapped_mood)
-                
                 if isOnboarding {
                     Analytics.shared.log(event: .onboarding_finished_mood)
                 }

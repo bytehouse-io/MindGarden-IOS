@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/superwall-me/paywall-ios",
       "state" : {
-        "revision" : "52bdb74ecc398f13acabf6b5a73ec6f2652623c5",
-        "version" : "2.2.7"
+        "revision" : "10d73eda3c8c387272be4115d4b80ab976cc9d33",
+        "version" : "2.5.4"
       }
     },
     {
@@ -34,15 +34,6 @@
       "state" : {
         "revision" : "04b2892389e07478fde30892c801c938ceaedbfb",
         "version" : "1.19.4"
-      }
-    },
-    {
-      "identity" : "tpinappreceipt",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tikhop/TPInAppReceipt.git",
-      "state" : {
-        "revision" : "2b9946f8fe2dd74ed87dfcb5dbedc3be06c5ccab",
-        "version" : "3.3.3"
       }
     }
   ],

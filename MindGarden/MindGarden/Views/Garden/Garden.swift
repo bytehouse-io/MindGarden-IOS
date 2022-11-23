@@ -191,59 +191,24 @@ struct Garden: View {
                                                 .border(.white, width: 1)
                                         } else {
                                             if gardenModel.monthTiles[row]?[currentDate]?.0 != nil && gardenModel.monthTiles[row]?[currentDate]?.1 != nil {
-                                                // mood & plant both exist
-                                                // first tile in onboarding
-                                                let plantHead = gardenModel.monthTiles[row]?[currentDate]?.0?.head.resizable().aspectRatio(contentMode: .fit)
                                                 ZStack {
                                                     Rectangle()
                                                         .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
                                                         .border(.white, width: 1)
                                                         .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                    plantHead
-//                                                        .resizable()
-//                                                        .aspectRatio(contentMode: .fit)
-                                                        .padding(3)
-                                                        .overlay(
-                                                            ZStack {
-                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
-                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.fredoka(.semiBold, size: 10))
-                                                                        .foregroundColor(Color.black)
-                                                                        .padding(.leading)
-                                                                }
-                                                            }
-                                                        )
-                                                        .opacity(isOnboarding ? tileOpacity : 1)
-                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+                                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
+
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.0 != nil { // only mood is nil
                                                 ZStack {
                                                     let plant = gardenModel.monthTiles[row]?[currentDate]?.0
-                                                    let plantHead = gardenModel.monthTiles[row]?[currentDate]?.0?.head
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
                                                     Rectangle()
                                                         .fill(plant?.title == "Ice Flower" ? Clr.freezeBlue : Clr.calenderSquare)
                                                         .border(.white, width: 1)
                                                         .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                    plantHead
-//                                                        .resizable()
-//                                                        .aspectRatio(contentMode: .fit)
-                                                        .padding(3)
-                                                        .overlay(
-                                                            ZStack {
-                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
-                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.fredoka(.semiBold, size: 10))
-                                                                        .foregroundColor(Color.black)
-                                                                        .padding(.leading)
-                                                                }
-                                                            }
-                                                        )
-                                                        .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
-                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+                                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
                                                 Rectangle()
@@ -757,5 +722,62 @@ struct FavoritePlant: View {
             .frame(width: 70, height: 30)
         }.frame(height: 120)
             .padding(10)
+    }
+}
+
+
+
+struct PlantHead: View {
+    @EnvironmentObject var gardenModel: GardenViewModel
+    @State var row: Int
+    @State var currentDate: Int
+    @State var month: String
+    @State private var isOnboarding = false
+    @State private var tileOpacity = 1.0
+    @State private var showImage = false
+    var body: some View {
+        ZStack {
+            let maxDate = Date().getNumberOfDays(month: String(gardenModel.selectedMonth),year:String(gardenModel.selectedYear))
+            if let imgUrl = gardenModel.getImagePath(month: month, day:"\(currentDate)"), showImage {
+                UrlImageView(urlString: imgUrl)
+                    .padding(3)
+                    .overlay(
+                        ZStack {
+                            if UserDefaults.standard.bool(forKey: "tileDates") {
+                                Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                    .font(Font.fredoka(.semiBold, size: 10))
+                                    .foregroundColor(Color.black)
+                                    .padding(.leading)
+                            }
+                        }
+                    )
+                    .opacity((!UserDefaults.standard.bool(forKey: "tappedTile") && isOnboarding) ? tileOpacity : 1)
+                    .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+            } else {
+                gardenModel.monthTiles[row]?[currentDate]?.0?.head
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(3)
+                    .overlay(
+                        ZStack {
+                            if UserDefaults.standard.bool(forKey: "tileDates") {
+                                Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                    .font(Font.fredoka(.semiBold, size: 10))
+                                    .foregroundColor(Color.black)
+                                    .padding(.leading)
+                            }
+                        }
+                    )
+                    .opacity((!UserDefaults.standard.bool(forKey: "tappedTile") && isOnboarding) ? tileOpacity : 1)
+                    .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+            }
+        }
+        .onAppear {
+            showImage = UserDefaults.standard.bool(forKey: "showJournalImage")
+            if !UserDefaults.standard.bool(forKey: "tappedTile") {
+                isOnboarding = true
+                tileOpacity = 0.2
+            }
+        }
     }
 }

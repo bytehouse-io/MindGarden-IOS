@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 import Amplitude
 import Combine
+import FirebaseStorage
 
 var placeholderReflection = ""
 var placeholderQuestion = "What's one thing you're grateful for right now?"
@@ -28,183 +29,200 @@ struct JournalView: View, KeyboardReadable {
     @State var recs = [-4,71,23]
     @State var divider = 1
     
+    @State private  var imgUrl: String?
+    var data: [String: String]?
+    @State var fromProfile = false
+    
     @available(iOS 15.0, *)
     @FocusState private var isFocused: Bool
     
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    @State private var showLoading: Bool = false
     
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        ZStack(alignment:.top) {
-            Clr.darkWhite.ignoresSafeArea()
-            VStack(spacing:0) {
-                Spacer()
-                    .frame(height:50)
-                HStack {
-                    Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
-                        .font(Font.fredoka(.medium, size: 20))
-                        .foregroundColor(Clr.blackShadow)
-                        .multilineTextAlignment(.center)
-                        .opacity(0.5)
+        LoadingView(isShowing: $showLoading) {
+            ZStack(alignment:.top) {
+                Clr.darkWhite.ignoresSafeArea()
+                VStack(spacing:0) {
                     Spacer()
-                    
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
-                        CloseButton() {
-                            withAnimation {
-                                Analytics.shared.log(event: .journal_tapped_x)
-                                //                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
-                                placeholderQuestion = "What's one thing you're grateful for right now?"
-                                presentationMode.wrappedValue.dismiss()
-                                viewRouter.currentPage = viewRouter.previousPage
-                            }
-                        }.padding(.leading, 5)
-                    }
-                }.padding(.leading, 5)
-                if userModel.elaboration != "" {
+                        .frame(height:50)
                     HStack {
-                        Mood.getMoodImage(mood: userModel.selectedMood)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30)
-                        Text(userModel.elaboration)
-                            .font(Font.fredoka(.medium, size: 14))
-                            .foregroundColor(Clr.black2)
-                            .padding(.horizontal, 25)
-                            .padding(.vertical, 8)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color.black, lineWidth: 1.5)
-                            )
-                            .frame(minWidth: UIScreen.screenWidth * 0.175)
-                            .padding(.leading, 10)
-                    }
-                    .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
-                    .padding(.leading, 5)
-                    .padding(.vertical, 10)
-                }
-                GeometryReader { g in
-                    VStack(spacing: 15) {
-                        Text(question)
-                            .font(Font.fredoka(.bold, size: 24))
-                            .foregroundColor(Clr.black2)
-                            .lineLimit(3)
-                            .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
-                            .padding(.leading, 5)
+                        Text("\(Date().toString(withFormat: "EEEE, MMM dd"))")
+                            .font(Font.fredoka(.medium, size: 20))
+                            .foregroundColor(Clr.blackShadow)
+                            .multilineTextAlignment(.center)
+                            .opacity(0.5)
+                        Spacer()
                         
-                        ScrollView(.vertical, showsIndicators: false) {
-                            ZStack {
-                                VStack {
-                                    Group {
-                                        if #available(iOS 15.0, *) {
-                                            TextEditor(text: $text)
-                                                .focused($isFocused)
-                                                .background(Clr.darkWhite)
-                                                .font(Font.fredoka(.medium, size: 20))
-                                                .foregroundColor(Clr.black2)
-                                        } else if #available(iOS 14.0, *) {
-                                            TextEditor(text: $text)
-                                                .background(Clr.darkWhite)
-                                                .font(Font.fredoka(.medium, size: 20))
-                                                .foregroundColor(Clr.black2)
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
+                            CloseButton() {
+                                withAnimation {
+                                    Analytics.shared.log(event: .journal_tapped_x)
+                                    //                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+                                    placeholderQuestion = "What's one thing you're grateful for right now?"
+                                    presentationMode.wrappedValue.dismiss()
+                                    viewRouter.currentPage = viewRouter.previousPage
+                                }
+                            }.padding(.leading, 5)
+                        }
+                    }.padding(.leading, 5)
+                    if userModel.elaboration != "" {
+                        HStack {
+                            Mood.getMoodImage(mood: userModel.selectedMood)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30)
+                            Text(userModel.elaboration)
+                                .font(Font.fredoka(.medium, size: 14))
+                                .foregroundColor(Clr.black2)
+                                .padding(.horizontal, 25)
+                                .padding(.vertical, 8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.black, lineWidth: 1.5)
+                                )
+                                .frame(minWidth: UIScreen.screenWidth * 0.175)
+                                .padding(.leading, 10)
+                        }
+                        .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
+                        .padding(.leading, 5)
+                        .padding(.vertical, 10)
+                    }
+                    GeometryReader { g in
+                        VStack(spacing: 15) {
+                            Text(question)
+                                .font(Font.fredoka(.bold, size: 24))
+                                .foregroundColor(Clr.black2)
+                                .lineLimit(3)
+                                .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
+                                .padding(.leading, 5)
+                            
+                            ScrollView(.vertical, showsIndicators: false) {
+                                ZStack {
+                                    VStack {
+                                        Group {
+                                            if #available(iOS 15.0, *) {
+                                                TextEditor(text: $text)
+                                                    .focused($isFocused)
+                                                    .background(Clr.darkWhite)
+                                                    .font(Font.fredoka(.medium, size: 20))
+                                                    .foregroundColor(Clr.black2)
+                                            } else if #available(iOS 14.0, *) {
+                                                TextEditor(text: $text)
+                                                    .background(Clr.darkWhite)
+                                                    .font(Font.fredoka(.medium, size: 20))
+                                                    .foregroundColor(Clr.black2)
+                                            }
                                         }
-                                    }
-                                    .disableAutocorrection(false)
-                                    .foregroundColor(Clr.black2)
-                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                    .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                                        withAnimation {
-                                            contentKeyVisible = newIsKeyboardVisible
+                                        .disableAutocorrection(false)
+                                        .foregroundColor(Clr.black2)
+                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                                            withAnimation {
+                                                contentKeyVisible = newIsKeyboardVisible
+                                            }
+                                        }.onTapGesture {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            //                                    if text == placeholderReflection {
+                                            //                                        text = ""
+                                            //                                    }
                                         }
-                                    }.onTapGesture {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        //                                    if text == placeholderReflection {
-                                        //                                        text = ""
-                                        //                                    }
-                                    }
-                                    
-                                    .frame(height: g.size.height * (question == placeholderQuestion ? 0.3 : (question.count >= 64 ? 0.225 : question.count >= 32 ? 0.275 : 0.325)))
-                                    if let img = inputImage, let image = Image(uiImage: img) {
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height:200)
-                                            .padding()
+                                        
+                                        .frame(height: g.size.height * (question == placeholderQuestion ? 0.3 : (question.count >= 64 ? 0.225 : question.count >= 32 ? 0.275 : 0.325)))
+                                        if fromProfile, let img = imgUrl, !img.isEmpty {
+                                            UrlImageView(urlString: img)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height:200)
+                                        } else if let img = inputImage, let image = Image(uiImage: img) {
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height:200)
+                                                .padding()
+                                        }
                                     }
                                 }
                             }
+                            .transition(.move(edge: .leading))
                         }
-                        .transition(.move(edge: .leading))
                     }
                 }
+                .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
+                bottomPanel
+                    .padding(.bottom)
             }
-            .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
-            bottomPanel
-                .padding(.bottom)
-        }
-        .offset(x: -5)
-        .onChange(of:text) { txt in
-            //                if text.contains(placeholderReflection) {
-            //                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
-            //                }
-            
-            
-            if text.contains(placeholderReflection) {
-                self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
-            }
-            
-            if text.count >= 5 && text.count < 10 {
-                coin = max(1,5/divider)
-            } else if text.count >= 10 && text.count < 25 {
-                coin = max(1,10/divider)
-            } else if text.count >= 25 && text.count < 50 {
-                coin = max(1,20/divider)
-            } else if text.count >= 50 && text.count < 100 {
-                coin = max(1,30/divider)
-            } else if text.count >= 100 && text.count < 200 {
-                coin = max(1,40/divider)
-            } else if text.count >= 200 && text.count < 300 {
-                coin = max(1,50/divider)
-            } else if text.count >= 300 {
-                coin = max(1,50/divider)
-            } else {
-                coin = 0
-            }
-        }
-        .onAppear {
-            if !fromProfile {
-                text = ""
-            }
-            if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
-                divider = gratitudes.count * 3
-            }
-            if #available(iOS 15.0, *) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    isFocused = true
+            .offset(x: -5)
+            .onChange(of:text) { txt in
+                //                if text.contains(placeholderReflection) {
+                //                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
+                //                }
+                
+                
+                if text.contains(placeholderReflection) {
+                    self.text = self.text.replacingOccurrences(of: placeholderReflection, with: "")
+                }
+                
+                if text.count >= 5 && text.count < 10 {
+                    coin = max(1,5/divider)
+                } else if text.count >= 10 && text.count < 25 {
+                    coin = max(1,10/divider)
+                } else if text.count >= 25 && text.count < 50 {
+                    coin = max(1,20/divider)
+                } else if text.count >= 50 && text.count < 100 {
+                    coin = max(1,30/divider)
+                } else if text.count >= 100 && text.count < 200 {
+                    coin = max(1,40/divider)
+                } else if text.count >= 200 && text.count < 300 {
+                    coin = max(1,50/divider)
+                } else if text.count >= 300 {
+                    coin = max(1,50/divider)
+                } else {
+                    coin = 0
                 }
             }
-            recs = Meditation.getRecsFromMood(selectedMood: userModel.selectedMood, elaboration: userModel.elaboration)
-            question = placeholderQuestion
-            UITextView.appearance().backgroundColor = .clear
-        }
-        .ignoresSafeArea()
-        .sheet(isPresented: $showPrompts) {
-            PromptsView(question: $question)
-        }
-        .fullScreenCover(isPresented: $showRecs) {
-            RecommendationsView(recs: $recs, coin: $coin)
-        }
-        .transition(.move(edge: .trailing))
-        .onDisappear {
-            fromProfile = false
-            if #available(iOS 15.0, *) {
-                isFocused = false
+            .onAppear {
+                if !fromProfile {
+                    text = ""
+                } else {
+                    if let journal = data?["gratitude"] {
+                        if let img = data?["image"], !img.isEmpty {
+                            imgUrl = img
+                        }
+                    }
+                }
+                if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals]  as? [[String: String]] {
+                    divider = gratitudes.count * 3
+                }
+                if #available(iOS 15.0, *) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        isFocused = true
+                    }
+                }
+                recs = Meditation.getRecsFromMood(selectedMood: userModel.selectedMood, elaboration: userModel.elaboration)
+                question = placeholderQuestion
+                UITextView.appearance().backgroundColor = .clear
             }
-        }
-        .onAppearAnalytics(event: .screen_load_journal)
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $inputImage)
+            .ignoresSafeArea()
+            .sheet(isPresented: $showPrompts) {
+                PromptsView(question: $question)
+            }
+            .fullScreenCover(isPresented: $showRecs) {
+                RecommendationsView(recs: $recs, coin: $coin)
+            }
+            .transition(.move(edge: .trailing))
+            .onDisappear {
+                fromProfile = false
+                if #available(iOS 15.0, *) {
+                    isFocused = false
+                }
+            }
+            .onAppearAnalytics(event: .screen_load_journal)
+            .sheet(isPresented: $showingImagePicker) {
+                ImagePicker(image: $inputImage)
+            }
         }
     }
     var bottomPanel: some View {
@@ -227,7 +245,7 @@ struct JournalView: View, KeyboardReadable {
                                 .neoShadow()
                             
                         }
-//                        attachmentButton
+                        attachmentButton
                         Spacer()
                         shuffleButton
                             .rightShadow()
@@ -312,51 +330,11 @@ struct JournalView: View, KeyboardReadable {
     var doneButton: some View {
         Button {
             if !text.isEmpty{
-                if #available(iOS 15.0, *) {
-                    isFocused = false
-                }
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                var num = UserDefaults.standard.integer(forKey: "numGrads")
-                num += 1
-                let identify = AMPIdentify()
-                    .set("num_gratitudes", value: NSNumber(value: num))
-                Amplitude.instance().identify(identify ?? AMPIdentify())
-                if num == 30 {
-                    userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
-                    userModel.buyPlant(unlockedStrawberry: true)
-                    userModel.triggerAnimation = true
-                }
-                gardenModel.isGratitudeDone = true
-                UserDefaults(suiteName: K.widgetDefault)?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    withAnimation {
-                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                        }
-                        UserDefaults.standard.setValue(num, forKey: "numGrads")
-                        withAnimation {
-                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                                UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                            }
-                            Analytics.shared.log(event: .gratitude_tapped_done)
-                            var journalObj = [String: String]()
-                            journalObj["timeStamp"] = Date.getTime()
-                            journalObj["gratitude"] = text
-                            journalObj["question"] =  question
-                            if let img = inputImage {
-                                journalObj["image"] =  img.base64
-                            }
-                            userModel.coins += coin
-                            gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
-                            if moodFirst {
-                                showRecs = true
-                                moodFirst = false
-                            } else {
-                                viewRouter.currentPage = .meditate
-                            }                            }
-                        //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
-                        placeholderQuestion = "What's one thing you're grateful for right now?"
-                    }
+                showLoading = true
+                if let img = inputImage {
+                    storeImage(data: img.jpegData(compressionQuality: 0.3))
+                } else {
+                    updateJournelData(url:"")
                 }
             }
         } label: {
@@ -369,6 +347,75 @@ struct JournalView: View, KeyboardReadable {
             .frame(width:120, height: 35)
             .background(Clr.brightGreen.neoShadow())
             .cornerRadius(24)
+        }
+    }
+    
+    private func storeImage(data:Data?) {
+        guard let data = data else {
+            return
+        }
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let id = UUID().uuidString
+        let imagesRef = storageRef.child("journelImages/\(id).jpg")
+        imagesRef.putData(data, metadata: nil) { (metadata, error) in
+            imagesRef.downloadURL { (url, error) in
+                guard let downloadURL = url else {
+                    return
+                }
+                updateJournelData(url:downloadURL.absoluteString)
+            }
+        }
+    }
+    
+    private func updateJournelData(url:String){
+        if #available(iOS 15.0, *) {
+            isFocused = false
+        }
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        var num = UserDefaults.standard.integer(forKey: "numGrads")
+        num += 1
+        let identify = AMPIdentify()
+            .set("num_gratitudes", value: NSNumber(value: num))
+        Amplitude.instance().identify(identify ?? AMPIdentify())
+        if num == 30 {
+            userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
+            userModel.buyPlant(unlockedStrawberry: true)
+            userModel.triggerAnimation = true
+        }
+        gardenModel.isGratitudeDone = true
+        UserDefaults(suiteName: K.widgetDefault)?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            withAnimation {
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                    UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                }
+                UserDefaults.standard.setValue(num, forKey: "numGrads")
+                withAnimation {
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                    }
+                    Analytics.shared.log(event: .gratitude_tapped_done)
+                    var journalObj = [String: String]()
+                    journalObj["timeStamp"] = Date.getTime()
+                    journalObj["gratitude"] = text
+                    journalObj["question"] =  question
+                    if !url.isEmpty {
+                        journalObj["image"] =  url
+                    }
+                    userModel.coins += coin
+                    gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
+                    if moodFirst {
+                        showRecs = true
+                        moodFirst = false
+                    } else {
+                        viewRouter.currentPage = .meditate
+                    }
+                }
+                //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+                placeholderQuestion = "What's one thing you're grateful for right now?"
+                showLoading = false
+            }
         }
     }
 }

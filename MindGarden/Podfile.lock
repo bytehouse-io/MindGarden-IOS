@@ -368,6 +368,9 @@ PODS:
   - Firebase/DynamicLinks (8.14.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 8.14.0)
+  - Firebase/Storage (8.14.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.14.0)
   - FirebaseAnalytics (8.14.0):
     - FirebaseAnalytics/AdIdSupport (= 8.14.0)
     - FirebaseCore (~> 8.0)
@@ -427,6 +430,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseStorage (8.14.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GoogleAppMeasurement (8.14.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.14.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
@@ -521,6 +527,7 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Crashlytics
   - Firebase/DynamicLinks
+  - Firebase/Storage
   - FirebaseAuth
   - FirebaseFirestore
   - GoogleSignIn (~> 5.0)
@@ -544,6 +551,7 @@ SPEC REPOS:
     - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseInstallations
+    - FirebaseStorage
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleSignIn
@@ -575,6 +583,7 @@ SPEC CHECKSUMS:
   FirebaseDynamicLinks: 5fe9d2405cc93a58fead4af4ef4c81a466516ba0
   FirebaseFirestore: fff37682b934e3e94d83e5c24936721890a2edf0
   FirebaseInstallations: 7d1d967a307c12f1aadd76844fc321cef699b1ce
+  FirebaseStorage: 32ab036ce11eb7e94c279a238a65efa24f81593d
   GoogleAppMeasurement: 71156240babd3cc6ced03e0d54816f01a880c730
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
@@ -590,6 +599,6 @@ SPEC CHECKSUMS:
   Purchases: b714751c386c2204d2d5aafaa903fd424a25cd59
   PurchasesCoreSwift: 2cf98c52dd4b785177539fbfd1c32f60c89eafe7
 
-PODFILE CHECKSUM: 54a7482969e1a55c3373b006a60cb9656e8f9eca
+PODFILE CHECKSUM: d9aa72a9aad4f9b8230a8f72b8c1ea9de04a7242
 
 COCOAPODS: 1.11.2
