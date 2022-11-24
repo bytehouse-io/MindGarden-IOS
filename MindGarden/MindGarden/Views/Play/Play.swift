@@ -273,127 +273,139 @@ struct Play: View {
         
         .onAppear {
             
-            if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
-                backgroundAnimationOn = bgAnimation
-            }
+            initPlayer()
+            addSound()
             
-            model.selectedBreath = nil
-            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
-                if let player = player {
-                    player.stop()
-                }
-            }
-            model.forwardCounter = 0
-            if model.selectedMeditation?.id != 22 {
-                showTutorialModal = !UserDefaults.standard.bool(forKey: "playTutorialModal")
-            }
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-               try AVAudioSession.sharedInstance().setActive(true)
-             } catch {
-               print(error)
-             }
-            model.selectedPlant = userModel.selectedPlant
-            model.checkIfFavorited()
-            favorited = model.isFavorited
-            model.setup(viewRouter)
-            if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
-                if defaultSound != "noSound"  {
-                    selectedSound = Sound.getSound(str: defaultSound)
-                    if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
-                        backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
-                        backgroundPlayer?.delegate = self.del
-                        backgroundPlayer?.prepareToPlay()
-                        if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
-                            backgroundPlayer?.volume = vol
-                            sliderData.sliderValue = vol
-                        } else {
-                            backgroundPlayer?.volume = 0.3
-                            sliderData.sliderValue = 0.3
-                        }
-                        if let bgPlayer = self.backgroundPlayer {
-                            sliderData.setPlayer(player: bgPlayer)
-                        }
-                        backgroundPlayer?.numberOfLoops = -1
-                        backgroundPlayer?.play()
-                    }
-                } else {
-                    if let url = Bundle.main.path(forResource: "", ofType: "mp3") {
-                        backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
-                    }
-                }
-            }
-
-
-            //bell at the end of a session
-            if let url = Bundle.main.path(forResource: "bell", ofType: "mp3") {
-                model.bellPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
-                model.bellPlayer?.delegate = self.del
-            }
-
-            if let bellVolume = UserDefaults.standard.value(forKey: "bellVolume") as? Float {
-                model.bellPlayer?.volume = bellVolume
-                bellSlider.sliderValue = bellVolume
-            } else {
-                model.bellPlayer?.volume = 0.5
-                bellSlider.sliderValue = 0.5
-            }
-            
-            if let bplayer = model.bellPlayer {
-                bellSlider.setPlayer(player:bplayer)
-            }
-
-            if model.selectedMeditation?.url != "" {
-                if  let url = URL(string: model.selectedMeditation?.url ?? "") {
-                    let playerItem = AVPlayerItem(url: url)
-                    self.mainPlayer = AVPlayer(playerItem: playerItem)
-                    mainPlayer?.volume = 5
-                    mainPlayer?.play()
-                    model.startCountdown()
-                }
-            } else if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
-                if let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3") {
-                    self.mainPlayer = AVPlayer(url: URL(fileURLWithPath: url))
-                    mainPlayer?.volume = 5
-                    mainPlayer?.play()
-                    model.startCountdown()
-                }
-            } else {
-                isTraceTimeMannual = true
-                model.startCountdown()
-                
-            }
-            timerSeconds = Double(model.totalTime)
-            let timeScale = CMTimeScale(NSEC_PER_SEC)
-            let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
-
-            mainPlayer?.addPeriodicTimeObserver(forInterval: time, queue: .main) { time in
-                guard let item = self.mainPlayer?.currentItem, !item.duration.seconds.isNaN else {
-                    return
-                }
-                
-                let _ = time.seconds / item.duration.seconds
-                self.timerSeconds = item.duration.seconds - time.seconds
-                if self.timerSeconds < 1 {
-                    model.secondsRemaining = -1
-                }
-//                withAnimation(.linear) {
-//                    self.progressValue = timer < 0.001 ? 0.001 : timer
-//                }
-            }
-            
-            do {
-                try audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowAirPlay, .allowBluetoothA2DP])
-                try self.audioSession.setActive(true)
-            } catch {
-                print("failed to setup audio session category")
-            }
+            trackProgress()
             
             setupRemoteTransportControls()
             setupNowPlaying()
         }
         .onDisappear {
             StopPlaying()
+        }
+        
+    }
+    
+    private func initPlayer(){
+        if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+            backgroundAnimationOn = bgAnimation
+        }
+        
+        model.selectedBreath = nil
+        if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+            if let player = player {
+                player.stop()
+            }
+        }
+        model.forwardCounter = 0
+        if model.selectedMeditation?.id != 22 {
+            showTutorialModal = !UserDefaults.standard.bool(forKey: "playTutorialModal")
+        }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+           try AVAudioSession.sharedInstance().setActive(true)
+         } catch {
+           print(error)
+         }
+    }
+    
+    private func addSound(){
+        model.selectedPlant = userModel.selectedPlant
+        model.checkIfFavorited()
+        favorited = model.isFavorited
+        model.setup(viewRouter)
+        if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+            if defaultSound != "noSound"  {
+                selectedSound = Sound.getSound(str: defaultSound)
+                if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+                    backgroundPlayer?.delegate = self.del
+                    backgroundPlayer?.prepareToPlay()
+                    if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
+                        backgroundPlayer?.volume = vol
+                        sliderData.sliderValue = vol
+                    } else {
+                        backgroundPlayer?.volume = 0.3
+                        sliderData.sliderValue = 0.3
+                    }
+                    if let bgPlayer = self.backgroundPlayer {
+                        sliderData.setPlayer(player: bgPlayer)
+                    }
+                    backgroundPlayer?.numberOfLoops = -1
+                    backgroundPlayer?.play()
+                }
+            } else {
+                if let url = Bundle.main.path(forResource: "", ofType: "mp3") {
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+                }
+            }
+        }
+
+        //bell at the end of a session
+        if let url = Bundle.main.path(forResource: "bell", ofType: "mp3") {
+            model.bellPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+            model.bellPlayer?.delegate = self.del
+        }
+
+        if let bellVolume = UserDefaults.standard.value(forKey: "bellVolume") as? Float {
+            model.bellPlayer?.volume = bellVolume
+            bellSlider.sliderValue = bellVolume
+        } else {
+            model.bellPlayer?.volume = 0.5
+            bellSlider.sliderValue = 0.5
+        }
+        
+        if let bplayer = model.bellPlayer {
+            bellSlider.setPlayer(player:bplayer)
+        }
+        
+        if model.selectedMeditation?.url != "" {
+            if  let url = URL(string: model.selectedMeditation?.url ?? "") {
+                let playerItem = AVPlayerItem(url: url)
+                self.mainPlayer = AVPlayer(playerItem: playerItem)
+                mainPlayer?.volume = 5.0
+                mainPlayer?.play()
+                model.startCountdown()
+            }
+        } else if model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"  {
+            if let url = Bundle.main.path(forResource: model.selectedMeditation?.title ?? "", ofType: "mp3") {
+                self.mainPlayer = AVPlayer(url: URL(fileURLWithPath: url))
+                mainPlayer?.volume = 5.0
+                mainPlayer?.play()
+                model.startCountdown()
+            }
+        } else {
+            isTraceTimeMannual = true
+            model.startCountdown()
+            
+        }
+    }
+    
+    private func trackProgress() {
+        timerSeconds = Double(model.totalTime)
+        let timeScale = CMTimeScale(NSEC_PER_SEC)
+        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+        
+        mainPlayer?.addPeriodicTimeObserver(forInterval: time, queue: .main) { time in
+            guard let item = self.mainPlayer?.currentItem, !item.duration.seconds.isNaN else {
+                return
+            }
+            
+            self.timerSeconds = Double(item.duration.seconds - time.seconds)
+            if self.timerSeconds < 1 {
+                model.secondsRemaining = -1
+            }
+            //                withAnimation(.linear) {
+            //                    self.progressValue = timer < 0.001 ? 0.001 : timer
+            //                }
+        }
+        
+        do {
+            try audioSession.setCategory(.playAndRecord, mode: .spokenAudio, options: [.defaultToSpeaker, .allowAirPlay, .allowBluetoothA2DP])
+            try self.audioSession.setActive(true)
+        } catch {
+            print("failed to setup audio session category")
         }
     }
     
@@ -480,9 +492,9 @@ struct Play: View {
         }
         let isMainPlayer = model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds) ?? 0) )
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer?.currentTime : backgroundPlayer?.currentTime
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer?.currentTime ?? 0 : backgroundPlayer?.currentTime ?? 0
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer?.rate : backgroundPlayer?.rate
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer?.rate ?? 0 : backgroundPlayer?.rate ?? 0
         
         // Set the metadata
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
