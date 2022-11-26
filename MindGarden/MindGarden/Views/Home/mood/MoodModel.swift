@@ -107,6 +107,27 @@ enum Mood: String, CaseIterable {
         }
     }
     
+    static func getMoodImageWidget(mood: Mood) -> Image {
+        switch mood {
+        case .happy:
+            return Image("widget_happyPot")
+        case .sad:
+            return Image("widget_sadPot")
+        case .angry:
+            return Image("widget_angryPot")
+        case .okay:
+            return Image("widget_okayPot")
+        case .stressed:
+            return Image("widget_stressedPot")
+        case .bad: return Image("widget_badPot")
+        case .veryBad: return Image("widget_veryBadPot")
+        case .good: return Image("widget_goodPot")
+        case .veryGood: return Image("widget_veryGoodPot")
+        default:
+            return Image("widget_okayPot")
+        }
+    }
+    
 }
 struct MoodData: Codable,Identifiable {
     var id: String = UUID().uuidString

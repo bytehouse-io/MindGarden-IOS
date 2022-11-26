@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */; };
-		2DAD2CD52D8956FCFD51DF91 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 267FF021DD48962EE52032DD /* Pods_MindGarden_MindGardenWidgetExtension.framework */; };
-		558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */; };
 		5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */; };
 		5801C2752892F3C900927C4F /* Fredoka-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */; };
 		5801C2762892F3D000927C4F /* Fredoka-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */; };
@@ -76,12 +73,12 @@
 		58D6FB4F286D6199003EA6A7 /* PromptsTabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D6FB4E286D6199003EA6A7 /* PromptsTabModel.swift */; };
 		58D90A9627E6F925008C4E1C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9527E6F925008C4E1C /* SplashView.swift */; };
 		58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D90A9727E70DA4008C4E1C /* ViewTransition.swift */; };
+		58D914362930D18000388230 /* MeditationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */; };
 		58DB9A76289D578A00F930DE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEBA7E6E2677D46F00758E58 /* GoogleService-Info.plist */; };
 		58DB9A77289D7BB900F930DE /* GardenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8A926BE0500002CF8C2 /* GardenViewModel.swift */; };
 		58DB9A78289D7C8B00F930DE /* Numbers+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBF22C726D98E87002572E2 /* Numbers+Extension.swift */; };
 		58DEE5AC2867390400A04CA2 /* BreathworkPlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DEE5AB2867390400A04CA2 /* BreathworkPlay.swift */; };
 		58E21AD2280687DE00F2BC0F /* HomeViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E21AD1280687DE00F2BC0F /* HomeViewScroll.swift */; };
-		58E4199B28982FC20042F492 /* MeditationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE683F3D26A0CAE1009A66DF /* MeditationsViewModel.swift */; };
 		58E4199E2898DDDA0042F492 /* Images+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FD6266D4E5B008CDAA4 /* Images+Generated.swift */; };
 		58E4199F2898DE000042F492 /* Breathwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6ACB32870F2A400A1E042 /* Breathwork.swift */; };
 		58E419A02898DE210042F492 /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FE6266EA49A008CDAA4 /* ViewRouter.swift */; };
@@ -98,6 +95,7 @@
 		58EB9CA32813274A00B0788F /* ReasonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EB9CA22813274A00B0788F /* ReasonModel.swift */; };
 		58F171A627E45A93008D380E /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F171A527E45A93008D380E /* WiggleModifier.swift */; };
 		58F5F04B2860D7E000207D92 /* FreeTrialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F5F04A2860D7E000207D92 /* FreeTrialView.swift */; };
+		7F013E115C3FB0274AEE2B28 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885ADAB4F32408C165F8A15C /* Pods_MindGarden_MindGardenUITests.framework */; };
 		88164779287D0D4C00C2B6D4 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88164778287D0D4C00C2B6D4 /* background.mp3 */; };
 		882738D327E2D75E00F8D4D0 /* first_part.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D227E2D75D00F8D4D0 /* first_part.json */; };
 		882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D427E2D76E00F8D4D0 /* second_part_loop.json */; };
@@ -157,7 +155,9 @@
 		88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBC127F2244A00744D9F /* theta.mp3 */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
-		DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */; };
+		940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130EBB51197FC76EE7120FD4 /* Pods_MindGarden.framework */; };
+		E4E27EB033BE9058FA50E491 /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CD3C4E5EA0A04C0694E473 /* Pods_MindGardenTests.framework */; };
+		F5327F350046C44C54530418 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4894B46B32C982CA8D046B /* Pods_MindGarden_MindGardenWidgetExtension.framework */; };
 		FE04A803279A3CA900799A07 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A802279A3CA900799A07 /* CheckBox.swift */; };
 		FE04A805279CD77400799A07 /* SaveProgressModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE04A804279CD77400799A07 /* SaveProgressModal.swift */; };
 		FE09DA2126F52DCD0018099F /* OnboardingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE09DA2026F52DCD0018099F /* OnboardingModal.swift */; };
@@ -304,11 +304,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		04371576AAD4E6B810CC782C /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
-		1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
-		21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
-		267FF021DD48962EE52032DD /* Pods_MindGarden_MindGardenWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		130EBB51197FC76EE7120FD4 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		176A2840CDF90E86AFDC76BB /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
+		47148409A1C4D45A03147FE4 /* Pods-MindGardenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.release.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.release.xcconfig"; sourceTree = "<group>"; };
+		4A4894B46B32C982CA8D046B /* Pods_MindGarden_MindGardenWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
 		5803A31C27DBB8CB00F1F2E7 /* StreakScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreakScene.swift; sourceTree = "<group>"; };
 		5810EB622847971800DD4D25 /* JourneyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyScene.swift; sourceTree = "<group>"; };
@@ -377,12 +376,14 @@
 		58EB9CA22813274A00B0788F /* ReasonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonModel.swift; sourceTree = "<group>"; };
 		58F171A527E45A93008D380E /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
 		58F5F04A2860D7E000207D92 /* FreeTrialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeTrialView.swift; sourceTree = "<group>"; };
-		605E304F19ACE4AFB3123482 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		5B7492452CD831D405A8A213 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5EC9A025F0CA56C7345269FE /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
 		88164778287D0D4C00C2B6D4 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
 		88588041283C0293007AACC2 /* wavingTurtle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wavingTurtle.png; sourceTree = "<group>"; };
 		88588052283C0D41007AACC2 /* ChallengeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModal.swift; sourceTree = "<group>"; };
+		885ADAB4F32408C165F8A15C /* Pods_MindGarden_MindGardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		885BA66D2877CE560045F2E5 /* StoreTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTabView.swift; sourceTree = "<group>"; };
 		885BA66F2878A7B60045F2E5 /* RealTrees.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTrees.swift; sourceTree = "<group>"; };
 		8862586A27C4369D0093D18C /* check2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = check2.json; sourceTree = "<group>"; };
@@ -435,12 +436,11 @@
 		88F5CBBF27F0E6ED00744D9F /* 30 Second Meditation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "30 Second Meditation.mp3"; sourceTree = "<group>"; };
 		88F5CBC127F2244A00744D9F /* theta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = theta.mp3; sourceTree = "<group>"; };
 		88F7528827CABD50004E86D4 /* PaywallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallManager.swift; sourceTree = "<group>"; };
-		8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
-		93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED8CDB12AA546761D320FBB9 /* Pods-MindGardenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.release.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.release.xcconfig"; sourceTree = "<group>"; };
-		F08C90D1DEB871934670CE18 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99CD3C4E5EA0A04C0694E473 /* Pods_MindGardenTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGardenTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A821B0C65FA87F7EE4F6F7C3 /* Pods-MindGarden.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.release.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.release.xcconfig"; sourceTree = "<group>"; };
+		A940751888DCDA98E4D81694 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.release.xcconfig"; sourceTree = "<group>"; };
+		CC6B9A53AA4CEEB069AD08A5 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		FA3A8DB30DC56126B6CD1093 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		FE04A802279A3CA900799A07 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		FE04A804279CD77400799A07 /* SaveProgressModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveProgressModal.swift; sourceTree = "<group>"; };
 		FE09DA2026F52DCD0018099F /* OnboardingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModal.swift; sourceTree = "<group>"; };
@@ -567,7 +567,7 @@
 			files = (
 				FE48B43C27791B5500CA7B63 /* SwiftUI.framework in Frameworks */,
 				FE48B43A27791B5500CA7B63 /* WidgetKit.framework in Frameworks */,
-				2DAD2CD52D8956FCFD51DF91 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */,
+				F5327F350046C44C54530418 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,7 +580,7 @@
 				88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */,
 				887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
-				558E6B78C2FCEE88D898B3FC /* Pods_MindGarden.framework in Frameworks */,
+				940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,7 +588,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D275DB7E3A8448D1F88D26D /* Pods_MindGardenTests.framework in Frameworks */,
+				E4E27EB033BE9058FA50E491 /* Pods_MindGardenTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,7 +596,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB9BD960635B4FFCB31AD5D2 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */,
+				7F013E115C3FB0274AEE2B28 /* Pods_MindGarden_MindGardenUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,10 +610,10 @@
 				FE39A0B9277137D3007A3E82 /* iAd.framework */,
 				FE48B43927791B5500CA7B63 /* WidgetKit.framework */,
 				FE48B43B27791B5500CA7B63 /* SwiftUI.framework */,
-				93DF2E80611C065293A4DF72 /* Pods_MindGarden.framework */,
-				F2E9E5A223310D657C2F005B /* Pods_MindGarden_MindGardenUITests.framework */,
-				D2B505FFC209B3BAC48B1CE6 /* Pods_MindGardenTests.framework */,
-				267FF021DD48962EE52032DD /* Pods_MindGarden_MindGardenWidgetExtension.framework */,
+				130EBB51197FC76EE7120FD4 /* Pods_MindGarden.framework */,
+				885ADAB4F32408C165F8A15C /* Pods_MindGarden_MindGardenUITests.framework */,
+				4A4894B46B32C982CA8D046B /* Pods_MindGarden_MindGardenWidgetExtension.framework */,
+				99CD3C4E5EA0A04C0694E473 /* Pods_MindGardenTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -621,14 +621,14 @@
 		3A7661D503EA9E2EFD32F645 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				04371576AAD4E6B810CC782C /* Pods-MindGarden.debug.xcconfig */,
-				1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */,
-				269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */,
-				8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */,
-				21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */,
-				ED8CDB12AA546761D320FBB9 /* Pods-MindGardenTests.release.xcconfig */,
-				F08C90D1DEB871934670CE18 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */,
-				605E304F19ACE4AFB3123482 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */,
+				5EC9A025F0CA56C7345269FE /* Pods-MindGarden.debug.xcconfig */,
+				A821B0C65FA87F7EE4F6F7C3 /* Pods-MindGarden.release.xcconfig */,
+				5B7492452CD831D405A8A213 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */,
+				A940751888DCDA98E4D81694 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */,
+				FA3A8DB30DC56126B6CD1093 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */,
+				CC6B9A53AA4CEEB069AD08A5 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */,
+				176A2840CDF90E86AFDC76BB /* Pods-MindGardenTests.debug.xcconfig */,
+				47148409A1C4D45A03147FE4 /* Pods-MindGardenTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1274,11 +1274,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE48B44C27791B5B00CA7B63 /* Build configuration list for PBXNativeTarget "MindGardenWidgetExtension" */;
 			buildPhases = (
-				CC4BB242769C01E0930528C1 /* [CP] Check Pods Manifest.lock */,
+				63B285F5E782AA1C55355656 /* [CP] Check Pods Manifest.lock */,
 				FE48B43427791B5500CA7B63 /* Sources */,
 				FE48B43527791B5500CA7B63 /* Frameworks */,
 				FE48B43627791B5500CA7B63 /* Resources */,
-				8D49A27A048FB0CCAAFEFE13 /* [CP] Copy Pods Resources */,
+				9396D827844BA4F41DE982F5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1293,15 +1293,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FEB6AFBC265D95F700224BFD /* Build configuration list for PBXNativeTarget "MindGarden" */;
 			buildPhases = (
-				71531E88CC7BDAA56CA5941A /* [CP] Check Pods Manifest.lock */,
+				29064BFC9F5B918A95F8CF7F /* [CP] Check Pods Manifest.lock */,
 				FEB6AF8E265D95F500224BFD /* Sources */,
 				FEB6AF8F265D95F500224BFD /* Frameworks */,
 				FEB6AF90265D95F500224BFD /* Resources */,
 				FEB85FD3266D4838008CDAA4 /* SwiftGen */,
 				FE48B44927791B5B00CA7B63 /* Embed App Extensions */,
-				3C3992E0C604A7C6E1FFA251 /* [CP] Embed Pods Frameworks */,
-				C0C8C8ABA1FF5B74850CB317 /* [CP] Copy Pods Resources */,
 				58BAD4DB28182A29005BBB9A /* ShellScript */,
+				5F186B8A1545C058A548937A /* [CP] Embed Pods Frameworks */,
+				A3470F3CA5168A26B37F8C8E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1322,7 +1322,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FEB6AFBF265D95F700224BFD /* Build configuration list for PBXNativeTarget "MindGardenTests" */;
 			buildPhases = (
-				1FB311832FA6D46709297E95 /* [CP] Check Pods Manifest.lock */,
+				4AD306BF9652BBCA7EA4DAA0 /* [CP] Check Pods Manifest.lock */,
 				FEB6AFA4265D95F700224BFD /* Sources */,
 				FEB6AFA5265D95F700224BFD /* Frameworks */,
 				FEB6AFA6265D95F700224BFD /* Resources */,
@@ -1341,12 +1341,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FEB6AFC2265D95F700224BFD /* Build configuration list for PBXNativeTarget "MindGardenUITests" */;
 			buildPhases = (
-				D884199FE9D80E9C4E89C8D6 /* [CP] Check Pods Manifest.lock */,
+				29B0E35DBD9F8EA10B9A5A9D /* [CP] Check Pods Manifest.lock */,
 				FEB6AFAF265D95F700224BFD /* Sources */,
 				FEB6AFB0265D95F700224BFD /* Frameworks */,
 				FEB6AFB1265D95F700224BFD /* Resources */,
-				DC4415A9D2C008CB516C74E8 /* [CP] Embed Pods Frameworks */,
-				193A050E74A4EEB8C38ADE6F /* [CP] Copy Pods Resources */,
+				EE0843A610E5BFD8A215CFDF /* [CP] Embed Pods Frameworks */,
+				20A77D0C6D87048303D03094 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1517,7 +1517,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		193A050E74A4EEB8C38ADE6F /* [CP] Copy Pods Resources */ = {
+		20A77D0C6D87048303D03094 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1534,7 +1534,51 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1FB311832FA6D46709297E95 /* [CP] Check Pods Manifest.lock */ = {
+		29064BFC9F5B918A95F8CF7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MindGarden-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		29B0E35DBD9F8EA10B9A5A9D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MindGarden-MindGardenUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4AD306BF9652BBCA7EA4DAA0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1554,23 +1598,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3C3992E0C604A7C6E1FFA251 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		58BAD4DB28182A29005BBB9A /* ShellScript */ = {
@@ -1593,63 +1620,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		71531E88CC7BDAA56CA5941A /* [CP] Check Pods Manifest.lock */ = {
+		5F186B8A1545C058A548937A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MindGarden-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8D49A27A048FB0CCAAFEFE13 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C0C8C8ABA1FF5B74850CB317 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CC4BB242769C01E0930528C1 /* [CP] Check Pods Manifest.lock */ = {
+		63B285F5E782AA1C55355656 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1671,29 +1659,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D884199FE9D80E9C4E89C8D6 /* [CP] Check Pods Manifest.lock */ = {
+		9396D827844BA4F41DE982F5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MindGarden-MindGardenUITests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden-MindGardenWidgetExtension/Pods-MindGarden-MindGardenWidgetExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DC4415A9D2C008CB516C74E8 /* [CP] Embed Pods Frameworks */ = {
+		A3470F3CA5168A26B37F8C8E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MindGarden/Pods-MindGarden-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE0843A610E5BFD8A215CFDF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1748,7 +1748,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58E4199B28982FC20042F492 /* MeditationsViewModel.swift in Sources */,
 				5898541728954E33002999A0 /* MediumWidget.swift in Sources */,
 				FE48B44E2779599400CA7B63 /* Fonts+Generated.swift in Sources */,
 				5898541528954E0C002999A0 /* SmallWidget.swift in Sources */,
@@ -1762,6 +1761,7 @@
 				5898541928954E4C002999A0 /* LargeWidget.swift in Sources */,
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
 				58DB9A77289D7BB900F930DE /* GardenViewModel.swift in Sources */,
+				58D914362930D18000388230 /* MeditationsViewModel.swift in Sources */,
 				58B5AA9B28A79F8200BDC379 /* ImageLoader.swift in Sources */,
 				5820EEA428B8E1B1002DC784 /* String+Extensions.swift in Sources */,
 				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
@@ -2039,7 +2039,7 @@
 		};
 		FE48B44A27791B5B00CA7B63 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F08C90D1DEB871934670CE18 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */;
+			baseConfigurationReference = FA3A8DB30DC56126B6CD1093 /* Pods-MindGarden-MindGardenWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -2070,7 +2070,7 @@
 		};
 		FE48B44B27791B5B00CA7B63 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 605E304F19ACE4AFB3123482 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */;
+			baseConfigurationReference = CC6B9A53AA4CEEB069AD08A5 /* Pods-MindGarden-MindGardenWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -2217,7 +2217,7 @@
 		};
 		FEB6AFBD265D95F700224BFD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 04371576AAD4E6B810CC782C /* Pods-MindGarden.debug.xcconfig */;
+			baseConfigurationReference = 5EC9A025F0CA56C7345269FE /* Pods-MindGarden.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2247,7 +2247,7 @@
 		};
 		FEB6AFBE265D95F700224BFD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1DCFB765699304509EE3BA2B /* Pods-MindGarden.release.xcconfig */;
+			baseConfigurationReference = A821B0C65FA87F7EE4F6F7C3 /* Pods-MindGarden.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2276,7 +2276,7 @@
 		};
 		FEB6AFC0265D95F700224BFD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21FCC3B5B7FB91DEE9249488 /* Pods-MindGardenTests.debug.xcconfig */;
+			baseConfigurationReference = 176A2840CDF90E86AFDC76BB /* Pods-MindGardenTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2299,7 +2299,7 @@
 		};
 		FEB6AFC1265D95F700224BFD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED8CDB12AA546761D320FBB9 /* Pods-MindGardenTests.release.xcconfig */;
+			baseConfigurationReference = 47148409A1C4D45A03147FE4 /* Pods-MindGardenTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -2322,7 +2322,7 @@
 		};
 		FEB6AFC3265D95F700224BFD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 269E00692F954070E5D4BF4F /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */;
+			baseConfigurationReference = 5B7492452CD831D405A8A213 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -2343,7 +2343,7 @@
 		};
 		FEB6AFC4265D95F700224BFD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BE8AECC9D2CB31FD252B3E0 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */;
+			baseConfigurationReference = A940751888DCDA98E4D81694 /* Pods-MindGarden-MindGardenUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

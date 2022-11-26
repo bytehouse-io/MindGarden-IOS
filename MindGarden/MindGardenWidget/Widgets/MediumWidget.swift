@@ -144,7 +144,7 @@ struct MediumWidgetRow: View {
                                             getImage()
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(height:15)
+                                                .frame(height:20)
                                             Spacer()
                                         }
                                     } else {

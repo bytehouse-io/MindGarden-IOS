@@ -35,7 +35,7 @@ struct Provider: IntentTimelineProvider {
         
         let lastLogDate = userDefaults?.value(forKey: "lastJournel") as? String ?? Date().toString(withFormat: "MMM dd, yyyy")
         let strLastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? "okay"
-        let lastLogMood = Mood.getMoodImage(mood: Mood.getMood(str: strLastLogMood))
+        let lastLogMood = Mood.getMoodImageWidget(mood: Mood.getMood(str: strLastLogMood))
         
         let meditation = userDefaults?.value(forKey: "featuredMeditation") as? Int
         let breathwork = userDefaults?.value(forKey: "featuredBreathwork") as? Int
@@ -266,7 +266,7 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
