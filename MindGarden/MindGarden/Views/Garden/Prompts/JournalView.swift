@@ -60,6 +60,9 @@ struct JournalView: View, KeyboardReadable {
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood" {
                             CloseButton() {
                                 withAnimation {
+                                    if #available(iOS 15.0, *) {
+                                        isFocused = false
+                                    }
                                     Analytics.shared.log(event: .journal_tapped_x)
                                     //                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                                     placeholderQuestion = "What's one thing you're grateful for right now?"
