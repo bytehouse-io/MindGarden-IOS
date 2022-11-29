@@ -367,6 +367,9 @@ class MeditationViewModel: ObservableObject {
             case 241...301: reward = 35
             default: reward = 0
             }
+            if UserDefaults.standard.bool(forKey: "isPro") {
+                reward = reward * 2
+            }
             shouldStreakUpdate = true
             return reward
         }

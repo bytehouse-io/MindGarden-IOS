@@ -81,7 +81,7 @@ struct IAPModal: View {
                                 Spacer()
                                 Spacer()
                             }
-                            .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.3 : 0.25), alignment: .top)
+                            .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.3 : 0.3), alignment: .top)
                             VStack {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -110,7 +110,7 @@ struct IAPModal: View {
                             }.frame(height: g.size.height * 0.4)
                             Spacer()
                         }
-                        .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.7), alignment: .center)
+                        .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.75), alignment: .center)
                         .background(Clr.darkWhite)
                         .cornerRadius(32)
                         Spacer()

@@ -30,6 +30,7 @@ struct Finished: View {
     @State private var hideConfetti = false
     @State private var showStreak = false
     @State private var ios14 = true
+    @State private var ios16 = false
     @State private var triggerRating = false
     @State private var showRating = false
     @Environment(\.sizeCategory) var sizeCategory
@@ -105,7 +106,7 @@ struct Finished: View {
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(height: 25)
-                                                Text("+\(reward)!")
+                                                Text(UserDefaults.standard.bool(forKey: "isPro") ?  "\(reward/2) x 2: \(reward)": "+\(reward)!")
                                                     .font(Font.fredoka(.bold, size: 24))
                                                     .foregroundColor(.white)
                                                     .offset(x: -3)
@@ -199,7 +200,7 @@ struct Finished: View {
                                         Spacer()
                                     }
                                     VStack {
-                                        Text("You completed your \(gardenModel.allTimeSessions.ordinal)  session!")
+                                        Text("You completed your \(gardenModel.allTimeSessions.ordinal) session!")
                                             .font(Font.fredoka(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
@@ -221,8 +222,7 @@ struct Finished: View {
                                 }
                                 Spacer()
                             }.offset(y: !isOnboarding ? -20 : -75)
-                        
-                        }.offset(y: -g.size.height/6)
+                        }.offset(y: -g.size.height/(ios16 ? 10 : 6))
                     }.frame(width: g.size.width)
                     HStack {
                         heart.padding(.horizontal)
@@ -338,6 +338,9 @@ struct Finished: View {
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         ios14 = false
+                    }
+                    if  #available(iOS 16.0, *)  {
+                        ios16 = true
                     }
                 }
                 

@@ -13,6 +13,7 @@ struct Store: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
     @State private var showModal = false
     @State private var confirmModal = false
     @State private var showSuccess = false
@@ -32,6 +33,8 @@ struct Store: View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
+                let width = g.size.width
+                let height = g.size.height
                 VStack {
                     if isShop {
                         StoreTab(selectedTab: $tabType)
@@ -75,6 +78,47 @@ struct Store: View {
                     if tabType == .realTree {
                         RealTrees(buyRealTree: $showModal)
                     } else {
+                        if tabType == .store {
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                Analytics.shared.log(event: .pricing_from_home)
+                                withAnimation {
+                                    fromPage = "store"
+                                    viewRouter.currentPage = .pricing
+                                }
+                            } label: {
+                                ZStack {
+                                    Rectangle()
+                                        .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
+                                        .frame(height: height * 0.1)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 16)
+                                    HStack(spacing: 10) {
+                                        HStack(spacing: 10) {
+                                            Img.tripleCoins
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: width * 0.15)
+                                            (Text("Get 2x Coins.\n")
+                                                .font(Font.fredoka(.bold, size: 16))
+                                                .foregroundColor(.black)
+                                             + Text("Start your free trial").font(Font.fredoka(.medium, size: 16))                                            .foregroundColor(Clr.black2))
+                                            .multilineTextAlignment(.leading)
+                                        }.frame(width: width * 0.5)
+                                        Text("✨ Try Pro")
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.fredoka(.semiBold, size: 16))
+                                            .padding(8)
+                                            .frame(width: width * 0.3, height: height * 0.055)
+                                            .background(Color.white)
+                                            .cornerRadius(12)
+                                            .addBorder(.black, width: 1.5, cornerRadius: 12)
+                                            .rightShadow()
+                                            .padding(.trailing)
+                                    }
+                                }.padding(.top, 15)
+                                    .frame(width: width * 0.85)
+                            }.buttonStyle(NeoPress())
+                        }
                         ScrollView(showsIndicators: false) {
                             HStack(alignment: .top, spacing: 20) {
                                 VStack(alignment: .leading, spacing: -10) {

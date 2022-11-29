@@ -24,6 +24,7 @@ struct Garden: View {
     @State private var gotItOpacity = 1.0
     @State private var forceRefresh = false
     @State private var color = Clr.yellow
+    @State private var showImages = false
     @Environment(\.sizeCategory) var sizeCategory
     @State var activeSheet: Sheet?
     @State private var showStreak: Bool = false
@@ -119,13 +120,12 @@ struct Garden: View {
                         //                        }
                         //                    }
                         HStack {
-                            Text("Your MindGarden")
-                                .font(Font.fredoka(.bold, size: 22))
+                            Text("Your Garden")
+                                .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Color.white)
                                 .padding()
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
-                            Spacer()
                             HStack {
                                 Button {
                                     Analytics.shared.log(event: .garden_tapped_plant_select)
@@ -164,18 +164,18 @@ struct Garden: View {
                                     Analytics.shared.log(event: .garden_tapped_settings)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        gardenSettings = true
-                                        activeSheet = .profile
+                                        showImages.toggle()
+                                        UserDefaults.standard.setValue(showImages, forKey: "showImages")
                                     }
                                 } label: {
                                     HStack {
                                         Image(systemName: "photo.on.rectangle.angled")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .foregroundColor(Clr.black2)
+                                            .foregroundColor(showImages ? .white : Clr.black2)
                                             .frame(width: 20, height: 20)
                                     }      .frame(width: 30, height: 20)
-                                        .roundedCapsule()
+                                        .roundedCapsule(color: showImages ? Clr.brightGreen : Clr.yellow)
                                 }
                                 .buttonStyle(ScalePress())
                             }
@@ -486,7 +486,12 @@ struct Garden: View {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
+                    .onAppear {
+                        tileOpacity = 1.0
+                        isOnboarding = false
+                    }
             }.onAppear {
+                showImages = UserDefaults.standard.bool(forKey: "showImages")
                 viewRouter.previousPage = .garden
                 DispatchQueue.main.async {
                     withAnimation {

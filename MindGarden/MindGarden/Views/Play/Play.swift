@@ -70,11 +70,14 @@ struct Play: View {
                         VStack(alignment: .center) {
                             //Navbar
                             HStack {
-                                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? backArrow.opacity(0) : backArrow.opacity(1)
+                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                                    backArrow
+                                }
                                 Spacer()
                                 Text(model.selectedMeditation?.title ?? "")
+                                    .font(Font.fredoka(.medium, size: 12))
                                     .foregroundColor(isSleep ? Clr.brightGreen : Clr.black2)
-                                    .padding(.leading, 20)
+                                    .padding(.leading, 16)
                                 Spacer()
                                 HStack{shareButton; sound; heart}
                                     .padding(.trailing)
@@ -147,12 +150,14 @@ struct Play: View {
                                 }
                                 .frame(width: K.isPad() ? 500 : 250)
                             }.offset(y: 25)
+                            Spacer()
                             Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
                                 .foregroundColor(isSleep ? Clr.brightGreen : Clr.black1)
                                 .font(Font.fredoka(.bold, size: 60))
                                 .frame(width: UIScreen.screenWidth)
                                 .animation(UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" ? nil : Animation.easeIn(duration: 0.5))
                                 .offset(y: 50)
+                            Spacer()
                             HStack(alignment: .center, spacing: 20) {
                                 if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                     Button {
@@ -224,6 +229,8 @@ struct Play: View {
                                     }
                                 }
                             }
+                            Spacer()
+                            Spacer()
                         }
                         Spacer()
                     }.opacity(showNatureModal ? 0.3 : 1)

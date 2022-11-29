@@ -36,7 +36,7 @@ struct PricingView: View {
     @State private var showProfile: Bool = false
     @State private var showLoading: Bool = false
 
-    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Meditations per month", "30", "Infinite"), ("Journals per month", "30", "Infinite"), ("Mood Checks per month", "30", "Infinite"),("Access to all Breathworks", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Save data on  the cloud", "🔒", "✅")]
+    let items = [("Regular vs\n Pro", "😔", "🤩"), ("Meditations per month", "20", "Infinite"), ("Journals per month", "20", "Infinite"), ("Mood Checks per month", "20", "Infinite"),("2x coin booster", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Unlock all Breathworks", "🔒", "✅")]
     var body: some View {
         LoadingView(isShowing: $showLoading) {
             GeometryReader { g in
@@ -65,9 +65,9 @@ struct PricingView: View {
                             .padding(.bottom, -25)
                             .buttonStyle(NeoPress())
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : "🍏 Unlock ")
+                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock "))
                                 .font(Font.fredoka(.bold, size: 24))
-                             + Text(fromInfluencer == "" ? "MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
+                             + Text(fromInfluencer == "" ? "with MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
                                 .font(Font.fredoka(.bold, size: 24))
                              +
                              Text(fiftyOff ? "\n(limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : " & get 1% happier everyday"))
