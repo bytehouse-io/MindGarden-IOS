@@ -99,20 +99,60 @@ struct HomeViewScroll: View {
                     .zIndex(1)
                     .offset(x: -4)
        
-                    HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
-                    StartDayView()
-                    HStack(spacing: 15) {
-                        Text("\(numberOfMeds)")
-                            .font(Font.fredoka(.bold, size: 36))
-                            .foregroundColor(Clr.black1)
-                        Text("people are meditating \nright now")
-                            .font(Font.fredoka(.regular, size: 22))
-                            .minimumScaleFactor(0.05)
-                            .lineLimit(2)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(width: width * 0.8, height: height * 0.06)
-                    .padding([.vertical, .top], 30)
+                        HomeViewDashboard(showModal: $showModal, totalBonuses: $bonusModel.totalBonuses, greeting:$userModel.greeting,name:userModel.name , activeSheet:$activeSheet, showIAP: $showIAP, streakNumber: $bonusModel.streakNumber)
+                        StartDayView()
+                        Button {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            Analytics.shared.log(event: .pricing_from_home)
+                            withAnimation {
+                                fromPage = "home"
+                                viewRouter.currentPage = .pricing
+                            }
+                        } label: {
+                            ZStack {
+                                Rectangle()
+                                    .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
+                                    .frame(height: height * 0.1)
+                                    .addBorder(.black, width: 1.5, cornerRadius: 16)
+                                HStack(spacing: 10) {
+                                    HStack(spacing: 10) {
+                                        Img.panda
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: width * 0.15)
+                                        (Text("Get Focused.\n")
+                                            .font(Font.fredoka(.bold, size: 16))
+                                            .foregroundColor(.black)
+                                        + Text("Start your free trial").font(Font.fredoka(.medium, size: 16))                                            .foregroundColor(Clr.black2))
+                                            .multilineTextAlignment(.leading)
+                                    }.frame(width: width * 0.5)
+                                    Text("✨ Try Pro")
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.fredoka(.semiBold, size: 16))
+                                        .padding()
+                                        .frame(width: width * 0.275, height: height * 0.055)
+                                        .background(Color.white)
+                                        .cornerRadius(12)
+                                        .addBorder(.black, width: 1.5, cornerRadius: 12)
+                                        .rightShadow()
+                                        .padding(.trailing)
+                                }
+                            }.padding(.top, 15)
+                            .frame(width: width * 0.85)
+                        }.buttonStyle(NeoPress())
+                
+                        HStack(spacing: 15) {
+                            Text("\(numberOfMeds)")
+                                .font(Font.fredoka(.bold, size: 36))
+                                .foregroundColor(Clr.black1)
+                            Text("people are meditating \nright now")
+                                .font(Font.fredoka(.regular, size: 20))
+                                .minimumScaleFactor(0.05)
+                                .lineLimit(2)
+                                .foregroundColor(.gray)
+                        }
+                        .frame(width: width * 0.8, height: height * 0.06)
+                        .padding([.vertical, .top], 30)
                     }.offset(y: -height * 0.125)
             }
             }.frame(height: height + (K.isSmall() ? 125 : 0))

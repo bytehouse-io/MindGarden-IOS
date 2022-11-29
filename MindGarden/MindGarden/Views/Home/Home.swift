@@ -130,7 +130,7 @@ struct Home: View {
             if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done") {
                 profileModel.showWidget = true
             }
-            
+                        
             viewRouter.previousPage = .meditate
             fromPage = "profile"
             tappedSignOut = false
@@ -139,9 +139,6 @@ struct Home: View {
                 showProfile = false
             }
             
-        
-
-    
             userModel.checkIfPro()
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
@@ -204,8 +201,6 @@ struct Home: View {
                 activeSheet = .profile
             }
         }
- 
-
     }
 }
 

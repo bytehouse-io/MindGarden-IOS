@@ -383,10 +383,11 @@ struct Finished: View {
                 if userModel.isPotion || userModel.isChest {
                     reward = reward * 3
                 }
-                if reward == 0 && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-                    viewRouter.currentPage = .garden
-                }
-                                
+                
+//                if reward == 0 && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+//                    viewRouter.currentPage = .garden
+//                }
+//
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
                     if model.shouldStreakUpdate {

@@ -634,7 +634,7 @@ struct PricingView: View {
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
                         HStack(spacing: 2) {
-                            if title == "Yearly" && (fiftyOff || UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done") {
+                            if title == "Yearly" {
                                 (Text(Locale.current.currencySymbol ?? "$") + Text("\(price * 2 + 0.01, specifier: "%.2f")"))
                                     .strikethrough(color: Color("lightGray"))
                                     .foregroundColor(Color("lightGray"))

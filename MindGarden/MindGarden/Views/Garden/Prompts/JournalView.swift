@@ -107,14 +107,16 @@ struct JournalView: View, KeyboardReadable {
                                 ZStack {
                                     VStack {
                                         Group {
-                                            if #available(iOS 15.0, *) {
+                                            if #available(iOS 16.0, *) {
                                                 TextEditor(text: $text)
                                                     .focused($isFocused)
+                                                    .scrollContentBackground(.hidden) // <- Hide it
                                                     .background(Clr.darkWhite)
                                                     .font(Font.fredoka(.medium, size: 20))
                                                     .foregroundColor(Clr.black2)
-                                            } else if #available(iOS 14.0, *) {
+                                            } else if #available(iOS 15.0, *) {
                                                 TextEditor(text: $text)
+                                                    .focused($isFocused)
                                                     .background(Clr.darkWhite)
                                                     .font(Font.fredoka(.medium, size: 20))
                                                     .foregroundColor(Clr.black2)
@@ -332,6 +334,7 @@ struct JournalView: View, KeyboardReadable {
     }
     var doneButton: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !text.isEmpty{
                 showLoading = true
                 if let img = inputImage {

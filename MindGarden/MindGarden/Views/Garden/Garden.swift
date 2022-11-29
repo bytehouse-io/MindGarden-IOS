@@ -119,7 +119,7 @@ struct Garden: View {
                         //                        }
                         //                    }
                         HStack {
-                            Text("👨‍🌾 Your MindGarden")
+                            Text("Your MindGarden")
                                 .font(Font.fredoka(.bold, size: 22))
                                 .foregroundColor(Color.white)
                                 .padding()
@@ -140,7 +140,7 @@ struct Garden: View {
                                             .frame(width: 25, height: 25)
 
                                     }
-                                    .frame(width: 35, height: 20)
+                                    .frame(width: 30, height: 20)
                                     .roundedCapsule()
                                 }.buttonStyle(ScalePress())
                                 Button {
@@ -157,13 +157,29 @@ struct Garden: View {
                                             .aspectRatio(contentMode: .fit)
                                             .foregroundColor(Clr.black2)
                                             .frame(width: 20, height: 20)
-                                    }      .frame(width: 35, height: 20)
+                                    }      .frame(width: 30, height: 20)
                                         .roundedCapsule()
                                 }
-                          
+                                Button {
+                                    Analytics.shared.log(event: .garden_tapped_settings)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        gardenSettings = true
+                                        activeSheet = .profile
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "photo.on.rectangle.angled")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(Clr.black2)
+                                            .frame(width: 20, height: 20)
+                                    }      .frame(width: 30, height: 20)
+                                        .roundedCapsule()
+                                }
                                 .buttonStyle(ScalePress())
                             }
-                        }.frame(width: gp.size.width * 0.85)
+                        }.frame(width: gp.size.width * 0.875)
                         .padding(.bottom, -10)
                         .offset(x: -10)
                         .padding(.top)
@@ -269,10 +285,13 @@ struct Garden: View {
                                 .zIndex(-1000)
                                 
                                 HStack {
-                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
-                                        .font(Font.fredoka(.semiBold, size: 20))
-                                        .foregroundColor(Clr.black2)
-                                        .padding(.leading, 12)
+                                    VStack {
+                                        Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
+                                            .font(Font.fredoka(.semiBold, size: 20))
+                                            .foregroundColor(Clr.black2)
+                                            .padding(.leading, 12)
+                                    }
+                                  
                                     Spacer()
                                     Button {
                                         withAnimation {

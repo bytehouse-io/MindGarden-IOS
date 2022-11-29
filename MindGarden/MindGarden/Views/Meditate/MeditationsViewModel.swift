@@ -372,7 +372,7 @@ class MeditationViewModel: ObservableObject {
         }
         
         let duration = selectedMeditation?.duration ?? 0
-        
+    
 
         
         if ((forwardCounter > 2 && duration <= 120) || (forwardCounter > 6) || (selectedMeditation?.id == 22 && forwardCounter >= 1)) {

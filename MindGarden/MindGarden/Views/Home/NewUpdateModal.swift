@@ -27,7 +27,7 @@ struct NewUpdateModal: View {
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
 //                                .frame(height: g.size.height * 0.1)
-                            Text("💎 You've Earned a 50% Pro Chest")
+                            Text("💎 You've Earned a 75% Pro Chest")
                                 .multilineTextAlignment(.center) 
                                 .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.black2)
@@ -43,7 +43,7 @@ struct NewUpdateModal: View {
                             .frame(width:  g.size.width * 0.85 * 0.5)
                             .padding()
                         HStack {
-                            Text("Just for coming back, you've unlocked a 50% off of Premium.")
+                            Text("You've been randomly selected to earn a ONE time 75% off of Pro!")
                         }.multilineTextAlignment(.center)
                         .font(Font.fredoka(.medium, size: 20))
                         .foregroundColor(Clr.black2)
@@ -51,7 +51,7 @@ struct NewUpdateModal: View {
                         .padding(.bottom, 10)
                         .padding(.top)
                         HStack {
-                            Text("📈 Pro users are") + Text(" 3x more likely ").bold() + Text("to stick with meditation.")
+                            Text("📈 Pro users are") + Text(" 4x more likely ").bold() + Text("to stick with meditation.")
                         }.multilineTextAlignment(.center)
                         .font(Font.fredoka(.medium, size: 20))
                         .foregroundColor(Clr.black2)
@@ -116,7 +116,7 @@ struct NewUpdateModal: View {
                             Capsule()
                                 .fill(Clr.darkgreen)
                                 .overlay(
-                                    Text("Claim my 50% off")
+                                    Text("Claim my 75% off")
                                         .font(Font.fredoka(.bold, size: 20))
                                         .foregroundColor(.white)
                                         .lineLimit(1)
