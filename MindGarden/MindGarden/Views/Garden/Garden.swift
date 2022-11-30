@@ -24,7 +24,6 @@ struct Garden: View {
     @State private var gotItOpacity = 1.0
     @State private var forceRefresh = false
     @State private var color = Clr.yellow
-    @State private var showImages = false
     @Environment(\.sizeCategory) var sizeCategory
     @State var activeSheet: Sheet?
     @State private var showStreak: Bool = false
@@ -102,8 +101,8 @@ struct Garden: View {
             ZStack {
                 Img.gardenBackground
                     .resizable()
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                     .edgesIgnoringSafeArea(.all)
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 32)
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .center, spacing: 20) {
                         //Version 2
@@ -120,12 +119,13 @@ struct Garden: View {
                         //                        }
                         //                    }
                         HStack {
-                            Text("Your Garden")
-                                .font(Font.fredoka(.bold, size: 24))
+                            Text("👨‍🌾 Your MindGarden")
+                                .font(Font.fredoka(.bold, size: 22))
                                 .foregroundColor(Color.white)
                                 .padding()
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
+                            Spacer()
                             HStack {
                                 Button {
                                     Analytics.shared.log(event: .garden_tapped_plant_select)
@@ -140,7 +140,7 @@ struct Garden: View {
                                             .frame(width: 25, height: 25)
 
                                     }
-                                    .frame(width: 30, height: 20)
+                                    .frame(width: 35, height: 20)
                                     .roundedCapsule()
                                 }.buttonStyle(ScalePress())
                                 Button {
@@ -157,29 +157,13 @@ struct Garden: View {
                                             .aspectRatio(contentMode: .fit)
                                             .foregroundColor(Clr.black2)
                                             .frame(width: 20, height: 20)
-                                    }      .frame(width: 30, height: 20)
+                                    }      .frame(width: 35, height: 20)
                                         .roundedCapsule()
                                 }
-                                Button {
-                                    Analytics.shared.log(event: .garden_tapped_settings)
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        showImages.toggle()
-                                        UserDefaults.standard.setValue(showImages, forKey: "showImages")
-                                    }
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "photo.on.rectangle.angled")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .foregroundColor(showImages ? .white : Clr.black2)
-                                            .frame(width: 20, height: 20)
-                                    }      .frame(width: 30, height: 20)
-                                        .roundedCapsule(color: showImages ? Clr.brightGreen : Clr.yellow)
-                                }
+                          
                                 .buttonStyle(ScalePress())
                             }
-                        }.frame(width: gp.size.width * 0.875)
+                        }.frame(width: gp.size.width * 0.85)
                         .padding(.bottom, -10)
                         .offset(x: -10)
                         .padding(.top)
@@ -213,7 +197,7 @@ struct Garden: View {
                                                         .border(.white, width: 1)
                                                         .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth), showImage: $showImages)
+                                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
 
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.0 != nil { // only mood is nil
@@ -224,28 +208,28 @@ struct Garden: View {
                                                         .border(.white, width: 1)
                                                         .opacity(!UserDefaults.standard.bool(forKey: "tappedTile") ? tileOpacity : 1)
                                                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth), showImage: $showImages)
+                                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
                                                 }.frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             } else if gardenModel.monthTiles[row]?[currentDate]?.1 != nil { // only plant is nil
-                                                if let imgUrl = gardenModel.getImagePath(month: String(gardenModel.selectedMonth), day:"\(currentDate)"), showImages {
-                                                    UrlImageView(urlString: imgUrl)
-                                                        .padding(3)
-                                                        .overlay(
-                                                            ZStack {
-                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
-                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.fredoka(.semiBold, size: 10))
-                                                                        .foregroundColor(Color.black)
-                                                                        .padding(.leading)
-                                                                }
+                                                Rectangle()
+                                                    .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
+                                                    .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
+                                                    .border(.white, width: 1)
+                                                    .overlay(
+                                                        ZStack {
+                                                            if UserDefaults.standard.bool(forKey: "tileDates") {
+                                                                Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
+                                                                    .font(Font.fredoka(.semiBold, size: 10))
+                                                                    .foregroundColor(Color.black)
+                                                                    .padding(.leading)
                                                             }
-                                                        )
-                                                        .opacity((!UserDefaults.standard.bool(forKey: "tappedTile") && isOnboarding) ? tileOpacity : 1)
-                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                } else {
+                                                        }
+                                                    )
+                                            } else { //both are nil
+                                                ZStack {
                                                     Rectangle()
-                                                        .fill(gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare)
-                                                        .frame(width:  gp.size.width * 0.12, height:  gp.size.width * 0.12)
+                                                        .fill(Clr.calenderSquare)
+                                                        .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                                         .border(.white, width: 1)
                                                         .overlay(
                                                             ZStack {
@@ -257,40 +241,6 @@ struct Garden: View {
                                                                 }
                                                             }
                                                         )
-                                                }
-                                            } else { //both are nil
-                                                if let imgUrl = gardenModel.getImagePath(month: String(gardenModel.selectedMonth), day:"\(currentDate)"), showImages {
-                                                    UrlImageView(urlString: imgUrl)
-                                                        .padding(3)
-                                                        .overlay(
-                                                            ZStack {
-                                                                if UserDefaults.standard.bool(forKey: "tileDates") {
-                                                                    Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                        .font(Font.fredoka(.semiBold, size: 10))
-                                                                        .foregroundColor(Color.black)
-                                                                        .padding(.leading)
-                                                                }
-                                                            }
-                                                        )
-                                                        .opacity((!UserDefaults.standard.bool(forKey: "tappedTile") && isOnboarding) ? tileOpacity : 1)
-                                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                } else {
-                                                    ZStack {
-                                                        Rectangle()
-                                                            .fill(Clr.calenderSquare)
-                                                            .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
-                                                            .border(.white, width: 1)
-                                                            .overlay(
-                                                                ZStack {
-                                                                    if UserDefaults.standard.bool(forKey: "tileDates") {
-                                                                        Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
-                                                                            .font(Font.fredoka(.semiBold, size: 10))
-                                                                            .foregroundColor(Color.black)
-                                                                            .padding(.leading)
-                                                                    }
-                                                                }
-                                                            )
-                                                    }
                                                 }
                                             }
                                         }
@@ -319,13 +269,10 @@ struct Garden: View {
                                 .zIndex(-1000)
                                 
                                 HStack {
-                                    VStack {
-                                        Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                            .foregroundColor(Clr.black2)
-                                            .padding(.leading, 12)
-                                    }
-                                  
+                                    Text("\(Date().getMonthName(month: String(gardenModel.selectedMonth))) \(String(gardenModel.selectedYear).withReplacedCharacters(",", by: ""))")
+                                        .font(Font.fredoka(.semiBold, size: 20))
+                                        .foregroundColor(Clr.black2)
+                                        .padding(.leading, 12)
                                     Spacer()
                                     Button {
                                         withAnimation {
@@ -510,7 +457,7 @@ struct Garden: View {
                                 .position(x: gp.size.width - 100, y:  gp.size.height/1.75)
                         default: EmptyView()
                         }
-                    }      
+                    }
                     // TODO  fix day4 being set to true on launch
                 }.padding(.bottom ,50)
             }.fullScreenCover(isPresented: $userModel.triggerAnimation) {
@@ -520,12 +467,7 @@ struct Garden: View {
                 SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
-                    .onAppear {
-                        tileOpacity = 1.0
-                        isOnboarding = false
-                    }
             }.onAppear {
-                showImages = UserDefaults.standard.bool(forKey: "showImages")
                 viewRouter.previousPage = .garden
                 DispatchQueue.main.async {
                     withAnimation {
@@ -792,7 +734,7 @@ struct PlantHead: View {
     @State var month: String
     @State private var isOnboarding = false
     @State private var tileOpacity = 1.0
-    @Binding var showImage: Bool
+    @State private var showImage = false
     var body: some View {
         ZStack {
             let maxDate = Date().getNumberOfDays(month: String(gardenModel.selectedMonth),year:String(gardenModel.selectedYear))
@@ -831,6 +773,7 @@ struct PlantHead: View {
             }
         }
         .onAppear {
+            showImage = UserDefaults.standard.bool(forKey: "showJournalImage")
             if !UserDefaults.standard.bool(forKey: "tappedTile") {
                 isOnboarding = true
                 tileOpacity = 0.2
