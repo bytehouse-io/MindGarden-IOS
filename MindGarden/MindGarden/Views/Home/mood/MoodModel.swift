@@ -89,7 +89,7 @@ enum Mood: String, CaseIterable {
     static func getMoodImage(mood: Mood) -> Image {
         switch mood {
         case .happy:
-            return Image("happyPot")
+            return Image("veryGood")
         case .sad:
             return Image("sadPot")
         case .angry:
@@ -119,12 +119,12 @@ enum Mood: String, CaseIterable {
             return Image("widget_okayPot")
         case .stressed:
             return Image("widget_stressedPot")
-        case .bad: return Image("widget_badPot")
-        case .veryBad: return Image("widget_veryBadPot")
-        case .good: return Image("widget_goodPot")
-        case .veryGood: return Image("widget_veryGoodPot")
+        case .bad: return Image("bad")
+        case .veryBad: return Image("veryBad")
+        case .good: return Image("good")
+        case .veryGood: return Image("veryGood")
         default:
-            return Image("widget_okayPot")
+            return Image("okay")
         }
     }
     
