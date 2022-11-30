@@ -27,6 +27,7 @@ struct Garden: View {
     @Environment(\.sizeCategory) var sizeCategory
     @State var activeSheet: Sheet?
     @State private var showStreak: Bool = false
+    @State private var showImages = false
     @EnvironmentObject var bonusModel: BonusViewModel
     @Environment(\.colorScheme) var colorScheme
     var currentStreak : String {
@@ -119,12 +120,10 @@ struct Garden: View {
                         //                        }
                         //                    }
                         HStack {
-                            Text("👨‍🌾 Your MindGarden")
-                                .font(Font.fredoka(.bold, size: 22))
+                            Text("Your Garden")
+                                .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(Color.white)
                                 .padding()
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.05)
                             Spacer()
                             HStack {
                                 Button {
@@ -140,7 +139,7 @@ struct Garden: View {
                                             .frame(width: 25, height: 25)
 
                                     }
-                                    .frame(width: 35, height: 20)
+                                    .frame(width: 30, height: 20)
                                     .roundedCapsule()
                                 }.buttonStyle(ScalePress())
                                 Button {
@@ -157,13 +156,30 @@ struct Garden: View {
                                             .aspectRatio(contentMode: .fit)
                                             .foregroundColor(Clr.black2)
                                             .frame(width: 20, height: 20)
-                                    }      .frame(width: 35, height: 20)
+                                    }      .frame(width: 30, height: 20)
                                         .roundedCapsule()
                                 }
-                          
+                                .buttonStyle(ScalePress())
+                                Button {
+                                    Analytics.shared.log(event: .garden_tapped_settings)
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        showImages.toggle()
+                                        UserDefaults.standard.setValue(showImages, forKey: "showImages")
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "photo.on.rectangle.angled")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .foregroundColor(showImages ? .white : Clr.black2)
+                                            .frame(width: 20, height: 20)
+                                    }.frame(width: 30, height: 20)
+                                    .roundedCapsule(color: showImages ? Clr.brightGreen : Clr.yellow)
+                                }
                                 .buttonStyle(ScalePress())
                             }
-                        }.frame(width: gp.size.width * 0.85)
+                        }.frame(width: gp.size.width * 0.875)
                         .padding(.bottom, -10)
                         .offset(x: -10)
                         .padding(.top)

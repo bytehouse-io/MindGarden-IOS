@@ -239,9 +239,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "800"
-            endingLineNumber = "800"
-            landmarkName = "body"
-            landmarkType = "24">
+            endingLineNumber = "800">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
