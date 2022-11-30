@@ -29,17 +29,17 @@ struct WidgetPrompt: View {
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
                         
-                        Text("🔥 Stay motivated. Keep your streak burning.")
+                        Text("Visualize your progress. Widget users are 2x more likely to meditate")
                             .font(Font.fredoka(.medium, size: K.isSmall() ? 16 : 20))
                             .foregroundColor(Clr.black2)
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
                             .frame(width:UIScreen.screenWidth*0.8)
                             .padding([.horizontal, .bottom])
-                        Img.smallWidget
+                        Img.widgetPrompt
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: geomatry.size.height*0.25)
+                            .frame(height: geomatry.size.height*0.45)
                             .cornerRadius(20).padding(.bottom, 20)
                         AddWidgetView
                     }

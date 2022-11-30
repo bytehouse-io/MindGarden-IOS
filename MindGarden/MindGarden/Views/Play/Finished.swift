@@ -222,7 +222,7 @@ struct Finished: View {
                                 }
                                 Spacer()
                             }.offset(y: !isOnboarding ? -20 : -75)
-                        }.offset(y: -g.size.height/(ios16 ? 10 : 6))
+                        }.offset(y: -g.size.height/(ios16 ? 12 : 6))
                     }.frame(width: g.size.width)
                     HStack {
                         heart.padding(.horizontal)

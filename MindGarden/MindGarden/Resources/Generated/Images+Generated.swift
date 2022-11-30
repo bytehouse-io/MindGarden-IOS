@@ -366,7 +366,6 @@ public enum Img {
   public static let watermelon = Image("watermelon")
   public static let wave = Image("wave")
   public static let whiteClouds = Image("whiteClouds")
-  public static let widgetExample = Image("widgetExample")
   public static let widgetPrompt = Image("widgetPrompt")
   public static let widgetStep1 = Image("widgetStep1")
   public static let widgetStep2 = Image("widgetStep2")
