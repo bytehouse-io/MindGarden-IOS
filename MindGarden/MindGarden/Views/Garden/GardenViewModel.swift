@@ -510,12 +510,7 @@ class GardenViewModel: ObservableObject {
     }
     
     func getImagePath(month:String, day:String)-> String? {
-        print("just joshing")
     if let gratitudes = grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["journals"]  as? [[String: String]] {
-        print(gratitudes, "bluez")
-            for grat in gratitudes {
-                print(grat, "hiding")
-            }
             return gratitudes[gratitudes.count-1]["image"]
         }
         return nil

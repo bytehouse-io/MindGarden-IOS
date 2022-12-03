@@ -233,6 +233,10 @@ struct Garden: View {
                                                     .border(.white, width: 1)
                                                     .overlay(
                                                         ZStack {
+                                                            if let imgUrl = gardenModel.getImagePath(month: String(gardenModel.selectedMonth), day:"\(currentDate)"), showImages {
+                                                                UrlImageView(urlString: imgUrl)
+                                                                    .padding(3)
+                                                            }
                                                             if UserDefaults.standard.bool(forKey: "tileDates") {
                                                                 Text(currentDate <= maxDate ? "\(currentDate)" : "").offset(x: 6, y: 15)
                                                                     .font(Font.fredoka(.semiBold, size: 10))
@@ -484,6 +488,7 @@ struct Garden: View {
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
             }.onAppear {
+                showImages = UserDefaults.standard.bool(forKey: "showJournalImage")
                 viewRouter.previousPage = .garden
                 DispatchQueue.main.async {
                     withAnimation {
