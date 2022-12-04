@@ -10,7 +10,6 @@ import Foundation
 
 
 struct K {
-    
     static var widgetDefault = "group.M5757NXZKD.io.bytehouse.mindgarden.widget"
     static var userPreferences = "userPreferences"
     static var journey = "Journey"

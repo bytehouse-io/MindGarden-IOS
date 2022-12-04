@@ -750,7 +750,7 @@ struct PlantHead: View {
     @State var month: String
     @State private var isOnboarding = false
     @State private var tileOpacity = 1.0
-    @State private var showImage = false
+    @State private var showImage = true
     var body: some View {
         ZStack {
             let maxDate = Date().getNumberOfDays(month: String(gardenModel.selectedMonth),year:String(gardenModel.selectedYear))
