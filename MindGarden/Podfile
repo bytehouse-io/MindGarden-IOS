@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '15.0'
 
 target 'MindGarden' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -11,7 +11,7 @@ target 'MindGarden' do
    pod 'Firebase'
    pod 'Firebase/Storage'
    pod 'Amplitude-iOS', '~> 4.9.3'
-   pod 'GoogleSignIn', '~> 5.0'
+   pod 'GoogleSignIn'
    pod 'lottie-ios'
    pod 'AppsFlyerFramework'
    pod 'Purchases'

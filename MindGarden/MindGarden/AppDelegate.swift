@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
 
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         // Appsflyer
         AppsFlyerLib.shared().appsFlyerDevKey = "MuYPR9jvHqxu7TzZCrTNcn"
         AppsFlyerLib.shared().appleAppID = "1588582890"
@@ -194,7 +193,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
                 }
             }
         }
-        return GIDSignIn.sharedInstance().handle(url)
+        return GIDSignIn.sharedInstance.handle(url)
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity,

@@ -40,7 +40,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         self.userModel = userModel
         self.viewRouter = viewRouter
         super.init()
-        setupGoogleSignIn()
     }
     var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -276,83 +275,92 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             }
         }
     }
+    
+    func checkStatus(){
+            if let user = GIDSignIn.sharedInstance.currentUser {
+                Auth.auth().fetchSignInMethods(forEmail: user.profile?.email ?? "", completion: { [weak self]
+                    (providers, error) in
+                    if let error = error {
+                        self?.alertError = true
+                        self?.alertMessage = error.localizedDescription
+                        self?.isLoading = false
+                    } else if let providers = providers {
+                        if providers.count != 0 {
+                            self?.googleIsNew = false
+                        }
+                        self?.firebaseAuthentication(withUser: user)
+                    } else {
+                        if let signup = self?.isSignUp, !signup {
+                            self?.googleIsNew = true
+                            self?.alertError = true
+                            self?.alertMessage = "Email is not associated with account"
+                            self?.isLoading = false
+                            return
+                        } else {
+                            self?.firebaseAuthentication(withUser: user)
+                        }
+                    }
+                })
+            }else{
+                self.isLoading = false
+            }
+        }
+        
+        func check(){
+            GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                
+                self.checkStatus()
+            }
+        }
 
      func signInWithGoogle() {
-        if GIDSignIn.sharedInstance().currentUser == nil {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-            GIDSignIn.sharedInstance().presentingViewController = UIApplication.shared.windows.first?.rootViewController
-            GIDSignIn.sharedInstance().signIn()
-        }
+         isLoading = true
+         guard let presentingViewController = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
+
+         let signInConfig = GIDConfiguration.init(clientID: (FirebaseApp.app()?.options.clientID)!)
+         GIDSignIn.sharedInstance.signIn(
+            with: signInConfig,
+            presenting: presentingViewController,
+            callback: { [weak self] user, error in
+                if let error = error {
+                    self?.isLoading = false
+                    print(error.localizedDescription)
+                }
+                self?.checkStatus()
+            }
+         )
     }
 
     func signOut() {
-        GIDSignIn.sharedInstance().signOut()
-        do {
-            try Auth.auth().signOut()
-        } catch let signOutError as NSError {
-            print(signOutError.localizedDescription)
-        }
-    }
-
-    private func setupGoogleSignIn() {
-        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance.signOut()
+        self.checkStatus()
     }
 }
 
-extension AuthenticationViewModel: GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if error == nil {
-//            isLoading = true
-            Auth.auth().fetchSignInMethods(forEmail: user.profile.email, completion: { [self]
-                (providers, error) in
-                if let error = error {
-                    alertError = true
-                    alertMessage = error.localizedDescription
-                    isLoading = false
-                } else if let providers = providers {
-                    if providers.count != 0 {
-                        googleIsNew = false
-                    }
-                    self.firebaseAuthentication(withUser: user)
-                } else {
-                    if !isSignUp {
-                        googleIsNew = true
-                        alertError = true
-                        alertMessage = "Email is not associated with account"
-                        isLoading = false
-                        return
-                    } else {
-                        self.firebaseAuthentication(withUser: user)
-                    }
-                }
-            })
-        } else {
-            print(error.debugDescription)
-        }
-    }
-
+extension AuthenticationViewModel {
     private func firebaseAuthentication(withUser user: GIDGoogleUser) {
-        if let authentication = user.authentication {
-            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-
-            Auth.auth().signIn(with: credential) { [self] (_, error) in
-                isLoading = false
-                if let _ = error {
-                    alertError = true
-                    alertMessage = error?.localizedDescription ?? "Email not associated with an account"
-                    isLoading = false
+        let authentication = user.authentication
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken ?? "", accessToken: authentication.accessToken)
+        
+        Auth.auth().signIn(with: credential) { [weak self] (_, error) in
+            self?.isLoading = false
+            if let _ = error {
+                self?.alertError = true
+                self?.alertMessage = error?.localizedDescription ?? "Email not associated with an account"
+            } else {
+                if ((self?.googleIsNew) != nil) {
+                    self?.createUser()
+                    self?.goToHome()
                 } else {
-                    if googleIsNew {
-                        createUser()
-                        goToHome()
-                    } else {
-                        getData()
-                    }
-                    withAnimation {
-                        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
-                    }
-                    alertError = false
+                    self?.getData()
                 }
+                withAnimation {
+                    UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                }
+                self?.alertError = false
             }
         }
     }
