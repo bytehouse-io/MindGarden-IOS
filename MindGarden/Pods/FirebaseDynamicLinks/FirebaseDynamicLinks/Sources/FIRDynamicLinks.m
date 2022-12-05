@@ -22,7 +22,7 @@
 #import <UIKit/UIKit.h>
 
 #ifdef FIRDynamicLinks3P
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
+#import "FirebaseCore/Extension/FirebaseCoreInternal.h"
 #import "FirebaseDynamicLinks/Sources/FIRDLScionLogging.h"
 #import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
 #else
@@ -129,8 +129,7 @@ static const NSInteger FIRErrorCodeDurableDeepLinkFailed = -119;
     id<FIRAnalyticsInterop> analytics = FIR_COMPONENT(FIRAnalyticsInterop, container);
     FIRDynamicLinks *dynamicLinks = [[FIRDynamicLinks alloc] initWithAnalytics:analytics];
     [dynamicLinks configureDynamicLinks:container.app];
-    // Check for pending Dynamic Link automatically if enabled, otherwise we expect the developer to
-    // call strong match FDL API to retrieve a pending link.
+
     if ([FIRDynamicLinks isAutomaticRetrievalEnabled]) {
       [dynamicLinks checkForPendingDynamicLink];
     }
@@ -413,15 +412,23 @@ static const NSInteger FIRErrorCodeDurableDeepLinkFailed = -119;
 
   if ([self canParseUniversalLinkURL:url]) {
     if (url.query.length > 0) {
-      NSDictionary *parameters = FIRDLDictionaryFromQuery(url.query);
+      NSDictionary<NSString *, NSString *> *parameters = FIRDLDictionaryFromQuery(url.query);
       if (parameters[kFIRDLParameterLink]) {
-        FIRDynamicLink *dynamicLink = [[FIRDynamicLink alloc] init];
         NSString *urlString = parameters[kFIRDLParameterLink];
         NSURL *deepLinkURL = [NSURL URLWithString:urlString];
         if (deepLinkURL) {
-          dynamicLink.url = deepLinkURL;
+          FIRDynamicLink *dynamicLink = [[FIRDynamicLink alloc] initWithParametersDictionary:@{
+            kFIRDLParameterDeepLinkIdentifier : urlString,
+            kFIRDLParameterCampaign : parameters[kFIRDLParameterCampaign] ?: [NSNull null],
+            kFIRDLParameterContent : parameters[kFIRDLParameterContent] ?: [NSNull null],
+            kFIRDLParameterMedium : parameters[kFIRDLParameterMedium] ?: [NSNull null],
+            kFIRDLParameterSource : parameters[kFIRDLParameterSource] ?: [NSNull null],
+            kFIRDLParameterTerm : parameters[kFIRDLParameterTerm] ?: [NSNull null],
+            kFIRDLParameterMinimumAppVersion : parameters[kFIRDLParameterMinimumAppVersion]
+                ?: [NSNull null],
+          }];
           dynamicLink.matchType = FIRDLMatchTypeUnique;
-          dynamicLink.minimumAppVersion = parameters[kFIRDLParameterMinimumAppVersion];
+
           // Call resolveShortLink:completion: to do logging.
           // TODO: Create dedicated logging function to prevent this.
           [self.dynamicLinkNetworking
@@ -440,7 +447,14 @@ static const NSInteger FIRErrorCodeDurableDeepLinkFailed = -119;
       }
     }
   }
-  mainQueueCompletion(nil, nil);
+
+  mainQueueCompletion(
+      nil, [[NSError alloc] initWithDomain:@"com.firebase.dynamicLinks"
+                                      code:1
+                                  userInfo:@{
+                                    NSLocalizedFailureReasonErrorKey :
+                                        @"Universal link URL could not be parsed by Dynamic Links."
+                                  }]);
   return nil;
 }
 
@@ -550,9 +564,6 @@ static const NSInteger FIRErrorCodeDurableDeepLinkFailed = -119;
                                              errorDescription:(NSString *)errorDescription
                                               underlyingError:(nullable NSError *)underlyingError {
   self.retrievingPendingDynamicLink = NO;
-
-  // TODO (b/38035270) inform caller why we failed, for App developer it is hard to debug
-  // stuff like this without having source code access
 }
 
 #pragma mark - FIRDLRetrievalProcessDelegate
@@ -578,7 +589,6 @@ static const NSInteger FIRErrorCodeDurableDeepLinkFailed = -119;
 
 static NSString *kSelfDiagnoseOutputHeader =
     @"---- Firebase Dynamic Links diagnostic output start ----\n";
-// TODO (b/38397557) Add link to the "Debug FDL" documentation when docs is published
 static NSString *kSelfDiagnoseOutputFooter =
     @"---- Firebase Dynamic Links diagnostic output end ----\n";
 
