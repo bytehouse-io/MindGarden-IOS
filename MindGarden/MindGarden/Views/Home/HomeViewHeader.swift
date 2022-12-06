@@ -33,11 +33,6 @@ struct HomeViewHeader: View {
     
     var body: some View {
         ZStack {
-            Img.yellowBubble
-                .resizable()
-                .frame(width: width + 25, height: height * 0.4)
-                .oldShadow()
-                .offset(x: -10)
             HStack {
                 Img.topBranch
                     .resizable()
