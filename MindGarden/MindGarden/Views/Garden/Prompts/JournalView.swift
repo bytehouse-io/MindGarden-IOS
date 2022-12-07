@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 import Amplitude
 import Combine
+import Firebase
 import FirebaseStorage
 
 var placeholderReflection = ""
@@ -357,31 +358,47 @@ struct JournalView: View, KeyboardReadable {
     }
     
     private func storeImage(data:Data?) {
-        DispatchQueue.main.async {
-            guard let data = data else {
-                return
-            }
-            let storage = Storage.storage()
-            let storageRef = storage.reference()
-            let id = UUID().uuidString
-            let imagesRef = storageRef.child("journelImages/img_\(id).jpg")
-            
-            imagesRef.putData(data) { (metadata, error) in
-                guard error == nil else {
-                    showLoading = false
-                    print(error as Any)
-                    return
-                }
+        guard let data = data else {
+            return
+        }
+        if ((Auth.auth().currentUser?.email) != nil) {
+            DispatchQueue.main.async {
+                let storage = Storage.storage()
+                let storageRef = storage.reference()
+                let id = UUID().uuidString
+                let imagesRef = storageRef.child("journelImages/img_\(id).jpg")
                 
-                imagesRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else {
+                imagesRef.putData(data) { (metadata, error) in
+                    guard error == nil else {
+                        showLoading = false
                         print(error as Any)
-                        updateJournelData(url:"")
                         return
                     }
-                    updateJournelData(url:downloadURL.absoluteString)
+                    
+                    imagesRef.downloadURL { (url, error) in
+                        guard let downloadURL = url else {
+                            print(error as Any)
+                            updateJournelData(url:"")
+                            return
+                        }
+                        updateJournelData(url:downloadURL.absoluteString)
+                    }
                 }
             }
+        } else {
+            let id = UUID().uuidString
+            let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let directoryPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let url = directoryPath.appendingPathComponent("journelImages/img_\(id).jpg")
+            print("url : \(url)")
+            do {
+                try data.write(to: url)
+            } catch {
+                print("Unable to Write Image Data to Disk")
+                print(error.localizedDescription)
+                showLoading = false
+            }
+            updateJournelData(url:url.path)
         }
     }
     

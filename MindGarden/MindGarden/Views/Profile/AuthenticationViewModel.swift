@@ -347,6 +347,7 @@ extension AuthenticationViewModel {
         
         Auth.auth().signIn(with: credential) { [weak self] (_, error) in
             self?.isLoading = false
+            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
             if let _ = error {
                 self?.alertError = true
                 self?.alertMessage = error?.localizedDescription ?? "Email not associated with an account"
