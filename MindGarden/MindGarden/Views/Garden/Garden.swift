@@ -731,12 +731,10 @@ struct PlantHead: View {
     @State var row: Int
     @State var currentDate: Int
     @State var month: String
-<<<<<<< HEAD
     @State private var isOnboarding = false
     @State private var tileOpacity = 1.0
     @State private var showImage = true
-=======
->>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
+
     var body: some View {
         ZStack {
             gardenModel.monthTiles[row]?[currentDate]?.0?.head
