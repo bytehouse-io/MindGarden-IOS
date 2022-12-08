@@ -9,6 +9,7 @@ import SwiftUI
 import Lottie
 import Amplitude
 import Combine
+import Firebase
 import FirebaseStorage
 
 var placeholderReflection = ""
@@ -259,14 +260,14 @@ struct JournalView: View, KeyboardReadable {
                         doneButton
                         
                     }
-                        .background(
-                            Capsule()
-                                .fill(Clr.yellow)
-                                .neoShadow()
-                        )
-                        .padding(.horizontal,0)
-                        .padding(.bottom)
-                        .KeyboardAwarePadding()
+                    .background(
+                        Capsule()
+                            .fill(Clr.yellow)
+                            .neoShadow()
+                    )
+                    .padding(.horizontal,0)
+                    .padding(.bottom)
+                    .KeyboardAwarePadding()
                 }
                 Spacer()
                     .frame(height:50)
@@ -322,20 +323,20 @@ struct JournalView: View, KeyboardReadable {
                 .aspectRatio(contentMode: .fit)
                 .frame(width:25, height: 25)
                 .padding(.trailing, 12)
-//            Text("Prompts")
-//                .font(Font.fredoka(.bold, size: 20))
-//                .foregroundColor(Clr.redGradientBottom)
-//                .multilineTextAlignment(.center)
-//                .padding(.trailing)
-//                .minimumScaleFactor(0.5)
-//                .lineLimit(1)
+            //            Text("Prompts")
+            //                .font(Font.fredoka(.bold, size: 20))
+            //                .foregroundColor(Clr.redGradientBottom)
+            //                .multilineTextAlignment(.center)
+            //                .padding(.trailing)
+            //                .minimumScaleFactor(0.5)
+            //                .lineLimit(1)
         }.frame(height: 35)
             .neoShadow()
     }
     var doneButton: some View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if !text.isEmpty{
+            if !text.isEmpty, !showLoading {
                 showLoading = true
                 if let img = inputImage {
                     storeImage(data: img.jpegData(compressionQuality: 0.3))
@@ -360,17 +361,44 @@ struct JournalView: View, KeyboardReadable {
         guard let data = data else {
             return
         }
-        let storage = Storage.storage()
-        let storageRef = storage.reference()
-        let id = UUID().uuidString
-        let imagesRef = storageRef.child("journelImages/\(id).jpg")
-        imagesRef.putData(data, metadata: nil) { (metadata, error) in
-            imagesRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    return
+        if ((Auth.auth().currentUser?.email) != nil) {
+            DispatchQueue.main.async {
+                let storage = Storage.storage()
+                let storageRef = storage.reference()
+                let id = UUID().uuidString
+                let imagesRef = storageRef.child("journelImages/img_\(id).jpg")
+                
+                imagesRef.putData(data) { (metadata, error) in
+                    guard error == nil else {
+                        showLoading = false
+                        print(error as Any)
+                        return
+                    }
+                    
+                    imagesRef.downloadURL { (url, error) in
+                        guard let downloadURL = url else {
+                            print(error as Any)
+                            updateJournelData(url:"")
+                            return
+                        }
+                        updateJournelData(url:downloadURL.absoluteString)
+                    }
                 }
-                updateJournelData(url:downloadURL.absoluteString)
             }
+        } else {
+            let id = UUID().uuidString
+            let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let directoryPath =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let url = directoryPath.appendingPathComponent("journelImages/img_\(id).jpg")
+            print("url : \(url)")
+            do {
+                try data.write(to: url)
+            } catch {
+                print("Unable to Write Image Data to Disk")
+                print(error.localizedDescription)
+                showLoading = false
+            }
+            updateJournelData(url:url.path)
         }
     }
     
@@ -392,36 +420,35 @@ struct JournalView: View, KeyboardReadable {
         gardenModel.isGratitudeDone = true
         UserDefaults(suiteName: K.widgetDefault)?.setValue((Date().toString(withFormat: "MMM dd, yyyy")), forKey: "lastJournel")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+            }
+            UserDefaults.standard.setValue(num, forKey: "numGrads")
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+            }
+            Analytics.shared.log(event: .gratitude_tapped_done)
+            var journalObj = [String: String]()
+            journalObj["timeStamp"] = Date.getTime()
+            journalObj["gratitude"] = text
+            journalObj["question"] =  question
+            if !url.isEmpty {
+                journalObj["image"] =  url
+            }
+            userModel.coins += coin
+            gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
             withAnimation {
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                    UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                if moodFirst {
+                    showRecs = true
+                    moodFirst = false
+                } else {
+                    viewRouter.currentPage = .meditate
                 }
-                UserDefaults.standard.setValue(num, forKey: "numGrads")
-                withAnimation {
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                        UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
-                    }
-                    Analytics.shared.log(event: .gratitude_tapped_done)
-                    var journalObj = [String: String]()
-                    journalObj["timeStamp"] = Date.getTime()
-                    journalObj["gratitude"] = text
-                    journalObj["question"] =  question
-                    if !url.isEmpty {
-                        journalObj["image"] =  url
-                    }
-                    userModel.coins += coin
-                    gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
-                    if moodFirst {
-                        showRecs = true
-                        moodFirst = false
-                    } else {
-                        viewRouter.currentPage = .meditate
-                    }
-                }
-                //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                 placeholderQuestion = "What's one thing you're grateful for right now?"
                 showLoading = false
             }
+            //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+            
         }
     }
 }

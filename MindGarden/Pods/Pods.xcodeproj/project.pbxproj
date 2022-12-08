@@ -14752,7 +14752,11 @@
 		18D0722283DADE08A12886502964968D /* status.nanopb.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = status.nanopb.cc; path = Firestore/Protos/nanopb/google/rpc/status.nanopb.cc; sourceTree = "<group>"; };
 		18DB9E8DFE6A47D254481D03D3773122 /* gsec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = gsec.h; path = src/core/tsi/alts/crypt/gsec.h; sourceTree = "<group>"; };
 		18ED94837ECF484923C006B0081AB437 /* FIRActionCodeSettings.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRActionCodeSettings.m; path = FirebaseAuth/Sources/Auth/FIRActionCodeSettings.m; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		1911113E0FBF13CFF9132E5FF7685228 /* gRPC-C++ */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "gRPC-C++"; path = grpcpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		1911113E0FBF13CFF9132E5FF7685228 /* grpcpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = grpcpp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 		19229C565E6F62FDFA60FFF89F816396 /* obj_xref.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = obj_xref.c; path = src/crypto/obj/obj_xref.c; sourceTree = "<group>"; };
 		192D70AFB98A5F6AB2FC98475FDC8E12 /* FIRCLSDwarfExpressionMachine.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = FIRCLSDwarfExpressionMachine.c; path = Crashlytics/Crashlytics/Unwind/Dwarf/FIRCLSDwarfExpressionMachine.c; sourceTree = "<group>"; };
 		193A6A4086051216C7771B42533348C0 /* tcp_client_cfstream.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = tcp_client_cfstream.cc; path = src/core/lib/iomgr/tcp_client_cfstream.cc; sourceTree = "<group>"; };
@@ -15249,7 +15253,11 @@
 		3309E08D88380656D9CE4D1B38597999 /* ev_apple.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = ev_apple.cc; path = src/core/lib/iomgr/ev_apple.cc; sourceTree = "<group>"; };
 		33292DD033785840A85052B89226B88A /* optional.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = optional.h; path = absl/types/optional.h; sourceTree = "<group>"; };
 		33478D21305E2825CF699DC8B4AFCFB1 /* FIRStartMFASignInResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRStartMFASignInResponse.h; path = FirebaseAuth/Sources/Backend/RPC/MultiFactor/SignIn/FIRStartMFASignInResponse.h; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		3347A1AB6546F0A3977529B8F199DC41 /* PromisesObjC */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PromisesObjC; path = FBLPromises.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		3347A1AB6546F0A3977529B8F199DC41 /* FBLPromises.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FBLPromises.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 		334E789146A5D25741EBFEA6D24F0F6B /* handshaker_factory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = handshaker_factory.h; path = src/core/lib/channel/handshaker_factory.h; sourceTree = "<group>"; };
 		3353F8C4575DB93B3F4DFAD97BBD4AF9 /* ProductsManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductsManager.swift; path = PurchasesCoreSwift/Purchasing/ProductsManager.swift; sourceTree = "<group>"; };
 		335BAA02C68A5C00269C215EBD95DFF7 /* cpu-arm-linux.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "cpu-arm-linux.h"; path = "src/crypto/cpu-arm-linux.h"; sourceTree = "<group>"; };
@@ -16882,7 +16890,11 @@
 		8549083DABA4F94717F27A494EAE48E0 /* pollset_set.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pollset_set.h; path = src/core/lib/iomgr/pollset_set.h; sourceTree = "<group>"; };
 		855798DAEECDFA5C6ABC838A710D3B53 /* socket_windows.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = socket_windows.cc; path = src/core/lib/iomgr/socket_windows.cc; sourceTree = "<group>"; };
 		856A2C97E388749FC7811B6C3F74F229 /* xds_client_stats.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = xds_client_stats.cc; path = src/core/ext/xds/xds_client_stats.cc; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		856B5CD56F194FAD26EA91620B66D614 /* GoogleDataTransport */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GoogleDataTransport; path = GoogleDataTransport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		856B5CD56F194FAD26EA91620B66D614 /* GoogleDataTransport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleDataTransport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 		857B67E3755E406833DEA3425E93B346 /* GDTCORTransport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GDTCORTransport.h; path = GoogleDataTransport/GDTCORLibrary/Public/GoogleDataTransport/GDTCORTransport.h; sourceTree = "<group>"; };
 		857CB03A67DAA8C336E4A2846F505BEF /* alts_grpc_integrity_only_record_protocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = alts_grpc_integrity_only_record_protocol.h; path = src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.h; sourceTree = "<group>"; };
 		857F013AA7EDF1E3FFC1639E32F8FB8A /* seed_material.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = seed_material.h; path = absl/random/internal/seed_material.h; sourceTree = "<group>"; };
@@ -17868,7 +17880,11 @@
 		B45F65803A2E613A0E2B601E168CF92F /* FIRGetProjectConfigRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRGetProjectConfigRequest.m; path = FirebaseAuth/Sources/Backend/RPC/FIRGetProjectConfigRequest.m; sourceTree = "<group>"; };
 		B46C453974002B12FC265FB7B4F02983 /* CompositionLayersInitializer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CompositionLayersInitializer.swift; path = Sources/Private/MainThread/LayerContainers/Utility/CompositionLayersInitializer.swift; sourceTree = "<group>"; };
 		B46DBE7CF6D822B9686C70A4B69CF1BF /* grpc_service.upbdefs.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = grpc_service.upbdefs.c; path = "src/core/ext/upbdefs-generated/envoy/config/core/v3/grpc_service.upbdefs.c"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		B471867C535B02FA55D87E260F6480F8 /* gRPC-Core */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "gRPC-Core"; path = grpc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		B471867C535B02FA55D87E260F6480F8 /* grpc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = grpc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 		B47A2CBD7F7E87CF407EC182D7C98536 /* http2_settings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = http2_settings.h; path = src/core/ext/transport/chttp2/transport/http2_settings.h; sourceTree = "<group>"; };
 		B47C62E8080B8839847503EBE5F7B43E /* chttp2_server.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = chttp2_server.h; path = src/core/ext/transport/chttp2/server/chttp2_server.h; sourceTree = "<group>"; };
 		B4941DBED94EA8E413C9D950D6CC6609 /* lds.upb.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = lds.upb.c; path = "src/core/ext/upb-generated/envoy/service/listener/v3/lds.upb.c"; sourceTree = "<group>"; };
@@ -19097,7 +19113,11 @@
 		F16624A7477534ED63494673CC4B0399 /* x_spki.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = x_spki.c; path = src/crypto/x509/x_spki.c; sourceTree = "<group>"; };
 		F167BEF9B158345D5096CA91371FDB96 /* log_linux.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = log_linux.cc; path = src/core/lib/gpr/log_linux.cc; sourceTree = "<group>"; };
 		F1769FD21F28EFA57625E7713B60690F /* FirebaseInstallations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FirebaseInstallations.h; path = FirebaseInstallations/Source/Library/Public/FirebaseInstallations/FirebaseInstallations.h; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		F18CD5ED469F74F6061E59B143A4E30F /* Pods-MindGarden */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-MindGarden"; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		F18CD5ED469F74F6061E59B143A4E30F /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 		F1992EC0AD36A9AA3B415F4845EF4921 /* tcp_windows.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = tcp_windows.cc; path = src/core/lib/iomgr/tcp_windows.cc; sourceTree = "<group>"; };
 		F1A913B22E6C4A088551D132BC6CE6A2 /* key_wrap.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = key_wrap.c; path = src/crypto/fipsmodule/aes/key_wrap.c; sourceTree = "<group>"; };
 		F1B16D47DF3E3639F5172AE3BC8F7F4B /* BaseCompositionLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseCompositionLayer.swift; path = Sources/Private/CoreAnimation/Layers/BaseCompositionLayer.swift; sourceTree = "<group>"; };
@@ -19318,7 +19338,11 @@
 		FD3C0A691D48B4A1BF95CD302957B5EE /* a_mbstr.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = a_mbstr.c; path = src/crypto/asn1/a_mbstr.c; sourceTree = "<group>"; };
 		FD47B07C380C5D63FE0E076C09D55632 /* gsec.cc */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = gsec.cc; path = src/core/tsi/alts/crypt/gsec.cc; sourceTree = "<group>"; };
 		FD5683CC807B14623757A700A54D1A8D /* rbac.upb.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rbac.upb.h; path = "src/core/ext/upb-generated/envoy/extensions/filters/http/rbac/v3/rbac.upb.h"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		FD56AB51475BC5F592781EE2692D1412 /* GoogleSignIn */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GoogleSignIn; path = GoogleSignIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+=======
+		FD56AB51475BC5F592781EE2692D1412 /* GoogleSignIn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GoogleSignIn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 		FD57A485D1D83175331312FE18C4094D /* FIRTimestamp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRTimestamp.m; path = Firestore/Source/API/FIRTimestamp.m; sourceTree = "<group>"; };
 		FD60816F9896C4C3C13FBB9E32CAE872 /* rbac.upbdefs.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rbac.upbdefs.h; path = "src/core/ext/upbdefs-generated/envoy/extensions/filters/http/rbac/v3/rbac.upbdefs.h"; sourceTree = "<group>"; };
 		FD66410942A42E5F12AA1962FD360C90 /* composite_credentials.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = composite_credentials.h; path = src/core/lib/security/credentials/composite/composite_credentials.h; sourceTree = "<group>"; };
@@ -26591,24 +26615,29 @@
 				92000153CD73F7FC2DBAB4AB708269F3 /* FirebaseFirestore */,
 				13C8C8B254851998F9289F71229B28A2 /* FirebaseInstallations */,
 				9CF8FA5F01F446F01AAC7331075452AD /* FirebaseStorage */,
+<<<<<<< HEAD
 				856B5CD56F194FAD26EA91620B66D614 /* GoogleDataTransport */,
 				FD56AB51475BC5F592781EE2692D1412 /* GoogleSignIn */,
+=======
+				856B5CD56F194FAD26EA91620B66D614 /* GoogleDataTransport.framework */,
+				FD56AB51475BC5F592781EE2692D1412 /* GoogleSignIn.framework */,
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 				E5BA41B7F2E1FE47F9ABCAC27C9E4281 /* GoogleSignIn.bundle */,
 				B43874C6CBB50E7134FBEC24BABFE14F /* GoogleUtilities */,
-				1911113E0FBF13CFF9132E5FF7685228 /* gRPC-C++ */,
+				1911113E0FBF13CFF9132E5FF7685228 /* grpcpp.framework */,
 				9C7C87B5D0A6752AFA2642F1BCA967A3 /* gRPCCertificates-Cpp.bundle */,
-				B471867C535B02FA55D87E260F6480F8 /* gRPC-Core */,
+				B471867C535B02FA55D87E260F6480F8 /* grpc.framework */,
 				6FD122EA0AB9AB2A8FFA5F676C795DF0 /* GTMAppAuth */,
 				C1998E0D8085221AD87F89B614C10E52 /* GTMSessionFetcher */,
 				0A9F46A999C47653013D3AD854352507 /* leveldb-library */,
 				6BC54C3D03DEBF9C3A40965E69CAE039 /* Libuv-gRPC */,
 				51BA97E8B5085EFFB47BC9C0B785CEA7 /* lottie-ios */,
 				06FC5C9CF96D60C50FCD47D339C91951 /* nanopb */,
-				F18CD5ED469F74F6061E59B143A4E30F /* Pods-MindGarden */,
+				F18CD5ED469F74F6061E59B143A4E30F /* Pods_MindGarden.framework */,
 				5297C3B31C2B9299163EF576147C83A6 /* Pods-MindGarden-MindGardenUITests */,
 				EF0873B2DAD2CEE96B1240F73E09242C /* Pods-MindGarden-MindGardenWidgetExtension */,
 				6D8256886D19D9FB91AD779C137AD63C /* Pods-MindGardenTests */,
-				3347A1AB6546F0A3977529B8F199DC41 /* PromisesObjC */,
+				3347A1AB6546F0A3977529B8F199DC41 /* FBLPromises.framework */,
 				FBA7F9EF3FAEB0BC7D79BB1AFF265A06 /* Purchases */,
 				A8744BFCBA0EFF3EFCB22EF6E0408B42 /* PurchasesCoreSwift */,
 			);
@@ -29819,7 +29848,7 @@
 			);
 			name = "gRPC-C++";
 			productName = grpcpp;
-			productReference = 1911113E0FBF13CFF9132E5FF7685228 /* gRPC-C++ */;
+			productReference = 1911113E0FBF13CFF9132E5FF7685228 /* grpcpp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		23E7C4A52360C026F97E4A96D91B03CE /* FirebaseStorage */ = {
@@ -29879,7 +29908,7 @@
 			);
 			name = PromisesObjC;
 			productName = FBLPromises;
-			productReference = 3347A1AB6546F0A3977529B8F199DC41 /* PromisesObjC */;
+			productReference = 3347A1AB6546F0A3977529B8F199DC41 /* FBLPromises.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		2BC2CC6A5EB8F91429DC14E6BDC342DF /* PurchasesCoreSwift */ = {
@@ -30194,7 +30223,7 @@
 			);
 			name = "gRPC-Core";
 			productName = grpc;
-			productReference = B471867C535B02FA55D87E260F6480F8 /* gRPC-Core */;
+			productReference = B471867C535B02FA55D87E260F6480F8 /* grpc.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		526C4398D095B3704EB933DADBC30093 /* FirebaseCrashlytics */ = {
@@ -30239,7 +30268,7 @@
 			);
 			name = GoogleDataTransport;
 			productName = GoogleDataTransport;
-			productReference = 856B5CD56F194FAD26EA91620B66D614 /* GoogleDataTransport */;
+			productReference = 856B5CD56F194FAD26EA91620B66D614 /* GoogleDataTransport.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		5C642AA10FB29936669CC269F42079C6 /* AppAuth */ = {
@@ -30523,7 +30552,11 @@
 			);
 			name = GoogleSignIn;
 			productName = GoogleSignIn;
+<<<<<<< HEAD
 			productReference = FD56AB51475BC5F592781EE2692D1412 /* GoogleSignIn */;
+=======
+			productReference = FD56AB51475BC5F592781EE2692D1412 /* GoogleSignIn.framework */;
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 			productType = "com.apple.product-type.framework";
 		};
 		CE5513D4888D55D4E7ED117F0324E1DA /* Pods-MindGarden */ = {
@@ -30575,7 +30608,7 @@
 			);
 			name = "Pods-MindGarden";
 			productName = Pods_MindGarden;
-			productReference = F18CD5ED469F74F6061E59B143A4E30F /* Pods-MindGarden */;
+			productReference = F18CD5ED469F74F6061E59B143A4E30F /* Pods_MindGarden.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		D2B5E7DCCBBFB32341D857D01211A1A3 /* nanopb */ = {
@@ -30802,8 +30835,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 12.0";
@@ -35184,7 +35217,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = No;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleSignIn";
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = M5757NXZKD;
+=======
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 				IBSC_MODULE = GoogleSignIn;
 				INFOPLIST_FILE = "Target Support Files/GoogleSignIn/ResourceBundle-GoogleSignIn-GoogleSignIn-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -35637,7 +35673,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = No;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = M5757NXZKD;
+=======
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 				IBSC_MODULE = grpcpp;
 				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -37369,7 +37408,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = No;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = M5757NXZKD;
+=======
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 				IBSC_MODULE = grpcpp;
 				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -37459,7 +37501,10 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = No;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleSignIn";
+<<<<<<< HEAD
 				DEVELOPMENT_TEAM = M5757NXZKD;
+=======
+>>>>>>> b80cbb02aeff99798ce018042ba3071d0c1f1b00
 				IBSC_MODULE = GoogleSignIn;
 				INFOPLIST_FILE = "Target Support Files/GoogleSignIn/ResourceBundle-GoogleSignIn-GoogleSignIn-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
