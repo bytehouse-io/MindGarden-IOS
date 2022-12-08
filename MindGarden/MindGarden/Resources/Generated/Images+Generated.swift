@@ -214,6 +214,7 @@ public enum Img {
   public static let happyPandaFace = Image("happyPandaFace")
   public static let happySunflower = Image("happySunflower")
   public static let heart = Image("heart")
+  public static let house = Image("house")
   public static let icecream = Image("icecream")
   public static let alpha = Image("alpha")
   public static let beach = Image("beach")

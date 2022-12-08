@@ -48,12 +48,12 @@ extension MeditationViewModel {
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
                 self?.secondsRemaining -= 1
                 withAnimation {
-                    if self?.secondsRemaining ?? 0 - 0.2 <= self?.totalTime ?? 0 * 0.25 { //15 = 0
+                    if (self?.secondsRemaining ?? 0) - 0.2 <= (self?.totalTime ?? 0) * 0.25 { //15 = 0
                         self?.lastSeconds = true
                         self?.playImage = self?.selectedPlant?.coverImage ?? Img.redTulips3
-                    } else if self?.secondsRemaining ?? 0 - 0.2 <= self?.totalTime ?? 0 * 0.5 { //30 - 15
+                    } else if (self?.secondsRemaining ?? 0) - 0.2 <= (self?.totalTime ?? 0) * 0.5 { //30 - 15
                         self?.playImage = self?.selectedPlant?.two ?? Img.redTulips2
-                    } else if self?.secondsRemaining ?? 0 - 0.2 <= self?.totalTime ?? 0 * 0.75 { //45-30
+                    } else if (self?.secondsRemaining ?? 0) - 0.2 <= (self?.totalTime ?? 0) * 0.75 { //45-30
                         self?.playImage = self?.selectedPlant?.one ?? Img.redTulips1
                     } else { //60 - 45
                         self?.playImage = Img.seed
