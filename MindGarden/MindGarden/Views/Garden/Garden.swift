@@ -234,7 +234,7 @@ struct Garden: View {
                                                             .padding(3)
                                                     }
                                                     
-                                                    if mood != nil {
+                                                    if plant != nil {
                                                         PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
                                                             .opacity((plant != nil && mood != nil ) ? (!tappedTile ? tileOpacity : 1) : 1 )
                                                             .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
