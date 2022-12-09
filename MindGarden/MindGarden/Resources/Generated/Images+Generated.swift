@@ -291,6 +291,7 @@ public enum Img {
   public static let paperPencil = Image("paper+Pencil")
   public static let pencil = Image("pencil")
   public static let pencilIcon = Image("pencilIcon")
+  public static let photoCalendar = Image("photoCalendar")
   public static let plane = Image("plane")
   public static let plantIcon = Image("plantIcon")
   public static let pondBackground = Image("pond-background")

@@ -65,17 +65,26 @@ struct PricingView: View {
                             .padding(.bottom, -25)
                             .buttonStyle(NeoPress())
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? ""), " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock "))
+                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? "")," : (fromPage == "garden" ? "📸 Add photos from your journal " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock ")))
                                 .font(Font.fredoka(.bold, size: 24))
                              + Text(fromInfluencer == "" ? "with MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
                                 .font(Font.fredoka(.bold, size: 24))
                              +
-                             Text(fiftyOff ? "\n(limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : " & get 1% happier everyday"))
+                             Text(fiftyOff ? "\n(limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : fromPage == "garden" ? "" : "& get 1% happier everyday"))
                                 .font(Font.fredoka(.semiBold, size: 24))
                                 .foregroundColor(Clr.black2)
                                 .multilineTextAlignment(.leading)
                                 .frame(width: width * 0.78, alignment: .leading)
                                 .padding(15)
+                            if fromPage == "garden" {
+                                Img.photoCalendar
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(32)
+                                    .frame(width: width * 0.8)
+                                    .padding()
+                                    .neoShadow()
+                            }
 //                            + Text(" (limited time)").foregroundColor(Clr.darkgreen))
 
 //                            Button {
@@ -351,6 +360,7 @@ struct PricingView: View {
                             case "widget": viewRouter.currentPage = .meditate
                             case "discover": viewRouter.currentPage = .learn
                             case "journal": viewRouter.currentPage = .learn
+                            case "garden": viewRouter.currentPage = .garden
                             default: viewRouter.currentPage = viewRouter.previousPage
                             }
                         }
@@ -609,6 +619,8 @@ struct PricingView: View {
                 event = event + "journal"
             } else if fromPage == "streak" {
                 event = event + "streak"
+            } else if fromPage == "garden" {
+                event = event + "garden"
             }
             return event
         }
@@ -688,3 +700,5 @@ struct PricingView_Previews: PreviewProvider {
         PricingView()
     }
 }
+
+

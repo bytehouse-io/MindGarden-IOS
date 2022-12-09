@@ -29,14 +29,12 @@ struct Garden: View {
     @State private var showStreak: Bool = false
     @EnvironmentObject var bonusModel: BonusViewModel
     @Environment(\.colorScheme) var colorScheme
+    @State private var showImages = false
     
     var currentStreak : String {
         return "\(bonusModel.streakNumber)"
     }
-    
-    private var showImages: Bool {
-        UserDefaults.standard.bool(forKey: "showJournalImage")
-    }
+
     
     var longestStreak : Int {
         (UserDefaults.standard.value(forKey: "longestStreak")) as? Int ?? 1
@@ -172,7 +170,15 @@ struct Garden: View {
                                     Analytics.shared.log(event: .garden_tapped_settings)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        UserDefaults.standard.setValue(!showImages, forKey: "showImages")
+                                        showImages.toggle()
+
+//                                        if UserDefaults.standard.bool(forKey: "isPro") {
+//                                            showImages.toggle()
+//                                            UserDefaults.standard.setValue(showImages, forKey: "showImages")
+//                                        } else {
+//                                            fromPage = "garden"
+//                                            viewRouter.currentPage = .pricing
+//                                        }
                                     }
                                 } label: {
                                     HStack {
@@ -212,13 +218,13 @@ struct Garden: View {
                                         let mood = gardenModel.monthTiles[row]?[currentDate]?.1
                                         
                                         Rectangle()
-                                            .fill(plant != nil ? gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare : Clr.calenderSquare)
+                                            .fill(mood != nil ? gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare : Clr.calenderSquare)
                                             .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
                                             .border(.white, width: 1)
                                             .opacity((plant != nil && mood != nil ) ? (!tappedTile ? tileOpacity : 1) : 1 )
                                             .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                             .overlay(
-                                                PhotoCalender(showImages: .constant(showImages), tileOpacity: $tileOpacity, tappedTile: .constant(tappedTile), row: row, currentDate: currentDate,plant: plant, mood: mood, maxDate: maxDate)
+                                                PhotoCalender(showImages: $showImages, tileOpacity: $tileOpacity, tappedTile: .constant(tappedTile), row: row, currentDate: currentDate,plant: plant, mood: mood, maxDate: maxDate)
                                             )
                                     }
                                     .onTapGesture {
@@ -642,14 +648,16 @@ struct PhotoCalender: View {
                 VStack {
                     Spacer()
                     HStack {
-                        Spacer()
                         ZStack {
-                            HStack(spacing:0) {
+                            HStack(spacing: 0) {
                                 if let mood = mood {
-                                    Mood.getMoodImage(mood: mood)
-                                        .resizable()
-                                        .frame(width: 10, height:10)
-                                        .padding(.leading,3)
+                                    ZStack {
+                                        Mood.getMoodImage(mood: mood)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .padding(.vertical, 3)
+                                            .padding(.leading, plant != nil ? 3 : 0)
+                                    }.frame(width: 16, height: 16)
                                 }
                                 if plant != nil {
                                     PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
@@ -664,13 +672,13 @@ struct PhotoCalender: View {
                             )
                             .padding(4)
                         }
-
+                        Spacer()
                     }
                 }
             }
             
             Text((currentDate <= maxDate && currentDate > 0 ) ? "\(currentDate)" : "").offset(x: 5, y: 15)
-                .font(Font.fredoka(.semiBold, size: 10))
+                .font(Font.fredoka(.semiBold, size: 8))
                 .foregroundColor(Color.black)
                 .padding(.leading)
                 .opacity(showTileDate ? 1.0 : 0)

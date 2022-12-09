@@ -17,7 +17,7 @@ struct SingleDay: View {
     var month: Int
     var year: Int
     @State var moods: [[String: String]]?
-    @State var gratitudes: [String]?
+    @State var journals: [[String:String]]?
     @State var sessions: [[String: String]]?
     @State var totalTime: Int = 0
     @State var totalSessions: Int = 0
@@ -108,9 +108,16 @@ struct SingleDay: View {
                             } else {
                                 Text("No sessions for \nthis day :(")
                                     .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.bold, size: 30))
-                                    .offset(y: -65)
+                                    .font(Font.fredoka(.semiBold, size: 28))
                                     .multilineTextAlignment(.center)
+                                    .padding(24)
+                                    .background(
+                                        RoundedRectangle(cornerRadius:8)
+                                        .fill(Clr.darkWhite)
+                                        .neoShadow()
+                                    )
+                                    .offset(y: -65)
+
                             }
                         }.padding(.bottom, -95)
                         Text("Stats For the Day: ")
@@ -139,7 +146,7 @@ struct SingleDay: View {
                                                 .frame(width: 30)
                                                 .offset(x: 3)
                                             Text(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60) min")
-                                                .font(Font.fredoka(.bold, size: 20))
+                                                .font(Font.fredoka(.semiBold, size: 16))
                                                 .minimumScaleFactor(0.7)
                                                 .foregroundColor(Clr.black2)
                                                 .offset(x: -5)
@@ -147,14 +154,14 @@ struct SingleDay: View {
                                         .padding(.bottom,10)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.horizontal, 15)
-                                }.frame(width: g.size.width * 0.38)
+                                }.frame(width: g.size.width * 0.3)
                                 ZStack(alignment: .leading) {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
                                         .addBorder(.black, width: 1.5, cornerRadius: 14)
                                         .neoShadow()
                                     VStack(alignment:.leading, spacing:5){
-                                        Text("Total Sessions")
+                                        Text("Sessions")
                                             .font(Font.fredoka(.regular, size: 16))
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.horizontal, 5)
@@ -166,14 +173,14 @@ struct SingleDay: View {
                                                 .frame(width: 30)
                                                 .offset(x: 3)
                                             Text("\(totalSessions)")
-                                                .font(Font.fredoka(.bold, size: 20))
+                                                .font(Font.fredoka(.semiBold, size: 16))
                                                 .minimumScaleFactor(0.7)
                                                 .foregroundColor(Clr.black2)
                                         }
                                         .padding(.bottom,10)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     }.padding(.horizontal, 15)
-                                }.frame(width: g.size.width * 0.38)
+                                }.frame(width: g.size.width * 0.3)
                                 ZStack {
                                     Rectangle()
                                         .fill(Clr.darkWhite)
@@ -198,7 +205,7 @@ struct SingleDay: View {
                                         }.frame(maxWidth: .infinity, maxHeight: g.size.height * 0.07, alignment: .leading)
                                     }.padding(.horizontal, 15)
                                 }
-                                .frame(width: g.size.width * 0.38)
+                                .frame(width: g.size.width * 0.30)
                             }
                             .frame(maxWidth: g.size.width * 0.4)
                             ZStack {
@@ -213,17 +220,25 @@ struct SingleDay: View {
                                         .font(Font.fredoka(.semiBold, size: 16))
                                         .offset(y: 5)
                                     ScrollView(showsIndicators: false) {
-                                        ForEach(self.gratitudes ?? ["No reflections written this day"], id: \.self) { gratitude in
-                                            Text(gratitude)
+                                        ForEach(self.journals ?? [], id: \.self) { journal in
+                                            Text(journal["gratitude"] ?? "No reflections written this day")
                                                 .fixedSize(horizontal: false, vertical: true)
-                                                .foregroundColor(Clr.black2)
+                                                .foregroundColor(self.journals?.isEmpty ?? false ? Color.gray : Clr.black2)
                                                 .font(Font.fredoka(.regular, size: 14))
                                                 .padding(10)
+                                            if let img = journal["image"], !img.isEmpty {
+                                                UrlImageView(urlString: String(img))
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width:g.size.width * 0.3)
+                                                    .cornerRadius(14)
+                                                    .addBorder(.black,width:1.5, cornerRadius: 14)
+                                                    .neoShadow()
+                                            }
                                             Divider()
                                         }
                                     }
                                 }.padding(5)
-                            }
+                            }.frame(width: g.size.width * 0.5)
                         }.frame(maxHeight: g.size.height * 0.40)
                         .padding(.horizontal, g.size.width * 0.1)
                         Spacer()
@@ -259,15 +274,16 @@ struct SingleDay: View {
             }
             
             
-            if let gratitudes = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["gratitudes"] as? [String] {
-                self.gratitudes = gratitudes
-            } else if let grats = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["journals"] as? [[String: String]] {
-                self.gratitudes = []
-                for grat in grats {
-                    if let gratitude = grat["gratitude"] {
-                        self.gratitudes?.append(gratitude)
-                    }
+            if let journals = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["gratitudes"] as? [String] {
+                for journal in journals {
+                    var journalObj = [String: String]()
+                    journalObj["question"] = "None"
+                    journalObj["gratitude"] = journal
+                    journalObj["timeStamp"] = "12:00 AM"
+                    self.journals?.append(journalObj)
                 }
+            } else if let grats = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?["journals"] as? [[String: String]] {
+                self.journals = grats
             }
             
             if let sessions = gardenModel.grid[String(self.year)]?[String(self.month)]?[String(self.day)]?[K.defaults.sessions] as? [[String: String]] {
