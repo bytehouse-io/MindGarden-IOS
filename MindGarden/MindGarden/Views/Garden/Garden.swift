@@ -42,10 +42,6 @@ struct Garden: View {
         (UserDefaults.standard.value(forKey: "longestStreak")) as? Int ?? 1
     }
     
-    var showTileDate : Bool {
-        UserDefaults.standard.bool(forKey: "tileDates")
-    }
-    
     var tappedTile : Bool {
         UserDefaults.standard.bool(forKey: "tappedTile")
     }
@@ -215,12 +211,6 @@ struct Garden: View {
                                         let plant = gardenModel.monthTiles[row]?[currentDate]?.0
                                         let mood = gardenModel.monthTiles[row]?[currentDate]?.1
                                         
-                                        let dateOnTiles = Text((currentDate <= maxDate && currentDate > 0 ) ? "\(currentDate)" : "").offset(x: 5, y: 15)
-                                            .font(Font.fredoka(.semiBold, size: 10))
-                                            .foregroundColor(Color.black)
-                                            .padding(.leading)
-                                            .opacity(showTileDate ? 1.0 : 0)
-                                        
                                         Rectangle()
                                             .fill(plant != nil ? gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare : Clr.calenderSquare)
                                             .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
@@ -228,20 +218,7 @@ struct Garden: View {
                                             .opacity((plant != nil && mood != nil ) ? (!tappedTile ? tileOpacity : 1) : 1 )
                                             .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
                                             .overlay(
-                                                ZStack {
-                                                    if let imgUrl = gardenModel.getImagePath(month: String(gardenModel.selectedMonth), day:"\(currentDate)"), showImages {
-                                                        UrlImageView(urlString: imgUrl)
-                                                            .padding(1)
-                                                    }
-                                                    
-                                                    if plant != nil {
-                                                        PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
-                                                            .opacity((plant != nil && mood != nil ) ? (!tappedTile ? tileOpacity : 1) : 1 )
-                                                            .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
-                                                    }
-                                                    
-                                                    dateOnTiles
-                                                }
+                                                PhotoCalender(showImages: .constant(showImages), tileOpacity: $tileOpacity, tappedTile: .constant(tappedTile), row: row, currentDate: currentDate,plant: plant, mood: mood, maxDate: maxDate)
                                             )
                                     }
                                     .onTapGesture {
@@ -633,6 +610,73 @@ struct Garden_Previews: PreviewProvider {
 }
 
 //MARK: - components
+struct PhotoCalender: View {
+    @Binding var showImages:Bool
+    @Binding var tileOpacity:Double
+    @Binding var tappedTile:Bool
+    @EnvironmentObject var gardenModel: GardenViewModel
+    var row: Int
+    var currentDate: Int
+    var plant:Plant?
+    var mood:Mood?
+    let maxDate:Int
+    
+    var showTileDate : Bool {
+        UserDefaults.standard.bool(forKey: "tileDates")
+    }
+    
+    var body: some View {
+        ZStack {
+            if let imgUrl = gardenModel.getImagePath(month: String(gardenModel.selectedMonth), day:"\(currentDate)"), showImages {
+                UrlImageView(urlString: imgUrl)
+                    .padding(1)
+            }
+            
+            if !showImages {
+                if plant != nil,!showImages {
+                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
+                        .opacity((plant != nil && mood != nil ) ? (!tappedTile ? tileOpacity : 1) : 1 )
+                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+                }
+            } else {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        ZStack {
+                            HStack(spacing:0) {
+                                if let mood = mood {
+                                    Mood.getMoodImage(mood: mood)
+                                        .resizable()
+                                        .frame(width: 10, height:10)
+                                        .padding(.leading,3)
+                                }
+                                if plant != nil {
+                                    PlantHead(row:row, currentDate:currentDate, month: String(gardenModel.selectedMonth))
+                                        .opacity((plant != nil && mood != nil ) ? (!tappedTile ? tileOpacity : 1) : 1 )
+                                        .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: tileOpacity)
+                                        .frame(width:16,height:16)
+                                }
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius:8)
+                                    .fill(Clr.darkWhite)
+                            )
+                            .padding(4)
+                        }
+
+                    }
+                }
+            }
+            
+            Text((currentDate <= maxDate && currentDate > 0 ) ? "\(currentDate)" : "").offset(x: 5, y: 15)
+                .font(Font.fredoka(.semiBold, size: 10))
+                .foregroundColor(Color.black)
+                .padding(.leading)
+                .opacity(showTileDate ? 1.0 : 0)
+        }
+    }
+}
 struct MoodImage: View {
     let mood: Mood
     let value: Int
