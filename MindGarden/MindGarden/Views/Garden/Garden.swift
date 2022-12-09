@@ -231,7 +231,7 @@ struct Garden: View {
                                                 ZStack {
                                                     if let imgUrl = gardenModel.getImagePath(month: String(gardenModel.selectedMonth), day:"\(currentDate)"), showImages {
                                                         UrlImageView(urlString: imgUrl)
-                                                            .padding(3)
+                                                            .padding(1)
                                                     }
                                                     
                                                     if plant != nil {

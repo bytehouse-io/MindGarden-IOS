@@ -352,7 +352,7 @@ extension AuthenticationViewModel {
                 self?.alertError = true
                 self?.alertMessage = error?.localizedDescription ?? "Email not associated with an account"
             } else {
-                if ((self?.googleIsNew) != nil) {
+                if self?.googleIsNew ?? false {
                     self?.createUser()
                     self?.goToHome()
                 } else {
