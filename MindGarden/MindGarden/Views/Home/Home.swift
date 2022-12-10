@@ -127,7 +127,7 @@ struct Home: View {
         }
 
         .onAppear {
-            if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done") {
+            if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") {
                 profileModel.showWidget = true
             }
                                     
@@ -152,7 +152,7 @@ struct Home: View {
                 
                 numberOfMeds += Int.random(in: -3 ... 3)
                 //handle update modal or deeplink
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" {
                     if UserDefaults.standard.bool(forKey: "introLink") {
                         model.selectedMeditation = Meditation.allMeditations.first(where: {$0.id == 6})
                         viewRouter.currentPage = .middle
@@ -186,7 +186,7 @@ struct Home: View {
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("storyOnboarding")))
         { _ in
             withAnimation {
-                if (UserDefaults.standard.bool(forKey: "review") || UserDefaults.standard.string(forKey: "onboarding") == "done") && !UserDefaults.standard.bool(forKey: "showedChallenge") {
+                if (UserDefaults.standard.bool(forKey: "review") || (UserDefaults.standard.string(forKey: "onboarding") == "done") || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") && !UserDefaults.standard.bool(forKey: "showedChallenge") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Change `2.0` to the desired number of seconds.
                        // Code you want to be delayed
 //                        showChallenge = true

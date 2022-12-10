@@ -404,7 +404,7 @@ struct StartDayView: View {
         }
         .padding(.horizontal, 26)
         .onAppear() {
-            if !userModel.completedIntroDay && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && userModel.completedDayTitle == "1"  {
+            if !userModel.completedIntroDay && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" && userModel.completedDayTitle == "1"  {
                 tileOpacity = 0.35
             }
             gardenModel.updateStartDay()

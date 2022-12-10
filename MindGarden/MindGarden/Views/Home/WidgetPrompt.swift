@@ -25,12 +25,11 @@ struct WidgetPrompt: View {
                     } else {
                         
                         Text("New MindGarden Widget")
-                            .font(Font.fredoka(.bold, size: K.isSmall() ? 20 : 28))
+                            .font(Font.fredoka(.bold, size: K.isSmall() ? 20 : 24))
                             .foregroundColor(Clr.black2)
                             .multilineTextAlignment(.center)
-                        
-                        Text("Visualize your progress. Widget users are 2x more likely to meditate")
-                            .font(Font.fredoka(.medium, size: K.isSmall() ? 16 : 20))
+                        Text("Stay motivated. Visualize your progress.")
+                            .font(Font.fredoka(.medium, size: K.isSmall() ? 16 : 16))
                             .foregroundColor(Clr.black2)
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
@@ -40,7 +39,7 @@ struct WidgetPrompt: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: geomatry.size.height*0.45)
-                            .cornerRadius(20).padding(.bottom, 20)
+                            .cornerRadius(20).padding(.bottom, 12)
                         AddWidgetView
                     }
                     
@@ -50,9 +49,6 @@ struct WidgetPrompt: View {
                 .frame(width: geomatry.size.width, height: geomatry.size.height*0.8)
                 .background(Clr.darkWhite)
                 .cornerRadius(20, corners:[.topLeft,.topRight])
-                
-                
-                
             }.offset(y: playAnim ? 0 : 1000)
             .ignoresSafeArea()
                 .onAppear {

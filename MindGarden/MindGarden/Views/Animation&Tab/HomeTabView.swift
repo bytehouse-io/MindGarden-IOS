@@ -45,7 +45,7 @@ struct HomeTabView: View {
         Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation(.linear(duration: 0.4)) {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
                 switch selectedTab {
                 case .garden:
                     viewRouter.currentPage = .garden

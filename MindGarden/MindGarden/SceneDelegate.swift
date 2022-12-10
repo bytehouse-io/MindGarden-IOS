@@ -251,7 +251,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       if user == nil && invitedBy != nil {
           Analytics.shared.log(event: .onboarding_came_from_referral)
           UserDefaults.standard.setValue(invitedBy, forKey: K.defaults.referred)
-          if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
+          if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
                         self.router.currentPage = .authentication
           }
       }

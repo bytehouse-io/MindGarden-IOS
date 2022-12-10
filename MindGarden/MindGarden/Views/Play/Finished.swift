@@ -387,9 +387,9 @@ struct Finished: View {
                     reward = reward * 3
                 }
                 
-//                if reward == 0 && UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" {
-//                    viewRouter.currentPage = .garden
-//                }
+                if reward == 0 && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") {
+                    viewRouter.currentPage = .garden
+                }
 //
                 userModel.coins += reward
                 gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
@@ -412,7 +412,7 @@ struct Finished: View {
                 // onboarding
                 if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                     Analytics.shared.log(event: .onboarding_finished_meditation)
-                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                    UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
                     isOnboarding = true
                 } else {
                     OneSignal.sendTag("firstMeditation", value: "true")

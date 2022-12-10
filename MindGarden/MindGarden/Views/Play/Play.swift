@@ -70,16 +70,25 @@ struct Play: View {
                         VStack(alignment: .center) {
                             //Navbar
                             HStack {
-                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                                    backArrow
-                                }
+                                    HStack {
+                                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
+                                            backArrow
+                                        }
+                                        heart;
+                                    }
+                                
                                 Spacer()
                                 Text(model.selectedMeditation?.title ?? "")
                                     .font(Font.fredoka(.medium, size: 12))
                                     .foregroundColor(isSleep ? Clr.brightGreen : Clr.black2)
                                     .padding(.leading, 16)
                                 Spacer()
-                                HStack{shareButton; sound; heart}
+                                HStack{
+                                    sound;
+                                    if model.selectedMeditation?.title ?? "" != "30 Second Meditation" {
+                                        shareButton;
+                                    }
+                                }
                                     .padding(.trailing)
                             }.padding(.horizontal)
                             .padding(.top, height * 0.07)
@@ -418,7 +427,7 @@ struct Play: View {
     
     private func shareAction() {
         var media: Media
-        let poster = "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1159&q=80"
+        let poster = "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/newImages%2Fmindgarden-Beach_large.jpg?alt=media&token=b42ea140-baff-4a46-abf9-69b815a5b510"
         var title = model.selectedMeditation?.title ?? "Intro to Meditation"
         var description = model.selectedMeditation?.description ?? "Intro to Meditation"
         if let audiourl = model.selectedMeditation?.url  {

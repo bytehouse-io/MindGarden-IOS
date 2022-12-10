@@ -394,6 +394,7 @@ class MeditationViewModel: ObservableObject {
             case 1500...1799: reward = 180
             default: reward = 200
             }
+            
             if secondsRemaining < 60 {
                 shouldStreakUpdate = false
             } else {

@@ -72,7 +72,6 @@ struct CircleLoadingView<Content>: View where Content: View {
                         .foregroundColor(.white)
                         .minimumScaleFactor(0.5)
                         .font(Font.fredoka(.bold, size: 28))
-                        .animation(.linear(duration: 5))
                 }
                 .offset(y: -150)
                 .opacity(self.isShowing ? 1 : 0)

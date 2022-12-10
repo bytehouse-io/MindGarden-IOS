@@ -30,6 +30,8 @@ struct Garden: View {
     @EnvironmentObject var bonusModel: BonusViewModel
     @Environment(\.colorScheme) var colorScheme
     @State private var showImages = false
+    @State private var plant: Plant?
+    @State private var mood: Mood?
     
     var currentStreak : String {
         return "\(bonusModel.streakNumber)"
@@ -170,15 +172,13 @@ struct Garden: View {
                                     Analytics.shared.log(event: .garden_tapped_settings)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
-                                        showImages.toggle()
-
-//                                        if UserDefaults.standard.bool(forKey: "isPro") {
-//                                            showImages.toggle()
-//                                            UserDefaults.standard.setValue(showImages, forKey: "showImages")
-//                                        } else {
-//                                            fromPage = "garden"
-//                                            viewRouter.currentPage = .pricing
-//                                        }
+                                        if UserDefaults.standard.bool(forKey: "isPro") {
+                                            showImages.toggle()
+                                            UserDefaults.standard.setValue(showImages, forKey: "showImages")
+                                        } else {
+                                            fromPage = "garden"
+                                            viewRouter.currentPage = .pricing
+                                        }
                                     }
                                 } label: {
                                     HStack {
@@ -209,14 +209,13 @@ struct Garden: View {
 //                                .addBorder(Clr.brightGreen, width: 1.5, cornerRadius: 20)
                             VStack(spacing:0) {
                                 GridStack(rows: Date.needsExtraRow(month: gardenModel.selectedMonth, year: gardenModel.selectedYear) ? 6 : 5, columns: 7) { row, col in
+                                    let c = gardenModel.placeHolders
+                                    let currentDate = col + (row * 7) + 1 - c
+                                    let maxDate = Date().getNumberOfDays(month: String(gardenModel.selectedMonth),year:String(gardenModel.selectedYear))
+                                    
+                                    let plant = gardenModel.monthTiles[row]?[currentDate]?.0
+                                    let mood = gardenModel.monthTiles[row]?[currentDate]?.1
                                     ZStack {
-                                        let c = gardenModel.placeHolders
-                                        let currentDate = col + (row * 7) + 1 - c
-                                        let maxDate = Date().getNumberOfDays(month: String(gardenModel.selectedMonth),year:String(gardenModel.selectedYear))
-                                        
-                                        let plant = gardenModel.monthTiles[row]?[currentDate]?.0
-                                        let mood = gardenModel.monthTiles[row]?[currentDate]?.1
-                                        
                                         Rectangle()
                                             .fill(mood != nil ? gardenModel.monthTiles[row]?[currentDate]?.1?.color ?? Clr.calenderSquare : Clr.calenderSquare)
                                             .frame(width: gp.size.width * 0.12, height: gp.size.width * 0.12)
@@ -235,13 +234,20 @@ struct Garden: View {
                                             if !tappedTile {
                                                 if (gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.0 != nil || gardenModel.monthTiles[row]?[col + (row * 7) + 1 - gardenModel.placeHolders]?.1 != nil)  {
                                                     Analytics.shared.log(event: .onboarding_finished_single)
-                                                    showSingleModal = true
-                                                    isOnboarding = false
+                                                    if (plant != nil || mood != nil) {
+                                                        self.plant = plant
+                                                        self.mood = mood
+                                                        showSingleModal = true
+                                                        isOnboarding = false
+                                                    }
                                                     UserDefaults.standard.setValue(true, forKey: "tappedTile")
                                                 }
                                             } else {
                                                 if day <= 31 && day >= 1 {
+                                                    if (plant != nil || mood != nil) {
+                                                        self.plant = plant
                                                         showSingleModal = true
+                                                    }
                                                 }
                                             }
                                         }
@@ -362,7 +368,7 @@ struct Garden: View {
                     }.padding(.horizontal, 24)
                         .padding(.vertical, 16)
                         .padding(.top, 32)
-                    if isOnboarding && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ){
+                    if isOnboarding && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" ) {
                         VStack(spacing: 0) {
                             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                 Triangle()
@@ -413,7 +419,6 @@ struct Garden: View {
                                     .fill(Clr.yellow)
                                     .frame(width: 40, height: 20)
                                     .rotationEffect(.radians(.pi))
-                                
                             }
                         }.offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? K.isSmall() ? -175 : -125 : -75)
                     }
@@ -446,10 +451,11 @@ struct Garden: View {
                 PlantGrowing()
             }
             .popover(isPresented: $showSingleModal) {
-                SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear)
+                SingleDay(showSingleModal: $showSingleModal, day: $day, month: gardenModel.selectedMonth, year: gardenModel.selectedYear, plant: $plant, mood: $mood, grid: $gardenModel.grid)
                     .environmentObject(gardenModel)
                     .navigationViewStyle(StackNavigationViewStyle())
             }.onAppear {
+               
                 viewRouter.previousPage = .garden
                 DispatchQueue.main.async {
                     withAnimation {
