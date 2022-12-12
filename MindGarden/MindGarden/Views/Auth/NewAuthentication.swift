@@ -297,6 +297,8 @@ struct NewAuthentication: View {
                                 viewRouter.currentPage = .onboarding
                             } else if fromPage == "update" {
                                 viewRouter.currentPage = .meditate
+                            } else if fromPage == "journal" {
+                                viewRouter.currentPage = .journal
                             } else {
                                 viewRouter.currentPage = .garden
                             }

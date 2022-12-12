@@ -1,4 +1,4 @@
-//
+ //
 //  StorylyManager.swift
 //  MindGarden
 //

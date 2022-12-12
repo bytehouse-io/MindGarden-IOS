@@ -267,12 +267,17 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
-            if fromOnboarding {
-                viewRouter.currentPage = .garden
-                fromOnboarding = false
+            if fromPage == "journal" {
+                viewRouter.currentPage = .journal
             } else {
-                viewRouter.currentPage = .meditate
+                if fromOnboarding {
+                    viewRouter.currentPage = .garden
+                    fromOnboarding = false
+                } else {
+                    viewRouter.currentPage = .meditate
+                }
             }
+         
         }
     }
     

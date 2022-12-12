@@ -113,16 +113,16 @@ struct LargeWidget: View {
                             .padding(.leading, 12)
                         Spacer()
                         HStack(spacing:0) {
-//                            Img.streak
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .foregroundColor(Clr.gardenRed)
-//                                .frame(width: 25)
-                            Text("\(streakNumber) Days")
+                            Image("streakWidg")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(Clr.gardenRed)
+                                .frame(width: 25)
+                            Text("\(streakNumber) Day" + (streakNumber > 1 ?  "s" : ""))
                                 .font(Font.fredoka(.semiBold, size: 20))
                                 .foregroundColor(Clr.gardenRed)
-                                .padding(.leading, 12)
-                        }
+                                .padding(.leading, 4)
+                        }.padding(.trailing)
                     }
                     Spacer()
                 }

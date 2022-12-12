@@ -340,6 +340,7 @@ public enum Img {
   public static let streakPencilUnselected = Image("streakPencilUnselected")
   public static let streakViewPencil = Image("streakViewPencil")
   public static let streakViewPencil1 = Image("streakViewPencil1")
+  public static let streakWidg = Image("streakWidg")
   public static let subway = Image("subway")
   public static let sun = Image("sun")
   public static let sunglasses = Image("sunglasses")

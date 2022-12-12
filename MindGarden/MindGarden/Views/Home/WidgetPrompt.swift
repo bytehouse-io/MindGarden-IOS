@@ -23,7 +23,6 @@ struct WidgetPrompt: View {
                     if showNext {
                         NextButtonView
                     } else {
-                        
                         Text("New MindGarden Widget")
                             .font(Font.fredoka(.bold, size: K.isSmall() ? 20 : 24))
                             .foregroundColor(Clr.black2)

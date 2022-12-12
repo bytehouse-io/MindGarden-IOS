@@ -277,8 +277,14 @@ struct JournalView: View, KeyboardReadable {
     }
     var attachmentButton: some View {
         Button {
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            showingImagePicker = true
+            if ((Auth.auth().currentUser?.email) != nil) {
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                showingImagePicker = true
+            } else {
+                fromPage = "journal"
+                viewRouter.currentPage = .authentication
+            }
+ 
         } label: {
             Image(systemName: "photo.on.rectangle")
                 .resizable()
