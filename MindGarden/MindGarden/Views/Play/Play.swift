@@ -492,8 +492,8 @@ struct Play: View {
     private func shareAction() {
         var media: Media
         let poster = "https://firebasestorage.googleapis.com/v0/b/mindgarden-b9527.appspot.com/o/newImages%2Fmindgarden-Beach_large.jpg?alt=media&token=b42ea140-baff-4a46-abf9-69b815a5b510"
-        var title = model.selectedMeditation?.title ?? "Intro to Meditation"
-        var description = model.selectedMeditation?.description ?? "Intro to Meditation"
+        let title = model.selectedMeditation?.title ?? "Intro to Meditation"
+        let description = model.selectedMeditation?.description ?? "Intro to Meditation"
         if let audiourl = model.selectedMeditation?.url  {
              media = Media(source: audiourl, sourceIsRedirect: false, poster: poster)
         } else {
@@ -501,7 +501,7 @@ struct Play: View {
         }
         let common = Common(media: media)
         let contentConfig = ContentConfig(contentType: "AUDIO", contentName: title, contentDescription: description, contentID: String(model.selectedMeditation?.id ?? 1), common: common)
-        let envoyData = EnvoyData(userID: "1", contentConfig: contentConfig)
+        let envoyData = EnvoyData(userID: userModel.getUserID() ?? "1", contentConfig: contentConfig)
         envoyModel.generateLink(body: envoyData)
     }
     

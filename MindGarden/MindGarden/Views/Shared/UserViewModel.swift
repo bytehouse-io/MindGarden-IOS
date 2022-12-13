@@ -474,6 +474,10 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    func getUserID() -> String? {
+        return Auth.auth().currentUser?.uid
+    }
+    
     func updateCoins(plusCoins: Int) {
         coins += plusCoins
         userCoinCollectedLevel += 1
