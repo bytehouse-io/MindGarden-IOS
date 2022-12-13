@@ -11,6 +11,7 @@ import OneSignal
 import Purchases
 import Amplitude
 import Lottie
+import AppTrackingTransparency
 
 var tappedSignIn = false
 struct OnboardingScene: View {
@@ -143,6 +144,14 @@ struct OnboardingScene: View {
                     let identify = AMPIdentify()
                         .set("abTest1.53", value: NSNumber(value: num))
                     Amplitude.instance().identify(identify ?? AMPIdentify())
+                }
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    switch status {
+                    case .authorized:
+                        Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                    default:
+                        Analytics.shared.log(event: .onboarding_tapped_denied_att)
+                    }
                 }
             }
             .sheet(isPresented: $showAuth) {

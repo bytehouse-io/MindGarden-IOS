@@ -45,6 +45,7 @@ struct Play: View {
     @StateObject var envoyModel = EnvoyViewModel()
     @State private var isSharePresented = false
     @State private var giftUrl = URL(string: "https://mindgarden.io")
+    @State private var showGift = false
     
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
@@ -73,6 +74,9 @@ struct Play: View {
                                     HStack {
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
                                             backArrow
+                                        }  else {
+                                            EmptyView()
+                                                .frame(width: 24)
                                         }
                                         heart;
                                     }
@@ -85,8 +89,11 @@ struct Play: View {
                                 Spacer()
                                 HStack{
                                     sound;
-                                    if model.selectedMeditation?.title ?? "" != "30 Second Meditation" {
+                                    if model.selectedMeditation?.title ?? "" != "30 Second Meditation" && !(model.selectedMeditation?.title ?? "" ).contains("Minute") {
                                         shareButton;
+                                    } else {
+                                        EmptyView()
+                                            .frame(width: 24)
                                     }
                                 }
                                     .padding(.trailing)
@@ -243,10 +250,16 @@ struct Play: View {
                         }
                         Spacer()
                     }.opacity(showNatureModal ? 0.3 : 1)
-                    if showNatureModal || showTutorialModal {
+                    if showNatureModal || showTutorialModal || showGift {
                         Color.black
                             .opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
+                            .onTapGesture {
+                                withAnimation {
+                                    showGift = false
+                                    showNatureModal = false
+                                }
+                            }
                     }
                     NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn: $backgroundAnimationOn)
                         .offset(y: showNatureModal ? 0 : g.size.height)
@@ -254,6 +267,57 @@ struct Play: View {
                     TutorialModal(show: $showTutorialModal)
                         .offset(y: showTutorialModal ? 0 : g.size.height)
                         .animation(.default)
+                    BottomSheet(
+                        isOpen: $showGift,
+                        maxHeight: height * (K.isSmall() ? 0.75 : 0.625),
+                        minHeight: 0.1,
+                        trigger: { }
+                    ) {
+                        VStack {
+                            Img.gift
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 80)
+                            Text("You have _ gifts left this month")
+                                .font(Font.fredoka(.bold, size: 20))
+                                .foregroundColor(Clr.darkgreen)
+                                .padding(.bottom, -5)
+                            Text("Meditations are now sharable, no app download for them required. Give the gift of mindfulness this holiday season 🙌")
+                                .font(Font.fredoka(.medium, size: 16))
+                                .foregroundColor(Clr.black2)
+                                .multilineTextAlignment(.center)
+                                .frame(height: 90)
+                            Button {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    userModel.showCoinAnimation = false
+                                    Analytics.shared.log(event: .onboarding_finished_single_course)
+                                }
+                            } label: {
+                                Capsule()
+                                    .fill(Clr.darkgreen)
+                                    .overlay(
+                                        Text("Share this meditation")
+                                            .font(Font.fredoka(.bold, size: 16))
+                                             .foregroundColor(.white)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
+                                    )
+                            }.buttonStyle(NeumorphicPress())
+                             .frame(height: 45)
+                             .padding(.vertical, 25)
+                            Text("No Thanks")
+                                .font(Font.fredoka(.medium, size: 16))
+                                .foregroundColor(Color.gray)
+                                .onTapGesture {
+                                    withAnimation {
+                                        showGift.toggle()
+                                    }
+                                }
+                                .padding(.bottom)
+                        }.frame(width: width * 0.85, alignment: .center)
+                        .padding()
+                    }.offset(y: height * 0.1)
                 }
             }
             .onAppear {
@@ -440,6 +504,7 @@ struct Play: View {
         let envoyData = EnvoyData(userID: "1", contentConfig: contentConfig)
         envoyModel.generateLink(body: envoyData)
     }
+    
     private func forwardAction() {
         model.forwardCounter += 1
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -582,12 +647,22 @@ struct Play: View {
 
     //MARK: - nav
     var shareButton: some View {
-        Image(systemName: "square.and.arrow.up")
-            .font(.system(size: 24))
+        Img.gift
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 30)
             .foregroundColor(Clr.gardenGreen)
             .onTapGesture {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                shareAction()
+                if !UserDefaults.standard.bool(forKey: "showGifting") {
+                    withAnimation {
+                        showGift.toggle()
+                    }
+                } else {
+                    withAnimation {
+                        shareAction()
+                    }
+                }
             }
     }
     var backArrow: some View {
