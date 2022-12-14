@@ -304,6 +304,7 @@ struct Play: View {
                             }.buttonStyle(NeumorphicPress())
                              .frame(height: 45)
                              .padding(.vertical, 25)
+                             .opacity(envoyModel.userQuota > 0 ? 1.0 : 0.3)
                             Text("No Thanks")
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Color.gray)
