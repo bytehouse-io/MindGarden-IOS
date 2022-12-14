@@ -290,8 +290,8 @@ struct Play: View {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                    userModel.showCoinAnimation = false
-                                    Analytics.shared.log(event: .onboarding_finished_single_course)
+                                    shareAction()
+                                    showGift.toggle()
                                 }
                             } label: {
                                 Capsule()
@@ -647,23 +647,29 @@ struct Play: View {
 
     //MARK: - nav
     var shareButton: some View {
-        Img.gift
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 30)
-            .foregroundColor(Clr.gardenGreen)
-            .onTapGesture {
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                if !UserDefaults.standard.bool(forKey: "showGifting") {
-                    withAnimation {
-                        showGift.toggle()
-                    }
-                } else {
-                    withAnimation {
-                        shareAction()
-                    }
+        ZStack {
+            Circle().frame(width:20,height: 20)
+                .foregroundColor(Clr.redGradientBottom)
+                .overlay(Capsule().stroke(.black, lineWidth: 1))
+            Img.gift
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 30)
+                .foregroundColor(Clr.gardenGreen)
+                .onTapGesture {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    shareAction()
+                    //                if !UserDefaults.standard.bool(forKey: "showGifting") {
+                    //                    withAnimation {
+                    //                        showGift.toggle()
+                    //                    }
+                    //                } else {
+                    //                    withAnimation {
+                    //                        shareAction()
+                    //                    }
+                    //                }
                 }
-            }
+        }
     }
     var backArrow: some View {
         Image(systemName: "arrow.backward")
