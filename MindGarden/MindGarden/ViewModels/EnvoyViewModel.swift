@@ -11,6 +11,7 @@ import Combine
 class EnvoyViewModel: ObservableObject {
     
     @Published var url: String = ""
+    @Published var userQuota: Int = 0
     var cancellationToken: AnyCancellable?
 
 }
@@ -26,6 +27,19 @@ extension EnvoyViewModel {
             .sink(receiveCompletion: { _ in },
                   receiveValue: {
                 self.url = $0.url ?? ""
+            })
+    }
+    
+    func getGiftQuota(userID:String) {
+        let url = URL(string: "\(EnvoyDB.giftUrl)\(userID)")
+        cancellationToken = EnvoyDB.getRequest(url:url)
+            .mapError({ (error) -> Error in
+                print(error)
+                return error
+            })
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: {
+                self.userQuota = $0.userRemainingQuota ?? 0
             })
     }
     
@@ -55,6 +69,8 @@ struct APIClient {
 enum EnvoyDB {
     static let apiClient = APIClient()
     static let baseUrl = URL(string: "https://osh7r2l4od.execute-api.eu-west-2.amazonaws.com/prod/partner/create-link")
+    static let giftUrl = "https://osh7r2l4od.execute-api.eu-west-2.amazonaws.com/prod/partner/user-quota/"
+    static let key = "X2BWh9IFnCaGheUIJ3bjN1M6a7t8hY924EXGavEI"
     
     //TODO: uncomment below for send box
 //    static let baseUrl = URL(string: "https://osh7r2l4od.execute-api.eu-west-2.amazonaws.com/prod/partner/create-sandbox-link")
@@ -68,10 +84,23 @@ extension EnvoyDB {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("X2BWh9IFnCaGheUIJ3bjN1M6a7t8hY924EXGavEI", forHTTPHeaderField: "x-api-key")
+        request.setValue(EnvoyDB.key, forHTTPHeaderField: "x-api-key")
         
         let jsonData = try? JSONEncoder().encode(body)
         request.httpBody = jsonData
+        
+        return apiClient.run(request)
+            .map(\.value)
+            .eraseToAnyPublisher()
+    }
+    
+    static func getRequest(url:URL?) -> AnyPublisher<UserQuota, Error> {
+        guard let url = url else { fatalError("Couldn't get url") }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(EnvoyDB.key, forHTTPHeaderField: "x-api-key")
         
         return apiClient.run(request)
             .map(\.value)

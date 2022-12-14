@@ -16,6 +16,16 @@ struct EnvoyResponse: Codable {
     }
 }
 
+struct UserQuota: Codable {
+    let userId: String?
+    let userRemainingQuota: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case userId = "userId"
+        case userRemainingQuota = "userRemainingQuota"
+    }
+}
+
 // MARK: - Envoy
 struct EnvoyData: Codable {
     let userID: String

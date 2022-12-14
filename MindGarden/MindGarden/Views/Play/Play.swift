@@ -278,7 +278,7 @@ struct Play: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 80)
-                            Text("You have _ gifts left this month")
+                            Text("You have \(envoyModel.userQuota) gifts left this month")
                                 .font(Font.fredoka(.bold, size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .padding(.bottom, -5)
@@ -292,6 +292,9 @@ struct Play: View {
                                 withAnimation {
                                     shareAction()
                                     showGift.toggle()
+                                }
+                                withAnimation {
+                                    shareAction()
                                 }
                             } label: {
                                 Capsule()
@@ -352,6 +355,10 @@ struct Play: View {
         }
         
         .onAppear {
+            
+            DispatchQueue.main.async {
+                envoyModel.getGiftQuota(userID: userModel.getUserID() ?? "1")
+            }
             
             initPlayer()
             addSound()
