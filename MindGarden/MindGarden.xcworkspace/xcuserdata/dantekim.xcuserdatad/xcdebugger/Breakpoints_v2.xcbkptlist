@@ -110,8 +110,8 @@
             filePath = "MindGarden/Views/Play/Play.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -256,22 +256,6 @@
             endingLineNumber = "395"
             landmarkName = "storeImage(data:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0353220F-973E-455C-BEB0-E4CE97C7476A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MindGarden/Views/Play/Play.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "body"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

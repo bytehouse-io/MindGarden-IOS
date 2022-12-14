@@ -288,11 +288,6 @@ struct Play: View {
                                 .multilineTextAlignment(.center)
                                 .frame(height: 90)
                             Button {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    shareAction()
-                                    showGift.toggle()
-                                }
                                 withAnimation {
                                     shareAction()
                                 }
@@ -665,16 +660,9 @@ struct Play: View {
                 .foregroundColor(Clr.gardenGreen)
                 .onTapGesture {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    shareAction()
-                    //                if !UserDefaults.standard.bool(forKey: "showGifting") {
-                    //                    withAnimation {
-                    //                        showGift.toggle()
-                    //                    }
-                    //                } else {
-                    //                    withAnimation {
-                    //                        shareAction()
-                    //                    }
-                    //                }
+                    withAnimation {
+                        showGift.toggle()
+                    }
                 }
         }
     }
