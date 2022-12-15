@@ -12,6 +12,23 @@ import AppsFlyerLib
 import Amplitude
 import Firebase
 
+final class PaywallService {
+  static let apiKey = "MYAPIKEY" // Replace this with your API Key
+  static var shared = PaywallService()
+
+  static func initPaywall() {
+    let options = PaywallOptions()
+    // Uncomment to show debug logs
+    // options.logging.level = .debug
+
+    Paywall.configure(
+      apiKey: apiKey,
+      delegate: shared,
+      options: options
+    )
+  }
+}
+
 class PaywallManager: PaywallDelegate {
     static var shared = PaywallManager()
     
@@ -24,6 +41,7 @@ class PaywallManager: PaywallDelegate {
             // no need to handle any errors or dismiss the paywall, Superwall does this for you automatically
         }
     }
+    
     
     func shouldPresentPaywall() -> Bool {
         return false
@@ -68,3 +86,5 @@ class PaywallManager: PaywallDelegate {
     
     func shouldTrack(event: String, params: [String : Any]) {}
 }
+
+
