@@ -31,7 +31,13 @@ extension EnvoyViewModel {
     }
     
     func getGiftQuota() {
-         let userID = UserDefaults.standard.value(forKey: K.defaults.giftQuotaId) as? String ?? UUID().uuidString
+        var userID = UUID().uuidString
+        if let uID = UserDefaults.standard.value(forKey: K.defaults.giftQuotaId) as? String, uID.count > 0 {
+            userID = uID
+        } else {
+            UserDefaults.standard.setValue(userID, forKey: K.defaults.giftQuotaId)
+        }
+        
         let url = URL(string: "\(EnvoyDB.giftUrl)\(userID)")
         cancellationToken = EnvoyDB.getRequest(url:url)
             .mapError({ (error) -> Error in
