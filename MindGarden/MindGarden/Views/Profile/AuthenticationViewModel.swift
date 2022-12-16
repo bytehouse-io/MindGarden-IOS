@@ -363,6 +363,7 @@ extension AuthenticationViewModel {
                 } else {
                     self?.getData()
                 }
+                UserDefaults.standard.setValue(UUID().uuidString, forKey: K.defaults.giftQuotaId)
                 withAnimation {
                     UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 }
