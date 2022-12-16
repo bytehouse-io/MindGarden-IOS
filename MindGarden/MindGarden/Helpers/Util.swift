@@ -41,6 +41,7 @@ struct K {
         static var completedMeditations = "completedMeditations"
         static var userCoinCollectedLevel = "userCoinCollectedLevel"
         static var journeys = "journeys"
+        static var giftQuotaId = "giftQuotaId"
     }
     
     struct ScreenSize

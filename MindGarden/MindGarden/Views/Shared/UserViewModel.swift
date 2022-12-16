@@ -475,7 +475,7 @@ class UserViewModel: ObservableObject {
     }
     
     func getUserID() -> String? {
-        return Auth.auth().currentUser?.uid
+        return UserDefaults.standard.value(forKey: K.defaults.giftQuotaId) as? String ?? UUID().uuidString
     }
     
     func updateCoins(plusCoins: Int) {

@@ -352,7 +352,7 @@ struct Play: View {
         
         .onAppear {          
             DispatchQueue.main.async {
-                envoyModel.getGiftQuota(userID: userModel.getUserID() ?? "1")
+                envoyModel.getGiftQuota()
             }
             
             initPlayer()
