@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>Allow us to serve you a more personalized experience</string>
+	<string>Allow us to serve you a more personalized roadmap and the best mindfulness experience possible</string>
 	<key>Allow Arbitrary Loads</key>
 	<true/>
 	<key>Allows Arbitrary Loads In Web Content</key>

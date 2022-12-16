@@ -65,17 +65,46 @@ struct PricingView: View {
                             .padding(.bottom, -25)
                             .buttonStyle(NeoPress())
 //                            UserDefaults.standard.string(forKey: "reason") == "Sleep better" ? "Get 1% happier every day & sleep better by upgrading to \nMindGarden Pro 🍏"  : UserDefaults.standard.string(forKey: "reason") == "Get more focused" ? "Get 1% happier & more focused every day by upgrading to MindGarden Pro 🍏" : "Get 1% happier & more calm every day by upgrading to MindGarden Pro 🍏
-                            (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? "")," : (fromPage == "garden" ? "📸 Add photos from your journal " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock ")))
-                                .font(Font.fredoka(.bold, size: 24))
-                             + Text(fromInfluencer == "" ? "with MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
-                                .font(Font.fredoka(.bold, size: 24))
-                             +
-                             Text(fiftyOff ? "\n(limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : fromPage == "garden" ? "" : "& get 1% happier everyday"))
-                                .font(Font.fredoka(.semiBold, size: 24))
-                                .foregroundColor(Clr.black2)
-                                .multilineTextAlignment(.leading)
-                                .frame(width: width * 0.78, alignment: .leading)
-                                .padding(15)
+                            if fiftyOff || fromInfluencer != "" || fromPage == "garden" || fromPage == "store"{
+                                (Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? "")," : (fromPage == "garden" ? "📸 Add photos from your journal " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock ")))
+                                    .font(Font.fredoka(.bold, size: 24))
+                                 + Text(fromInfluencer == "" ? "with MindGarden Pro": "\(fromInfluencer)").foregroundColor(Clr.brightGreen)
+                                    .font(Font.fredoka(.bold, size: 24))      +
+                                 Text(fiftyOff ? "\n(limited time)" :  fromInfluencer != "" ? " has unlocked a a gift for you!\n\nHow your free trial works:" : fromPage == "garden" ? "" : "& get 1% happier everyday"))
+                                    .font(Font.fredoka(.semiBold, size: 24))
+                                    .foregroundColor(Clr.black2)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(width: width * 0.78, alignment: .leading)
+                                    .padding(15)
+                            } else {
+                                switch UserDefaults.standard.string(forKey: "reason1"){
+                                case "Sleep better", "Get more focused", "Improve your focus", "Improve your mood", "Be more present":
+                                    (Text(UserDefaults.standard.string(forKey: "reason1") ?? "")
+                                        .font(Font.fredoka(.bold, size: 24))
+                                        .foregroundColor(Clr.darkgreen)
+                                     +
+                                    Text(" in just 7 days, for Free"))
+                                        .font(Font.fredoka(.semiBold, size: 24))
+                                        .foregroundColor(Clr.black2)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(width: width * 0.78, alignment: .leading)
+                                        .padding(15)
+                                case "Reduce stress & anxiety": (Text("Reduce your stress & anxiety") + Text(" in 7 days, for Free"))
+                                        .font(Font.fredoka(.semiBold, size: 24))
+                                        .foregroundColor(Clr.black2)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(width: width * 0.78, alignment: .leading)
+                                        .padding(15)
+                                default: Text("Become more mindful in just 7 days for free")
+                                        .font(Font.fredoka(.semiBold, size: 24))
+                                        .foregroundColor(Clr.black2)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(width: width * 0.78, alignment: .leading)
+                                        .padding(15)
+                                }
+                            }
+                       
+                        
                             if fromPage == "garden" {
                                 Img.photoCalendar
                                     .resizable()
@@ -400,6 +429,9 @@ struct PricingView: View {
             }.onAppear {
                 if #available(iOS 15.0, *) {
                     ios14 = false
+                }
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "onboarding" {
+                    Analytics.shared.log(event: .screen_load_pricing_onboarding)
                 }
                 
                 Purchases.shared.offerings { [self] (offerings, error) in

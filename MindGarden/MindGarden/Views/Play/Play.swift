@@ -350,8 +350,7 @@ struct Play: View {
             }
         }
         
-        .onAppear {
-            
+        .onAppear {          
             DispatchQueue.main.async {
                 envoyModel.getGiftQuota(userID: userModel.getUserID() ?? "1")
             }

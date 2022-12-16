@@ -12,43 +12,41 @@ import AppsFlyerLib
 import Amplitude
 import Firebase
 
-final class PaywallService {
-  static let apiKey = "MYAPIKEY" // Replace this with your API Key
-  static var shared = PaywallService()
+final class PaywallService: PaywallDelegate {
+    static let apiKey = "pk_2b80d8c8e83cefc53bea6b7a998504fde03f88a8da975b87"
+    static var shared = PaywallService()
+    
 
-  static func initPaywall() {
-    let options = PaywallOptions()
-    // Uncomment to show debug logs
-    // options.logging.level = .debug
-
-    Paywall.configure(
-      apiKey: apiKey,
-      delegate: shared,
-      options: options
-    )
-  }
-}
-
-class PaywallManager: PaywallDelegate {
-    static var shared = PaywallManager()
+    
+    static func initPaywall() {
+      let options = PaywallOptions()
+      // Uncomment to show debug logs
+       options.logging.level = .debug
+        // configures the SDK
+      Paywall.configure(
+        apiKey: apiKey,
+        delegate: shared,
+        options: options
+      )
+    }
     
     func purchase(product: SKProduct) {
+        // TODO: Purchase the product. Below example uses RevenueCat
         
-    // TODO: Purchase the product. Below example uses RevenueCat
-    
-        Purchases.shared.purchaseProduct(product) { transaction, purchaserInfo, error, userCanceled in
-            // check purchaserInfo and unlock the app if the user is paying.
-            // no need to handle any errors or dismiss the paywall, Superwall does this for you automatically
-        }
+            Purchases.shared.purchaseProduct(product) { transaction, purchaserInfo, error, userCanceled in
+                // check purchaserInfo and unlock the app if the user is paying.
+                // no need to handle any errors or dismiss the paywall, Superwall does this for you automatically
+            }
     }
-    
-    
-    func shouldPresentPaywall() -> Bool {
-        return false
+    static func setUser(id: String, reasons: String) {
+      var attributes: [String: Any] = [
+        "name": "test",
+        "apnsToken": id,
+        "reason": reasons
+      ]
+      Paywall.setUserAttributes(attributes)
     }
-    
-
-    func restorePurchases(completion: @escaping (Bool) -> ()) {
+    func restorePurchases(completion: @escaping (Bool) -> Void) {
         
     // TODO: Restore Purchases. Below example uses RevenueCat.
     
@@ -69,15 +67,15 @@ class PaywallManager: PaywallDelegate {
         }
     }
     
-  func isUserSubscribed() -> Bool {
-        
-    // TODO: Return true if the user is subscribed, otherwise return false
-      if UserDefaults.standard.bool(forKey: "isPro") {
-          return true
-      } else {
-          return false
-      }
-  }
+    func isUserSubscribed() -> Bool {
+        // TODO: Return true if the user is subscribed, otherwise return false
+          if UserDefaults.standard.bool(forKey: "isPro") {
+              return true
+          } else {
+              return false
+          }
+    }
+    
     
     func reset() {
         Paywall.reset()
@@ -85,6 +83,9 @@ class PaywallManager: PaywallDelegate {
     
     
     func shouldTrack(event: String, params: [String : Any]) {}
+    
+
 }
+
 
 

@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/superwall-me/paywall-ios",
       "state" : {
-        "revision" : "10d73eda3c8c387272be4115d4b80ab976cc9d33",
-        "version" : "2.5.4"
+        "revision" : "15e8b540da851a9d5ac9f289ee98494b289edcf6",
+        "version" : "2.5.6"
       }
     },
     {

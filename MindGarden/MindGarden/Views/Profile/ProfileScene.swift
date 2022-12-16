@@ -410,7 +410,7 @@ struct ProfileScene: View {
                                                         viewRouter.currentPage = .authentication
                                                     }
                                                 }
-                                                PaywallManager.shared.reset()
+                                                PaywallService.shared.reset()
                                             } label: {
                                                 if let _ = Auth.auth().currentUser?.email {
                                                     Capsule()

@@ -52,8 +52,8 @@ struct ReasonItem: Identifiable, Hashable {
     var title: String {
         switch self.type {
         case .morePresent: return "Be more present"
-        case .improveMood: return "Improve mood"
-        case .focus: return "Get more focused"
+        case .improveMood: return "Improve your mood"
+        case .focus: return "Improve your focus"
         case .anxiety: return "Managing Stress & Anxiety"
         case .sleep: return "Sleep better"
         case .tryingItOut: return "Just trying it out"

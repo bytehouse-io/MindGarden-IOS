@@ -19,12 +19,12 @@ struct ReviewScene: View {
     @State private var aim3 = (Img.redTulips3, "")
     @State private var notifications = ""
     @State private var showLoading = false
+    @State private var showPaywall = false
     var displayedTime: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
         return formatter
     }
-    @State private var showPaywall = false
     
     var body: some View {
         ZStack {
@@ -93,7 +93,7 @@ struct ReviewScene: View {
                                 .neoShadow()
                             HStack(spacing: -10) {
                                 experience.0
-                                    .resizable() 
+                                    .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.125, height: width * 0.125, alignment: .leading)
                                     .padding()
@@ -162,54 +162,79 @@ struct ReviewScene: View {
                             }
                         }
                         Spacer()
-                        Button {
-                            MGAudio.sharedInstance.playBubbleSound()
-                            Analytics.shared.log(event: .review_tapped_tutorial)
-                            fromOnboarding = true
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            fromPage = "onboarding2"
-                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                            UserDefaults.standard.setValue(true, forKey: "onboarded")
-                            withAnimation {
-                                viewRouter.progressValue = 1
-                                if fromInfluencer != "" {
-                                    Analytics.shared.log(event: .user_from_influencer)
-                                    viewRouter.currentPage = .pricing
-                                } else {
-                                    Paywall.present { info in
-                                        Analytics.shared.log(event: .screen_load_superwall)
-                                    } onDismiss: {  didPurchase, productId, paywallInfo in
-                                        switch productId {
-                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                        case "io.mindgarden.pro.yearly":
-                                            Analytics.shared.log(event: .yearly_started_from_superwall)
-                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
-                                            UserDefaults.standard.setValue(true, forKey: "isPro")
-                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
-                                                NotificationHelper.freeTrial()
-                                            }
-                                        default: break
-                                        }
-                                        showLoading = true
-                                    } onFail: { error in
+                        Button(
+                            action: {
+                                MGAudio.sharedInstance.playBubbleSound()
+                                Analytics.shared.log(event: .review_tapped_tutorial)
+                                fromOnboarding = true
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                fromPage = "onboarding2"
+                                UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                                UserDefaults.standard.setValue(true, forKey: "onboarded")
+                                showPaywall.toggle()
+                                withAnimation {
+                                    viewRouter.progressValue = 1
+                                    if fromInfluencer != "" {
+                                        Analytics.shared.log(event: .user_from_influencer)
                                         viewRouter.currentPage = .pricing
+                                    } else {
+                                        showPaywall.toggle()
                                     }
                                 }
+                                
+                            },
+                            label: {
+                                HStack {
+                                    Text("Let's Go! 🏃‍♂️")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.fredoka(.semiBold, size: 16))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
+                                }.frame(width: g.size.width * 0.75, height: g.size.height/16)
+                                    .background(Clr.yellow)
+                                    .cornerRadius(24)
+                                    .addBorder(.black, width: 1.5,  cornerRadius: 24)
                             }
-                        } label: {
-                            HStack {
-                                Text("Let's Go! 🏃‍♂️")
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(Font.fredoka(.semiBold, size: 16))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
-                            }.frame(width: g.size.width * 0.75, height: g.size.height/16)
-                                .background(Clr.yellow)
-                                .cornerRadius(24)
-                                .addBorder(.black, width: 1.5,  cornerRadius: 24)
-                        }.padding(20)
-                            .buttonStyle(NeumorphicPress())
+                          )
+                    
+                        .triggerPaywall(
+                            forEvent: "review_tapped_tutorial",
+                            withParams: ["reason": 17],
+                            shouldPresent: $showPaywall,
+                            onPresent: { paywallInfo in
+                                print("paywall info is", paywallInfo)
+                                Analytics.shared.log(event: .screen_load_superwall)
+                            },
+                            onDismiss: { result in
+                                switch result.state {
+                                case .closed:
+                                    print("User dismissed the paywall.")
+                                case .purchased(productId: let productId):
+                                    switch productId {
+                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                    case "io.mindgarden.pro.yearly":
+                                        Analytics.shared.log(event: .yearly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                            NotificationHelper.freeTrial()
+                                        }
+                                    default: break
+                                    }
+                                case .restored:
+                                    print("Restored purchases, then dismissed.")
+                                }
+                                showLoading = true
+                            },
+                            onFail: { error in
+                                print("did fail", error)
+                                viewRouter.currentPage = .pricing
+                            }
+                        )
+                        .padding(20)
+                        .buttonStyle(NeumorphicPress())
+                    
                      
 //                        Button {
 //                            Analytics.shared.log(event: .review_tapped_explore)
@@ -296,3 +321,4 @@ struct ReviewScene_Previews: PreviewProvider {
         ReviewScene()
     }
 }
+

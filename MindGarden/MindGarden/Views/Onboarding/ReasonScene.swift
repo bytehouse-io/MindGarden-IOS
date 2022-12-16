@@ -46,7 +46,7 @@ struct ReasonScene: View {
                                 Spacer()
                             }
 
-                            Text("What brings you to MindGarden?")
+                            Text("What brings you to MindGarden? (up to 3)")
                                 .font(Font.fredoka(.bold, size: 28))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -126,6 +126,11 @@ struct ReasonScene: View {
         
         var body: some View {
             Button {
+                if !UserDefaults.standard.bool(forKey: "firstTap") {
+                    PaywallService.setUser(id: "234", reasons: reason.title)
+                    UserDefaults.standard.setValue(reason.title, forKey: "reason1")
+                    UserDefaults.standard.setValue(true, forKey: "firstTap")
+                }
                 MGAudio.sharedInstance.playBubbleSound()
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
@@ -198,8 +203,8 @@ enum Reason {
     var title: String {
         switch self {
         case .morePresent: return "Be more present"
-        case .improveMood: return "Improve mood"
-        case .focus: return "Improve focus"
+        case .improveMood: return "Improve your mood"
+        case .focus: return "Improve your focus"
         case .reduceStress: return "Reduce stress & anxiety"
         case .sleep: return "Sleep better"
         case .tryingItOut: return "Just trying it out"

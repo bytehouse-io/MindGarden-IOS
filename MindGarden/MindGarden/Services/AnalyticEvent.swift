@@ -23,6 +23,7 @@ enum AnalyticEvent {
     case show_onboarding_rating //
     case update_triggered_auth //
     case show_onboarding_auth //
+    case screen_load_pricing_onboarding
 
     //experience
     case screen_load_experience //
@@ -451,7 +452,7 @@ extension AnalyticEvent {
         switch self {
         case .sceneDidBecomeActive: return "sceneDidBecomeActive"
         case .launchedApp: return "launchedApp"
-            
+        case .screen_load_pricing_onboarding: return "screen_load_pricing_onboarding"
         case .breathwrk_middle_favorited: return "breathwrk_middle_favorited"
         case .breathwrk_middle_duration_1: return "breathwrk_middle_duration_1"
         case .breathwrk_middle_duration_3: return "breathwrk_middle_duration_3"
