@@ -290,6 +290,7 @@ struct Play: View {
                             Button {
                                 withAnimation {
                                     shareAction()
+                                    showGift.toggle()
                                 }
                             } label: {
                                 Capsule()

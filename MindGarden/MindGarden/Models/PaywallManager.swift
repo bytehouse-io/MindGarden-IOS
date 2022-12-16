@@ -38,14 +38,17 @@ final class PaywallService: PaywallDelegate {
                 // no need to handle any errors or dismiss the paywall, Superwall does this for you automatically
             }
     }
-    static func setUser(id: String, reasons: String) {
-      var attributes: [String: Any] = [
-        "name": "test",
-        "apnsToken": id,
-        "reason": reasons
-      ]
-      Paywall.setUserAttributes(attributes)
+    static func setUser(reasons: String) {
+        if let id =  UserDefaults.standard.string(forKey: K.defaults.giftQuotaId) {
+            let attributes: [String: Any] = [
+            "name": "test",
+            "id":  id,
+            "reason": reasons
+          ]
+            Paywall.setUserAttributes(attributes)
+        }
     }
+    
     func restorePurchases(completion: @escaping (Bool) -> Void) {
         
     // TODO: Restore Purchases. Below example uses RevenueCat.
