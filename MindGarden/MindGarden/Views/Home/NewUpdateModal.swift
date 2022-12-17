@@ -27,7 +27,7 @@ struct NewUpdateModal: View {
 //                                .resizable()
 //                                .aspectRatio(contentMode: .fit)
 //                                .frame(height: g.size.height * 0.1)
-                            Text("💎 You've Earned a 75% Pro Chest")
+                            Text("💎 You've Earned a 50% Pro Chest")
                                 .multilineTextAlignment(.center) 
                                 .font(Font.fredoka(.bold, size: 24))
                                 .foregroundColor(Clr.black2)

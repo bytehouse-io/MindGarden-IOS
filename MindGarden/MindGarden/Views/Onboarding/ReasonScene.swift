@@ -127,7 +127,7 @@ struct ReasonScene: View {
         var body: some View {
             Button {
                 if !UserDefaults.standard.bool(forKey: "firstTap") {
-                    PaywallService.setUser(id: "234", reasons: reason.title)
+                    PaywallService.setUser(reasons: reason.title)
                     UserDefaults.standard.setValue(reason.title, forKey: "reason1")
                     UserDefaults.standard.setValue(true, forKey: "firstTap")
                 }
