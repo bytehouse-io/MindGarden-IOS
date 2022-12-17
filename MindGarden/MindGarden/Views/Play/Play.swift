@@ -364,6 +364,7 @@ struct Play: View {
             setupNowPlaying()
         }
         .onDisappear {
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
             StopPlaying()
         }
         
@@ -564,23 +565,25 @@ struct Play: View {
     }
     
     func setupNowPlaying() {
-        // Define Now Playing Info
-        var nowPlayingInfo = [String : Any]()
-        nowPlayingInfo[MPMediaItemPropertyTitle] = model.selectedMeditation?.title ?? "Mind Garden"
-        if let image = UIImage(named: "meditateIcon") {
-            nowPlayingInfo[MPMediaItemPropertyArtwork] =
+        if let mainPlayer = mainPlayer {
+            // Define Now Playing Info
+            var nowPlayingInfo = [String : Any]()
+            nowPlayingInfo[MPMediaItemPropertyTitle] = model.selectedMeditation?.title ?? "Mind Garden"
+            if let image = UIImage(named: "meditateIcon") {
+                nowPlayingInfo[MPMediaItemPropertyArtwork] =
                 MPMediaItemArtwork(boundsSize: image.size) { size in
                     return image
+                }
             }
+            let isMainPlayer = model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((mainPlayer.currentTime().seconds)) )
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer.currentTime : backgroundPlayer?.currentTime ?? 0.0
+            nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer.rate : backgroundPlayer?.rate ?? 0.0
+            
+            // Set the metadata
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         }
-        let isMainPlayer = model.selectedMeditation?.belongsTo != "Timed Meditation" && model.selectedMeditation?.belongsTo != "Open-ended Meditation"
-        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = Int(Double((self.mainPlayer?.currentTime().seconds) ?? 0) )
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = isMainPlayer ? mainPlayer?.currentTime ?? 0 : backgroundPlayer?.currentTime ?? 0
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = model.secondsRemaining
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = isMainPlayer ? mainPlayer?.rate ?? 0 : backgroundPlayer?.rate ?? 0
-        
-        // Set the metadata
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
     private func StopPlaying(){
