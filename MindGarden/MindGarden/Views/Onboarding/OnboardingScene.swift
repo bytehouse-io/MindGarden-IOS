@@ -150,6 +150,10 @@ struct OnboardingScene: View {
                     switch status {
                     case .authorized:
                         Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                    case .notDetermined:
+                        print("test")
+                    case .restricted:
+                        print("restricted")
                     default:
                         Analytics.shared.log(event: .onboarding_tapped_denied_att)
                     }

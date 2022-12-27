@@ -43,7 +43,8 @@ final class PaywallService: PaywallDelegate {
             let attributes: [String: Any] = [
             "name": "test",
             "id":  id,
-            "reason": reasons
+            "reason": reasons,
+            "testing": "simulator"
           ]
             Paywall.setUserAttributes(attributes)
         }

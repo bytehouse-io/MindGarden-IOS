@@ -74,7 +74,7 @@ struct ReasonItem: Identifiable, Hashable {
     static func getImage(str: String) -> Image {
         switch str {
         case "Sleep better": return Img.sleepingSloth
-        case "Get more focused": return Img.target
+        case "Improve your focus": return Img.target
         case "Managing Stress & Anxiety": return Img.heart
         case "Be more present": return Img.meditatingRacoon
         case "Improve mood": return Img.happyPandaFace

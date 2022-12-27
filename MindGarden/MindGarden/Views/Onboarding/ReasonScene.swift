@@ -127,7 +127,14 @@ struct ReasonScene: View {
         var body: some View {
             Button {
                 if !UserDefaults.standard.bool(forKey: "firstTap") {
-                    PaywallService.setUser(reasons: reason.title)
+                    switch reason.title {
+                    case "Sleep better", "Get more focused", "Improve your focus", "Improve your mood", "Be more present":
+                        PaywallService.setUser(reasons: "📈 " + reason.title)
+                    case "Managing Stress & Anxiety":
+                        PaywallService.setUser(reasons: "📉 Reduce your stress & anxiety")
+                    default:
+                        PaywallService.setUser(reasons: "📈 Become more mindful in")
+                    }
                     UserDefaults.standard.setValue(reason.title, forKey: "reason1")
                     UserDefaults.standard.setValue(true, forKey: "firstTap")
                 }

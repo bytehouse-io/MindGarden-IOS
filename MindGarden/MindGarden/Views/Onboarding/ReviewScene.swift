@@ -171,14 +171,14 @@ struct ReviewScene: View {
                                 fromPage = "onboarding2"
                                 UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
                                 UserDefaults.standard.setValue(true, forKey: "onboarded")
-                                showPaywall.toggle()
                                 withAnimation {
                                     viewRouter.progressValue = 1
-                                    if fromInfluencer != "" {
+                                    if fromInfluencer != ""
+                                    {
                                         Analytics.shared.log(event: .user_from_influencer)
                                         viewRouter.currentPage = .pricing
                                     } else {
-                                        viewRouter.currentPage = .pricing
+                                        showPaywall = true
                                     }
                                 }
                                 
@@ -195,42 +195,42 @@ struct ReviewScene: View {
                                     .cornerRadius(24)
                                     .addBorder(.black, width: 1.5,  cornerRadius: 24)
                             }
-                          )                    
-//                        .triggerPaywall(
-//                            forEvent: "review_tapped_tutorial",
-//                            withParams: ["reason": 17],
-//                            shouldPresent: $showPaywall,
-//                            onPresent: { paywallInfo in
-//                                print("paywall info is", paywallInfo)
-//                                Analytics.shared.log(event: .screen_load_superwall)
-//                            },
-//                            onDismiss: { result in
-//                                switch result.state {
-//                                case .closed:
-//                                    print("User dismissed the paywall.")
-//                                case .purchased(productId: let productId):
-//                                    switch productId {
-//                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-//                                        UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                    case "io.mindgarden.pro.yearly":
-//                                        Analytics.shared.log(event: .yearly_started_from_superwall)
-//                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
-//                                        UserDefaults.standard.setValue(true, forKey: "isPro")
-//                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
-//                                            NotificationHelper.freeTrial()
-//                                        }
-//                                    default: break
-//                                    }
-//                                case .restored:
-//                                    print("Restored purchases, then dismissed.")
-//                                }
-//                                showLoading = true
-//                            },
-//                            onFail: { error in
-//                                print("did fail", error)
-//                                viewRouter.currentPage = .pricing
-//                            }
-//                        )
+                          )
+                        .triggerPaywall(
+                            forEvent: "review_tapped_tutorial",
+                            withParams: ["reason": 17],
+                            shouldPresent: $showPaywall,
+                            onPresent: { paywallInfo in
+                                print("paywall info is", paywallInfo)
+                                Analytics.shared.log(event: .screen_load_superwall)
+                            },
+                            onDismiss: { result in
+                                switch result.state {
+                                case .closed:
+                                    print("User dismissed the paywall.")
+                                case .purchased(productId: let productId):
+                                    switch productId {
+                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                    case "io.mindgarden.pro.yearly":
+                                        Analytics.shared.log(event: .yearly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                            NotificationHelper.freeTrial()
+                                        }
+                                    default: break
+                                    }
+                                case .restored:
+                                    print("Restored purchases, then dismissed.")
+                                }
+                                showLoading = true
+                            },
+                            onFail: { error in
+                                print("did fail", error)
+                                viewRouter.currentPage = .pricing
+                            }
+                        )
                         .padding(20)
                         .buttonStyle(NeumorphicPress())
                     

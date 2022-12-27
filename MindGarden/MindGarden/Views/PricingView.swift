@@ -35,7 +35,7 @@ struct PricingView: View {
     @State private var ios14 = true
     @State private var showProfile: Bool = false
     @State private var showLoading: Bool = false
-
+    @State private var showLoadingIllusion: Bool = false
     let items = [("Regular vs\n Pro", "😔", "🤩"), ("Meditations per month", "20", "Infinite"), ("Journals per month", "20", "Infinite"), ("Mood Checks per month", "20", "Infinite"),("2x coin booster", "🔒", "✅"), ("Unlock all Meditations", "🔒", "✅"), ("Unlock all Breathworks", "🔒", "✅")]
     var body: some View {
         LoadingView(isShowing: $showLoading) {
@@ -79,23 +79,23 @@ struct PricingView: View {
                             } else {
                                 switch UserDefaults.standard.string(forKey: "reason1"){
                                 case "Sleep better", "Get more focused", "Improve your focus", "Improve your mood", "Be more present":
-                                    (Text(UserDefaults.standard.string(forKey: "reason1") ?? "")
+                                    (Text("📈 " + (UserDefaults.standard.string(forKey: "reason1") ?? ""))
                                         .font(Font.fredoka(.bold, size: 24))
-                                        .foregroundColor(Clr.darkgreen)
                                      +
-                                    Text(" in just 7 days, for Free"))
+                                    Text(" in just 7 days, for Free.").foregroundColor(Clr.darkgreen))
                                         .font(Font.fredoka(.semiBold, size: 24))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.leading)
                                         .frame(width: width * 0.78, alignment: .leading)
                                         .padding(15)
-                                case "Reduce stress & anxiety": (Text("Reduce your stress & anxiety") + Text(" in 7 days, for Free"))
+                                case "Managing Stress & Anxiety": (Text("📉 Reduce your stress & anxiety")
+                                                                   + Text(" in just 7 days, for Free.").foregroundColor(Clr.darkgreen))
                                         .font(Font.fredoka(.semiBold, size: 24))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.leading)
                                         .frame(width: width * 0.78, alignment: .leading)
                                         .padding(15)
-                                default: Text("Become more mindful in just 7 days for free")
+                                default: (Text("📈 Become more mindful in") + Text(" just 7 days for Free.").foregroundColor(Clr.darkgreen))
                                         .font(Font.fredoka(.semiBold, size: 24))
                                         .foregroundColor(Clr.black2)
                                         .multilineTextAlignment(.leading)
@@ -173,6 +173,7 @@ struct PricingView: View {
                             }.buttonStyle(NeumorphicPress())
                                 .frame(width: width * 0.8, height: height * 0.08)
                                 .padding(5)
+                                .padding(.bottom, 32)
                             Section() {
                                 VStack(alignment: .trailing, spacing: 0){
                                         ForEach(items, id: \.0){ item in
@@ -220,7 +221,7 @@ struct PricingView: View {
                                                     .frame(width: width * 0.8, height: height * 0.55)
                                                     .neoShadow())
                                 }.frame(width: width * 0.8, height: height * 0.6)
-             
+                                .padding(.vertical)
                             if !ios14 {
                                 Text("Don't just take it from us\n⭐️⭐️⭐️⭐️⭐️")
                                     .font(Font.fredoka(.bold, size: 22))
@@ -229,37 +230,7 @@ struct PricingView: View {
                                     .padding(.top)
                                 SnapCarousel()
                                     .padding(.bottom)
-                                    .environmentObject(UIStateModel())
                             }
-                            VStack {
-                                Text("👨‍🌾 Invest in MindGarden,\nhelp build these features & support mental health")
-                                    .font(Font.fredoka(.bold, size: 22))
-                                    .foregroundColor(Clr.black2)
-                                    .multilineTextAlignment(.center)
-                                    .frame(width: width * 0.8)
-                                    .padding(.top, ios14 ? 0 : 30)
-                                ZStack {
-                                    Img.investMg
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: width * 0.70)
-                                        .padding()
-                                        .background(RoundedRectangle(cornerRadius: 14)
-                                                        .fill(Clr.darkWhite)
-                                                        .frame(width: width * 0.80)
-                                                        .neoShadow())
-                                }
-                                Button {
-                                    MGAudio.sharedInstance.playBubbleSound()
-                                    guard let url = URL(string: "https://tally.so/r/3xRxkn") else { return }
-                                     UIApplication.shared.open(url)
-                                } label: {
-                                    HStack {
-                                        Text("Are you a student & can't \nafford pro? ") + Text("Let us know").foregroundColor(Clr.brightGreen).bold()
-                                    }.frame(width: width * 0.8)
-                                        .foregroundColor(Clr.black2)
-                                }.padding([.horizontal, .top])
-                            }.padding(.top, 20)
                             VStack {
                                 Text("🙋‍♂️ Frequent Asked Questions")
                                     .font(Font.fredoka(.bold, size: 22))
@@ -279,6 +250,7 @@ struct PricingView: View {
                                             question1.toggle()
                                         }
                                     }
+                                
                                 if question1 {
                                     Text("Pro users are 72% more likely to stick with meditation vs non pro users. You have no limits for moods, gratitudes, and meditations. You feel invested, so you make sure to use the app daily.")
                                         .font(Font.fredoka(.semiBold, size: 16))
@@ -329,6 +301,18 @@ struct PricingView: View {
                                         .frame(width: width * 0.8, alignment: .leading)
                                         .padding(.leading, 5)
                                 }
+                                Button {
+                                    MGAudio.sharedInstance.playBubbleSound()
+                                    guard let url = URL(string: "https://tally.so/r/3xRxkn") else { return }
+                                     UIApplication.shared.open(url)
+                                } label: {
+                                    HStack {
+                                        Text("Are you a student & can't \nafford pro? ") + Text("Let us know").foregroundColor(Clr.brightGreen).bold()
+                                    }.frame(width: width * 0.8)
+                                        .foregroundColor(Clr.black2)
+                                }.padding([.horizontal, .top])
+                                    .padding(.top, 32)
+
                             }.padding(.bottom, 25)
                         }
                         Spacer()
@@ -374,6 +358,12 @@ struct PricingView: View {
                         Spacer()
                     }.padding(.top, K.hasNotch() ? 30 : 10)
                     Button {
+                        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                            withAnimation {
+                                showLoadingIllusion.toggle()
+                            }
+                            return
+                        }
                         MGAudio.sharedInstance.playBubbleSound()
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         withAnimation {
@@ -424,13 +414,20 @@ struct PricingView: View {
                         }.frame(width: 40)
                     }.position(x: g.size.width - 50, y: 75)
                     .buttonStyle(NeoPress())
+                    .opacity(0)
+
                 }
                 }
-            }.onAppear {
+            }
+        .fullScreenCover(isPresented: $showLoadingIllusion)  {
+            LoadingIllusion()
+                .frame(height: UIScreen.screenHeight + 50)
+        }
+        .onAppear {
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "onboarding" {
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
                     Analytics.shared.log(event: .screen_load_pricing_onboarding)
                 }
                 
@@ -557,9 +554,15 @@ struct PricingView: View {
                                                                     ])
                     Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
                     Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
+               
                     let identify = AMPIdentify()
                         .set("plan_type", value: NSString(utf8String: "yearly"))
                     Amplitude.instance().identify(identify ?? AMPIdentify())
+                }
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                    if let reason = UserDefaults.standard.string(forKey: "reason1"){
+                        Amplitude.instance().logEvent("onboarding_conversion_from", withEventProperties: ["reason": "\(reason)"])
+                    }
                 }
                 AppsFlyerLib.shared().logEvent(name: event2, values:
                                                                 [

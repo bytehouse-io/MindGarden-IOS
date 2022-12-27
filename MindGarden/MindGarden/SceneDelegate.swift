@@ -52,6 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.setValue(randomInt, forKey: "abTest")
             UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
             playSound(soundName: "background")
+            UserDefaults.standard.setValue(UUID().uuidString, forKey: K.defaults.giftQuotaId)
             UserDefaults.standard.setValue(["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
             UserDefaults.standard.setValue(["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: "storySegments")
             UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")

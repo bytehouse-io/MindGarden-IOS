@@ -651,20 +651,27 @@ struct Play: View {
     //MARK: - nav
     var shareButton: some View {
         ZStack {
-            Circle().frame(width:20,height: 20)
-                .foregroundColor(Clr.redGradientBottom)
-                .overlay(Capsule().stroke(.black, lineWidth: 1))
             Img.gift
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30)
                 .foregroundColor(Clr.gardenGreen)
-                .onTapGesture {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    withAnimation {
-                        showGift.toggle()
-                    }
-                }
+            ZStack {
+                Circle().frame(width:12,height: 12)
+                    .foregroundColor(Clr.redGradientBottom)
+                    .overlay(Capsule().stroke(.black, lineWidth: 1))
+                Text("\(envoyModel.userQuota)")
+                    .font(Font.fredoka(.medium, size: 10))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                    .frame(width: 10)
+            } .offset(x: 10, y: -5)
+        }
+        .onTapGesture {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            withAnimation {
+                showGift.toggle()
+            }
         }
     }
     var backArrow: some View {
@@ -679,6 +686,7 @@ struct Play: View {
                 }
                 
                 withAnimation {
+                    StopPlaying()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         Analytics.shared.log(event: .play_tapped_back)

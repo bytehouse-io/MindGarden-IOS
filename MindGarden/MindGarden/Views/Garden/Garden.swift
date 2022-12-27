@@ -364,7 +364,7 @@ struct Garden: View {
                             .offset(y: playEntryAnimation ? 0 : 400)
                             .animation(animation.delay(0.4), value: playEntryAnimation)
                             .padding(.top)
-                            .padding(.bottom, 32)
+                            .padding(.bottom, 48)
                     }.padding(.horizontal, 24)
                         .padding(.vertical, 16)
                         .padding(.top, 32)

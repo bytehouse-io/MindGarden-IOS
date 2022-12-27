@@ -363,7 +363,6 @@ extension AuthenticationViewModel {
                 } else {
                     self?.getData()
                 }
-                UserDefaults.standard.setValue(UUID().uuidString, forKey: K.defaults.giftQuotaId)
                 withAnimation {
                     UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
                 }
@@ -583,6 +582,7 @@ extension AuthenticationViewModel {
         UserDefaults.standard.setValue(true, forKey: "day7")
         UserDefaults.standard.setValue(true, forKey: "showWidget")
         UserDefaults.standard.setValue(true, forKey: "signedIn")
+        UserDefaults.standard.setValue(UUID().uuidString, forKey: K.defaults.giftQuotaId)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { (snapshot, error) in
                 if let document = snapshot, document.exists {
