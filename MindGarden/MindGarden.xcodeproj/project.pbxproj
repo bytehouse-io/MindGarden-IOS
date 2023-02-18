@@ -99,6 +99,11 @@
 		88164779287D0D4C00C2B6D4 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88164778287D0D4C00C2B6D4 /* background.mp3 */; };
 		882738D327E2D75E00F8D4D0 /* first_part.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D227E2D75D00F8D4D0 /* first_part.json */; };
 		882738D527E2D76E00F8D4D0 /* second_part_loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 882738D427E2D76E00F8D4D0 /* second_part_loop.json */; };
+		882DD398299F13E8008A3C77 /* MWMAdvertisingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD397299F13E8008A3C77 /* MWMAdvertisingSDK */; };
+		882DD39A299F13E8008A3C77 /* MWMPublishingSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD399299F13E8008A3C77 /* MWMPublishingSDK */; };
+		882DD39C299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD39B299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate */; };
+		882DD39E299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD39D299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate */; };
+		882DD3A0299F13E8008A3C77 /* NukeRemoteImageLoader in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD39F299F13E8008A3C77 /* NukeRemoteImageLoader */; };
 		88588042283C0293007AACC2 /* wavingTurtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 88588041283C0293007AACC2 /* wavingTurtle.png */; };
 		88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588052283C0D41007AACC2 /* ChallengeModal.swift */; };
 		885BA66E2877CE570045F2E5 /* StoreTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BA66D2877CE560045F2E5 /* StoreTabView.swift */; };
@@ -575,12 +580,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				882DD39E299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate in Frameworks */,
+				882DD39A299F13E8008A3C77 /* MWMPublishingSDK in Frameworks */,
 				FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */,
 				88F7528727CABBB2004E86D4 /* Paywall in Frameworks */,
 				88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */,
 				887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
 				940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */,
+				882DD398299F13E8008A3C77 /* MWMAdvertisingSDK in Frameworks */,
+				882DD3A0299F13E8008A3C77 /* NukeRemoteImageLoader in Frameworks */,
+				882DD39C299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1311,6 +1321,11 @@
 				FE39A0B4277116CC007A3E82 /* OneSignal */,
 				88F7528627CABBB2004E86D4 /* Paywall */,
 				88A6FABF2814A9B500B88BEF /* Storyly */,
+				882DD397299F13E8008A3C77 /* MWMAdvertisingSDK */,
+				882DD399299F13E8008A3C77 /* MWMPublishingSDK */,
+				882DD39B299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate */,
+				882DD39D299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate */,
+				882DD39F299F13E8008A3C77 /* NukeRemoteImageLoader */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -1396,6 +1411,7 @@
 				FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */,
 				88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */,
+				882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */,
 			);
 			productRefGroup = FEB6AF93265D95F500224BFD /* Products */;
 			projectDirPath = "";
@@ -2362,6 +2378,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://code.musicworldmedia.com/external/mwmpublishingsdk-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Netvent/storyly-ios";
@@ -2390,6 +2414,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		882DD397299F13E8008A3C77 /* MWMAdvertisingSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;
+			productName = MWMAdvertisingSDK;
+		};
+		882DD399299F13E8008A3C77 /* MWMPublishingSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;
+			productName = MWMPublishingSDK;
+		};
+		882DD39B299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;
+			productName = MWMPublishingSDKDefaultFacebookDelegate;
+		};
+		882DD39D299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;
+			productName = MWMPublishingSDKDefaultGoogleDelegate;
+		};
+		882DD39F299F13E8008A3C77 /* NukeRemoteImageLoader */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;
+			productName = NukeRemoteImageLoader;
+		};
 		88A6FABF2814A9B500B88BEF /* Storyly */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */;

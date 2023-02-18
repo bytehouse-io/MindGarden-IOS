@@ -16,6 +16,7 @@ import OneSignal
 import Paywall
 import WidgetKit
 import AVFoundation
+import MWMPublishingSDK
 
 var player: AVAudioPlayer?
 
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        MWM.initWithLaunchInfo(launchOptions, placements: [PlacementRequest]?) // Init the Publishing SDK
         playSound(soundName: "background")
         // Override point for customization after application launch.
         
