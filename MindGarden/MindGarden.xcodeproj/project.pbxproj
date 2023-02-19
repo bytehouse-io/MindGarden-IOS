@@ -104,6 +104,8 @@
 		882DD39C299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD39B299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate */; };
 		882DD39E299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD39D299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate */; };
 		882DD3A0299F13E8008A3C77 /* NukeRemoteImageLoader in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD39F299F13E8008A3C77 /* NukeRemoteImageLoader */; };
+		882DD3A329A29AE5008A3C77 /* MWMSessions in Frameworks */ = {isa = PBXBuildFile; productRef = 882DD3A229A29AE5008A3C77 /* MWMSessions */; };
+		882DD3A529A2BE1E008A3C77 /* MWMModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882DD3A429A2BE1E008A3C77 /* MWMModel.swift */; };
 		88588042283C0293007AACC2 /* wavingTurtle.png in Resources */ = {isa = PBXBuildFile; fileRef = 88588041283C0293007AACC2 /* wavingTurtle.png */; };
 		88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88588052283C0D41007AACC2 /* ChallengeModal.swift */; };
 		885BA66E2877CE570045F2E5 /* StoreTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 885BA66D2877CE560045F2E5 /* StoreTabView.swift */; };
@@ -386,6 +388,7 @@
 		88164778287D0D4C00C2B6D4 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
+		882DD3A429A2BE1E008A3C77 /* MWMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMModel.swift; sourceTree = "<group>"; };
 		88588041283C0293007AACC2 /* wavingTurtle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wavingTurtle.png; sourceTree = "<group>"; };
 		88588052283C0D41007AACC2 /* ChallengeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeModal.swift; sourceTree = "<group>"; };
 		885ADAB4F32408C165F8A15C /* Pods_MindGarden_MindGardenUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -587,6 +590,7 @@
 				88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */,
 				887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
+				882DD3A329A29AE5008A3C77 /* MWMSessions in Frameworks */,
 				940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */,
 				882DD398299F13E8008A3C77 /* MWMAdvertisingSDK in Frameworks */,
 				882DD3A0299F13E8008A3C77 /* NukeRemoteImageLoader in Frameworks */,
@@ -1140,6 +1144,7 @@
 				88B6ACB32870F2A400A1E042 /* Breathwork.swift */,
 				88A5D65C2895CD6D00EA535A /* Journal.swift */,
 				58A2BD9128FD806A003B500A /* Envoy.swift */,
+				882DD3A429A2BE1E008A3C77 /* MWMModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1326,6 +1331,7 @@
 				882DD39B299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate */,
 				882DD39D299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate */,
 				882DD39F299F13E8008A3C77 /* NukeRemoteImageLoader */,
+				882DD3A229A29AE5008A3C77 /* MWMSessions */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -1412,6 +1418,7 @@
 				88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */,
 				88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */,
 				882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */,
+				882DD3A129A29AE5008A3C77 /* XCRemoteSwiftPackageReference "mwmsessionssdk-ios" */,
 			);
 			productRefGroup = FEB6AF93265D95F500224BFD /* Products */;
 			projectDirPath = "";
@@ -1777,6 +1784,7 @@
 				FE11F0B62691073300E1E71A /* Authentication.swift in Sources */,
 				5838E9E828A2C9FF002B4AD0 /* StopableAnimation.swift in Sources */,
 				58A9EE7D27C749C500254AC2 /* common.swift in Sources */,
+				882DD3A529A2BE1E008A3C77 /* MWMModel.swift in Sources */,
 				FEBA7E722677D66F00758E58 /* Store.swift in Sources */,
 				88E3D3222866261C00B71809 /* LoadingIllusion.swift in Sources */,
 				FEA53C8D268BF7AF00321C07 /* MoodCheck.swift in Sources */,
@@ -2386,6 +2394,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		882DD3A129A29AE5008A3C77 /* XCRemoteSwiftPackageReference "mwmsessionssdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://code.musicworldmedia.com/external/mwmsessionssdk-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Netvent/storyly-ios";
@@ -2438,6 +2454,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;
 			productName = NukeRemoteImageLoader;
+		};
+		882DD3A229A29AE5008A3C77 /* MWMSessions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 882DD3A129A29AE5008A3C77 /* XCRemoteSwiftPackageReference "mwmsessionssdk-ios" */;
+			productName = MWMSessions;
 		};
 		88A6FABF2814A9B500B88BEF /* Storyly */ = {
 			isa = XCSwiftPackageProductDependency;

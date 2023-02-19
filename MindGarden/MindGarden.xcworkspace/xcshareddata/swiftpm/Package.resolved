@@ -100,6 +100,15 @@
       }
     },
     {
+      "identity" : "mwmsessionssdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://code.musicworldmedia.com/external/mwmsessionssdk-ios.git",
+      "state" : {
+        "revision" : "2c36a7fa56e8286b94b3fe26ab50f7c7f0b40890",
+        "version" : "1.0.4"
+      }
+    },
+    {
       "identity" : "nanopb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/nanopb.git",

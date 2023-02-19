@@ -14,6 +14,8 @@ import Foundation
 import OneSignal
 import Storyly
 import AVFoundation
+import MWMPublishingSDK
+
 
 var numberOfMeds = 0
 var storylyViewProgrammatic = StorylyView()
@@ -34,13 +36,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (seef `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
 //        UserDefaults.standard.setValue(false, forKey: "tappedRate")
-
+        
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
 //        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
 //        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
@@ -102,6 +103,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         let contentView = ContentView(bonusModel:  SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
+        
 
         // Use a UIHostingController as window root view controller.
         let rootHost = UIHostingController(rootView: contentView
@@ -111,10 +113,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                             .environmentObject(SceneDelegate.gardenModel))
         
 //        NewAuthentication(viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter())).environmentObject(ViewRouter())
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = rootHost
+        if let windowScene = scene as? UIWindowScene {             let window = UIWindow(windowScene: windowScene)
+            MWM.showOnboardingIfNeeded(withPlacementKey: MWMModel.DynamicScreenPlacement.onboarding.rawValue,
+                                               on: window,
+                                               loaderViewController: nil) { _, _ in
+                        self.window?.rootViewController = rootHost
+                    }
+
             storylyViewProgrammatic.rootViewController = rootHost
+//            window.rootViewController = rootHost
             self.window = window
             window.makeKeyAndVisible()
         }

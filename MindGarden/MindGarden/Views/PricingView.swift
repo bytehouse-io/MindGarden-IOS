@@ -13,6 +13,7 @@ import FirebaseFirestore
 import Amplitude
 import WidgetKit
 import OneSignal
+import MWMPublishingSDK
 
 var fromPage = ""
 var userWentPro = false
@@ -40,8 +41,10 @@ struct PricingView: View {
     var body: some View {
         LoadingView(isShowing: $showLoading) {
             GeometryReader { g in
+                
                 let width = g.size.width
                 let height = g.size.height
+                
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all)
                     VStack {
@@ -424,6 +427,8 @@ struct PricingView: View {
                 .frame(height: UIScreen.screenHeight + 50)
         }
         .onAppear {
+                let isUserPremium = MWM.inAppManager().isAnyPremiumFeatureUnlocked()
+                print(isUserPremium, "testing")
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }

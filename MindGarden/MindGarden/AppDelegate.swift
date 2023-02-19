@@ -17,6 +17,7 @@ import Paywall
 import WidgetKit
 import AVFoundation
 import MWMPublishingSDK
+import NukeRemoteImageLoader
 
 var player: AVAudioPlayer?
 
@@ -27,7 +28,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        MWM.initWithLaunchInfo(launchOptions)
+        MWM.setRemoteImageLoader(NukeRemoteImageLoader())
+
+
+        let placements = MWMModel.DynamicScreenPlacement.allCases.map {
+            PlacementRequest(placementKey: $0.rawValue, orientation: .portrait)
+        }
+
+        
+        MWM.initWithLaunchInfo(launchOptions, legacyFeatures: nil,
+                               verbose: false,
+                               uiElementsProvider: nil,
+                               uiElementsIDs: nil,
+                               capabilities: nil,
+                               placements: placements,
+                               transactionDelegate: nil)
+
         playSound(soundName: "background")
         // Override point for customization after application launch.
         
