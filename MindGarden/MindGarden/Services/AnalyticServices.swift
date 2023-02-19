@@ -39,6 +39,14 @@ final class Analytics: ObservableObject {
          AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
          Amplitude.instance().logEvent(event.eventName)
          Paywall.track(name: event.eventName)
+        // prepare activity report content.
+        let eventInfo = ["someKey": "someValue", "otherKey": 2]
+        let eventInfoStringData = try! JSONSerialization.data(withJSONObject: eventInfo, options: [])
+        let eventInfoString = String(data: eventInfoStringData, encoding: .utf8)
+
+        // send the activity report
+        MWM.sendActivityReport(withKind: "example", withContent: eventInfoString)
+
         #endif
          print("logging, \(event.eventName)")
      }

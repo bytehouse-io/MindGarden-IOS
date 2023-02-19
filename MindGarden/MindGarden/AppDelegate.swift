@@ -27,12 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PurchasesDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        MWM.initWithLaunchInfo(launchOptions, placements: [PlacementRequest]?) // Init the Publishing SDK
+//        MWM.initWithLaunchInfo(launchOptions)
         playSound(soundName: "background")
         // Override point for customization after application launch.
         
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
+        
+        let installationId = MWM.installationId()
+        Crashlytics.crashlytics().setUserID(installationId)
 
         // Appsflyer
         AppsFlyerLib.shared().appsFlyerDevKey = "MuYPR9jvHqxu7TzZCrTNcn"
