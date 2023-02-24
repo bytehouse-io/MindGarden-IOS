@@ -11,7 +11,6 @@ target 'MindGarden' do
    pod 'Firebase'
    pod 'Firebase/Storage'
    pod 'Amplitude-iOS', '~> 4.9.3'
-   pod 'GoogleSignIn'
    pod 'lottie-ios', '~> 3.5.0'
    pod 'AppsFlyerFramework'
    pod 'Purchases'
