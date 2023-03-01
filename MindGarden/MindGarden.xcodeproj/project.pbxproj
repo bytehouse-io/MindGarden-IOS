@@ -162,6 +162,8 @@
 		88F5CBC227F2244D00744D9F /* theta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88F5CBC127F2244A00744D9F /* theta.mp3 */; };
 		88F7528727CABBB2004E86D4 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = 88F7528627CABBB2004E86D4 /* Paywall */; };
 		88F7528927CABD50004E86D4 /* PaywallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F7528827CABD50004E86D4 /* PaywallManager.swift */; };
+		88FE170129A937F3003E9D14 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 88FE170029A937F3003E9D14 /* FirebaseAuth */; };
+		88FE170329A937F3003E9D14 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 88FE170229A937F3003E9D14 /* FirebaseStorage */; };
 		940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130EBB51197FC76EE7120FD4 /* Pods_MindGarden.framework */; };
 		E4E27EB033BE9058FA50E491 /* Pods_MindGardenTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CD3C4E5EA0A04C0694E473 /* Pods_MindGardenTests.framework */; };
 		F5327F350046C44C54530418 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4894B46B32C982CA8D046B /* Pods_MindGarden_MindGardenWidgetExtension.framework */; };
@@ -386,6 +388,7 @@
 		5B7492452CD831D405A8A213 /* Pods-MindGarden-MindGardenUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden-MindGardenUITests.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden-MindGardenUITests/Pods-MindGarden-MindGardenUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5EC9A025F0CA56C7345269FE /* Pods-MindGarden.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGarden.debug.xcconfig"; path = "Target Support Files/Pods-MindGarden/Pods-MindGarden.debug.xcconfig"; sourceTree = "<group>"; };
 		88164778287D0D4C00C2B6D4 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		881C00CC29ABB739008E9CFE /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		882738D227E2D75D00F8D4D0 /* first_part.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = first_part.json; sourceTree = "<group>"; };
 		882738D427E2D76E00F8D4D0 /* second_part_loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = second_part_loop.json; sourceTree = "<group>"; };
 		882DD3A429A2BE1E008A3C77 /* MWMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMModel.swift; sourceTree = "<group>"; };
@@ -593,6 +596,8 @@
 				882DD3A329A29AE5008A3C77 /* MWMSessions in Frameworks */,
 				940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */,
 				882DD398299F13E8008A3C77 /* MWMAdvertisingSDK in Frameworks */,
+				88FE170129A937F3003E9D14 /* FirebaseAuth in Frameworks */,
+				88FE170329A937F3003E9D14 /* FirebaseStorage in Frameworks */,
 				882DD3A0299F13E8008A3C77 /* NukeRemoteImageLoader in Frameworks */,
 				882DD39C299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate in Frameworks */,
 			);
@@ -620,6 +625,7 @@
 		31146EA5291805B3B30F837A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				881C00CC29ABB739008E9CFE /* FirebaseCore.framework */,
 				887C578528637EA300CCE5F2 /* AppTrackingTransparency.framework */,
 				FE39A0B9277137D3007A3E82 /* iAd.framework */,
 				FE48B43927791B5500CA7B63 /* WidgetKit.framework */,
@@ -1299,6 +1305,8 @@
 			dependencies = (
 			);
 			name = MindGardenWidgetExtension;
+			packageProductDependencies = (
+			);
 			productName = MindGardenWidgetExtension;
 			productReference = FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1332,6 +1340,8 @@
 				882DD39D299F13E8008A3C77 /* MWMPublishingSDKDefaultGoogleDelegate */,
 				882DD39F299F13E8008A3C77 /* NukeRemoteImageLoader */,
 				882DD3A229A29AE5008A3C77 /* MWMSessions */,
+				88FE170029A937F3003E9D14 /* FirebaseAuth */,
+				88FE170229A937F3003E9D14 /* FirebaseStorage */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -1419,6 +1429,7 @@
 				88A6FABE2814A9B500B88BEF /* XCRemoteSwiftPackageReference "storyly-ios" */,
 				882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */,
 				882DD3A129A29AE5008A3C77 /* XCRemoteSwiftPackageReference "mwmsessionssdk-ios" */,
+				88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = FEB6AF93265D95F500224BFD /* Products */;
 			projectDirPath = "";
@@ -1970,7 +1981,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.82;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1998,7 +2009,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.82;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.OneSignalNotificationServiceExtension2;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden.OneSignalNotificationServiceExtension2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2029,7 +2040,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.82;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2060,7 +2071,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.82;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden.MindGardenWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden.MindGardenWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2207,7 +2218,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.82;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2235,7 +2246,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.82;
-				PRODUCT_BUNDLE_IDENTIFIER = io.bytehouse.mindgarden;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2418,6 +2429,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		FE39A0B3277116CC007A3E82 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/OneSignal/OneSignal-XCFramework";
@@ -2469,6 +2488,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 88F7528527CABBB2004E86D4 /* XCRemoteSwiftPackageReference "paywall-ios" */;
 			productName = Paywall;
+		};
+		88FE170029A937F3003E9D14 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		88FE170229A937F3003E9D14 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		FE39A0B4277116CC007A3E82 /* OneSignal */ = {
 			isa = XCSwiftPackageProductDependency;

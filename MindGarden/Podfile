@@ -7,9 +7,6 @@ target 'MindGarden' do
 
   # Pods for MindGarden
    pod 'FirebaseFirestore'
-   pod 'FirebaseAuth'
-   pod 'Firebase'
-   pod 'Firebase/Storage'
    pod 'Amplitude-iOS', '~> 4.9.3'
    pod 'lottie-ios', '~> 3.5.0'
    pod 'AppsFlyerFramework'
@@ -22,6 +19,7 @@ target 'MindGarden' do
    target 'MindGardenWidgetExtension' do
      pod 'FirebaseFirestore'
      pod 'Firebase'
+     pod 'FirebaseAuth'
    end
 
   target 'MindGardenTests' do

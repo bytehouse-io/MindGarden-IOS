@@ -7,8 +7,8 @@
 
 import SwiftUI
 import Combine
-import Firebase
 import FirebaseFirestore
+import FirebaseAuth
 
 enum Mood: String, CaseIterable {
     var options: [String] {

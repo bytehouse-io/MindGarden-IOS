@@ -2,20 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
-	<key>CFBundleDisplayName</key>
-	<string></string>
-	<key>NSAdvertisingAttributionReportEndpoint</key>
-	<string>https://appsflyer-skadnetwork.com/</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>Allow us to serve you a more personalized roadmap and the best mindfulness experience possible</string>
 	<key>Allow Arbitrary Loads</key>
 	<true/>
 	<key>Allows Arbitrary Loads In Web Content</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -151,14 +145,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://appsflyer-skadnetwork.com/</string>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Share Your Progress</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Allow us to serve you a more personalized roadmap and the best mindfulness experience possible</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fredoka-Regular.ttf</string>
