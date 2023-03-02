@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3AA77C29B0BEBB00386163 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA77B29B0BEBB00386163 /* FirebaseAnalytics */; };
+		0B3AA77E29B0BEBB00386163 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA77D29B0BEBB00386163 /* FirebaseCrashlytics */; };
+		0B3AA78029B0BEBB00386163 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA77F29B0BEBB00386163 /* FirebaseDatabase */; };
+		0B3AA78229B0BEBB00386163 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78129B0BEBB00386163 /* FirebaseFirestore */; };
+		0B3AA78429B0BED800386163 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78329B0BED800386163 /* FirebaseAnalytics */; };
+		0B3AA78629B0BED800386163 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78529B0BED800386163 /* FirebaseAuth */; };
+		0B3AA78829B0BED800386163 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78729B0BED800386163 /* FirebaseCrashlytics */; };
+		0B3AA78A29B0BED800386163 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78929B0BED800386163 /* FirebaseDatabase */; };
+		0B3AA78C29B0BED800386163 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78B29B0BED800386163 /* FirebaseDynamicLinks */; };
+		0B3AA78E29B0BED800386163 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78D29B0BED800386163 /* FirebaseFirestore */; };
+		0B3AA79029B0BED800386163 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78F29B0BED800386163 /* FirebaseStorage */; };
+		0B3AA79229B0C0C500386163 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA79129B0C0C500386163 /* FirebaseDynamicLinks */; };
 		5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */; };
 		5801C2752892F3C900927C4F /* Fredoka-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */; };
 		5801C2762892F3D000927C4F /* Fredoka-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */; };
@@ -194,7 +206,7 @@
 		FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE48B44127791B5B00CA7B63 /* Assets.xcassets */; };
 		FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */; };
 		FE48B44527791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = FE48B44027791B5500CA7B63 /* MindGardenWidget.intentdefinition */; };
-		FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FE48B44D2779583500CA7B63 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB85FC6266C1C1C008CDAA4 /* Images.xcassets */; };
 		FE48B44E2779599400CA7B63 /* Fonts+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB85FD5266D4E5B008CDAA4 /* Fonts+Generated.swift */; };
 		FE48B44F277959A400CA7B63 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB85FC4266C1C11008CDAA4 /* Colors.xcassets */; };
@@ -299,15 +311,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FE48B44927791B5B00CA7B63 /* Embed App Extensions */ = {
+		FE48B44927791B5B00CA7B63 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed App Extensions */,
+				FE48B44827791B5B00CA7B63 /* MindGardenWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -577,7 +589,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE48B43C27791B5500CA7B63 /* SwiftUI.framework in Frameworks */,
+				0B3AA78629B0BED800386163 /* FirebaseAuth in Frameworks */,
 				FE48B43A27791B5500CA7B63 /* WidgetKit.framework in Frameworks */,
+				0B3AA79029B0BED800386163 /* FirebaseStorage in Frameworks */,
+				0B3AA78C29B0BED800386163 /* FirebaseDynamicLinks in Frameworks */,
+				0B3AA78829B0BED800386163 /* FirebaseCrashlytics in Frameworks */,
+				0B3AA78E29B0BED800386163 /* FirebaseFirestore in Frameworks */,
+				0B3AA78429B0BED800386163 /* FirebaseAnalytics in Frameworks */,
+				0B3AA78A29B0BED800386163 /* FirebaseDatabase in Frameworks */,
 				F5327F350046C44C54530418 /* Pods_MindGarden_MindGardenWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,13 +610,18 @@
 				FE39A0BA277137D3007A3E82 /* iAd.framework in Frameworks */,
 				88F7528727CABBB2004E86D4 /* Paywall in Frameworks */,
 				88A6FAC02814A9B500B88BEF /* Storyly in Frameworks */,
+				0B3AA78229B0BEBB00386163 /* FirebaseFirestore in Frameworks */,
 				887C578628637EA400CCE5F2 /* AppTrackingTransparency.framework in Frameworks */,
 				FE39A0B5277116CC007A3E82 /* OneSignal in Frameworks */,
+				0B3AA78029B0BEBB00386163 /* FirebaseDatabase in Frameworks */,
 				882DD3A329A29AE5008A3C77 /* MWMSessions in Frameworks */,
+				0B3AA77C29B0BEBB00386163 /* FirebaseAnalytics in Frameworks */,
 				940784E4B41CEAA08743A9E0 /* Pods_MindGarden.framework in Frameworks */,
+				0B3AA79229B0C0C500386163 /* FirebaseDynamicLinks in Frameworks */,
 				882DD398299F13E8008A3C77 /* MWMAdvertisingSDK in Frameworks */,
 				88FE170129A937F3003E9D14 /* FirebaseAuth in Frameworks */,
 				88FE170329A937F3003E9D14 /* FirebaseStorage in Frameworks */,
+				0B3AA77E29B0BEBB00386163 /* FirebaseCrashlytics in Frameworks */,
 				882DD3A0299F13E8008A3C77 /* NukeRemoteImageLoader in Frameworks */,
 				882DD39C299F13E8008A3C77 /* MWMPublishingSDKDefaultFacebookDelegate in Frameworks */,
 			);
@@ -1306,6 +1330,13 @@
 			);
 			name = MindGardenWidgetExtension;
 			packageProductDependencies = (
+				0B3AA78329B0BED800386163 /* FirebaseAnalytics */,
+				0B3AA78529B0BED800386163 /* FirebaseAuth */,
+				0B3AA78729B0BED800386163 /* FirebaseCrashlytics */,
+				0B3AA78929B0BED800386163 /* FirebaseDatabase */,
+				0B3AA78B29B0BED800386163 /* FirebaseDynamicLinks */,
+				0B3AA78D29B0BED800386163 /* FirebaseFirestore */,
+				0B3AA78F29B0BED800386163 /* FirebaseStorage */,
 			);
 			productName = MindGardenWidgetExtension;
 			productReference = FE48B43827791B5500CA7B63 /* MindGardenWidgetExtension.appex */;
@@ -1320,7 +1351,7 @@
 				FEB6AF8F265D95F500224BFD /* Frameworks */,
 				FEB6AF90265D95F500224BFD /* Resources */,
 				FEB85FD3266D4838008CDAA4 /* SwiftGen */,
-				FE48B44927791B5B00CA7B63 /* Embed App Extensions */,
+				FE48B44927791B5B00CA7B63 /* Embed Foundation Extensions */,
 				58BAD4DB28182A29005BBB9A /* ShellScript */,
 				5F186B8A1545C058A548937A /* [CP] Embed Pods Frameworks */,
 			);
@@ -1342,6 +1373,11 @@
 				882DD3A229A29AE5008A3C77 /* MWMSessions */,
 				88FE170029A937F3003E9D14 /* FirebaseAuth */,
 				88FE170229A937F3003E9D14 /* FirebaseStorage */,
+				0B3AA77B29B0BEBB00386163 /* FirebaseAnalytics */,
+				0B3AA77D29B0BEBB00386163 /* FirebaseCrashlytics */,
+				0B3AA77F29B0BEBB00386163 /* FirebaseDatabase */,
+				0B3AA78129B0BEBB00386163 /* FirebaseFirestore */,
+				0B3AA79129B0C0C500386163 /* FirebaseDynamicLinks */,
 			);
 			productName = MindGarden;
 			productReference = FEB6AF92265D95F500224BFD /* MindGarden.app */;
@@ -1393,7 +1429,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					FE39A0A627711644007A3E82 = {
 						CreatedOnToolsVersion = 13.1;
@@ -1616,7 +1652,7 @@
 		};
 		58BAD4DB28182A29005BBB9A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -1630,7 +1666,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
@@ -2206,7 +2242,6 @@
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 81;
-				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
@@ -2235,7 +2270,6 @@
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 81;
-				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
 				DEVELOPMENT_TEAM = M5757NXZKD;
 				ENABLE_PREVIEWS = YES;
@@ -2449,6 +2483,66 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0B3AA77B29B0BEBB00386163 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		0B3AA77D29B0BEBB00386163 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		0B3AA77F29B0BEBB00386163 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		0B3AA78129B0BEBB00386163 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		0B3AA78329B0BED800386163 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		0B3AA78529B0BED800386163 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		0B3AA78729B0BED800386163 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		0B3AA78929B0BED800386163 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		0B3AA78B29B0BED800386163 /* FirebaseDynamicLinks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDynamicLinks;
+		};
+		0B3AA78D29B0BED800386163 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		0B3AA78F29B0BED800386163 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		0B3AA79129B0C0C500386163 /* FirebaseDynamicLinks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 88FE16FF29A937F3003E9D14 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDynamicLinks;
+		};
 		882DD397299F13E8008A3C77 /* MWMAdvertisingSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 882DD396299F13E8008A3C77 /* XCRemoteSwiftPackageReference "mwmpublishingsdk-ios" */;

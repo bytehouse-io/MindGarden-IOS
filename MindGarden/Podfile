@@ -6,20 +6,20 @@ target 'MindGarden' do
   use_frameworks!
 
   # Pods for MindGarden
-   pod 'FirebaseFirestore'
+#   pod 'FirebaseFirestore'
    pod 'Amplitude-iOS', '~> 4.9.3'
    pod 'lottie-ios', '~> 3.5.0'
    pod 'AppsFlyerFramework'
    pod 'Purchases'
-   pod 'Firebase/DynamicLinks'
+#   pod 'Firebase/DynamicLinks'
    pod 'Amplitude', '~> 8.5.0'
-   pod 'Firebase/Crashlytics'
+#   pod 'Firebase/Crashlytics'
    # pod 'EnvoySDK'
    
    target 'MindGardenWidgetExtension' do
-     pod 'FirebaseFirestore'
-     pod 'Firebase'
-     pod 'FirebaseAuth'
+#     pod 'FirebaseFirestore'
+#     pod 'Firebase'
+#     pod 'FirebaseAuth'
    end
 
   target 'MindGardenTests' do
