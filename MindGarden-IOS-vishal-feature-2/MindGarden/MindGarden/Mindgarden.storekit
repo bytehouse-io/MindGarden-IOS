@@ -1,0 +1,159 @@
+{
+  "identifier" : "F4B17605",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "5F68A08C",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.bytehouse.mindgarden.freeze",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "0F339939",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.bytehouse.mindgarden.chest",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "B0F3B809",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.bytehouse.mindgarden.potion",
+      "referenceName" : null,
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "4FCC50CC",
+      "localizations" : [
+
+      ],
+      "name" : "MWM",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "65B42E4C",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "appstore.io.bytehouse.mindgarden.subscription.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : null,
+          "subscriptionGroupID" : "4FCC50CC",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "D833EA32",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "appstore.io.bytehouse.mindgarden.subscription.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : null,
+          "subscriptionGroupID" : "4FCC50CC",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    },
+    {
+      "id" : "227F3E56",
+      "localizations" : [
+
+      ],
+      "name" : "Sandbox",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "C14FC7CE",
+          "introductoryOffer" : {
+            "internalID" : "E83B5647",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "vip.pass.week",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : null,
+          "subscriptionGroupID" : "227F3E56",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

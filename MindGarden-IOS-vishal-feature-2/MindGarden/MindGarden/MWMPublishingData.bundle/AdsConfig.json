@@ -1,0 +1,21 @@
+{
+    "minDelayBetweenInterstitials": 60,
+    "rewardedVideoTimeout": 4,
+    "maxRetry": 12,
+    "interstitialsIDs": {
+        "interstitial": "7ced2646bd08cceb"
+    },
+    "rewardedVideoIDs": {
+        "rewarded_video": "bcdf4841730408eb"
+    },
+    "iPhoneBannerIDs": {
+        "banner": "cd206ca59d7177bf"
+    },
+    "amazonConfiguration": {
+        "appId": "c9a29038-ef33-433d-9f33-02e064a7ac1c",
+        "slotIds": {
+            "interstitial": "6a8466f3-e257-4cbf-97c8-56ba3a6eab9a",
+            "banner": "818fb1d6-d471-4be1-92fa-981af7cde7f0"
+        }
+    }
+}

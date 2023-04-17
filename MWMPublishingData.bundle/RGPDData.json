@@ -1,0 +1,9 @@
+{
+    "version" : "2.0",
+    "topImage" : "RGPD.png",
+    "backgroundColor" : "#FFFFFF",
+    "textColor" : "#000000",
+    "buttonTextColor" : "#FFFFFF",
+    "buttonColor" : "#0089FF",
+    "htmlContent" : "RGPD.html"
+}

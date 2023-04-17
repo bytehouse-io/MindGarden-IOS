@@ -1,0 +1,19 @@
+{
+    "version": "4.0",
+    "consumables": [
+        {
+            "identifier": "io.bytehouse.mindgarden.freeze"
+        },
+        {
+            "identifier": "io.bytehouse.mindgarden.chest"
+        },
+        {
+            "identifier": "io.bytehouse.mindgarden.potion"
+        }
+    ],
+    "features" : [
+      {
+        "identifier": "publishing_sandbox.features.premium",
+        "isPremium": true
+      }]
+}
