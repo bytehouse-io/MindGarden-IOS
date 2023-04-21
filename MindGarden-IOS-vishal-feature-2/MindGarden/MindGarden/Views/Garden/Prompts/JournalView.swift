@@ -16,10 +16,13 @@ var placeholderReflection = ""
 var placeholderQuestion = "What's one thing you're grateful for right now?"
 
 struct JournalView: View, KeyboardReadable {
+    
+    // MARK: - Properties
+    
     @State private var text: String = placeholderReflection
     @State private var contentKeyVisible: Bool = true
     @State private var showPrompts = false
-    @State private var showRecs = false
+    @State private var showHooray = false
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
@@ -43,6 +46,8 @@ struct JournalView: View, KeyboardReadable {
 
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: - Body
+    
     var body: some View {
         LoadingView(isShowing: $showLoading) {
             ZStack(alignment: .top) {
@@ -130,11 +135,12 @@ struct JournalView: View, KeyboardReadable {
                                             withAnimation {
                                                 contentKeyVisible = newIsKeyboardVisible
                                             }
-                                        }.onTapGesture {
+                                        }
+                                        .onTapGesture {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            //                                    if text == placeholderReflection {
-                                            //                                        text = ""
-                                            //                                    }
+        //                                    if text == placeholderReflection {
+        //                                        text = ""
+        //                                    }
                                         }
 
                                         .frame(height: g.size.height * (question == placeholderQuestion ? 0.3 : (question.count >= 64 ? 0.225 : question.count >= 32 ? 0.275 : 0.325)))
@@ -149,17 +155,17 @@ struct JournalView: View, KeyboardReadable {
                                                 .frame(height: 200)
                                                 .padding()
                                         }
-                                    }
-                                }
-                            }
+                                    } //: VStack
+                                } //: ZStack
+                            } //: ScrollView
                             .transition(.move(edge: .leading))
-                        }
-                    }
-                }
+                        } //: VStack
+                    } //: GeometryReader
+                } //: VStack
                 .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
                 bottomPanel
                     .padding(.bottom)
-            }
+            } //: ZStack
             .offset(x: -5)
             .onChange(of: text) { _ in
                 //                if text.contains(placeholderReflection) {
@@ -214,8 +220,8 @@ struct JournalView: View, KeyboardReadable {
             .sheet(isPresented: $showPrompts) {
                 PromptsView(question: $question)
             }
-            .fullScreenCover(isPresented: $showRecs) {
-                RecommendationsView(recs: $recs, coin: $coin)
+            .fullScreenCover(isPresented: $showHooray) {
+                HoorayView(recs: $recs, coin: $coin)
             }
             .transition(.move(edge: .trailing))
             .onDisappear {
@@ -228,7 +234,7 @@ struct JournalView: View, KeyboardReadable {
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
             }
-        }
+        } //: LoadingView
     }
 
     var bottomPanel: some View {
@@ -256,7 +262,7 @@ struct JournalView: View, KeyboardReadable {
                         promptButton
                             .rightShadow()
                         doneButton
-                    }
+                    } //: HStack
                     .background(
                         Capsule()
                             .fill(Clr.yellow)
@@ -309,7 +315,8 @@ struct JournalView: View, KeyboardReadable {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 25, height: 25)
                 .padding(.trailing, 12)
-        }.disabled(fromProfile)
+        }
+        .disabled(fromProfile)
     }
 
     var promptButton: some View {
@@ -329,15 +336,9 @@ struct JournalView: View, KeyboardReadable {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 25, height: 25)
                 .padding(.trailing, 12)
-            //            Text("Prompts")
-            //                .font(Font.fredoka(.bold, size: 20))
-            //                .foregroundColor(Clr.redGradientBottom)
-            //                .multilineTextAlignment(.center)
-            //                .padding(.trailing)
-            //                .minimumScaleFactor(0.5)
-            //                .lineLimit(1)
-        }.frame(height: 35)
-            .neoShadow()
+        }
+        .frame(height: 35)
+        .neoShadow()
     }
 
     var doneButton: some View {
@@ -446,7 +447,7 @@ struct JournalView: View, KeyboardReadable {
             gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
             withAnimation {
                 if moodFirst {
-                    showRecs = true
+                    showHooray = true
                     moodFirst = false
                 } else {
                     viewRouter.currentPage = .meditate
@@ -454,7 +455,7 @@ struct JournalView: View, KeyboardReadable {
                 placeholderQuestion = "What's one thing you're grateful for right now?"
                 showLoading = false
             }
-            //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
+//                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
         }
     }
 }

@@ -147,7 +147,7 @@ struct BonusModal: View {
                     Spacer()
                 }
                 if showCoins {
-                    LottieAnimationView(filename: "coins", loopMode: .playOnce)
+                    CustomLottieAnimationView(filename: "coins", loopMode: .playOnce)
                         .frame(height: 300)
                         .offset(x: place == .button1 ? 0 : 50)
                         .offset(y: place == .button1 ? -130 : (place == .button2 ? 50 : 110))

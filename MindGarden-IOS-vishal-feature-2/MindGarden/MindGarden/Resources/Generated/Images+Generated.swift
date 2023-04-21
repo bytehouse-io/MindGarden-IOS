@@ -257,6 +257,7 @@ public enum Img {
   public static let magnifyingGlass = Image("magnifyingGlass")
   public static let meditatingRacoon = Image("meditatingRacoon")
   public static let meditatingTurtle = Image("meditatingTurtle")
+  public static let meditatingTurtle2 = Image("meditatingTurtle2")
   public static let menu = Image("menu")
   public static let menuClose = Image("menuClose")
   public static let menuFavourite = Image("menuFavourite")

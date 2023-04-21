@@ -47,7 +47,7 @@ struct CourseScene: View {
                         .foregroundColor(Clr.darkgreen)
                         .offset(x: 65, y: UIScreen.main.bounds.height * 0.55)
                     HStack {
-                        LottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying: $isPlaying)
+                        CustomLottieAnimationView(filename: "check2", loopMode: .playOnce, isPlaying: $isPlaying)
                     }
                     .offset(x: width / 6, y: K.isSmall() ? -50 : -25)
                     .frame(width: width, height: 400)

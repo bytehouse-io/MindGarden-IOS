@@ -44,6 +44,7 @@ enum Page {
     case onboarding
     case experience
     case reason
+    case meditationGoal
     case notification
     case name
     case pricing
@@ -51,4 +52,6 @@ enum Page {
     case learn
     case mood
     case journal
+    case meditationCompleted
+    case congratulationsOnCompletion
 }

@@ -76,21 +76,27 @@ struct NotificationScene: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .offset(y: -20)
-                            (Text("Users who set a reminder are")
-                                .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.medium, size: 20))
-                                + Text(" 4x more likely ")
-                                .foregroundColor(Clr.darkgreen)
-                                .font(Font.fredoka(.bold, size: 20))
-                                + Text("to stick with meditation")
-                                .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.medium, size: 20)))
-                                .multilineTextAlignment(.center)
-                                .frame(height: 50)
-                                .offset(y: -20)
-                                .lineLimit(3)
-                                .minimumScaleFactor(0.05)
-                                .frame(width: width * 0.85)
+                            
+                            (
+                                Text("Users who set a reminder are")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.medium, size: 20))
+                                +
+                                Text(" 4x more likely ")
+                                    .foregroundColor(Clr.darkgreen)
+                                    .font(Font.fredoka(.bold, size: 20))
+                                +
+                                Text("to stick with meditation")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.medium, size: 20))
+                            )
+                            .multilineTextAlignment(.center)
+                            .frame(height: 50)
+                            .offset(y: -20)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.05)
+                            .frame(width: width * 0.85)
+                            
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
@@ -114,8 +120,10 @@ struct NotificationScene: View {
                                                 .foregroundColor(Clr.black2)
                                         }.padding(.horizontal)
                                     )
-                            }.buttonStyle(NeumorphicPress())
-                                .padding()
+                            } //: Button
+                            .buttonStyle(NeumorphicPress())
+                            .padding()
+                            
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 showActionSheet = true
@@ -137,7 +145,8 @@ struct NotificationScene: View {
                                                 .foregroundColor(.black)
                                         }.padding([.horizontal])
                                     )
-                            }.buttonStyle(NeumorphicPress())
+                            } //: Button
+                            .buttonStyle(NeumorphicPress())
                             Spacer()
                             Img.turtleLetter
                                 .resizable()
@@ -169,9 +178,11 @@ struct NotificationScene: View {
                                             .font(Font.fredoka(.bold, size: 20))
                                     )
                                     .addBorder(.black, width: 1.5, cornerRadius: 24)
-                            }.frame(height: 50)
-                                .padding(5)
-                                .buttonStyle(NeumorphicPress())
+                            } //: Button
+                            .frame(height: 50)
+                            .padding(5)
+                            .buttonStyle(NeumorphicPress())
+                            
                             if !fromSettings {
                                 Text("Skip")
                                     .foregroundColor(.gray)
@@ -197,9 +208,10 @@ struct NotificationScene: View {
                                         }
                                     }
                             }
-                        }.frame(width: width * 0.85)
-                            .padding(.top, 5)
-                    }
+                        } //: VStack
+                        .frame(width: width * 0.85)
+                        .padding(.top, 5)
+                    } //: VStack
 
                     if bottomSheetShown {
                         Color.black
@@ -207,7 +219,8 @@ struct NotificationScene: View {
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
-                }
+                } //: ZStack
+                
                 BottomSheetView(
                     dateSelected: $dateTime,
                     isOpen: self.$bottomSheetShown,
@@ -217,9 +230,10 @@ struct NotificationScene: View {
                         .datePickerStyle(WheelDatePickerStyle())
                         .labelsHidden()
                         .offset(y: -25)
-                }.offset(y: g.size.height * 0.3)
-            }
-        }
+                } //: BottomSheetView
+                .offset(y: g.size.height * 0.3)
+            } //: GeometryReader
+        } //: ZStack
         .actionSheet(isPresented: $showActionSheet) {
             ActionSheet(title: Text("Frequency"),
                         buttons: [

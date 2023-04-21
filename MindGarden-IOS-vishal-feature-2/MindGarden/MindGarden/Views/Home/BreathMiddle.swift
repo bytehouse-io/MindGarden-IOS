@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct BreathMiddle: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
@@ -17,6 +20,8 @@ struct BreathMiddle: View {
     @State private var isFavorited: Bool = false
     @State private var breathWork: Breathwork = .breathworks[0]
 
+    // MARK: - Body
+    
     var body: some View {
         if showPlay {
             BreathworkPlay(totalTime: $duration, showPlay: $showPlay, breathWork: medModel.selectedBreath)
@@ -52,8 +57,10 @@ struct BreathMiddle: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 15)
                                 )
-                        }.buttonStyle(NeoPress())
-                            .offset(x: -5, y: 5)
+                        } //: Button
+                        .buttonStyle(NeoPress())
+                        .offset(x: -5, y: 5)
+                        
                         Spacer()
                         HStack {
                             Button {
@@ -72,16 +79,18 @@ struct BreathMiddle: View {
                                         .font(.footnote)
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
-                                }
+                                } //: HStack
                                 .frame(width: g.size.width * 0.3, height: 20)
                                 .padding(8)
                                 .background(Clr.yellow)
                                 .cornerRadius(24)
-                            }
+                            } //: Button
                             .buttonStyle(BonusPress())
-                        }
+                        } //: HStack
                         heart
-                    }.frame(width: width - 60, height: 35)
+                    } //: HStack
+                    .frame(width: width - 60, height: 35)
+                    
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .center, spacing: 30) {
                             HStack(spacing: 15) {
@@ -93,9 +102,12 @@ struct BreathMiddle: View {
                                         .font(Font.fredoka(.semiBold, size: 28))
                                     Text(breathWork.description)
                                         .font(Font.fredoka(.regular, size: 16))
-                                }.foregroundColor(Clr.black2)
-                                    .frame(width: width * 0.575, alignment: .leading)
-                            }.frame(width: width - 60, height: height * 0.175)
+                                } //: VStack
+                                .foregroundColor(Clr.black2)
+                                .frame(width: width * 0.575, alignment: .leading)
+                            } //: HStack
+                            .frame(width: width - 60, height: height * 0.175)
+                            
                             HStack {
                                 Spacer()
                                 Button {
@@ -106,8 +118,11 @@ struct BreathMiddle: View {
                                     }
                                 } label: {
                                     DurationButton(selected: $duration, duration: 30)
-                                }.buttonStyle(NeoPress())
+                                } //: Button
+                                .buttonStyle(NeoPress())
+                                
                                 Spacer()
+                                
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     Analytics.shared.log(event: .breathwrk_middle_duration_3)
@@ -116,8 +131,11 @@ struct BreathMiddle: View {
                                     }
                                 } label: {
                                     DurationButton(selected: $duration, duration: 1)
-                                }.buttonStyle(NeoPress())
+                                } //: Button
+                                .buttonStyle(NeoPress())
+                                
                                 Spacer()
+                                
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     Analytics.shared.log(event: .breathwrk_middle_duration_5)
@@ -126,8 +144,11 @@ struct BreathMiddle: View {
                                     }
                                 } label: {
                                     DurationButton(selected: $duration, duration: 3)
-                                }.buttonStyle(NeoPress())
+                                } //: Button
+                                .buttonStyle(NeoPress())
+                                
                                 Spacer()
+                                
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     Analytics.shared.log(event: .breathwrk_middle_duration_10)
@@ -136,9 +157,13 @@ struct BreathMiddle: View {
                                     }
                                 } label: {
                                     DurationButton(selected: $duration, duration: 5)
-                                }.buttonStyle(NeoPress())
+                                } //: Button
+                                .buttonStyle(NeoPress())
+                                
                                 Spacer()
-                            }.frame(width: width - 15)
+                                
+                            } //: HStack
+                            .frame(width: width - 15)
 
                             HStack {
                                 Spacer()
@@ -166,15 +191,21 @@ struct BreathMiddle: View {
                                             .aspectRatio(contentMode: .fit)
                                             .font(Font.title.weight(.bold))
                                             .frame(width: 20)
-                                    }.foregroundColor(Clr.black2)
+                                    } //: HStack
+                                    .foregroundColor(Clr.black2)
+                                } //: ZStack
+                                .frame(width: width - 45, height: 50)
+                            } //: Button
+                            .buttonStyle(NeoPress())
 
-                                }.frame(width: width - 45, height: 50)
-                            }.buttonStyle(NeoPress())
-
-                            (Text("💡 Tip: ").bold() + Text(breathWork.tip))
-                                .font(Font.fredoka(.medium, size: 16))
-                                .foregroundColor(Clr.darkGray)
-                                .frame(width: width - 60, height: 70, alignment: .leading)
+                            (
+                                Text("💡 Tip: ").bold()
+                                +
+                                Text(breathWork.tip)
+                            )
+                            .font(Font.fredoka(.medium, size: 16))
+                            .foregroundColor(Clr.darkGray)
+                            .frame(width: width - 60, height: 70, alignment: .leading)
 
                             // MARK: - Recommended Use
 
@@ -185,17 +216,21 @@ struct BreathMiddle: View {
                                 VStack {
                                     WrappingHStack(list: breathWork.recommendedUse, geometry: g)
                                         .offset(x: -7)
-                                }
-                            }.frame(width: width - 60, alignment: .leading)
-                                .offset(y: -15)
+                                } //: VStack
+                            } //: VStack
+                            .frame(width: width - 60, alignment: .leading)
+                            .offset(y: -15)
                             Spacer()
-                        }
-                    }
-                }.padding(.top, K.hasNotch() ? 50 : 25)
-            }.sheet(isPresented: $showPlant) {
+                        } //: VStack
+                    } //: ScrollView
+                } //: VStack
+                .padding(.top, K.hasNotch() ? 50 : 25)
+            }
+            .sheet(isPresented: $showPlant) {
                 Store(isShop: false)
             }
-        }.onAppear {
+        }
+        .onAppear {
             medModel.updateSelf()
             if let breath = medModel.selectedBreath {
                 breathWork = breath

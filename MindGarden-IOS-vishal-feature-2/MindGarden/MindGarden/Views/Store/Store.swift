@@ -270,7 +270,8 @@ struct Store: View {
         }
         .onDisappear {
             UserDefaults.standard.setValue(true, forKey: "showTip")
-        }.onAppear {
+        }
+        .onAppear {
             if isShop {}
         }
     }

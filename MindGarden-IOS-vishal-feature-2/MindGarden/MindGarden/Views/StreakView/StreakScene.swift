@@ -56,10 +56,10 @@ struct StreakScene: View {
             VStack(spacing: 0) {
                 Spacer()
                 ZStack {
-                    LottieAnimationView(filename: "flame 1", loopMode: .playOnce, isPlaying: .constant(true))
+                    CustomLottieAnimationView(filename: "flame 1", loopMode: .playOnce, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
                         .opacity(timeRemaining <= 0 ? 0 : 1)
-                    LottieAnimationView(filename: "flame 2", loopMode: .loop, isPlaying: .constant(true))
+                    CustomLottieAnimationView(filename: "flame 2", loopMode: .loop, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
                         .opacity(timeRemaining <= 0 ? 1 : 0)
                 }.offset(y: 75)

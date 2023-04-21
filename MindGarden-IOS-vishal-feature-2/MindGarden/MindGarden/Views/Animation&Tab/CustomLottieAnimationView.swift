@@ -8,7 +8,7 @@
 import Lottie
 import SwiftUI
 
-struct LottieAnimationView: UIViewRepresentable {
+struct CustomLottieAnimationView: UIViewRepresentable {
     @State private var isPlayingDefault = true
 
     let filename: String

@@ -9,9 +9,10 @@ import Lottie
 import SwiftUI
 
 struct LottieView: UIViewRepresentable {
+    
     typealias UIViewType = UIView
     var fileName: String
-    let animationView = AnimationView()
+    let animationView = LottieAnimationView()
     var loopMode: LottieLoopMode = .loop
     var play: Bool = true
 

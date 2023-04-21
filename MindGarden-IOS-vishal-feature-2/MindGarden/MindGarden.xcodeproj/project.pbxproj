@@ -25,6 +25,10 @@
 		1882E70F29DBD501005D6DF2 /* TermsAndPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */; };
 		1882E71129DBE023005D6DF2 /* PricingBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E71029DBE023005D6DF2 /* PricingBoxView.swift */; };
 		1882E71329DBE420005D6DF2 /* RegularVsProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E71229DBE420005D6DF2 /* RegularVsProView.swift */; };
+		188F8B8D29F180F40062C4A8 /* MeditationCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8B8C29F180F40062C4A8 /* MeditationCompleted.swift */; };
+		188F8B8F29F1B4050062C4A8 /* CongratulationsOnCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8B8E29F1B4040062C4A8 /* CongratulationsOnCompletion.swift */; };
+		18A0EE4929EF0E7000D31261 /* MeditationGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A0EE4829EF0E7000D31261 /* MeditationGoalView.swift */; };
+		18A502D229F0F36300528A23 /* HoorayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A502D129F0F36300528A23 /* HoorayView.swift */; };
 		18B47D0F29E7DDB9002914CB /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */; };
 		18B47D1029E7DDB9002914CB /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */; };
 		18B47D1129E7DDB9002914CB /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */; };
@@ -76,7 +80,7 @@
 		58A9EE7F27C749C500254AC2 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7927C749C500254AC2 /* HomeTabView.swift */; };
 		58A9EE8027C749C500254AC2 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE7A27C749C500254AC2 /* TabButtonView.swift */; };
 		58A9EE8227C779E200254AC2 /* PlusMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A9EE8127C779E200254AC2 /* PlusMenuView.swift */; };
-		58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */; };
+		58AB2AE027C92FA70012C23B /* CustomLottieAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB2ADF27C92FA70012C23B /* CustomLottieAnimationView.swift */; };
 		58AC816B27CFDE0500A326DC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */; };
 		58B5AA9B28A79F8200BDC379 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B5AA9A28A79F8200BDC379 /* ImageLoader.swift */; };
 		58BAD4DD2818FCE5005BBB9A /* ReferralScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */; };
@@ -344,6 +348,10 @@
 		1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPrivacyView.swift; sourceTree = "<group>"; };
 		1882E71029DBE023005D6DF2 /* PricingBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingBoxView.swift; sourceTree = "<group>"; };
 		1882E71229DBE420005D6DF2 /* RegularVsProView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularVsProView.swift; sourceTree = "<group>"; };
+		188F8B8C29F180F40062C4A8 /* MeditationCompleted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationCompleted.swift; sourceTree = "<group>"; };
+		188F8B8E29F1B4040062C4A8 /* CongratulationsOnCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsOnCompletion.swift; sourceTree = "<group>"; };
+		18A0EE4829EF0E7000D31261 /* MeditationGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationGoalView.swift; sourceTree = "<group>"; };
+		18A502D129F0F36300528A23 /* HoorayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoorayView.swift; sourceTree = "<group>"; };
 		18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWMPublishingData.bundle; sourceTree = "<group>"; };
 		18B47D0E29E7DDB9002914CB /* Mindgarden.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Mindgarden.storekit; sourceTree = "<group>"; };
 		47148409A1C4D45A03147FE4 /* Pods-MindGardenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.release.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -387,7 +395,7 @@
 		58A9EE7927C749C500254AC2 /* HomeTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		58A9EE7A27C749C500254AC2 /* TabButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		58A9EE8127C779E200254AC2 /* PlusMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMenuView.swift; sourceTree = "<group>"; };
-		58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationView.swift; sourceTree = "<group>"; };
+		58AB2ADF27C92FA70012C23B /* CustomLottieAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLottieAnimationView.swift; sourceTree = "<group>"; };
 		58AC816A27CFDE0500A326DC /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		58B5AA9A28A79F8200BDC379 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		58BAD4DC2818FCE5005BBB9A /* ReferralScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralScene.swift; sourceTree = "<group>"; };
@@ -802,7 +810,7 @@
 				58A9EE7827C749C500254AC2 /* TabModel.swift */,
 				58A9EE7927C749C500254AC2 /* HomeTabView.swift */,
 				58A9EE7A27C749C500254AC2 /* TabButtonView.swift */,
-				58AB2ADF27C92FA70012C23B /* LottieAnimationView.swift */,
+				58AB2ADF27C92FA70012C23B /* CustomLottieAnimationView.swift */,
 				58F171A527E45A93008D380E /* WiggleModifier.swift */,
 				58D90A9727E70DA4008C4E1C /* ViewTransition.swift */,
 				8871EF992868D5BE00E28616 /* LikeButton.swift */,
@@ -961,6 +969,7 @@
 				88B6ACB52871125400A1E042 /* BreathMiddle.swift */,
 				584401E828BA434700CD0432 /* WidgetPrompt.swift */,
 				58E6570328C7440500546D11 /* FloatingMenu.swift */,
+				18A502D129F0F36300528A23 /* HoorayView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1225,6 +1234,7 @@
 				58F5F04A2860D7E000207D92 /* FreeTrialView.swift */,
 				88E3D3212866261C00B71809 /* LoadingIllusion.swift */,
 				182CF8EE29D88A5D001E1FB9 /* LeavesView.swift */,
+				18A0EE4829EF0E7000D31261 /* MeditationGoalView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1322,6 +1332,8 @@
 				FE1CA3C927B218DD0074C497 /* PlayViewModel.swift */,
 				88A15834288C816300892774 /* NextSteps.swift */,
 				5838E9E728A2C9FF002B4AD0 /* StopableAnimation.swift */,
+				188F8B8C29F180F40062C4A8 /* MeditationCompleted.swift */,
+				188F8B8E29F1B4040062C4A8 /* CongratulationsOnCompletion.swift */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -1893,6 +1905,7 @@
 				FEA53C852687CA1A00321C07 /* BonusModal.swift in Sources */,
 				58C8BE2C280498ED00075FD2 /* PlaySounds.swift in Sources */,
 				58BAD4E12819AB3B005BBB9A /* RererralsModel.swift in Sources */,
+				18A0EE4929EF0E7000D31261 /* MeditationGoalView.swift in Sources */,
 				FE683F35269CCF6E009A66DF /* ButtonModifier.swift in Sources */,
 				584D1CAF28DD761700545CF3 /* ImagePickerView.swift in Sources */,
 				88A15835288C816400892774 /* NextSteps.swift in Sources */,
@@ -1919,7 +1932,7 @@
 				FEA592CF267E8D98006558A2 /* Util.swift in Sources */,
 				FEB85FDE266D5676008CDAA4 /* OnboardingScene.swift in Sources */,
 				885BA66E2877CE570045F2E5 /* StoreTabView.swift in Sources */,
-				58AB2AE027C92FA70012C23B /* LottieAnimationView.swift in Sources */,
+				58AB2AE027C92FA70012C23B /* CustomLottieAnimationView.swift in Sources */,
 				88588053283C0D41007AACC2 /* ChallengeModal.swift in Sources */,
 				FEDC4310269A553B008E0318 /* Finished.swift in Sources */,
 				FE17B8B026C06C21002CF8C2 /* Sound.swift in Sources */,
@@ -1928,6 +1941,7 @@
 				FE4CF8AB27288425007117F5 /* PricingView.swift in Sources */,
 				58D90A9827E70DA4008C4E1C /* ViewTransition.swift in Sources */,
 				58CB600D28717B5A007A64D9 /* LikeButton.swift in Sources */,
+				188F8B8D29F180F40062C4A8 /* MeditationCompleted.swift in Sources */,
 				FEA7FBE026ADEE160073C62D /* UserViewModel.swift in Sources */,
 				88D3803C281F26D7003B0A3D /* ConfirmModal.swift in Sources */,
 				586E7DA428409F42007E0695 /* DiscoverScene.swift in Sources */,
@@ -1965,6 +1979,7 @@
 				FE11F0B3268FAABE00E1E71A /* Gratitude.swift in Sources */,
 				FE4CF8A927276948007117F5 /* NotificationHelper.swift in Sources */,
 				58C052E22805DF3E007B4D2B /* HomeViewHeader.swift in Sources */,
+				188F8B8F29F1B4050062C4A8 /* CongratulationsOnCompletion.swift in Sources */,
 				58A2BD9028FD4D9D003B500A /* EnvoyViewModel.swift in Sources */,
 				FEC3FFCB26F1219F009F58EE /* MailView.swift in Sources */,
 				584837152851B93900900C80 /* LeaveFeedback.swift in Sources */,
@@ -1990,6 +2005,7 @@
 				88A5D65D2895CD6D00EA535A /* Journal.swift in Sources */,
 				FE683F3E26A0CAE1009A66DF /* MeditationsViewModel.swift in Sources */,
 				586E7DAB2841DF40007E0695 /* DiscoverModel.swift in Sources */,
+				18A502D229F0F36300528A23 /* HoorayView.swift in Sources */,
 				FEB85FD7266D4E5B008CDAA4 /* Colors+Generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,23 +12,23 @@ import MediaPlayer
 import SwiftUI
 
 struct BreathworkPlay: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var userModel: MeditationViewModel
+    
     @State private var bgAnimation = false
     @State private var fadeAnimation = false
     @State private var title = ""
-
     @State private var durationCounter = 1
     @State private var sequenceCounter = 0
     @State private var noOfSequence = 0
     @State private var size = 300.0
     @State private var showPanel = true
     @State private var timerCount: TimeInterval = 0.0
-    @Binding var totalTime: Int
     @State private var progress = 0.0
-
-    // Background Settings
     @State private var backgroundPlayer: AVAudioPlayer?
     @State private var del = AVdelegate()
     @State private var showNatureModal = false
@@ -37,25 +37,23 @@ struct BreathworkPlay: View {
     @State private var bellSlider = SliderData()
     @State private var data: Data = .init(count: 0)
     @State private var isFavorited: Bool = false
-
-    let panelHideDelay = 2.0
-
     @State var isPaused = false
-    @Binding var showPlay: Bool
-
-    let breathWork: Breathwork?
-
     @State var timer: Timer?
     @State var durationTimer: Timer?
-
     @State private var scale = 0.0
     @State private var duration: TimeInterval = 0
-    private let startScale = 1.0
-    private let endScale = 2.0
     @State var callerTimer: Timer?
     @State private var engine: CHHapticEngine?
     @State var playVibration = false
     @State var backgroundAnimationOn = false
+    
+    @Binding var totalTime: Int
+    @Binding var showPlay: Bool
+
+    let panelHideDelay = 2.0
+    let breathWork: Breathwork?
+    private let startScale = 1.0
+    private let endScale = 2.0
 
     private var remainingDuration: RemainingDurationProvider<Double> {
         { currentScale in
@@ -145,9 +143,10 @@ struct BreathworkPlay: View {
                                 .foregroundColor(.white)
                                 .opacity(fadeAnimation ? 0 : 1)
                             Spacer()
-                        }
-                    }
-                }.frame(height: size)
+                        } //: VStack
+                    } //: ZStack
+                } //: ZStack
+                .frame(height: size)
 
                 VStack {
                     VStack(spacing: 0) {
@@ -157,7 +156,8 @@ struct BreathworkPlay: View {
                             .frame(minWidth: UIScreen.screenWidth * 0.8, minHeight: 100)
                             .overlay(
                                 plantView
-                            ).background(
+                            )
+                            .background(
                                 ZStack {
                                     if progress < 0.50, progress >= 0.24 {
                                         userModel.selectedPlant?.one
@@ -200,10 +200,11 @@ struct BreathworkPlay: View {
                                     .fill(breathWork?.color.secondary ?? Clr.calmsSecondary)
                                     .frame(width: geometry.size.width * progress, height: 15)
                                     .cornerRadius(25, corners: [.bottomLeft, .bottomRight])
-                            }
-                        }.frame(height: 15, alignment: .top)
+                            } //: GeometryReader
+                        } //: ZStack
+                        .frame(height: 15, alignment: .top)
                             .offset(y: -3)
-                    }
+                    } //: VStack
                     .padding(.top, UIScreen.screenHeight * (K.isSmall() ? 0.1 : 0.2))
                     VStack {
                         Button {
@@ -226,27 +227,15 @@ struct BreathworkPlay: View {
                                             .foregroundColor(Clr.black2)
                                     ).addBorder(.black, width: 1, cornerRadius: 30)
                             }
-                        }
+                        } //: Button
                         .frame(height: 50)
                         .buttonStyle(ScalePress())
-//                        Button {
-//                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                            withAnimation {
-//                                withAnimation {
-//                                    viewRouter.currentPage  = .finished
-//                                }
-//                            }
-//                        } label: {
-//                            Text("I'm Done")
-//                                .font(Font.fredoka(.medium, size: 20))
-//                                .foregroundColor(Clr.black2)
-//                                .underline()
-//                        }.padding(.top)
-                    }
+                    } //: VStack
                     .padding(K.isSmall() ? .bottom : .vertical)
                     .disabled(!showPanel)
                     .opacity(showPanel ? 1.0 : 0.0)
-                }.padding(.horizontal, 30)
+                } //: VStack
+                .padding(.horizontal, 30)
             }
             if showNatureModal {
                 Color.black

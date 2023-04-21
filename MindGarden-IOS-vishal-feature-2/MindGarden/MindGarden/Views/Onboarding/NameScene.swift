@@ -38,7 +38,7 @@ struct NameScene: View {
                                     withAnimation {
                                         arr = []
                                         viewRouter.progressValue -= 0.1
-                                        viewRouter.currentPage = .reason
+                                        viewRouter.currentPage = .meditationGoal
                                     }
                                 }
                         }

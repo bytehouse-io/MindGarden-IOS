@@ -81,7 +81,7 @@ struct NextSteps: View {
                     .padding(.top)
             }
             if playAnim {
-                LottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
+                CustomLottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
                     .scaleEffect(2)
                     .frame(height: UIScreen.screenHeight * 0.175)
                     .position(x: UIScreen.screenWidth / 2, y: 75)

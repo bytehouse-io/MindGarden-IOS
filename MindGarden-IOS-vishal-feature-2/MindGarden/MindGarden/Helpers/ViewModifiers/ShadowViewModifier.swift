@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct ShadowViewModifier: ViewModifier {
     var darkMode: Bool = false
     @Environment(\.colorScheme) var colorScheme: ColorScheme

@@ -116,3 +116,33 @@ struct LightButton_Previews: PreviewProvider {
         })
     }
 }
+
+struct ContinueButton: View {
+    
+    // MARK: - Properties
+    var action: (() -> ())
+    @Binding var enabled: Bool
+    
+    // MARK: - Body
+    var body: some View {
+        Button {
+            MGAudio.sharedInstance.playBubbleSound()
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            action()
+        } label: {
+            Rectangle()
+                .fill(enabled ? Clr.yellow : Clr.yellow.opacity(0.3))
+                .overlay(
+                    Text("Continue 👉")
+                        .foregroundColor(enabled ? Clr.darkgreen : Clr.darkgreen.opacity(0.3))
+                        .font(Font.fredoka(.bold, size: 20))
+                )
+                .addBorder(enabled ? Color.black : Color.black.opacity(0.3), width: 1.5, cornerRadius: 24)
+        } //: Button
+        .frame(height: 50)
+        .padding()
+        .buttonStyle(NeumorphicPress())
+//        .offset(y: 35)
+        .disabled(!enabled)
+    }
+}

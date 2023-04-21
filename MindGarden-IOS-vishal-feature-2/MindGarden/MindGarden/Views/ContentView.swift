@@ -30,7 +30,6 @@ struct ContentView: View {
     @State private var showItems = false
     @ObservedObject var bonusModel: BonusViewModel
     @ObservedObject var profileModel: ProfileViewModel
-    var authModel: AuthenticationViewModel
     @State var hasConnection = false
     @State var playAnim = false
     @State var selectedTab: TabType = .meditate
@@ -39,6 +38,8 @@ struct ContentView: View {
     @State private var goShinny = false
     @State private var progressWidth = 0.0
     @State var offset: CGSize = .zero
+    
+    var authModel: AuthenticationViewModel
 
     init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -79,10 +80,11 @@ struct ContentView: View {
                                             .foregroundColor(.white)
                                             .opacity(hasConnection ? 0 : 1)
                                     } //: VStack
-                                        .frame(height: hasConnection ? 0 : 50)
+                                    .frame(height: hasConnection ? 0 : 50)
                                 )
                                 .offset(y: -18)
                                 .position(x: geometry.size.width / 2, y: 0)
+                            
                             VStack {
                                 if #available(iOS 14.0, *) {
                                     switch viewRouter.currentPage {
@@ -169,6 +171,27 @@ struct ContentView: View {
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(bonusModel)
                                             .environmentObject(viewRouter)
+                                    case .meditationCompleted:
+                                        MeditationCompleted(
+                                            model: meditationModel,
+                                            userModel: userModel,
+                                            gardenModel: gardenModel,
+                                            onDismiss: .congratulationsOnCompletion
+                                        )
+                                        .frame(height: geometry.size.height)
+                                        .navigationViewStyle(StackNavigationViewStyle())
+                                        .environmentObject(bonusModel)
+                                        .environmentObject(viewRouter)
+                                    case .congratulationsOnCompletion:
+                                        CongratulationsOnCompletion(
+                                            model: meditationModel,
+                                            userModel: userModel,
+                                            gardenModel: gardenModel,
+                                            onDismiss: .garden
+                                        )
+                                        .frame(height: geometry.size.height)
+                                        .navigationViewStyle(StackNavigationViewStyle())
+                                        .environmentObject(viewRouter)
                                     case .authentication:
                                         NewAuthentication(viewModel: authModel)
                                             .frame(height: geometry.size.height)
@@ -191,6 +214,10 @@ struct ContentView: View {
                                         ReasonScene()
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                    case .meditationGoal:
+                                        MeditationGoalView()
+                                            .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                     case .review:
                                         ReviewScene()
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
@@ -200,7 +227,7 @@ struct ContentView: View {
                                 
                                 // MARK: - onboarding progress indicator
                                 
-                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .experience || viewRouter.currentPage == .name || viewRouter.currentPage == .reason || viewRouter.currentPage == .review {
+                                if viewRouter.currentPage == .notification || viewRouter.currentPage == .experience || viewRouter.currentPage == .name || viewRouter.currentPage == .reason || viewRouter.currentPage == .review || viewRouter.currentPage == .meditationGoal {
                                     ZStack(alignment: .leading) {
                                         Rectangle()
                                             .frame(width: geometry.size.width * 0.8, height: 20)
@@ -272,38 +299,6 @@ struct ContentView: View {
                                         .onChange(of: selectedPopupOption) { value in
                                             setSelectedPopupOption(selectedOption: value)
                                         }
-                                    // The way user defaults work is that each step, should be the previous steps title. For example if we're on the mood check step,
-                                    // onboarding userdefault should be equal to signedUp because we just completed it.
-                                    //                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp"  {
-                                    //                                        VStack {
-                                    //                                            switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
-                                    //                                            case "signedUp":
-                                    //                                                Img.moodTurtle
-                                    //                                                    .resizable()
-                                    //                                                    .aspectRatio(contentMode: .fit)
-                                    //                                            case "mood":
-                                    //                                                Img.gratitudeTurtle
-                                    //                                                    .resizable()
-                                    //                                                    .aspectRatio(contentMode: .fit)
-                                    //                                            case "gratitude":
-                                    //                                                Img.meditateTurtle
-                                    //                                                    .resizable()
-                                    //                                                    .aspectRatio(contentMode: .fit)
-                                    //                                            default: EmptyView()
-                                    //                                            }
-                                    //                                        }
-                                    //                                        .offset(x:(playAnim ? 0 : -300))
-                                    //                                        .animation(.spring(), value: userModel.showCoinAnimation)
-                                    //                                        .frame(width: 200)
-                                    //                                        .position(x: 50, y: geometry.size.height/1.35)
-                                    //                                        .onAppear() {
-                                    //                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    //                                                withAnimation(.spring()) {
-                                    //                                                    playAnim = true
-                                    //                                                }
-                                    //                                            }
-                                    //                                        }
-                                    //                                    }
                                 } //: ZStack
                                 .offset(y: 16)
                                 
@@ -311,10 +306,12 @@ struct ContentView: View {
                                     .frame(width: geometry.size.width, height: geometry.size.height * 0.4)
                                     .background(Clr.darkWhite)
                                     .cornerRadius(32)
-                                    .offset(y: addMood ?(geometry.size.height / (K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)
+                                    .offset(y: addMood ? (geometry.size.height / (K.hasNotch() ? 2.75 : 3) + (viewRouter.currentPage == .finished ? -75 : 0)) : geometry.size.height)
+                                
                                 WidgetPrompt(profileModel: profileModel)
                                     .offset(y: profileModel.showWidget ? 0 : geometry.size.height + 75)
                                     .animation(.default, value: profileModel.showWidget)
+                                
                                 BottomSheet(
                                     isOpen: $userModel.showDay1Complete,
                                     maxHeight: geometry.size.height * (K.isSmall() ? 1 : 0.75),
@@ -362,7 +359,7 @@ struct ContentView: View {
                                                         .lineLimit(1)
                                                         .minimumScaleFactor(0.1)
                                                 )
-                                        }
+                                        } //: Button
                                         .buttonStyle(NeumorphicPress())
                                         .frame(height: 45)
                                         .padding(.top, 32)
@@ -372,6 +369,7 @@ struct ContentView: View {
                                     .padding()
                                 } //: BottomSheet
                                 .offset(y: geometry.size.height * 0.1)
+                                
                                 BottomSheet(
                                     isOpen: $userModel.showCoinAnimation,
                                     maxHeight: geometry.size.height * (K.isSmall() ? 0.75 : 0.6),

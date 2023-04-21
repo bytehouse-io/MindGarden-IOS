@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct RecommendationsView: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @EnvironmentObject var userModel: UserViewModel
@@ -22,100 +25,22 @@ struct RecommendationsView: View {
     @State private var rowOpacity = 1.0
     @Environment(\.presentationMode) var presentationMode
 
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             Clr.darkWhite.ignoresSafeArea()
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    Spacer()
-                        .frame(height: 20)
-                    VStack(spacing: 0) {
-                        HStack {
-                            Text("Hooray!")
-                                .foregroundColor(Clr.brightGreen)
-                                .font(Font.fredoka(.semiBold, size: 28))
-                            Spacer()
-                            if !isOnboarding {
-                                CloseButton {
-                                    withAnimation {
-                                        Analytics.shared.log(event: .recommendations_tapped_x)
-                                        if !isOnboarding {
-                                            viewRouter.currentPage = .meditate
-                                        }
-                                    }
-                                }
-                            }
-
-                        }.padding(5)
-                            .padding(.bottom, 10)
-                            .zIndex(2)
-                        ZStack {
-                            Rectangle()
-                                .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
-                                .font(Font.fredoka(.medium, size: 20))
-                                .overlay(LottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
-                                    .scaleEffect(2))
-                            VStack(alignment: .leading, spacing: 0) {
-                                HStack {
-                                    (Text("You earned").foregroundColor(.white) + Text("  +\(moodCoins + coin)  ").foregroundColor(Clr.brightGreen) + Text("coins").foregroundColor(.white))
-                                        .font(Font.fredoka(.semiBold, size: 20))
-                                        .padding()
-                                        .offset(x: 24)
-                                    Spacer()
-                                }
-                                HStack(spacing: 20) {
-                                    Img.coinBunch
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(.leading, 16)
-                                        .frame(width: 100)
-                                        .offset(x: 24, y: -8)
-                                    Spacer()
-                                    VStack(alignment: .leading, spacing: 10) {
-                                        HStack {
-                                            Mood.getMoodImage(mood: userModel.selectedMood)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 30)
-                                            Text("+\(moodCoins)")
-                                                .foregroundColor(Clr.brightGreen)
-                                                .font(Font.fredoka(.semiBold, size: 20)) +
-                                                Text(" Mood Check")
-                                                .foregroundColor(Clr.black2)
-                                                .font(Font.fredoka(.regular, size: 20))
-                                        }
-                                        HStack {
-                                            Img.streakPencil
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 30)
-                                            Text("+\(coin)")
-                                                .foregroundColor(Clr.brightGreen)
-                                                .font(Font.fredoka(.semiBold, size: 20)) +
-                                                Text(" Journaling")
-                                                .foregroundColor(Clr.black2)
-                                                .font(Font.fredoka(.regular, size: 20))
-                                        }
-                                        Spacer()
-                                    }
-                                    .frame(width: width * 0.5)
-                                    .padding(.trailing, 30)
-                                    .padding(.top)
-                                }
-                                Spacer()
-                            }
-                        }
-                        .frame(width: width * 0.875, height: 175)
-                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                    }
-
-                    TodaysMeditation
-                        .padding(.top, 30)
-                    Spacer()
+                if !isOnboarding {
+                    EarnedCoins
                 }
-                .padding(.horizontal, 32)
-            }
-        }.onAppear {
+                TodaysMeditation
+                    .padding(.top, 30)
+                Spacer()
+            } //: ScrollView
+            .padding(.horizontal, 32)
+        } //: ZStack
+        .onAppear {
             if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"] as? [[String: String]] {
                 if moods.count == 1 {
                     moodCoins = 20
@@ -129,7 +54,7 @@ struct RecommendationsView: View {
                 playAnim = true
                 playEntryAnimation = true
             }
-
+            
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
                 if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
                     Analytics.shared.log(event: .onboarding_load_recs)
@@ -149,6 +74,98 @@ struct RecommendationsView: View {
                 Analytics.shared.log(event: .screen_load_recs)
             }
         }
+    }
+    
+    var EarnedCoins: some View {
+        VStack {
+            Spacer()
+                .frame(height: 20)
+            Group {
+                HStack {
+                    Text("Hooray!")
+                        .foregroundColor(Clr.brightGreen)
+                        .font(Font.fredoka(.semiBold, size: 28))
+                    Spacer()
+                    CloseButton {
+                        withAnimation {
+                            Analytics.shared.log(event: .recommendations_tapped_x)
+                            if !isOnboarding {
+                                viewRouter.currentPage = .meditate
+                            }
+                        }
+                    } //: CloseButton
+                } //: HStack
+            } //: Group
+            .padding(5)
+            .padding(.bottom, 10)
+            .zIndex(2)
+            
+            ZStack {
+                Rectangle()
+                    .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
+                    .font(Font.fredoka(.medium, size: 20))
+                    .overlay(CustomLottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
+                        .scaleEffect(2))
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack {
+                        (
+                            Text("You earned").foregroundColor(.white)
+                            +
+                            Text("  +\(moodCoins + coin)  ").foregroundColor(Clr.brightGreen)
+                            +
+                            Text("coins").foregroundColor(.white)
+                        )
+                        .font(Font.fredoka(.semiBold, size: 20))
+                        .padding()
+                        .offset(x: 24)
+                        
+                        Spacer()
+                    } //: HStack
+                    HStack(spacing: 20) {
+                        Img.coinBunch
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.leading, 16)
+                            .frame(width: 100)
+                            .offset(x: 24, y: -8)
+                        Spacer()
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Mood.getMoodImage(mood: userModel.selectedMood)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30)
+                                Text("+\(moodCoins)")
+                                    .foregroundColor(Clr.brightGreen)
+                                    .font(Font.fredoka(.semiBold, size: 20)) +
+                                Text(" Mood Check")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.regular, size: 20))
+                            } //: HStack
+                            HStack {
+                                Img.streakPencil
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 30)
+                                Text("+\(coin)")
+                                    .foregroundColor(Clr.brightGreen)
+                                    .font(Font.fredoka(.semiBold, size: 20)) +
+                                Text(" Journaling")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.regular, size: 20))
+                            } //: HStack
+                            Spacer()
+                        } //: VStack
+                        .frame(width: width * 0.5)
+                        .padding(.trailing, 30)
+                        .padding(.top)
+                    } //: HStack
+                    Spacer()
+                } //: VStack
+            } //: ZStack
+            .frame(width: width * 0.875, height: 175)
+            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+        } //: VStack
     }
 
     var TodaysMeditation: some View {
@@ -212,30 +229,91 @@ struct RecommendationsView: View {
                         HStack {
                             Text("See More")
                                 .foregroundColor(Clr.black2)
-                                .font(Font.fredoka(.bold, size: 16))
-                            Image(systemName: "arrow.right")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 16)
+                                .font(Font.fredoka(.regular, size: 20))
+                                .multilineTextAlignment(.leading)
+                        } //: HStack
+                        .frame(width: UIScreen.screenWidth * 0.875, height: 50)
+                            .padding(.bottom, 20)
+                        ForEach(0 ..< 3) { idx in
+                            if isOnboarding && idx == 0 { // onboarding
+                                MeditationRow(id: 22, isBreathwork: false)
+                                    .padding(.vertical, 5)
+                                    .offset(y: playEntryAnimation ? 0 : 100)
+                                    .opacity(rowOpacity)
+                                    .animation(Animation.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: rowOpacity)
+                            } else {
+                                MeditationRow(id: recs[idx], isBreathwork: idx == 0)
+                                    .padding(.vertical, 5)
+                                    .offset(y: playEntryAnimation ? 0 : 100)
+                                    .opacity(playEntryAnimation ? 1 : 0)
+                                    .animation(.spring().delay(Double(idx + 1) * 0.3), value: playEntryAnimation)
+                                    .disabled(isOnboarding)
+                                    .opacity(isOnboarding ? 0.15 : 1)
+                            }
                         }
-                    }
-                }.buttonStyle(NeoPress())
-                    .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
-                    .offset(x: 5)
-                    .disabled(isOnboarding)
-            }
-        }
+                        if !isOnboarding {
+                            HStack {
+                                Spacer()
+                                Text("OR")
+                                    .foregroundColor(Clr.black2)
+                                    .font(Font.fredoka(.medium, size: 16))
+                                Spacer()
+                            } //: HStack
+
+                            Button {
+                                Analytics.shared.log(event: .recs_tapped_see_more)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    viewRouter.currentPage = .learn
+                                }
+                            } label: {
+                                ZStack {
+                                    Capsule()
+                                        .fill(Clr.yellow)
+                                        .frame(height: 44)
+                                        .addBorder(Color.black, width: 1.5, cornerRadius: 22)
+                                    HStack {
+                                        Text("See More")
+                                            .foregroundColor(Clr.black2)
+                                            .font(Font.fredoka(.bold, size: 16))
+                                        Image(systemName: "arrow.right")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 16)
+                                    }
+                                }
+                            } //: Button
+                            .buttonStyle(NeoPress())
+                            .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
+                            .offset(x: 5)
+                            .disabled(isOnboarding)
+                        }
+                    } //: VStack
+                    .padding(.top, 30)
+                    Spacer()
+                } //: VStack
+                .padding(.horizontal, 32)
+            } //: ScrollView
+        } //: ZStack
     }
 }
 
 struct MeditationRow: View {
+    
+    // MARK: - Properties
+    
     @Environment(\.presentationMode) var presentationMode
+    
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var medModel: MeditationViewModel
-    var id: Int
-    var isBreathwork: Bool
+    
     @State var meditation: Meditation = .allMeditations[0]
     @State var breathwork: Breathwork = .breathworks[0]
+    
+    var id: Int
+    var isBreathwork: Bool
+    
+    // MARK: - Body
 
     var body: some View {
         Button {
@@ -289,9 +367,10 @@ struct MeditationRow: View {
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical, 0)
-                        }.padding(.vertical, 0)
-                            .frame(width: UIScreen.screenWidth / 2.25, alignment: .leading)
-                            .offset(x: 5)
+                        } //: HStack
+                        .padding(.vertical, 0)
+                        .frame(width: UIScreen.screenWidth / 2.25, alignment: .leading)
+                        .offset(x: 5)
 
                         HStack(spacing: 5) {
                             Image(systemName: isBreathwork ? breathwork.color.image : "timer")
@@ -316,10 +395,11 @@ struct MeditationRow: View {
                                 .font(Font.fredoka(.medium, size: 16))
                                 .foregroundColor(Clr.black2.opacity(0.5))
                                 .padding(.vertical, 0)
-                        }.padding(.vertical, 0)
-                            .frame(width: UIScreen.screenWidth / 2.1, alignment: .leading)
-                            .offset(x: 5)
-                    }
+                        } //: HStack
+                        .padding(.vertical, 0)
+                        .frame(width: UIScreen.screenWidth / 2.1, alignment: .leading)
+                        .offset(x: 5)
+                    } //: VStack
                     Spacer()
                     Group {
                         if isBreathwork {
@@ -336,32 +416,36 @@ struct MeditationRow: View {
                                     .aspectRatio(contentMode: .fit)
                             }
                         }
-                    }.frame(width: 80, height: 80)
+                    } //: Group
+                    .frame(width: 80, height: 80)
                         .offset(y: 2)
-                }
+                } //: HStack
                 .frame(height: 95, alignment: .center)
                 .offset(y: -7)
                 .padding(.horizontal, 30)
                 .padding(.vertical, 20)
-            }
-        }.buttonStyle(BonusPress())
-            .onAppear {
-                if isBreathwork {
-                    if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
-                        breathwork = breath
-                    }
+            } //: ZStack
+        } //: Button
+        .buttonStyle(BonusPress())
+        .onAppear {
+            if isBreathwork {
+                if let breath = Breathwork.breathworks.first(where: { $0.id == id }) {
+                    breathwork = breath
+                }
 
-                } else {
-                    if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
-                        meditation = med
-                    }
+            } else {
+                if let med = Meditation.allMeditations.first(where: { $0.id == id }) {
+                    meditation = med
                 }
             }
+        }
     }
 }
 
+#if DEBUG
 struct RecommendationsView_Previews: PreviewProvider {
     static var previews: some View {
         RecommendationsView(recs: .constant([-1, 1, 2]), coin: .constant(3))
     }
 }
+#endif

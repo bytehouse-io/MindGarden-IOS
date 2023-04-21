@@ -81,7 +81,7 @@ struct OnboardingScene: View {
                             .multilineTextAlignment(.leading)
                             .font(Font.fredoka(.bold, size: 40))
                             .offset(y: K.isSmall() ? height * 0.1 : height * 0.15)
-                            LottieAnimationView(filename: "onboarding1", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
+                            CustomLottieAnimationView(filename: "onboarding1", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
                                 .frame(width: width * 0.45)
                                 .offset(y: height * -0.15)
                         }
@@ -110,9 +110,11 @@ struct OnboardingScene: View {
                                             .foregroundColor(Clr.darkgreen)
                                             .font(Font.fredoka(.bold, size: 20))
                                     ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
-                            }.frame(width: UIScreen.screenWidth * 0.8, height: 50)
-                                .padding()
-                                .buttonStyle(BonusPress())
+                            } //: Button
+                            .frame(width: UIScreen.screenWidth * 0.8, height: 50)
+                            .padding()
+                            .buttonStyle(BonusPress())
+                            
                             Button {
                                 MGAudio.sharedInstance.playBubbleSound()
                                 Analytics.shared.log(event: .onboarding_tapped_sign_in)
@@ -129,50 +131,56 @@ struct OnboardingScene: View {
                                     .underline()
                                     .font(Font.fredoka(.semiBold, size: 18))
                                     .foregroundColor(.gray)
-                            }.frame(height: 30)
-                                .padding([.horizontal, .bottom])
-                                .offset(y: 25)
-                                .buttonStyle(BonusPress())
-                        }.offset(y: height * -0.1)
+                            } //: Button
+                            .frame(height: 30)
+                            .padding([.horizontal, .bottom])
+                            .offset(y: 25)
+                            .buttonStyle(BonusPress())
+                        } //: VStack
+                        .offset(y: height * -0.1)
                         Spacer()
                     }
                 }
-            }.navigationBarTitle("", displayMode: .inline)
-        }.onAppearAnalytics(event: .screen_load_onboarding)
-            .onAppear {
-                UserDefaults.standard.setValue("onboarding", forKey: K.defaults.onboarding)
-                if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
-                    let identify = AMPIdentify()
-                        .set("abTest1.53", value: NSNumber(value: num))
-                    Amplitude.instance().identify(identify ?? AMPIdentify())
-                }
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    switch status {
-                    case .authorized:
-                        Analytics.shared.log(event: .onboarding_tapped_allowed_att)
-                    case .notDetermined:
-                        print("test")
-                    case .restricted:
-                        print("restricted")
-                    default:
-                        Analytics.shared.log(event: .onboarding_tapped_denied_att)
-                    }
+            } //: GeometryReader
+            .navigationBarTitle("", displayMode: .inline)
+        } //: NavigationView
+        .onAppearAnalytics(event: .screen_load_onboarding)
+        .onAppear {
+            UserDefaults.standard.setValue("onboarding", forKey: K.defaults.onboarding)
+            if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
+                let identify = AMPIdentify()
+                    .set("abTest1.53", value: NSNumber(value: num))
+                Amplitude.instance().identify(identify ?? AMPIdentify())
+            }
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                case .notDetermined:
+                    print("test")
+                case .restricted:
+                    print("restricted")
+                default:
+                    Analytics.shared.log(event: .onboarding_tapped_denied_att)
                 }
             }
-            .sheet(isPresented: $showAuth) {
-                if tappedSignOut {
-                } else {
-                    Authentication(viewModel: authModel)
-                        .environmentObject(medModel)
-                        .environmentObject(userModel)
-                        .environmentObject(gardenModel)
-                }
+        }
+        .sheet(isPresented: $showAuth) {
+            if tappedSignOut {
+            } else {
+                Authentication(viewModel: authModel)
+                    .environmentObject(medModel)
+                    .environmentObject(userModel)
+                    .environmentObject(gardenModel)
             }
+        }
     }
 }
 
+#if DEBUG
 struct OnboardingScene_Previews: PreviewProvider {
     static var previews: some View {
         OnboardingScene()
     }
 }
+#endif

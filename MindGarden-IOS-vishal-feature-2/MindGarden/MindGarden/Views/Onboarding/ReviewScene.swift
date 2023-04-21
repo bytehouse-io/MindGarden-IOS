@@ -50,7 +50,8 @@ struct ReviewScene: View {
                                     .offset(y: -10)
                             }
                             Spacer()
-                        }.edgesIgnoringSafeArea(.all)
+                        } //: HStack
+                        .edgesIgnoringSafeArea(.all)
                         Spacer()
                         Text("So, to recap \(UserDefaults.standard.string(forKey: "name") ?? "")")
                             .font(Font.fredoka(.bold, size: 30))
@@ -86,96 +87,86 @@ struct ReviewScene: View {
                                                 .font(Font.fredoka(.semiBold, size: 20))
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
+                                            
                                         } //: VStack
                                         .frame(width: width * 0.5, alignment: .leading)
                                     } //: HStack
                                 } //: ForEach Loop
                             } //: VStack
                         } //: ZStack
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(14)
-                                .frame(width: width * 0.75, height: width * 0.22)
-                                .neoShadow()
-                            HStack(spacing: -10) {
-                                // Image
+                        
+                        ReviewBase(
+                            width: width,
+                            title: "Your experience level",
+                            image: {
                                 LeadingImage(image: experience.0, width: width)
-//                                experience.0
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .frame(width: width * 0.125, height: width * 0.125, alignment: .leading)
-//                                    .padding()
-                                VStack(alignment: .leading) {
-                                    // Title
-                                    Text("Your experience level")
-                                        .foregroundColor(.gray)
-                                        .font(Font.fredoka(.regular, size: 16))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                    // experience description
-                                    Text("\(experience.1)")
-                                        .foregroundColor(Clr.black1)
-                                        .font(Font.fredoka(.semiBold, size: 20))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                } //: VStack
-                                .frame(width: width * 0.5, alignment: .leading)
-                            } //: HStack
-                        } //: ZStack
+                            },
+                            description: {
+                                Text("\(experience.1)")
+                                    .foregroundColor(Clr.black1)
+                                    .font(Font.fredoka(.semiBold, size: 20))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.05)
+                            }
+                        ) //: ReviewBase for experience level
                         .padding(.top, 15)
-                        ZStack {
-                            Rectangle()
-                                .fill(Clr.darkWhite)
-                                .cornerRadius(14)
-                                .frame(width: width * 0.75, height: width * 0.22)
-                                .neoShadow()
-                            HStack(spacing: -10) {
-//                                LeadingImage(image: Img.bell, width: width)
+                        
+                        ReviewBase(
+                            width: width,
+                            title: "Your notifcations are",
+                            image: {
                                 Img.bell
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: width * 0.125, height: width * 0.175)
                                     .padding()
                                     .padding(.trailing)
-                                VStack(alignment: .leading, spacing: 0) {
-                                    Text("Your notifcations are")
-                                        .foregroundColor(.gray)
-                                        .font(Font.fredoka(.regular, size: 16))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                    HStack {
-                                        Text("\(notifications)")
-                                            .foregroundColor(Clr.black1)
-                                            .font(Font.fredoka(.semiBold, size: 20))
-                                        if notifications == "Off" {
-                                            Button {
-                                                MGAudio.sharedInstance.playBubbleSound()
-                                                withAnimation {
-                                                    tappedTurnOn = true
-                                                    viewRouter.currentPage = .notification
-                                                }
-                                            } label: {
-                                                Capsule()
-                                                    .fill(Clr.yellow)
-                                                    .frame(width: width * 0.2, height: height * 0.03)
-                                                    .overlay(
-                                                        Text("Turn On")
-                                                            .foregroundColor(.black)
-                                                            .font(.caption)
-                                                            .lineLimit(1)
-                                                            .minimumScaleFactor(0.05)
-                                                    )
-                                                    .neoShadow()
-                                            } //: Button
-                                        }
-                                    } //: HStack
-                                } //: VStack
-                                .frame(width: width * 0.5, alignment: .leading)
-                                    .offset(x: -5)
-                            } //: HStack
-                        } //: ZStack
-//                        .padding(.top, 15)
+                            },
+                            description: {
+                                HStack {
+                                    Text("\(notifications)")
+                                        .foregroundColor(Clr.black1)
+                                        .font(Font.fredoka(.semiBold, size: 20))
+                                    if notifications == "Off" {
+                                        Button {
+                                            MGAudio.sharedInstance.playBubbleSound()
+                                            withAnimation {
+                                                tappedTurnOn = true
+                                                viewRouter.currentPage = .notification
+                                            }
+                                        } label: {
+                                            Capsule()
+                                                .fill(Clr.yellow)
+                                                .frame(width: width * 0.2, height: height * 0.03)
+                                                .overlay(
+                                                    Text("Turn On")
+                                                        .foregroundColor(.black)
+                                                        .font(.caption)
+                                                        .lineLimit(1)
+                                                        .minimumScaleFactor(0.05)
+                                                )
+                                                .neoShadow()
+                                        } //: Button
+                                    }
+                                } //: HStack
+                            }
+                        )
+                        
+                        ReviewBase(
+                            width: width,
+                            title: "Your meditation goal is",
+                            image: {
+                                LeadingImage(image: Img.meditatingTurtle, width: width)
+                            },
+                            description: {
+                                Text("\(UserDefaults.standard.string(forKey: "meditationGoal") ?? "")")
+                                .foregroundColor(Clr.black1)
+                                .font(Font.fredoka(.semiBold, size: 20))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.05)
+                            }
+                        ) //: ReviewBase
+                        
                         Spacer()
                         Button(
                             action: {
@@ -210,8 +201,8 @@ struct ReviewScene: View {
                                 .background(Clr.yellow)
                                 .cornerRadius(24)
                                 .addBorder(.black, width: 1.5, cornerRadius: 24)
-                            } //: Button
-                        )
+                            }
+                        ) //: Button
 //                        .triggerPaywall(
 //                            forEvent: "review_tapped_tutorial",
 //                            withParams: ["reason": 17],
@@ -328,11 +319,13 @@ struct ReviewScene: View {
     }
 }
 
+#if DEBUG
 struct ReviewScene_Previews: PreviewProvider {
     static var previews: some View {
         ReviewScene()
     }
 }
+#endif
 
 struct LeadingImage: View {
     var image: Image
@@ -344,5 +337,41 @@ struct LeadingImage: View {
             .aspectRatio(contentMode: .fit)
             .frame(width: width * 0.125, height: width * 0.125, alignment: .leading)
             .padding()
+    }
+}
+
+struct ReviewBase<ImageContent: View, DesContent: View>: View {
+    
+    // MARK: - Properties
+    
+    var width: CGFloat
+    var title: String
+    
+    @ViewBuilder var image: ImageContent
+    @ViewBuilder var description: DesContent
+    
+    // MARK: - Body
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(Clr.darkWhite)
+                .cornerRadius(14)
+                .frame(width: width * 0.75, height: width * 0.22)
+                .neoShadow()
+            HStack(spacing: -10) {
+                image
+                VStack(alignment: .leading) {
+                    // Title
+                    Text(title)
+                        .foregroundColor(.gray)
+                        .font(Font.fredoka(.regular, size: 16))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.05)
+                    description
+                } //: VStack
+                .frame(width: width * 0.5, alignment: .leading)
+            } //: HStack
+        } //: ZStack
     }
 }

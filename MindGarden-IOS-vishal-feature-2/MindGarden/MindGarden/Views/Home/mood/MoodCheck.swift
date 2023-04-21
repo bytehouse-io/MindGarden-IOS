@@ -9,6 +9,9 @@ import Amplitude
 import SwiftUI
 
 struct MoodCheck: View {
+    
+    // MARK: - Properties
+    
     @Binding var shown: Bool
     @Binding var showPopUp: Bool
     @State var moodSelected: Mood = .none
@@ -16,11 +19,12 @@ struct MoodCheck: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var viewRouter: ViewRouter
 
-    /// Ashvin : Binding variable for pass animation flag
     @Binding var PopUpIn: Bool
     @Binding var showPopUpOption: Bool
     @Binding var showItems: Bool
     @State private var notifOn: Bool = false
+    
+    // MARK: - Body
 
     var body: some View {
         GeometryReader { g in
@@ -46,14 +50,17 @@ struct MoodCheck: View {
                                         .frame(width: 30, height: 30)
                                         .cornerRadius(17)
                                         .neoShadow()
-                                ).onTapGesture {
+                                )
+                                .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     moodFromFinished = false
                                     withAnimation { shown.toggle() }
-                                }.offset(x: -5, y: 10)
+                                }
+                                .offset(x: -5, y: 10)
                                 .disabled(UserDefaults.standard.bool(forKey: "signedUp"))
                         }
-                    }.frame(width: g.size.width * 0.85, alignment: .leading)
+                    } //: HStack
+                    .frame(width: g.size.width * 0.85, alignment: .leading)
 
                     Text("How are you feeling right now?")
                         .font(Font.fredoka(.semiBold, size: K.isPad() ? 40 : 28))
@@ -62,6 +69,7 @@ struct MoodCheck: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                         .padding(.bottom, 15)
+                    
                     ZStack(alignment: .center) {
                         Rectangle()
                             .fill(LinearGradient(colors: [Clr.veryBad, Clr.bad, Clr.okay, Clr.good, Clr.veryGood], startPoint: .leading, endPoint: .trailing))
@@ -73,17 +81,20 @@ struct MoodCheck: View {
                             SingleMood(moodSelected: $moodSelected, mood: .okay, save: save)
                             SingleMood(moodSelected: $moodSelected, mood: .good, save: save)
                             SingleMood(moodSelected: $moodSelected, mood: .veryGood, save: save)
-                        }.padding(.horizontal, 10)
-                    }.frame(width: g.size.width * 0.9, height: g.size.height / 3.25, alignment: .center)
+                        } //: HStack
+                        .padding(.horizontal, 10)
+                    } //: ZStack
+                    .frame(width: g.size.width * 0.9, height: g.size.height / 3.25, alignment: .center)
                     Spacer()
                     if K.isPad() {
                         Spacer()
                     }
-                }
+                } //: VStack
                 Spacer()
                 Spacer()
-            }
-        }.onAppear {
+            } //: HStack
+        } //: GeometryReader
+        .onAppear {
             notifOn = UserDefaults.standard.bool(forKey: "moodRecsToggle")
         }
     }
@@ -115,6 +126,7 @@ struct MoodCheck: View {
     }
 }
 
+#if DEBUG
 struct MoodCheck_Previews: PreviewProvider {
     static var previews: some View {
         MoodCheck(shown: .constant(true), showPopUp: .constant(false), PopUpIn: .constant(false), showPopUpOption: .constant(false), showItems: .constant(false))
@@ -123,6 +135,7 @@ struct MoodCheck_Previews: PreviewProvider {
             .cornerRadius(12)
     }
 }
+#endif
 
 struct SingleMood: View {
     @Binding var moodSelected: Mood

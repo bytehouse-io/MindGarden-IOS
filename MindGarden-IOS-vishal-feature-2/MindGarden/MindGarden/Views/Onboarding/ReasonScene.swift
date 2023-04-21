@@ -81,8 +81,8 @@ struct ReasonScene: View {
 
                                 withAnimation(.easeOut(duration: 0.5)) {
                                     DispatchQueue.main.async {
-                                        viewRouter.progressValue += 0.2
-                                        viewRouter.currentPage = .name
+                                        viewRouter.progressValue += 0.1
+                                        viewRouter.currentPage = .meditationGoal
                                     }
                                 }
                             }
@@ -218,8 +218,10 @@ enum Reason {
     }
 }
 
+#if DEBUG
 struct ReasonScene_Previews: PreviewProvider {
     static var previews: some View {
         ExperienceScene()
     }
 }
+#endif

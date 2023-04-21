@@ -11,14 +11,9 @@ import SwiftUI
 import UIKit
 
 struct Play: View {
-    var progressValue: Float {
-        if model.isOpenEnded {
-            return 1
-        } else {
-            return 1 - (model.secondsRemaining / model.totalTime)
-        }
-    }
 
+    // MARK: - Properties
+    
     @State var timerStarted: Bool = true
     @State var favorited: Bool = false
     @State var backgroundPlayer: AVAudioPlayer?
@@ -31,27 +26,38 @@ struct Play: View {
     @State var selectedSound: Sound? = .noSound
     @State var sliderData = SliderData()
     @State var bellSlider = SliderData()
-    @EnvironmentObject var viewRouter: ViewRouter
-    @EnvironmentObject var model: MeditationViewModel
-    @EnvironmentObject var userModel: UserViewModel
-
     @State var showTutorialModal = false
     @State var isTraceTimeMannual = false
     @State var timerSeconds = 0.0
     @State var isDeviceLocked = false
     @State var isSleep = false
     @State var backgroundAnimationOn = false
-    private let audioSession = AVAudioSession.sharedInstance()
-
-    @StateObject var envoyModel = EnvoyViewModel()
     @State private var isSharePresented = false
     @State private var giftUrl = URL(string: "https://mindgarden.io")
     @State private var showGift = false
+    
+    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var model: MeditationViewModel
+    @EnvironmentObject var userModel: UserViewModel
+
+    @StateObject var envoyModel = EnvoyViewModel()
+    
+    private let audioSession = AVAudioSession.sharedInstance()
+
+    var progressValue: Float {
+        if model.isOpenEnded {
+            return 1
+        } else {
+            return 1 - (model.secondsRemaining / model.totalTime)
+        }
+    }
 
     init() {
         UIApplication.shared.isIdleTimerDisabled = true
     }
 
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             if isSleep {
@@ -80,7 +86,7 @@ struct Play: View {
                                         .frame(width: 24)
                                 }
                                 heart
-                            }
+                            } //: HStack
 
                             Spacer()
                             Text(model.selectedMeditation?.title ?? "")
@@ -96,10 +102,11 @@ struct Play: View {
                                     EmptyView()
                                         .frame(width: 24)
                                 }
-                            }
+                            } //: HStack
                             .padding(.trailing)
-                        }.padding(.horizontal)
-                            .padding(.top, height * 0.07)
+                        } //: HStack
+                        .padding(.horizontal)
+                        .padding(.top, height * 0.07)
                         HStack(alignment: .center) {
                             ZStack {
                                 Circle()
@@ -164,9 +171,10 @@ struct Play: View {
                                         .frame(width: 30, height: 30)
                                         .offset(y: 85)
                                 }
-                            }
+                            } //: ZStack
                             .frame(width: K.isPad() ? 500 : 250)
-                        }.offset(y: 25)
+                        } //: HStack
+                        .offset(y: 25)
                         Spacer()
                         Text(model.secondsToMinutesSeconds(totalSeconds: Float(timerSeconds)))
                             .foregroundColor(isSleep ? Clr.brightGreen : Clr.black1)
@@ -192,9 +200,9 @@ struct Play: View {
                                             Text("15")
                                                 .font(.caption)
                                                 .foregroundColor(Clr.darkgreen)
-                                        }
-                                    }
-                                }
+                                        } //: VStack
+                                    } //: ZStack
+                                } //: Button
                             }
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -210,8 +218,8 @@ struct Play: View {
                                         .aspectRatio(contentMode: .fit)
                                         .foregroundColor(Clr.brightGreen)
                                         .frame(width: 35)
-                                }
-                            }
+                                } //: ZStack
+                            } //: Button
                             if model.selectedMeditation?.belongsTo != "Open-ended Meditation" {
                                 Button {
                                     forwardAction()
@@ -228,9 +236,9 @@ struct Play: View {
                                             Text("15")
                                                 .font(.caption)
                                                 .foregroundColor(Clr.darkgreen)
-                                        }
-                                    }
-                                }
+                                        } //: VStack
+                                    } //: ZStack
+                                } //: Button
                             } else {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -243,14 +251,15 @@ struct Play: View {
                                         .foregroundColor(Clr.brightGreen)
                                         .aspectRatio(contentMode: .fit)
                                         .font(.system(size: 40))
-                                }
+                                } //: Button
                             }
                         }
                         Spacer()
                         Spacer()
-                    }
+                    } //: VStack
                     Spacer()
-                }.opacity(showNatureModal ? 0.3 : 1)
+                } //: HStack
+                .opacity(showNatureModal ? 0.3 : 1)
                 if showNatureModal || showTutorialModal || showGift {
                     Color.black
                         .opacity(0.3)
@@ -303,10 +312,11 @@ struct Play: View {
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.5)
                                 )
-                        }.buttonStyle(NeumorphicPress())
-                            .frame(height: 45)
-                            .padding(.vertical, 25)
-                            .opacity(envoyModel.userQuota > 0 ? 1.0 : 0.3)
+                        } //: Button
+                        .buttonStyle(NeumorphicPress())
+                        .frame(height: 45)
+                        .padding(.vertical, 25)
+                        .opacity(envoyModel.userQuota > 0 ? 1.0 : 0.3)
                         Text("No Thanks")
                             .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Color.gray)
@@ -316,9 +326,11 @@ struct Play: View {
                                 }
                             }
                             .padding(.bottom)
-                    }.frame(width: width * 0.85, alignment: .center)
-                        .padding()
-                }.offset(y: height * 0.1)
+                    } //: VStack
+                    .frame(width: width * 0.85, alignment: .center)
+                    .padding()
+                } //: BottomSheet
+                .offset(y: height * 0.1)
             }
         }
         .onAppear {

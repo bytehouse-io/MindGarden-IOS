@@ -20,7 +20,7 @@ struct FlowerPop: View {
     var body: some View {
         ZStack {
             GeometryReader { g in
-                LottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
+                CustomLottieAnimationView(filename: "background", loopMode: .loop, isPlaying: .constant(true))
                     .frame(width: g.size.width, height: g.size.height, alignment: .center)
                     .overlay(
                         userModel.willBuyPlant?.coverImage

@@ -14,12 +14,16 @@ import StoreKit
 import SwiftUI
 
 var moodFromFinished = false
+
 struct Finished: View {
+    
+    // MARK: - Properties
+    
     var bonusModel: BonusViewModel
     var model: MeditationViewModel
     var userModel: UserViewModel
-    @EnvironmentObject var viewRouter: ViewRouter
     var gardenModel: GardenViewModel
+    
     @State private var sharedImage: UIImage?
     @State private var shotting = true
     @State private var isOnboarding = false
@@ -33,7 +37,9 @@ struct Finished: View {
     @State private var ios16 = false
     @State private var triggerRating = false
     @State private var showRating = false
+    
     @Environment(\.sizeCategory) var sizeCategory
+    @EnvironmentObject var viewRouter: ViewRouter
 
     var minsMed: Int {
         if model.selectedMeditation?.duration == -1 {
@@ -54,6 +60,8 @@ struct Finished: View {
         self.gardenModel = gardenModel
     }
 
+    // MARK: - Body
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -91,12 +99,14 @@ struct Finished: View {
                                             .animation(.easeInOut(duration: 1.5))
                                             .opacity(animateViews ? 0 : 1)
                                             .offset(x: animateViews ? 500 : 0)
+                                        
                                         Text(model.totalBreaths > 0 ? String(model.totalBreaths) : String(minsMed))
                                             .font(Font.fredoka(.bold, size: 70))
                                             .foregroundColor(.white)
                                             .animation(.easeInOut(duration: 1.5))
                                             .opacity(animateViews ? 0 : 1)
                                             .offset(x: animateViews ? 500 : 0)
+                                        
                                         VStack {
                                             HStack {
                                                 Text("You received:")
@@ -117,7 +127,8 @@ struct Finished: View {
                                                         .frame(height: 30)
                                                         .rotationEffect(.degrees(30))
                                                 }
-                                            }.offset(y: sizeCategory > .large ? -60 : -25)
+                                            } //: HStack
+                                            .offset(y: sizeCategory > .large ? -60 : -25)
                                             if !isOnboarding {
                                                 HStack {
                                                     Button {} label: {
@@ -133,21 +144,23 @@ struct Finished: View {
                                                                 .padding(.trailing)
                                                                 .lineLimit(1)
                                                                 .minimumScaleFactor(0.05)
-                                                        }.frame(width: g.size.width * 0.4, height: 45)
-                                                            .background(Clr.yellow)
-                                                            .cornerRadius(24)
-                                                            .addBorder(.black, width: 1.5, cornerRadius: 24)
-                                                            .onTapGesture {
-                                                                moodFromFinished = true
-                                                                withAnimation(.easeOut) {
-                                                                    hideConfetti = true
-                                                                    Analytics.shared.log(event: .home_tapped_categories)
-                                                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                                                    impact.impactOccurred()
-                                                                    NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
-                                                                }
+                                                        } //: HStack
+                                                        .frame(width: g.size.width * 0.4, height: 45)
+                                                        .background(Clr.yellow)
+                                                        .cornerRadius(24)
+                                                        .addBorder(.black, width: 1.5, cornerRadius: 24)
+                                                        .onTapGesture {
+                                                            moodFromFinished = true
+                                                            withAnimation(.easeOut) {
+                                                                hideConfetti = true
+                                                                Analytics.shared.log(event: .home_tapped_categories)
+                                                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                                                impact.impactOccurred()
+                                                                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
                                                             }
-                                                    }.buttonStyle(BonusPress())
+                                                        }
+                                                    } //: Button
+                                                    .buttonStyle(BonusPress())
                                                     Button {} label: {
                                                         HStack {
                                                             Img.streakPencil
@@ -161,31 +174,36 @@ struct Finished: View {
                                                                 .padding(.trailing)
                                                                 .lineLimit(1)
                                                                 .minimumScaleFactor(0.05)
-                                                        }.frame(width: g.size.width * 0.4, height: 45)
-                                                            .background(Clr.yellow)
-                                                            .cornerRadius(24)
-                                                            .addBorder(.black, width: 1.5, cornerRadius: 24)
-                                                            .onTapGesture {
-                                                                withAnimation {
-                                                                    hideConfetti = true
-                                                                    Analytics.shared.log(event: .home_tapped_categories)
-                                                                    let impact = UIImpactFeedbackGenerator(style: .light)
-                                                                    impact.impactOccurred()
-                                                                    viewRouter.previousPage = .garden
-                                                                    viewRouter.currentPage = .journal
-                                                                }
+                                                        } //: HStack
+                                                        .frame(width: g.size.width * 0.4, height: 45)
+                                                        .background(Clr.yellow)
+                                                        .cornerRadius(24)
+                                                        .addBorder(.black, width: 1.5, cornerRadius: 24)
+                                                        .onTapGesture {
+                                                            withAnimation {
+                                                                hideConfetti = true
+                                                                Analytics.shared.log(event: .home_tapped_categories)
+                                                                let impact = UIImpactFeedbackGenerator(style: .light)
+                                                                impact.impactOccurred()
+                                                                viewRouter.previousPage = .garden
+                                                                viewRouter.currentPage = .journal
                                                             }
-                                                    }
+                                                        }
+                                                    } //: Button
                                                     .buttonStyle(BonusPress())
-                                                }.frame(width: g.size.width, height: 45)
-                                                    .padding(.top, 10)
-                                                    .zIndex(100)
-                                                    .offset(y: sizeCategory > .large ? -60 : K.isSmall() ? -15 : 0)
+                                                } //: HStack
+                                                .frame(width: g.size.width, height: 45)
+                                                .padding(.top, 10)
+                                                .zIndex(100)
+                                                .offset(y: sizeCategory > .large ? -60 : K.isSmall() ? -15 : 0)
                                             }
-                                        }.offset(y: !isOnboarding ? 0 : -25)
-                                    }.offset(y: !isOnboarding ? 15 : -50)
-                                }.padding(.top, ios14 && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" ? 50 : 0)
-                            }
+                                        } //: VStack
+                                        .offset(y: !isOnboarding ? 0 : -25)
+                                    } //: VStack
+                                    .offset(y: !isOnboarding ? 15 : -50)
+                                } //: HStack
+                                .padding(.top, ios14 && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "done" ? 50 : 0)
+                            } //: ZStack
 
                             HStack(alignment: .center) {
                                 Spacer()
@@ -217,12 +235,16 @@ struct Finished: View {
                                             .frame(height: g.size.height / 2.75)
                                             .padding(.top, 10)
                                             .animation(.easeInOut(duration: 2.0))
-                                    }.frame(width: g.size.width * 0.85, height: g.size.height / 2.25)
-                                }
+                                    } //: VStack
+                                    .frame(width: g.size.width * 0.85, height: g.size.height / 2.25)
+                                } //: VStack
                                 Spacer()
-                            }.offset(y: !isOnboarding ? -20 : -75)
-                        }.offset(y: -g.size.height / (ios16 ? 12 : 6))
-                    }.frame(width: g.size.width)
+                            } //: HStack
+                            .offset(y: !isOnboarding ? -20 : -75)
+                        } //: VStack
+                        .offset(y: -g.size.height / (ios16 ? 12 : 6))
+                    } //: ScrollView
+                    .frame(width: g.size.width)
                     HStack {
                         heart.padding(.horizontal)
                         Image(systemName: "square.and.arrow.up")
@@ -284,147 +306,145 @@ struct Finished: View {
                                         }
                                     }
                                 }
-                        }
+                        } //: Button
                         .zIndex(100)
                         .frame(width: g.size.width * 0.6, height: g.size.height / 16)
                         .buttonStyle(ScalePress())
-                    }.frame(width: abs(g.size.width - 50), height: g.size.height / 10)
-                        .background(!K.isSmall() ? .clear : Clr.darkWhite)
-                        .padding()
-                        .position(x: g.size.width / 2, y: g.size.height - g.size.height / (K.hasNotch() ? ios14 ? 7 : 9 : 4))
+                    } //: HStack
+                    .frame(width: abs(g.size.width - 50), height: g.size.height / 10)
+                    .background(!K.isSmall() ? .clear : Clr.darkWhite)
+                    .padding()
+                    .position(x: g.size.width / 2, y: g.size.height - g.size.height / (K.hasNotch() ? ios14 ? 7 : 9 : 4))
                     if showUnlockedModal {
                         Color.black
                             .opacity(0.55)
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
-//                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
-//                        .offset(y: showUnlockedModal ? 0 : g.size.height)
-//                        .animation(.default, value: showUnlockedModal)
+                } //: GeometryReader
+            } //: ZStack
+        } //: NavigationView
+        .transition(.move(edge: .trailing))
+        .fullScreenCover(isPresented: $showStreak, content: {
+            StreakScene(showStreak: $showStreak)
+                .environmentObject(bonusModel)
+                .environmentObject(viewRouter)
+                .background(Clr.darkWhite)
+        })
+        .onDisappear {
+            model.totalBreaths = 0
+            model.playImage = Img.seed
+            model.lastSeconds = false
+            if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+                print("numSession", UserDefaults.standard.integer(forKey: "numSessions"))
+                NotificationHelper.addOneDay()
+            }
+            if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
+                NotificationHelper.addThreeDay()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter)) { _ in }
+        .onAppear {
+            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                if let player = player {
+                    player.play()
                 }
             }
-        }.transition(.move(edge: .trailing))
-            .fullScreenCover(isPresented: $showStreak, content: {
-                StreakScene(showStreak: $showStreak)
-                    .environmentObject(bonusModel)
-                    .environmentObject(viewRouter)
-                    .background(Clr.darkWhite)
-            })
-            .onDisappear {
-                model.totalBreaths = 0
-                model.playImage = Img.seed
-                model.lastSeconds = false
-                if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
-                    print("numSession", UserDefaults.standard.integer(forKey: "numSessions"))
-                    NotificationHelper.addOneDay()
+
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    ios14 = false
                 }
-                if let threeId = UserDefaults.standard.value(forKey: "threeDayNotif") as? String {
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
-                    NotificationHelper.addThreeDay()
+                if #available(iOS 16.0, *) {
+                    ios16 = true
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter))
-            { _ in }
-            .onAppear {
-                if UserDefaults.standard.bool(forKey: "isPlayMusic") {
-                    if let player = player {
-                        player.play()
-                    }
-                }
 
-                DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        ios14 = false
-                    }
-                    if #available(iOS 16.0, *) {
-                        ios16 = true
-                    }
-                }
+            var session = [String: String]()
+            session[K.defaults.plantSelected] = userModel.selectedPlant?.title
+            var minutesMed = 0
 
-                var session = [String: String]()
-                session[K.defaults.plantSelected] = userModel.selectedPlant?.title
-                var minutesMed = 0
-
-                if model.totalBreaths > 0 {
-                    if let selectedBreath = model.selectedBreath {
-                        session[K.defaults.meditationId] = String(selectedBreath.id)
-                        switch selectedBreath.duration * model.totalBreaths {
-                        case 0 ... 35: minutesMed = 30
-                        case 36 ... 70: minutesMed = 60
-                        default: minutesMed = selectedBreath.duration * model.totalBreaths
-                        }
-                        if minutesMed >= 30 {
-                            userModel.finishedMeditation(id: String(selectedBreath.id))
-                        }
+            if model.totalBreaths > 0 {
+                if let selectedBreath = model.selectedBreath {
+                    session[K.defaults.meditationId] = String(selectedBreath.id)
+                    switch selectedBreath.duration * model.totalBreaths {
+                    case 0 ... 35: minutesMed = 30
+                    case 36 ... 70: minutesMed = 60
+                    default: minutesMed = selectedBreath.duration * model.totalBreaths
                     }
-                    session[K.defaults.duration] = String(minutesMed)
-                    // Log Analytics
-                    #if !targetEnvironment(simulator)
-                        Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
-                    #endif
-                    print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
-                } else {
-                    session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
-                    session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
-                    let dur = model.selectedMeditation?.duration ?? 0
-                    if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
-                        userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                    if minutesMed >= 30 {
+                        userModel.finishedMeditation(id: String(selectedBreath.id))
                     }
-                    // Log Analytics
-                    #if !targetEnvironment(simulator)
-                        Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
-                    #endif
-                    print("logging, \("finMed_\(model.selectedMeditation?.returnEventName() ?? "")")")
                 }
-                session["timeStamp"] = Date.getTime()
-                reward = model.getReward()
-                if userModel.isPotion || userModel.isChest {
-                    reward = reward * 3
+                session[K.defaults.duration] = String(minutesMed)
+                // Log Analytics
+                #if !targetEnvironment(simulator)
+                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
+                #endif
+                print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
+            } else {
+                session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
+                session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+                let dur = model.selectedMeditation?.duration ?? 0
+                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
+                    userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
                 }
+                // Log Analytics
+                #if !targetEnvironment(simulator)
+                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
+                #endif
+                print("logging, \("finMed_\(model.selectedMeditation?.returnEventName() ?? "")")")
+            }
+            session["timeStamp"] = Date.getTime()
+            reward = model.getReward()
+            if userModel.isPotion || userModel.isChest {
+                reward = reward * 3
+            }
 
-                if reward == 0 && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") {
-                    viewRouter.currentPage = .garden
-                }
+            if reward == 0 && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") {
+                viewRouter.currentPage = .garden
+            }
 //
-                userModel.coins += reward
-                gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
-                    if model.shouldStreakUpdate {
-                        bonusModel.updateStreak()
-                    }
-
-                    if !userModel.ownedPlants.contains(where: { plt in plt.title == "Cherry Blossoms" }) && UserDefaults.standard.bool(forKey: "unlockedCherry") {
-                        userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
-                            p.title == "Cherry Blossoms"
-                        })
-                        userModel.buyPlant(unlockedStrawberry: true)
-                    }
+            userModel.coins += reward
+            gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
+                if model.shouldStreakUpdate {
+                    bonusModel.updateStreak()
                 }
 
-                favorited = model.isFavorited
-                // onboarding
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                    Analytics.shared.log(event: .onboarding_finished_meditation)
-                    UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
-                    isOnboarding = true
-                } else {
-                    OneSignal.sendTag("firstMeditation", value: "true")
+                if !userModel.ownedPlants.contains(where: { plt in plt.title == "Cherry Blossoms" }) && UserDefaults.standard.bool(forKey: "unlockedCherry") {
+                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                        p.title == "Cherry Blossoms"
+                    })
+                    userModel.buyPlant(unlockedStrawberry: true)
                 }
             }
-            .onAppearAnalytics(event: .screen_load_finished)
-            .alert(isPresented: $triggerRating) {
-                Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
-                      primaryButton: .default(Text("Yes!")) {
-                          Analytics.shared.log(event: .rating_tapped_yes)
-                          showRating = true
-                          UserDefaults.standard.setValue(true, forKey: "reviewedApp")
 
-                      },
-                      secondaryButton: .default(Text("No")) {
-                          Analytics.shared.log(event: .rating_tapped_no)
-                          dismiss()
-                      })
+            favorited = model.isFavorited
+            // onboarding
+            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                Analytics.shared.log(event: .onboarding_finished_meditation)
+                UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
+                isOnboarding = true
+            } else {
+                OneSignal.sendTag("firstMeditation", value: "true")
             }
+        }
+        .onAppearAnalytics(event: .screen_load_finished)
+        .alert(isPresented: $triggerRating) {
+            Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
+                  primaryButton: .default(Text("Yes!")) {
+                      Analytics.shared.log(event: .rating_tapped_yes)
+                      showRating = true
+                      UserDefaults.standard.setValue(true, forKey: "reviewedApp")
+
+                  },
+                  secondaryButton: .default(Text("No")) {
+                      Analytics.shared.log(event: .rating_tapped_no)
+                      dismiss()
+                  })
+        }
     }
 
     var heart: some View {
