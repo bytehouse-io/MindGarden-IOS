@@ -149,7 +149,7 @@ struct PricingView: View {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             selectedBox = "Yearly"
-                            unlockPro()
+                            unlockProMWM()
                         } label: {
                             ZStack {
                                 PricingBoxView(title: "Yearly", price: yearlyPrice, selected: $selectedBox, trialLength: $trialLength)
@@ -178,7 +178,7 @@ struct PricingView: View {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Monthly"
-                                unlockPro()
+                                unlockProMWM()
                             }
                         } label: {
                             PricingBoxView(title: "Monthly", price: monthlyPrice, selected: $selectedBox, trialLength: $trialLength)
@@ -213,7 +213,7 @@ struct PricingView: View {
                         // ACTION BUTTON
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
-                            unlockPro()
+                            unlockProMWM()
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         } label: {
                             HStack {
@@ -313,6 +313,7 @@ extension PricingView {
     }
     
     private func userIsPro() {
+//        viewRouter.currentPage = .meditate
         OneSignal.sendTag("userIsPro", value: "true")
         if !userModel.ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" }) ?? Plant.badgePlants[0]) {
             userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
@@ -342,6 +343,7 @@ extension PricingView {
                 }
             }
         }
+        crossButtonAction()
     }
     
     private func purchasesOffering() {
@@ -432,7 +434,9 @@ extension PricingView {
             showLoading = false
             if success {
                 // Start delivering the consumable product to your user from here
-                userIsPro()
+                onMainThread {
+                    userIsPro()
+                }
             } else {
                 // Handle error
                 Amplitude.instance().logEvent(event3)

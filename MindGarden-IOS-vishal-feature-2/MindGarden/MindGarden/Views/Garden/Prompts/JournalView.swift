@@ -76,9 +76,12 @@ struct JournalView: View, KeyboardReadable {
                                     presentationMode.wrappedValue.dismiss()
                                     viewRouter.currentPage = viewRouter.previousPage
                                 }
-                            }.padding(.leading, 5)
+                            } //: CloseButton
+                            .padding(.leading, 5)
                         }
-                    }.padding(.leading, 5)
+                    } //: HStack
+                    .padding(.leading, 5)
+                    
                     if userModel.elaboration != "" {
                         HStack {
                             Mood.getMoodImage(mood: userModel.selectedMood)
@@ -232,7 +235,7 @@ struct JournalView: View, KeyboardReadable {
             .fullScreenCover(isPresented: $showHooray) {
                 HoorayView(recs: $recs, coin: $coin)
             }
-            .transition(.move(edge: .trailing))
+//            .transition(.move(edge: .trailing))
             .onDisappear {
                 fromProfile = false
                 if #available(iOS 15.0, *) {

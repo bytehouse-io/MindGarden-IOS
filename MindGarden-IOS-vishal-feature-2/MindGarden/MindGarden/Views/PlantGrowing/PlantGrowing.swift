@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct PlantGrowing: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var userModel: UserViewModel
+    
     @State private var isTransit = false
     @State private var shake = 0
     @State private var calendarWiggles = false
     @State var plant: Plant?
 
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             VStack {

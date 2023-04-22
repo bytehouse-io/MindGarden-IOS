@@ -20,6 +20,7 @@
 		0B3AA79029B0BED800386163 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78F29B0BED800386163 /* FirebaseStorage */; };
 		0B3AA79229B0C0C500386163 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA79129B0C0C500386163 /* FirebaseDynamicLinks */; };
 		182CF8EF29D88A5D001E1FB9 /* LeavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182CF8EE29D88A5D001E1FB9 /* LeavesView.swift */; };
+		184899FB29F3C81D0095B61E /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FA29F3C81C0095B61E /* HelperFunctions.swift */; };
 		187CE0FF29DC89BE00E6B54B /* MWMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CE0FE29DC89BE00E6B54B /* MWMManager.swift */; };
 		1882E70D29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70C29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift */; };
 		1882E70F29DBD501005D6DF2 /* TermsAndPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */; };
@@ -343,6 +344,7 @@
 		130EBB51197FC76EE7120FD4 /* Pods_MindGarden.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		176A2840CDF90E86AFDC76BB /* Pods-MindGardenTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.debug.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.debug.xcconfig"; sourceTree = "<group>"; };
 		182CF8EE29D88A5D001E1FB9 /* LeavesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeavesView.swift; sourceTree = "<group>"; };
+		184899FA29F3C81C0095B61E /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		187CE0FE29DC89BE00E6B54B /* MWMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMManager.swift; sourceTree = "<group>"; };
 		1882E70C29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentlyAskedQuestionView.swift; sourceTree = "<group>"; };
 		1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPrivacyView.swift; sourceTree = "<group>"; };
@@ -1105,6 +1107,7 @@
 				FE6289B22675477400007889 /* ViewModifiers */,
 				FEA592CE267E8D98006558A2 /* Util.swift */,
 				58D4F03827EAE9C400451081 /* ActivityViewController.swift */,
+				184899FA29F3C81C0095B61E /* HelperFunctions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2007,6 +2010,7 @@
 				586E7DAB2841DF40007E0695 /* DiscoverModel.swift in Sources */,
 				18A502D229F0F36300528A23 /* HoorayView.swift in Sources */,
 				FEB85FD7266D4E5B008CDAA4 /* Colors+Generated.swift in Sources */,
+				184899FB29F3C81D0095B61E /* HelperFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

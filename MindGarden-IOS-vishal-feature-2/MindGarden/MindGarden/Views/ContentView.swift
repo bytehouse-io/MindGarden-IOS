@@ -163,6 +163,7 @@ struct ContentView: View {
                                         MoodElaborate()
                                     case .journal:
                                         JournalView()
+                                            .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(userModel)
                                             .environmentObject(gardenModel)
                                     case .finished:
@@ -213,6 +214,9 @@ struct ContentView: View {
                                         PricingView()
                                             .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
+                                            .environmentObject(userModel)
+                                            .environmentObject(meditationModel)
+                                            .environmentObject(viewRouter)
                                     case .reason:
                                         ReasonScene()
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))

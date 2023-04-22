@@ -97,7 +97,8 @@ struct HoorayView: View {
                     } //: VStack
                     .padding()
                     .frame(width: g.size.width * 0.8)
-                }  .frame(width: width * 0.85, height: 150)
+                } //: ZStack
+                .frame(width: width * 0.85, height: 150)
                 .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                 Spacer()
                     
@@ -105,7 +106,7 @@ struct HoorayView: View {
                     action: {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         Analytics.shared.log(event: .hooray_tapped_continue)
-                        presentationMode.wrappedValue.dismiss()
+//                        presentationMode.wrappedValue.dismiss()
                         showRecs = true
                     },
                     enabled: Binding(get: { true }, set: { _, _ in })
@@ -151,6 +152,6 @@ struct HoorayView: View {
         .fullScreenCover(isPresented: $showRecs) {
             RecommendationsView(recs: $recs, coin: $coin)
         }
-        .transition(.move(edge: .trailing))
+//        .transition(.move(edge: .trailing))
     }
 }

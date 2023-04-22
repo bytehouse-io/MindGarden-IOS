@@ -151,7 +151,6 @@ struct MeditationCompleted: View {
                 }
             }
 
-
             var session = [String: String]()
             session[K.defaults.plantSelected] = userModel.selectedPlant?.title
             var minutesMed = 0
@@ -170,9 +169,9 @@ struct MeditationCompleted: View {
                 }
                 session[K.defaults.duration] = String(minutesMed)
                 // Log Analytics
-                #if !targetEnvironment(simulator)
-                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
-                #endif
+//                #if !targetEnvironment(simulator)
+//                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
+//                #endif
                 print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
             } else {
                 session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
@@ -182,9 +181,9 @@ struct MeditationCompleted: View {
                     userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
                 }
                 // Log Analytics
-                #if !targetEnvironment(simulator)
-                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
-                #endif
+//                #if !targetEnvironment(simulator)
+//                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
+//                #endif
                 print("logging, \("finMed_\(model.selectedMeditation?.returnEventName() ?? "")")")
             }
             session["timeStamp"] = Date.getTime()

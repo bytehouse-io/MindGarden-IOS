@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FlowerPop: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var userModel: UserViewModel
     @State private var scale = 0.0
     @State private var isEquipped = false
@@ -15,8 +18,12 @@ struct FlowerPop: View {
     @State private var img = UIImage()
     @State private var showSharing = false
     @State private var showButtons = true
-
-    @Environment(\.presentationMode) var presentationMode
+    
+    @Environment(\.dismiss) var dismiss
+//    @Environment(\.presentationMode) var presentationMode
+    
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             GeometryReader { g in
@@ -55,19 +62,22 @@ struct FlowerPop: View {
                                     Text("Continue")
                                         .foregroundColor(.black)
                                         .font(Font.fredoka(.bold, size: 24))
-                                }.frame(width: g.size.width * 0.50, height: 60)
-                                    .background(Clr.yellow)
-                                    .cornerRadius(25)
-                                    .onTapGesture {
-                                        withAnimation {
-                                            Analytics.shared.log(event: .store_animation_continue)
-                                            let impact = UIImpactFeedbackGenerator(style: .light)
-                                            impact.impactOccurred()
-                                            userModel.triggerAnimation = false
-                                            presentationMode.wrappedValue.dismiss()
-                                        }
+                                }
+                                .frame(width: g.size.width * 0.50, height: 60)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
+                                .onTapGesture {
+                                    withAnimation {
+                                        Analytics.shared.log(event: .store_animation_continue)
+                                        let impact = UIImpactFeedbackGenerator(style: .light)
+                                        impact.impactOccurred()
+                                        userModel.triggerAnimation = false
+                                        dismiss()
                                     }
-                            }.buttonStyle(NeumorphicPress())
+                                }
+                            } //: Button
+                            .buttonStyle(NeumorphicPress())
+                            
                             Button {
                                 showButtons = false
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -77,14 +87,14 @@ struct FlowerPop: View {
                             } label: {
                                 Img.share
                                     .padding()
-                            }
-                        }
+                            } //: Button
+                        } //: HStack
                         .padding(.horizontal, 50)
                         .padding(.bottom, 100)
                     }
-                }
-            }
-        }
+                } //: VStack
+            } //: GeometryReader
+        } //: ZStack
         .onChange(of: showSharing) { value in
             showButtons = !value
         }
