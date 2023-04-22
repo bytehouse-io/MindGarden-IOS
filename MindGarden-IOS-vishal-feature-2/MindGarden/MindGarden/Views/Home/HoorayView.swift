@@ -24,7 +24,8 @@ struct HoorayView: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
-    
+    @Environment(\.presentationMode) var presentationMode
+
     let width = UIScreen.screenWidth
 
     // MARK: - Body
@@ -36,10 +37,8 @@ struct HoorayView: View {
                     .frame(height: 80)
                 Text("Hooray!")
                     .foregroundColor(Clr.brightGreen)
-                    .font(Font.fredoka(.semiBold, size: 28))
+                    .font(Font.fredoka(.semiBold, size: 36))
                     .multilineTextAlignment(.center)
-                Spacer()
-                
                 (
                     Text("You earned")
                         .foregroundColor(Clr.black2)
@@ -50,53 +49,63 @@ struct HoorayView: View {
                     Text("coins")
                         .foregroundColor(Clr.black2)
                 )
-                .font(Font.fredoka(.semiBold, size: 20))
-                .padding()
+                .font(Font.fredoka(.semiBold, size: 24))
+                .padding(.bottom)
                 Spacer()
                 Img.coinBunch
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .padding(.leading, 16)
-                    .frame(width: 150)
+                    .frame(width: 200)
                 Spacer()
-                VStack(spacing: 10) {
-                    HStack {
-                        Text("+\(moodCoins)")
-                            .foregroundColor(Clr.brightGreen)
-                            .font(Font.fredoka(.semiBold, size: 20)) +
-                            Text(" Mood Check")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.regular, size: 20))
+                ZStack {
+                    Rectangle()
+                        .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
+                        .font(Font.fredoka(.medium, size: 20))
+                        .overlay(CustomLottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
+                            .scaleEffect(2))
+                    VStack(spacing: 10) {
                         Spacer()
-                        Mood.getMoodImage(mood: userModel.selectedMood)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30)
-                    } //: HStack
-                    HStack {
-                        Text("+\(coin)")
-                            .foregroundColor(Clr.brightGreen)
-                            .font(Font.fredoka(.semiBold, size: 20))
-                        +
-                        Text(" Journaling")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.regular, size: 20))
+                        HStack() {
+                            Text("+\(moodCoins)")
+                                .foregroundColor(.white)
+                                .font(Font.fredoka(.bold, size: 20)) +
+                            Text("  Mood Check")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.semiBold, size: 20))
+                            Spacer()
+                            Mood.getMoodImage(mood: userModel.selectedMood)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 36)
+                        } //: HStack
+                        HStack {
+                            Text("+\(coin)")
+                                .foregroundColor(.white)
+                                .font(Font.fredoka(.bold, size: 20))
+                            +
+                            Text("  Journaling")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.semiBold, size: 20))
+                            Spacer()
+                            Img.streakPencil
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 36)
+                        } //: HStack
                         Spacer()
-                        Img.streakPencil
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30)
-                    } //: HStack
-                    Spacer()
-                } //: VStack
-                .padding(.trailing, 30)
-                .padding(.top)
-                .frame(width: g.size.width * 0.8)
-                
+                    } //: VStack
+                    .padding()
+                    .frame(width: g.size.width * 0.8)
+                }  .frame(width: width * 0.85, height: 150)
+                .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                 Spacer()
                     
                 ContinueButton(
                     action: {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        Analytics.shared.log(event: .hooray_tapped_continue)
+                        presentationMode.wrappedValue.dismiss()
                         showRecs = true
                     },
                     enabled: Binding(get: { true }, set: { _, _ in })

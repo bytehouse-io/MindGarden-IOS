@@ -181,12 +181,12 @@ struct ReviewScene: View {
                                     viewRouter.progressValue = 1
                                     // goto home screen now
                                     viewRouter.currentPage = .meditate
-//                                    if fromInfluencer != "" {
-//                                        Analytics.shared.log(event: .user_from_influencer)
-//                                        viewRouter.currentPage = .pricing
-//                                    } else {
-//                                        showPaywall = true
-//                                    }
+                                    if fromInfluencer != "" {
+                                        Analytics.shared.log(event: .user_from_influencer)
+                                        viewRouter.currentPage = .pricing
+                                    } else {
+                                        viewRouter.currentPage = .pricing
+                                    }
                                 }
                             },
                             label: {

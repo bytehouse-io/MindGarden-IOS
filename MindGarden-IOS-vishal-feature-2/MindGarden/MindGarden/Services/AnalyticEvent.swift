@@ -25,6 +25,13 @@ enum AnalyticEvent {
     case update_triggered_auth //
     case show_onboarding_auth //
     case screen_load_pricing_onboarding
+    case goalview_tapped_14 //
+    case goalview_tapped_30 //
+    case goalview_tapped_7 //
+    case goalview_tapped_50 //
+    case goalview_tapped_continue //
+    case goalview_tapped_back //
+    
 
     // experience
     case screen_load_experience //
@@ -83,6 +90,8 @@ enum AnalyticEvent {
     case onboarding_finished_single_course //
     case onboarding_claimed_strawberry //
     case onboarding_came_from_referral //
+    case onboarding_single_go_to_home //
+    case hooray_tapped_continue
 
     // MARK: - Authentication
 
@@ -262,6 +271,12 @@ enum AnalyticEvent {
     case finished_tapped_gratitude //
     case finished_tapped_mood //
     case finished_set_reminder //
+    
+    case meditationCompleted_tapped_continue
+    case meditationCompleted_tapped_heart
+    
+    case congratulations_tapped_continue
+    case congratulations_tapped_heart
 
     // MARK: - Discover
 
@@ -480,6 +495,8 @@ extension AnalyticEvent {
         case .breathwrk_middle_tapped_settings: return "breathwrk_middle_tapped_settings"
         case .screen_load_breathwrk_middle: return "screen_load_breathwrk_middle"
 
+            
+            
         case .screen_load_onboarding: return "screen_load_onboarding"
         case .onboarding_tapped_continue: return "onboarding_tapped_continue"
         case .onboarding_tapped_sign_in: return "onboarding_tapped_sign_in"
@@ -509,6 +526,12 @@ extension AnalyticEvent {
         case .notification_success: return "notification_success"
         case .notification_tapped_skip: return "notification_tapped_skip"
         case .notification_go_to_settings: return "notification_go_to_settings"
+        case .goalview_tapped_14: return "goalview_tapped_14"
+        case .goalview_tapped_30: return "goalview_tapped_30"
+        case .goalview_tapped_7: return "goalview_tapped_7"
+        case .goalview_tapped_50: return "goalview_tapped_50"
+        case .goalview_tapped_continue: return "goalview_tapped_continue"
+        case .goalview_tapped_back: return "goalview_tapped_back"
         case .onboarding_finished_mood: return "onboarding_finished_mood"
         case .onboarding_notification_off: return "onboarding_notification_off"
         case .onboarding_notification_on: return "onboarding_notification_on"
@@ -805,6 +828,15 @@ extension AnalyticEvent {
         case .widget_tapped_meditate: return "widget_tapped_meditate"
         case .widget_tapped_logMood: return "widget_tapped_logMood"
         case .widget_tapped_journal: return "widget_tapped_journal"
+            
+        case .meditationCompleted_tapped_continue: return "meditationCompleted_tapped_continue"
+        case .meditationCompleted_tapped_heart: return  "meditationCompleted_tapped_heart"
+        
+        case .congratulations_tapped_continue: return "congratulations_tapped_continue"
+        case .congratulations_tapped_heart: return "congratulations_tapped_heart"
+            
+        case .hooray_tapped_continue: return "hooray_tapped_continue"
+        case .onboarding_single_go_to_home: return "onboarding_single_go_to_home"
         }
     }
 }

@@ -51,8 +51,7 @@ struct HomeViewScroll: View {
                                 Text("\(bonusModel.streakNumber)")
                                     .font(Font.fredoka(.medium, size: 24))
                                     .foregroundColor(Clr.healthSecondary)
-                            } //: HStack
-                            .onTapGesture {
+                            }.onTapGesture {
                                 withAnimation {
                                     Analytics.shared.log(event: .home_tapped_streak)
                                     showModal = true
@@ -66,15 +65,13 @@ struct HomeViewScroll: View {
                                 Text("\(userModel.plantedTrees.count)")
                                     .font(Font.fredoka(.medium, size: 24))
                                     .foregroundColor(Clr.darkgreen)
-                            } //: HStack
-                            .onTapGesture {
+                            }.onTapGesture {
                                 withAnimation {
                                     Analytics.shared.log(event: .home_tapped_real_tree)
                                     NotificationCenter.default.post(name: Notification.Name("trees"), object: nil)
                                 }
                             }
-                        } //: HStack
-                        .offset(x: -50, y: -30)
+                        }.offset(x: -50, y: -30)
                     }
                     VStack {
                         HStack(spacing: -4) {
@@ -123,17 +120,12 @@ struct HomeViewScroll: View {
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: width * 0.15)
-                                            (
-                                                Text("Get Focused.\n")
-                                                    .font(Font.fredoka(.bold, size: 16))
-                                                    .foregroundColor(.black)
-                                                +
-                                                Text("Start your free trial")
-                                                    .font(Font.fredoka(.medium, size: 16))
-                                                    .foregroundColor(Clr.black2))
-                                                    .multilineTextAlignment(.leading)
-                                        } //: HStack
-                                        .frame(width: width * 0.5)
+                                            (Text("Get Focused.\n")
+                                                .font(Font.fredoka(.bold, size: 16))
+                                                .foregroundColor(.black)
+                                                + Text("Start your free trial").font(Font.fredoka(.medium, size: 16)).foregroundColor(Clr.black2))
+                                                .multilineTextAlignment(.leading)
+                                        }.frame(width: width * 0.5)
                                         Text("✨ Try Pro")
                                             .foregroundColor(Clr.black2)
                                             .font(Font.fredoka(.semiBold, size: 16))
@@ -144,12 +136,10 @@ struct HomeViewScroll: View {
                                             .addBorder(.black, width: 1.5, cornerRadius: 12)
                                             .rightShadow()
                                             .padding(.trailing)
-                                    } //: HStack
-                                } //: ZStack
-                                .padding(.top, 15)
-                                .frame(width: width * 0.85)
-                            } //: Button
-                            .buttonStyle(NeoPress())
+                                    }
+                                }.padding(.top, 15)
+                                    .frame(width: width * 0.85)
+                            }.buttonStyle(NeoPress())
                         }
 
                         HStack(spacing: 15) {
@@ -161,15 +151,13 @@ struct HomeViewScroll: View {
                                 .minimumScaleFactor(0.05)
                                 .lineLimit(2)
                                 .foregroundColor(.gray)
-                        } //: HStack
+                        }
                         .frame(width: width * 0.8, height: height * 0.06)
                         .padding([.vertical, .top], 30)
-                    } //: VStack
-                    .offset(y: -height * 0.125)
-                } //: VStack
-            } //: ScrollView
-            .frame(height: height + (K.isSmall() ? 125 : 0))
-            .padding(.bottom)
+                    }.offset(y: -height * 0.125)
+                }
+            }.frame(height: height + (K.isSmall() ? 125 : 0))
+                .padding(.bottom)
         }
     }
 }

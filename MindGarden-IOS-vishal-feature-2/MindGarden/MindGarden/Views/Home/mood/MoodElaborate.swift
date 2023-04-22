@@ -20,6 +20,7 @@ struct MoodElaborate: View {
     @State private var showDetail = false
     @State private var showMoodEdit: Bool = false
     @State private var subMoodList: [MoodList] = []
+    
 
     let columns = [
         GridItem(.flexible()),

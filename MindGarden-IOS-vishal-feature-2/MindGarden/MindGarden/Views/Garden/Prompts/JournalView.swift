@@ -13,7 +13,7 @@ import Lottie
 import SwiftUI
 
 var placeholderReflection = ""
-var placeholderQuestion = "What's one thing you're grateful for right now?"
+var placeholderQuestion = "Elaborate on how you're feeling"
 
 struct JournalView: View, KeyboardReadable {
     
@@ -26,6 +26,7 @@ struct JournalView: View, KeyboardReadable {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
+    @State private var showRecs = false
 
     @State private var showtextFieldToolbar = false
     @State private var coin = 0
@@ -165,7 +166,10 @@ struct JournalView: View, KeyboardReadable {
                 .frame(width: UIScreen.screenWidth - 60, alignment: .leading)
                 bottomPanel
                     .padding(.bottom)
-            } //: ZStack
+            } //: ZStack\
+            .fullScreenCover(isPresented: $showRecs) {
+                RecommendationsView(recs: $recs, coin: $coin)
+            }
             .offset(x: -5)
             .onChange(of: text) { _ in
                 //                if text.contains(placeholderReflection) {
@@ -195,6 +199,9 @@ struct JournalView: View, KeyboardReadable {
                 }
             }
             .onAppear {
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                    placeholderQuestion = "What's one thing you're grateful for right now?"
+                }
                 if !fromProfile {
                     text = ""
                 } else {
@@ -207,11 +214,13 @@ struct JournalView: View, KeyboardReadable {
                 if let gratitudes = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?[K.defaults.journals] as? [[String: String]] {
                     divider = gratitudes.count * 3
                 }
+                
                 if #available(iOS 15.0, *) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         isFocused = true
                     }
                 }
+                
                 recs = Meditation.getRecsFromMood(selectedMood: userModel.selectedMood, elaboration: userModel.elaboration)
                 question = placeholderQuestion
                 UITextView.appearance().backgroundColor = .clear
@@ -447,12 +456,16 @@ struct JournalView: View, KeyboardReadable {
             gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
             withAnimation {
                 if moodFirst {
-                    showHooray = true
+                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                        showHooray = true
+                    } else {
+                        showRecs = true
+                    }
                     moodFirst = false
                 } else {
                     viewRouter.currentPage = .meditate
                 }
-                placeholderQuestion = "What's one thing you're grateful for right now?"
+                placeholderQuestion = "Elaborate on how you feel"
                 showLoading = false
             }
 //                                    placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"

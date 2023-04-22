@@ -130,6 +130,7 @@ struct Home: View {
             viewRouter.currentPage = .middle
         }
         .onAppear {
+            
             if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") {
                 profileModel.showWidget = true
             }

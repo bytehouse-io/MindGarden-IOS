@@ -15,7 +15,11 @@ struct MeditationCompleted: View {
     var model: MeditationViewModel
     var userModel: UserViewModel
     var gardenModel: GardenViewModel
+    var bonusModel: BonusViewModel
     var onDismiss: Page
+    @State private var playEntryAnimation = false
+    @State private var playAnim = false
+
 
     @EnvironmentObject var viewRouter: ViewRouter
 
@@ -42,16 +46,30 @@ struct MeditationCompleted: View {
             
             VStack {
                 Spacer()
-                    .frame(height: 150)
+                    .frame(height: 50)
                 // MEDITATING TURLE IMAGE
-                Img.meditatingTurtle2
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 150)
-                    .padding(.bottom, 40)
+                if model.selectedMeditation?.imgURL != "" {
+                    UrlImageView(urlString: model.selectedMeditation?.imgURL ?? "")
+                        .scaledToFit()
+                        .frame(height: 150)
+                        .padding(.vertical, 20)
+                } else {
+                    model.selectedMeditation?.img
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 150)
+                        .padding(.vertical, 20)
+                }
+
                 VStack(alignment: .leading) {
                     // TITLE
-                    Text("Meditation Completed")
+
+                    Text(model.selectedMeditation?.title ?? "")
+                        .font(Font.fredoka(.bold, size: 28))
+                        .foregroundColor(Clr.darkgreen)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal)
+                    Text("Completed")
                         .font(Font.fredoka(.bold, size: 28))
                         .foregroundColor(Clr.darkgreen)
                         .fixedSize(horizontal: false, vertical: true)
@@ -59,53 +77,129 @@ struct MeditationCompleted: View {
                         .padding(.bottom, 15)
                     
                     // TIME MEDITATED
-                    (
-                        Text(model.totalBreaths > 0 ? "Total Breaths meditated: " : "Time meditated: ")
-                            .font(Font.fredoka(.semiBold, size: 16))
-                            .foregroundColor(Clr.black2)
-                        +
-                        Text(model.totalBreaths > 0 ? String(model.totalBreaths) : "\(String(minsMed)) Min")
-                            .font(Font.fredoka(.bold, size: 16))
-                            .foregroundColor(.black)
-                    )
-                    .padding(.horizontal)
+   
                     
                     // COINS EARNED
-                    HStack {
-                        Text("Coins Earned: ")
-                            .font(Font.fredoka(.semiBold, size: 16))
-                            .foregroundColor(Clr.black2)
-                        Img.coinBunch
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 25)
-                        Text(UserDefaults.standard.bool(forKey: "isPro") ? "\(reward / 2) x 2: \(reward)" : "+\(reward)!")
-                            .font(Font.fredoka(.bold, size: 16))
-                            .foregroundColor(.black)
-                        if userModel.isPotion || userModel.isChest {
-                            Img.sunshinepotion
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 30)
-                                .rotationEffect(.degrees(30))
+                    ZStack {
+                        Rectangle()
+                            .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                            .font(Font.fredoka(.medium, size: 24))
+                            .overlay(CustomLottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
+                                .scaleEffect(2))                    
+                        VStack(alignment: .leading, spacing: 0) {
+                            (
+                                Text(model.totalBreaths > 0 ? "Total Breaths meditated: " : "Time meditated: ")
+                                    .font(Font.fredoka(.semiBold, size: 24))
+                                    .foregroundColor(Clr.black2)
+                                +
+                                Text(model.totalBreaths > 0 ? String(model.totalBreaths) : "\(String(minsMed)) Min")
+                                    .font(Font.fredoka(.bold, size: 24))
+                                    .foregroundColor(.black)
+                            )
+                            .padding(.horizontal)
+                            HStack {
+                                Text("Coins Earned: ")
+                                    .font(Font.fredoka(.semiBold, size: 24))
+                                    .foregroundColor(Clr.black2)
+                                Img.coinBunch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 25)
+                                Text(UserDefaults.standard.bool(forKey: "isPro") ? "\(reward / 2) x 2: \(reward)" : "+\(reward)!")
+                                    .font(Font.fredoka(.bold, size: 24))
+                                    .foregroundColor(.black)
+                                if userModel.isPotion || userModel.isChest {
+                                    Img.sunshinepotion
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 30)
+                                        .rotationEffect(.degrees(30))
+                                }
+                            } //: HStack
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .offset(y: playEntryAnimation ? 0 : 100)
                         }
-                    } //: HStack
-                    .padding(.horizontal)
-                    
-                    Spacer()
-                    
-                    // FOOTER FOR SHARE AND CONTINUE
+                        Spacer()
+                        // FOOTER FOR SHARE AND CONTINUE
+                  
+                    } //: ZStack
                     ShareAndContinueFooter(
                         model: model,
                         userModel: userModel,
                         gardenModel: gardenModel,
+                        bonusModel: bonusModel,
                         onDismiss: onDismiss,
+                        isFirst: true,
                         viewRouter: _viewRouter
                     ) //: ShareAndContinueFooter
-                } //: VStack
+                }
             } //: VStack
             .padding(.all, 24)
+            .transition(.move(edge: .trailing))
         } //: GeometryReader
+        .onAppear {
+            withAnimation(.spring()) {
+                playAnim = true
+                playEntryAnimation = true
+            }
+            
+            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                if let player = player {
+                    player.play()
+                }
+            }
+
+
+            var session = [String: String]()
+            session[K.defaults.plantSelected] = userModel.selectedPlant?.title
+            var minutesMed = 0
+
+            if model.totalBreaths > 0 {
+                if let selectedBreath = model.selectedBreath {
+                    session[K.defaults.meditationId] = String(selectedBreath.id)
+                    switch selectedBreath.duration * model.totalBreaths {
+                    case 0 ... 35: minutesMed = 30
+                    case 36 ... 70: minutesMed = 60
+                    default: minutesMed = selectedBreath.duration * model.totalBreaths
+                    }
+                    if minutesMed >= 30 {
+                        userModel.finishedMeditation(id: String(selectedBreath.id))
+                    }
+                }
+                session[K.defaults.duration] = String(minutesMed)
+                // Log Analytics
+                #if !targetEnvironment(simulator)
+                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
+                #endif
+                print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
+            } else {
+                session[K.defaults.meditationId] = String(model.selectedMeditation?.id ?? 0)
+                session[K.defaults.duration] = model.selectedMeditation?.duration == -1 ? String(model.secondsRemaining) : String(model.selectedMeditation?.duration ?? 0)
+                let dur = model.selectedMeditation?.duration ?? 0
+                if !((model.forwardCounter > 2 && dur <= 120) || (model.forwardCounter > 6) || (model.selectedMeditation?.id == 22 && model.forwardCounter >= 1)) {
+                    userModel.finishedMeditation(id: String(model.selectedMeditation?.id ?? 0))
+                }
+                // Log Analytics
+                #if !targetEnvironment(simulator)
+                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
+                #endif
+                print("logging, \("finMed_\(model.selectedMeditation?.returnEventName() ?? "")")")
+            }
+            session["timeStamp"] = Date.getTime()
+            reward = model.getReward()
+            if userModel.isPotion || userModel.isChest {
+                reward = reward * 3
+            }
+//
+            userModel.coins += reward
+            gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
+         
+            }
+
+
+        }
     }
 }
 
@@ -124,7 +218,9 @@ struct ShareAndContinueFooter: View {
     var model: MeditationViewModel
     var userModel: UserViewModel
     var gardenModel: GardenViewModel
+    var bonusModel: BonusViewModel
     var onDismiss: Page
+    var isFirst: Bool = false
 
     @State private var showStreak = false
     @State private var showRating = false
@@ -135,6 +231,7 @@ struct ShareAndContinueFooter: View {
     
     var heart: some View {
         ZStack {
+        
             if model.isFavoritedLoaded {
                 LikeButton(isLiked: model.isFavorited, size: 35) {
                     likeAction()
@@ -188,7 +285,11 @@ struct ShareAndContinueFooter: View {
                         .padding(.horizontal)
                         // TODO: -> change not now in saveProgress modal to trigger showStreak
                         .onTapGesture {
-                            Analytics.shared.log(event: .finished_tapped_finished)
+                            if isFirst {
+                                Analytics.shared.log(event: .meditationCompleted_tapped_continue)
+                            } else {
+                                Analytics.shared.log(event: .congratulations_tapped_continue)
+                            }
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
@@ -223,26 +324,31 @@ struct ShareAndContinueFooter: View {
             .position(x: g.size.width / 2, y: g.size.height - g.size.height / (K.hasNotch() ? ios14 ? 7 : 9 : 4))
         } //: GeometryReader
         .onAppear {
-            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
-                if let player = player {
-                    player.play()
-                }
-            }
-            
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     ios14 = false
                 }
-//                if #available(iOS 16.0, *) {
+                if #available(iOS 16.0, *) {
 //                    ios16 = true
-//                }
+                }
             }
+
         }
+        .fullScreenCover(isPresented: $showStreak, content: {
+            StreakScene(showStreak: $showStreak)
+                .environmentObject(bonusModel)
+                .environmentObject(viewRouter)
+                .background(Clr.darkWhite)
+        })
     }
     
     // MARK: - Helper Functions
     private func likeAction() {
-        Analytics.shared.log(event: .play_tapped_favorite)
+        if isFirst {
+            Analytics.shared.log(event: .meditationCompleted_tapped_heart)
+        } else {
+            Analytics.shared.log(event: .congratulations_tapped_heart)
+        }
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let med = model.selectedMeditation {
     //                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")

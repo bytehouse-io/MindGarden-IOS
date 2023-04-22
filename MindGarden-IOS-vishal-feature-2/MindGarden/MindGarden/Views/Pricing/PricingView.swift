@@ -149,7 +149,7 @@ struct PricingView: View {
                             let impact = UIImpactFeedbackGenerator(style: .light)
                             impact.impactOccurred()
                             selectedBox = "Yearly"
-                            unlockProMWM()
+                            unlockPro()
                         } label: {
                             ZStack {
                                 PricingBoxView(title: "Yearly", price: yearlyPrice, selected: $selectedBox, trialLength: $trialLength)
@@ -178,7 +178,7 @@ struct PricingView: View {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 selectedBox = "Monthly"
-                                unlockProMWM()
+                                unlockPro()
                             }
                         } label: {
                             PricingBoxView(title: "Monthly", price: monthlyPrice, selected: $selectedBox, trialLength: $trialLength)
@@ -213,7 +213,7 @@ struct PricingView: View {
                         // ACTION BUTTON
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
-                            unlockProMWM()
+                            unlockPro()
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         } label: {
                             HStack {
@@ -252,7 +252,6 @@ struct PricingView: View {
                 } //: Button
                 .position(x: g.size.width - 50, y: 75)
                 .buttonStyle(NeoPress())
-                .opacity(0)
                 } //: ZStack
             } //: GeometryReader
         } //: LoadingView
@@ -286,13 +285,13 @@ extension PricingView {
     // MARK: - Helper Functions
     
     private func crossButtonAction() {
+        MGAudio.sharedInstance.playBubbleSound()
         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
             withAnimation {
                 showLoadingIllusion.toggle()
             }
             return
         }
-        MGAudio.sharedInstance.playBubbleSound()
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation {
             switch fromPage {
@@ -314,12 +313,6 @@ extension PricingView {
     }
     
     private func userIsPro() {
-        UserDefaults.standard.setValue(true, forKey: "bonsai")
-        UserDefaults.standard.setValue(true, forKey: "isPro")
-        UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
-        viewRouter.currentPage = .meditate
-        WidgetCenter.shared.reloadAllTimelines()
-        userWentPro = true
         OneSignal.sendTag("userIsPro", value: "true")
         if !userModel.ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" }) ?? Plant.badgePlants[0]) {
             userModel.willBuyPlant = Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" })
@@ -329,7 +322,11 @@ extension PricingView {
         if !fiftyOff {
             UserDefaults.standard.setValue(true, forKey: "freeTrial")
         }
-        
+        UserDefaults.standard.setValue(true, forKey: "bonsai")
+        UserDefaults.standard.setValue(true, forKey: "isPro")
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
+        WidgetCenter.shared.reloadAllTimelines()
+        userWentPro = true
         if fromPage != "onboarding2" {
             if let _ = Auth.auth().currentUser?.email {
                 if let email = Auth.auth().currentUser?.email {
@@ -345,7 +342,6 @@ extension PricingView {
                 }
             }
         }
-        
     }
     
     private func purchasesOffering() {
@@ -436,9 +432,7 @@ extension PricingView {
             showLoading = false
             if success {
                 // Start delivering the consumable product to your user from here
-                DispatchQueue.main.async {
-                    userIsPro()
-                }
+                userIsPro()
             } else {
                 // Handle error
                 Amplitude.instance().logEvent(event3)

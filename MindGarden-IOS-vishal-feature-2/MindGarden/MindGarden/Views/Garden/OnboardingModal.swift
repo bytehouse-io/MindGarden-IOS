@@ -36,40 +36,22 @@ struct OnboardingModal: View {
                                     .lineLimit(2)
                                     .multilineTextAlignment(.center)
                                     .minimumScaleFactor(0.05)
-                                (Text("🎉 That's it for the tutorial! Complete the intro to meditation course to unlock a free strawberry plant for a ").font(Font.fredoka(.semiBold, size: 18))
-                                    + Text("limited time").font(Font.fredoka(.bold, size: 18)))
-                                    .foregroundColor(Clr.black2)
-                                    .lineLimit(4)
-                                    .multilineTextAlignment(.center)
-                                    .minimumScaleFactor(0.05)
-                                    .padding(.top, 5)
+                                (Text("Watch the intro video for a secret present").font(Font.fredoka(.semiBold, size: 18)))
+//                                    + Text("limited time").font(Font.fredoka(.bold, size: 18)))
+//                                    .foregroundColor(Clr.black2)
+//                                    .lineLimit(4)
+//                                    .multilineTextAlignment(.center)
+//                                    .minimumScaleFactor(0.05)
+//                                    .padding(.top, 5)
                             }
 
-                            Img.strawberryPacket
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: g.size.height * 0.3)
-                                .padding()
+//                            Img.strawberryPacket
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(height: g.size.height * 0.3)
+//                                .padding()
                             HStack(spacing: 10) {
-                                if isUnlocked {
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            shown = false
-                                        }
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.brightGreen)
-                                            .overlay(
-                                                Text("Got it!")
-                                                    .font(Font.fredoka(.bold, size: 18))
-                                                    .foregroundColor(.white)
-                                                    .lineLimit(1)
-                                                    .minimumScaleFactor(0.5)
-                                            )
-                                            .frame(width: g.size.width * 0.4, height: g.size.height * 0.07)
-                                    }.buttonStyle(NeumorphicPress())
-                                } else {
+                            
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
@@ -93,17 +75,14 @@ struct OnboardingModal: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             shown = false
-                                            Analytics.shared.log(event: .onboarding_finished_single_course)
-                                            UserDefaults.standard.setValue(false, forKey: "introLink")
-                                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                                            meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                            viewRouter.currentPage = .middle
+                                            Analytics.shared.log(event: .onboarding_single_go_to_home)
+                                            viewRouter.currentPage = .meditate
                                         }
                                     } label: {
                                         Capsule()
                                             .fill(Clr.brightGreen)
                                             .overlay(
-                                                Text("Go to course!")
+                                                Text("Go to home")
                                                     .font(Font.fredoka(.bold, size: 18))
                                                     .foregroundColor(.white)
                                                     .lineLimit(1)
@@ -111,7 +90,7 @@ struct OnboardingModal: View {
                                             )
                                             .frame(width: g.size.width * 0.4, height: g.size.height * 0.06)
                                     }.buttonStyle(NeumorphicPress())
-                                }
+                                
                             }
                         }.frame(width: g.size.width * 0.65, height: g.size.height * (isUnlocked ? 0.55 : 0.75), alignment: .center)
                     }.frame(width: g.size.width * 0.85, height: g.size.height * (isUnlocked ? 0.6 : 0.80), alignment: .center)

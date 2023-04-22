@@ -250,20 +250,80 @@ struct SingleDay: View {
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
-                    //                OnboardingModal(shown: $showOnboardingModal)
-                    //                    .offset(y: showOnboardingModal ? 0 : g.size.height)
-                    //                    .animation(.default, value: showOnboardingModal)
+                    BottomSheet(
+                                      isOpen: self.$showOnboardingModal,
+                                      maxHeight: g.size.height * (K.isSmall() ? 0.6 : 0.6),
+                                      minHeight: 0.1,
+                                      trigger: { }
+                                  ) {
+                                      VStack {
+                                          Img.signUpImage
+                                              .resizable()
+                                              .aspectRatio(contentMode: .fit)
+                                              .frame(width: 150)
+                                          Text("You're almost finished")
+                                              .font(Font.fredoka(.bold, size: 28))
+                                              .foregroundColor(Clr.darkgreen)
+                                              .padding(.bottom, -5)
+                                          Text("Go home to complete the tutorial and claim your gift")
+                                              .font(Font.fredoka(.medium, size: 20))
+                                              .foregroundColor(Clr.black2)
+                                              .multilineTextAlignment(.center)
+                                              .frame(height: 50)
+                                          Button {
+                                              UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                              
+                                              withAnimation {
+                                                  showOnboardingModal = false
+                                                  Analytics.shared.log(event: .onboarding_finished_single)
+                                              }
+                                          } label: {
+                                              Capsule()
+                                              
+                                                  .fill(Clr.darkgreen)
+                                                  .overlay(
+                                                      Text("Go to Home")
+                                                          .font(Font.fredoka(.bold, size: 18))
+                                                           .foregroundColor(.white)
+                                                          .lineLimit(1)
+                                                          .minimumScaleFactor(0.5)
+                                                  )
+                                                  
+                                          }.buttonStyle(NeumorphicPress())
+                                           .frame(height: 45)
+                                           .padding(.top, 25)
+                                          Button {
+                                              withAnimation {
+                                                  fromPage = "single"
+                                                  UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                                  showRating()
+                                                  showOnboardingModal = false
+                                              }
+                                          } label: {
+                                              Text("Not Now")
+                                                  .font(Font.fredoka(.semiBold, size: 16))
+                                                  .foregroundColor(Color.gray)
+                                                  .underline()
+                                                  .padding(.top, 25)
+                                          }
+                                      }.frame(width: g.size.width * 0.85, alignment: .center)
+                                      .offset(y: -25)
+                                      .padding()
+                                  }.offset(y: g.size.height * 0.1)
                 }
             }
         }
         .onAppear {
             showLoading = true
+            print(gardenModel.totalSessions, "brokie", UserDefaults.standard.bool(forKey: "singleTile"))
+
             Analytics.shared.log(event: .screen_load_single)
-            if !UserDefaults.standard.bool(forKey: "singleTile") {
-                UserDefaults.standard.setValue(true, forKey: "singleTile")
+            if !UserDefaults.standard.bool(forKey: "singleOnboarding1") {
+                UserDefaults.standard.setValue(true, forKey: "singleOnboarding1")
                 Analytics.shared.log(event: .screen_load_single_onboarding)
-                showOnboardingModal = true
-                showRating()
+                if gardenModel.totalSessions <= 1 {
+                    showOnboardingModal = true
+                }
                 if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                 }

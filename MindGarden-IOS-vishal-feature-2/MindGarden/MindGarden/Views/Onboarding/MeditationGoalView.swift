@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct Goal: Identifiable, Hashable {
     enum GoalType {
         case seven
@@ -63,56 +64,89 @@ struct MeditationGoalView: View {
     // MARK: - Body
     
     var body: some View {
-        GeometryReader { g in
-            let width = g.size.width
-            let height = g.size.height
-            VStack {
-                Spacer()
-                // TITLE
-                Text("Select Your\nMeditation Goal")
-                    .font(Font.fredoka(.bold, size: 28))
-                    .foregroundColor(Clr.darkgreen)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                    .padding(.bottom, 15)
-                
-                // OPTIONS
-                ForEach(goals, id: \.self) { goal in
-                    GoalDetailView(width: width, height: height, goal: goal, selectedGoal: $selectedGoal, isSelected: $isSelected)
-                }
-                
-                // IMAGE
-                Img.meditatingTurtle2
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: height * 0.15)
-                    .padding(.vertical, 8)
-                
-                Spacer()
-                
-                // CONTINUE BUTTON
-                ContinueButton(
-                    action: {
-                        withAnimation(.easeOut(duration: 0.5)) {
-                            DispatchQueue.main.async {
-                                viewRouter.progressValue += 0.1
-                                viewRouter.currentPage = .name
+        VStack {
+            GeometryReader { g in
+                let width = g.size.width
+                let height = g.size.height
+                ZStack {
+                    Clr.darkWhite.edgesIgnoringSafeArea(.all)
+                    
+                    VStack(spacing: -5) {
+                        HStack {
+                            Img.topBranch
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: UIScreen.screenWidth * 0.6)
+                                .padding(.leading, -20)
+                                .offset(x: -20, y: -10)
+                            Spacer()
+                            Image(systemName: "arrow.backward")
+                                .font(.system(size: 22))
+                                .foregroundColor(Clr.darkgreen)
+                                .padding()
+                                .onTapGesture {
+                                    Analytics.shared.log(event: .goalview_tapped_back)
+                                    MGAudio.sharedInstance.playBubbleSound()
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        arr = []
+                                        viewRouter.progressValue -= 0.1
+                                        viewRouter.currentPage = .reason
+                                    }
+                                }.offset(x: -20, y: 20)
+
+                        }.frame(width: width)
+                        VStack {
+                            // TITLE
+                            Text("Select Your\nMeditation Goal")
+                                .font(Font.fredoka(.bold, size: 28))
+                                .foregroundColor(Clr.darkgreen)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                                .padding(.bottom, 15)
+                            
+                            // OPTIONS
+                            ForEach(goals, id: \.self) { goal in
+                                GoalDetailView(width: width, height: height, goal: goal, selectedGoal: $selectedGoal, isSelected: $isSelected)
                             }
-                        }
-                    },
-                    enabled: $isSelected
-                ) //: ContinueButton
-                .frame(width: width * 0.9)
-                Spacer()
-            } //: VStack
-            .frame(maxWidth: .infinity)
-            .padding(safeAreaInsets)
-        } //: GeometryReader
+                            
+                            // IMAGE
+                            Img.meditatingTurtle2
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: height * 0.15)
+                                .padding(.vertical, 8)
+                            
+                            Spacer()
+                            
+                            // CONTINUE BUTTON
+                            ContinueButton(
+                                action: {
+                                    withAnimation(.easeOut(duration: 0.5)) {
+                                        DispatchQueue.main.async {
+                                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            MGAudio.sharedInstance.playBubbleSound()
+                                            Analytics.shared.log(event: .goalview_tapped_continue)
+                                            viewRouter.progressValue += 0.1
+                                            viewRouter.currentPage = .name
+                                        }
+                                    }
+                                },
+                                enabled: $isSelected
+                            ) //: ContinueButton
+                            .frame(width: width * 0.9)
+                            Spacer()
+                        }.frame(height: height * 0.85)
+                    }.frame(width: width * 0.9)  //: VStack
+                } //ZStack
+            } //: GeometryReader
+        }//VStack
+        .transition(.move(edge: .trailing))
     }
 }
 
-#if DEBUG
+#if DEBUG 
 struct MeditationGoalView_Previews: PreviewProvider {
     static var previews: some View {
         MeditationGoalView()
@@ -136,6 +170,12 @@ struct GoalDetailView: View {
             MGAudio.sharedInstance.playBubbleSound()
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
+                switch goal.type {
+                case .seven:   Analytics.shared.log(event: .goalview_tapped_7)
+                case .fourteen:  Analytics.shared.log(event: .goalview_tapped_14)
+                case .thirty:  Analytics.shared.log(event: .goalview_tapped_30)
+                case .fifty:  Analytics.shared.log(event: .goalview_tapped_50)
+                }
                 isSelected = true
                 selectedGoal = goal
                 UserDefaults.standard.setValue(goal.title, forKey: "meditationGoal")

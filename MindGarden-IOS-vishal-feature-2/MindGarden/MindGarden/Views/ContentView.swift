@@ -176,6 +176,7 @@ struct ContentView: View {
                                             model: meditationModel,
                                             userModel: userModel,
                                             gardenModel: gardenModel,
+                                            bonusModel: bonusModel,
                                             onDismiss: .congratulationsOnCompletion
                                         )
                                         .frame(height: geometry.size.height)
@@ -187,11 +188,13 @@ struct ContentView: View {
                                             model: meditationModel,
                                             userModel: userModel,
                                             gardenModel: gardenModel,
+                                            bonusModel: bonusModel,
                                             onDismiss: .garden
                                         )
                                         .frame(height: geometry.size.height)
                                         .navigationViewStyle(StackNavigationViewStyle())
                                         .environmentObject(viewRouter)
+                                    
                                     case .authentication:
                                         NewAuthentication(viewModel: authModel)
                                             .frame(height: geometry.size.height)

@@ -40,7 +40,7 @@ struct NameScene: View {
                                         viewRouter.progressValue -= 0.1
                                         viewRouter.currentPage = .meditationGoal
                                     }
-                                }
+                                }.offset(x: -20, y: 20)
                         }
                         Spacer()
                         HStack {
