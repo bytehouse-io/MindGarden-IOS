@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct PlusMenuView: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var userModel: UserViewModel
+    
     @Binding var showPopup: Bool
     @Binding var selectedOption: PlusMenuType
-    @State var opac: CGFloat = 0.01
     @Binding var isOnboarding: Bool
+
+    @State var opac: CGFloat = 0.01
+    
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             VStack(spacing: 12) {
@@ -26,15 +34,17 @@ struct PlusMenuView: View {
                         }
                     } label: {
                         MenuChoice(title: item.title, img: item.image, disabled: false)
-                    }.disabled((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"))).opacity((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")) ? 0.5 : 1.0)
+                    } //: Button
+                    .disabled((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"))).opacity((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")) ? 0.5 : 1.0)
                         .buttonStyle(NeoPress())
-                }
-            }
+                } //: ForEach Loop
+            } //: VStack
             .background(Clr.darkWhite)
             .scaleEffect(opac)
             .opacity(opac)
             .padding()
-        }.onChange(of: showPopup) { value in
+        } //: ZStack
+        .onChange(of: showPopup) { value in
             withAnimation(.easeInOut(duration: 0.3)) {
                 opac = value ? 1.0 : 0.01
             }
