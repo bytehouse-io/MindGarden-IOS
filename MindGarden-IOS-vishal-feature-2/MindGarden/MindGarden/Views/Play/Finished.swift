@@ -290,7 +290,7 @@ struct Finished: View {
                                             if launchNum == 2 || launchNum == 4 || launchNum == 7 || launchNum == 9 {
                                                 showRating = true
                                                 if !UserDefaults.standard.bool(forKey: "reviewedApp") {
-                                                    if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                                                    if let scene = UIApplication.shared.activeScene {
                                                         SKStoreReviewController.requestReview(in: scene)
                                                     } else {
                                                         dismiss()

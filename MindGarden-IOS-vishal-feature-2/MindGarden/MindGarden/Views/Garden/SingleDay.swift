@@ -420,7 +420,7 @@ struct SingleDay: View {
     private func showRating() {
         if (gardenModel.numMeds + gardenModel.numBreaths) == 1 {
             Analytics.shared.log(event: .show_onboarding_rating)
-            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+            if let scene = UIApplication.shared.activeScene {
                 SKStoreReviewController.requestReview(in: scene)
                 showOnboardingModal = false
             }

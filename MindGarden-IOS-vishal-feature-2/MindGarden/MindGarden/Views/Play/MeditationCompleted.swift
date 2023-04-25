@@ -41,9 +41,6 @@ struct MeditationCompleted: View {
     
     var body: some View {
         GeometryReader { g in
-            let width = g.size.width
-            let height = g.size.height
-            
             VStack {
                 Spacer()
                     .frame(height: 50)
@@ -64,22 +61,18 @@ struct MeditationCompleted: View {
                 VStack(alignment: .leading) {
                     // TITLE
 
-                    Text(model.selectedMeditation?.title ?? "")
-                        .font(Font.fredoka(.bold, size: 28))
-                        .foregroundColor(Clr.darkgreen)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.horizontal)
-                    Text("Completed")
+                    Text("\(model.selectedMeditation?.title ?? "")\nCompleted")
                         .font(Font.fredoka(.bold, size: 28))
                         .foregroundColor(Clr.darkgreen)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal)
                         .padding(.bottom, 15)
+//                    Text("")
+//                        .font(Font.fredoka(.bold, size: 28))
+//                        .foregroundColor(Clr.darkgreen)
+//                        .fixedSize(horizontal: false, vertical: true)
+//                        .padding(.horizontal)
                     
-                    // TIME MEDITATED
-   
-                    
-                    // COINS EARNED
                     ZStack {
                         Rectangle()
                             .fill(LinearGradient(colors: [Clr.brightGreen.opacity(0.8), Clr.yellow], startPoint: .leading, endPoint: .trailing))
@@ -88,6 +81,8 @@ struct MeditationCompleted: View {
                             .overlay(CustomLottieAnimationView(filename: "party", loopMode: .playOnce, isPlaying: $playAnim)
                                 .scaleEffect(2))                    
                         VStack(alignment: .leading, spacing: 0) {
+                            
+                            // TIME MEDITATED
                             (
                                 Text(model.totalBreaths > 0 ? "Total Breaths meditated: " : "Time meditated: ")
                                     .font(Font.fredoka(.semiBold, size: 24))
@@ -98,6 +93,8 @@ struct MeditationCompleted: View {
                                     .foregroundColor(.black)
                             )
                             .padding(.horizontal)
+                            
+                            // COINS EARNED
                             HStack {
                                 Text("Coins Earned: ")
                                     .font(Font.fredoka(.semiBold, size: 24))
@@ -122,9 +119,8 @@ struct MeditationCompleted: View {
                             .offset(y: playEntryAnimation ? 0 : 100)
                         }
                         Spacer()
-                        // FOOTER FOR SHARE AND CONTINUE
-                  
                     } //: ZStack
+                    // FOOTER FOR SHARE AND CONTINUE
                     ShareAndContinueFooter(
                         model: model,
                         userModel: userModel,
@@ -134,7 +130,7 @@ struct MeditationCompleted: View {
                         isFirst: true,
                         viewRouter: _viewRouter
                     ) //: ShareAndContinueFooter
-                }
+                } //: VStack
             } //: VStack
             .padding(.all, 24)
             .transition(.move(edge: .trailing))
@@ -196,8 +192,6 @@ struct MeditationCompleted: View {
             gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
          
             }
-
-
         }
     }
 }
@@ -291,12 +285,14 @@ struct ShareAndContinueFooter: View {
                             }
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
+                                let launchNum = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
+//                                UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
                                 if !showRating {
                                     if launchNum == 2 || launchNum == 4 || launchNum == 7 || launchNum == 9 {
                                         showRating = true
-                                        if !UserDefaults.standard.bool(forKey: "reviewedApp") {
-                                            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+//                                        if !UserDefaults.standard.bool(forKey: "reviewedApp") {
+                                        if !DefaultsManager.standard.value(forKey: .reviewedApp).boolValue {
+                                            if let scene = UIApplication.shared.activeScene {
                                                 SKStoreReviewController.requestReview(in: scene)
                                             } else {
                                                 dismiss()

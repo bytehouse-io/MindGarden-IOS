@@ -275,8 +275,9 @@ struct ContentView: View {
                                 }
                             } //: VStack
                             .edgesIgnoringSafeArea(.all)
-                            
-                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
+                            let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && onboardingValue != .meditate && onboardingValue != .gratitude
+//                                UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
                             ) {
                                 ZStack {
                                     Rectangle()

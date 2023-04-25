@@ -72,9 +72,10 @@ struct PlusMenuView: View {
                         .foregroundColor(Clr.brightGreen)
                         .frame(width: UIScreen.main.bounds.width * 0.32, alignment: .center)
                         .padding(.leading, 8)
-                }.frame(width: UIScreen.main.bounds.width * 0.4, alignment: .leading)
-                    .padding(5)
-            }
+                } //: HStack
+                .frame(width: UIScreen.main.bounds.width * 0.4, alignment: .leading)
+                .padding(5)
+            } //: ZStack
             .opacity(disabled ? 0.3 : 1)
         }
     }

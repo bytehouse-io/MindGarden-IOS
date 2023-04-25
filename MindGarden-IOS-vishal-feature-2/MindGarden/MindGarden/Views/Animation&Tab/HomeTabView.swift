@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeTabView: View {
+    
+    // MARK: - Properties
+    
     @Binding var selectedOption: PlusMenuType
     @ObservedObject var viewRouter: ViewRouter
     @Binding var selectedTab: TabType
@@ -15,6 +18,8 @@ struct HomeTabView: View {
     @State var scale: CGFloat = 0.01
     @Binding var isOnboarding: Bool
     @State private var playEntryAnimation = false
+    
+    // MARK: - Body
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -32,7 +37,8 @@ struct HomeTabView: View {
             TabButtonView(selectedTab: $selectedTab, isOnboarding: $isOnboarding)
                 .padding([.bottom, .horizontal], 20)
             PlusButtonPopup(showPopup: $showPopup, scale: $scale, selectedOption: $selectedOption, isOnboarding: $isOnboarding)
-        }.onChange(of: selectedTab) { value in
+        } //: ZStack
+        .onChange(of: selectedTab) { value in
             showPopup = false
             DispatchQueue.main.async {
                 setSelectedTab(selectedTab: value)
@@ -45,18 +51,33 @@ struct HomeTabView: View {
         Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation(.linear(duration: 0.4)) {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
-                switch selectedTab {
-                case .garden:
-                    viewRouter.currentPage = .garden
-                case .meditate:
-                    viewRouter.currentPage = .meditate
-                case .shop:
-                    viewRouter.currentPage = .shop
-                case .search:
-                    viewRouter.currentPage = .learn
-                }
+            let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+            switch onboardingValue {
+            case .done, .stats, .garden, .single:
+                switchTab(selectedTab)
+            case .none, .signedUp, .mood, .gratitude, .meditate, .calendar:
+                break
             }
+            
+            if DefaultsManager.standard.value(forKey: .review).boolValue {
+                switchTab(selectedTab)
+            }
+//            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
+//
+//            }
+        }
+    }
+    
+    private func switchTab(_ selectedTab: TabType) {
+        switch selectedTab {
+        case .garden:
+            viewRouter.currentPage = .garden
+        case .meditate:
+            viewRouter.currentPage = .meditate
+        case .shop:
+            viewRouter.currentPage = .shop
+        case .search:
+            viewRouter.currentPage = .learn
         }
     }
 }

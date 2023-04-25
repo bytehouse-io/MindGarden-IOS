@@ -158,10 +158,13 @@ struct CongratulationsOnCompletion: View {
             } //: ZStack
         } //: GeometryReader
         .onAppear {
-    
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+            if
+//                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude"
+                DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude
+            {
                 Analytics.shared.log(event: .onboarding_finished_meditation)
-                UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
+                DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.garden.rawValue, forKey: .onboarding)
+//                UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
                 isOnboarding = true
             }
             if model.shouldStreakUpdate {
@@ -174,8 +177,6 @@ struct CongratulationsOnCompletion: View {
                 })
                 userModel.buyPlant(unlockedStrawberry: true)
             }
-            
-
         }
     }
 }

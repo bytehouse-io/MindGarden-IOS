@@ -8,22 +8,31 @@
 import SwiftUI
 
 struct TabButtonView: View {
+    
+    // MARK: - Properties
+    
     @Binding var selectedTab: TabType
     @State var color: Color = .white
     @Binding var isOnboarding: Bool
     @State private var currentTab: TabType?
     @State var tag = 2
 
+    // MARK: - Body
+    
     var body: some View {
         ZStack(alignment: .center) {
             HStack {
                 ForEach(tabList) { item in
                     Button {
-                        if !isOnboarding || UserDefaults.standard.bool(forKey: "review") {
+                        if !isOnboarding ||
+//                            UserDefaults.standard.bool(forKey: "review")
+                            DefaultsManager.standard.value(forKey: .review).boolValue
+                        {
                             DispatchQueue.main.async {
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                     middleToSearch = ""
                                     selectedTab = item.tabName
+                                    print(item.tabName)
                                     color = item.color
                                 }
                             }
@@ -39,22 +48,23 @@ struct TabButtonView: View {
                                 .minimumScaleFactor(0.5)
                                 .font(Font.fredoka(.semiBold, size: 10))
                                 .padding(.top, 5)
-                        }
+                        } //: VStack
                         .foregroundColor(currentTab == item.tabName ? .black : .white)
                         .frame(maxWidth: .infinity)
-                    }
+                    } //: Button
                     .background(PositionReader(tag: item.index))
                     if item.tabName == .meditate {
-                        Spacer().frame(maxWidth: .infinity)
+                        Spacer()
+                            .frame(maxWidth: .infinity)
                     }
-                }
-            }
+                } //: ForEach Loop
+            } //: HStack
             .backgroundPreferenceValue(Positions.self) { preferences in
                 GeometryReader { proxy in
                     Capsule().fill(Clr.yellow).overlay(Capsule().stroke(.black, lineWidth: 1.5)).frame(width: 70, height: 50).position(self.getPosition(proxy: proxy, tag: self.tag, preferences: preferences))
-                }
+                } //: GeometryReader
             }
-        }
+        } //: ZStack
         .onChange(of: selectedTab) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 setTab()

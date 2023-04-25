@@ -7,6 +7,9 @@
 
 import SwiftUI
 struct PlusButtonPopup: View {
+    
+    // MARK: - Properties
+    
     @Binding var showPopup: Bool
     @Binding var scale: CGFloat
     @Binding var selectedOption: PlusMenuType
@@ -15,6 +18,8 @@ struct PlusButtonPopup: View {
     private let buttonRadius: CGFloat = 12.0
     private let popupRadius: CGFloat = 32.0
 
+    // MARK: - Body
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -29,7 +34,8 @@ struct PlusButtonPopup: View {
 
                             PlusMenuView(showPopup: $showPopup, selectedOption: $selectedOption, isOnboarding: $isOnboarding).cornerRadius(popupRadius)
                                 .plusPopupStyle(size: geometry.size, scale: scale)
-                        }.zIndex(1)
+                        } //: ZStack
+                        .zIndex(1)
                         Button {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                             DispatchQueue.main.async {
@@ -46,12 +52,13 @@ struct PlusButtonPopup: View {
                                 .shadow(color: .black.opacity(0.25), radius: 4, x: 4, y: 4)
                                 .plusButtonStyle(scale: scale)
                                 .overlay(RoundedRectangle(cornerRadius: buttonRadius).stroke(.black, lineWidth: 1.5))
-                        }.buttonStyle(ScalePress())
-                    }
+                        } //: Button
+                        .buttonStyle(ScalePress())
+                    } //: VStack
                     Spacer()
                         .frame(height: 32)
-                }
-            }
+                } //: VStack
+            } //: ZStack
             .offset(y: -24)
             .ignoresSafeArea()
             .onChange(of: showPopup) { _ in
@@ -65,6 +72,6 @@ struct PlusButtonPopup: View {
                     }
                 }
             }
-        }
+        } //: GeometryReader
     }
 }

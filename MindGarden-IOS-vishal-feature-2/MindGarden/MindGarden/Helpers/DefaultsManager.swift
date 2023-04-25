@@ -11,27 +11,29 @@ struct DefaultsManager {
     
     static var standard = DefaultsManager()
     
-    private let standardDefaults = UserDefaults.standard
-    private var value: Any? = nil
-    private var lock = NSLock()
+    private let standardDefaults: UserDefaults
     
-    private init() { }
+    private init() {
+        standardDefaults = UserDefaults.standard
+    }
     
-    mutating func value(forKey key: Keys) -> Any? {
-        lock.lock()
-        value = standardDefaults.value(forKey: key.rawValue)
-        lock.unlock()
-        return value
+    mutating func value(forKey key: Keys) -> DefaultsValues {
+        var defaultsValues = DefaultsValues(value: standardDefaults.value(forKey: key.rawValue))
+        return defaultsValues
     }
     
     func set(value: Any, forKey key: Keys) {
-        lock.lock()
         standardDefaults.set(value, forKey: key.rawValue)
-        lock.unlock()
     }
 }
 
-extension DefaultsManager {
+struct DefaultsValues {
+    private var value: Any? = nil
+    
+    init(value: Any? = nil) {
+        self.value = value
+    }
+    
     var boolValue: Bool {
         if let value = value as? Bool {
             return value
@@ -48,13 +50,21 @@ extension DefaultsManager {
         }
     }
     
-    var onboardingValue: OnboardingScreens? {
-        let onbValue: OnboardingScreens? = enumValue()
+    var integerValue: Int {
+        if let value = value as? Int {
+            return value
+        } else {
+            return 0
+        }
+    }
+    
+    var onboardingValue: DefaultsManager.OnboardingScreens? {
+        let onbValue: DefaultsManager.OnboardingScreens? = enumValue()
         return onbValue
     }
 }
 
-extension DefaultsManager {
+extension DefaultsValues {
     func enumValue<E: RawRepresentable>() -> E? {
         if let value = value as? E.RawValue {
             let enumCase = E(rawValue: value)
@@ -95,6 +105,8 @@ extension DefaultsManager {
         case userCoinCollectedLevel
         case journeys
         case giftQuotaId
+        case dailyLaunchNumber
+        case reviewedApp
     }
     
     enum OnboardingScreens: String {
