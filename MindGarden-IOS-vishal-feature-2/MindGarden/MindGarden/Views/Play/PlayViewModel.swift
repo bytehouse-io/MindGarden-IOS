@@ -70,34 +70,34 @@ extension MeditationViewModel {
                         self?.stop()
                         switch self?.selectedMeditation?.id {
                         case 7:
-                            UserDefaults.standard.setValue(true, forKey: "day1Intro")
+                            DefaultsManager.standard.set(value: true, forKey: .day1Intro)
                             OneSignal.sendTag("day1", value: "true")
                         case 8:
-                            UserDefaults.standard.setValue(true, forKey: "day2Intro")
+                            DefaultsManager.standard.set(value: true, forKey: .day2Intro)
                             OneSignal.sendTag("day2", value: "true")
                         case 9:
-                            UserDefaults.standard.setValue(true, forKey: "day3Intro")
+                            DefaultsManager.standard.set(value: true, forKey: .day3Intro)
                         case 10:
-                            UserDefaults.standard.setValue(true, forKey: "day4Intro")
+                            DefaultsManager.standard.set(value: true, forKey: .day4Intro)
                         case 11:
-                            UserDefaults.standard.setValue(true, forKey: "day5Intro")
+                            DefaultsManager.standard.set(value: true, forKey: .day5Intro)
                         case 12:
-                            UserDefaults.standard.setValue(true, forKey: "day6Intro")
+                            DefaultsManager.standard.set(value: true, forKey: .day6Intro)
                         case 13:
-                            UserDefaults.standard.setValue(true, forKey: "day7")
-                            UserDefaults.standard.setValue(true, forKey: "unlockedCherry")
+                            DefaultsManager.standard.set(value: true, forKey: .day7)
+                            DefaultsManager.standard.set(value: true, forKey: .unlockedCherry)
                         case 101:
-                            UserDefaults.standard.setValue(true, forKey: "10days")
+                            DefaultsManager.standard.set(value: true, forKey: .tenDays)
                         default: break
                         }
 
                         if UserDefaults.standard.bool(forKey: "day7") {
-                            UserDefaults.standard.setValue(true, forKey: "beginnerCourse")
+                            DefaultsManager.standard.set(value: true, forKey: .beginnerCourse)
                             self?.getFeaturedMeditation()
                         }
 
                         if self?.selectedMeditation?.id == 21 {
-                            UserDefaults.standard.setValue(true, forKey: "intermediateCourse")
+                            DefaultsManager.standard.set(value: true, forKey: .intermediateCourse)
                             self?.getFeaturedMeditation()
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

@@ -191,7 +191,7 @@ struct NotificationScene: View {
                                         let identify = AMPIdentify()
                                             .set("reminder_set", value: NSNumber(0))
                                         Amplitude.instance().identify(identify ?? AMPIdentify())
-                                        UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                                        DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
                                             withAnimation(.easeOut(duration: 0.5)) {
@@ -281,8 +281,8 @@ struct NotificationScene: View {
                     .set("reminder_set", value: NSNumber(1))
                 Amplitude.instance().identify(identify ?? AMPIdentify())
 
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
-                UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                DefaultsManager.standard.set(value: dateTime, forKey: K.defaults.meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
@@ -298,8 +298,8 @@ struct NotificationScene: View {
                     NotificationHelper.freeTrial()
                 }
 
-                UserDefaults.standard.setValue(dateTime, forKey: "notif")
-                UserDefaults.standard.setValue(true, forKey: "notifOn")
+                DefaultsManager.standard.set(value: dateTime, forKey: .notif)
+                DefaultsManager.standard.set(value: true, forKey: .notifOn)
 
                 if frequency == "Everyday" {
                     for i in 1 ... 7 {
@@ -334,7 +334,7 @@ struct NotificationScene: View {
                 }
             case .notDetermined:
                 if fromSettings || tappedTurnOn {
-                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                    DefaultsManager.standard.set(value: false, forKey: "isNotifOn")
                     Analytics.shared.log(event: .notification_go_to_settings)
                     DispatchQueue.main.async {
                         if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {

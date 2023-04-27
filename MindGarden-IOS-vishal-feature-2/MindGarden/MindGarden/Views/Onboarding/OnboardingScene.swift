@@ -146,7 +146,7 @@ struct OnboardingScene: View {
         } //: NavigationView
         .onAppearAnalytics(event: .screen_load_onboarding)
         .onAppear {
-            UserDefaults.standard.setValue("onboarding", forKey: K.defaults.onboarding)
+            DefaultsManager.standard.set(value: "onboarding", forKey: .onboarding)
             if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
                 let identify = AMPIdentify()
                     .set("abTest1.53", value: NSNumber(value: num))

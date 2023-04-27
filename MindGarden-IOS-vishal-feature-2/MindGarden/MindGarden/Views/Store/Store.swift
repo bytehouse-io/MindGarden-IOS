@@ -180,7 +180,7 @@ struct Store: View {
                                                         }
                                                     } else {
                                                         Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
-                                                        UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                                        DefaultsManager.standard.set(value: plant.title, forKey: .selectedPlant)
                                                         userModel.selectedPlant = plant
                                                     }
                                                 } label: {
@@ -260,7 +260,7 @@ struct Store: View {
                     withAnimation {
                         showModal = true
                     }
-                    UserDefaults.standard.setValue(false, forKey: "christmasLink")
+                    DefaultsManager.standard.set(value: false, forKey: .christmasLink)
                 }
             }
         }
@@ -269,7 +269,7 @@ struct Store: View {
                 .environmentObject(userModel)
         }
         .onDisappear {
-            UserDefaults.standard.setValue(true, forKey: "showTip")
+            DefaultsManager.standard.set(value: true, forKey: .showTip)
         }
         .onAppear {
             if isShop {}
@@ -329,7 +329,7 @@ struct Store: View {
                                     }
                                 } else {
                                     Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
-                                    UserDefaults.standard.setValue(plant.title, forKey: K.defaults.selectedPlant)
+                                    DefaultsManager.standard.set(value: plant.title, forKey: .selectedPlant)
                                     userModel.selectedPlant = plant
                                     Analytics.shared.log(event: .home_selected_plant)
                                 }
@@ -366,13 +366,15 @@ struct Store: View {
                             .onTapGesture {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                    UserDefaults.standard.setValue(true, forKey: "storeTutorial")
+                                    DefaultsManager.standard.set(value: true, forKey: .storeTutorial)
                                     currentHightlight = 1
                                     showTip = true
                                 }
                             }
-                    }.padding()
-                ).cornerRadius(12)
+                    }
+                    .padding()
+                )
+                .cornerRadius(12)
         }
     }
 
@@ -381,7 +383,7 @@ struct Store: View {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus {
             case .authorized:
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
                 Analytics.shared.log(event: .notification_success_store)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
@@ -393,7 +395,7 @@ struct Store: View {
                 if UserDefaults.standard.bool(forKey: "freeTrial") {
                     NotificationHelper.freeTrial()
                 }
-                UserDefaults.standard.setValue(true, forKey: "notifOn")
+                DefaultsManager.standard.set(value: true, forKey: .notifOn)
                 isNotifOn = true
             case .denied:
                 Analytics.shared.log(event: .notification_settings_store)
@@ -402,7 +404,7 @@ struct Store: View {
                         UIApplication.shared.open(appSettings)
                     }
                 }
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
             case .notDetermined:
                 Analytics.shared.log(event: .notification_settings_learn)
                 DispatchQueue.main.async {
@@ -410,7 +412,7 @@ struct Store: View {
                         UIApplication.shared.open(appSettings)
                     }
                 }
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
             default:
                 print("Unknow Status")
             }

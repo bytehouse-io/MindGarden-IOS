@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        MWM.setRemoteImageLoader(NukeRemoteImageLoader())
+//        MWM.setRemoteImageLoader(NukeRemoteImageLoader())
 
         let placements = MWMModel.DynamicScreenPlacement.allCases.map {
             PlacementRequest(placementKey: $0.rawValue, orientation: .portrait)
@@ -121,12 +121,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } catch { print("already logged out") }
         }
 
-        if UserDefaults.standard.value(forKey: "vibrationMode") == nil {
-            UserDefaults.standard.set(true, forKey: "vibrationMode")
+        if DefaultsManager.standard.value(forKey: .vibrationMode).isNil
+//            UserDefaults.standard.value(forKey: "vibrationMode") == nil
+        {
+            DefaultsManager.standard.set(value: true, forKey: .vibrationMode)
+//            UserDefaults.standard.set(true, forKey: "vibrationMode")
         }
 
-        if UserDefaults.standard.value(forKey: "backgroundAnimation") == nil {
-            UserDefaults.standard.set(true, forKey: "backgroundAnimation")
+        if DefaultsManager.standard.value(forKey: .backgroundAnimation).isNil
+//            UserDefaults.standard.value(forKey: "backgroundAnimation") == nil
+        {
+            DefaultsManager.standard.set(value: true, forKey: .backgroundAnimation)
+//            UserDefaults.standard.set(true, forKey: "backgroundAnimation")
         }
 
         return true
@@ -145,7 +151,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             player?.numberOfLoops = -1
 
             guard let player = player else { return }
-            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+            if DefaultsManager.standard.value(forKey: .isPlayMusic).boolValue
+//                UserDefaults.standard.bool(forKey: "isPlayMusic")
+            {
                 player.play()
             }
 
@@ -207,7 +215,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             for item in queryItems {
                 if item.name == "referral" {
                     Analytics.shared.log(event: .onboarding_came_from_referral)
-                    UserDefaults.standard.setValue(item.value ?? "", forKey: K.defaults.referred)
+                    DefaultsManager.standard.set(value: item.value ?? "", forKey: .referred)
                 }
             }
         }
@@ -279,7 +287,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if response.notification.request.identifier == "oneDay" {
             Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
         } else if response.notification.request.identifier == "introNotif" {
-            NotificationCenter.default.post(name: Notification.Name("intro"), object: nil)
+            NotificationCenter.default.post(name: .intro, object: nil)
             Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
         } else if response.notification.request.identifier == "threeDay" {
             Analytics.shared.log(event: .notification_tapped_threeDay_reminder)
@@ -289,13 +297,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             Analytics.shared.log(event: .notification_tapped_onboarding)
         } else if response.notification.request.identifier == "⚙️ Widget has been unlocked" {
             Analytics.shared.log(event: .notification_tapped_widget)
-            NotificationCenter.default.post(name: Notification.Name("widget"), object: nil)
+            NotificationCenter.default.post(name: .widget, object: nil)
         } else if response.notification.request.identifier == "🛍 Your Store Page has been unlocked!" {
             Analytics.shared.log(event: .notification_tapped_store)
-            NotificationCenter.default.post(name: Notification.Name("store"), object: nil)
+            NotificationCenter.default.post(name: .store, object: nil)
         } else if response.notification.request.identifier == "🔑 Learn Page has unlocked!" {
             Analytics.shared.log(event: .notification_tapped_learn)
-            NotificationCenter.default.post(name: Notification.Name("learn"), object: nil)
+            NotificationCenter.default.post(name: .learn, object: nil)
         }
         completionHandler()
     }

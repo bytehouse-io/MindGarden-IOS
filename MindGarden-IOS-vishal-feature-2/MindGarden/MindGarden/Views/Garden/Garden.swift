@@ -166,7 +166,7 @@ struct Garden: View {
                                     withAnimation {
                                         if UserDefaults.standard.bool(forKey: "isPro") {
                                             showImages.toggle()
-                                            UserDefaults.standard.setValue(showImages, forKey: "showImages")
+                                            DefaultsManager.standard.set(value: showImages, forKey: .showImages)
                                         } else {
                                             fromPage = "garden"
                                             viewRouter.currentPage = .pricing
@@ -237,7 +237,7 @@ struct Garden: View {
                                                         showSingleModal = true
                                                         isOnboarding = false
                                                     }
-                                                    UserDefaults.standard.setValue(true, forKey: "tappedTile")
+                                                    DefaultsManager.standard.set(value: true, forKey: .tappedTile)
                                                 }
                                             } else {
                                                 if day <= 31 && day >= 1 {
@@ -405,9 +405,9 @@ struct Garden: View {
                                                 withAnimation {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
                                                         Analytics.shared.log(event: .onboarding_finished_calendar)
-                                                        UserDefaults.standard.setValue("calendar", forKey: K.defaults.onboarding)
-                                                    } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
-                                                        UserDefaults.standard.setValue("stats", forKey: K.defaults.onboarding)
+                                                        DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.calendar.rawValue, forKey: .onboarding)
+                                                    } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == DefaultsManager.OnboardingScreens.calendar.rawValue {
+                                                        DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.stats.rawValue, forKey: .onboarding)
                                                         Analytics.shared.log(event: .onboarding_finished_stats)
                                                     }
                                                     forceRefresh.toggle()
@@ -417,14 +417,14 @@ struct Garden: View {
                                 )
                                 .cornerRadius(16)
 
-                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "calendar" {
+                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == DefaultsManager.OnboardingScreens.calendar.rawValue {
                                 Triangle()
                                     .fill(Clr.yellow)
                                     .frame(width: 40, height: 20)
                                     .rotationEffect(.radians(.pi))
                             }
                         } //: VStack
-                        .offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" ? K.isSmall() ? -175 : -125 : -75)
+                        .offset(y: UserDefaults.standard.string(forKey: K.defaults.onboarding) == DefaultsManager.OnboardingScreens.meditate.rawValue ? K.isSmall() ? -175 : -125 : -75)
                     }
                     if isOnboarding {
                         switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {

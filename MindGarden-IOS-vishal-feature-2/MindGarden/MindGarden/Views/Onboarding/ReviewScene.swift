@@ -175,8 +175,8 @@ struct ReviewScene: View {
                                 fromOnboarding = true
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 fromPage = "onboarding2"
-                                UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                                UserDefaults.standard.setValue(true, forKey: "onboarded")
+                                DefaultsManager.standard.set(value: "signedUp", forKey: .onboarding)
+                                DefaultsManager.standard.set(value: true, forKey: .onboarded)
                                 withAnimation {
                                     viewRouter.progressValue = 1
                                     // goto home screen now
@@ -218,11 +218,11 @@ struct ReviewScene: View {
 //                                case let .purchased(productId: productId):
 //                                    switch productId {
 //                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-//                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                        DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                    case "io.mindgarden.pro.yearly":
 //                                        Analytics.shared.log(event: .yearly_started_from_superwall)
-//                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
-//                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                        DefaultsManager.standard.set(value: true, forKey: "freeTrial")
+//                                        DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
 //                                            NotificationHelper.freeTrial()
 //                                        }
@@ -252,8 +252,8 @@ struct ReviewScene: View {
 //                                StorylyManager.refresh()
 //                            }
 
-//                            UserDefaults.standard.setValue(true, forKey: "review")
-//                            UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+//                            DefaultsManager.standard.set(value: true, forKey: "review")
+//                            DefaultsManager.standard.set(value: "meditate", forKey: K.defaults.onboarding)
 //                            withAnimation {
 //                                viewRouter.progressValue = 1
 //                                if fromInfluencer != "" {
@@ -265,11 +265,11 @@ struct ReviewScene: View {
 //                                    } onDismiss: {  didPurchase, productId, paywallInfo in
 //                                        switch productId {
 //                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
-//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                            DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                        case "io.mindgarden.pro.yearly":
 //                                            Analytics.shared.log(event: .yearly_started_from_superwall)
-//                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
-//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                            DefaultsManager.standard.set(value: true, forKey: "freeTrial")
+//                                            DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
 //                                                NotificationHelper.freeTrial()
 //                                            }

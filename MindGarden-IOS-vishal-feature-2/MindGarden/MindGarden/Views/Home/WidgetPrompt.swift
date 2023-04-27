@@ -170,7 +170,7 @@ struct WidgetPrompt: View {
 
     func noThanksTap() {
         Analytics.shared.log(event: .widget_tapped_no_thanks)
-        UserDefaults.standard.setValue(true, forKey: "showWidget")
+        DefaultsManager.standard.set(value: true, forKey: .showWidget)
         withAnimation {
             profileModel.showWidget = false
         }
@@ -178,7 +178,7 @@ struct WidgetPrompt: View {
 
     func finishAllSteps() {
         Analytics.shared.log(event: .widget_tapped_finished)
-        UserDefaults.standard.setValue(true, forKey: "showWidget")
+        DefaultsManager.standard.set(value: true, forKey: .showWidget)
         withAnimation {
             profileModel.showWidget = false
         }

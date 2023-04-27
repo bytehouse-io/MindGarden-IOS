@@ -57,7 +57,7 @@ struct OnboardingModal: View {
                                         withAnimation {
                                             shown = false
                                             Analytics.shared.log(event: .onboarding_finished_single_okay)
-                                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                                            DefaultsManager.standard.set(value: "done", forKey: .onboarding)
                                         }
                                     } label: {
                                         Capsule()

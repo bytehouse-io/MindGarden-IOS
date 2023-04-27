@@ -83,11 +83,11 @@ class UserViewModel: ObservableObject {
             } else { // old users
 //                var arr = oldSegs
 //                arr.append("intro/day 2")
-//                UserDefaults.standard.setValue(arr, forKey: "oldSegments")
+//                DefaultsManager.standard.set(value: arr, forKey: "oldSegments")
 //                if let newSegs = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
 //                    var newArr = newSegs
 //                    newArr.append("intro/day 2")
-//                    UserDefaults.standard.setValue(newArr, forKey: "storySegments")
+//                    DefaultsManager.standard.set(value: newArr, forKey: "storySegments")
 //                }
 //                completedDayTitle = "2"
 //                completedIntroDay = false
@@ -132,9 +132,9 @@ class UserViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(potion, forKey: "potion")
-            UserDefaults.standard.setValue(chest, forKey: "chest")
-            UserDefaults.standard.setValue(streakFreeze, forKey: "streakFreeze")
+            DefaultsManager.standard.set(value: potion, forKey: .potion)
+            DefaultsManager.standard.set(value: chest, forKey: .chest)
+            DefaultsManager.standard.set(value: streakFreeze, forKey: .streakFreeze)
         }
     }
 
@@ -187,7 +187,7 @@ class UserViewModel: ObservableObject {
                         self.journeyFinished = fbJourney
                     }
                     if let longestStreak = document["longestStreak"] as? Int {
-                        UserDefaults.standard.setValue(longestStreak, forKey: "longestStreak")
+                        DefaultsManager.standard.set(value: longestStreak, forKey: .longestStreak)
                     }
 
                     if let fbPlants = document[K.defaults.plants] as? [String] {
@@ -196,7 +196,7 @@ class UserViewModel: ObservableObject {
                                 plant.title == str
                             })
                         }
-                        UserDefaults.standard.setValue(fbPlants, forKey: "plants")
+                        DefaultsManager.standard.set(value: fbPlants, forKey: .plants)
                     }
 
                     if let stack = document["referredStack"] as? String {
@@ -206,7 +206,7 @@ class UserViewModel: ObservableObject {
 
                         if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
                             showCoinAnimation = true
-                            UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
+                            DefaultsManager.standard.set(value: numRefs, forKey: .numRefs)
                         }
 
                         if numRefs >= 1 && !UserDefaults.standard.bool(forKey: "referPlant") && !ownedPlants.contains(where: { plt in
@@ -214,20 +214,20 @@ class UserViewModel: ObservableObject {
                         }) {
                             willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Venus Fly Trap" })
                             buyPlant(unlockedStrawberry: true)
-                            UserDefaults.standard.setValue(true, forKey: "referPlant")
+                            DefaultsManager.standard.set(value: true, forKey: .referPlant)
                             showPlantAnimation = true
                         }
                     }
 
                     if let completedMeditations = document[K.defaults.completedMeditations] as? [String] {
                         self.completedMeditations = completedMeditations
-                        UserDefaults.standard.setValue(completedMeditations, forKey: K.defaults.completedMeditations)
+                        DefaultsManager.standard.set(value: completedMeditations, forKey: .completedMeditations)
                     }
 
                     if let level = document[K.defaults.userCoinCollectedLevel] as? Int {
                         self.userCoinCollectedLevel = level
                         SceneDelegate.medModel.getUserMap()
-                        UserDefaults.standard.setValue(level, forKey: K.defaults.userCoinCollectedLevel)
+                        DefaultsManager.standard.set(value: level, forKey: .userCoinCollectedLevel)
                     }
 
                     self.updateTimeRemaining()
@@ -326,7 +326,7 @@ class UserViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(true, forKey: "finishedJourney")
+            DefaultsManager.standard.set(value: true, forKey: .finishedJourney)
         }
     }
 
@@ -337,7 +337,7 @@ class UserViewModel: ObservableObject {
                 K.defaults.completedMeditations: completedMeditations,
             ])
         }
-        UserDefaults.standard.setValue(completedMeditations, forKey: K.defaults.completedMeditations)
+        DefaultsManager.standard.set(value: completedMeditations, forKey: .completedMeditations)
     }
 
     func getCourseCounter(title: String) -> Int {
@@ -350,7 +350,7 @@ class UserViewModel: ObservableObject {
             if !ownedPlants.contains(Plant.badgePlants.first(where: { plant in plant.title == "Bonsai Tree" }) ?? Plant.badgePlants[0]) {
                 buyPlant(unlockedStrawberry: true)
             }
-            UserDefaults.standard.setValue(true, forKey: "bonsai")
+            DefaultsManager.standard.set(value: true, forKey: .bonsai)
         }
     }
 
@@ -368,12 +368,12 @@ class UserViewModel: ObservableObject {
         // using mwm Publishing SDK
         let isUserPremium = MWM.inAppManager().isAnyPremiumFeatureUnlocked()
         if isUserPremium {
-            UserDefaults.standard.setValue(true, forKey: "isPro")
+            DefaultsManager.standard.set(value: true, forKey: .isPro)
             UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
             WidgetCenter.shared.reloadAllTimelines()
             buyBonsai()
         } else {
-            UserDefaults.standard.setValue(false, forKey: "isPro")
+            DefaultsManager.standard.set(value: false, forKey: .isPro)
             let identify = AMPIdentify()
                 .set("plan_type", value: NSString(utf8String: "free"))
             Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -385,12 +385,12 @@ class UserViewModel: ObservableObject {
         // removing revenue cat purchase
 //        Purchases.shared.purchaserInfo { [self] purchaserInfo, _ in
 //            if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-//                UserDefaults.standard.setValue(true, forKey: "isPro")
+//                DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
 //                WidgetCenter.shared.reloadAllTimelines()
 //                buyBonsai()
 //            } else {
-//                UserDefaults.standard.setValue(false, forKey: "isPro")
+//                DefaultsManager.standard.set(value: false, forKey: "isPro")
 //                let identify = AMPIdentify()
 //                    .set("plan_type", value: NSString(utf8String: "free"))
 //                Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -462,13 +462,13 @@ class UserViewModel: ObservableObject {
                 if let plants = UserDefaults.standard.value(forKey: K.defaults.plants) as? [String] {
                     var newPlants = plants
                     newPlants.append(plant.title)
-                    UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
+                    DefaultsManager.standard.set(value: newPlants, forKey: .plants)
                 } else {
                     var newPlants = ["White Daisy", "Red Tulips"]
                     newPlants.append(plant.title)
-                    UserDefaults.standard.setValue(newPlants, forKey: K.defaults.plants)
+                    DefaultsManager.standard.set(value: newPlants, forKey: .plants)
                 }
-                UserDefaults.standard.setValue(coins, forKey: K.defaults.coins)
+                DefaultsManager.standard.set(value: coins, forKey: .coins)
             }
         }
     }
@@ -494,8 +494,8 @@ class UserViewModel: ObservableObject {
     func updateCoins(plusCoins: Int) {
         coins += plusCoins
         userCoinCollectedLevel += 1
-        UserDefaults.standard.setValue(coins, forKey: K.defaults.coins)
-        UserDefaults.standard.setValue(userCoinCollectedLevel, forKey: K.defaults.userCoinCollectedLevel)
+        DefaultsManager.standard.set(value: coins, forKey: K.defaults.coins)
+        DefaultsManager.standard.set(value: userCoinCollectedLevel, forKey: .userCoinCollectedLevel)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.coins: coins,

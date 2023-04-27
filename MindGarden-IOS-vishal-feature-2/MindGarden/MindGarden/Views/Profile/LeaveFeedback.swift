@@ -305,7 +305,7 @@ struct LeaveFeedback: View {
         Analytics.shared.log(event: .profile_tapped_rate)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-            UserDefaults.standard.setValue(true, forKey: "tappedRate")
+            DefaultsManager.standard.set(value: true, forKey: .tappedRate)
         }
     }
 

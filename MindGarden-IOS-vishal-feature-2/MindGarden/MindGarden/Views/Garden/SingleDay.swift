@@ -319,7 +319,7 @@ struct SingleDay: View {
 
             Analytics.shared.log(event: .screen_load_single)
             if !UserDefaults.standard.bool(forKey: "singleOnboarding1") {
-                UserDefaults.standard.setValue(true, forKey: "singleOnboarding1")
+                DefaultsManager.standard.set(value: true, forKey: .singleOnboarding1)
                 Analytics.shared.log(event: .screen_load_single_onboarding)
                 if gardenModel.totalSessions <= 1 {
                     showOnboardingModal = true
@@ -381,7 +381,7 @@ struct SingleDay: View {
                 }
             }
         }.onDisappear {
-            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+            DefaultsManager.standard.set(value: "done", forKey: .onboarding)
         }
     }
 

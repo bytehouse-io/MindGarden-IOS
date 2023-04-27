@@ -92,8 +92,8 @@ struct MindfulScene: View {
                             if smiling { notifTypes.append("smiling") }
                             if loving { notifTypes.append("loving") }
                             if present { notifTypes.append("present") }
-                            UserDefaults.standard.setValue(notifTypes, forKey: "notifTypes")
-                            UserDefaults.standard.setValue(frequency, forKey: "frequency")
+                            DefaultsManager.standard.set(value: notifTypes, forKey: .notifTypes)
+                            DefaultsManager.standard.set(value: frequency, forKey: .frequency)
                             NotificationHelper.createMindfulNotifs()
                             withAnimation {
                                 presentationMode.wrappedValue.dismiss()

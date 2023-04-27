@@ -96,7 +96,7 @@ struct Gratitude: View, KeyboardReadable {
                     DoneCancel(showPrompt: $openPrompts, shown: $shown, width: g.size.width, height: min(250, g.size.height / 2), mood: false, save: {
                         text = "I'm thankful for "
                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                            UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                            DefaultsManager.standard.set(value: "gratitude", forKey: .onboarding)
                             showPopupWithAnimation {}
                         }
                     }, moodSelected: .angry, showRecs: .constant(false))

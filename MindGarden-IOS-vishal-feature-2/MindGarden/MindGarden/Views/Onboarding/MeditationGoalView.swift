@@ -178,7 +178,7 @@ struct GoalDetailView: View {
                 }
                 isSelected = true
                 selectedGoal = goal
-                UserDefaults.standard.setValue(goal.title, forKey: "meditationGoal")
+                DefaultsManager.standard.set(value: goal.title, forKey: .meditationGoal)
             }
         } label: {
             ZStack {

@@ -33,8 +33,8 @@ struct ChallengeModal: View {
                                 withAnimation {
                                     shown = false
                                 }
-                                UserDefaults.standard.setValue(challengeDate, forKey: "challengeDate")
-                                UserDefaults.standard.setValue(true, forKey: "showedChallenge")
+                                DefaultsManager.standard.set(value: challengeDate, forKey: .challengeDate)
+                                DefaultsManager.standard.set(value: true, forKey: .showedChallenge)
                             } label: {
                                 Image(systemName: "xmark")
                                     .foregroundColor(.gray.opacity(0.5))
@@ -93,9 +93,9 @@ struct ChallengeModal: View {
                                 shown = false
                                 Analytics.shared.log(event: .challenge_tapped_accept)
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                UserDefaults.standard.setValue(challengeDate, forKey: "challengeDate")
+                                DefaultsManager.standard.set(value: challengeDate, forKey: .challengeDate)
                                 viewRouter.currentPage = .middle
-                                UserDefaults.standard.setValue(true, forKey: "showedChallenge")
+                                DefaultsManager.standard.set(value: true, forKey: .showedChallenge)
                                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
                                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
                                     NotificationHelper.addOneDay()

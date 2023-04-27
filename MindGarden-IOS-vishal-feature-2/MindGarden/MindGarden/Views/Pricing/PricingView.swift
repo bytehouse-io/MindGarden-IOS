@@ -321,10 +321,10 @@ extension PricingView {
             userModel.triggerAnimation = true
         }
         if !fiftyOff {
-            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+            DefaultsManager.standard.set(value: true, forKey: .freeTrial)
         }
-        UserDefaults.standard.setValue(true, forKey: "bonsai")
-        UserDefaults.standard.setValue(true, forKey: "isPro")
+        DefaultsManager.standard.set(value: true, forKey: .bonsai)
+        DefaultsManager.standard.set(value: true, forKey: .isPro)
         UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
         userWentPro = true

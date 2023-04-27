@@ -173,7 +173,7 @@ struct PurchaseModal: View {
                                         Analytics.shared.log(event: .store_tapped_rate_app)
                                         withAnimation {
                                             if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-                                                UserDefaults.standard.setValue(true, forKey: "tappedRate")
+                                                DefaultsManager.standard.set(value: true, forKey: .tappedRate)
                                                 userModel.buyPlant(unlockedStrawberry: true)
                                             }
                                         }
@@ -203,7 +203,7 @@ struct PurchaseModal: View {
                                     }
                                     Analytics.shared.log(event: .store_tapped_discord)
                                     if !UserDefaults.standard.bool(forKey: "reddit") {
-                                        UserDefaults.standard.setValue(true, forKey: "reddit")
+                                        DefaultsManager.standard.set(value: true, forKey: .reddit)
                                     }
                                 case "✏️ 30 Journal Entries":
                                     withAnimation {

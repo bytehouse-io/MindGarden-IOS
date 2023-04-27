@@ -74,7 +74,7 @@ struct ReasonScene: View {
                                         if let oldSegs = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
                                             var segs = oldSegs
                                             segs.append("sleep 1")
-                                            UserDefaults.standard.setValue(segs, forKey: "oldSegments")
+                                            DefaultsManager.standard.set(value: segs, forKey: .oldSegments)
                                         }
                                     }
                                 }
@@ -130,8 +130,8 @@ struct ReasonScene: View {
 //                    default:
 //                        PaywallService.setUser(reasons: "📈 Become more mindful in")
 //                    }
-                    UserDefaults.standard.setValue(reason.title, forKey: "reason1")
-                    UserDefaults.standard.setValue(true, forKey: "firstTap")
+                    DefaultsManager.standard.set(value: reason.title, forKey: .reason1)
+                    DefaultsManager.standard.set(value: true, forKey: .firstTap)
                 }
                 MGAudio.sharedInstance.playBubbleSound()
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -140,11 +140,11 @@ struct ReasonScene: View {
                         selected.removeAll(where: { $0.id == reason.id })
                         if reason.title == "Sleep better" {
                             if selected.count == 1 {
-                                UserDefaults.standard.setValue("Sleep better", forKey: "reason")
+                                DefaultsManager.standard.set(value: "Sleep better", forKey: .reason)
                             }
                         } else if reason.title == "Just trying it out" {
                             if selected.count == 1 {
-                                UserDefaults.standard.setValue("Just trying it out", forKey: "reason")
+                                DefaultsManager.standard.set(value: "Just trying it out", forKey: .reason)
                             }
                         }
                         selected = Array(Set(selected))
@@ -160,14 +160,14 @@ struct ReasonScene: View {
 
                     if reason.title == "Sleep better" {
                         if selected.count == 1 {
-                            UserDefaults.standard.setValue("Sleep better", forKey: "reason")
+                            DefaultsManager.standard.set(value: "Sleep better", forKey: .reason)
                         }
                     } else if reason.title == "Just trying it out" {
                         if selected.count == 1 {
-                            UserDefaults.standard.setValue("Just trying it out", forKey: "reason")
+                            DefaultsManager.standard.set(value: "Just trying it out", forKey: .reason)
                         }
                     } else {
-                        UserDefaults.standard.setValue(reason.title, forKey: "reason")
+                        DefaultsManager.standard.set(value: reason.title, forKey: .reason)
                     }
                 }
             } label: {

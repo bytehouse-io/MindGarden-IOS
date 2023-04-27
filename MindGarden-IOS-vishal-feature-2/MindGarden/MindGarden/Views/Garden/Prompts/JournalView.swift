@@ -441,11 +441,11 @@ struct JournalView: View, KeyboardReadable {
         UserDefaults(suiteName: K.widgetDefault)?.setValue(Date().toString(withFormat: "MMM dd, yyyy"), forKey: "lastJournel")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                DefaultsManager.standard.set(value: "gratitude", forKey: K.defaults.onboarding)
             }
-            UserDefaults.standard.setValue(num, forKey: "numGrads")
+            DefaultsManager.standard.set(value: num, forKey: "numGrads")
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                UserDefaults.standard.setValue("gratitude", forKey: K.defaults.onboarding)
+                DefaultsManager.standard.set(value: "gratitude", forKey: K.defaults.onboarding)
             }
             Analytics.shared.log(event: .gratitude_tapped_done)
             var journalObj = [String: String]()

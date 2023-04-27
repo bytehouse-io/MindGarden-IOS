@@ -147,16 +147,16 @@ class GardenViewModel: ObservableObject {
             }
             yearSortDict[key] = yearIds
             // TODO: get old timestamp sorting code from github
-//            UserDefaults.standard.setValue(ids, forKey: "recent")
+//            DefaultsManager.standard.set(value: ids, forKey: "recent")
             // TODO: instead of timestamp, save entire date.
             let identify = AMPIdentify()
                 .set("breathwork_sessions", value: NSNumber(value: numBreaths))
             identify?
                 .set("meditation_sessions", value: NSNumber(value: numMeds))
-            UserDefaults.standard.setValue(numBreaths + numMeds, forKey: "numSessions")
+            DefaultsManager.standard.set(value: numBreaths + numMeds, forKey: .numSessions)
             identify?
                 .set("journal_sessions", value: NSNumber(value: numGrads))
-            UserDefaults.standard.setValue(numGrads, forKey: "numGrads")
+                                         DefaultsManager.standard.set(value: numGrads, forKey: .numGrads)
             identify?
                 .set("mood_sessions", value: NSNumber(value: numMoods))
             Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -442,9 +442,9 @@ class GardenViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(allTimeMinutes, forKey: "allTimeMinutes")
-            UserDefaults.standard.setValue(allTimeSessions, forKey: "allTimeSessions")
-            UserDefaults.standard.setValue(coins, forKey: "coins")
+            DefaultsManager.standard.set(value: allTimeMinutes, forKey: .allTimeMinutes)
+            DefaultsManager.standard.set(value: allTimeSessions, forKey: .allTimeSessions)
+            DefaultsManager.standard.set(value: coins, forKey: .coins)
             if let gridd = UserDefaults.standard.value(forKey: "grid") as? [String: [String: [String: [String: Any]]]] {
                 grid = gridd
             }
@@ -455,8 +455,8 @@ class GardenViewModel: ObservableObject {
     }
 
     private func updateData(completionHandler: () -> Void = {}, key _: String) {
-        UserDefaults.standard.setValue(grid, forKey: "grid")
-        UserDefaults(suiteName: K.widgetDefault)?.setValue(grid, forKey: "grid")
+        DefaultsManager.standard.set(value: grid, forKey: .grid)
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(grid, forKey: .grid)
         WidgetCenter.shared.reloadAllTimelines()
         populateMonth()
         getLastFive()

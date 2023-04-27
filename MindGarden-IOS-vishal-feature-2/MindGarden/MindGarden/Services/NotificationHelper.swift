@@ -75,7 +75,7 @@ struct NotificationHelper {
         // Create the request
         let request = UNNotificationRequest(identifier: id,
                                             content: content, trigger: trigger)
-        UserDefaults.standard.setValue(id, forKey: "oneDayNotif")
+        DefaultsManager.standard.set(value: id, forKey: .oneDayNotif)
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { error in
@@ -162,7 +162,7 @@ struct NotificationHelper {
         let uuidString = "finishOnboarding"
         let request = UNNotificationRequest(identifier: uuidString,
                                             content: content, trigger: trigger)
-        UserDefaults.standard.setValue(uuidString, forKey: "onboardingNotif")
+        DefaultsManager.standard.set(value: uuidString, forKey: .onboardingNotif)
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { error in
@@ -193,7 +193,7 @@ struct NotificationHelper {
         let id = "threeDay"
         let request = UNNotificationRequest(identifier: id,
                                             content: content, trigger: trigger)
-        UserDefaults.standard.setValue(id, forKey: "threeDayNotif")
+        DefaultsManager.standard.set(value: id, forKey: .threeDayNotif)
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.add(request) { error in

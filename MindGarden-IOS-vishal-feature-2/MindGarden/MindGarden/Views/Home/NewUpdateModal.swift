@@ -70,7 +70,7 @@ struct NewUpdateModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "14DayModal")
+                                DefaultsManager.standard.set(value: true, forKey: .14DayModal)
                                 fromInfluencer = ""
                                 fiftyOff = true
                                 viewRouter.currentPage = .pricing
@@ -90,7 +90,7 @@ struct NewUpdateModal: View {
                         Button {
                             Analytics.shared.log(event: .no_thanks_50)
                             withAnimation {
-                                UserDefaults.standard.setValue(true, forKey: "14DayModal")
+                                DefaultsManager.standard.set(value: true, forKey: .fourteenDayModal)
                                 shown = false
                             }
                         } label: {

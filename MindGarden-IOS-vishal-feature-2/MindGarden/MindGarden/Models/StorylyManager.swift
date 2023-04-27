@@ -26,19 +26,19 @@ class StorylyManager: StorylyDelegate {
         if story.media.actionUrl == "notification" {
             Analytics.shared.log(event: .story_notification_swipe)
             storylyViewProgrammatic.dismiss(animated: true)
-            NotificationCenter.default.post(name: Notification.Name("notification"), object: nil)
+            NotificationCenter.default.post(name: .notification, object: nil)
         } else if story.media.actionUrl == "referral" {
             Analytics.shared.log(event: .story_notification_swipe)
             storylyViewProgrammatic.dismiss(animated: true)
-            NotificationCenter.default.post(name: Notification.Name("referrals"), object: nil)
+            NotificationCenter.default.post(name: .referrals, object: nil)
         } else if story.media.actionUrl == "gratitude" {
             Analytics.shared.log(event: .story_notification_swipe_gratitude)
             storylyViewProgrammatic.dismiss(animated: true)
-            NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+            NotificationCenter.default.post(name: .gratitude, object: nil)
         } else if story.media.actionUrl == "trees" {
             Analytics.shared.log(event: .story_swipe_trees_future)
             storylyViewProgrammatic.dismiss(animated: true)
-            NotificationCenter.default.post(name: Notification.Name("trees"), object: nil)
+            NotificationCenter.default.post(name: .trees, object: nil)
         }
     }
 
@@ -46,7 +46,7 @@ class StorylyManager: StorylyDelegate {
 
     func storylyStoryDismissed(_: Storyly.StorylyView) {
         if !UserDefaults.standard.bool(forKey: "showedChallenge") {
-            NotificationCenter.default.post(name: Notification.Name("storyOnboarding"), object: nil)
+            NotificationCenter.default.post(name: .storyOnboarding, object: nil)
         }
     }
 
@@ -83,15 +83,15 @@ class StorylyManager: StorylyDelegate {
                 StorylyManager.refresh()
 //                       storylyViewProgrammatic.dismiss(animated: true)
                 let unique = Array(storySegments)
-                UserDefaults.standard.setValue(unique, forKey: "storySegments")
-                UserDefaults.standard.setValue(unique, forKey: "oldSegments")
+                DefaultsManager.standard.set(value: unique, forKey: .storySegments)
+                DefaultsManager.standard.set(value: unique, forKey: .oldSegments)
                 return
             } else if story.title.lowercased().contains("trees for the future") {
                 storyArray?.removeAll(where: { str in
                     str.lowercased().contains("trees for the future")
                 })
 //                       storylyViewProgrammatic.dismiss(animated: true)
-                UserDefaults.standard.setValue(storyArray, forKey: "storySegments")
+                DefaultsManager.standard.set(value: storyArray ?? [], forKey: .storySegments)
                 return
             } else if story.title.lowercased().contains("welcome!") {
                 storyArray?.removeAll(where: { str in
@@ -108,7 +108,7 @@ class StorylyManager: StorylyDelegate {
             }
 
             unique = Array(Set(storyArray ?? [""]))
-            UserDefaults.standard.setValue(unique, forKey: "storySegments")
+            DefaultsManager.standard.set(value: unique, forKey: .storySegments)
         }
     }
 
@@ -152,9 +152,9 @@ class StorylyManager: StorylyDelegate {
         }()
 
         guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
-            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
+            DefaultsManager.standard.set(value: formatter.string(from: Date()), forKey: .userDate)
             if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
-//                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
+//                DefaultsManager.standard.set(value: oldSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: oldSegments)
             }
             return
@@ -166,7 +166,7 @@ class StorylyManager: StorylyDelegate {
 //        var arrDates = [Date]()
 //        arrDates.append(Date())
 //        date = cal.date(byAdding: Calendar.Component.day, value: -1, to: date)!
-//        UserDefaults.standard.setValue(formatter.string(from: date), forKey: "userDate")
+//        DefaultsManager.standard.set(value: formatter.string(from: date), forKey: "userDate")
 //        let userDate = UserDefaults.standard.string(forKey: "userDate")!
 //
         let lastOpenedDate = formatter.date(from: userDate)!.setTime(hour: 00, min: 00, sec: 00)
@@ -174,24 +174,24 @@ class StorylyManager: StorylyDelegate {
         let interval = currentDate.interval(ofComponent: .day, fromDate: lastOpenedDate ?? Date())
 
         if interval >= 1 && interval < 2 { // update streak number and date
-            UserDefaults.standard.setValue(Date(), forKey: "userDate")
+            DefaultsManager.standard.set(value: Date(), forKey: .userDate)
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                UserDefaults.standard.setValue(newSegments, forKey: "oldSegments")
+                DefaultsManager.standard.set(value: newSegments, forKey: .oldSegments)
                 StorylyManager.updateSegments(segs: newSegments)
                 StorylyManager.saveToFirebase(unique: newSegments)
             }
 
         } else if interval >= 2 { // broke streak
-            UserDefaults.standard.setValue(Date(), forKey: "userDate")
+            DefaultsManager.standard.set(value: Date(), forKey: .userDate)
             if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-                UserDefaults.standard.setValue(newSegments, forKey: "oldSegments")
+                DefaultsManager.standard.set(value: newSegments, forKey: .oldSegments)
                 StorylyManager.updateSegments(segs: newSegments)
                 StorylyManager.saveToFirebase(unique: newSegments)
             }
 
         } else {
             if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
-//                UserDefaults.standard.setValue(oldSegments, forKey: "oldSegments")
+//                DefaultsManager.standard.set(value: oldSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: oldSegments)
             }
         }

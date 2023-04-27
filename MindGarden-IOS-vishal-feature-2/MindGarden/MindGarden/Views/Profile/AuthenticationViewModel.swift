@@ -87,7 +87,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                             if !isSignUp { // login
                                 alertError = true
                                 alertMessage = "Email is already in use. Use the sign in page"
-                                UserDefaults.standard.set(true, forKey: "falseAppleId")
+                                DefaultsManager.standard.set(value: true, forKey: .falseAppleId)
+//                                UserDefaults.standard.set(true, forKey: "falseAppleId")
                                 isLoading = false
                                 falseAppleId = true
                                 return
@@ -102,8 +103,10 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     // User never used this appleid before
                                     createUser()
                                     withAnimation {
-                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
-                                        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                        DefaultsManager.standard.set(value: appleIDCredential.user, forKey: .appleAuthorizedUserIdKey)
+                                        DefaultsManager.standard.set(value: true, forKey: .loggedIn)
+//                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+//                                        DefaultsManager.standard.set(value: true, forKey: K.defaults.loggedIn)
 
                                         goToHome()
                                     }
@@ -126,8 +129,10 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                     }
 
                                     withAnimation {
-                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
-                                        UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                        DefaultsManager.standard.set(value: appleIDCredential.user, forKey: .appleAuthorizedUserIdKey)
+                                        DefaultsManager.standard.set(value: true, forKey: .loggedIn)
+//                                        UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+//                                        DefaultsManager.standard.set(value: true, forKey: K.defaults.loggedIn)
                                         goToHome()
                                     }
                                 })
@@ -182,11 +187,12 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
                                 // User already signed in with this appleId once
 
-                                if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId") { // new user
+                                if (appleIDCredential.email != nil) || DefaultsManager.standard.value(forKey: .falseAppleId).boolValue { // new user
                                     if !isSignUp { // login
                                         alertError = true
                                         alertMessage = "Email is not associated with account"
-                                        UserDefaults.standard.set(true, forKey: "falseAppleId")
+                                        DefaultsManager.standard.set(value: true, forKey: .falseAppleId)
+//                                        UserDefaults.standard.set(true, forKey: "falseAppleId")
                                         isLoading = false
                                         falseAppleId = true
                                         return
@@ -201,8 +207,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             // User never used this appleid before
                                             createUser()
                                             withAnimation {
-                                                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
-                                                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                                                saveUserDetails(appleIDCredential.user)
+//                                                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+//                                                DefaultsManager.standard.set(value: true, forKey: K.defaults.loggedIn)
                                                 getData()
                                             }
                                         })
@@ -223,8 +230,9 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                                             }
 
                                             withAnimation {
-                                                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
-                                                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+//                                                UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
+//                                                DefaultsManager.standard.set(value: true, forKey: K.defaults.loggedIn)
+                                                saveUserDetails(appleIDCredential.user)
                                                 getData()
                                             }
                                         })
@@ -244,6 +252,11 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             }
         }
     }
+    
+    private func saveUserDetails(_ userDetials: String) {
+        DefaultsManager.standard.set(value: userDetials, forKey: .appleAuthorizedUserIdKey)
+        DefaultsManager.standard.set(value: true, forKey: .loggedIn)
+    }
 
     private func goToHome() {
         OneSignal.sendTag("first_name", value: UserDefaults.standard.string(forKey: "name") ?? "")
@@ -260,8 +273,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             Analytics.shared.log(event: .authentication_signup_successful)
         } else {
             Analytics.shared.log(event: .authentication_signin_successful)
-            UserDefaults.standard.setValue(true, forKey: "showedChallenge")
-            UserDefaults.standard.setValue(false, forKey: "newUser")
+            DefaultsManager.standard.set(value: true, forKey: .showedChallenge)
+            DefaultsManager.standard.set(value: false, forKey: .newUser)
         }
 
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -350,7 +363,7 @@ extension AuthenticationViewModel {
 
         Auth.auth().signIn(with: credential) { [weak self] _, error in
             self?.isLoading = false
-            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+            DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.done.rawValue, forKey: .onboarding)
             if let _ = error {
                 self?.alertError = true
                 self?.alertMessage = error?.localizedDescription ?? "Email not associated with an account"
@@ -362,7 +375,7 @@ extension AuthenticationViewModel {
                     self?.getData()
                 }
                 withAnimation {
-                    UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                    DefaultsManager.standard.set(value: true, forKey: .loggedIn)
                 }
                 self?.alertError = false
             }
@@ -406,7 +419,7 @@ extension AuthenticationViewModel {
             createUser()
             alertError = false
             withAnimation {
-                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                DefaultsManager.standard.set(value: true, forKey: .loggedIn)
                 goToHome()
             }
         }
@@ -422,13 +435,13 @@ extension AuthenticationViewModel {
             }
             alertError = false
             withAnimation {
-                UserDefaults.standard.setValue(true, forKey: K.defaults.loggedIn)
+                DefaultsManager.standard.set(value: true, forKey: .loggedIn)
                 if isSignUp {
                 } else {
                     getData()
-                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
+                    DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.done.rawValue, forKey: .onboarding)
                 }
-                UserDefaults.standard.setValue("432hz", forKey: "sound")
+                DefaultsManager.standard.set(value: "432hz", forKey: .sound)
             }
         }
     }
@@ -564,7 +577,7 @@ extension AuthenticationViewModel {
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
-                    UserDefaults.standard.setValue("432hz", forKey: "sound")
+                    DefaultsManager.standard.set(value: "432hz", forKey: .sound)
                     self.userModel.getSelectedPlant()
                     self.userModel.name = UserDefaults.standard.string(forKey: "name") ?? ""
                 }
@@ -577,40 +590,40 @@ extension AuthenticationViewModel {
     }
 
     func getData() {
-        UserDefaults.standard.setValue(true, forKey: "day7")
-        UserDefaults.standard.setValue(true, forKey: "showWidget")
-        UserDefaults.standard.setValue(true, forKey: "signedIn")
-        UserDefaults.standard.setValue(UUID().uuidString, forKey: K.defaults.giftQuotaId)
+        DefaultsManager.standard.set(value: true, forKey: .day7)
+        DefaultsManager.standard.set(value: true, forKey: .showWidget)
+        DefaultsManager.standard.set(value: true, forKey: .signedIn)
+        DefaultsManager.standard.set(value: UUID().uuidString, forKey: .giftQuotaId)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { snapshot, _ in
                 if let document = snapshot, document.exists {
                     if let name = document[K.defaults.name] {
-                        UserDefaults.standard.setValue(name, forKey: K.defaults.name)
+                        DefaultsManager.standard.set(value: name, forKey: .name)
                     }
                     if let fbFav = document[K.defaults.favorites] {
-                        UserDefaults.standard.setValue(fbFav, forKey: K.defaults.favorites)
+                        DefaultsManager.standard.set(value: fbFav, forKey: .favorites)
                     }
                     if let fbRecents = document[K.defaults.completedMeditations] {
-                        UserDefaults.standard.setValue(fbRecents, forKey: K.defaults.completedMeditations)
+                        DefaultsManager.standard.set(value: fbRecents, forKey: .completedMeditations)
                     }
 
                     if let joinDate = document[K.defaults.joinDate] {
-                        UserDefaults.standard.setValue(joinDate, forKey: K.defaults.joinDate)
+                        DefaultsManager.standard.set(value: joinDate, forKey: .joinDate)
                     }
 
                     if let isPro = document["isPro"] {
-                        UserDefaults.standard.setValue(isPro, forKey: "isPro")
+                        DefaultsManager.standard.set(value: isPro, forKey: .isPro)
                     }
 
                     if let experience = document["experience"] {
-                        UserDefaults.standard.setValue(experience, forKey: "experience")
+                        DefaultsManager.standard.set(value: experience, forKey: .experience)
                     }
 
                     if let storySegs = document["storySegments"] as? [String] {
                         storySegments = Set(storySegs)
                         StorylyManager.refresh()
-                        UserDefaults.standard.setValue(storySegs, forKey: "oldSegments")
-                        UserDefaults.standard.setValue(storySegs, forKey: "storySegments")
+                        DefaultsManager.standard.set(value: storySegs, forKey: .oldSegments)
+                        DefaultsManager.standard.set(value: storySegs, forKey: .storySegments)
                     }
 
                     if let stack = document["referredStack"] as? String {
@@ -618,16 +631,16 @@ extension AuthenticationViewModel {
                         let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
 
                         if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
-                            UserDefaults.standard.setValue(numRefs, forKey: "numRefs")
+                            DefaultsManager.standard.set(value: numRefs, forKey: .numRefs)
                         }
                     }
 //                    Purchases.configure(withAPIKey: "wuPOzKiCUvKWUtiHEFRRPJoksAdxJMLG", appUserID: email)
-                    UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                    UserDefaults.standard.setValue("432hz", forKey: "sound")
+                    DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.done.rawValue, forKey: .onboarding)
+                    DefaultsManager.standard.set(value: "432hz", forKey: .sound)
                     DispatchQueue.main.async {
 //                        Purchases.shared.logIn(email) { info, _, _ in
 //                            if info?.entitlements.all["isPro"]?.isActive == true {
-//                                UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
 //                                WidgetCenter.shared.reloadAllTimelines()
 //                            }

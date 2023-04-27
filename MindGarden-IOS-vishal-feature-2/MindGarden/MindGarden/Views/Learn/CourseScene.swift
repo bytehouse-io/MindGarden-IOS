@@ -180,11 +180,11 @@ struct CourseScene: View {
                                                         if !courseIds.contains(where: { $0 == course.id }) {
                                                             courseIds.append(course.id)
                                                             completedCourses = courseIds
-                                                            UserDefaults.standard.setValue(courseIds, forKey: "completedCourses")
+                                                            DefaultsManager.standard.set(value: courseIds, forKey: .completedCourses)
                                                         }
                                                     } else {
                                                         completedCourses = [course.id]
-                                                        UserDefaults.standard.setValue([course.id], forKey: "completedCourses")
+                                                        DefaultsManager.standard.set(value: [course.id], forKey: .completedCourses)
                                                     }
                                                     if course.category == "meditation" {
                                                         Analytics.shared.log(event: .learn_finished_meditation_course)

@@ -156,7 +156,7 @@ struct Finished: View {
                                                                 Analytics.shared.log(event: .home_tapped_categories)
                                                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                                                 impact.impactOccurred()
-                                                                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+                                                                NotificationCenter.default.post(name: .mood, object: nil)
                                                             }
                                                         }
                                                     } //: Button
@@ -345,7 +345,7 @@ struct Finished: View {
                 NotificationHelper.addThreeDay()
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.runCounter)) { _ in }
+        .onReceive(NotificationCenter.default.publisher(for: .runCounter)) { _ in }
         .onAppear {
             if UserDefaults.standard.bool(forKey: "isPlayMusic") {
                 if let player = player {
@@ -425,7 +425,7 @@ struct Finished: View {
             // onboarding
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 Analytics.shared.log(event: .onboarding_finished_meditation)
-                UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
+                DefaultsManager.standard.set(value: "garden", forKey: .onboarding)
                 isOnboarding = true
             } else {
                 OneSignal.sendTag("firstMeditation", value: "true")
@@ -437,7 +437,7 @@ struct Finished: View {
                   primaryButton: .default(Text("Yes!")) {
                       Analytics.shared.log(event: .rating_tapped_yes)
                       showRating = true
-                      UserDefaults.standard.setValue(true, forKey: "reviewedApp")
+                DefaultsManager.standard.set(value: true, forKey: .reviewedApp)
 
                   },
                   secondaryButton: .default(Text("No")) {

@@ -34,14 +34,14 @@ class ProfileViewModel: ObservableObject {
         catch { print("already logged out") }
 
         UserDefaults.deleteAll()
-        UserDefaults.standard.setValue(false, forKey: K.defaults.loggedIn)
-        UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
-        UserDefaults.standard.setValue(false, forKey: "isPro")
-        UserDefaults.standard.setValue("", forKey: K.defaults.onboarding)
-        UserDefaults.standard.setValue("432hz", forKey: "sound")
-        UserDefaults.standard.setValue(50, forKey: "coins")
+        DefaultsManager.standard.set(value: false, forKey: .loggedIn)
+        DefaultsManager.standard.set(value: "White Daisy", forKey: .selectedPlant)
+        DefaultsManager.standard.set(value: false, forKey: .isPro)
+        DefaultsManager.standard.set(value: "", forKey: .onboarding)
+        DefaultsManager.standard.set(value: "432hz", forKey: .sound)
+        DefaultsManager.standard.set(value: 50, forKey: .coins)
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
-        UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")
+        DefaultsManager.standard.set(value: formatter.string(from: Date()), forKey: .joinDate)
     }
 }

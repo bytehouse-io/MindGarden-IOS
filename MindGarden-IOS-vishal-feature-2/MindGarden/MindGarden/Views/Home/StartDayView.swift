@@ -232,7 +232,7 @@ struct StartDayView: View {
                             Analytics.shared.log(event: .home_tapped_mood)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+                                NotificationCenter.default.post(name: .mood, object: nil)
                             }
                         }
                     }.buttonStyle(ScalePress())
@@ -404,7 +404,7 @@ struct StartDayView: View {
             gardenModel.getAllGratitude(weekDays: gardenModel.getAllDaysOfTheCurrentWeek())
             updateStartDay()
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("updateStart"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .updateStart)) { _ in
             updateStartDay()
         }
     }
@@ -415,7 +415,7 @@ struct StartDayView: View {
         }
 
         if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-//            UserDefaults.standard.setValue(newSegments, forKey: "oldSegments")
+//            DefaultsManager.standard.set(value: newSegments, forKey: "oldSegments")
         }
     }
 

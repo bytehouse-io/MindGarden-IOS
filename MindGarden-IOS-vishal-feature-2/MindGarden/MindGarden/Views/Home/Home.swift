@@ -121,11 +121,11 @@ struct Home: View {
                 Alert(title: Text("😎 Welcome to the club."), message: Text("🍀 You're now a MindGarden Pro Member"), dismissButton: .default(Text("Got it!")))
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("runCounter")))
+        .onReceive(NotificationCenter.default.publisher(for: .runCounter))
         { _ in
             runCounter(counter: $attempts, start: 0, end: 3, speed: 1)
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("intro"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .intro)) { _ in
             model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
             viewRouter.currentPage = .middle
         }
@@ -160,18 +160,18 @@ struct Home: View {
                     if UserDefaults.standard.bool(forKey: "introLink") {
                         model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                         viewRouter.currentPage = .middle
-                        UserDefaults.standard.setValue(false, forKey: "introLink")
+                        DefaultsManager.standard.set(value: false, forKey: .introLink)
                     } else if UserDefaults.standard.bool(forKey: "happinessLink") {
                         model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 14 })
                         viewRouter.currentPage = .middle
-                        UserDefaults.standard.setValue(false, forKey: "happinessLink")
+                        DefaultsManager.standard.set(value: false, forKey: .happinessLink)
                     }
                 }
 
                 if (UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
                     showUpdateModal = true
                     userModel.show50Off = false
-                    UserDefaults.standard.setValue(true, forKey: "freeTrialTo50")
+                    DefaultsManager.standard.set(value: true, forKey: .freeTrialTo50)
                 }
 
                 // coins = userModel.coins
@@ -179,14 +179,14 @@ struct Home: View {
             }
         }
         .onAppearAnalytics(event: .screen_load_home)
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("notification")))
+        .onReceive(NotificationCenter.default.publisher(for: .notification))
         { _ in
             withAnimation {
                 mindfulNotifs = true
                 activeSheet = .profile
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("storyOnboarding")))
+        .onReceive(NotificationCenter.default.publisher(for: .storyOnboarding))
         { _ in
             withAnimation {
                 if (UserDefaults.standard.bool(forKey: "review") || (UserDefaults.standard.string(forKey: "onboarding") == "done") || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") && !UserDefaults.standard.bool(forKey: "showedChallenge") {
@@ -197,7 +197,7 @@ struct Home: View {
                 }
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("referrals"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .referrals)) { _ in
             withAnimation {
                 tappedRefer = true
                 activeSheet = .profile

@@ -65,10 +65,11 @@ struct HomeViewScroll: View {
                                 Text("\(userModel.plantedTrees.count)")
                                     .font(Font.fredoka(.medium, size: 24))
                                     .foregroundColor(Clr.darkgreen)
-                            }.onTapGesture {
+                            }
+                            .onTapGesture {
                                 withAnimation {
                                     Analytics.shared.log(event: .home_tapped_real_tree)
-                                    NotificationCenter.default.post(name: Notification.Name("trees"), object: nil)
+                                    NotificationCenter.default.post(name: .trees, object: nil)
                                 }
                             }
                         }.offset(x: -50, y: -30)

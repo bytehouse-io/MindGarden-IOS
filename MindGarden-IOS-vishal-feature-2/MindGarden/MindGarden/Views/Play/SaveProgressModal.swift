@@ -33,7 +33,7 @@ struct SaveProgressModal: View {
                                 fromOnboarding = true
                                 shown = false
                                 viewRouter.currentPage = .authentication
-                                UserDefaults.standard.setValue(true, forKey: "saveProgress")
+                                DefaultsManager.standard.set(value: true, forKey: .saveProgress)
                             }
                         } label: {
                             Capsule()
@@ -53,7 +53,7 @@ struct SaveProgressModal: View {
                             withAnimation {
                                 Analytics.shared.log(event: .finished_not_now)
                                 shown = false
-                                UserDefaults.standard.setValue(true, forKey: "saveProgress")
+                                DefaultsManager.standard.set(value: true, forKey: .saveProgress)
                             }
                         } label: {
                             Capsule()

@@ -44,7 +44,7 @@ struct PlantGrowing: View {
             }
             if let selectedPlant = plant?.id, Plant.badgePlants.first(where: { $0.id == selectedPlant }) != nil {
                 isTransit = true
-                UserDefaults.standard.setValue(plant?.title, forKey: K.defaults.selectedPlant)
+                DefaultsManager.standard.set(value: plant?.title, forKey: .selectedPlant)
                 userModel.selectedPlant = plant
             } else {
                 DispatchQueue.main.async {

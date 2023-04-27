@@ -40,35 +40,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (seef `application:configurationForConnectingSceneSession` instead).
         // Create the SwiftUI view that provides the window contents.
-//        UserDefaults.standard.setValue(false, forKey: "tappedRate")
+//        DefaultsManager.standard.set(value: false, forKey: "tappedRate")
 
         let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
-//        UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-//        UserDefaults.standard.setValue(["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
+//        DefaultsManager.standard.set(value: "done", forKey: K.defaults.onboarding)
+//        DefaultsManager.standard.set(value: ["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         Analytics.shared.log(event: .launchedApp)
         playSound(soundName: "background")
 
         if launchNum == 0 {
             let randomInt = Int.random(in: 0 ..< 2)
-            UserDefaults.standard.setValue(randomInt, forKey: "abTest")
-            UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
+            DefaultsManager.standard.set(value: randomInt, forKey: .abTest)
+            DefaultsManager.standard.set(value: true, forKey: .isPlayMusic)
             playSound(soundName: "background")
-            UserDefaults.standard.setValue(UUID().uuidString, forKey: K.defaults.giftQuotaId)
-            UserDefaults.standard.setValue(["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: "oldSegments")
-            UserDefaults.standard.setValue(["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: "storySegments")
-            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "userDate")
-            UserDefaults.standard.setValue(["White Daisy", "Red Tulip"], forKey: K.defaults.plants)
-            UserDefaults.standard.setValue("White Daisy", forKey: K.defaults.selectedPlant)
-            UserDefaults.standard.setValue("432hz", forKey: "sound")
-            UserDefaults.standard.setValue(50, forKey: "coins")
-            UserDefaults.standard.setValue(2, forKey: "frequency")
-            UserDefaults.standard.setValue(["gratitude", "smiling", "loving", "breathing", "present"], forKey: "notifTypes")
+            DefaultsManager.standard.set(value: UUID().uuidString, forKey: .giftQuotaId)
+            DefaultsManager.standard.set(value: ["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: .oldSegments)
+            DefaultsManager.standard.set(value: ["New Users", "Intro/Day 1", "Tip New Users", "trees for the future"], forKey: .storySegments)
+            DefaultsManager.standard.set(value: formatter.string(from: Date()), forKey: .userDate)
+            DefaultsManager.standard.set(value: ["White Daisy", "Red Tulip"], forKey: .plants)
+            DefaultsManager.standard.set(value: "White Daisy", forKey: .selectedPlant)
+            DefaultsManager.standard.set(value: "432hz", forKey: .sound)
+            DefaultsManager.standard.set(value: 50, forKey: .coins)
+            DefaultsManager.standard.set(value: 2, forKey: .frequency)
+            DefaultsManager.standard.set(value: ["gratitude", "smiling", "loving", "breathing", "present"], forKey: .notifTypes)
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd,yyyy"
-            UserDefaults.standard.setValue(formatter.string(from: Date()), forKey: "joinDate")
-            UserDefaults.standard.setValue(true, forKey: "newUser")
-            UserDefaults.standard.setValue(1, forKey: "launchNumber")
-            UserDefaults.standard.setValue(1, forKey: "dailyLaunchNumber")
+            DefaultsManager.standard.set(value: formatter.string(from: Date()), forKey: .joinDate)
+            DefaultsManager.standard.set(value: true, forKey: .newUser)
+            DefaultsManager.standard.set(value: 1, forKey: .launchNumber)
+            DefaultsManager.standard.set(value: 1, forKey: .dailyLaunchNumber)
         }
 
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
@@ -188,7 +188,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
         launchNum += 1
-        UserDefaults.standard.setValue(launchNum, forKey: "launchNumber")
+        DefaultsManager.standard.set(value: launchNum, forKey: .launchNumber)
 
         if UserDefaults.standard.bool(forKey: "reddit") && !UserDefaults.standard.bool(forKey: "redditOne") {
             SceneDelegate.userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
@@ -196,7 +196,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             })
             SceneDelegate.userModel.buyPlant(unlockedStrawberry: true)
             SceneDelegate.userModel.showPlantAnimation = true
-            UserDefaults.standard.setValue(true, forKey: "redditOne")
+            DefaultsManager.standard.set(value: true, forKey: .redditOne)
         }
 
         StorylyManager.updateStories()
@@ -232,23 +232,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         for context in URLContexts {
             if context.url.scheme == "christmas" {
-                UserDefaults.standard.setValue(true, forKey: "christmasLink")
+                DefaultsManager.standard.set(value: true, forKey: .christmasLink)
+//                DefaultsManager.standard.set(value: true, forKey: "christmasLink")
             } else if context.url.scheme == "intro" || context.url.host == "intro" {
-                UserDefaults.standard.setValue(true, forKey: "introLink")
+                DefaultsManager.standard.set(value: true, forKey: .introLink)
+//                DefaultsManager.standard.set(value: true, forKey: "introLink")
             } else if context.url.scheme == "happiness" || context.url.host == "happiness" {
-                UserDefaults.standard.setValue(true, forKey: "happinessLink")
+                DefaultsManager.standard.set(value: true, forKey: .happinessLink)
+//                DefaultsManager.standard.set(value: true, forKey: "happinessLink")
             } else if context.url.scheme == "gratitude" || context.url.host == "gratitude" {
-                NotificationCenter.default.post(name: Notification.Name("gratitude"), object: nil)
+                NotificationCenter.default.post(name: .gratitude, object: nil)
             } else if context.url.scheme == "meditate" || context.url.host == "meditate" {
-                NotificationCenter.default.post(name: Notification.Name("meditate"), object: nil)
+                NotificationCenter.default.post(name: .meditate, object: nil)
             } else if context.url.scheme == "mood" || context.url.host == "mood" {
-                NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
+                NotificationCenter.default.post(name: .mood, object: nil)
             } else if context.url.scheme == "breathwork" || context.url.host == "breathwork" {
-                NotificationCenter.default.post(name: Notification.Name("breathwork"), object: nil)
+                NotificationCenter.default.post(name: .breathwork, object: nil)
             } else if context.url.scheme == "pro" || context.url.host == "pro" {
-                NotificationCenter.default.post(name: Notification.Name("pro"), object: nil)
+                NotificationCenter.default.post(name: .pro, object: nil)
             } else if context.url.scheme == "garden" || context.url.host == "garden" {
-                NotificationCenter.default.post(name: Notification.Name("garden"), object: nil)
+                NotificationCenter.default.post(name: .garden, object: nil)
             }
         }
         if let url = URLContexts.first?.url {
@@ -267,8 +270,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // user's RTDB record.
         if user == nil && invitedBy != nil {
             Analytics.shared.log(event: .onboarding_came_from_referral)
-            UserDefaults.standard.setValue(invitedBy, forKey: K.defaults.referred)
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
+            DefaultsManager.standard.set(value: invitedBy ?? "", forKey: .referred)
+//            DefaultsManager.standard.set(value: invitedBy, forKey: K.defaults.referred)
+            let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+            let isLoggedIn = DefaultsManager.standard.value(forKey: .loggedIn).boolValue
+            if onboardingValue == .done || onboardingValue == .garden && isLoggedIn
+//                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn)
+            {
                 router.currentPage = .authentication
             }
         }
@@ -279,11 +287,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus {
             case .authorized:
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
-            case .denied:
-                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
-            case .notDetermined:
-                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+//                DefaultsManager.standard.set(value: true, forKey: "isNotifOn")
+            case .denied, .notDetermined:
+                DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
+//                DefaultsManager.standard.set(value: false, forKey: "isNotifOn")
+//            case .notDetermined:
+//                DefaultsManager.standard.set(value: false, forKey: "isNotifOn")
             default:
                 print("Unknow Status")
             }
@@ -357,7 +367,9 @@ extension SceneDelegate {
             player?.numberOfLoops = -1
 
             guard let player = player else { return }
-            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+            if DefaultsManager.standard.value(forKey: .isPlayMusic).boolValue
+//                UserDefaults.standard.bool(forKey: "isPlayMusic")
+            {
                 player.play()
             }
 

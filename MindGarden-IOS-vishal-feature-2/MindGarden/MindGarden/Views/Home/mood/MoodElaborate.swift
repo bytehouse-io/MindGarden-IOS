@@ -83,7 +83,7 @@ struct MoodElaborate: View {
                                         selectedSubMood = item
                                         var num = UserDefaults.standard.integer(forKey: "numMoods")
                                         num += 1
-                                        UserDefaults.standard.setValue(num, forKey: "numMoods")
+                                        DefaultsManager.standard.set(value: num, forKey: .numMoods)
                                         let identify = AMPIdentify()
                                             .set("num_moods", value: NSNumber(value: num))
                                         Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -93,7 +93,7 @@ struct MoodElaborate: View {
                                         print("logging, \("tapped_mood_\(item)")")
 
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
-                                            UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
+                                            DefaultsManager.standard.set(value: "mood", forKey: .onboarding)
                                         }
 
                                         if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"] as? [[String: String]] {
@@ -106,8 +106,8 @@ struct MoodElaborate: View {
                                         var moodSession = [String: String]()
                                         moodSession["timeStamp"] = Date.getTime()
                                         moodSession["elaboration"] = item
-                                        UserDefaults.standard.setValue(userModel.selectedMood.title, forKey: "selectedMood")
-                                        UserDefaults.standard.setValue(item, forKey: "elaboration")
+                                        DefaultsManager.standard.set(value: userModel.selectedMood.title, forKey: .selectedMood)
+                                        DefaultsManager.standard.set(value: item, forKey: .elaboration)
                                         userModel.elaboration = item
                                         moodSession["mood"] = userModel.selectedMood.title
 
@@ -150,7 +150,7 @@ struct MoodElaborate: View {
 //                                    selectedSubMood = item
 //                                    var num = UserDefaults.standard.integer(forKey: "numMoods")
 //                                    num += 1
-//                                    UserDefaults.standard.setValue(num, forKey: "numMoods")
+//                                    DefaultsManager.standard.set(value: num, forKey: "numMoods")
 //                                    let identify = AMPIdentify()
 //                                        .set("num_moods", value: NSNumber(value: num))
 //                                    Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -161,7 +161,7 @@ struct MoodElaborate: View {
 //
 //
 //                                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
-//                                        UserDefaults.standard.setValue("mood", forKey: K.defaults.onboarding)
+//                                        DefaultsManager.standard.set(value: "mood", forKey: K.defaults.onboarding)
 //                                    }
 //
 //                                    if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"]  as? [[String: String]] {

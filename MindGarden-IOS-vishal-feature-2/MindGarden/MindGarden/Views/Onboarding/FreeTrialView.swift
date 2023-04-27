@@ -173,7 +173,7 @@ struct FreeTrialView: View {
                         }
                     case .notDetermined:
                         isReminderOn = false
-                        UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                        DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
                         Analytics.shared.log(event: .notification_go_to_settings)
                         DispatchQueue.main.async {
                             if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {

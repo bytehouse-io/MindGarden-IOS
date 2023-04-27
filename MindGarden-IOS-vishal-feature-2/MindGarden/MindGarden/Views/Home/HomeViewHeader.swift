@@ -55,11 +55,11 @@ struct HomeViewHeader: View {
                                 if let player = player {
                                     if player.isPlaying {
                                         player.pause()
-                                        UserDefaults.standard.setValue(false, forKey: "isPlayMusic")
+                                        DefaultsManager.standard.set(value: false, forKey: .isPlayMusic)
                                         isSpeakerOn = false
                                     } else {
                                         player.play()
-                                        UserDefaults.standard.setValue(true, forKey: "isPlayMusic")
+                                        DefaultsManager.standard.set(value: true, forKey: .isPlayMusic)
                                         isSpeakerOn = true
                                     }
                                 }
@@ -157,7 +157,7 @@ struct HomeViewHeader: View {
                                 if !UserDefaults.standard.bool(forKey: "day4") {
                                     PlusCoins(coins: $userModel.coins)
                                         .onTapGesture {
-                                            UserDefaults.standard.setValue(true, forKey: "plusCoins")
+                                            DefaultsManager.standard.set(value: true, forKey: .plusCoins)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             Analytics.shared.log(event: .home_tapped_IAP)
                                             withAnimation { showIAP.toggle() }
@@ -165,7 +165,7 @@ struct HomeViewHeader: View {
                                 } else {
                                     PlusCoins(coins: $userModel.coins)
                                         .onTapGesture {
-                                            UserDefaults.standard.setValue(true, forKey: "plusCoins")
+                                            DefaultsManager.standard.set(value: true, forKey: .plusCoins)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             Analytics.shared.log(event: .home_tapped_IAP)
                                             withAnimation { showIAP.toggle() }

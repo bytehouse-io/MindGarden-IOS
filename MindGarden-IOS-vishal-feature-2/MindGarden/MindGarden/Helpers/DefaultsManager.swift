@@ -18,7 +18,7 @@ struct DefaultsManager {
     }
     
     mutating func value(forKey key: Keys) -> DefaultsValues {
-        var defaultsValues = DefaultsValues(value: standardDefaults.value(forKey: key.rawValue))
+        let defaultsValues = DefaultsValues(value: standardDefaults.value(forKey: key.rawValue))
         return defaultsValues
     }
     
@@ -56,6 +56,10 @@ struct DefaultsValues {
         } else {
             return 0
         }
+    }
+    
+    var isNil: Bool {
+        value == nil
     }
     
     var onboardingValue: DefaultsManager.OnboardingScreens? {
@@ -107,6 +111,85 @@ extension DefaultsManager {
         case giftQuotaId
         case dailyLaunchNumber
         case reviewedApp
+        case showWidget
+        case fiveHundredBonus = "500bonus"
+        case christmasLink
+        case introLink
+        case happinessLink
+        case isNotifOn
+        case notifOn
+        case isPlayMusic
+        case vibrationMode
+        case backgroundAnimation
+        case falseAppleId
+        case appleAuthorizedUserIdKey
+        case redditOne
+        case launchNumber
+        case storySegments
+        case oldSegments
+        case userDate
+        case abTest
+        case sound
+        case frequency
+        case notifTypes
+        case newUser
+        case ltd
+        case day1
+        case day2
+        case day3
+        case day7
+        case day
+        case referTip
+        case remindersOn
+        case widgetTip
+        case plusCoins
+        case sevenDay
+        case thirtyDay
+        case longestStreak
+        case updatedStreak
+        case authx
+        case firstStory
+        case completedCourses
+        case showedChallenge
+        case newUser
+        case sound
+        case showWidget
+        case signedIn
+        case joinDate
+        case mindful
+        case reddit
+        case tileDates
+        case notifTypes
+        case singleOnboarding1
+        case numSessions
+        case grid
+        case playTutorialModal
+        case backgroundVolume
+        case bellVolume
+        case saveProgress
+        case day1Intro
+        case day2Intro
+        case day3Intro
+        case day4Intro
+        case day5Intro
+        case day6Intro
+        case unlockedCherry
+        case tenDays = "10days"
+        case beginnerCourse
+        case intermediateCourse
+        case storeTutorial
+        case freeTrialTo50
+        case fourteenDayModal = "14DayModal"
+        case showedNotif
+        case notif
+        case referPlant
+        case bonsai
+        case reason1
+        case firstTap
+        case onboarded
+        case oneDayNotif
+        case onboardingNotif
+        case threeDayNotif
     }
     
     enum OnboardingScreens: String {

@@ -128,7 +128,7 @@ struct ExperienceScene: View {
     private func promptNotif() {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             if accepted {
-                UserDefaults.standard.setValue("", forKey: K.defaults.meditationReminder)
+                DefaultsManager.standard.set(value: "", forKey: .meditationReminder)
                 Analytics.shared.log(event: .onboarding_notification_on)
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()
@@ -156,7 +156,7 @@ struct ExperienceScene: View {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     selected = title
-                    UserDefaults.standard.setValue(title, forKey: "experience")
+                    DefaultsManager.standard.set(value: title, forKey: .experience)
                 }
             } label: {
                 ZStack {

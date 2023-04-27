@@ -339,7 +339,7 @@ struct NewAuthentication: View {
         .onAppearAnalytics(event: .screen_load_newAuthenticaion)
         .onAppear {
             if fromPage == "profile" {
-                UserDefaults.standard.setValue(true, forKey: "authx")
+                DefaultsManager.standard.set(value: true, forKey: .authx)
             }
 
             if tappedSignOut {
@@ -358,7 +358,7 @@ struct NewAuthentication: View {
             if UserDefaults.standard.bool(forKey: "review") && !UserDefaults.standard.bool(forKey: "firstStory") {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 58920, play: .StoryGroup)
                 storylyViewProgrammatic.resume()
-                UserDefaults.standard.setValue(true, forKey: "firstStory")
+                DefaultsManager.standard.set(value: true, forKey: .firstStory)
             }
         }
         .transition(.opacity)

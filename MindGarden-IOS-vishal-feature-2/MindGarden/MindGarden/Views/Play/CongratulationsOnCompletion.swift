@@ -164,7 +164,7 @@ struct CongratulationsOnCompletion: View {
             {
                 Analytics.shared.log(event: .onboarding_finished_meditation)
                 DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.garden.rawValue, forKey: .onboarding)
-//                UserDefaults.standard.setValue("garden", forKey: K.defaults.onboarding)
+//                DefaultsManager.standard.set(value: "garden", forKey: K.defaults.onboarding)
                 isOnboarding = true
             }
             if model.shouldStreakUpdate {

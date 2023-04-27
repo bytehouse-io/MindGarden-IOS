@@ -176,7 +176,7 @@ struct LearnScene: View {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus {
             case .authorized:
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
                 Analytics.shared.log(event: .notification_success_learn)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
@@ -187,14 +187,14 @@ struct LearnScene: View {
                 if UserDefaults.standard.bool(forKey: "freeTrial") {
                     NotificationHelper.freeTrial()
                 }
-                UserDefaults.standard.setValue(true, forKey: "notifOn")
+                DefaultsManager.standard.set(value: true, forKey: .notifOn)
                 isNotifOn = true
             case .denied:
                 Analytics.shared.log(event: .notification_settings_learn)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
-                        UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                        DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
                     }
                 }
             case .notDetermined:
@@ -202,7 +202,7 @@ struct LearnScene: View {
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
-                        UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                        DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
                     }
                 }
             default:

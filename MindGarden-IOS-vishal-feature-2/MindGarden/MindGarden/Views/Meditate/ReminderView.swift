@@ -79,7 +79,7 @@ struct ReminderView: View {
                                                             }
                                                             NotificationHelper.addOneDay()
                                                             NotificationHelper.addThreeDay()
-                                                            // UserDefaults.standard.setValue(true, forKey: "mindful")
+                                                            // DefaultsManager.standard.set(value: true, forKey: "mindful")
                                                             // NotificationHelper.createMindfulNotifs()
                                                             if UserDefaults.standard.bool(forKey: "freeTrial") {
                                                                 NotificationHelper.freeTrial()
@@ -91,7 +91,7 @@ struct ReminderView: View {
                                                         } else {
                                                             isToggled = false
                                                         }
-                                                        UserDefaults.standard.setValue(true, forKey: "showedNotif")
+                                                        DefaultsManager.standard.set(value: true, forKey: .showedNotif)
                                                     })
                                                 } else {
                                                     promptNotification()
@@ -116,8 +116,8 @@ struct ReminderView: View {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus {
             case .authorized:
-                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
-                UserDefaults.standard.setValue(TimeInterval(time).secondsToHourMinFormat(), forKey: K.defaults.meditationReminder)
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                DefaultsManager.standard.set(value: TimeInterval(time).secondsToHourMinFormat(), forKey: .meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
@@ -128,7 +128,7 @@ struct ReminderView: View {
                 if UserDefaults.standard.bool(forKey: "freeTrial") {
                     NotificationHelper.freeTrial()
                 }
-                UserDefaults.standard.setValue(true, forKey: "notifOn")
+                DefaultsManager.standard.set(value: true, forKey: .notifOn)
                 let formatter = DateComponentsFormatter()
                 formatter.allowedUnits = [.hour, .minute]
                 formatter.zeroFormattingBehavior = .pad
@@ -139,7 +139,7 @@ struct ReminderView: View {
                 dateFormatter.dateFormat = "hh:mm a"
                 let realDate = dateFormatter.string(from: date ?? Date())
 
-                UserDefaults.standard.setValue(dateFormatter.date(from: realDate), forKey: "notif")
+                DefaultsManager.standard.set(value: dateFormatter.date(from: realDate), forKey: .notif)
 
                 for i in 1 ... 7 {
                     let dateTime = dateFormatter.date(from: TimeInterval(time).secondsToHourMinFormat() ?? "12:54") ?? Date()
@@ -147,7 +147,7 @@ struct ReminderView: View {
                     NotificationHelper.scheduleNotification(at: datee, weekDay: i)
                 }
             case .notDetermined:
-                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
                 Analytics.shared.log(event: .notification_go_to_settings)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
@@ -157,7 +157,7 @@ struct ReminderView: View {
                 isToggled = false
                 return
             case .denied:
-                UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
                 Analytics.shared.log(event: .notification_go_to_settings)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {

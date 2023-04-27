@@ -290,13 +290,17 @@ struct ContentView: View {
                                 .onTapGesture {
                                     withAnimation {
                                         hidePopupWithAnimation {
-                                            if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
+                                            let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+                                            if onboardingValue != .signedUp
+//                                                UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp"
+                                            {
                                                 addMood = false
                                             }
                                             addGratitude = false
                                             if profileModel.showWidget {
                                                 profileModel.showWidget = false
-                                                UserDefaults.standard.setValue(true, forKey: "showWidget")
+                                                DefaultsManager.standard.set(value: true, forKey: .showWidget)
+//                                                DefaultsManager.standard.set(value: true, forKey: "showWidget")
                                             }
                                         }
                                     }
@@ -325,7 +329,8 @@ struct ContentView: View {
                                     maxHeight: geometry.size.height * (K.isSmall() ? 1 : 0.75),
                                     minHeight: 0.1,
                                     trigger: {
-                                        UserDefaults.standard.setValue(true, forKey: "500bonus")
+                                        DefaultsManager.standard.set(value: true, forKey: .fiveHundredBonus)
+//                                        DefaultsManager.standard.set(value: true, forKey: "500bonus")
                                         Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
                                         bonusModel.tripleBonus()
                                     }
@@ -353,7 +358,8 @@ struct ContentView: View {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
-                                                UserDefaults.standard.setValue(true, forKey: "500bonus")
+                                                DefaultsManager.standard.set(value: true, forKey: .fiveHundredBonus)
+//                                                DefaultsManager.standard.set(value: true, forKey: "500bonus")
                                                 userModel.showDay1Complete = false
                                                 bonusModel.tripleBonus()
                                             }
@@ -458,43 +464,43 @@ struct ContentView: View {
                 selectedTab = .search
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.gratitude)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .gratitude)) { _ in
             withAnimation {
                 Analytics.shared.log(event: .widget_tapped_journal)
                 viewRouter.currentPage = .journal
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.mood)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .mood)) { _ in
             Analytics.shared.log(event: .widget_tapped_meditate)
             withAnimation {
                 addMood = true
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.pro)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .pro)) { _ in
             fromPage = "widget"
             viewRouter.currentPage = .pricing
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.meditate)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .meditate)) { _ in
             Analytics.shared.log(event: .widget_tapped_meditate)
             selectedTab = .search
             viewRouter.currentPage = .learn
         }
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.garden)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .garden)) { _ in
             selectedTab = .garden
             viewRouter.currentPage = .garden
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("trees"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .trees)) { _ in
             withAnimation {
                 selectedTab = .shop
                 swipedTrees = true
                 viewRouter.currentPage = .shop
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("store"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .store)) { _ in
             selectedTab = .shop
             viewRouter.currentPage = .shop
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("breathwork")))
+        .onReceive(NotificationCenter.default.publisher(for: .breathwork))
         { _ in
             withAnimation {
                 Analytics.shared.log(event: .widget_tapped_breathwork)
@@ -503,7 +509,7 @@ struct ContentView: View {
                 viewRouter.currentPage = .learn
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("learn"))) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .learn)) { _ in
             learnNotif = true
             selectedTab = .search
             viewRouter.currentPage = .learn
@@ -595,7 +601,10 @@ struct ContentView: View {
                 }
             }
 
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+            if
+                DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude
+//                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude"
+            {
                 Analytics.shared.log(event: .onboarding_finished_gratitude)
                 withAnimation {
                     meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
@@ -621,11 +630,24 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-extension NSNotification {
+extension NSNotification.Name {
     static let gratitude = Notification.Name("gratitude")
     static let meditate = Notification.Name("meditate")
     static let mood = Notification.Name("mood")
     static let pro = Notification.Name("pro")
     static let garden = Notification.Name("garden")
     static let runCounter = Notification.Name("runCounter")
+    static let trees = Notification.Name("trees")
+    static let store = Notification.Name("store")
+    static let breathwork = Notification.Name("breathwork")
+    static let learn = Notification.Name("learn")
+    static let intro = Notification.Name("intro")
+    static let widget = Notification.Name("widget")
+    static let referrals = Notification.Name("referrals")
+    static let storyOnboarding = Notification.Name("storyOnboarding")
+    static let notification = Notification.Name("notification")
+    static let updateStart = Notification.Name("updateStart")
+    static let finish = NSNotification.Name("Finish")
+//    static let storyOnboarding =
+//    static let storyOnboarding =
 }

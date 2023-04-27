@@ -107,8 +107,8 @@ class BonusViewModel: ObservableObject {
         userModel.coins += plusCoins
         dailyBonus = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 24, to: Date()) ?? Date())
         createDailyCountdown()
-        UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
-        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
+        DefaultsManager.standard.set(value: dailyBonus, forKey: .dailyBonus)
+        DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).updateData([
                 // TODO: turn this into userdefault
@@ -122,16 +122,16 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
-            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
+            DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
+            DefaultsManager.standard.set(value: dailyBonus, forKey: .dailyBonus)
         }
     }
 
     func saveSeven() {
         userModel.coins += 300
         sevenDay += 1
-        UserDefaults.standard.setValue(sevenDay, forKey: K.defaults.seven)
-        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
+        DefaultsManager.standard.set(value: sevenDay, forKey: .seven)
+        DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.seven: sevenDay,
@@ -145,15 +145,15 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
-            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
+            DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
+            DefaultsManager.standard.set(value: dailyBonus, forKey: .dailyBonus)
             calculateProgress()
         }
     }
 
     func tripleBonus() {
         userModel.coins += 500
-        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
+        DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.coins: userModel.coins,
@@ -166,8 +166,8 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
-            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
+            DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
+            DefaultsManager.standard.set(value: dailyBonus, forKey: .dailyBonus)
             calculateProgress()
         }
     }
@@ -175,8 +175,8 @@ class BonusViewModel: ObservableObject {
     func saveThirty() {
         userModel.coins += 1000
         thirtyDay += 1
-        UserDefaults.standard.setValue(thirtyDay, forKey: K.defaults.thirty)
-        UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
+        DefaultsManager.standard.set(value: thirtyDay, forKey: .thirty)
+        DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).updateData([
                 K.defaults.thirty: thirtyDay,
@@ -190,8 +190,8 @@ class BonusViewModel: ObservableObject {
                 }
             }
         } else {
-            UserDefaults.standard.setValue(userModel.coins, forKey: K.defaults.coins)
-            UserDefaults.standard.setValue(dailyBonus, forKey: K.defaults.dailyBonus)
+            DefaultsManager.standard.set(value: userModel.coins, forKey: .coins)
+            DefaultsManager.standard.set(value: dailyBonus, forKey: .dailyBonus)
             calculateProgress()
         }
     }
@@ -207,13 +207,13 @@ class BonusViewModel: ObservableObject {
             progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date()) ?? Date()))
         } else if UserDefaults.standard.bool(forKey: "newUser") {
             let dte = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date()) ?? Date())
-            UserDefaults.standard.setValue(dte, forKey: "ltd")
+            DefaultsManager.standard.set(value: dte, forKey: .ltd)
             progressiveDisclosure(lastStreakDate: dte)
         } else {
-            UserDefaults.standard.setValue(true, forKey: "day1")
-            UserDefaults.standard.setValue(true, forKey: "day2")
-            UserDefaults.standard.setValue(true, forKey: "day3")
-            UserDefaults.standard.setValue(1, forKey: "day")
+            DefaultsManager.standard.set(value: true, forKey: .day1)
+            DefaultsManager.standard.set(value: true, forKey: .day2)
+            DefaultsManager.standard.set(value: true, forKey: .day3)
+            DefaultsManager.standard.set(value: 1, forKey: .day)
         }
 
         if let email = Auth.auth().currentUser?.email {
@@ -292,7 +292,7 @@ class BonusViewModel: ObservableObject {
         segments = storySegments.filter { str in !str.lowercased().contains("tip") }
 
         segments.insert(tip)
-        UserDefaults.standard.setValue(Array(segments), forKey: "storySegments")
+        DefaultsManager.standard.set(value: Array(segments), forKey: .storySegments)
         storySegments = segments
         StorylyManager.refresh()
     }
@@ -303,17 +303,17 @@ class BonusViewModel: ObservableObject {
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
             if UserDefaults.standard.bool(forKey: "referTip") {
-                UserDefaults.standard.setValue(true, forKey: "referTip")
+                DefaultsManager.standard.set(value: true, forKey: .referTip)
                 updateTips(tip: "Tip Referrals")
             }
         } else if launchNum >= 2 && !UserDefaults.standard.bool(forKey: "remindersOn") {
-            UserDefaults.standard.setValue(true, forKey: "remindersOn")
+            DefaultsManager.standard.set(value: true, forKey: .remindersOn)
             updateTips(tip: "Tip Reminders")
         } else if showWidgetTip && !UserDefaults.standard.bool(forKey: "widgetTip") {
-            UserDefaults.standard.setValue(true, forKey: "widgetTip")
+            DefaultsManager.standard.set(value: true, forKey: .widgetTip)
             updateTips(tip: "Tip Widget")
         } else if UserDefaults.standard.bool(forKey: "day4") && !UserDefaults.standard.bool(forKey: "plusCoins") {
-            UserDefaults.standard.setValue(true, forKey: "plusCoins")
+            DefaultsManager.standard.set(value: true, forKey: .plusCoins)
             updateTips(tip: "Tip Potion Shop")
         }
 
@@ -323,7 +323,7 @@ class BonusViewModel: ObservableObject {
         } else if Date() - (formatter.date(from: lastStreakDate) ?? Date()) > 172_800 {
             launchNum += 1
         }
-        UserDefaults.standard.setValue(launchNum, forKey: "dailyLaunchNumber")
+        DefaultsManager.standard.set(value: launchNum, forKey: .dailyLaunchNumber)
         let identify = AMPIdentify()
             .set("dailyLaunchNumber", value: NSNumber(value: launchNum))
         Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -358,7 +358,7 @@ class BonusViewModel: ObservableObject {
             }
         } else {
             lastStreakDate = calculateStreak(lastStreakDate: lastStreakDate)
-            UserDefaults.standard.setValue(String(streakNumber) + "+" + lastStreakDate, forKey: "streak")
+            DefaultsManager.standard.set(value: String(streakNumber) + "+" + lastStreakDate, forKey: .streak)
         }
     }
 
@@ -405,8 +405,8 @@ class BonusViewModel: ObservableObject {
                             }
                         }
                     } else {
-                        UserDefaults.standard.setValue(0, forKey: "sevenDay")
-                        UserDefaults.standard.setValue(0, forKey: "thirtyDay")
+                        DefaultsManager.standard.set(value: 0, forKey: .sevenDay)
+                                                     DefaultsManager.standard.set(value: 0, forKey: .thirtyDay)
                     }
                 }
             } else {
@@ -459,19 +459,19 @@ class BonusViewModel: ObservableObject {
     private func updateLongest() {
         if let longestStreak = UserDefaults.standard.value(forKey: "longestStreak") as? Int {
             if longestStreak < streakNumber {
-                UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
+                DefaultsManager.standard.set(value: streakNumber, forKey: .longestStreak)
             }
 
-            UserDefaults.standard.setValue(true, forKey: "updatedStreak")
+            DefaultsManager.standard.set(value: true, forKey: .updatedStreak)
         } else {
-            UserDefaults.standard.setValue(1, forKey: "longestStreak")
+            DefaultsManager.standard.set(value: 1, forKey: .longestStreak)
         }
     }
 
     private func progressiveDisclosure(lastStreakDate _: String) {
 //        if formatter.date(from: lastStreakDate)! - Date() <= 0 {
 //            let dte =  formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date())!)
-//            UserDefaults.standard.setValue(dte,forKey: "ltd")
+//            DefaultsManager.standard.set(value: dte,forKey: "ltd")
 //            if UserDefaults.standard.bool(forKey: "day1") {
 //                if UserDefaults.standard.bool(forKey: "day2") {
 //                    if UserDefaults.standard.bool(forKey: "day3") {
@@ -479,23 +479,23 @@ class BonusViewModel: ObservableObject {
 //
 //                        } else { //fourth day back unlock plusCoins
 //
-//                            UserDefaults.standard.setValue(true, forKey: "day4")
-//                            UserDefaults.standard.setValue(4, forKey: "day")
+//                            DefaultsManager.standard.set(value: true, forKey: "day4")
+//                            DefaultsManager.standard.set(value: 4, forKey: "day")
 //                        }
 //                    } else { // third day back
 //                        showWidgetTip = true
-//                        UserDefaults.standard.setValue(true, forKey: "day3")
-//                        UserDefaults.standard.setValue(3, forKey: "day")
+//                        DefaultsManager.standard.set(value: true, forKey: "day3")
+//                        DefaultsManager.standard.set(value: 3, forKey: "day")
 //                    }
 //                } else { // second day back
 //                    NotificationHelper.addUnlockedFeature(title: "⚙️ Widget has been unlocked", body: "Add it to your home screen!")
-//                    UserDefaults.standard.setValue(true, forKey: "day2")
-//                    UserDefaults.standard.setValue(2, forKey: "day")
+//                    DefaultsManager.standard.set(value: true, forKey: "day2")
+//                    DefaultsManager.standard.set(value: 2, forKey: "day")
 //                }
 //            } else { // first day back
 //                NotificationHelper.addUnlockedFeature(title: "🛍 Your Store Page has been unlocked!", body: "Start collecting, and make your MindGarden beautiful!")
-//                UserDefaults.standard.setValue(true, forKey: "day1")
-//                UserDefaults.standard.setValue(1, forKey: "day")
+//                DefaultsManager.standard.set(value: true, forKey: "day1")
+//                DefaultsManager.standard.set(value: 1, forKey: "day")
 //            }
 //        }
         createProgressiveCountdown()
@@ -506,11 +506,11 @@ class BonusViewModel: ObservableObject {
         if dailyBonus != "" {
             if Date() - (formatter.date(from: dailyBonus) ?? Date()) >= 0 {
                 totalBonuses += 1
-                NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
+                NotificationCenter.default.post(name: .runCounter, object: nil)
             }
         } else {
             totalBonuses += 1
-            NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
+            NotificationCenter.default.post(name: .runCounter, object: nil)
         }
 
         if sevenDay > 0 {
@@ -535,11 +535,11 @@ class BonusViewModel: ObservableObject {
 
         if sevenDayProgress >= 1.0 {
             totalBonuses += 1
-            NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
+            NotificationCenter.default.post(name: .runCounter, object: nil)
         }
         if thirtyDayProgress >= 1.0 {
             totalBonuses += 1
-            NotificationCenter.default.post(name: Notification.Name("runCounter"), object: nil)
+            NotificationCenter.default.post(name: .runCounter, object: nil)
         }
     }
 }

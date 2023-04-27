@@ -327,7 +327,7 @@ class MeditationViewModel: ObservableObject {
             }
             checkIfFavorited()
 
-            UserDefaults.standard.setValue(favoritedMeditations, forKey: K.defaults.favorites)
+            DefaultsManager.standard.set(value: favoritedMeditations, forKey: .favorites)
             db.collection(K.userPreferences).document(email).updateData([
                 "favorited": favoritedMeditations,
             ]) { error in
@@ -346,10 +346,10 @@ class MeditationViewModel: ObservableObject {
                     favoritedMeditations.insert(id, at: 0)
                     favorites.insert(id, at: 0)
                 }
-                UserDefaults.standard.setValue(favorites, forKey: K.defaults.favorites)
+                DefaultsManager.standard.set(value: favorites, forKey: .favorites)
             } else {
                 favoritedMeditations.insert(id, at: 0)
-                UserDefaults.standard.setValue(favoritedMeditations, forKey: K.defaults.favorites)
+                DefaultsManager.standard.set(value: favoritedMeditations, forKey: .favorites)
             }
             checkIfFavorited()
         }

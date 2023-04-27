@@ -777,7 +777,7 @@ struct Play: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     show = false
-                                    UserDefaults.standard.setValue(true, forKey: "playTutorialModal")
+                                    DefaultsManager.standard.set(value: true, forKey: .playTutorialModal)
                                 }
                             } label: {
                                 Capsule()
@@ -869,7 +869,7 @@ struct SoundButton: View {
                     selectedType = type
                     change()
                 }
-                UserDefaults.standard.setValue(selectedType?.title, forKey: "sound")
+                DefaultsManager.standard.set(value: selectedType?.title, forKey: .sound)
             }
         } label: {
             ZStack {
@@ -946,10 +946,10 @@ struct NatureModal: View {
                             withAnimation {
                                 show = false
                             }
-                            UserDefaults.standard.setValue(sliderData.sliderValue, forKey: "backgroundVolume")
-                            UserDefaults.standard.setValue(bellSlider.sliderValue, forKey: "bellVolume")
-                            UserDefaults.standard.set(vibrationOn, forKey: "vibrationMode")
-                            UserDefaults.standard.set(backgroundAnimationOn, forKey: "backgroundAnimation")
+                            DefaultsManager.standard.set(value: sliderData.sliderValue, forKey: .backgroundVolume)
+                            DefaultsManager.standard.set(value: bellSlider.sliderValue, forKey: .bellVolume)
+                            DefaultsManager.standard.set(value: vibrationOn, forKey: .vibrationMode)
+                            DefaultsManager.standard.set(value: backgroundAnimationOn, forKey: .backgroundAnimation)
                         } label: {
                             ZStack {
                                 Capsule()
@@ -1061,7 +1061,7 @@ struct NatureModal: View {
 
 class AVdelegate: NSObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_: AVAudioPlayer, successfully _: Bool) {
-        NotificationCenter.default.post(name: NSNotification.Name("Finish"), object: nil)
+        NotificationCenter.default.post(name: .finish, object: nil)
     }
 }
 

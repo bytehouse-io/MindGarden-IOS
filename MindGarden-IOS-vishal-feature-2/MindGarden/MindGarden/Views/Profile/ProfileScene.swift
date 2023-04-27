@@ -140,7 +140,7 @@ struct ProfileScene: View {
                                                 Row(title: "Meditation Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
                                                     withAnimation {
                                                         showNotification = false
-                                                        UserDefaults.standard.setValue(true, forKey: "notifOn")
+                                                        DefaultsManager.standard.set(value: true, forKey: .notifOn)
                                                         showNotif = true
                                                     }
                                                 }, showNotif: $showNotif, showMindful: $showMindful)
@@ -148,7 +148,7 @@ struct ProfileScene: View {
                                                 Divider()
                                                 Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
                                                     withAnimation {
-                                                        UserDefaults.standard.setValue(true, forKey: "mindful")
+                                                        DefaultsManager.standard.set(value: true, forKey: .mindful)
                                                         showMindful = true
                                                     }
                                                 }, showNotif: $showNotif, showMindful: $showMindful)
@@ -183,7 +183,7 @@ struct ProfileScene: View {
                                                 // TODO: turn on/off Vines
 //                                                    Row(title: "Mindful Reminders", img: Image(systemName: "bell.fill"), swtch: true, action: {
 //                                                        withAnimation {
-//                                                            UserDefaults.standard.setValue(true, forKey: "mindful")
+//                                                            DefaultsManager.standard.set(value: true, forKey: "mindful")
 //                                                            showMindful = true
 //                                                        }
 //                                                    }, showNotif: $showNotif, showMindful: $showMindful)
@@ -235,7 +235,7 @@ struct ProfileScene: View {
                                                                         backgroundMusicOn = true
                                                                     }
                                                                 }
-                                                                UserDefaults.standard.setValue(backgroundMusicOn, forKey: "isPlayMusic")
+                                                                DefaultsManager.standard.set(value: backgroundMusicOn, forKey: .isPlayMusic)
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             Divider()
@@ -263,19 +263,19 @@ struct ProfileScene: View {
                                                             
                                                             MWMManager.shared.restorePurchases { result in
                                                                 if result.isAnyPremiumFeatureUnlocked {
-                                                                    UserDefaults.standard.setValue(true, forKey: "isPro")
+                                                                    DefaultsManager.standard.set(value: true, forKey: .isPro)
                                                                     restorePurchase = true
                                                                 } else {
-                                                                    UserDefaults.standard.setValue(false, forKey: "isPro")
+                                                                    DefaultsManager.standard.set(value: false, forKey: .isPro)
                                                                 }
                                                             }
                                                             // removing revenue cat
 //                                                                Purchases.shared.restoreTransactions { purchaserInfo, _ in
 //                                                                    if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
-//                                                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                                                        DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                                                        restorePurchase = true
 //                                                                    } else {
-//                                                                        UserDefaults.standard.setValue(false, forKey: "isPro")
+//                                                                        DefaultsManager.standard.set(value: false, forKey: "isPro")
 //                                                                    }
 //                                                                }
                                                         }, showNotif: $showNotif, showMindful: $showMindful)
@@ -363,7 +363,7 @@ struct ProfileScene: View {
                                                             Analytics.shared.log(event: .profile_tapped_discord)
                                                             if let url = URL(string: "https://discord.gg/SZXnxtyBV5") {
                                                                 UIApplication.shared.open(url)
-                                                                UserDefaults.standard.setValue(true, forKey: "reddit")
+                                                                DefaultsManager.standard.set(value: true, forKey: .reddit)
                                                             }
                                                         }, showNotif: $showNotif, showMindful: $showMindful).frame(height: 40)
                                                             .frame(height: K.isSmall() ? 30 : 40)
@@ -594,7 +594,7 @@ struct ProfileScene: View {
         Analytics.shared.log(event: .profile_tapped_rate)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
-            UserDefaults.standard.setValue(true, forKey: "tappedRate")
+            DefaultsManager.standard.set(value: true, forKey: .tappedRate)
             //                                                userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
             //                                                    p.title == "Camellia"
             //                                                })
@@ -682,13 +682,13 @@ struct ProfileScene: View {
                                 if title == "Meditation Reminders" {
                                     Toggle("", isOn: $notifOn)
                                         .onChange(of: notifOn) { val in
-                                            UserDefaults.standard.setValue(val, forKey: "notifOn")
+                                            DefaultsManager.standard.set(value: val, forKey: .notifOn)
                                             if val {
                                                 Analytics.shared.log(event: .profile_tapped_toggle_on_notifs)
                                                 showNotif = true
                                             } else { // turned off
                                                 Analytics.shared.log(event: .profile_tapped_toggle_off_notifs)
-                                                UserDefaults.standard.setValue(false, forKey: "notifOn")
+                                                DefaultsManager.standard.set(value: false, forKey: .notifOn)
                                                 let center = UNUserNotificationCenter.current()
                                                 center.removePendingNotificationRequests(withIdentifiers: ["1", "2", "3", "4", "5", "6", "7"]) // To remove all pending notifications which are not delivered yet but scheduled.
                                             }
@@ -698,14 +698,14 @@ struct ProfileScene: View {
                                     Toggle("", isOn: $notifOn)
                                         .onChange(of: notifOn) { val in
                                             if title == "Dates on Tile" {
-                                                UserDefaults.standard.setValue(val, forKey: "tileDates")
+                                                DefaultsManager.standard.set(value: val, forKey: .tileDates)
                                                 if val {
                                                     Analytics.shared.log(event: .profile_tapped_garden_date_on)
                                                 } else { // turned off
                                                     Analytics.shared.log(event: .profile_tapped_garden_date_off)
                                                 }
                                             } else {
-                                                UserDefaults.standard.setValue(val, forKey: "mindful")
+                                                DefaultsManager.standard.set(value: val, forKey: .mindful)
                                                 if val {
                                                     Analytics.shared.log(event: .profile_tapped_toggle_on_mindful)
                                                     showMindful = true

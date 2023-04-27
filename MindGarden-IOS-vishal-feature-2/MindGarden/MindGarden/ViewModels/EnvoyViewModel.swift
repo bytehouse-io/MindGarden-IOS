@@ -32,7 +32,7 @@ extension EnvoyViewModel {
         if let uID = UserDefaults.standard.value(forKey: K.defaults.giftQuotaId) as? String, uID.count > 0 {
             userID = uID
         } else {
-            UserDefaults.standard.setValue(userID, forKey: K.defaults.giftQuotaId)
+            DefaultsManager.standard.set(value: userID, forKey: .giftQuotaId)
         }
 
         let url = URL(string: "\(EnvoyDB.giftUrl)\(userID)")
