@@ -62,9 +62,21 @@ struct DefaultsValues {
         value == nil
     }
     
+    var isNotNil: Bool {
+        !isNil
+    }
+    
     var onboardingValue: DefaultsManager.OnboardingScreens? {
         let onbValue: DefaultsManager.OnboardingScreens? = enumValue()
         return onbValue
+    }
+    
+    var arrayValue: [Any] {
+        if let value = value as? [Any] {
+            return value
+        } else {
+            return []
+        }
     }
 }
 
@@ -151,15 +163,10 @@ extension DefaultsManager {
         case firstStory
         case completedCourses
         case showedChallenge
-        case newUser
-        case sound
-        case showWidget
         case signedIn
-        case joinDate
         case mindful
         case reddit
         case tileDates
-        case notifTypes
         case singleOnboarding1
         case numSessions
         case grid
@@ -179,17 +186,37 @@ extension DefaultsManager {
         case intermediateCourse
         case storeTutorial
         case freeTrialTo50
+        case freeTrial
         case fourteenDayModal = "14DayModal"
         case showedNotif
         case notif
         case referPlant
         case bonsai
         case reason1
+        case reason
         case firstTap
         case onboarded
         case oneDayNotif
         case onboardingNotif
         case threeDayNotif
+        case numGrads
+        case allTimeMinutes
+        case allTimeSessions
+        case tappedRate
+        case meditationGoal
+        case numMoods
+        case challengeDate
+        case potion
+        case chest
+        case streakFreeze
+        case numRefs
+        case finishedJourney
+        case selectedMood
+        case elaboration
+        case experience
+        case showImages
+        case tappedTile
+        case showTip
     }
     
     enum OnboardingScreens: String {

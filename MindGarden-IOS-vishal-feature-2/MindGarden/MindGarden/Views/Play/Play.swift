@@ -271,7 +271,7 @@ struct Play: View {
                             }
                         }
                 }
-                NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn: $backgroundAnimationOn)
+                NatureModal(show: $showNatureModal, sound: $selectedSound, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn: $backgroundAnimationOn, change: self.changeSound, player: backgroundPlayer)
                     .offset(y: showNatureModal ? 0 : g.size.height)
                     .animation(.default)
                 TutorialModal(show: $showTutorialModal)
@@ -869,7 +869,7 @@ struct SoundButton: View {
                     selectedType = type
                     change()
                 }
-                DefaultsManager.standard.set(value: selectedType?.title, forKey: .sound)
+                DefaultsManager.standard.set(value: selectedType?.title ?? "", forKey: .sound)
             }
         } label: {
             ZStack {
@@ -883,29 +883,33 @@ struct SoundButton: View {
                     .padding(type == .fourThirtyTwo ? 0 : type == .flute ? 5 : 10)
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(.white)
-//                    Rectangle()
-//                        .fill(Color.white)
-//                        .frame(width: type != selectedType ? 40 : 0, height: 3)
-//                        .opacity(0.9)
-//                        .rotationEffect(.degrees(-45))
-            }.frame(width: 50, height: 50)
-        }.buttonStyle(NeumorphicPress())
+            } //: ZStack
+            .frame(width: 50, height: 50)
+        } //: Button
+        .buttonStyle(NeumorphicPress())
     }
 }
 
 // MARK: - nature modal
 
 struct NatureModal: View {
+    
+    // MARK: - Properties
+    
     @State private var volume: Double = 0.0
+    
     @Binding var show: Bool
     @Binding var sound: Sound?
-    var change: () -> Void
-    var player: AVAudioPlayer?
     @Binding var sliderData: SliderData
     @Binding var bellSlider: SliderData
     @Binding var vibrationOn: Bool
     @Binding var backgroundAnimationOn: Bool
+    
+    var change: () -> Void
+    var player: AVAudioPlayer?
 
+    // MARK: - Body
+    
     var body: some View {
         GeometryReader { g in
             VStack {
@@ -932,9 +936,12 @@ struct NatureModal: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation { show = false }
                                     }
-                            }.frame(width: 30, height: 30)
-                        }.padding(20)
-                            .offset(y: 20)
+                            } //: ZStack
+                            .frame(width: 30, height: 30)
+                        } //: HStack
+                        .padding(20)
+                        .offset(y: 20)
+                        
                         Spacer()
                         SoundView
                         Spacer()
@@ -959,21 +966,24 @@ struct NatureModal: View {
                                             .font(Font.fredoka(.bold, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .background(Clr.yellow)
-                                    ).addBorder(.black, width: 1, cornerRadius: 20)
-                            }.frame(height: 40)
-                                .padding(15)
-                        }
+                                    )
+                                    .addBorder(.black, width: 1, cornerRadius: 20)
+                            } //: ZStack
+                            .frame(height: 40)
+                            .padding(15)
+                        } //: Button
                         .neoShadow()
                         .animation(.default)
                         .padding(15)
                         .offset(y: -10)
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * 0.75, alignment: .center)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(32)
+                    } //: VStack
+                    .frame(width: g.size.width * 0.85, height: g.size.height * 0.75, alignment: .center)
+                    .background(Clr.darkWhite)
+                    .cornerRadius(32)
                     Spacer()
-                }
+                } //: HStack
                 Spacer()
-            }
+            } //: VStack
             .onAppear {
                 if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
                     vibrationOn = vibration
@@ -983,7 +993,7 @@ struct NatureModal: View {
                     backgroundAnimationOn = bgAnimation
                 }
             }
-        }
+        } //: GeometryReader
     }
 
     var SoundView: some View {
@@ -1016,21 +1026,26 @@ struct NatureModal: View {
             GeometryReader { _ in
                 Slider(value: self.$sliderData.sliderValue, in: 0.0 ... 3.0, step: 0.03)
                     .accentColor(Clr.darkgreen)
-            }.frame(height: 30)
-                .padding(.horizontal, 30)
-                .padding(.top)
+            } //: GeometryReader
+            .frame(height: 30)
+            .padding(.horizontal, 30)
+            .padding(.top)
+            
             Spacer()
+            
             Text("Bell Volume")
                 .foregroundColor(Clr.black2)
                 .font(Font.fredoka(.semiBold, size: 20))
                 .multilineTextAlignment(.center)
                 .padding(.top)
+            
             GeometryReader { _ in
                 Slider(value: self.$bellSlider.sliderValue, in: 0.0 ... 1.0, step: 0.01)
                     .accentColor(Clr.darkgreen)
-            }.frame(height: 30)
-                .padding(.horizontal, 30)
-                .padding(.top, 10)
+            } //: GeometryReader
+            .frame(height: 30)
+            .padding(.horizontal, 30)
+            .padding(.top, 10)
         }
     }
 
@@ -1042,7 +1057,7 @@ struct NatureModal: View {
             Spacer()
             Toggle("", isOn: $vibrationOn)
                 .toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-        }
+        } //: HStack
         .padding(.horizontal, 20)
     }
 
@@ -1054,7 +1069,7 @@ struct NatureModal: View {
             Spacer()
             Toggle("", isOn: $backgroundAnimationOn)
                 .toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))
-        }
+        } //: HStack
         .padding(.horizontal, 20)
     }
 }

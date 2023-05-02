@@ -282,7 +282,7 @@ struct NotificationScene: View {
                 Amplitude.instance().identify(identify ?? AMPIdentify())
 
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
-                DefaultsManager.standard.set(value: dateTime, forKey: K.defaults.meditationReminder)
+                DefaultsManager.standard.set(value: dateTime, forKey: .meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
@@ -334,7 +334,7 @@ struct NotificationScene: View {
                 }
             case .notDetermined:
                 if fromSettings || tappedTurnOn {
-                    DefaultsManager.standard.set(value: false, forKey: "isNotifOn")
+                    DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
                     Analytics.shared.log(event: .notification_go_to_settings)
                     DispatchQueue.main.async {
                         if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {

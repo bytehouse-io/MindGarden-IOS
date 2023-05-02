@@ -70,7 +70,7 @@ struct NewUpdateModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                DefaultsManager.standard.set(value: true, forKey: .14DayModal)
+                                DefaultsManager.standard.set(value: true, forKey: .fourteenDayModal)
                                 fromInfluencer = ""
                                 fiftyOff = true
                                 viewRouter.currentPage = .pricing

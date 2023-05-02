@@ -43,9 +43,13 @@ enum MenuType: String, CaseIterable {
 }
 
 struct FloatingMenu: View {
+    
+    // MARK: - Properties
+    
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var medModel: MeditationViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
+    
     @Binding var showModal: Bool
     @Binding var activeSheet: Sheet?
     @Binding var totalBonuses: Int
@@ -62,6 +66,9 @@ struct FloatingMenu: View {
     @State var isOpenAnimation = false
 
     let animation = Animation.spring()
+    
+    // MARK: - Body
+    
     var body: some View {
         ZStack(alignment: .top) {
             Button {
@@ -103,11 +110,12 @@ struct FloatingMenu: View {
                                 .overlay(Capsule().stroke(.black, lineWidth: 1))
                                 .overlay(badgeIcon)
                         }
-                    }
+                    } //: Group
                 }
-            }.rotationEffect(Angle(degrees: rotation))
-                .buttonStyle(ScalePress())
-        }
+            } //: Button
+            .rotationEffect(Angle(degrees: rotation))
+            .buttonStyle(ScalePress())
+        } //: ZStack
         .onChange(of: isOpen) { newVal in
             if newVal {
                 offset = -50
@@ -166,10 +174,12 @@ struct FloatingMenu: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.005)
                             .frame(width: 10)
-                    }.frame(width: 15)
-                }
+                    } //: ZStack
+                    .frame(width: 15)
+                } //: HStack
             }
-        }.offset(x: width / 3.5, y: -width / 3.5)
+        } //: ZStack
+        .offset(x: width / 3.5, y: -width / 3.5)
     }
 
     var menuItem: some View {
@@ -185,7 +195,7 @@ struct FloatingMenu: View {
                         }
                     } label: {
                         MenuView(state: state, totalBonuses: $totalBonuses)
-                    }
+                    } //: Button
                     .buttonStyle(ScalePress())
                     .scaleEffect(isOpen ? 1.0 : scale, anchor: .leading)
                     .offset(y: isOpenAnimation ? 0 : -((state.delay) * 40))
@@ -193,17 +203,18 @@ struct FloatingMenu: View {
                     EmptyView()
                         .frame(height: 0)
                 }
+            } //: ForEach Loop
+        } //: VStack
+        .frame(width: 300, alignment: .leading)
+        .opacity(isOpenAnimation ? 1.0 : 0.0)
+        .offset(x: (width * 2) + 10, y: CGFloat(offsetY))
+        .onAppear {
+            if userModel.completedMeditations.isEmpty && medModel.favoritedMeditations.isEmpty {
+                offsetY = 105
+            } else if userModel.completedMeditations.isEmpty || medModel.favoritedMeditations.isEmpty {
+                offsetY = 130
             }
-        }.frame(width: 300, alignment: .leading)
-            .opacity(isOpenAnimation ? 1.0 : 0.0)
-            .offset(x: (width * 2) + 10, y: CGFloat(offsetY))
-            .onAppear {
-                if userModel.completedMeditations.isEmpty && medModel.favoritedMeditations.isEmpty {
-                    offsetY = 105
-                } else if userModel.completedMeditations.isEmpty || medModel.favoritedMeditations.isEmpty {
-                    offsetY = 130
-                }
-            }
+        }
     }
 
     private func buttonAction(type: MenuType) {
@@ -242,11 +253,17 @@ struct FloatingMenu: View {
     }
 
     struct MenuView: View {
+        
+        // MARK: - Properties
         var state: MenuType
+        
         @Binding var totalBonuses: Int
+        
         @EnvironmentObject var userModel: UserViewModel
         @EnvironmentObject var medModel: MeditationViewModel
         @EnvironmentObject var bonusModel: BonusViewModel
+        
+        // MARK: - Body
 
         var body: some View {
             HStack {
@@ -262,20 +279,23 @@ struct FloatingMenu: View {
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.005)
                                 .frame(width: 10)
-                        }.frame(width: 15)
-                            .padding([.leading, .vertical], 10)
-                            .padding(.trailing, 10)
+                        } //: ZStack
+                        .frame(width: 15)
+                        .padding([.leading, .vertical], 10)
+                        .padding(.trailing, 10)
+                        
                         Text(getTitle(type: state))
                             .font(Font.fredoka(.medium, size: 16))
                             .foregroundColor(Clr.redGradientBottom)
                             .padding([.trailing, .vertical], 10)
-                    }
+                    } //: HStack
                     .background(
                         Rectangle()
                             .fill(Clr.yellow)
                             .addBorder(.black, cornerRadius: 25)
                             .frame(height: 35)
-                    ).wiggling1()
+                    )
+                    .wiggling1()
                 } else {
                     HStack(spacing: 0) {
                         state.image
@@ -294,7 +314,7 @@ struct FloatingMenu: View {
                         .font(Font.fredoka(.medium, size: 16))
                         .foregroundColor(Clr.black2)
                         .padding([.trailing, .vertical], 10)
-                    }
+                    } //: HStack
                     .background(
                         Rectangle()
                             .fill(Clr.yellow)
@@ -302,7 +322,7 @@ struct FloatingMenu: View {
                             .frame(height: 35)
                     )
                 }
-            }
+            } //: HStack
         }
 
         private func getTitle(type: MenuType) -> String {

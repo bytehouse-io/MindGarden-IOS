@@ -12,4 +12,8 @@ extension UIApplication {
     var activeScene: UIWindowScene? {
         connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
     }
+    
+    var window: UIWindow? {
+        (activeScene?.delegate as? SceneDelegate)?.window
+    }
 }

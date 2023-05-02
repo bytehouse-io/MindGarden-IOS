@@ -156,7 +156,7 @@ class GardenViewModel: ObservableObject {
             DefaultsManager.standard.set(value: numBreaths + numMeds, forKey: .numSessions)
             identify?
                 .set("journal_sessions", value: NSNumber(value: numGrads))
-                                         DefaultsManager.standard.set(value: numGrads, forKey: .numGrads)
+            DefaultsManager.standard.set(value: numGrads, forKey: .numGrads)
             identify?
                 .set("mood_sessions", value: NSNumber(value: numMoods))
             Amplitude.instance().identify(identify ?? AMPIdentify())
@@ -456,7 +456,7 @@ class GardenViewModel: ObservableObject {
 
     private func updateData(completionHandler: () -> Void = {}, key _: String) {
         DefaultsManager.standard.set(value: grid, forKey: .grid)
-        UserDefaults(suiteName: K.widgetDefault)?.setValue(grid, forKey: .grid)
+        UserDefaults(suiteName: K.widgetDefault)?.setValue(grid, forKey: "grid")
         WidgetCenter.shared.reloadAllTimelines()
         populateMonth()
         getLastFive()

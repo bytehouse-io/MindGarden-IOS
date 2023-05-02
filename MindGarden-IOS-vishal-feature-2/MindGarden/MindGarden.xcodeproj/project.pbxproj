@@ -23,6 +23,7 @@
 		184899FB29F3C81D0095B61E /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FA29F3C81C0095B61E /* HelperFunctions.swift */; };
 		184899FD29F44BD30095B61E /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
 		184899FF29F826D00095B61E /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FE29F826D00095B61E /* UIApplication+Extension.swift */; };
+		18633ECC2A015AA7009B7730 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
 		187CE0FF29DC89BE00E6B54B /* MWMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CE0FE29DC89BE00E6B54B /* MWMManager.swift */; };
 		1882E70D29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70C29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift */; };
 		1882E70F29DBD501005D6DF2 /* TermsAndPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */; };
@@ -1842,6 +1843,7 @@
 				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
 				58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */,
+				18633ECC2A015AA7009B7730 /* DefaultsManager.swift in Sources */,
 				58E419A62898E42C0042F492 /* Colors+Generated.swift in Sources */,
 				58E4199F2898DE000042F492 /* Breathwork.swift in Sources */,
 				58DB9A78289D7C8B00F930DE /* Numbers+Extension.swift in Sources */,

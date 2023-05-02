@@ -9,6 +9,9 @@ import OneSignal
 import SwiftUI
 
 struct LearnScene: View {
+    
+    // MARK: - Properties
+    
     @State private var meditationCourses: [LearnCourse] = []
     @State private var lifeCourses: [LearnCourse] = []
     @State private var showCourse: Bool = false
@@ -16,8 +19,11 @@ struct LearnScene: View {
     @State private var learnCourse: LearnCourse = .init(id: 0, title: "", img: "", description: "", duration: "", category: "", slides: [Slide(topText: "", img: "", bottomText: "")])
     @State private var isNotifOn = false
     @State private var completedCourses = [Int]()
+    
     @EnvironmentObject var bonusModel: BonusViewModel
 
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
@@ -50,35 +56,13 @@ struct LearnScene: View {
                                             .foregroundColor(Clr.black1)
                                             .lineLimit(2)
                                             .minimumScaleFactor(0.5)
-                                    }
-                                }.padding(10)
-                            }.frame(height: height * 0.15, alignment: .center)
-                                .padding(.horizontal, 28)
-//                    ZStack {
-//                        Rectangle()
-//                            .fill(Clr.darkWhite)
-//                            .cornerRadius(24)
-//                            .frame(height: 120, alignment: .center)
-//                            .addBorder(Clr.yellow, width: 3, cornerRadius: 16)
-//                            .oldShadow()
-//                        Rectangle()
-//                            .fill(Clr.yellow)
-//                            .frame(width: width * 0.55, height: 40)
-//                            .cornerRadius(24, corners: [.topLeft, .bottomRight, .topRight])
-//                            .overlay(
-//                                Text("Daily Stories")
-//                                    .font(Font.fredoka(.semiBold, size: 16))
-//                                    .foregroundColor(Clr.black2)
-//                                    .minimumScaleFactor(0.5)
-//                                    .lineLimit(1)
-//                            ).position(x: width * 0.272, y: K.isSmall() ? 10 : 24)
-//                        Stories()
-//                            .frame(height: K.isSmall() ? 120 : 150, alignment: .bottom)
-//                            .padding(.leading, K.isSmall() ? 10 : 20)
-//                            .padding(.top, K.isSmall() ? 24 : 56)
-//                    }.frame(height: K.isSmall() ? 150 : 120, alignment: .center)
-//                        .padding(.horizontal, 28)
-//                        .padding(.top, 56)
+                                    } //: VStack
+                                } //: HStack
+                                .padding(10)
+                            } //: ZStack
+                            .frame(height: height * 0.15, alignment: .center)
+                            .padding(.horizontal, 28)
+                            
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
@@ -103,13 +87,17 @@ struct LearnScene: View {
                                         HStack(spacing: 20) {
                                             ForEach(meditationCourses, id: \.self) { course in
                                                 LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
-                                            }
-                                        }.frame(height: height * 0.325 + 15)
-                                            .padding([.leading, .trailing], g.size.width * 0.07)
-                                    }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
-                                }
-                            }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
-                                .padding(.top, 40)
+                                            } //: ForEach Loop
+                                        } //: HStack
+                                        .frame(height: height * 0.325 + 15)
+                                        .padding([.leading, .trailing], g.size.width * 0.07)
+                                    } //: ScrollView
+                                    .frame(width: width * 0.85, height: height * 0.275, alignment: .center)
+                                } //: LazyHStack
+                            } //: ZStack
+                            .frame(width: width * 0.85, height: height * 0.275, alignment: .center)
+                            .padding(.top, 40)
+                            
                             ZStack {
                                 Rectangle()
                                     .fill(Clr.darkWhite)
@@ -135,21 +123,26 @@ struct LearnScene: View {
                                             ForEach(lifeCourses, id: \.self) { course in
                                                 LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
                                             }
-                                        }.frame(height: height * 0.325 + 15)
-                                            .padding([.leading, .trailing], g.size.width * 0.07)
-                                    }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
-                                }
-                            }.frame(width: width * 0.85, height: height * 0.275, alignment: .center)
-                                .padding(.top, 40)
+                                        } //: HStack
+                                        .frame(height: height * 0.325 + 15)
+                                        .padding([.leading, .trailing], g.size.width * 0.07)
+                                    } //: ScrollView
+                                    .frame(width: width * 0.85, height: height * 0.275, alignment: .center)
+                                } //: LazyHStack
+                            } //: ZStack
+                            .frame(width: width * 0.85, height: height * 0.275, alignment: .center)
+                            .padding(.top, 40)
                             Spacer()
                                 .frame(height: 60)
-                        }.frame(width: width, alignment: .center)
-                            .padding(.top, 25)
-                            .padding(.bottom, g.size.height * (K.hasNotch() ? 0.1 : 0.25))
-                    }.frame(height: height)
-                }
-            }
-        }
+                        } //: LazyVStack
+                        .frame(width: width, alignment: .center)
+                        .padding(.top, 25)
+                        .padding(.bottom, g.size.height * (K.hasNotch() ? 0.1 : 0.25))
+                    } //: ScrollView
+                    .frame(height: height)
+                } //: ZStack
+            } //: GeometryReader
+        } //: ZStack
         .fullScreenCover(isPresented: $showCourse) {
             CourseScene(course: $learnCourse, completedCourses: $completedCourses)
         }
@@ -158,7 +151,8 @@ struct LearnScene: View {
                 if let comCourses = UserDefaults.standard.array(forKey: "completedCourses") as? [Int] {
                     completedCourses = comCourses
                 }
-                isNotifOn = UserDefaults.standard.bool(forKey: "isNotifOn")
+                isNotifOn = DefaultsManager.standard.value(forKey: .isNotifOn).boolValue
+//                UserDefaults.standard.bool(forKey: "isNotifOn")
                 for course in LearnCourse.courses {
                     if course.category == "meditation" {
                         meditationCourses.append(course)
@@ -171,6 +165,78 @@ struct LearnScene: View {
         .onAppearAnalytics(event: .screen_load_learn)
     }
 
+    struct LearnCard: View {
+        
+        // MARK: - Properties
+        
+        let width, height: CGFloat
+        let course: LearnCourse
+        @Binding var showCourse: Bool
+        @Binding var learnCourse: LearnCourse
+        @Binding var completedCourses: [Int]
+        @State var completed = false
+        
+        // MARK: - Body
+        
+        var body: some View {
+            Button {} label: {
+                Rectangle()
+                    .fill(Clr.darkWhite)
+                    .cornerRadius(16)
+                    .overlay(
+                        ZStack {
+                            VStack(alignment: .leading, spacing: 0) {
+                                UrlImageView(urlString: course.img)
+                                    .aspectRatio(contentMode: .fit)
+                                    .cornerRadius(16)
+                                    .frame(width: width * 0.55, height: height * 0.2)
+                            } //: VStack
+                            .opacity(completed ? 0.5 : 1)
+                            if completed {
+                                Capsule()
+                                    .fill(Clr.yellow)
+                                    .overlay(
+                                        HStack(spacing: 2) {
+                                            Text("Completed")
+                                                .font(Font.fredoka(.semiBold, size: 12))
+                                                .minimumScaleFactor(0.05)
+                                                .lineLimit(1)
+                                                .foregroundColor(.black)
+                                            Image(systemName: "checkmark.seal.fill")
+                                                .foregroundColor(Clr.brightGreen)
+                                                .frame(width: 24)
+                                        } //: HStack
+                                        .padding(3)
+                                    )
+                                    .padding(3)
+                                    .frame(width: 100, height: 40)
+                                    .position(x: 70, y: 40)
+                                    .rightShadow()
+                            }
+                        } //: ZStack
+                        .onTapGesture {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            if course.category == "meditation" {
+                                Analytics.shared.log(event: .learn_tapped_meditation_course)
+                            } else {
+                                Analytics.shared.log(event: .learn_tapped_life_course)
+                            }
+                            learnCourse = course
+                            showCourse = true
+                        }
+                    )
+            } //: Button
+            .buttonStyle(NeumorphicPress())
+            .frame(width: width * 0.55, height: height * 0.175)
+            .cornerRadius(16)
+            .onAppear {
+                completed = completedCourses.contains(where: { $0 == course.id })
+            }
+        }
+    } //: LearnCard View
+}
+
+extension LearnScene {
     private func promptNotif() {
         let current = UNUserNotificationCenter.current()
         current.getNotificationSettings(completionHandler: { permission in
@@ -178,13 +244,19 @@ struct LearnScene: View {
             case .authorized:
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
                 Analytics.shared.log(event: .notification_success_learn)
-                if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                if DefaultsManager.standard.value(forKey: .oneDayNotif).isNil
+//                    UserDefaults.standard.value(forKey: "oneDayNotif") == nil
+                {
                     NotificationHelper.addOneDay()
                 }
-                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                if DefaultsManager.standard.value(forKey: .threeDayNotif).isNil
+//                    UserDefaults.standard.value(forKey: "threeDayNotif") == nil
+                {
                     NotificationHelper.addThreeDay()
                 }
-                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                if DefaultsManager.standard.value(forKey: .freeTrial).boolValue
+//                    UserDefaults.standard.bool(forKey: "freeTrial")
+                {
                     NotificationHelper.freeTrial()
                 }
                 DefaultsManager.standard.set(value: true, forKey: .notifOn)
@@ -209,67 +281,6 @@ struct LearnScene: View {
                 print("Unknow Status")
             }
         })
-    }
-
-    struct LearnCard: View {
-        let width, height: CGFloat
-        let course: LearnCourse
-        @Binding var showCourse: Bool
-        @Binding var learnCourse: LearnCourse
-        @Binding var completedCourses: [Int]
-        @State var completed = false
-        var body: some View {
-            Button {} label: {
-                Rectangle()
-                    .fill(Clr.darkWhite)
-                    .cornerRadius(16)
-                    .overlay(
-                        ZStack {
-                            VStack(alignment: .leading, spacing: 0) {
-                                UrlImageView(urlString: course.img)
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(16)
-                                    .frame(width: width * 0.55, height: height * 0.2)
-                            }.opacity(completed ? 0.5 : 1)
-                            if completed {
-                                Capsule()
-                                    .fill(Clr.yellow)
-                                    .overlay(
-                                        HStack(spacing: 2) {
-                                            Text("Completed")
-                                                .font(Font.fredoka(.semiBold, size: 12))
-                                                .minimumScaleFactor(0.05)
-                                                .lineLimit(1)
-                                                .foregroundColor(.black)
-                                            Image(systemName: "checkmark.seal.fill")
-                                                .foregroundColor(Clr.brightGreen)
-                                                .frame(width: 24)
-                                        }.padding(3)
-                                    )
-                                    .padding(3)
-                                    .frame(width: 100, height: 40)
-                                    .position(x: 70, y: 40)
-                                    .rightShadow()
-                            }
-                        }
-                        .onTapGesture {
-                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            if course.category == "meditation" {
-                                Analytics.shared.log(event: .learn_tapped_meditation_course)
-                            } else {
-                                Analytics.shared.log(event: .learn_tapped_life_course)
-                            }
-                            learnCourse = course
-                            showCourse = true
-                        }
-                    )
-            }.buttonStyle(NeumorphicPress())
-                .frame(width: width * 0.55, height: height * 0.175)
-                .cornerRadius(16)
-                .onAppear {
-                    completed = completedCourses.contains(where: { $0 == course.id })
-                }
-        }
     }
 }
 

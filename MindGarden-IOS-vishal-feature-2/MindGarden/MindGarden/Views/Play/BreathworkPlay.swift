@@ -243,7 +243,7 @@ struct BreathworkPlay: View {
                     .edgesIgnoringSafeArea(.all)
             }
             if let backgroundPlayer = backgroundPlayer {
-                NatureModal(show: $showNatureModal, sound: $selectedSound, change: self.changeSound, player: backgroundPlayer, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: $playVibration, backgroundAnimationOn: $backgroundAnimationOn)
+                NatureModal(show: $showNatureModal, sound: $selectedSound, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: $playVibration, backgroundAnimationOn: $backgroundAnimationOn, change: self.changeSound, player: backgroundPlayer)
                     .offset(y: showNatureModal ? 0 : UIScreen.screenHeight)
                     .animation(.default)
             }

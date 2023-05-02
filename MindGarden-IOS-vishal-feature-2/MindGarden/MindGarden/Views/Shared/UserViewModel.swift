@@ -494,7 +494,7 @@ class UserViewModel: ObservableObject {
     func updateCoins(plusCoins: Int) {
         coins += plusCoins
         userCoinCollectedLevel += 1
-        DefaultsManager.standard.set(value: coins, forKey: K.defaults.coins)
+        DefaultsManager.standard.set(value: coins, forKey: .coins)
         DefaultsManager.standard.set(value: userCoinCollectedLevel, forKey: .userCoinCollectedLevel)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).updateData([

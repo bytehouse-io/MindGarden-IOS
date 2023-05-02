@@ -350,7 +350,7 @@ class SetRouteViewControlller: UIViewController {
                 .environmentObject(SceneDelegate.medModel)
                 .environmentObject(SceneDelegate.userModel)
                 .environmentObject(SceneDelegate.gardenModel))
-            
+            UIApplication.shared.window?.rootViewController = rootHost
         }
     }
 }
