@@ -249,13 +249,14 @@ struct BreathworkPlay: View {
             }
         }
         .onAppear {
-            if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
-                playVibration = vibration
-            }
-
-            if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
-                backgroundAnimationOn = bgAnimation
-            }
+//            if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
+//                playVibration = vibration
+//            }
+            playVibration = DefaultsManager.standard.value(forKey: .vibrationMode).boolValue
+            backgroundAnimationOn = DefaultsManager.standard.value(forKey: .backgroundAnimation).boolValue
+//            if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+//                backgroundAnimationOn = bgAnimation
+//            }
 
             do {
                 engine = try CHHapticEngine()
@@ -263,38 +264,43 @@ struct BreathworkPlay: View {
                 print(error)
             }
 
-            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+            if DefaultsManager.standard.value(forKey: .isPlayMusic).boolValue
+//                UserDefaults.standard.bool(forKey: "isPlayMusic")
+            {
                 if let player = player {
                     player.stop()
                 }
             }
 
-            if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
-                if defaultSound != "noSound" {
-                    selectedSound = Sound.getSound(str: defaultSound)
-                    if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
-                        backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
-                        backgroundPlayer?.delegate = self.del
-                        backgroundPlayer?.prepareToPlay()
-                    }
-                    if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
-                        backgroundPlayer?.volume = vol
-                        sliderData.sliderValue = vol
-                    } else {
-                        backgroundPlayer?.volume = 0.3
-                        sliderData.sliderValue = 0.3
-                    }
-                    if let backgroundPlayer = backgroundPlayer {
-                        sliderData.setPlayer(player: backgroundPlayer)
-                    }
-                    backgroundPlayer?.numberOfLoops = -1
-                    backgroundPlayer?.play()
+//            if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+            let defaultSound = DefaultsManager.standard.value(forKey: .sound).stringValue
+            if defaultSound != "noSound" {
+                selectedSound = Sound.getSound(str: defaultSound)
+                if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+                    backgroundPlayer?.delegate = self.del
+                    backgroundPlayer?.prepareToPlay()
+                }
+                if let vol = DefaultsManager.standard.value(forKey: .backgroundVolume).float
+//                    UserDefaults.standard.value(forKey: "backgroundVolume") as? Float
+                {
+                    backgroundPlayer?.volume = vol
+                    sliderData.sliderValue = vol
                 } else {
+                    backgroundPlayer?.volume = 0.3
+                    sliderData.sliderValue = 0.3
+                }
+                if let backgroundPlayer = backgroundPlayer {
+                    sliderData.setPlayer(player: backgroundPlayer)
+                }
+                backgroundPlayer?.numberOfLoops = -1
+                backgroundPlayer?.play()
+            } else {
                     if let url = Bundle.main.path(forResource: "", ofType: "mp3") {
-                        backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
-                    }
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
                 }
             }
+//            }
 
             medModel.checkIfFavorited()
             if let plantTitle = UserDefaults.standard.string(forKey: K.defaults.selectedPlant) {

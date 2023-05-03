@@ -34,12 +34,20 @@ struct DefaultsValues {
         self.value = value
     }
     
+    var bool: Bool? {
+        value as? Bool
+    }
+    
     var boolValue: Bool {
         if let value = value as? Bool {
             return value
         } else {
             return false
         }
+    }
+    
+    var string: String? {
+        value as? String
     }
     
     var stringValue: String {
@@ -50,8 +58,24 @@ struct DefaultsValues {
         }
     }
     
+    var integer: Int? {
+        value as? Int
+    }
+    
     var integerValue: Int {
         if let value = value as? Int {
+            return value
+        } else {
+            return 0
+        }
+    }
+    
+    var float: Float? {
+        value as? Float
+    }
+    
+    var floatValue: Float {
+        if let value = value as? Float {
             return value
         } else {
             return 0

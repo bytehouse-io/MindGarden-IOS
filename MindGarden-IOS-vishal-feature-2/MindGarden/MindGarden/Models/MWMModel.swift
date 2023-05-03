@@ -16,6 +16,6 @@ final class MWMModel {
     }
     
     enum DynamicEmbeddedUIElements: String, CaseIterable {
-        case nativeOnboardingSlide = "native_onboarding_slide"
+        case nativeOnboardingSlide = "PUBSBX#app_launch#native_onboarding"
     }
 }
