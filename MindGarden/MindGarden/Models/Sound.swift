@@ -13,6 +13,15 @@ enum Sound {
     case nature
     case fire
     case beach
+    case fourThirtyTwo
+    case beta
+    case alpha
+    case theta
+    case flute
+    case guitar
+    case music
+    case piano1
+    case piano2
     case noSound
 
     var img: Image {
@@ -27,11 +36,29 @@ enum Sound {
             return Image("beach")
         case .fire:
             return Image(systemName: "flame")
+        case .fourThirtyTwo:
+            return Img.fourThirtyTwo
+        case .beta:
+            return Img.beta
+        case .alpha:
+            return Img.alpha
+        case .theta:
+            return Img.theta
+        case .flute:
+            return Img.fluteNotes
+        case .guitar:
+            return Img.guitar
+        case .piano1:
+            return Img.piano1
+        case .piano2:
+            return Img.piano2
+        case .music:
+            return Img.music
         case .noSound:
             return Image("beach")
         }
     }
-
+    
     var title: String {
         switch self {
         case .rain:
@@ -44,6 +71,25 @@ enum Sound {
             return "beach"
         case .fire:
             return "fire"
+        case .fourThirtyTwo:
+            return "432hz"
+        case .beta:
+            return "beta"
+        case .alpha:
+            return "alpha"
+        case .theta:
+            return "theta"
+        case .piano1:
+            return "piano1"
+        case .piano2:
+            return "piano2"
+        case .flute:
+            return "flute"
+        case .guitar:
+            return "guitar"
+        case .music:
+            return "music"
+        
         case .noSound:
             return "noSound"
         }
@@ -61,6 +107,24 @@ enum Sound {
             return .beach
         case "fire":
             return .fire
+        case "432hz":
+            return .fourThirtyTwo
+        case "beta":
+            return .beta
+        case "alpha":
+            return .alpha
+        case "theta":
+            return .theta
+        case "piano1":
+            return .piano1
+        case "piano2":
+            return .piano2
+        case "flute":
+            return .flute
+        case "guitar":
+            return .guitar
+        case "music":
+            return .music
         case "noSound":
             return .noSound
         default:

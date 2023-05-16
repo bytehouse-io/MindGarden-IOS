@@ -30,11 +30,18 @@ struct LottieView: UIViewRepresentable {
 
         animationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(animationView)
-        view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        view.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        if fileName == "sloth" || fileName == "turtle" {
+            animationView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+            animationView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        } else {
+            view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            view.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        }
+        
 
         return view
     }
+    
     func playAnimation() {
         animationView.play()
     }

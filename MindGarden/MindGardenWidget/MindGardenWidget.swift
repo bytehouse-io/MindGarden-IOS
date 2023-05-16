@@ -8,31 +8,44 @@
 import WidgetKit
 import SwiftUI
 import Intents
+import Amplitude
+import Firebase
 
 
 struct Provider: IntentTimelineProvider {
     let gridd = [String: [String:[String:[String:Any]]]]()
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, isPro: false, configuration: ConfigurationIntent())
+        SimpleEntry(configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), grid: gridd, streakNumber: 1, isPro: false, configuration: configuration)
+        let entry = SimpleEntry(configuration: configuration)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = [] 
-        let userDefaults = UserDefaults(suiteName: "group.io.bytehouse.mindgarden.widget")
+        let userDefaults = UserDefaults(suiteName: K.widgetDefault)
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]]
-        let streakNumber = userDefaults?.integer(forKey: "streakNumber")
-        let isPro = userDefaults?.bool(forKey: "isPro")
+        let grid = userDefaults?.value(forKey: "grid") as? [String: [String:[String:[String:Any]]]] ?? [:]
+        let streakNumber = userDefaults?.value(forKey: "streakNumber") as? Int ?? 1
+        let isPro = userDefaults?.value(forKey: "isPro") as? Bool ?? false
+        
+        let lastLogDate = userDefaults?.value(forKey: "lastJournel") as? String ?? Date().toString(withFormat: "MMM dd, yyyy")
+        let strLastLogMood = userDefaults?.value(forKey: "logMood") as? String ?? "okay"
+        let lastLogMood = Mood.getMoodImageWidget(mood: Mood.getMood(str: strLastLogMood))
+        
+        let meditation = userDefaults?.value(forKey: "featuredMeditation") as? Int
+        let breathwork = userDefaults?.value(forKey: "featuredBreathwork") as? Int
+        
+//        let breathImg = Breathwork.breathworks.first(where: { $0.id == breathwork } ) ?? Breathwork.breathworks.first!
+//        let meditationImg = Meditation.allMeditations.first(where: { $0.id == meditation } ) ?? Meditation.allMeditations.first!
+        
         for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, grid: grid ?? [String: [String:[String:[String:Any]]]](), streakNumber: streakNumber ?? 1, isPro: isPro ?? false,  configuration: configuration)
+            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate) ?? Date()
+            let entry = SimpleEntry(date: entryDate, grid: grid, streakNumber: streakNumber, isPro: isPro,lastLogDate: lastLogDate, lastLogMood: lastLogMood, configuration: configuration, meditationId:meditation ?? 2, breathWorkId: breathwork ?? -1/*,meditationImg: meditationImg.img, breathWorkImg:breathImg.img*/)
             entries.append(entry)
         }
 
@@ -42,11 +55,17 @@ struct Provider: IntentTimelineProvider {
 }
 
 struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let grid: [String: [String:[String:[String:Any]]]]
-    let streakNumber: Int
-    let isPro: Bool
+    var date: Date = Date()
+    var grid = [String: [String:[String:[String:Any]]]]()
+    var streakNumber: Int = 0
+    var isPro: Bool = false
+    var lastLogDate: String = Date().toString(withFormat: "MMM dd, yyyy")
+    var lastLogMood: Image = Image("okay")
     let configuration: ConfigurationIntent
+    var meditationId: Int = 1
+    var breathWorkId: Int = -1
+    var meditationImg: Image = Image("meditatingTurtle")
+    var breathWorkImg: Image = Image("mediumWidgetBreathwork")
 }
 
 struct MindGardenWidgetEntryView : View {
@@ -62,110 +81,18 @@ struct MindGardenWidgetEntryView : View {
 
     @ViewBuilder
     var body: some View {
-        GeometryReader { g in
-            let width = g.size.width
-            let height = g.size.height
-            ZStack {
-                Color("darkWhite")
-                switch family {
-                case .systemSmall:
-                    Text("Small")
-                case .systemMedium:
-                    if entry.isPro {
-                        MediumWidget(width: width, height: height, moods: $moods, gratitudes: $gratitudes, streak: $streak)
-                    } else {
-                        GoProPage
-                    }
-                case .systemLarge:
-                    ZStack {
-                        if entry.isPro {
-                        VStack(spacing: 5) {
-                            MediumWidget(width: width, height: height * 0.425, moods: $moods, gratitudes: $gratitudes, streak: $streak)
-                            HStack {
-                                ZStack {
-                                    Rectangle()
-                                        .fill(Color("darkWhite"))
-                                        .cornerRadius(14)
-                                        .neoShadow()
-                                        HStack {
-                                            Image(systemName: "clock")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .foregroundColor(Color("darkgreen"))
-                                                .frame(width: 25)
-                                            Text("Total\nTime")
-                                                .foregroundColor(Color("black2"))
-                                                .font(Font.mada(.regular, size: 12))
-                                            Text("\(totalTime/60 == 0 && totalTime != 0 ? "0.5" : "\(totalTime/60)") mins")
-                                                .foregroundColor(Color("darkgreen"))
-                                                .font(Font.mada(.bold, size: 14))
-                                        }
-                                }.frame(width: width * 0.435, height: height * 0.15)
-                                ZStack {
-                                        Rectangle()
-                                            .fill(Color("darkWhite"))
-                                            .cornerRadius(14)
-                                            .neoShadow()
-                                        HStack {
-                                            Image(systemName: "number")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 25)
-                                                .foregroundColor(Color("darkgreen"))
-                                            Text("Total\nSess")
-                                                .foregroundColor(Color("black2"))
-                                                .font(Font.mada(.regular, size: 12))
-                                            Text("\(totalSess) sess")
-                                                .foregroundColor(Color("darkgreen"))
-                                                .font(Font.mada(.bold, size: 14))
-                                        }
-                                    }.frame(width: width * 0.435, height: height * 0.15)
-                            }
-
-                            ZStack {
-                                Link(destination: URL(string: "garden://io.bytehouse.mindgarden")!)  {
-                                    Rectangle()
-                                        .fill(Color("yellow"))
-                                        .cornerRadius(14)
-                                        .frame(width: width * 0.875)
-                                        .opacity(0.8)
-                                        .neoShadow()
-                                    VStack(alignment: .center) {
-                                        Spacer()
-                                        ZStack {
-                                            if !plants.isEmpty {
-                                                HStack {
-                                                    //                                        Text(plants[0].title)
-                                                    //                                            .font(Font.mada(.bold, size: 40))
-                                                    ForEach(0..<min(plants.count, 6)) { idx in
-//                                                        let xPos = Int.random(in: -25...25)
-                                                        Image(plants[idx].title)
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .frame(width: 40, height: height * 0.35)
-                                                    }
-                                                }.frame(width: width * 0.80, height: height)
-                                                    .padding()
-                                            }
-                                        }
-                                    }.frame(width: width, height: height * 0.2)
-
-                                }.frame(width: width * 0.85, height: height * 0.25)
-                                    .padding(.vertical)
-                            }
-                            Text("🧘 Your last 6 sessions")
-                                .foregroundColor(Color("black2"))
-                                .font(Font.mada(.regular, size: 10))
-                                .offset(x: 90, y: -15)
-                        }
-                        } else {
-                            GoProPage
-                        }
-                    }
-
-                default:
-                    Text("Some other WidgetFamily in the future.")
-                }
+        ZStack {
+            Color("darkWhite")
+                .neoShadow()
+            switch family {
+            case .systemSmall:
+                SmallWidget(streak: entry.streakNumber)
+            case .systemMedium:
+                NewMediumWidget(mediumEntry: MediumEntry(lastDate: entry.lastLogDate, lastMood: entry.lastLogMood, meditationId: entry.meditationId, breathworkId: entry.breathWorkId, breathworkImg: entry.breathWorkImg, meditationImg: entry.meditationImg))
+            case .systemLarge:
+                LargeWidget(streakNumber: entry.streakNumber,gardenModel: GardenViewModel(), grid:entry.grid)
+            default:
+                Text("Some other WidgetFamily in the future.")
             }
         }.onAppear {
             let hour = Calendar.current.component( .hour, from:Date() )
@@ -174,7 +101,10 @@ struct MindGardenWidgetEntryView : View {
             } else {
                 dayTime = false
             }
-            extractData()
+//            extractData()
+            Timer.scheduledTimer(withTimeInterval: 3600.0, repeats: true) { timer in
+                WidgetCenter.shared.reloadAllTimelines()
+            }
         }
     }
 
@@ -184,14 +114,14 @@ struct MindGardenWidgetEntryView : View {
             VStack {
                 Spacer()
                 Text("This is a pro only feature")
-                    .font(Font.mada(.bold, size: 18))
+                    .font(Font.fredoka(.bold, size: 18))
                     .foregroundColor(Color("superBlack"))
                 Link(destination: URL(string: "pro://io.bytehouse.mindgarden")!)  {
                     Capsule()
                         .fill(Color("darkgreen"))
                         .overlay(Text("👨‍🌾 Go Pro!")
                                     .foregroundColor(.white)
-                                    .font(Font.mada(.bold, size: 14)))
+                                    .font(Font.fredoka(.bold, size: 14)))
                         .frame(width: 125, height: 35)
                         .padding(.top, 5)
                         .neoShadow()
@@ -201,88 +131,6 @@ struct MindGardenWidgetEntryView : View {
                 Spacer()
             }
     }
-
-    struct MediumWidget: View {
-        let width: CGFloat
-        let height: CGFloat
-        @Binding var moods: [Mood: Int]
-        @Binding var gratitudes: Int
-        @Binding var streak: Int
-
-
-        var body: some View {
-            HStack(alignment: .center, spacing: 15 ) {
-                VStack(spacing: 15) {
-                    Link(destination: URL(string: "mood://io.bytehouse.mindgarden")!)  {
-                        MenuChoice(title: "Mood", img: Image(systemName: "face.smiling"), width: width)
-                            .frame(height: 30)
-                            .neoShadow()
-                    }
-                    Link(destination: URL(string: "gratitude://io.bytehouse.mindgarden")!)  {
-                        MenuChoice(title: "Gratitude", img: Image(systemName: "square.and.pencil"), width: width)
-                            .frame(height: 30)
-                            .neoShadow()
-                    }
-                    Link(destination: URL(string: "meditate://io.bytehouse.mindgarden")!)  {
-                        MenuChoice(title: "Meditate", img: Image(systemName: "play"), width: width)
-                            .frame(height: 30)
-                            .neoShadow()
-                    }
-                }.padding(10)
-                    .frame(width: width * 0.4, height: height, alignment: .center)
-                ZStack {
-                    Rectangle()
-                        .fill(Color("brightGreen"))
-                        .cornerRadius(14)
-                        .shadow(radius: 5)
-                    VStack {
-                        Text("\(Date().getMonthName(month: Date().get(.month)))")
-                            .font(Font.mada(.bold, size: 14))
-                            .foregroundColor(Color.white)
-                            .offset(y: 5)
-                        HStack(spacing: 5) {
-                             Image("newStar")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.05)
-                            Text("Streak:")
-                                .font(Font.mada(.regular, size: 14))
-                                .foregroundColor(Color.white)
-                            Spacer()
-                            Text("\(streak)")
-                                .font(Font.mada(.bold, size: 16))
-                                .foregroundColor(Color.white)
-                        }.frame(width: width * 0.39, alignment: .leading)
-                        HStack(spacing: 5) {
-                            Image("hands")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: width * 0.05)
-                            Text("Gratitudes:")
-                                .font(Font.mada(.regular, size: 14))
-                                .foregroundColor(Color.white)
-                            Spacer()
-                            Text("\(gratitudes)")
-                                .font(Font.mada(.bold, size: 16))
-                                .foregroundColor(Color.white)
-                        }.frame(width: width * 0.39, alignment: .leading)
-                        HStack(spacing: 10) {
-                            SingleMood(mood: .happy, count: moods[.happy] ?? 0)
-                            SingleMood(mood: .okay, count: moods[.okay] ?? 0)
-                            SingleMood(mood: .stressed, count: moods[.stressed] ?? 0)
-                            SingleMood(mood: .angry, count: moods[.angry] ?? 0)
-                            SingleMood(mood: .sad, count: moods[.sad] ?? 0)
-                        }.frame(height: height * 0.25)
-                        .padding(.horizontal, 8)
-                        .offset(y: -2)
-                    }
-                }.frame(width: width * 0.45, height: height * 0.8, alignment: .center)
-                    .padding([.vertical])
-            }
-        }
-
-    }
-
 
     func extractData() {
 //       var monthTiles = [Int: [Int: (String?, Mood?)]]()
@@ -313,16 +161,16 @@ struct MindGardenWidgetEntryView : View {
                startsOnSunday = false
            }
 
-           if let sessions = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[K.defaults.sessions] as? [[String: String]] {
+           if let sessions = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[KK.defaults.sessions] as? [[String: String]] {
                for session in sessions {
                    self.totalSess += 1
                    self.totalTime += Int(Double(session[K.defaults.duration] ?? "0.0") ?? 0.0)
-                   let plant = session[K.defaults.plantSelected] ?? ""
+                   let plant = session[KK.defaults.plantSelected] ?? ""
                    allPlants.append(plant)
                }
            }
 
-           if let moods = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[K.defaults.moods] as? [String] {
+           if let moods = entry.grid[String(Date().get(.year))]?[strMonth]?[String(day)]?[KK.defaults.moods] as? [String] {
                mood = Mood.getMood(str: moods[moods.count - 1])
                for forMood in moods {
                    let singleMood = Mood.getMood(str: forMood)
@@ -335,14 +183,14 @@ struct MindGardenWidgetEntryView : View {
                }
            }
 
-           if let gratitudez = entry.grid[Date().get(.year)]?[strMonth]?[String(day)]?[K.defaults.gratitudes] as? [String] {
+           if let gratitudez = entry.grid[Date().get(.year)]?[strMonth]?[String(day)]?[KK.defaults.gratitudes] as? [String] {
                gratitudes += gratitudez.count
            }
    }
         var plantz = [Plnt]()
         for plant in allPlants {
 //            if  plant != "Bonsai Tree"  {
-                if let img = K.plantImages[plant]{
+                if let img = KK.plantImages[plant]{
                     let plnt = Plnt(title: img, id: plant)
                     plantz.append(plnt)
                 }
@@ -360,11 +208,11 @@ struct MindGardenWidgetEntryView : View {
 
         var body: some View {
             VStack(spacing: 2) {
-                K.getMoodImage(mood: mood)
+                KK.getMoodImage(mood: mood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 Text("\(count)")
-                    .font(Font.mada(.bold, size: 12))
+                    .font(Font.fredoka(.bold, size: 12))
                     .foregroundColor(Color.white)
             }
 
@@ -382,7 +230,7 @@ struct MindGardenWidgetEntryView : View {
                     .fill(Color("darkWhite"))
                 HStack(spacing: -5) {
                     Text(title)
-                        .font(Font.mada(.medium, size: 16))
+                        .font(Font.fredoka(.medium, size: 16))
                         .minimumScaleFactor(0.5)
                         .foregroundColor(Color("darkgreen"))
                         .frame(width: width * 0.3, alignment: .leading)
@@ -407,6 +255,10 @@ struct Plnt: Identifiable {
 @main
 struct MindGardenWidget: Widget {
     let kind: String = "MindGardenWidget"
+    
+    init(){
+        FirebaseApp.configure()
+    }
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
@@ -414,14 +266,13 @@ struct MindGardenWidget: Widget {
         }
         .configurationDisplayName("MindGarden Widget")
         .description("⚙️ This is the first version of our MindGarden widget. If you would like new features or layouts or experience a bug please fill out the feedback form in the settings page of the app :) We're a small team of 3 so all this feedback will be taken very seriously.")
-        .supportedFamilies([.systemMedium, .systemLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
 struct MindGardenWidget_Previews: PreviewProvider {
     static var previews: some View {
-        MindGardenWidgetEntryView(entry: SimpleEntry(date: Date(), grid: [String: [String:[String:[String:Any]]]]()
-                                                     , streakNumber: 1, isPro: false, configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
+        MindGardenWidgetEntryView(entry: SimpleEntry(configuration: ConfigurationIntent()), moods: [Mood: Int](), gratitudes: 0, streak: 1, plants: [Plnt](), dayTime: true, totalTime: 0, totalSess: 0)
             .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
 }

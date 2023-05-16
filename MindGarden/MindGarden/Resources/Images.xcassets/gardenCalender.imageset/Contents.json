@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Group 92.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Group 92-1.pdf",
+      "filename" : "calendar.svg",
       "idiom" : "universal"
     }
   ],

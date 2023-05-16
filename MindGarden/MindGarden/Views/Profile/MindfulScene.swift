@@ -25,7 +25,12 @@ struct MindfulScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(alignment: .center, spacing: 0) {
                         HStack {
-                            Img.topBranch.padding(.leading, -20)
+                            Img.topBranch
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: UIScreen.screenWidth * 0.6)
+                                .padding(.leading, -20)
+                                .offset(y: -10)
                             Spacer()
                             Image(systemName: "arrow.backward")
                                 .font(.system(size: 22))
@@ -40,7 +45,7 @@ struct MindfulScene: View {
                         }
                         Spacer()
                         Text("Mindful Reminders")
-                            .font(Font.mada(.bold, size: 30))
+                            .font(Font.fredoka(.bold, size: 30))
                             .padding(.top)
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -55,7 +60,7 @@ struct MindfulScene: View {
                                         .cornerRadius(14)
                                     HStack {
                                         Text("\(frequency) \(frequency == 1 ? "time" : "times") per day")
-                                            .font(Font.mada(.semiBold, size: 26))
+                                            .font(Font.fredoka(.semiBold, size: 26))
                                             .foregroundColor(Clr.darkgreen)
                                         Spacer()
                                         Image(systemName: "chevron.down")
@@ -101,7 +106,7 @@ struct MindfulScene: View {
                                 .overlay(
                                     Text("Save")
                                         .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 20))
+                                        .font(Font.fredoka(.bold, size: 20))
                                 )
                         }.frame(height: 50)
                             .padding(40)

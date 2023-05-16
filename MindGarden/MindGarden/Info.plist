@@ -8,6 +8,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -120,22 +122,50 @@
 				<string>garden</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.bytehouse.mindgarden</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>notification</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.bytehouse.mindgarden</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>link.page.mindgarden</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://appsflyer-skadnetwork.com/</string>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Share Your Progress</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Allow us to serve you a more personalized roadmap and the best mindfulness experience possible</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Mada-Regular.ttf</string>
-		<string>Mada-Bold.ttf</string>
-		<string>Mada-Light.ttf</string>
-		<string>Mada-Medium.ttf</string>
-		<string>Mada-SemiBold.ttf</string>
+		<string>Fredoka-Regular.ttf</string>
+		<string>Fredoka-Medium.ttf</string>
+		<string>Fredoka-Light.ttf</string>
+		<string>Fredoka-SemiBold.ttf</string>
+		<string>Fredoka-Bold.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -159,6 +189,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -177,5 +208,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

@@ -11,22 +11,27 @@ import FirebaseFirestore
 
 
 struct FirebaseAPI {
-    static let db = Firestore.firestore()
-    static var firebaseMeds: [Meditation] = []
+    let db = Firestore.firestore()
+    var firebaseMeds: [Meditation] = []
+    let medModel: MeditationViewModel 
     
     // For the Learn Page
-    static func fetchCourses() {
+     func fetchCourses() {
         db.collection("Learn Page").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
+            } else if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
                     var courseImg = ""
                     var courseDesc = ""
                     var courseDuration = ""
                     var courseCategory = ""
                     var courseSlides = [Slide]()
+                    var courseId = 0
                     
+                    if let id = document["id"] as? Int {
+                        courseId = id
+                    }
                     if let image = document["image"] as? String {
                         courseImg = image
                     }
@@ -38,6 +43,7 @@ struct FirebaseAPI {
                     if let duration = document["duration"] as? String {
                         courseDuration = duration
                     }
+                    
                     if let category = document["category"] as? String {
                         courseCategory = category
                     }
@@ -47,7 +53,7 @@ struct FirebaseAPI {
                         }
                     }
                     
-                    let newCourse = LearnCourse(title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory, slides: courseSlides)
+                    let newCourse = LearnCourse(id: courseId, title: document.documentID, img: courseImg, description: courseDesc, duration: courseDuration, category: courseCategory, slides: courseSlides)
                     
                     if !LearnCourse.courses.contains(where: { $0.title == document.documentID }) {
                         LearnCourse.courses.append(newCourse)
@@ -58,12 +64,12 @@ struct FirebaseAPI {
     }
     
     // For Meditation Page
-    static func fetchMeditations(meditationModel: MeditationViewModel) {
+     func fetchMeditations(meditationModel: MeditationViewModel) {
         db.collection("Meditations").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
+            } else if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
                     var medDuration = 0
                     var medAuthor = ""
                     var medImage = ""
@@ -123,6 +129,7 @@ struct FirebaseAPI {
                         case "sleep": medCateogry = .sleep
                         case "confidence": medCateogry = .confidence
                         case "growth": medCateogry = .growth
+                        case "sadness": medCateogry = .sadness
                         default: break
                         }
                     }
@@ -140,6 +147,8 @@ struct FirebaseAPI {
                         Meditation.allMeditations.append(newMed)
                     }
                 }
+                medModel.getFeaturedMeditation()
+                medModel.getUserMap()
             }
         }
     }

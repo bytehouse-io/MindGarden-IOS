@@ -2,16 +2,16 @@
 //  AppsFlyerLib.h
 //  AppsFlyerLib
 //
-//  AppsFlyer iOS SDK 6.4.4 (40)
+//  AppsFlyer iOS SDK 6.9.1 (92)
 //  Copyright (c) 2012-2020 AppsFlyer Ltd. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-#import "AppsFlyerCrossPromotionHelper.h"
-#import "AppsFlyerShareInviteHelper.h"
-#import "AppsFlyerDeepLinkResult.h"
-#import "AppsFlyerDeepLink.h"
+#import <AppsFlyerLib/AppsFlyerCrossPromotionHelper.h>
+#import <AppsFlyerLib/AppsFlyerShareInviteHelper.h>
+#import <AppsFlyerLib/AppsFlyerDeepLinkResult.h>
+#import <AppsFlyerLib/AppsFlyerDeepLink.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -95,6 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define AFEventParam8                      @"af_param_8"
 #define AFEventParam9                      @"af_param_9"
 #define AFEventParam10                     @"af_param_10"
+#define AFEventParamTouch                  @"af_touch_obj"
 
 #define AFEventParamDepartingDepartureDate  @"af_departing_departure_date"
 #define AFEventParamReturningDepartureDate  @"af_returning_departure_date"
@@ -130,14 +131,11 @@ NS_ASSUME_NONNULL_BEGIN
 #define AFEventParamAdRevenueAdSize              @"af_adrev_ad_size"
 #define AFEventParamAdRevenueMediatedNetworkName @"af_adrev_mediated_network_name"
 
+
 /// Mail hashing type
 typedef enum  {
     /// None
     EmailCryptTypeNone = 0,
-    /// SHA1
-    EmailCryptTypeSHA1 = 1,
-    /// MD5
-    EmailCryptTypeMD5 = 2,
     /// SHA256
     EmailCryptTypeSHA256 = 3
 } EmailCryptType;
@@ -210,6 +208,9 @@ NS_SWIFT_NAME(DeepLinkDelegate)
  @return The singleton instance of AppsFlyerLib.
  */
 + (AppsFlyerLib *)shared;
+
+
+- (void)setUpInteroperabilityObject:(id)object;
 
 /**
  In case you use your own user ID in your app, you can set this property to that ID.

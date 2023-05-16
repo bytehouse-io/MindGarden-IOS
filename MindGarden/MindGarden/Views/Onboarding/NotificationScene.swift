@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import OneSignal
+import Amplitude
+import Lottie
 
 struct NotificationScene: View {
     @Environment(\.presentationMode) var presentationMode
@@ -37,22 +40,28 @@ struct NotificationScene: View {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                     VStack(spacing: -5) {
                         HStack {
-                            Img.topBranch.padding(.leading, -20)
+                            Img.topBranch
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: UIScreen.screenWidth * 0.6)
+                                .padding(.leading, -20)
+                                .offset(y: -10)
                             Spacer()
                             Image(systemName: "arrow.backward")
-                                .font(.system(size: 22))
+                                .font(.system(size: 20))
                                 .foregroundColor(Clr.darkgreen)
                                 .padding()
                                 .onTapGesture {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
+                                        viewRouter.progressValue -= 0.2
                                         if fromSettings {
                                             presentationMode.wrappedValue.dismiss()
                                         } else if tappedTurnOn {
                                             viewRouter.currentPage = .review
                                             tappedTurnOn = false
                                         } else {
-                                            viewRouter.currentPage = .reason
+                                            viewRouter.currentPage = .name
                                         }
                                     }
                                 }
@@ -61,20 +70,27 @@ struct NotificationScene: View {
                         }
                         VStack {
                             Text("🔔 Set a Reminder")
-                                .font(Font.mada(.semiBold, size: 28))
+                                .font(Font.fredoka(.semiBold, size: 28))
                                 .foregroundColor(Clr.black1)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.05)
                                 .offset(y: -20)
-                            Text("You're 3x more likely to stick with \nmeditation if you set a reminder.")
-                                .font(Font.mada(.bold, size: 20))
+                            (Text("Users who set a reminder are")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.medium, size: 20))
+                             + Text(" 4x more likely ")
                                 .foregroundColor(Clr.darkgreen)
+                                .font(Font.fredoka(.bold, size: 20))
+                             + Text("to stick with meditation")
+                                        .foregroundColor(Clr.black2)
+                                        .font(Font.fredoka(.medium, size: 20)))
                                 .multilineTextAlignment(.center)
                                 .frame(height: 50)
                                 .offset(y: -20)
                                 .lineLimit(3)
                                 .minimumScaleFactor(0.05)
+                                .frame(width: width * 0.85)
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
@@ -82,19 +98,21 @@ struct NotificationScene: View {
                                 }
                             } label: {
                                 Rectangle()
-                                    .fill(Clr.yellow)
+                                    .fill(Clr.darkWhite)
                                     .cornerRadius(12)
                                     .frame(width: width * 0.6, height: 75)
                                     .overlay(
                                         HStack {
                                             Text("\(displayedTime)")
-                                                .font(Font.mada(.bold, size: 40))
-                                                .foregroundColor(.black)
+                                                .font(Font.fredoka(.bold, size: 40))
+                                                .foregroundColor(Clr.black2)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
+                                            Spacer()
                                             Image(systemName: "chevron.down")
                                                 .font(Font.title)
-                                        }
+                                                .foregroundColor(Clr.black2)
+                                        }.padding(.horizontal)
                                     )
                             }.buttonStyle(NeumorphicPress())
                                 .padding()
@@ -103,104 +121,54 @@ struct NotificationScene: View {
                                 showActionSheet = true
                             } label: {
                                 Rectangle()
-                                    .fill(Clr.yellow)
+                                    .fill(Clr.darkWhite)
                                     .cornerRadius(12)
                                     .frame(width: width * 0.6, height: 50)
                                     .overlay(
                                         HStack {
                                             Text("\(frequency)")
-                                                .font(Font.mada(.bold, size: 26))
-                                                .foregroundColor(.black)
+                                                .font(Font.fredoka(.bold, size: 26))
+                                                .foregroundColor(Clr.black2)
                                                 .lineLimit(1)
                                                 .minimumScaleFactor(0.05)
                                             Spacer()
                                             Image(systemName: "chevron.down")
                                                 .font(Font.title)
+                                                .foregroundColor(.black)
                                         }.padding([.horizontal])
                                     )
                             }.buttonStyle(NeumorphicPress())
                             Spacer()
-                            Img.eggs
+                            Img.turtleLetter
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .neoShadow()
-                                .frame(width: g.size.width * 0.35)
+                                .frame(width: g.size.width * 0.4)
+
+//                            LottieAnimationView(filename: "turtleNotif", loopMode: LottieLoopMode.autoReverse, isPlaying: .constant(true))
+//                                .frame(width: g.size.width * 0.6)
                             Spacer()
-                         
                             Button {
                                 Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
-                                    let current = UNUserNotificationCenter.current()
-                                            current.getNotificationSettings(completionHandler: { permission in
-                                                switch permission.authorizationStatus  {
-                                                case .authorized:
-                                                    UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
-                                                    Analytics.shared.log(event: .notification_success)
-                                                    if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
-                                                        NotificationHelper.addOneDay()
-                                                    }
-                                                    if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
-                                                        NotificationHelper.addThreeDay()
-                                                    }
-                                                    UserDefaults.standard.setValue(dateTime, forKey: "notif")
-                                                    UserDefaults.standard.setValue(true, forKey: "notifOn")
-
-                                                    if frequency == "Everyday" {
-                                                        for i in 1...7 {
-                                                            let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!)
-                                                            NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
-                                                        }
-                                                    } else if frequency == "Weekdays" {
-                                                        for i in 2...6 {
-                                                            NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: i)
-                                                        }
-                                                    } else { // weekend
-                                                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 1)
-                                                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour))!, minute: Int(dateTime.get(.minute))!), weekDay: 7)
-                                                    }
-
-
-                                                    DispatchQueue.main.async {
-                                                        if fromSettings {
-                                                            presentationMode.wrappedValue.dismiss()
-                                                        } else {
-                                                            if tappedTurnOn {
-                                                                viewRouter.currentPage = .review
-                                                            } else {
-                                                                viewRouter.progressValue += 0.1
-                                                                viewRouter.currentPage = .name
-                                                            }
-                                                        }
-                                                        
-                                                    }
-                                                case .denied:
-                                                    Analytics.shared.log(event: .notification_go_to_settings)
-                                                    DispatchQueue.main.async {
-                                                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
-                                                            UIApplication.shared.open(appSettings)
-                                                        }
-                                                    }
-                                                case .notDetermined:
-                                                    Analytics.shared.log(event: .notification_go_to_settings)
-                                                    DispatchQueue.main.async {
-                                                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
-                                                            UIApplication.shared.open(appSettings)
-                                                        }
-                                                    }
-                                                default:
-                                                    print("Unknow Status")
-                                                }
-                                            })
+                                    OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                        if accepted {
+                                            Analytics.shared.log(event: .onboarding_notification_on)
+                                            promptNotification()
+                                        } else {
+                                            promptNotification()
+                                        }
+                                    })
                                 }
                             } label: {
                                 Capsule()
-                                    .fill(Clr.darkWhite)
+                                    .fill(Clr.yellow)
                                     .overlay(
-                                        Text(fromSettings ? "Turn On" : "Continue")
+                                        Text(fromSettings ? "Turn On" : "🔔 Set Reminder")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 20))
+                                            .font(Font.fredoka(.bold, size: 20))
                                     )
+                                    .addBorder(.black, width: 1.5, cornerRadius: 24)
                             }.frame(height: 50)
                                 .padding(5)
                                 .buttonStyle(NeumorphicPress())
@@ -209,21 +177,27 @@ struct NotificationScene: View {
                                     .foregroundColor(.gray)
                                     .padding()
                                     .onTapGesture {
+                                        let identify = AMPIdentify()
+                                            .set("reminder_set", value: NSNumber(0))
+                                        Amplitude.instance().identify(identify ?? AMPIdentify())
+                                        UserDefaults.standard.setValue(false, forKey: "isNotifOn")
                                         Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
-                                            withAnimation {
-                                                if tappedTurnOn {
-                                                    viewRouter.currentPage = .review
-                                                } else {
-                                                    viewRouter.progressValue += 0.1
-                                                    viewRouter.currentPage = .name
+                                            withAnimation(.easeOut(duration: 0.5)) {
+                                                DispatchQueue.main.async {
+                                                    if tappedTurnOn {
+                                                        viewRouter.currentPage = .review
+                                                    } else {
+                                                        viewRouter.progressValue = 1.0
+                                                        viewRouter.currentPage = .review
+                                                    }
                                                 }
                                             }
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         }
                                     }
                             }
-                        }.frame(width: width * 0.9)
+                        }.frame(width: width * 0.85)
                         .padding(.top, 5)
                     }
 
@@ -285,6 +259,82 @@ struct NotificationScene: View {
 //            }
 
     }
+    
+    private func promptNotification() {
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { permission in
+            switch permission.authorizationStatus  {
+            case .authorized:
+                let identify = AMPIdentify()
+                    .set("reminder_set", value: NSNumber(1))
+                Amplitude.instance().identify(identify ?? AMPIdentify())
+                
+                UserDefaults.standard.setValue(true, forKey: "isNotifOn")
+                UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
+                if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                    NotificationHelper.addOneDay()
+                }
+                
+                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                    NotificationHelper.addThreeDay()
+                }
+                if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
+                    NotificationHelper.addOnboarding()
+                }
+
+                if fromSettings && UserDefaults.standard.bool(forKey: "freeTrial")  {
+                    NotificationHelper.freeTrial()
+                }
+                
+                UserDefaults.standard.setValue(dateTime, forKey: "notif")
+                UserDefaults.standard.setValue(true, forKey: "notifOn")
+
+                if frequency == "Everyday" {
+                    for i in 1...7 {
+                        let datee = NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0)
+                        NotificationHelper.scheduleNotification(at: datee,  weekDay: i)
+                    }
+                } else if frequency == "Weekdays" {
+                    for i in 2...6 {
+                        NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: i, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0), weekDay: i)
+                    }
+                } else { // weekend
+                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 1, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0), weekDay: 1)
+                    NotificationHelper.scheduleNotification(at: NotificationHelper.createDate(weekday: 7, hour: Int(dateTime.get(.hour)) ?? 0, minute: Int(dateTime.get(.minute)) ?? 0), weekDay: 7)
+                }
+             
+                DispatchQueue.main.async {
+                    if fromSettings {
+                        presentationMode.wrappedValue.dismiss()
+                    } else {
+                        if !tappedTurnOn {
+                            viewRouter.progressValue += 0.2
+                        }
+                        viewRouter.currentPage = .review
+                    }
+                }
+            case .denied:
+                    Analytics.shared.log(event: .notification_go_to_settings)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+            case .notDetermined:
+                if fromSettings || tappedTurnOn {
+                    UserDefaults.standard.setValue(false, forKey: "isNotifOn")
+                    Analytics.shared.log(event: .notification_go_to_settings)
+                    DispatchQueue.main.async {
+                        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                            UIApplication.shared.open(appSettings)
+                        }
+                    }
+                }
+            default:
+                print("Unknow Status")
+            }
+        })
+    }
 }
 
 
@@ -323,7 +373,7 @@ struct BottomSheetView<Content: View>: View {
                 )
             Spacer()
             Text("Done")
-                .font(Font.mada(.bold, size: 18))
+                .font(Font.fredoka(.bold, size: 18))
                 .foregroundColor(Clr.darkgreen)
                 .onTapGesture {
                     Analytics.shared.log(event: .notification_tapped_done)

@@ -12,6 +12,7 @@ import OSLog
 import AppsFlyerLib
 import Amplitude
 import OneSignal
+import Paywall
 
 final class Analytics: ObservableObject {
     static let shared = Analytics()
@@ -32,14 +33,24 @@ final class Analytics: ObservableObject {
     /// Currently submits to FirebaseAnalytics in all cases and GoogleAnalytics if not running in a simulator.
     /// This function shuold only be called from within the `logSubject` Combine subject, never directly from code.
     /// To log an event from code, use the `log(event:)` function above.
-     func logActual(event: AnalyticEvent) {
+    func logActual(event: AnalyticEvent) {
         #if !targetEnvironment(simulator)
          Firebase.Analytics.logEvent(event.eventName, parameters: [:])
          AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
          Amplitude.instance().logEvent(event.eventName)
+         Paywall.track(name: event.eventName)
+        // prepare activity report content.
+        let eventInfo = ["someKey": "someValue", "otherKey": 2]
+        let eventInfoStringData = try! JSONSerialization.data(withJSONObject: eventInfo, options: [])
+        let eventInfoString = String(data: eventInfoStringData, encoding: .utf8)
+
+        // send the activity report
+        MWM.sendActivityReport(withKind: "example", withContent: eventInfoString)
+
         #endif
          print("logging, \(event.eventName)")
      }
+    
 
     init() {
         logSubject

@@ -7,13 +7,15 @@
 
 import SwiftUI
 import OneSignal
+import Amplitude
+
 //TODO fix navigation bar items not appearing in ios 15 phones
 struct ExperienceScene: View {
-    @State var selected: String = ""
+    @State private var selected: String = ""
+    @State private var showNotification = false
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var meditationModel: MeditationViewModel
     @EnvironmentObject var gardenModel: GardenViewModel
-    
 
     init() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
@@ -28,12 +30,21 @@ struct ExperienceScene: View {
                     ZStack {
                         Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                         VStack {
-                            HStack {
-                                Img.topBranch.padding(.leading, -20)
+                            if !K.isSmall() && K.hasNotch() {
+                                HStack {
+                                    Img.topBranch
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.screenWidth * 0.6)
+                                        .padding(.leading, -20)
+                                        .offset(x: -20, y: -15)
+                                    Spacer()
+                                }
+                            } else {
                                 Spacer()
                             }
                             Text("What is your experience \nwith meditation?")
-                                .font(Font.mada(.bold, size: 24))
+                                .font(Font.fredoka(.bold, size: 28))
                                 .foregroundColor(Clr.darkgreen)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .multilineTextAlignment(.center)
@@ -41,53 +52,94 @@ struct ExperienceScene: View {
                                 .padding(.horizontal)
                                 .lineLimit(2)
                                 .minimumScaleFactor(0.05)
-                            SelectionRow(width: width, height: height, title: "Meditate often", img: Img.redTulips3, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Have tried to meditate", img: Img.redTulips2, selected: $selected)
-                            SelectionRow(width: width, height: height, title: "Have never meditated", img: Img.redTulips1, selected: $selected)
+                                .frame(height: 50)
+                                .padding(.bottom, 16)
+                            Spacer()
+                            SelectionRow(width: width, height: height, title: Experience.often.title, img: Img.redTulips3, selected: $selected)
+                            SelectionRow(width: width, height: height, title: Experience.nowAndThen.title, img: Img.redTulips2, selected: $selected)
+                            SelectionRow(width: width, height: height, title: Experience.never.title, img: Img.redTulips1, selected: $selected)
+                            Spacer()
                             Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 Analytics.shared.log(event: .experience_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if selected != "" {
                                     switch selected {
-                                    case "Meditate often":
+                                    case Experience.often.title:
                                         OneSignal.sendTag("often", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_alot)
-                                    case "Have tried to meditate":
+                                    case Experience.nowAndThen.title:
                                         OneSignal.sendTag("tried", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_some)
-                                    case "Have never meditated":
+                                    case Experience.never.title:
                                         OneSignal.sendTag("never", value: "true")
                                         Analytics.shared.log(event: .experience_tapped_none)
                                     default:
                                         break
                                     }
-                                    withAnimation {
-                                        viewRouter.progressValue += 0.1
-                                        viewRouter.currentPage = .reason
+                                    
+                                    let identify = AMPIdentify()
+                                        .set("experience", value: NSString(utf8String: selected))
+                                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                                    
+                                    withAnimation(.easeOut(duration: 0.3)) {
+                                        DispatchQueue.main.async {
+                                            viewRouter.currentPage = .reason
+                                            viewRouter.progressValue += 0.2
+                                        }
                                     }
                                 } //TODO gray out button if not selected
                             } label: {
-                                Capsule()
-                                    .fill(Clr.darkWhite)
+                                Rectangle()
+                                    .fill(Clr.yellow)
                                     .overlay(
-                                        Text("Continue")
+                                        Text("Continue 👉")
                                             .foregroundColor(Clr.darkgreen)
-                                            .font(Font.mada(.bold, size: 20))
-                                    )
+                                            .font(Font.fredoka(.bold, size: 20))
+                                    ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
                             }.frame(height: 50)
                                 .padding()
                                 .buttonStyle(NeumorphicPress())
+                                .offset(y: 35)
                             Spacer()
-                        }
+                        }.frame(width: width * 0.9)
                 }
             }
         }.onDisappear {
             meditationModel.getFeaturedMeditation()
         }
+        .alert(isPresented: $showNotification) {
+                Alert(
+                    title: Text("You'll need to turn on Push"),
+                    message: Text("In order to fully experience MindGarden you'll need to turn on notifications"),
+                    primaryButton: Alert.Button.default(Text("Not now"), action: {
+                        Analytics.shared.log(event: .experience_tapped_not_now)
+                    }),
+                    secondaryButton: .default(Text("Ok"), action: {
+                        Analytics.shared.log(event: .experience_tapped_okay_push)
+                        promptNotif()
+                    })
+                )
+        }
         .transition(.move(edge: .trailing))
         .onAppear {
             Analytics.shared.log(event: .screen_load_experience)
         }
+    }
+    
+    private func promptNotif() {
+        OneSignal.promptForPushNotifications(userResponse: { accepted in
+            if accepted {
+                UserDefaults.standard.setValue("", forKey: K.defaults.meditationReminder)
+                Analytics.shared.log(event: .onboarding_notification_on)
+                NotificationHelper.addOneDay()
+                NotificationHelper.addThreeDay()
+                NotificationHelper.addOnboarding()
+            } else {
+                Analytics.shared.log(event: .onboarding_notification_off)
+                
+            }
+        })
     }
 
     struct SelectionRow: View {
@@ -99,6 +151,7 @@ struct ExperienceScene: View {
 
         var body: some View {
             Button {
+                MGAudio.sharedInstance.playBubbleSound()
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     selected = title
@@ -107,18 +160,17 @@ struct ExperienceScene: View {
             } label: {
                 ZStack {
                     Rectangle()
-                        .fill(selected == title ? Clr.yellow : Clr.darkWhite)
-                        .cornerRadius(15)
+                        .fill(selected == title ? Clr.brightGreen : Clr.darkWhite)
+                        .cornerRadius(20)
                         .frame(height: height * 0.15)
-                        .overlay(RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Clr.darkgreen, lineWidth: selected == title ? 3 : 0))
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 20)
                         .padding(.horizontal)
                         .padding(.vertical, 8)
 
                     HStack(spacing: 50) {
                         Text(title)
-                            .font(Font.mada(.bold, size: 24, relativeTo: .subheadline))
-                            .foregroundColor(selected == title ? colorScheme == .dark ? Color.black : Clr.black1 : Clr.black1)
+                            .font(Font.fredoka(.semiBold, size: 20, relativeTo: .subheadline))
+                            .foregroundColor(selected == title ?  Color.white : Clr.black2)
                             .padding()
                             .frame(width: width * 0.5, alignment: .leading)
                             .lineLimit(2)
@@ -126,7 +178,8 @@ struct ExperienceScene: View {
                         img
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: width * 0.15)
+                            .frame(width: width * 0.125, height: height * (title == Experience.never.title ? 0.04 : 0.1))
+                            .offset(x: -20, y: title == Experience.never.title ? 10 : 0)
                     }
                 }
             }.buttonStyle(NeumorphicPress())
@@ -139,3 +192,5 @@ struct ExperienceScene_Previews: PreviewProvider {
         ExperienceScene()
     }
 }
+
+

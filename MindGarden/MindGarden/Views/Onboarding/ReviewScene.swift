@@ -6,19 +6,26 @@
 //
 
 import SwiftUI
+import Paywall
+import Amplitude
+import OneSignal
 
 var tappedTurnOn = false
 struct ReviewScene: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @State private var experience: (Image, String) =  (Img.moon, "")
     @State private var aim = (Img.redTulips3, "")
+    @State private var aim2 = (Img.redTulips3, "")
+    @State private var aim3 = (Img.redTulips3, "")
     @State private var notifications = ""
+    @State private var showLoading = false
+    @State private var showPaywall = false
     var displayedTime: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
         return formatter
     }
-
+    
     var body: some View {
         ZStack {
             GeometryReader { g in
@@ -26,42 +33,56 @@ struct ReviewScene: View {
                 let height = g.size.height
                 ZStack {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    VStack(spacing: -10) {
+                    VStack(spacing: 5) {
                         HStack {
-                            Img.topBranch.padding(.leading, -20)
+                            if !K.isSmall() && K.hasNotch() {
+                                Img.topBranch
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: UIScreen.screenWidth * 0.6)
+                                    .padding(.leading, -20)
+                                    .offset(y: -10)
+                            }
                             Spacer()
                         }.edgesIgnoringSafeArea(.all)
                         Spacer()
                         Text("So, to recap \(UserDefaults.standard.string( forKey: "name") ?? "")")
-                            .font(Font.mada(.bold, size: 30))
+                            .font(Font.fredoka(.bold, size: 30))
                             .foregroundColor(Clr.black2)
                             .padding()
-                            .lineLimit(1)
+                            .lineLimit(2)
                             .minimumScaleFactor(0.05)
+                            .frame(width: width * 0.75)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
                                 .cornerRadius(14)
-                                .frame(width: width * 0.75, height: width * 0.22)
+                                .frame(width: width * 0.75, height: width * (arr.count == 1 ? 0.22 : arr.count == 2 ? 0.4 : arr.count == 3 ? 0.55 : 0.5))
                                 .neoShadow()
-                            HStack(spacing: -10){
-                                aim.0
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.2, height: width * 0.2)
-                                    .padding()
-                                VStack(alignment: .leading) {
-                                    Text("Your aim is to")
-                                        .foregroundColor(.gray)
-                                        .font(Font.mada(.regular, size: 20))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                    Text("\(aim.1)")
-                                        .foregroundColor(Clr.black1)
-                                        .font(Font.mada(.semiBold, size: 22))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.05)
-                                }.frame(width: width * 0.5, alignment: .leading)
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(Array(zip(arr.indices, arr)), id: \.0) { idx, item in
+                                    HStack {
+                                        ReasonItem.getImage(str: item)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: width * 0.125, height: width * 0.125)
+                                            .padding(10)
+                                        VStack(alignment: .leading) {
+                                            if idx == 0 {
+                                                Text("Your aim is to")
+                                                    .foregroundColor(.gray)
+                                                    .font(Font.fredoka(.regular, size: 20))
+                                                    .lineLimit(1)
+                                                    .minimumScaleFactor(0.05)
+                                            }
+                                            Text(item == "Managing Stress & Anxiety" ? " stress/anxiety" : item)
+                                                .foregroundColor(Clr.black1)
+                                                .font(Font.fredoka(.semiBold, size: 20))
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.05)
+                                        }.frame(width: width * 0.5, alignment: .leading)
+                                    }
+                                }
                             }
                         }
                         ZStack {
@@ -74,22 +95,22 @@ struct ReviewScene: View {
                                 experience.0
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.2, height: width * 0.2)
+                                    .frame(width: width * 0.125, height: width * 0.125, alignment: .leading)
                                     .padding()
                                 VStack(alignment: .leading) {
                                     Text("Your experience level")
                                         .foregroundColor(.gray)
-                                        .font(Font.mada(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 16))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                     Text("\(experience.1)")
                                         .foregroundColor(Clr.black1)
-                                        .font(Font.mada(.semiBold, size: 22))
+                                        .font(Font.fredoka(.semiBold, size: 20))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                 }.frame(width: width * 0.5, alignment: .leading)
                             }
-                        }
+                        }.padding(.top, 15)
                         ZStack {
                             Rectangle()
                                 .fill(Clr.darkWhite)
@@ -100,21 +121,22 @@ struct ReviewScene: View {
                                 Img.bell
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: width * 0.15, height: width * 0.2)
+                                    .frame(width: width * 0.125, height: width * 0.175)
                                     .padding()
                                     .padding(.trailing)
                                 VStack(alignment: .leading, spacing: 0) {
                                     Text("Your notifcations are")
                                         .foregroundColor(.gray)
-                                        .font(Font.mada(.regular, size: 20))
+                                        .font(Font.fredoka(.regular, size: 16))
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.05)
                                     HStack {
                                         Text("\(notifications)")
                                             .foregroundColor(Clr.black1)
-                                            .font(Font.mada(.semiBold, size: 22))
+                                            .font(Font.fredoka(.semiBold, size: 20))
                                         if notifications == "Off" {
                                             Button {
+                                                MGAudio.sharedInstance.playBubbleSound()
                                                 withAnimation {
                                                     tappedTurnOn = true
                                                     viewRouter.currentPage = .notification
@@ -123,102 +145,174 @@ struct ReviewScene: View {
                                                 Capsule()
                                                     .fill(Clr.yellow)
                                                     .frame(width: width * 0.2, height: height * 0.03)
-                                                    .neoShadow()
                                                     .overlay(
                                                         Text("Turn On")
+                                                        
                                                             .foregroundColor(.black)
                                                             .font(.caption)
                                                             .lineLimit(1)
                                                             .minimumScaleFactor(0.05)
                                                     )
+                                                    .neoShadow()
                                             }
                                         }
                                     }
                                 }.frame(width: width * 0.5, alignment: .leading)
+                                 .offset(x: -5)
                             }
                         }
                         Spacer()
-                        Button {
-                            Analytics.shared.log(event: .review_tapped_tutorial)
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                            UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
-                            withAnimation {
+                        Button(
+                            action: {
+                                MGAudio.sharedInstance.playBubbleSound()
+                                Analytics.shared.log(event: .review_tapped_tutorial)
+                                fromOnboarding = true
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 fromPage = "onboarding2"
-                                viewRouter.progressValue += 0.1
+                                UserDefaults.standard.setValue("signedUp", forKey: K.defaults.onboarding)
+                                UserDefaults.standard.setValue(true, forKey: "onboarded")
+                                withAnimation {
+                                    viewRouter.progressValue = 1
+                                    if fromInfluencer != ""
+                                    {
+                                        Analytics.shared.log(event: .user_from_influencer)
+                                        viewRouter.currentPage = .pricing
+                                    } else {
+                                        showPaywall = true
+                                    }
+                                }
+                                
+                            },
+                            label: {
+                                HStack {
+                                    Text("Let's Go! 🏃‍♂️")
+                                        .foregroundColor(Clr.darkgreen)
+                                        .font(Font.fredoka(.semiBold, size: 16))
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.05)
+                                }.frame(width: g.size.width * 0.75, height: g.size.height/16)
+                                    .background(Clr.yellow)
+                                    .cornerRadius(24)
+                                    .addBorder(.black, width: 1.5,  cornerRadius: 24)
+                            }
+                          )
+                        .triggerPaywall(
+                            forEvent: "review_tapped_tutorial",
+                            withParams: ["reason": 17],
+                            shouldPresent: $showPaywall,
+                            onPresent: { paywallInfo in
+                                print("paywall info is", paywallInfo)
+                                Analytics.shared.log(event: .screen_load_superwall)
+                            },
+                            onDismiss: { result in
+                                switch result.state {
+                                case .closed:
+                                    print("User dismissed the paywall.")
+                                case .purchased(productId: let productId):
+                                    switch productId {
+                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                    case "io.mindgarden.pro.yearly":
+                                        Analytics.shared.log(event: .yearly_started_from_superwall)
+                                        UserDefaults.standard.setValue(true, forKey: "freeTrial")
+                                        UserDefaults.standard.setValue(true, forKey: "isPro")
+                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
+                                            NotificationHelper.freeTrial()
+                                        }
+                                    default: break
+                                    }
+                                case .restored:
+                                    print("Restored purchases, then dismissed.")
+                                }
+                                showLoading = true
+                            },
+                            onFail: { error in
+                                print("did fail", error)
                                 viewRouter.currentPage = .pricing
                             }
-                        } label: {
-                            HStack {
-                                Text("MindGarden tutorial  👉🏻")
-                                    .foregroundColor(Clr.darkgreen)
-                                    .font(Font.mada(.semiBold, size: 18))
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.05)
-                            }.frame(width: g.size.width * 0.75, height: g.size.height/16)
-                            .background(Clr.yellow)
-                            .cornerRadius(25)
-                        }.padding(.top, 50)
+                        )
+                        .padding(20)
                         .buttonStyle(NeumorphicPress())
-                        Button {
-                            Analytics.shared.log(event: .review_tapped_explore)
-                            let impact = UIImpactFeedbackGenerator(style: .light)
-                            impact.impactOccurred()
-                            UserDefaults.standard.setValue("done", forKey: K.defaults.onboarding)
-                            withAnimation {
-                                viewRouter.progressValue += 0.1
-                                fromPage = "onboarding2"
-                                viewRouter.currentPage = .pricing
-                            }
-                        } label: {
-                            HStack {
-                                Text("Explore the app")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.mada(.regular, size: 18))
-                            }.frame(width: g.size.width * 0.75, height: g.size.height/16)
-                            .background(Clr.darkWhite)
-                            .cornerRadius(25)
-                        }.padding(.top, 35)
-                        .buttonStyle(NeumorphicPress())
+                    
+                     
+//                        Button {
+//                            Analytics.shared.log(event: .review_tapped_explore)
+//                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//
+//                            if let segments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+//                                var newArr = segments
+//                                newArr.append("non-tutorial")
+//                                storySegments = Set(newArr)
+//                                StorylyManager.refresh()
+//                            }
+//
+//                            UserDefaults.standard.setValue(true, forKey: "review")
+//                            UserDefaults.standard.setValue("meditate", forKey: K.defaults.onboarding)
+//                            withAnimation {
+//                                viewRouter.progressValue = 1
+//                                if fromInfluencer != "" {
+//                                    Analytics.shared.log(event: .user_from_influencer)
+//                                    viewRouter.currentPage = .pricing
+//                                } else {
+//                                    Paywall.present { info in
+//                                        Analytics.shared.log(event: .screen_load_superwall)
+//                                    } onDismiss: {  didPurchase, productId, paywallInfo in
+//                                        switch productId {
+//                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                        case "io.mindgarden.pro.yearly":
+//                                            Analytics.shared.log(event: .yearly_started_from_superwall)
+//                                            UserDefaults.standard.setValue(true, forKey: "freeTrial")
+//                                            UserDefaults.standard.setValue(true, forKey: "isPro")
+//                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
+//                                                NotificationHelper.freeTrial()
+//                                            }
+//                                        default: break
+//                                        }
+//                                        showLoading = true
+//                                    } onFail: { error in
+//                                        viewRouter.currentPage = .pricing
+//                                    }
+//                                }
+//                            }
+//                        } label: {
+//                                Text("Explore myself")
+//                                    .underline()
+//                                    .font(Font.fredoka(.regular, size: 16))
+//                                    .foregroundColor(.gray)
+//                                    .padding(.top, K.isSmall() ? 10 : 20)
+//                        }
                     }
                 }
             }
         }
+        .fullScreenCover(isPresented: $showLoading)  {
+            LoadingIllusion()
+                .frame(height: UIScreen.screenHeight + 50)
+        }
         .transition(.move(edge: .trailing))
         .onAppearAnalytics(event: .screen_load_review)
             .onAppear {
-                if UserDefaults.standard.string(forKey: "reason") != nil {
-                    switch UserDefaults.standard.string(forKey: "reason") {
-                        case "Sleep better":
-                            aim = (Img.moon, "Sleep better")
-                        case "Get more focused":
-                            aim = (Img.target, "Increase focus")
-                        case "Managing Stress & Anxiety":
-                            aim = (Img.moon, "Control anxiety")
-                        case "Just trying it out":
-                            aim = (Img.magnifyingGlass, "Try it out")
-                            default: break
-                    }
-                }
-
                 if UserDefaults.standard.string(forKey: "experience") != nil {
                 switch UserDefaults.standard.string(forKey: "experience") {
-                    case "Meditate often":
+                    case Experience.often.title:
+                    
                         experience = (Img.redTulips3, "is high")
-                    case "Have tried to meditate":
+                    case Experience.nowAndThen.title:
                         experience = (Img.redTulips2, "is low")
-                    case "Have never meditated":
+                    case Experience.never.title:
                         experience = (Img.redTulips1, "is none")
                     default: break
-                }
+                    }
                 }
                 if UserDefaults.standard.value(forKey: K.defaults.meditationReminder) != nil {
-                    notifications = "On for \(displayedTime.string(for: UserDefaults.standard.value(forKey: K.defaults.meditationReminder)) ?? "")"
+                    notifications = "On"
                 } else {
                     notifications = "Off"
                 }
             }
     }
+
 }
 
 struct ReviewScene_Previews: PreviewProvider {
@@ -226,3 +320,4 @@ struct ReviewScene_Previews: PreviewProvider {
         ReviewScene()
     }
 }
+

@@ -13,31 +13,35 @@ struct StatBox: View {
     let value: String
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             Rectangle()
                 .fill(Clr.darkWhite)
-                .cornerRadius(15)
+                .addBorder(.black, width: 1.5, cornerRadius: 14)
                 .neoShadow()
-            HStack(spacing: 0){
-                img
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(8)
-                VStack(alignment: .center, spacing: 0) {
-                    Text(label)
-                        .font(Font.mada(.regular, size: 12))
-                        .minimumScaleFactor(0.05)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.center)
+            VStack(alignment:.center, spacing:5){
+                Text(label)
+                    .font(Font.fredoka(.semiBold, size: 12))
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.horizontal, 5)
+                    .padding(.top,10)
+                    .foregroundColor(Clr.black2)
+                HStack(spacing:5) {
+                    img
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20)
                     Text(value)
-                        .font(Font.mada(.bold, size: 26))
+                        .font(Font.fredoka(.semiBold, size: 16))
+                        .minimumScaleFactor(0.7)
+                        .foregroundColor(Clr.black2)
+                        .lineLimit(1)
                         .minimumScaleFactor(0.05)
-                        .multilineTextAlignment(.center)
-                }.frame(maxWidth: 50, maxHeight: 100)
-                .padding(5)
+                }
+                .padding(.bottom,10)
+                .padding(.horizontal, 5)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
-        } 
-        .padding(.trailing, 10)
+        }
     }
 }
 

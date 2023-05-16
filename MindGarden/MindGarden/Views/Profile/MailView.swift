@@ -12,7 +12,7 @@ import SwiftUI
 
 struct MailView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
-
+    @Binding var subject: String 
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
 
         @Binding var presentationMode: PresentationMode
@@ -36,7 +36,7 @@ struct MailView: UIViewControllerRepresentable {
         let vc = MFMailComposeViewController()
         vc.mailComposeDelegate = context.coordinator
         vc.setToRecipients(["team@mindgarden.io"])
-        vc.setSubject("Bug Report or Feature Request")
+        vc.setSubject(subject)
         vc.setMessageBody("Dear MindGarden team, ", isHTML: false)
         return vc
     }

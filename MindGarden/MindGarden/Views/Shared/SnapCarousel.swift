@@ -8,193 +8,64 @@
 import SwiftUI
 
 struct SnapCarousel: View {
-    @EnvironmentObject var UIState: UIStateModel
+    let cardWidth = UIScreen.screenWidth*0.8
+    let images = [ Card(title: "2", img: Img.review2),  Card(title: "4", img: Img.review4), Card(title: "5", img: Img.review5), Card(title: "1", img: Img.review1), Card(title: "3", img: Img.review3)]
+    @State var index: Int = 1
+    @State private var offset: CGFloat = 0
 
     var body: some View {
-        let spacing: CGFloat = 16
-        let widthOfHiddenCards: CGFloat = 32 /// UIScreen.main.bounds.width - 10
-        let cardHeight: CGFloat = UIScreen.main.bounds.height * 0.25
-
-        let items = [
-            Card(id: 0),
-            Card(id: 1),
-            Card(id: 2),
-            Card(id: 3),
-            Card(id: 4),
-        ]
-
-        return Canvas {
-            /// TODO: find a way to avoid passing same arguments to Carousel and Item
-            Carousel(
-                numberOfItems: CGFloat(items.count),
-                spacing: spacing,
-                widthOfHiddenCards: widthOfHiddenCards
-            ) {
-                ForEach(items, id: \.self.id) { item in
-                    Item(
-                        _id: Int(item.id),
-                        spacing: spacing,
-                        widthOfHiddenCards: widthOfHiddenCards,
-                        cardHeight: cardHeight
-                    ) {
-                        if item.id == 0 {
-                            Img.review2
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else if item.id == 1 {
-                            Img.review4
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else if item.id == 2 {
-                            Img.review5
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else if item.id == 3 {
-                            Img.review1
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } else {
-                            Img.review3
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
-
+        VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(images, id: \.self) { item in
+                        ZStack(alignment: .center) {
+                            VStack(alignment: .center, spacing: 5) {
+                                item.img
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                }
+                            }
+                            .padding()
+                            
+                    }.frame(width: cardWidth, height:UIScreen.screenHeight*0.225, alignment: .center)
+                        .foregroundColor(Color.white)
+                        .background(Clr.review
+                        )
+                        .cornerRadius(8)
+                        .shadow(color: Clr.lightGray, radius: 4, x: 0, y: 4)
+                        .transition(AnyTransition.slide)
+                        .animation(.spring())
                     }
-                    .foregroundColor(Color.white)
-                    .background(Clr.review
-                    )
-                    .cornerRadius(8)
-                    .shadow(color: Clr.lightGray, radius: 4, x: 0, y: 4)
-                    .transition(AnyTransition.slide)
-                    .animation(.spring())
                 }
-            }
+            .content.offset(x: self.offset)
+            .frame(width: cardWidth, height: nil, alignment: .leading)
+            .gesture(DragGesture()
+                .onChanged({ value in
+                    self.offset = value.translation.width - cardWidth * CGFloat(self.index)
+                })
+                    .onEnded({ value in
+                        if abs(value.predictedEndTranslation.width) >= cardWidth / 2 {
+                            var nextIndex: Int = (value.predictedEndTranslation.width < 0) ? 1 : -1
+                            nextIndex += self.index
+                            self.index = nextIndex.keepIndexInRange(min: 0, max: images.count - 1)
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        }
+                        withAnimation { self.offset = (-cardWidth * CGFloat(self.index)) - CGFloat((self.index * 10)) }
+                    })
+            )
         }
-    }
 }
-
-struct Card: Decodable, Hashable, Identifiable {
-    var id: Int
-
-//    var img: Image = Img.review1
 }
-
-public class UIStateModel: ObservableObject {
-    @Published var activeCard: Int = 0
-    @Published var screenDrag: Float = 0.0
-}
-
-struct Carousel<Items : View> : View {
-    let items: Items
-    let numberOfItems: CGFloat //= 8
-    let spacing: CGFloat //= 16
-    let widthOfHiddenCards: CGFloat //= 32
-    let totalSpacing: CGFloat
-    let cardWidth: CGFloat
-
-    @GestureState var isDetectingLongPress = false
-
-    @EnvironmentObject var UIState: UIStateModel
-
-    @inlinable public init(
-        numberOfItems: CGFloat,
-        spacing: CGFloat,
-        widthOfHiddenCards: CGFloat,
-        @ViewBuilder _ items: () -> Items) {
-
-        self.items = items()
-        self.numberOfItems = numberOfItems
-        self.spacing = spacing
-        self.widthOfHiddenCards = widthOfHiddenCards
-        self.totalSpacing = (numberOfItems - 1) * spacing
-        self.cardWidth = UIScreen.main.bounds.width - (widthOfHiddenCards*2) - (spacing*2) //279
-
+struct Card: Hashable {
+    let title: String
+    let img: Image
+    let id = UUID()
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+    }
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        return lhs.title == rhs.title
     }
 
-    var body: some View {
-        let totalCanvasWidth: CGFloat = (cardWidth * numberOfItems) + totalSpacing
-        let xOffsetToShift = (totalCanvasWidth - UIScreen.main.bounds.width) / 2
-        let leftPadding = widthOfHiddenCards + spacing
-        let totalMovement = cardWidth + spacing
-
-        let activeOffset = xOffsetToShift + (leftPadding) - (totalMovement * CGFloat(UIState.activeCard))
-        let nextOffset = xOffsetToShift + (leftPadding) - (totalMovement * CGFloat(UIState.activeCard) + 1)
-
-        var calcOffset = Float(activeOffset)
-
-        if (calcOffset != Float(nextOffset)) {
-            calcOffset = Float(activeOffset) + UIState.screenDrag
-        }
-
-        return HStack(alignment: .center, spacing: spacing) {
-            items
-        }
-        .offset(x: CGFloat(calcOffset), y: 0)
-        .gesture(DragGesture().updating($isDetectingLongPress) { currentState, gestureState, transaction in
-            self.UIState.screenDrag = Float(currentState.translation.width)
-
-        }.onEnded { value in
-            self.UIState.screenDrag = 0
-
-            if (value.translation.width < -50 && (UIState.activeCard != 4)) {
-                self.UIState.activeCard = self.UIState.activeCard + 1
-                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                impactMed.impactOccurred()
-            }
-
-            if (value.translation.width > 50 && UIState.activeCard != 0) {
-                self.UIState.activeCard = self.UIState.activeCard - 1
-                let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                impactMed.impactOccurred()
-            }
-        })
-    }
-}
-
-struct Canvas<Content : View> : View {
-    let content: Content
-    @EnvironmentObject var UIState: UIStateModel
-
-    @inlinable init(@ViewBuilder _ content: () -> Content) {
-        self.content = content()
-    }
-
-    var body: some View {
-        content
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
-            .background(Color.clear)
-    }
-}
-
-struct Item<Content: View>: View {
-    @EnvironmentObject var UIState: UIStateModel
-    let cardWidth: CGFloat
-    let cardHeight: CGFloat
-
-    var _id: Int
-    var content: Content
-
-    @inlinable public init(
-        _id: Int,
-        spacing: CGFloat,
-        widthOfHiddenCards: CGFloat,
-        cardHeight: CGFloat,
-        @ViewBuilder _ content: () -> Content
-    ) {
-        self.content = content()
-        self.cardWidth = UIScreen.main.bounds.width - (widthOfHiddenCards*2) - (spacing*2) //279
-        self.cardHeight = cardHeight
-        self._id = _id
-    }
-
-    var body: some View {
-        content
-            .frame(width: cardWidth, height: _id == UIState.activeCard ? cardHeight : cardHeight - 15, alignment: .center)
-    }
-}
-
-struct SnapCarousel_Previews: PreviewProvider {
-    static var previews: some View {
-        SnapCarousel()
-    }
 }

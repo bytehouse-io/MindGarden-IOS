@@ -6,11 +6,23 @@
 //
 
 import SwiftUI
+import Paywall
+import OneSignal
+import Purchases
+import Amplitude
+import Lottie
+import AppTrackingTransparency
 
 var tappedSignIn = false
 struct OnboardingScene: View {
     @State private var index = 0
     @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject var authModel: AuthenticationViewModel
+    @EnvironmentObject var medModel: MeditationViewModel
+    @EnvironmentObject var gardenModel: GardenViewModel
+    @EnvironmentObject var userModel: UserViewModel
+    var title = "Meditate."
+    @State private var showAuth = false
     init() {
         if #available(iOS 14.0, *) {
             UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Clr.gardenGreen)
@@ -19,161 +31,146 @@ struct OnboardingScene: View {
         }
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
     }
-    let titles = ["Simple gamified meditation that actually sticks", "Visualize Your Progress", "Collect all the flowers, fruits and trees!"]
-    let subtitles = ["Stress less. Get 1% happier everyday by making meditation a lifestyle.", "Create your own beautiful MindGarden. (Tile color represents mood)", "Stay motivated, the longer you keep your streak alive the more coins you earn."]
-    let images = [Img.pottedPlants, Img.gardenCalender, Img.packets]
+
     var body: some View {
         NavigationView {
             GeometryReader { g in
-                let height = g.size.height
                 let width = g.size.height
+                let height = g.size.height
                 ZStack(alignment: .center) {
                     Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
-                    ZStack {
-//                        Img.sunflower3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: 20, y: 0)
-//                        Img.strawberry3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: screenWidth/2 - 10, y: -45)
-//                        Img.lavender3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: 20))
-//                            .position(x: screenWidth, y: -50)
-//                        Img.cherryBlossoms3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 80)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: screenWidth, y: height/5)
-//                        Img.blueberry3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: 10, y: height/3)
-//                        Img.rose3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 100)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: screenWidth, y: height/2)
-//                        Img.bonsai3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 120)
-//                            .rotationEffect(Angle(degrees: -20))
-//                            .position(x: 15, y: height/1.3)
-//                        Img.lily3
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 90)
-//                            .rotationEffect(Angle(degrees: 20))
-//                            .position(x: screenWidth - 20, y: height/1.3)
-                    }
-                    VStack(alignment: .center) {
-                        if #available(iOS 14.0, *) {
-                            TabView(selection: $index) {
-                                ForEach((0..<3), id: \.self) { index in
-                                    VStack {
-                                            images[index]
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: width * 0.6 , height: height * (index == 0 ? 0.2 : 0.38))
-                                                .padding()
-                                                .neoShadow()
-                                            Spacer()
-                                            VStack(alignment: .leading) {
-                                                Text(titles[index])
-                                                    .font(Font.mada(.bold, size: 42))
-                                                    .minimumScaleFactor(0.05)
-                                                    .lineSpacing(0)
-                                                    .padding(.bottom, 5)
-                                                    .foregroundColor(Clr.darkgreen)
-                                                Text(subtitles[index])
-                                                    .minimumScaleFactor(0.05)
-                                                    .font(Font.mada(.medium, size: 18))
-                                                    .foregroundColor(Clr.black1)
-                                                    .lineSpacing(10)                                             }
-                                            .multilineTextAlignment(.leading)
-                                            .offset(y: -20)
-                                            .padding(10)
-                                            .frame(width: width * (K.isSmall() ? 0.6 : 0.5))
-                                            Spacer()
-                                            Spacer()
-                                        }
-                                    }.offset(y: index == 0 ? 0 : -20)
-                            }
-                            .onChange(of: index, perform: { _ in
-                                if index == 0 {
-                                    viewRouter.progressValue = 0.3
-                                } else if index == 1{
-                                    viewRouter.progressValue = 0.4
-                                } else {
-                                    viewRouter.progressValue = 0.5
-                                }
-                            })
-                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .frame(width: width * (K.isSmall() ? 0.65 : 0.55), height: height * (0.75), alignment: .center)
-                        } else {
-                            // Fallback on earlier versions
+                    VStack {
+                        HStack(alignment:.top) {
+                            Img.onboardingCamelia
+                                .offset(x: -60, y: -60)
+                            Spacer()
+                            Img.onBoardingCalender
+                                .neoShadow()
+                                .offset(x: 25, y: -25)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
                         }
-                        Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            if index >= 2 {
+                        Spacer()
+                        HStack(alignment:.bottom) {
+                            Img.onBoardingFlower
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+                            Spacer()
+                            Img.onboardingApple
+                                .offset(x: 40, y: 100)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+                        }
+                    }
+                    .ignoresSafeArea()
+                    VStack(alignment: .center,spacing:0) {
+                        Spacer()
+                        Spacer()
+                        VStack(spacing:0) {
+                            VStack {
+                                Text("Meditate.")
+                                    .foregroundColor(Clr.healthSecondary)
+                                    .frame(width: width * 0.4 , alignment: .leading)
+                                Text("Journal.")
+                                    .foregroundColor(Clr.brightGreen)
+                                    .frame(width: width * 0.4, alignment: .leading)
+                                Text("Grow.")
+                                    .foregroundColor(Clr.energySecondary)
+                                    .frame(width: width * 0.4, alignment: .leading)
+                            }
+                                .multilineTextAlignment(.leading)
+                                .font(Font.fredoka(.bold, size: 40))
+                                .offset(y: K.isSmall() ?  height * 0.1 : height * 0.15)
+                            LottieAnimationView(filename: "onboarding1", loopMode: LottieLoopMode.loop, isPlaying: .constant(true))
+                                .frame(width: width * 0.45)
+                                .offset(y: height * -0.15)
+                        }
+                        .foregroundColor(Clr.brightGreen)
+                        //                        font(Font.fredoka(.bold, size: 32))
+                        .padding(.horizontal)
+                        VStack {
+                            Button {
+                                MGAudio.sharedInstance.playBubbleSound()
                                 Analytics.shared.log(event: .onboarding_tapped_continue)
-                                withAnimation {
-                                    viewRouter.progressValue = 0.6
-                                    viewRouter.currentPage = .experience
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation(.easeOut(duration: 0.4)) {
+                                    DispatchQueue.main.async {
+                                        viewRouter.progressValue = 0.2
+                                        viewRouter.currentPage = .experience
+                                    }
                                 }
-                            } else {
-                                index += 1
-                            }
-                        } label: {
-                            Capsule()
-                                .fill(Clr.yellow)
-                                .overlay(
-                                    Text(index != 2 ? "Next" : "Get Happier 👉🏻")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 20))
-                                )
-                        }.frame(height: 50)
-                            .padding([.horizontal, .bottom])
-                        .buttonStyle(BonusPress())
-                        Button {
-                            Analytics.shared.log(event: .onboarding_tapped_sign_in)
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            tappedSignIn = true
-                            withAnimation {
-                                viewRouter.currentPage = .authentication
-                            }
-                        } label: {
-                            Capsule()
-                                .fill(Clr.darkWhite)
-                                .overlay(
-                                    Text("Already have an account")
-                                        .foregroundColor(Clr.darkgreen)
-                                        .font(Font.mada(.bold, size: 20))
-                                        .shadow(radius: 0)
-                                )
-                        }.frame(height: 50)
-                            .padding([.bottom, .horizontal])
-                        .buttonStyle(BonusPress())
+                                if let onesignalId = OneSignal.getDeviceState().userId {
+                                    Purchases.shared.setOnesignalID(onesignalId)
+                                }
+                            } label: {
+                                Rectangle()
+                                    .fill(Clr.yellow)
+                                    .overlay(
+                                        Text("Start Growing 👉")
+                                            .foregroundColor(Clr.darkgreen)
+                                            .font(Font.fredoka(.bold, size: 20))
+                                    ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
+                            }.frame(width:UIScreen.screenWidth*0.8, height: 50)
+                                .padding()
+                                .buttonStyle(BonusPress())
+                            Button {
+                                MGAudio.sharedInstance.playBubbleSound()
+                                Analytics.shared.log(event: .onboarding_tapped_sign_in)
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                tappedSignIn = true
+                                withAnimation {
+                                    fromPage = "onboarding"
+                                    tappedSignOut = true
+                                    authModel.isSignUp = false
+                                    viewRouter.currentPage = .authentication
+                                }
+                            } label: {
+                                Text("Already have an account")
+                                    .underline()
+                                    .font(Font.fredoka(.semiBold, size: 18))
+                                    .foregroundColor(.gray)
+                            }.frame(height: 30)
+                                .padding([.horizontal,.bottom])
+                                .offset(y: 25)
+                                .buttonStyle(BonusPress())
+                        }.offset(y: height * -0.1)
                         Spacer()
                     }
-//                    .offset(y: K.isPad() ? 0 : g.size.height * -0.45)
                 }
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
+            .onAppear {
+                UserDefaults.standard.setValue("onboarding", forKey: K.defaults.onboarding)
+                if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
+                    let identify = AMPIdentify()
+                        .set("abTest1.53", value: NSNumber(value: num))
+                    Amplitude.instance().identify(identify ?? AMPIdentify())
+                }
+                ATTrackingManager.requestTrackingAuthorization { status in
+                    switch status {
+                    case .authorized:
+                        Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                    case .notDetermined:
+                        print("test")
+                    case .restricted:
+                        print("restricted")
+                    default:
+                        Analytics.shared.log(event: .onboarding_tapped_denied_att)
+                    }
+                }
+            }
+            .sheet(isPresented: $showAuth) {
+                if tappedSignOut {
+                    
+                } else {
+                    Authentication(viewModel: authModel)
+                        .environmentObject(medModel)
+                        .environmentObject(userModel)
+                        .environmentObject(gardenModel)
+                }
+            }
     }
+    
 }
 
 struct OnboardingScene_Previews: PreviewProvider {
