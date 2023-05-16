@@ -58,7 +58,7 @@ struct Meditation: Hashable {
             med.type != .lesson && med.id != 22 && med.id != 55 && med.id != 56
         }
 
-        if !UserDefaults.standard.bool(forKey: "isPro") {
+        if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
             filtedMeds = filtedMeds.filter { med in
                 !lockedMeditations.contains(where: { $0 == med.id })
             }
@@ -73,21 +73,22 @@ struct Meditation: Hashable {
                 med.category != .sleep
             }
         }
-
-        if UserDefaults.standard.string(forKey: "experience") != Experience.never.title && UserDefaults.standard.string(forKey: "experience") != "Have never meditated" {
-            if !UserDefaults.standard.bool(forKey: "beginnerCourse") {
+        let experienceString = DefaultsManager.standard.value(forKey: .experience).stringValue
+        if experienceString != Experience.never.title && experienceString != "Have never meditated" {
+            if !DefaultsManager.standard.value(forKey: .beginnerCourse).boolValue {
                 retMeds.append(allMeditations.first(where: { $0.id == 6 }) ?? allMeditations[0])
-            } else if !UserDefaults.standard.bool(forKey: "intermediateCourse") {
+            } else if !DefaultsManager.standard.value(forKey: .intermediateCourse).boolValue {
                 retMeds.append(allMeditations.first(where: { $0.id == 14 }) ?? allMeditations[0])
             }
         } else {
             retMeds.append(allMeditations.first(where: { $0.id == 57 }) ?? allMeditations[0])
         }
 
-        if UserDefaults.standard.string(forKey: "experience") != Experience.often.title && UserDefaults.standard.string(forKey: "experience") != "Meditate often" {
-            if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 12 {
+        let dailyLaunchNumber = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
+        if experienceString != Experience.often.title && experienceString != "Meditate often" {
+            if dailyLaunchNumber <= 12 {
                 filtedMeds = filtedMeds.filter { med in med.duration <= 360 && med.category != .unguided }
-            } else if UserDefaults.standard.integer(forKey: "dailyLaunchNumber") <= 20 {
+            } else if dailyLaunchNumber <= 20 {
                 filtedMeds = filtedMeds.filter { med in med.duration <= 700 && med.category != .unguided }
             }
         }

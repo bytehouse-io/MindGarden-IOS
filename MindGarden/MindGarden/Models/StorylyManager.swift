@@ -45,7 +45,7 @@ class StorylyManager: StorylyDelegate {
     func storylyStoryPresented(_: Storyly.StorylyView) {}
 
     func storylyStoryDismissed(_: Storyly.StorylyView) {
-        if !UserDefaults.standard.bool(forKey: "showedChallenge") {
+        if !DefaultsManager.standard.value(forKey: .showedChallenge).boolValue {
             NotificationCenter.default.post(name: .storyOnboarding, object: nil)
         }
     }
@@ -130,7 +130,7 @@ class StorylyManager: StorylyDelegate {
     private func updateComps(components: [String], segs: [String]?) -> [String]? {
         if var segments = segs {
             if let num = Int(components[1]) {
-                if components[0].lowercased() == "intro/day" && num == 1 && !UserDefaults.standard.bool(forKey: "500bonus") {
+                if components[0].lowercased() == "intro/day" && num == 1 && !DefaultsManager.standard.value(forKey: .fiveHundredBonus).boolValue {
                     SceneDelegate.userModel.showDay1Complete = true
                 }
                 let count = num + 1
@@ -151,9 +151,9 @@ class StorylyManager: StorylyDelegate {
             return formatter
         }()
 
-        guard let userDate = UserDefaults.standard.string(forKey: "userDate") else {
+        guard let userDate = DefaultsManager.standard.value(forKey: .userDate).string else {
             DefaultsManager.standard.set(value: formatter.string(from: Date()), forKey: .userDate)
-            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+            if let oldSegments = DefaultsManager.standard.value(forKey: .oldSegments).arrayValue as? [String] {
 //                DefaultsManager.standard.set(value: oldSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: oldSegments)
             }
@@ -175,7 +175,7 @@ class StorylyManager: StorylyDelegate {
 
         if interval >= 1 && interval < 2 { // update streak number and date
             DefaultsManager.standard.set(value: Date(), forKey: .userDate)
-            if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+            if let newSegments = DefaultsManager.standard.value(forKey: .storySegments).arrayValue as? [String] {
                 DefaultsManager.standard.set(value: newSegments, forKey: .oldSegments)
                 StorylyManager.updateSegments(segs: newSegments)
                 StorylyManager.saveToFirebase(unique: newSegments)
@@ -183,14 +183,14 @@ class StorylyManager: StorylyDelegate {
 
         } else if interval >= 2 { // broke streak
             DefaultsManager.standard.set(value: Date(), forKey: .userDate)
-            if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+            if let newSegments = DefaultsManager.standard.value(forKey: .storySegments).arrayValue as? [String] {
                 DefaultsManager.standard.set(value: newSegments, forKey: .oldSegments)
                 StorylyManager.updateSegments(segs: newSegments)
                 StorylyManager.saveToFirebase(unique: newSegments)
             }
 
         } else {
-            if let oldSegments = UserDefaults.standard.array(forKey: "oldSegments") as? [String] {
+            if let oldSegments = DefaultsManager.standard.value(forKey: .oldSegments).arrayValue as? [String] {
 //                DefaultsManager.standard.set(value: oldSegments, forKey: "oldSegments")
                 StorylyManager.updateSegments(segs: oldSegments)
             }

@@ -173,6 +173,7 @@ extension DefaultsManager {
         case day1
         case day2
         case day3
+        case day4
         case day7
         case day
         case referTip
@@ -241,6 +242,8 @@ extension DefaultsManager {
         case showImages
         case tappedTile
         case showTip
+        case hasBeenLaunchedBeforeFlag
+        case fiftyTimer
     }
     
     enum OnboardingScreens: String {

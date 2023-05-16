@@ -29,7 +29,7 @@ extension EnvoyViewModel {
 
     func getGiftQuota() {
         var userID = UUID().uuidString
-        if let uID = UserDefaults.standard.value(forKey: K.defaults.giftQuotaId) as? String, uID.count > 0 {
+        if let uID = DefaultsManager.standard.value(forKey: .giftQuotaId).stringValue, uID.count > 0 {
             userID = uID
         } else {
             DefaultsManager.standard.set(value: userID, forKey: .giftQuotaId)
