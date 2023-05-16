@@ -137,6 +137,7 @@ struct OnboardingScene: View {
                         Spacer()
                     }
                 }
+<<<<<<< Updated upstream
             }.navigationBarTitle("", displayMode: .inline)
         }.onAppearAnalytics(event: .screen_load_onboarding)
             .onAppear {
@@ -157,6 +158,29 @@ struct OnboardingScene: View {
                     default:
                         Analytics.shared.log(event: .onboarding_tapped_denied_att)
                     }
+=======
+            } //: GeometryReader
+            .navigationBarTitle("", displayMode: .inline)
+        } //: NavigationView
+        .onAppearAnalytics(event: .screen_load_onboarding)
+        .onAppear {
+            DefaultsManager.standard.set(value: "onboarding", forKey: .onboarding)
+            if let num = DefaultsManager.standard.value(forKey: .abTest).integer {
+                let identify = AMPIdentify()
+                    .set("abTest1.53", value: NSNumber(value: num))
+                Amplitude.instance().identify(identify ?? AMPIdentify())
+            }
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                case .notDetermined:
+                    print("test")
+                case .restricted:
+                    print("restricted")
+                default:
+                    Analytics.shared.log(event: .onboarding_tapped_denied_att)
+>>>>>>> Stashed changes
                 }
             }
             .sheet(isPresented: $showAuth) {

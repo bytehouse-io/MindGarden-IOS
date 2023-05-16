@@ -270,6 +270,57 @@ struct LearnScene: View {
                     completed = completedCourses.contains(where: { $0 == course.id })
                 }
         }
+<<<<<<< Updated upstream
+=======
+    } //: LearnCard View
+}
+
+extension LearnScene {
+    private func promptNotif() {
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { permission in
+            switch permission.authorizationStatus {
+            case .authorized:
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                Analytics.shared.log(event: .notification_success_learn)
+                if DefaultsManager.standard.value(forKey: .oneDayNotif).isNil
+//                    DefaultsManager.standard.value(forKey: "oneDayNotif") == nil
+                {
+                    NotificationHelper.addOneDay()
+                }
+                if DefaultsManager.standard.value(forKey: .threeDayNotif).isNil
+//                    DefaultsManager.standard.value(forKey: "threeDayNotif") == nil
+                {
+                    NotificationHelper.addThreeDay()
+                }
+                if DefaultsManager.standard.value(forKey: .freeTrial).boolValue
+//                    UserDefaults.standard.bool(forKey: "freeTrial")
+                {
+                    NotificationHelper.freeTrial()
+                }
+                DefaultsManager.standard.set(value: true, forKey: .notifOn)
+                isNotifOn = true
+            case .denied:
+                Analytics.shared.log(event: .notification_settings_learn)
+                DispatchQueue.main.async {
+                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                        UIApplication.shared.open(appSettings)
+                        DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                    }
+                }
+            case .notDetermined:
+                Analytics.shared.log(event: .notification_settings_learn)
+                DispatchQueue.main.async {
+                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+                        UIApplication.shared.open(appSettings)
+                        DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                    }
+                }
+            default:
+                print("Unknow Status")
+            }
+        })
+>>>>>>> Stashed changes
     }
 }
 

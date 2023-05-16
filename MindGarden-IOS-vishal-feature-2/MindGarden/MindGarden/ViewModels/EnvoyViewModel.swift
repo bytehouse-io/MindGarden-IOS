@@ -21,15 +21,17 @@ extension EnvoyViewModel {
                 print(error)
                 return error
             }
-            .sink(receiveCompletion: { _ in },
-                  receiveValue: {
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: {
                       self.url = $0.url ?? ""
-                  })
+                  }
+            )
     }
 
     func getGiftQuota() {
         var userID = UUID().uuidString
-        if let uID = UserDefaults.standard.value(forKey: K.defaults.giftQuotaId) as? String, uID.count > 0 {
+        if let uID = DefaultsManager.standard.value(forKey: .giftQuotaId).string, uID.count > 0 {
             userID = uID
         } else {
             UserDefaults.standard.setValue(userID, forKey: K.defaults.giftQuotaId)

@@ -260,6 +260,7 @@ struct BreathworkPlay: View {
             }
         }
         .onAppear {
+<<<<<<< Updated upstream
             if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
                 playVibration = vibration
             }
@@ -267,6 +268,16 @@ struct BreathworkPlay: View {
             if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
                 backgroundAnimationOn = bgAnimation
             }
+=======
+//            if let vibration = DefaultsManager.standard.value(forKey: "vibrationMode") as? Bool {
+//                playVibration = vibration
+//            }
+            playVibration = DefaultsManager.standard.value(forKey: .vibrationMode).boolValue
+            backgroundAnimationOn = DefaultsManager.standard.value(forKey: .backgroundAnimation).boolValue
+//            if let bgAnimation = DefaultsManager.standard.value(forKey: "backgroundAnimation") as? Bool {
+//                backgroundAnimationOn = bgAnimation
+//            }
+>>>>>>> Stashed changes
 
             do {
                 engine = try CHHapticEngine()
@@ -280,6 +291,7 @@ struct BreathworkPlay: View {
                 }
             }
 
+<<<<<<< Updated upstream
             if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
                 if defaultSound != "noSound" {
                     selectedSound = Sound.getSound(str: defaultSound)
@@ -300,6 +312,22 @@ struct BreathworkPlay: View {
                     }
                     backgroundPlayer?.numberOfLoops = -1
                     backgroundPlayer?.play()
+=======
+//            if let defaultSound = UserDefaults.standard.string(forKey: "sound") {
+            let defaultSound = DefaultsManager.standard.value(forKey: .sound).stringValue
+            if defaultSound != "noSound" {
+                selectedSound = Sound.getSound(str: defaultSound)
+                if let url = Bundle.main.path(forResource: selectedSound?.title, ofType: "mp3") {
+                    backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
+                    backgroundPlayer?.delegate = self.del
+                    backgroundPlayer?.prepareToPlay()
+                }
+                if let vol = DefaultsManager.standard.value(forKey: .backgroundVolume).float
+//                    DefaultsManager.standard.value(forKey: "backgroundVolume") as? Float
+                {
+                    backgroundPlayer?.volume = vol
+                    sliderData.sliderValue = vol
+>>>>>>> Stashed changes
                 } else {
                     if let url = Bundle.main.path(forResource: "", ofType: "mp3") {
                         backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))

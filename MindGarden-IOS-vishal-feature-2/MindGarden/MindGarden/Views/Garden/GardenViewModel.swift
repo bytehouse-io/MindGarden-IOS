@@ -362,7 +362,7 @@ class GardenViewModel: ObservableObject {
     }
 
     func updateSelf() {
-        if let defaultRecents = UserDefaults.standard.value(forKey: "recent") as? [Int] {
+        if let defaultRecents = DefaultsManager.standard.value(forKey: .recent).arrayValue as? [Int] {
             recentMeditations = defaultRecents.reversed()
         }
 
@@ -391,10 +391,10 @@ class GardenViewModel: ObservableObject {
                 grid = gridd
             }
             getLastFive()
-            if let allTimeMins = UserDefaults.standard.value(forKey: "allTimeMinutes") as? Int {
+            if let allTimeMins = DefaultsManager.standard.value(forKey: .allTimeMinutes).integer {
                 allTimeMinutes = allTimeMins
             }
-            if let allTimeSess = UserDefaults.standard.value(forKey: "allTimeSessions") as? Int {
+            if let allTimeSess = DefaultsManager.standard.value(forKey: .allTimeSessions).integer {
                 allTimeSessions = allTimeSess
             }
             populateMonth()

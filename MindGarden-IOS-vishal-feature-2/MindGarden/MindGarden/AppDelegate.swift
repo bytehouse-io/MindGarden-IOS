@@ -121,12 +121,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } catch { print("already logged out") }
         }
 
+<<<<<<< Updated upstream
         if UserDefaults.standard.value(forKey: "vibrationMode") == nil {
             UserDefaults.standard.set(true, forKey: "vibrationMode")
         }
 
         if UserDefaults.standard.value(forKey: "backgroundAnimation") == nil {
             UserDefaults.standard.set(true, forKey: "backgroundAnimation")
+=======
+        if DefaultsManager.standard.value(forKey: .vibrationMode).isNil
+//            DefaultsManager.standard.value(forKey: "vibrationMode") == nil
+        {
+            DefaultsManager.standard.set(value: true, forKey: .vibrationMode)
+//            UserDefaults.standard.set(true, forKey: "vibrationMode")
+        }
+
+        if DefaultsManager.standard.value(forKey: .backgroundAnimation).isNil
+//            DefaultsManager.standard.value(forKey: "backgroundAnimation") == nil
+        {
+            DefaultsManager.standard.set(value: true, forKey: .backgroundAnimation)
+//            UserDefaults.standard.set(true, forKey: "backgroundAnimation")
+>>>>>>> Stashed changes
         }
 
         return true

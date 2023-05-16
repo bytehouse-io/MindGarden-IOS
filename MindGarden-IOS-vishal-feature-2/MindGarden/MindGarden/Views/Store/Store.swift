@@ -382,14 +382,15 @@ struct Store: View {
             case .authorized:
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                 Analytics.shared.log(event: .notification_success_store)
-                if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+                if DefaultsManager.standard.value(forKey: .oneDayNotif).isNil {
                     NotificationHelper.addOneDay()
                 }
-                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                                                
+                if DefaultsManager.standard.value(forKey: .threeDayNotif).isNil {
                     NotificationHelper.addThreeDay()
                 }
 
-                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                if DefaultsManager.standard.value(forKey: .freeTrial).boolValue {
                     NotificationHelper.freeTrial()
                 }
                 UserDefaults.standard.setValue(true, forKey: "notifOn")

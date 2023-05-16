@@ -293,7 +293,7 @@ class MeditationViewModel: ObservableObject {
     }
 
     func updateSelf() {
-        if let defaultFavorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
+        if let defaultFavorites = DefaultsManager.standard.value(forKey: .favorites).arrayValue as? [Int] {
             favoritedMeditations = defaultFavorites.reversed()
         }
 
@@ -338,7 +338,7 @@ class MeditationViewModel: ObservableObject {
                 }
             }
         } else {
-            if var favorites = UserDefaults.standard.value(forKey: K.defaults.favorites) as? [Int] {
+            if var favorites = DefaultsManager.standard.value(forKey: .favorites).arrayValue as? [Int] {
                 if favorites.contains(where: { $0 == id }) {
                     favorites.removeAll { fbId in fbId == id }
                     favoritedMeditations.removeAll { med in med == id }
@@ -435,7 +435,7 @@ class MeditationViewModel: ObservableObject {
 
     func setRoadMap(begArr: [[Int]], expArr: [[Int]]) {
         let selected = UserDefaults.standard.string(forKey: "experience") ?? ""
-        let userCoinCollectedLevel = UserDefaults.standard.value(forKey: K.defaults.userCoinCollectedLevel) as? Int ?? 0
+        let userCoinCollectedLevel = DefaultsManager.standard.value(forKey: .userCoinCollectedLevel).integerValue
         roadMapArr = begArr[0]
         for i in 0 ... userCoinCollectedLevel {
             switch selected {

@@ -372,7 +372,7 @@ struct Play: View {
     }
 
     private func initPlayer() {
-        if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+        if let bgAnimation = DefaultsManager.standard.value(forKey: .backgroundAnimation).bool {
             backgroundAnimationOn = bgAnimation
         }
 
@@ -406,7 +406,7 @@ struct Play: View {
                     backgroundPlayer = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: url))
                     backgroundPlayer?.delegate = del
                     backgroundPlayer?.prepareToPlay()
-                    if let vol = UserDefaults.standard.value(forKey: "backgroundVolume") as? Float {
+                    if let vol = DefaultsManager.standard.value(forKey: .backgroundVolume).float {
                         backgroundPlayer?.volume = vol
                         sliderData.sliderValue = vol
                     } else {
@@ -432,7 +432,7 @@ struct Play: View {
             model.bellPlayer?.delegate = del
         }
 
-        if let bellVolume = UserDefaults.standard.value(forKey: "bellVolume") as? Float {
+        if let bellVolume = DefaultsManager.standard.value(forKey: .bellVolume).float {
             model.bellPlayer?.volume = bellVolume
             bellSlider.sliderValue = bellVolume
         } else {
@@ -963,11 +963,11 @@ struct NatureModal: View {
                 Spacer()
             }
             .onAppear {
-                if let vibration = UserDefaults.standard.value(forKey: "vibrationMode") as? Bool {
+                if let vibration = DefaultsManager.standard.value(forKey: .vibrationMode) .bool {
                     vibrationOn = vibration
                 }
 
-                if let bgAnimation = UserDefaults.standard.value(forKey: "backgroundAnimation") as? Bool {
+                if let bgAnimation = DefaultsManager.standard.value(forKey: .backgroundAnimation).bool {
                     backgroundAnimationOn = bgAnimation
                 }
             }

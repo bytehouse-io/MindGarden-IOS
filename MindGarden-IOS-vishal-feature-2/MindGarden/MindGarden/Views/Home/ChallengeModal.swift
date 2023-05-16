@@ -95,8 +95,13 @@ struct ChallengeModal: View {
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                                 UserDefaults.standard.setValue(challengeDate, forKey: "challengeDate")
                                 viewRouter.currentPage = .middle
+<<<<<<< Updated upstream
                                 UserDefaults.standard.setValue(true, forKey: "showedChallenge")
                                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
+=======
+                                DefaultsManager.standard.set(value: true, forKey: .showedChallenge)
+                                if let oneId = DefaultsManager.standard.value(forKey: .oneDayNotif).string {
+>>>>>>> Stashed changes
                                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
                                     NotificationHelper.addOneDay()
                                 }

@@ -17,7 +17,11 @@
 		<key>OneSignalNotificationServiceExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< Updated upstream
 			<integer>17</integer>
+=======
+			<integer>5</integer>
+>>>>>>> Stashed changes
 		</dict>
 	</dict>
 </dict>

@@ -64,7 +64,7 @@ class BonusViewModel: ObservableObject {
         fiftyOffInterval = ""
         var interval = TimeInterval()
 
-        if let fifty = UserDefaults.standard.string(forKey: "fiftyTimer") {
+        if let fifty = DefaultsManager.standard.value(forKey: .fiftyTimer).string {
             interval = (formatter.date(from: fifty) ?? Date()) - Date()
         } else {
             interval = 7200
@@ -86,7 +86,7 @@ class BonusViewModel: ObservableObject {
         progressiveInterval = ""
         var interval = TimeInterval()
 
-        if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
+        if let lastTutorialDate = DefaultsManager.standard.value(forKey: .ltd).string {
             interval = (formatter.date(from: lastTutorialDate) ?? Date()) - Date()
         } else {
             interval = 43200
@@ -200,12 +200,12 @@ class BonusViewModel: ObservableObject {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
 
-        if let lastTutorialDate = UserDefaults.standard.string(forKey: "ltd") {
-            if UserDefaults.standard.bool(forKey: "newUser") {
+        if let lastTutorialDate = DefaultsManager.standard.value(forKey: .ltd).string {
+            if DefaultsManager.standard.value(forKey: .newUser).boolValue {
                 progressiveDisclosure(lastStreakDate: lastTutorialDate)
             }
             progressiveDisclosure(lastStreakDate: formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date()) ?? Date()))
-        } else if UserDefaults.standard.bool(forKey: "newUser") {
+        } else if DefaultsManager.standard.value(forKey: .newUser).boolValue {
             let dte = formatter.string(from: Calendar.current.date(byAdding: .hour, value: 12, to: Date()) ?? Date())
             UserDefaults.standard.setValue(dte, forKey: "ltd")
             progressiveDisclosure(lastStreakDate: dte)
@@ -256,10 +256,10 @@ class BonusViewModel: ObservableObject {
             }
         } else {
             totalBonuses = 0
-            if let lSD = UserDefaults.standard.value(forKey: K.defaults.lastStreakDate) as? String {
+            if let lSD = DefaultsManager.standard.value(forKey: .lastStreakDate).string {
                 lastStreakDate = lSD
             }
-            if let streak = UserDefaults.standard.value(forKey: "streak") as? String {
+            if let streak = DefaultsManager.standard.value(forKey: .streak).string {
                 self.streak = streak
                 if let plus = self.streak?.firstIndex(of: "+"), let streak = self.streak {
                     streakNumber = Int(streak[..<plus]) ?? 0
@@ -270,13 +270,13 @@ class BonusViewModel: ObservableObject {
                 lastStreakDate = formatter.string(from: Date())
                 streakNumber = 0
             }
-            if let seven = UserDefaults.standard.value(forKey: K.defaults.seven) as? Int {
+            if let seven = DefaultsManager.standard.value(forKey: .seven).integer {
                 sevenDay = seven
             }
-            if let thirty = UserDefaults.standard.value(forKey: K.defaults.thirty) as? Int {
+            if let thirty = DefaultsManager.standard.value(forKey: .thirty).integer {
                 thirtyDay = thirty
             }
-            if let dailyBonus = UserDefaults.standard.value(forKey: K.defaults.dailyBonus) as? String {
+            if let dailyBonus = DefaultsManager.standard.value(forKey: .dailyBonus).string {
                 self.dailyBonus = dailyBonus
             }
             calculateProgress()
@@ -298,10 +298,11 @@ class BonusViewModel: ObservableObject {
     }
 
     private func updateLaunchNumber() {
-        var launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
+        var launchNum = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
 
         if launchNum == 7 {
             Analytics.shared.log(event: .seventh_time_coming_back)
+<<<<<<< Updated upstream
             if UserDefaults.standard.bool(forKey: "referTip") {
                 UserDefaults.standard.setValue(true, forKey: "referTip")
                 updateTips(tip: "Tip Referrals")
@@ -314,6 +315,20 @@ class BonusViewModel: ObservableObject {
             updateTips(tip: "Tip Widget")
         } else if UserDefaults.standard.bool(forKey: "day4") && !UserDefaults.standard.bool(forKey: "plusCoins") {
             UserDefaults.standard.setValue(true, forKey: "plusCoins")
+=======
+            if DefaultsManager.standard.value(forKey: .referTip).boolValue {
+                DefaultsManager.standard.set(value: true, forKey: .referTip)
+                updateTips(tip: "Tip Referrals")
+            }
+        } else if launchNum >= 2 && !DefaultsManager.standard.value(forKey: .remindersOn).boolValue {
+            DefaultsManager.standard.set(value: true, forKey: .remindersOn)
+            updateTips(tip: "Tip Reminders")
+        } else if showWidgetTip && !DefaultsManager.standard.value(forKey: .widgetTip).boolValue {
+            DefaultsManager.standard.set(value: true, forKey: .widgetTip)
+            updateTips(tip: "Tip Widget")
+        } else if DefaultsManager.standard.value(forKey: .day4).boolValue && !DefaultsManager.standard.value(forKey: .plusCoins).boolValue {
+            DefaultsManager.standard.set(value: true, forKey: .plusCoins)
+>>>>>>> Stashed changes
             updateTips(tip: "Tip Potion Shop")
         }
 
@@ -348,7 +363,7 @@ class BonusViewModel: ObservableObject {
             streak = String(streakNumber) + "+" + lastStreakDate
             db.collection(K.userPreferences).document(email).updateData([
                 "streak": String(streakNumber) + "+" + lastStreakDate,
-                "longestStreak": UserDefaults.standard.integer(forKey: "longestStreak"),
+                "longestStreak": DefaultsManager.standard.value(forKey: .longestStreak).integerValue,
             ]) { error in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
@@ -366,7 +381,7 @@ class BonusViewModel: ObservableObject {
         var lastStreakDate = lastStreakDate
 
         if !SceneDelegate.profileModel.isLoggedIn {
-            streak = UserDefaults.standard.value(forKey: "streak") as? String
+            streak = DefaultsManager.standard.value(forKey: .streak).stringValue
         }
 
         if let plus = streak?.firstIndex(of: "+"), let streak = streak {
@@ -457,7 +472,7 @@ class BonusViewModel: ObservableObject {
     }
 
     private func updateLongest() {
-        if let longestStreak = UserDefaults.standard.value(forKey: "longestStreak") as? Int {
+        if let longestStreak = DefaultsManager.standard.value(forKey: .longestStreak).integer {
             if longestStreak < streakNumber {
                 UserDefaults.standard.setValue(streakNumber, forKey: "longestStreak")
             }

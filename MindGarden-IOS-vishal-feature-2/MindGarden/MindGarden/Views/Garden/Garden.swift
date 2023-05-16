@@ -43,7 +43,7 @@ struct Garden: View {
     }
 
     var longestStreak: Int {
-        (UserDefaults.standard.value(forKey: "longestStreak")) as? Int ?? 1
+        (DefaultsManager.standard.value(forKey: .longestStreak)).integer ?? 1
     }
 
     var tappedTile: Bool {
@@ -471,7 +471,7 @@ struct Garden: View {
                     if !tappedTile {
                         isOnboarding = true
                         tileOpacity = 0.2
-                        if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+                        if let onboardingNotif = DefaultsManager.standard.value(forKey: .onboardingNotif).string {
                             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                         }
                     }

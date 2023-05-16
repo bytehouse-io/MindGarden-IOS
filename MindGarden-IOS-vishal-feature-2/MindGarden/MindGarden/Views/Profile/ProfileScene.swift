@@ -558,7 +558,7 @@ struct ProfileScene: View {
         }.onAppear {
             showImage = UserDefaults.standard.bool(forKey: "showJournalImage")
             backgroundMusicOn = UserDefaults.standard.bool(forKey: "isPlayMusic")
-            //            print(dateFormatter.string(from: UserDefaults.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
+            //            print(dateFormatter.string(from: DefaultsManager.standard.value(forKey: K.defaults.meditationReminder) as! Date), "so fast")
             if tappedRefer {
                 selection = .referral
                 tappedRefer = false

@@ -267,16 +267,22 @@ struct NotificationScene: View {
                     .set("reminder_set", value: NSNumber(1))
                 Amplitude.instance().identify(identify ?? AMPIdentify())
 
+<<<<<<< Updated upstream
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                 UserDefaults.standard.setValue(dateTime, forKey: K.defaults.meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+=======
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                DefaultsManager.standard.set(value: dateTime, forKey: .meditationReminder)
+                if DefaultsManager.standard.value(forKey: .oneDayNotif).isNil {
+>>>>>>> Stashed changes
                     NotificationHelper.addOneDay()
                 }
 
-                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                if DefaultsManager.standard.value(forKey: .threeDayNotif).isNil {
                     NotificationHelper.addThreeDay()
                 }
-                if UserDefaults.standard.value(forKey: "onboardingNotif") == nil {
+                if DefaultsManager.standard.value(forKey: .onboardingNotif).isNil {
                     NotificationHelper.addOnboarding()
                 }
 

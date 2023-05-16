@@ -262,9 +262,16 @@ struct SingleDay: View {
             if !UserDefaults.standard.bool(forKey: "singleTile") {
                 UserDefaults.standard.setValue(true, forKey: "singleTile")
                 Analytics.shared.log(event: .screen_load_single_onboarding)
+<<<<<<< Updated upstream
                 showOnboardingModal = true
                 showRating()
                 if let onboardingNotif = UserDefaults.standard.value(forKey: "onboardingNotif") as? String {
+=======
+                if gardenModel.totalSessions <= 1 {
+                    showOnboardingModal = true
+                }
+                if let onboardingNotif = DefaultsManager.standard.value(forKey: .onboardingNotif).string {
+>>>>>>> Stashed changes
                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [onboardingNotif])
                 }
             }

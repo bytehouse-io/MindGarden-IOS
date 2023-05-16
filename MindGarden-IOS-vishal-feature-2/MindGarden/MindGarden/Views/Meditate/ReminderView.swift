@@ -116,16 +116,22 @@ struct ReminderView: View {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus {
             case .authorized:
+<<<<<<< Updated upstream
                 UserDefaults.standard.setValue(true, forKey: "isNotifOn")
                 UserDefaults.standard.setValue(TimeInterval(time).secondsToHourMinFormat(), forKey: K.defaults.meditationReminder)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
+=======
+                DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
+                DefaultsManager.standard.set(value: TimeInterval(time).secondsToHourMinFormat(), forKey: .meditationReminder)
+                if DefaultsManager.standard.value(forKey: .oneDayNotif).isNil {
+>>>>>>> Stashed changes
                     NotificationHelper.addOneDay()
                 }
-                if UserDefaults.standard.value(forKey: "threeDayNotif") == nil {
+                if DefaultsManager.standard.value(forKey: .threeDayNotif).isNil {
                     NotificationHelper.addThreeDay()
                 }
 
-                if UserDefaults.standard.bool(forKey: "freeTrial") {
+                if DefaultsManager.standard.value(forKey: .freeTrial).boolValue {
                     NotificationHelper.freeTrial()
                 }
                 UserDefaults.standard.setValue(true, forKey: "notifOn")

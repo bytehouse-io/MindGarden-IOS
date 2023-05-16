@@ -298,9 +298,41 @@ struct Finished: View {
                             .edgesIgnoringSafeArea(.all)
                         Spacer()
                     }
+<<<<<<< Updated upstream
 //                    OnboardingModal(shown: $showUnlockedModal, isUnlocked: true)
 //                        .offset(y: showUnlockedModal ? 0 : g.size.height)
 //                        .animation(.default, value: showUnlockedModal)
+=======
+                } //: GeometryReader
+            } //: ZStack
+        } //: NavigationView
+        .transition(.move(edge: .trailing))
+        .fullScreenCover(isPresented: $showStreak, content: {
+            StreakScene(showStreak: $showStreak)
+                .environmentObject(bonusModel)
+                .environmentObject(viewRouter)
+                .background(Clr.darkWhite)
+        })
+        .onDisappear {
+            model.totalBreaths = 0
+            model.playImage = Img.seed
+            model.lastSeconds = false
+            if let oneId = DefaultsManager.standard.value(forKey: .oneDayNotif).string {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])
+                print("numSession", UserDefaults.standard.integer(forKey: "numSessions"))
+                NotificationHelper.addOneDay()
+            }
+            if let threeId = DefaultsManager.standard.value(forKey: .threeDayNotif).string {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [threeId])
+                NotificationHelper.addThreeDay()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .runCounter)) { _ in }
+        .onAppear {
+            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+                if let player = player {
+                    player.play()
+>>>>>>> Stashed changes
                 }
             }
         }.transition(.move(edge: .trailing))

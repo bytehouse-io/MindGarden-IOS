@@ -319,7 +319,7 @@ struct ReviewScene: View {
                 default: break
                 }
             }
-            if UserDefaults.standard.value(forKey: K.defaults.meditationReminder) != nil {
+            if DefaultsManager.standard.value(forKey: .meditationReminder).isNotNil {
                 notifications = "On"
             } else {
                 notifications = "Off"
