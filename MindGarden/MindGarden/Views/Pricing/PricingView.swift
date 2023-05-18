@@ -72,7 +72,7 @@ struct PricingView: View {
                         
                         if fiftyOff || fromInfluencer != "" || fromPage == "garden" || fromPage == "store" {
                             (
-                                Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(UserDefaults.standard.string(forKey: "name") ?? "")," : (fromPage == "garden" ? "📸 Add photos from your journal " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock ")))
+                                Text(fiftyOff ? "💎 Claim my 50% off for " : fromInfluencer != "" ? "👋 Hey \(DefaultsManager.standard.value(forKey: .name).stringValue)," : (fromPage == "garden" ? "📸 Add photos from your journal " : (fromPage == "store" ? "💸 Get 2x Coins " : "🍏 Unlock ")))
                                     .font(Font.fredoka(.bold, size: 24))
                                 +
                                 Text(fromInfluencer == "" ? "with MindGarden Pro" : "\(fromInfluencer)")
@@ -87,10 +87,10 @@ struct PricingView: View {
                             .frame(width: width * 0.78, alignment: .leading)
                             .padding(15)
                         } else {
-                            switch UserDefaults.standard.string(forKey: "reason1") {
+                            switch DefaultsManager.standard.value(forKey: .reason1).stringValue {
                             case "Sleep better", "Get more focused", "Improve your focus", "Improve your mood", "Be more present":
                                 (
-                                    Text("📈 " + (UserDefaults.standard.string(forKey: "reason1") ?? ""))
+                                    Text("📈 " + DefaultsManager.standard.value(forKey: .reason1).stringValue)
                                         .font(Font.fredoka(.bold, size: 24))
                                     +
                                     Text(" in just 7 days, for Free.")
@@ -265,7 +265,7 @@ struct PricingView: View {
             if #available(iOS 15.0, *) {
                 ios14 = false
             }
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+            if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .signedUp {
                 Analytics.shared.log(event: .screen_load_pricing_onboarding)
             }
             purchasesOffering()
@@ -286,7 +286,7 @@ extension PricingView {
     
     private func crossButtonAction() {
         MGAudio.sharedInstance.playBubbleSound()
-        if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+        if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .signedUp {
             withAnimation {
                 showLoadingIllusion.toggle()
             }

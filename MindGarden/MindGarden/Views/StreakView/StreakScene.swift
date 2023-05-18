@@ -154,11 +154,11 @@ struct StreakScene: View {
         withAnimation {
             viewRouter.previousPage = .garden
             viewRouter.currentPage = .pricing
-            let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
+            let launchNum = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
             if launchNum % 3 == 0 && launchNum != 1 {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
-                if !UserDefaults.standard.bool(forKey: "isPro") {
+                if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
                     viewRouter.currentPage = .pricing
                 } else {
                     viewRouter.currentPage = .garden

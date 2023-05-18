@@ -175,7 +175,7 @@ struct CourseScene: View {
                                                 progressValue += 1.0 / Double(course.slides.count)
                                                 if progressValue > 1.0 {
                                                     // update what courses user has finished
-                                                    if let ids = UserDefaults.standard.array(forKey: "completedCourses") as? [Int] {
+                                                    if let ids = DefaultsManager.standard.value(forKey: .completedCourses).arrayValue as? [Int] {
                                                         var courseIds = ids
                                                         if !courseIds.contains(where: { $0 == course.id }) {
                                                             courseIds.append(course.id)

@@ -23,6 +23,7 @@ struct PlusMenuView: View {
     // MARK: - Body
     
     var body: some View {
+        let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
         ZStack {
             VStack(spacing: 12) {
                 ForEach(plusMenuList) { item in
@@ -35,7 +36,7 @@ struct PlusMenuView: View {
                     } label: {
                         MenuChoice(title: item.title, img: item.image, disabled: false)
                     } //: Button
-                    .disabled((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"))).opacity((isOnboarding && (item.tabName == .moodCheck && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp")) || (isOnboarding && (item.tabName == .gratitude && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "mood")) || (isOnboarding && (item.tabName == .meditate && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude")) ? 0.5 : 1.0)
+                    .disabled((isOnboarding && (item.tabName == .moodCheck && onboardingValue != .signedUp)) || (isOnboarding && (item.tabName == .gratitude && onboardingValue != .mood)) || (isOnboarding && (item.tabName == .meditate && onboardingValue != .gratitude))).opacity((isOnboarding && (item.tabName == .moodCheck && onboardingValue) != .signedUp)) || (isOnboarding && (item.tabName == .gratitude && onboardingValue != .mood)) || (isOnboarding && (item.tabName == .meditate && onboardingValue != .gratitude)) ? 0.5 : 1.0)
                         .buttonStyle(NeoPress())
                 } //: ForEach Loop
             } //: VStack

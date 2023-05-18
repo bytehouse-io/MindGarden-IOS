@@ -148,7 +148,7 @@ struct LearnScene: View {
         }
         .onAppear {
             DispatchQueue.main.async {
-                if let comCourses = UserDefaults.standard.array(forKey: "completedCourses") as? [Int] {
+                if let comCourses = DefaultsManager.standard.value(forKey: .completedCourses).arrayValue as? [Int] {
                     completedCourses = comCourses
                 }
                 isNotifOn = DefaultsManager.standard.value(forKey: .isNotifOn).boolValue

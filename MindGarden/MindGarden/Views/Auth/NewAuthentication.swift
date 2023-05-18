@@ -242,7 +242,7 @@ struct NewAuthentication: View {
                                 .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
                         }
 
-                        if !tappedSignOut && !UserDefaults.standard.bool(forKey: "loggedIn") {
+                        if !tappedSignOut && !DefaultsManager.standard.value(forKey: .loggedIn).boolValue {
                             Button {
                                 Analytics.shared.log(event: .tapped_already_have_account)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -318,7 +318,7 @@ struct NewAuthentication: View {
                     } //: trailing button
                     .frame(width: 40, height: 40)
                     .buttonStyle(BonusPress())
-                    .opacity(UserDefaults.standard.bool(forKey: "loggedIn") ? 0 : 1)
+                    .opacity(DefaultsManager.standard.value(forKey: .loggedIn).boolValue ? 0 : 1)
                 )
                 .navigationBarBackButtonHidden(true)
             }
@@ -355,7 +355,7 @@ struct NewAuthentication: View {
         .onDisappear {
             fromPage = ""
             showFields = false
-            if UserDefaults.standard.bool(forKey: "review") && !UserDefaults.standard.bool(forKey: "firstStory") {
+            if DefaultsManager.standard.value(forKey: .review).boolValue && !DefaultsManager.standard.value(forKey: .firstStory).boolValue {
                 let _ = storylyViewProgrammatic.openStory(storyGroupId: 58920, play: .StoryGroup)
                 storylyViewProgrammatic.resume()
                 DefaultsManager.standard.set(value: true, forKey: .firstStory)

@@ -83,7 +83,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
                         // User already signed in with this appleId once
 
-                        if (appleIDCredential.email != nil) || UserDefaults.standard.bool(forKey: "falseAppleId") { // new user
+                        if (appleIDCredential.email != nil) || DefaultsManager.standard.bool(forKey: "falseAppleId") { // new user
                             if !isSignUp { // login
                                 alertError = true
                                 alertMessage = "Email is already in use. Use the sign in page"
@@ -259,7 +259,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     }
 
     private func goToHome() {
-        OneSignal.sendTag("first_name", value: UserDefaults.standard.string(forKey: "name") ?? "")
+        OneSignal.sendTag("first_name", value: DefaultsManager.standard.value(forKey: .name).stringValue)
         if isSignUp && checked {
             Analytics.shared.log(event: .authentication_signuped_newsletter)
             OneSignal.sendTag("newsletter", value: "true")
@@ -477,13 +477,14 @@ extension AuthenticationViewModel {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd,yyyy"
         var date = dateFormatter.string(from: Date())
-        if UserDefaults.standard.string(forKey: K.defaults.referred) != "", UserDefaults.standard.string(forKey: K.defaults.referred) != nil {
+        let referredEmail = DefaultsManager.standard.value(forKey: .referred).string
+        if referredEmail != "", referredEmail != nil {
             // create user session
             let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: Date())
             date = dateFormatter.string(from: newDate ?? Date())
         }
 
-        if let referredEmail = UserDefaults.standard.string(forKey: K.defaults.referred) {
+        if let referredEmail = referredEmail {
             if referredEmail != "" {
                 var refDate = ""
                 var refStack = 0
@@ -535,56 +536,56 @@ extension AuthenticationViewModel {
             thisGrid = gridd
         }
         var favs = [Int]()
-        if let favorites = UserDefaults.standard.array(forKey: K.defaults.favorites) as? [Int] {
+        if let favorites = DefaultsManager.standard.value(forKey: .favorites).arrayValue as? [Int] {
             favs = favorites
         }
         var uniquePlants = ["White Daisy", "Red Tulip"]
-        if let plantArr = UserDefaults.standard.array(forKey: K.defaults.plants) as? [String] {
+        if let plantArr = DefaultsManager.standard.value(forKey: .plants).arrayValue as? [String] {
             uniquePlants = [String](Set(plantArr))
         }
         var compMeds = [""]
-        if let comMeds = UserDefaults.standard.array(forKey: K.defaults.completedMeditations) as? [String] {
+        if let comMeds = DefaultsManager.standard.value(forKey: .completedMeditations).arrayValue as? [String] {
             compMeds = comMeds
         }
 
         var storySegs = [""]
-        if let storySegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
+        if let storySegments = DefaultsManager.standard.value(forKey: .storySegments).arrayValue as? [String] {
             storySegs = storySegments
         }
 
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
-                "name": UserDefaults.standard.string(forKey: "name") ?? "Name",
-                "coins": UserDefaults.standard.integer(forKey: "coins"),
-                "joinDate": UserDefaults.standard.string(forKey: "joinDate") ?? "",
-                "totalSessions": UserDefaults.standard.integer(forKey: "allTimeSessions"),
-                "totalMins": UserDefaults.standard.integer(forKey: "allTimeMinutes"),
+                "name": DefaultsManager.standard.value(forKey: .name).string ?? "Name",
+                "coins": DefaultsManager.standard.value(forKey: "coins"),
+                "joinDate": DefaultsManager.standard.value(forKey: .joinDate).string ?? "",
+                "totalSessions": DefaultsManager.standard.value(forKey: .allTimeSessions).integerValue,
+                "totalMins": DefaultsManager.standard.value(forKey: .allTimeMinutes).integerValue,
                 "gardenGrid": thisGrid,
                 "plants": uniquePlants,
                 "completedMeditations": compMeds,
-                "experience": UserDefaults.standard.string(forKey: "experience") ?? "",
-                K.defaults.lastStreakDate: UserDefaults.standard.string(forKey: K.defaults.lastStreakDate) ?? "",
-                "streak": UserDefaults.standard.string(forKey: "streak") ?? "",
-                K.defaults.seven: UserDefaults.standard.integer(forKey: K.defaults.seven),
-                K.defaults.thirty: UserDefaults.standard.integer(forKey: K.defaults.thirty),
-                K.defaults.dailyBonus: UserDefaults.standard.string(forKey: K.defaults.dailyBonus) ?? "",
+                "experience": DefaultsManager.standard.value(forKey: .experience).string ?? "",
+                K.defaults.lastStreakDate: DefaultsManager.standard.value(forKey: .lastStreakDate).string ?? "",
+                "streak": DefaultsManager.standard.value(forKey: .streak).string ?? "",
+                K.defaults.seven: DefaultsManager.standard.value(forKey: .seven).integerValue,
+                K.defaults.thirty: DefaultsManager.standard.value(forKey: .thirty).integerValue,
+                K.defaults.dailyBonus: DefaultsManager.standard.value(forKey: .dailyBonus).string ?? "",
                 "referredStack": "\(date)+0",
-                "isPro": UserDefaults.standard.bool(forKey: "isPro"),
+                "isPro": DefaultsManager.standard.value(forKey: .isPro).boolValue,
                 "favorited": favs,
                 "storySegments": storySegs,
-                K.defaults.userCoinCollectedLevel: UserDefaults.standard.integer(forKey: K.defaults.userCoinCollectedLevel),
+                K.defaults.userCoinCollectedLevel: DefaultsManager.standard.value(forKey: .userCoinCollectedLevel).integerValue,
             ]) { error in
                 if let e = error {
                     print("There was a issue saving data to firestore \(e) ")
                 } else {
                     DefaultsManager.standard.set(value: "432hz", forKey: .sound)
                     self.userModel.getSelectedPlant()
-                    self.userModel.name = UserDefaults.standard.string(forKey: "name") ?? ""
+                    self.userModel.name = DefaultsManager.standard.value(forKey: .name).string ?? ""
                 }
             }
         }
 
-        userModel.name = UserDefaults.standard.string(forKey: "name") ?? "name"
+        userModel.name = DefaultsManager.standard.value(forKey: .name).string ?? "name"
         userModel.joinDate = formatter.string(from: Date())
         userModel.referredStack = "\(date)+0"
     }
@@ -630,7 +631,7 @@ extension AuthenticationViewModel {
                         let plusIndex = stack.indexInt(of: "+") ?? 0
                         let numRefs = Int(stack.substring(from: plusIndex + 1)) ?? 0
 
-                        if numRefs > UserDefaults.standard.integer(forKey: "numRefs") {
+                        if numRefs > DefaultsManager.standard.value(forKey: .numRefs).integerValue {
                             DefaultsManager.standard.set(value: numRefs, forKey: .numRefs)
                         }
                     }
