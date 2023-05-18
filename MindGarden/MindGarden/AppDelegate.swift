@@ -324,33 +324,44 @@ extension AppDelegate: MWMEmbeddedUIElementsProvider {
 }
 
 class SetRouteViewControlller: UIViewController {
-    var closure: (() -> Void)?
+    let closure: (() -> Void)
     let router = ViewRouter()
     lazy var authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: router)
 
     init(_ closure: @escaping (() -> Void)) {
-        super.init(nibName: nil, bundle: nil)
         self.closure = closure
-        setClosureValue()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func setClosureValue() {
-        closure = { [weak self] in
-            guard let self = self else { return }
-            print("SetRouteViewControlller setClosureValue")
-            let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: self.authModel)
 
-            // Use a UIHostingController as window root view controller.
-            let rootHost = UIHostingController(rootView: contentView
-                .environmentObject(self.router)
-                .environmentObject(SceneDelegate.medModel)
-                .environmentObject(SceneDelegate.userModel)
-                .environmentObject(SceneDelegate.gardenModel))
-            UIApplication.shared.window?.rootViewController = rootHost
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Create a SwiftUI view to display
+        let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: self.authModel, onReviewCompletion: closure)
+
+        // Create a UIHostingController and set its rootView to the SwiftUI view
+        let hostingController = UIHostingController(rootView: contentView
+            .environmentObject(self.router)
+            .environmentObject(SceneDelegate.medModel)
+            .environmentObject(SceneDelegate.userModel)
+            .environmentObject(SceneDelegate.gardenModel))
+
+        // Add the hosting controller as a child view controller to this view controller
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+
+        // Set constraints for the hosting controller's view
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        // Notify the hosting controller that it has been added as a child view controller
+        hostingController.didMove(toParent: self)
     }
 }

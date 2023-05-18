@@ -41,12 +41,16 @@ struct ContentView: View {
     
     var authModel: AuthenticationViewModel
 
-    init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel) {
+    // a closure executed on onboarding's review completion.
+    var onReviewCompletion: (() -> Void)? = nil
+
+    init(bonusModel: BonusViewModel, profileModel: ProfileViewModel, authModel: AuthenticationViewModel, onReviewCompletion: (() -> Void)? = nil) {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         self.bonusModel = bonusModel
         self.profileModel = profileModel
         self.authModel = authModel
+        self.onReviewCompletion = onReviewCompletion
         //        meditationModel.isOpenEnded = false
         //        meditationModel.secondsRemaining = 150
         // check for auth here
@@ -226,7 +230,7 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .review:
-                                        ReviewScene()
+                                        ReviewScene(onReviewCompletion: onReviewCompletion)
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     }

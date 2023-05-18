@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     static let medModel = MeditationViewModel()
     static let profileModel = ProfileViewModel()
     static let bonusModel = BonusViewModel(userModel: userModel, gardenModel: gardenModel)
-    let router = ViewRouter()
+    var router: ViewRouter!
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy HH:mm:ss"
@@ -73,7 +73,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         UserDefaults.standard.removeObject(forKey: K.defaults.referred)
 
-        let authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: router)
         let firebaseAPI = FirebaseAPI(medModel: SceneDelegate.medModel)
 
         let _ = Auth.auth().addStateDidChangeListener { _, user in
@@ -99,15 +98,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             SceneDelegate.bonusModel.thirtyDayProgress = 0.08
         }
 
-        let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
-
-        // Use a UIHostingController as window root view controller.
-        let rootHost = UIHostingController(rootView: contentView
-            .environmentObject(router)
-            .environmentObject(SceneDelegate.medModel)
-            .environmentObject(SceneDelegate.userModel)
-            .environmentObject(SceneDelegate.gardenModel))
-
 //        NewAuthentication(viewModel: AuthenticationViewModel(userModel: UserViewModel(), viewRouter: ViewRouter())).environmentObject(ViewRouter())
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
@@ -121,18 +111,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             MWMSessions.setup(configuration: configuration)
 
             // checking for MWMPublishingSDK onboarding screens
-            if MWM.shouldShowOnboarding() {
-                MWM.showOnboardingIfNeeded(
-                    withPlacementKey: MWMModel.DynamicScreenPlacement.onboarding.rawValue,
-                    on: window,
-                    loaderViewController: nil
-                ) { _, _ in
-                    window.rootViewController = rootHost
-                }
-            } else {
+            MWM.showOnboardingIfNeeded(
+                withPlacementKey: MWMModel.DynamicScreenPlacement.onboarding.rawValue,
+                on: window,
+                loaderViewController: nil
+            ) { _, _ in
+                self.router = ViewRouter()
+                let authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: self.router)
+                let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
+
+                // Use a UIHostingController as window root view controller.
+                let rootHost = UIHostingController(rootView: contentView
+                    .environmentObject(self.router)
+                    .environmentObject(SceneDelegate.medModel)
+                    .environmentObject(SceneDelegate.userModel)
+                    .environmentObject(SceneDelegate.gardenModel))
                 window.rootViewController = rootHost
+                storylyViewProgrammatic.rootViewController = rootHost
             }
-            storylyViewProgrammatic.rootViewController = rootHost
+
 //            window.rootViewController = rootHost
             self.window = window
             window.makeKeyAndVisible()

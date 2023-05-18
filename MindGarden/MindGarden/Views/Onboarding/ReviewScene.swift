@@ -30,6 +30,12 @@ struct ReviewScene: View {
         return formatter
     }
 
+    var onReviewCompletion: (() -> Void)? = nil
+
+    init(onReviewCompletion: (() -> Void)?) {
+        self.onReviewCompletion = onReviewCompletion
+    }
+
     // MARK: - Body
     
     var body: some View {
@@ -179,13 +185,17 @@ struct ReviewScene: View {
                                 DefaultsManager.standard.set(value: true, forKey: .onboarded)
                                 withAnimation {
                                     viewRouter.progressValue = 1
-                                    // goto home screen now
-                                    viewRouter.currentPage = .meditate
-                                    if fromInfluencer != "" {
-                                        Analytics.shared.log(event: .user_from_influencer)
-                                        viewRouter.currentPage = .pricing
+                                    if onReviewCompletion != nil {
+                                        onReviewCompletion?()
                                     } else {
-                                        viewRouter.currentPage = .pricing
+                                        // goto home screen now
+                                        viewRouter.currentPage = .meditate
+                                        if fromInfluencer != "" {
+                                            Analytics.shared.log(event: .user_from_influencer)
+                                            viewRouter.currentPage = .pricing
+                                        } else {
+                                            viewRouter.currentPage = .pricing
+                                        }
                                     }
                                 }
                             },
@@ -322,7 +332,7 @@ struct ReviewScene: View {
 #if DEBUG
 struct ReviewScene_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewScene()
+        ReviewScene(onReviewCompletion: nil)
     }
 }
 #endif
