@@ -36,8 +36,9 @@ struct PlusMenuView: View {
                     } label: {
                         MenuChoice(title: item.title, img: item.image, disabled: false)
                     } //: Button
-                    .disabled((isOnboarding && (item.tabName == .moodCheck && onboardingValue != .signedUp)) || (isOnboarding && (item.tabName == .gratitude && onboardingValue != .mood)) || (isOnboarding && (item.tabName == .meditate && onboardingValue != .gratitude))).opacity((isOnboarding && (item.tabName == .moodCheck && onboardingValue) != .signedUp)) || (isOnboarding && (item.tabName == .gratitude && onboardingValue != .mood)) || (isOnboarding && (item.tabName == .meditate && onboardingValue != .gratitude)) ? 0.5 : 1.0)
-                        .buttonStyle(NeoPress())
+                    .disabled((isOnboarding && (item.tabName == .moodCheck && onboardingValue != .signedUp)) || (isOnboarding && (item.tabName == .gratitude && onboardingValue != .mood)) || (isOnboarding && (item.tabName == .meditate && onboardingValue != .gratitude)))
+                    .opacity((isOnboarding && (item.tabName == .moodCheck && onboardingValue != .signedUp) || (isOnboarding && (item.tabName == .gratitude && onboardingValue != .mood)) || (isOnboarding && (item.tabName == .meditate && onboardingValue != .gratitude))) ? 0.5 : 1.0)
+                    .buttonStyle(NeoPress())
                 } //: ForEach Loop
             } //: VStack
             .background(Clr.darkWhite)

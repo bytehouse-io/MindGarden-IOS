@@ -83,7 +83,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
                         // User already signed in with this appleId once
 
-                        if (appleIDCredential.email != nil) || DefaultsManager.standard.bool(forKey: "falseAppleId") { // new user
+                        if (appleIDCredential.email != nil) || DefaultsManager.standard.value(forKey: .falseAppleId).boolValue { // new user
                             if !isSignUp { // login
                                 alertError = true
                                 alertMessage = "Email is already in use. Use the sign in page"
@@ -556,19 +556,19 @@ extension AuthenticationViewModel {
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).setData([
                 "name": DefaultsManager.standard.value(forKey: .name).string ?? "Name",
-                "coins": DefaultsManager.standard.value(forKey: "coins"),
-                "joinDate": DefaultsManager.standard.value(forKey: .joinDate).string ?? "",
+                "coins": DefaultsManager.standard.value(forKey: .coins).integerValue,
+                "joinDate": DefaultsManager.standard.value(forKey: .joinDate).stringValue,
                 "totalSessions": DefaultsManager.standard.value(forKey: .allTimeSessions).integerValue,
                 "totalMins": DefaultsManager.standard.value(forKey: .allTimeMinutes).integerValue,
                 "gardenGrid": thisGrid,
                 "plants": uniquePlants,
                 "completedMeditations": compMeds,
-                "experience": DefaultsManager.standard.value(forKey: .experience).string ?? "",
-                K.defaults.lastStreakDate: DefaultsManager.standard.value(forKey: .lastStreakDate).string ?? "",
-                "streak": DefaultsManager.standard.value(forKey: .streak).string ?? "",
+                "experience": DefaultsManager.standard.value(forKey: .experience).stringValue,
+                K.defaults.lastStreakDate: DefaultsManager.standard.value(forKey: .lastStreakDate).stringValue,
+                "streak": DefaultsManager.standard.value(forKey: .streak).stringValue,
                 K.defaults.seven: DefaultsManager.standard.value(forKey: .seven).integerValue,
                 K.defaults.thirty: DefaultsManager.standard.value(forKey: .thirty).integerValue,
-                K.defaults.dailyBonus: DefaultsManager.standard.value(forKey: .dailyBonus).string ?? "",
+                K.defaults.dailyBonus: DefaultsManager.standard.value(forKey: .dailyBonus).stringValue,
                 "referredStack": "\(date)+0",
                 "isPro": DefaultsManager.standard.value(forKey: .isPro).boolValue,
                 "favorited": favs,

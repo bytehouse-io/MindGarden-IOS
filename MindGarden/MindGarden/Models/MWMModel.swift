@@ -10,11 +10,11 @@ import Foundation
 final class MWMModel {
     static var shared = MWMModel()
     enum DynamicScreenPlacement: String, CaseIterable {
-        case onboarding = "PUBSBX#app_launch#native_onboarding"
+        case onboarding = "PUBSBX#app_launch#onboarding"
         case store = "PUBSBX#anywhere#store"
     }
     
     enum DynamicEmbeddedUIElements: String, CaseIterable {
-        case nativeOnboardingSlide = "native_onboarding_slide"
+        case nativeOnboardingSlide = "PUBSBX#app_launch#native_onboarding"
     }
 }
