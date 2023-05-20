@@ -42,7 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
 //        DefaultsManager.standard.set(value: false, forKey: "tappedRate")
 
-        let launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        let launchNum = DefaultsManager.standard.value(forKey: .launchNumber).integerValue
 //        DefaultsManager.standard.set(value: "done", forKey: K.defaults.onboarding)
 //        DefaultsManager.standard.set(value: ["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
         Analytics.shared.log(event: .launchedApp)
@@ -92,7 +92,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
 
-        if let onBoarding = UserDefaults.standard.string(forKey: K.defaults.onboarding), onBoarding != "done" {
+        if let onBoarding = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue, onBoarding != .done {
             SceneDelegate.bonusModel.totalBonuses = 1
             SceneDelegate.bonusModel.sevenDayProgress = 0.1
             SceneDelegate.bonusModel.thirtyDayProgress = 0.08

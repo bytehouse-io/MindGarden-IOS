@@ -40,8 +40,8 @@ struct LoadingIllusion: View {
                     Spacer()
                 } //: HStack
                 .frame(width: UIScreen.screenWidth - 50, alignment: .center)
-                    .offset(y: 50)
-                    .padding(50)
+                .offset(y: 50)
+                .padding(50)
             }
         }
         .onAppear {

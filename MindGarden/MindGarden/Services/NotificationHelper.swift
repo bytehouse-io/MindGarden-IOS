@@ -92,7 +92,7 @@ struct NotificationHelper {
                 if let attachment = UNNotificationAttachment.getAttachment(identifier: "firefox", imageName: "firefox") {
                     content.attachments = [attachment]
                 }
-                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? "") Don't Break Your Streak!"
+                content.title = "\(DefaultsManager.standard.value(forKey: .name).stringValue) Don't Break Your Streak!"
                 switch UserDefaults.standard.string(forKey: "reason") {
                 case "Sleep better":
                     content.body = "Sleeping better starts tonight"
@@ -109,14 +109,14 @@ struct NotificationHelper {
                 if let attachment = UNNotificationAttachment.getAttachment(identifier: "educatedRacoon", imageName: "educatedRacoon") {
                     content.attachments = [attachment]
                 }
-                content.title = "\(UserDefaults.standard.string(forKey: "name") ?? ""), continue your journey"
+                content.title = "\(DefaultsManager.standard.value(forKey: .name).stringValue), continue your journey"
                 content.body = "🧘‍♂️ We get it, meditation is hard but anything worth doing is."
             }
         } else {
             if let attachment = UNNotificationAttachment.getAttachment(identifier: "educatedRacoon", imageName: "educatedRacoon") {
                 content.attachments = [attachment]
             }
-            content.title = "🌱\(UserDefaults.standard.string(forKey: "name") ?? ""), let's go!"
+            content.title = "🌱\(DefaultsManager.standard.value(forKey: .name).stringValue), let's go!"
             content.body = "\"The best time to plant a tree was 20 years ago. The second best time is now.\""
         }
         return content

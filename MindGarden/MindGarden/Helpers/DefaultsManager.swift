@@ -24,6 +24,7 @@ struct DefaultsManager {
     
     func set(value: Any, forKey key: Keys) {
         standardDefaults.set(value, forKey: key.rawValue)
+        standardDefaults.synchronize()
     }
 }
 
@@ -256,5 +257,6 @@ extension DefaultsManager {
         case single
         case meditate
         case calendar
+//        case loadingIllusion
     }
 }

@@ -381,7 +381,7 @@ struct SingleDay: View {
                 }
             }
         }.onDisappear {
-            DefaultsManager.standard.set(value: "done", forKey: .onboarding)
+            DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.done.rawValue, forKey: .onboarding)
         }
     }
 

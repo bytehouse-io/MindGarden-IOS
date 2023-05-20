@@ -425,7 +425,7 @@ struct Finished: View {
             // onboarding
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
                 Analytics.shared.log(event: .onboarding_finished_meditation)
-                DefaultsManager.standard.set(value: "garden", forKey: .onboarding)
+                DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.garden.rawValue, forKey: .onboarding)
                 isOnboarding = true
             } else {
                 OneSignal.sendTag("firstMeditation", value: "true")

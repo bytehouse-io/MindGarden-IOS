@@ -10,19 +10,21 @@ import SwiftUI
 class ViewRouter: ObservableObject {
     @Published var previousPage: Page = .meditate
     @Published var currentPage: Page = {
-        if UserDefaults.standard.bool(forKey: K.defaults.loggedIn) {
+        if DefaultsManager.standard.value(forKey: .loggedIn).boolValue {
             return .meditate
-        } else if UserDefaults.standard.bool(forKey: "review") {
+        } else if DefaultsManager.standard.value(forKey: .review).boolValue {
             return .meditate
         } else {
-            switch UserDefaults.standard.string(forKey: K.defaults.onboarding) {
-            case "done": return .meditate
-            case "signedUp": return .meditate
-            case "mood": return .meditate
-            case "gratitude": return .meditate
-            case "meditate": return .garden
-            case "stats": return .garden
-            case "calendar": return .garden
+            switch DefaultsManager.standard.value(forKey: .onboarding).onboardingValue {
+            case .done: return .meditate
+            case .signedUp: return .meditate
+            case .mood: return .meditate
+            case .gratitude: return .meditate
+            case .meditate: return .garden
+            case .stats: return .garden
+            case .calendar: return .garden
+            case .garden: return .meditate
+//            case .loadingIllusion: return .loadingIllusion
             default: return .onboarding
             }
         }
@@ -54,4 +56,5 @@ enum Page {
     case journal
     case meditationCompleted
     case congratulationsOnCompletion
+//    case loadingIllusion
 }

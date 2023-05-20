@@ -440,12 +440,12 @@ struct JournalView: View, KeyboardReadable {
         gardenModel.isGratitudeDone = true
         UserDefaults(suiteName: K.widgetDefault)?.setValue(Date().toString(withFormat: "MMM dd, yyyy"), forKey: "lastJournel")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                DefaultsManager.standard.set(value: "gratitude", forKey: .onboarding)
+            if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .mood {
+                DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.gratitude.rawValue, forKey: .onboarding)
             }
             DefaultsManager.standard.set(value: num, forKey: .numGrads)
-            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
-                DefaultsManager.standard.set(value: "gratitude", forKey: .onboarding)
+            if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .mood {
+                DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.gratitude.rawValue, forKey: .onboarding)
             }
             Analytics.shared.log(event: .gratitude_tapped_done)
             var journalObj = [String: String]()
@@ -459,7 +459,7 @@ struct JournalView: View, KeyboardReadable {
             gardenModel.save(key: K.defaults.journals, saveValue: journalObj, coins: userModel.coins)
             withAnimation {
                 if moodFirst {
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                    if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude {
                         showHooray = true
                     } else {
                         showRecs = true

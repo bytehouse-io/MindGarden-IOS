@@ -86,7 +86,7 @@ struct NameScene: View {
                             withAnimation(.easeOut(duration: 0.3)) {
                                 DispatchQueue.main.async {
                                     if !name.isEmpty {
-                                        UserDefaults.standard.set(name, forKey: "name")
+                                        DefaultsManager.standard.set(value: name, forKey: .name)
                                         viewRouter.progressValue += 0.2
                                         viewRouter.currentPage = .notification
                                         userModel.name = name

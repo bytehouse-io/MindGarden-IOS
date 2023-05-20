@@ -139,11 +139,11 @@ class UserViewModel: ObservableObject {
     }
 
     func updateSelf() {
-        if let defaultName = UserDefaults.standard.string(forKey: "name") {
+        if let defaultName = DefaultsManager.standard.value(forKey: .name).string {
             name = defaultName
         }
 
-        if let coins = UserDefaults.standard.value(forKey: "coins") as? Int {
+        if let coins = DefaultsManager.standard.value(forKey: .coins).integer {
             self.coins = coins
         }
 
@@ -156,12 +156,12 @@ class UserViewModel: ObservableObject {
 
                     if let coins = document[K.defaults.coins] as? Int {
                         self.coins = coins
-                        UserDefaults.standard.set(self.coins, forKey: "coins")
+                        DefaultsManager.standard.set(value: coins, forKey: .coins)
                     }
 
                     if let name = document["name"] as? String {
                         self.name = name
-                        UserDefaults.standard.set(self.name, forKey: "name")
+                        DefaultsManager.standard.set(value: name, forKey: .name)
                         tappedSignIn = false
                     }
 
@@ -242,17 +242,17 @@ class UserViewModel: ObservableObject {
                 }
             }
 
-            if let name = UserDefaults.standard.string(forKey: K.defaults.name) {
+            if let name = DefaultsManager.standard.value(forKey: .name).string {
                 self.name = name
             }
 
-            if let joinDate = UserDefaults.standard.string(forKey: "joinDate") {
+            if let joinDate = DefaultsManager.standard.value(forKey: .joinDate).string {
                 self.joinDate = joinDate
             }
-            if let potion = UserDefaults.standard.value(forKey: "potion") as? String {
+            if let potion = DefaultsManager.standard.value(forKey: .potion).string {
                 self.potion = potion
             }
-            if let chest = UserDefaults.standard.value(forKey: "chest") as? String {
+            if let chest = DefaultsManager.standard.value(forKey: .chest).string {
                 self.chest = chest
             }
             if let completedMeditations = UserDefaults.standard.value(forKey: K.defaults.completedMeditations) as? [String] {
@@ -263,19 +263,19 @@ class UserViewModel: ObservableObject {
                 userCoinCollectedLevel = level
                 SceneDelegate.medModel.getUserMap()
             }
-            if let finJourney = UserDefaults.standard.value(forKey: "finishedJourney") as? Bool {
+            if let finJourney = DefaultsManager.standard.value(forKey: .finishedJourney).bool {
                 journeyFinished = finJourney
             }
 
-            streakFreeze = UserDefaults.standard.integer(forKey: "streakFreeze")
+            streakFreeze = DefaultsManager.standard.value(forKey: .streakFreeze).integerValue
 
-            coins = UserDefaults.standard.integer(forKey: "coins")
+            coins = DefaultsManager.standard.value(forKey: .coins).integerValue
             updateTimeRemaining()
         }
 
         // set selected plant
         selectedPlant = Plant.allPlants.first(where: { plant in
-            plant.title == UserDefaults.standard.string(forKey: K.defaults.selectedPlant)
+            plant.title == DefaultsManager.standard.value(forKey: .selectedPlant).stringValue
         })
     }
 

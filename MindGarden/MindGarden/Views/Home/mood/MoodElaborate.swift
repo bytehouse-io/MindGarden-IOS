@@ -93,7 +93,7 @@ struct MoodElaborate: View {
                                         print("logging, \("tapped_mood_\(item)")")
 
                                         if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
-                                            DefaultsManager.standard.set(value: "mood", forKey: .onboarding)
+                                            DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.mood.rawValue, forKey: .onboarding)
                                         }
 
                                         if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"] as? [[String: String]] {

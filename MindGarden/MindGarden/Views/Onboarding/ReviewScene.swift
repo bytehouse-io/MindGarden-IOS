@@ -59,7 +59,7 @@ struct ReviewScene: View {
                         } //: HStack
                         .edgesIgnoringSafeArea(.all)
                         Spacer()
-                        Text("So, to recap \(UserDefaults.standard.string(forKey: "name") ?? "")")
+                        Text("So, to recap \(DefaultsManager.standard.value(forKey: .name).stringValue)")
                             .font(Font.fredoka(.bold, size: 30))
                             .foregroundColor(Clr.black2)
                             .padding()
@@ -176,12 +176,13 @@ struct ReviewScene: View {
                         Spacer()
                         Button(
                             action: {
+                                showLoading = true
                                 MGAudio.sharedInstance.playBubbleSound()
                                 Analytics.shared.log(event: .review_tapped_tutorial)
                                 fromOnboarding = true
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 fromPage = "onboarding2"
-                                DefaultsManager.standard.set(value: "signedUp", forKey: .onboarding)
+                                DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.signedUp.rawValue, forKey: .onboarding)
                                 DefaultsManager.standard.set(value: true, forKey: .onboarded)
                                 withAnimation {
                                     viewRouter.progressValue = 1
