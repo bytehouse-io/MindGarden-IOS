@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct K {
-    static var widgetDefault = "group.M5757NXZKD.io.bytehouse.mindgarden.widget"
+    static var widgetDefault = "group.M5757NXZKD.io.bytehouse.mwmmindgarden.widget"
     static var userPreferences = "userPreferences"
     static var journey = "Journey"
     static var mood = "mood"

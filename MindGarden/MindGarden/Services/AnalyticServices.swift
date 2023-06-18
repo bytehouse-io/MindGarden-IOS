@@ -6,7 +6,7 @@
 //
 
 import Amplitude
-import AppsFlyerLib
+//import AppsFlyerLib
 import Combine
 import Firebase
 import MWMPublishingSDK
@@ -37,7 +37,7 @@ final class Analytics: ObservableObject {
     func logActual(event: AnalyticEvent) {
         #if !targetEnvironment(simulator)
             Firebase.Analytics.logEvent(event.eventName, parameters: [:])
-            AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
+//            AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
             Amplitude.instance().logEvent(event.eventName)
 //            Paywall.track(name: event.eventName)
             // prepare activity report content.

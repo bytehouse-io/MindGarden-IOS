@@ -13,9 +13,6 @@
 		<string>applinks:mindgarden.page.link</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>group.M5757NXZKD.io.bytehouse.mindgarden.widget</string>
-		<string>group.io.bytehouse.mindgarden.onesignal</string>
-	</array>
+	<array/>
 </dict>
 </plist>

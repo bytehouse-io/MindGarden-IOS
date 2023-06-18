@@ -6,7 +6,7 @@
 //
 
 import Amplitude
-import AppsFlyerLib
+//import AppsFlyerLib
 import AVFoundation
 import Firebase
 import FirebaseDynamicLinks
@@ -25,9 +25,9 @@ var player: AVAudioPlayer?
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    @objc func sendLaunch() {
-        AppsFlyerLib.shared().start()
-    }
+//    @objc func sendLaunch() {
+//        AppsFlyerLib.shared().start()
+//    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        MWM.setRemoteImageLoader(NukeRemoteImageLoader())
@@ -58,10 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Crashlytics.crashlytics().setUserID(installationId)
 
         // Appsflyer
-        AppsFlyerLib.shared().appsFlyerDevKey = "MuYPR9jvHqxu7TzZCrTNcn"
-        AppsFlyerLib.shared().appleAppID = "1588582890"
-        AppsFlyerLib.shared().delegate = self
-        AppsFlyerLib.shared().isDebug = true
+//        AppsFlyerLib.shared().appsFlyerDevKey = "MuYPR9jvHqxu7TzZCrTNcn"
+//        AppsFlyerLib.shared().appleAppID = "1588582890"
+//        AppsFlyerLib.shared().delegate = self
+//        AppsFlyerLib.shared().isDebug = true
 
         Amplitude.instance().trackingSessionEvents = true
         // Initialize SDK
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Log an event
 
         // TODO: test amplitude match up with revenuecat
-        sendLaunch()
+//        sendLaunch()
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
         // OneSignal initialization
         OneSignal.initWithLaunchOptions(launchOptions)
@@ -231,56 +231,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 // MARK: AppsFlyerLibDelegate
 
-extension AppDelegate: AppsFlyerLibDelegate {
-    // Handle Organic/Non-organic installation
-    func onConversionDataSuccess(_ installData: [AnyHashable: Any]) {
-//        print("onConversionDataSuccess data:")
-//        for (key, value) in installData {
+//extension AppDelegate: AppsFlyerLibDelegate {
+//    // Handle Organic/Non-organic installation
+//    func onConversionDataSuccess(_ installData: [AnyHashable: Any]) {
+////        print("onConversionDataSuccess data:")
+////        for (key, value) in installData {
+////            print(key, ":", value)
+////        }
+//        if let status = installData["af_status"] as? String {
+//            if status == "Non-organic" {
+//                if let sourceID = installData["media_source"],
+//                   let campaign = installData["campaign"]
+//                {
+//                    print("This is a Non-Organic install. Media source: \(sourceID)  Campaign: \(campaign)")
+//                    if "\(sourceID)" == "influencer" {
+//                        fromInfluencer = "\(campaign)"
+//                        let identify = AMPIdentify()
+//                            .set("influencer", value: NSString(utf8String: "\(campaign)"))
+//                        Amplitude.instance().identify(identify ?? AMPIdentify())
+//                    }
+//                }
+//            } else {
+//                print("This is an organic install.")
+//            }
+//            if let is_first_launch = installData["is_first_launch"] as? Bool,
+//               is_first_launch
+//            {
+//                print("First Launch")
+//            } else {
+//                print("Not First Launch")
+//            }
+//        }
+//    }
+//
+//    func onConversionDataFail(_ error: Error) {
+//        print(error)
+//    }
+//
+//    // Handle Deep Link
+//    func onAppOpenAttribution(_ attributionData: [AnyHashable: Any]) {
+////        Handle Deep Link Data
+//        print("onAppOpenAttribution data:")
+//        for (key, value) in attributionData {
 //            print(key, ":", value)
 //        }
-        if let status = installData["af_status"] as? String {
-            if status == "Non-organic" {
-                if let sourceID = installData["media_source"],
-                   let campaign = installData["campaign"]
-                {
-                    print("This is a Non-Organic install. Media source: \(sourceID)  Campaign: \(campaign)")
-                    if "\(sourceID)" == "influencer" {
-                        fromInfluencer = "\(campaign)"
-                        let identify = AMPIdentify()
-                            .set("influencer", value: NSString(utf8String: "\(campaign)"))
-                        Amplitude.instance().identify(identify ?? AMPIdentify())
-                    }
-                }
-            } else {
-                print("This is an organic install.")
-            }
-            if let is_first_launch = installData["is_first_launch"] as? Bool,
-               is_first_launch
-            {
-                print("First Launch")
-            } else {
-                print("Not First Launch")
-            }
-        }
-    }
-
-    func onConversionDataFail(_ error: Error) {
-        print(error)
-    }
-
-    // Handle Deep Link
-    func onAppOpenAttribution(_ attributionData: [AnyHashable: Any]) {
-//        Handle Deep Link Data
-        print("onAppOpenAttribution data:")
-        for (key, value) in attributionData {
-            print(key, ":", value)
-        }
-    }
-
-    func onAppOpenAttributionFailure(_ error: Error) {
-        print(error)
-    }
-}
+//    }
+//
+//    func onAppOpenAttributionFailure(_ error: Error) {
+//        print(error)
+//    }
+//}
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

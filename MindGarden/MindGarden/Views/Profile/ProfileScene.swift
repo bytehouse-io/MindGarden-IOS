@@ -334,7 +334,7 @@ struct ProfileScene: View {
                                                         Divider()
                                                         Row(title: "Request Feature/Med", img: Image(systemName: "hand.raised.fill"), action: {
                                                             Analytics.shared.log(event: .profile_tapped_roadmap)
-                                                            if let url = URL(string: "https://mindgarden.upvoty.com/") {
+                                                            if let url = URL(string: "https://discord.gg/SZXnxtyBV5") {
                                                                 UIApplication.shared.open(url)
                                                             }
                                                         }, showNotif: $showNotif, showMindful: $showMindful)

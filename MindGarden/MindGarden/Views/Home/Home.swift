@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 6/11/21.
 //
 
-import AppsFlyerLib
+//import AppsFlyerLib
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
@@ -36,6 +36,7 @@ struct Home: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var profileModel: ProfileViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
+    
     @State private var showModal: Bool = false
     @State private var showSearch = false
     @State private var showUpdateModal = false
@@ -130,8 +131,8 @@ struct Home: View {
             viewRouter.currentPage = .middle
         }
         .onAppear {
-            
-            if !UserDefaults.standard.bool(forKey: "showWidget") && (UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") {
+            let onboarding = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+            if !DefaultsManager.standard.value(forKey: .showWidget).boolValue && (onboarding == .done || onboarding == .garden) {
                 profileModel.showWidget = true
             }
 
@@ -156,19 +157,20 @@ struct Home: View {
 
                 numberOfMeds += Int.random(in: -3 ... 3)
                 // handle update modal or deeplink
-                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" {
-                    if UserDefaults.standard.bool(forKey: "introLink") {
+                
+                if onboarding == .done || onboarding == .garden {
+                    if DefaultsManager.standard.value(forKey: .introLink).boolValue {
                         model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                         viewRouter.currentPage = .middle
                         DefaultsManager.standard.set(value: false, forKey: .introLink)
-                    } else if UserDefaults.standard.bool(forKey: "happinessLink") {
+                    } else if DefaultsManager.standard.value(forKey: .happinessLink).boolValue {
                         model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 14 })
                         viewRouter.currentPage = .middle
                         DefaultsManager.standard.set(value: false, forKey: .happinessLink)
                     }
                 }
 
-                if (UserDefaults.standard.integer(forKey: "dailyLaunchNumber") == 2 && !UserDefaults.standard.bool(forKey: "isPro") && !UserDefaults.standard.bool(forKey: "14DayModal")) || userModel.show50Off {
+                if (DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue == 2 && !DefaultsManager.standard.value(forKey: .isPro).boolValue && !DefaultsManager.standard.value(forKey: .fourteenDayModal).boolValue) || userModel.show50Off {
                     showUpdateModal = true
                     userModel.show50Off = false
                     DefaultsManager.standard.set(value: true, forKey: .freeTrialTo50)
@@ -188,8 +190,9 @@ struct Home: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .storyOnboarding))
         { _ in
+            let onboarding = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
             withAnimation {
-                if (UserDefaults.standard.bool(forKey: "review") || (UserDefaults.standard.string(forKey: "onboarding") == "done") || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden") && !UserDefaults.standard.bool(forKey: "showedChallenge") {
+                if (DefaultsManager.standard.value(forKey: .review).boolValue || onboarding == .done || onboarding == .garden) && !DefaultsManager.standard.value(forKey: .showedChallenge).boolValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Change `2.0` to the desired number of seconds.
                         // Code you want to be delayed
 //                        showChallenge = true

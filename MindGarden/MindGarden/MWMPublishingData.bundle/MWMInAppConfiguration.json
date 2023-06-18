@@ -13,7 +13,7 @@
     ],
     "features" : [
       {
-        "identifier": "publishing_sandbox.features.premium",
+        "identifier": "mindgarden.features.premium",
         "isPremium": true
       }]
 }

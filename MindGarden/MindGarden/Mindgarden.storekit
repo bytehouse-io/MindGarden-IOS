@@ -68,7 +68,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "0.99",
+          "displayPrice" : "08.49",
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "65B42E4C",
@@ -80,7 +80,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "appstore.io.bytehouse.mindgarden.subscription.monthly",
+          "productID" : "appstore.io.bytehouse.mindgarden.subscription.monthly.00.08.49",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : null,
           "subscriptionGroupID" : "4FCC50CC",
@@ -93,11 +93,15 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "0.99",
+          "displayPrice" : "49.99",
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "D833EA32",
-          "introductoryOffer" : null,
+          "introductoryOffer" : {
+            "internalID" : "E71E5A50",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
           "localizations" : [
             {
               "description" : "",
@@ -105,7 +109,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "appstore.io.bytehouse.mindgarden.subscription.yearly",
+          "productID" : "appstore.io.bytehouse.mindgarden.subscription.yearly.07.49.99",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : null,
           "subscriptionGroupID" : "4FCC50CC",

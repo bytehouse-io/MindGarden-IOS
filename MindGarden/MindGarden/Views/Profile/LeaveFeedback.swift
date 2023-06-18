@@ -158,7 +158,7 @@ struct LeaveFeedback: View {
     var requestFeature: some View {
         Button {
             Analytics.shared.log(event: .profile_tapped_roadmap)
-            if let url = URL(string: "https://mindgarden.upvoty.com/") {
+            if let url = URL(string: "https://discord.gg/SZXnxtyBV5/") {
                 UIApplication.shared.open(url)
             }
         } label: {

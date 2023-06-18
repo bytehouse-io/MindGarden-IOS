@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>CrossIAPAppGroup</key>
-	<string>group.com.mwm.publishing_generic.crossiap</string>
+	<string>group.com.mwm.mindgarden.crossiap</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -54,12 +54,12 @@
 		<integer>2</integer>
 	</array>
 	<key>appleAppID</key>
-	<string>1421134105</string>
+	<string>1588582890</string>
 	<key>gcpID</key>
-	<string>publishing-sandbox-backend</string>
+	<string>mindgarden-backend</string>
 	<key>mwmAppID</key>
-	<string>publishing_sandbox</string>
+	<string>mindgarden</string>
 	<key>mwmAppToken</key>
-	<string>9825d0fb44799971403f604bc9a950c55f520848518f28f09ce06a7e5c4154b4</string>
+	<string>25ce28cd4286e0d012c7e346e6253ffea0c219a676f2a897d38cbe22e7f0e616</string>
 </dict>
 </plist>

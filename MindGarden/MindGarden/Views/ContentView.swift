@@ -107,18 +107,19 @@ struct ContentView: View {
                                             .environmentObject(bonusModel)
                                             .environmentObject(authModel)
                                             .onAppear {
-                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "signedUp" {
+                                                let onboarding = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+                                                if onboarding == .signedUp {
                                                     withAnimation {
                                                         self.isOnboarding = true
                                                         addMood = true
                                                     }
-                                                } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "mood" {
+                                                } else if onboarding == .mood {
                                                     self.isOnboarding = true
                                                     moodFromFinished = false
                                                     viewRouter.currentPage = .journal
-                                                    if let mood = UserDefaults.standard.string(forKey: "selectedMood") {
+                                                    if let mood = DefaultsManager.standard.value(forKey: .selectedMood).string {
                                                         userModel.selectedMood = Mood.getMood(str: mood)
-                                                        if let elab = UserDefaults.standard.string(forKey: "elaboration") {
+                                                        if let elab = DefaultsManager.standard.value(forKey: .elaboration).string {
                                                             userModel.elaboration = elab
                                                         }
                                                         moodFirst = true
@@ -159,7 +160,8 @@ struct ContentView: View {
                                         Play()
                                             .frame(height: geometry.size.height + 80)
                                             .onAppear {
-                                                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
+                                                let onboarding = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
+                                                if onboarding == .gratitude {
                                                     self.isOnboarding = false
                                                 }
                                             }
@@ -215,7 +217,8 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .pricing:
-                                        PricingView()
+//                                        PricingView()
+                                        PricingMainView()
                                             .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(userModel)
@@ -280,9 +283,7 @@ struct ContentView: View {
                             } //: VStack
                             .edgesIgnoringSafeArea(.all)
                             let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
-                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && onboardingValue != .meditate && onboardingValue != .gratitude
-//                                UserDefaults.standard.string(forKey: K.defaults.onboarding) != "meditate" && UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
-                            ) {
+                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && onboardingValue != .meditate && onboardingValue != .gratitude) {
                                 ZStack {
                                     Rectangle()
                                         .opacity(addMood || addGratitude || isOnboarding || userModel.showDay1Complete || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
@@ -363,7 +364,6 @@ struct ContentView: View {
                                             withAnimation {
                                                 Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
                                                 DefaultsManager.standard.set(value: true, forKey: .fiveHundredBonus)
-//                                                DefaultsManager.standard.set(value: true, forKey: "500bonus")
                                                 userModel.showDay1Complete = false
                                                 bonusModel.tripleBonus()
                                             }

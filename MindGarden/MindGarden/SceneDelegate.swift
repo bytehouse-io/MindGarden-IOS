@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 5/25/21.
 //
 
-import AppsFlyerLib
+//import AppsFlyerLib
 import AVFoundation
 import Firebase
 import FirebaseDynamicLinks
@@ -251,9 +251,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 NotificationCenter.default.post(name: .garden, object: nil)
             }
         }
-        if let url = URLContexts.first?.url {
-            AppsFlyerLib.shared().handleOpen(url, options: nil)
-        }
+//        if let url = URLContexts.first?.url {
+//            AppsFlyerLib.shared().handleOpen(url, options: nil)
+//        }
     }
 
     func handlIncomingDynamicLink(_ dynamicLink: DynamicLink?) {

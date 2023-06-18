@@ -6,7 +6,7 @@
 //
 
 import Amplitude
-import AppsFlyerLib
+//import AppsFlyerLib
 import Firebase
 //import Paywall
 import Purchases // This example uses RevenueCat

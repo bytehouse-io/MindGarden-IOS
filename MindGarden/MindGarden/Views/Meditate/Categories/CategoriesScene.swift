@@ -136,9 +136,13 @@ struct CategoriesScene: View {
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 withAnimation {
-                                    if let url = URL(string: "https://mindgarden.upvoty.com/b/feature-requests/") {
+                                    if let url = URL(string: "https://discord.gg/SZXnxtyBV5") {
                                         UIApplication.shared.open(url)
                                     }
+                                
+//                                    if let url = URL(string: "https://mindgarden.upvoty.com/b/feature-requests/") {
+//                                        UIApplication.shared.open(url)
+//                                    }
                                 }
                             } label: {
                                 HStack {

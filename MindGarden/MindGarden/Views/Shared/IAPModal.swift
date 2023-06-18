@@ -6,9 +6,10 @@
 //
 
 import Amplitude
-import AppsFlyerLib
+//import AppsFlyerLib
 //import Purchases
 import SwiftUI
+import MWMPublishingSDK
 
 enum IAPType {
     case freeze, potion, chest
@@ -34,6 +35,8 @@ struct IAPModal: View {
 //    @State private var packagesAvailableForPurchase = [Purchases.Package]()
     @Binding var showAlert: Bool
     @State var isLoading = false
+    @State private var presentAlert = false
+    @State private var alertTitleError = ""
     // TODO: if user has a potion or chest activated can't purchase more or the other.
     // TODO: give user the ability to stack freeze streaks
 
@@ -59,8 +62,9 @@ struct IAPModal: View {
                                             .foregroundColor(.gray.opacity(0.85))
                                             .font(.system(size: 22))
                                             .padding()
-                                    }.position(x: 30, y: 25)
-                                }
+                                    } //: Button
+                                    .position(x: 30, y: 25)
+                                } //: ZStack
                                 Text("Potion Shop")
                                     .font(Font.fredoka(.bold, size: 20))
                                     .foregroundColor(Clr.black1)
@@ -80,7 +84,7 @@ struct IAPModal: View {
                                 Spacer()
                                 Spacer()
                                 Spacer()
-                            }
+                            } //: VStack
                             .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.3 : 0.3), alignment: .top)
                             VStack {
                                 Button {
@@ -89,7 +93,8 @@ struct IAPModal: View {
                                     onPurchase(type: .freeze)
                                 } label: {
                                     PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice, type: .freeze)
-                                }.padding(.bottom, 10)
+                                } //: Button
+                                .padding(.bottom, 10)
                                 Button {
                                     guard !userModel.isPotion && !userModel.isChest else { return }
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -97,7 +102,8 @@ struct IAPModal: View {
                                     onPurchase(type: .potion)
                                 } label: {
                                     PurchaseBox(isEnabled: !userModel.isPotion && !userModel.isChest, width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice, type: .potion)
-                                }.padding(.bottom, 10)
+                                } //: Button
+                                .padding(.bottom, 10)
                                 Button {
                                     guard !userModel.isPotion && !userModel.isChest else { return }
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -105,20 +111,23 @@ struct IAPModal: View {
                                     onPurchase(type: .chest)
                                 } label: {
                                     PurchaseBox(isEnabled: !userModel.isPotion && !userModel.isChest, width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice, type: .chest)
-                                }.padding(.bottom, 10)
+                                } //: Button
+                                .padding(.bottom, 10)
 
-                            }.frame(height: g.size.height * 0.4)
+                            } //: VStack
+                            .frame(height: g.size.height * 0.4)
                             Spacer()
-                        }
+                        } //: VStack
                         .frame(width: g.size.width * 0.85, height: g.size.height * (K.isSmall() ? 0.75 : 0.75), alignment: .center)
                         .background(Clr.darkWhite)
                         .cornerRadius(32)
                         Spacer()
-                    }
+                    } //: HStack
                     Spacer()
-                }
-            }
-        }.onAppear {
+                } //: VStack
+            } //: GeometryReader
+        } //: LoadingView
+        .onAppear {
 //            Purchases.shared.offerings { [self] offerings, _ in
 //                if let offerings = offerings {
 //                    let freeze = offerings["potion"]?.availablePackages[0]
@@ -149,6 +158,7 @@ struct IAPModal: View {
 //                }
 //            }
         }
+        .alert(alertTitleError, isPresented: $presentAlert) { }
     }
 
     private func onSuccess(type: IAPType) {
@@ -168,6 +178,7 @@ struct IAPModal: View {
 
     private func onPurchase(type: IAPType) {
         isLoading = true
+        purchaseIAP(with: type)
 //        let package = packagesAvailableForPurchase.last { package -> Bool in
 //            package.product.productIdentifier == type.productId
 //        }!
@@ -177,6 +188,24 @@ struct IAPModal: View {
 //            }
 //        }
     }
+    
+    func purchaseIAP(with type: IAPType) {
+        MWM.inAppManager().purchaseIAP(type.productId, completion: { success, error in
+            DispatchQueue.main.async {
+                isLoading = false
+                if success {
+                    // Start delivering the consumable product to your user from here
+                    onSuccess(type: type)
+                } else {
+                    // Handle error
+                    alertTitleError = error?.localizedDescription ?? ""
+                    presentAlert = true
+                    print(error)
+                }
+            }
+        })
+    }
+
 
     private func unlockPurchase(selectedBox: String) {
 //        var price = 0.0
@@ -231,19 +260,19 @@ struct IAPModal: View {
 //        }
     }
 
-    private func logRevenue(event: String, event2: String, price: Double) {
-        AppsFlyerLib.shared().logEvent(name: event, values:
-            [
-                AFEventParamContent: "true",
-            ])
-        Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
-        Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
-
-        AppsFlyerLib.shared().logEvent(name: event2, values:
-            [
-                AFEventParamContent: "true",
-            ])
-    }
+//    private func logRevenue(event: String, event2: String, price: Double) {
+//        AppsFlyerLib.shared().logEvent(name: event, values:
+//            [
+//                AFEventParamContent: "true",
+//            ])
+//        Amplitude.instance().logEvent(event2, withEventProperties: ["revenue": "\(price)"])
+//        Amplitude.instance().logEvent(event, withEventProperties: ["revenue": "\(price)"])
+//
+//        AppsFlyerLib.shared().logEvent(name: event2, values:
+//            [
+//                AFEventParamContent: "true",
+//            ])
+//    }
 
     private func logEvent(selectedBox: String) -> String {
         var event = ""

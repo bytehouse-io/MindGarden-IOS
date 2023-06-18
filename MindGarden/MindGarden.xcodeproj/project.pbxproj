@@ -24,6 +24,13 @@
 		184899FD29F44BD30095B61E /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
 		184899FF29F826D00095B61E /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FE29F826D00095B61E /* UIApplication+Extension.swift */; };
 		18633ECC2A015AA7009B7730 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
+		187658352A1FB81A00B66BB3 /* PricingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187658342A1FB81A00B66BB3 /* PricingMainView.swift */; };
+		187658382A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */; };
+		187658392A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */; };
+		1876583A2A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */; };
+		1876583B2A1FD62200B66BB3 /* Mindgarden.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 187658372A1FD62100B66BB3 /* Mindgarden.storekit */; };
+		1876583C2A1FD62200B66BB3 /* Mindgarden.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 187658372A1FD62100B66BB3 /* Mindgarden.storekit */; };
+		1876583D2A1FD62200B66BB3 /* Mindgarden.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 187658372A1FD62100B66BB3 /* Mindgarden.storekit */; };
 		187CE0FF29DC89BE00E6B54B /* MWMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CE0FE29DC89BE00E6B54B /* MWMManager.swift */; };
 		1882E70D29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70C29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift */; };
 		1882E70F29DBD501005D6DF2 /* TermsAndPrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */; };
@@ -33,12 +40,6 @@
 		188F8B8F29F1B4050062C4A8 /* CongratulationsOnCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188F8B8E29F1B4040062C4A8 /* CongratulationsOnCompletion.swift */; };
 		18A0EE4929EF0E7000D31261 /* MeditationGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A0EE4829EF0E7000D31261 /* MeditationGoalView.swift */; };
 		18A502D229F0F36300528A23 /* HoorayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A502D129F0F36300528A23 /* HoorayView.swift */; };
-		18B47D0F29E7DDB9002914CB /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */; };
-		18B47D1029E7DDB9002914CB /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */; };
-		18B47D1129E7DDB9002914CB /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */; };
-		18B47D1229E7DDB9002914CB /* Mindgarden.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0E29E7DDB9002914CB /* Mindgarden.storekit */; };
-		18B47D1329E7DDB9002914CB /* Mindgarden.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0E29E7DDB9002914CB /* Mindgarden.storekit */; };
-		18B47D1429E7DDB9002914CB /* Mindgarden.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 18B47D0E29E7DDB9002914CB /* Mindgarden.storekit */; };
 		5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF80286B6ED5000C6E0B /* Fredoka-Bold.ttf */; };
 		5801C2752892F3C900927C4F /* Fredoka-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF84286B6ED5000C6E0B /* Fredoka-Light.ttf */; };
 		5801C2762892F3D000927C4F /* Fredoka-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88F4BF82286B6ED5000C6E0B /* Fredoka-Medium.ttf */; };
@@ -350,6 +351,9 @@
 		184899FA29F3C81C0095B61E /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		184899FC29F44BD20095B61E /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		184899FE29F826D00095B61E /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
+		187658342A1FB81A00B66BB3 /* PricingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingMainView.swift; sourceTree = "<group>"; };
+		187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWMPublishingData.bundle; sourceTree = "<group>"; };
+		187658372A1FD62100B66BB3 /* Mindgarden.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Mindgarden.storekit; sourceTree = "<group>"; };
 		187CE0FE29DC89BE00E6B54B /* MWMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWMManager.swift; sourceTree = "<group>"; };
 		1882E70C29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequentlyAskedQuestionView.swift; sourceTree = "<group>"; };
 		1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndPrivacyView.swift; sourceTree = "<group>"; };
@@ -359,8 +363,6 @@
 		188F8B8E29F1B4040062C4A8 /* CongratulationsOnCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsOnCompletion.swift; sourceTree = "<group>"; };
 		18A0EE4829EF0E7000D31261 /* MeditationGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationGoalView.swift; sourceTree = "<group>"; };
 		18A502D129F0F36300528A23 /* HoorayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoorayView.swift; sourceTree = "<group>"; };
-		18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWMPublishingData.bundle; sourceTree = "<group>"; };
-		18B47D0E29E7DDB9002914CB /* Mindgarden.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Mindgarden.storekit; sourceTree = "<group>"; };
 		47148409A1C4D45A03147FE4 /* Pods-MindGardenTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindGardenTests.release.xcconfig"; path = "Target Support Files/Pods-MindGardenTests/Pods-MindGardenTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A4894B46B32C982CA8D046B /* Pods_MindGarden_MindGardenWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindGarden_MindGardenWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5803A31B27DBB8CB00F1F2E7 /* DaysProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaysProgressBar.swift; sourceTree = "<group>"; };
@@ -683,6 +685,7 @@
 			isa = PBXGroup;
 			children = (
 				FE4CF8AA27288425007117F5 /* PricingView.swift */,
+				187658342A1FB81A00B66BB3 /* PricingMainView.swift */,
 				1882E70C29DBD38F005D6DF2 /* FrequentlyAskedQuestionView.swift */,
 				1882E70E29DBD501005D6DF2 /* TermsAndPrivacyView.swift */,
 				1882E71029DBE023005D6DF2 /* PricingBoxView.swift */,
@@ -1048,9 +1051,9 @@
 		FEB6AF94265D95F500224BFD /* MindGarden */ = {
 			isa = PBXGroup;
 			children = (
-				18B47D0E29E7DDB9002914CB /* Mindgarden.storekit */,
-				18B47D0D29E7DDB7002914CB /* MWMPublishingData.bundle */,
 				FE11F0B726910D5A00E1E71A /* MindGarden.entitlements */,
+				187658372A1FD62100B66BB3 /* Mindgarden.storekit */,
+				187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */,
 				FEB85FBF266C19BB008CDAA4 /* Helpers */,
 				FEB85FC3266C1B75008CDAA4 /* Resources */,
 				FEB85FCC266C1D29008CDAA4 /* Models */,
@@ -1539,8 +1542,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18B47D1329E7DDB9002914CB /* Mindgarden.storekit in Resources */,
-				18B47D1029E7DDB9002914CB /* MWMPublishingData.bundle in Resources */,
+				1876583C2A1FD62200B66BB3 /* Mindgarden.storekit in Resources */,
+				187658392A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */,
 				88C39D41283D460F004D42EC /* educatedRacoon.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1552,9 +1555,9 @@
 				5801C2762892F3D000927C4F /* Fredoka-Medium.ttf in Resources */,
 				FE48B44F277959A400CA7B63 /* Colors.xcassets in Resources */,
 				5801C2772892F3D400927C4F /* Fredoka-Regular.ttf in Resources */,
-				18B47D1429E7DDB9002914CB /* Mindgarden.storekit in Resources */,
+				1876583D2A1FD62200B66BB3 /* Mindgarden.storekit in Resources */,
 				5801C2782892F3D800927C4F /* Fredoka-SemiBold.ttf in Resources */,
-				18B47D1129E7DDB9002914CB /* MWMPublishingData.bundle in Resources */,
+				1876583A2A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */,
 				FE48B44227791B5B00CA7B63 /* Assets.xcassets in Resources */,
 				5801C2742892F3C600927C4F /* Fredoka-Bold.ttf in Resources */,
 				FE48B4512779618600CA7B63 /* Assets.xcassets in Resources */,
@@ -1583,7 +1586,7 @@
 				88F36AB927DFBE900060FD8E /* 432hz.mp3 in Resources */,
 				58C8BE2E28049A1E00075FD2 /* fire_ignite.mp3 in Resources */,
 				FEB85FC7266C1C1C008CDAA4 /* Images.xcassets in Resources */,
-				18B47D0F29E7DDB9002914CB /* MWMPublishingData.bundle in Resources */,
+				187658382A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */,
 				5822E587286186C000DB0AFC /* waterdrops.mp3 in Resources */,
 				FE9B408226A65A72000DF00C /* night.mp3 in Resources */,
 				88D4C5DB27FA468C00CBB956 /* sloth.json in Resources */,
@@ -1615,7 +1618,7 @@
 				FE4D80ED26ED4E36002FE291 /* side-arrow.json in Resources */,
 				8884A994284A75E200B0B315 /* flame.json in Resources */,
 				FE9B407A26A4B336000DF00C /* rain.mp3 in Resources */,
-				18B47D1229E7DDB9002914CB /* Mindgarden.storekit in Resources */,
+				1876583B2A1FD62200B66BB3 /* Mindgarden.storekit in Resources */,
 				FE9B407C26A4D0D9000DF00C /* beach.mp3 in Resources */,
 				8862586B27C4369E0093D18C /* check2.json in Resources */,
 				88F36ABB27DFBE900060FD8E /* beta.mp3 in Resources */,
@@ -1977,6 +1980,7 @@
 				FEA592D1267E9459006558A2 /* StatBox.swift in Sources */,
 				58D5C0F127FB672500454937 /* FlowerPop.swift in Sources */,
 				FEB85FC2266C1A97008CDAA4 /* View+Extensions.swift in Sources */,
+				187658352A1FB81A00B66BB3 /* PricingMainView.swift in Sources */,
 				FE6B5161270A36FB000118E8 /* AnalyticServices.swift in Sources */,
 				88CF8E6F287CDF7800BA89B9 /* ProfileTabBar.swift in Sources */,
 				FE17B8AA26BE0500002CF8C2 /* GardenViewModel.swift in Sources */,
@@ -2314,11 +2318,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 81;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
-				DEVELOPMENT_TEAM = M5757NXZKD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MindGarden/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2329,6 +2333,7 @@
 				MARKETING_VERSION = 1.82;
 				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -2342,10 +2347,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = MindGarden/MindGarden.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 81;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGarden/Preview Content\"";
-				DEVELOPMENT_TEAM = M5757NXZKD;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MindGarden/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -2356,6 +2361,7 @@
 				MARKETING_VERSION = 1.82;
 				PRODUCT_BUNDLE_IDENTIFIER = io.mwm.mindgarden.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

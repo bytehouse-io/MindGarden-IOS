@@ -6,7 +6,7 @@
 //
 
 import Amplitude
-import AppsFlyerLib
+//import AppsFlyerLib
 import Firebase
 import FirebaseFirestore
 import MWMPublishingSDK
@@ -600,5 +600,56 @@ extension PricingView {
             event = event + "garden"
         }
         return event
+    }
+}
+
+class PricingViewHelperViewController: UIViewController {
+    
+    let router = ViewRouter()
+    lazy var authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: router)
+
+    override func viewDidLoad() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: { [weak self] in
+            self?.openDynamicScreen()
+        })
+    }
+    
+    func openDynamicScreen() {
+        MWM.presentDynamicScreen(
+            withPlacementKey: MWMModel.DynamicScreenPlacement.store.rawValue,
+            on: self,
+            loaderViewController: nil,
+            withCompletion: { 
+            },
+            onDismiss: { [weak self] booll in
+                self?.openContentView()
+            })
+    }
+    
+    func openContentView() {
+        // Create a SwiftUI view to display
+        let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: self.authModel, onReviewCompletion: nil)
+
+        // Create a UIHostingController and set its rootView to the SwiftUI view
+        let hostingController = UIHostingController(rootView: contentView
+            .environmentObject(self.router)
+            .environmentObject(SceneDelegate.medModel)
+            .environmentObject(SceneDelegate.userModel)
+            .environmentObject(SceneDelegate.gardenModel))
+        
+
+        // Add the hosting controller as a child view controller to this view controller
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+
+        // Set constraints for the hosting controller's view
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        // Notify the hosting controller that it has been added as a child view controller
+        hostingController.didMove(toParent: self)
     }
 }

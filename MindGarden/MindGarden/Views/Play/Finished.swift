@@ -6,7 +6,7 @@
 //
 
 import Amplitude
-import AppsFlyerLib
+//import AppsFlyerLib
 import Firebase
 import OneSignal
 import Photos
