@@ -150,11 +150,13 @@ struct MediumWidgetRow: View {
                                     }
                                 )
                             Spacer()
-                        }
-                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
-                }.padding(10)
-            }
-        }
+                        } //: HStack
+                    } //: VStack
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } //: HStack
+                .padding(10)
+            } //: Link
+        } //: ZStack
         .background(Color("darkWhite").cornerRadius(20).neoShadow())
         .padding(5)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

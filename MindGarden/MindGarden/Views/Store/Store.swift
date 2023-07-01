@@ -288,12 +288,12 @@ struct Store: View {
             VStack {
                 HStack {
                     PlusCoins(coins: $userModel.coins)
-                        .onTapGesture {
-                            withAnimation {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                showIAP.toggle()
-                            }
-                        }
+//                        .onTapGesture {
+//                            withAnimation {
+//                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                                showIAP.toggle()
+//                            }
+//                        }
                 }.padding(.bottom, -10)
                 if isShop && !(tabType == .store) {
                     ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count / 2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in

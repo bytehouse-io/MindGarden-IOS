@@ -30,10 +30,11 @@ struct SmallWidget: View {
                         .shadow(color: .black.opacity(0.5), radius: 2, x: -2, y: -2)
                         .offset(y: -8)
                     Spacer()
-                }
+                } //: VStack
                 Spacer()
-            }.padding(.leading, 24)
-                .padding(.top, 5)
+            } //: HStack
+            .padding(.leading, 24)
+            .padding(.top, 5)
         }
     }
 }

@@ -26,16 +26,16 @@ struct PlusCoins: View {
                     .font(Font.fredoka(.semiBold, size: coins >= 1000 ? 18 : 20))
                     .foregroundColor(Clr.black2)
             }.frame(width: 80, height: 20)
-            Circle()
-                .fill(Clr.brightGreen)
-                .frame(height: 35)
-                .neoShadow()
-                .zIndex(100)
-                .overlay(
-                    Image(systemName: "plus")
-                        .foregroundColor(.white)
-                        .font(Font.system(size: 18, weight: .bold))
-                )
+//            Circle()
+//                .fill(Clr.brightGreen)
+//                .frame(height: 35)
+//                .neoShadow()
+//                .zIndex(100)
+//                .overlay(
+//                    Image(systemName: "plus")
+//                        .foregroundColor(.white)
+//                        .font(Font.system(size: 18, weight: .bold))
+//                )
         }.frame(width: 110)
     }
 }

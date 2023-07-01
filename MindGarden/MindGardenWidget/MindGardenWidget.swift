@@ -48,7 +48,9 @@ struct Provider: IntentTimelineProvider {
             entries.append(entry)
         }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        guard let refreshDate = Calendar.current.date(byAdding: .minute, value: 50, to: currentDate) else { return }
+        
+        let timeline = Timeline(entries: entries, policy: .after(refreshDate))
         completion(timeline)
     }
 }
@@ -93,7 +95,8 @@ struct MindGardenWidgetEntryView: View {
             default:
                 Text("Some other WidgetFamily in the future.")
             }
-        }.onAppear {
+        }
+        .onAppear {
             let hour = Calendar.current.component(.hour, from: Date())
             if hour <= 17 {
                 dayTime = true
@@ -101,9 +104,9 @@ struct MindGardenWidgetEntryView: View {
                 dayTime = false
             }
 //            extractData()
-            Timer.scheduledTimer(withTimeInterval: 3600.0, repeats: true) { _ in
-                WidgetCenter.shared.reloadAllTimelines()
-            }
+//            Timer.scheduledTimer(withTimeInterval: 3600.0, repeats: true) { _ in
+//                WidgetCenter.shared.reloadAllTimelines()
+//            }
         }
     }
 
@@ -239,7 +242,8 @@ struct MindGardenWidgetEntryView: View {
                         .foregroundColor(Color("darkgreen"))
                         .padding(3)
                         .frame(width: width * 0.07)
-                }.frame(width: width * 0.4, alignment: .leading)
+                } //: HStack
+                .frame(width: width * 0.4, alignment: .leading)
             }
         }
     }
