@@ -88,7 +88,7 @@ struct NextSteps: View {
             }
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                Analytics.shared.log(event: .nextsteps_tapped_done)
+                // Analytics.shared.log(event: .nextsteps_tapped_done)
                 withAnimation {
                     presentationMode.wrappedValue.dismiss()
                     viewRouter.currentPage = .garden
@@ -113,7 +113,7 @@ struct NextSteps: View {
                 .padding(.horizontal, 32)
                 .position(x: UIScreen.screenWidth / 2, y: UIScreen.screenHeight - 100)
         }.frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight)
-            .onAppearAnalytics(event: .screen_load_nextsteps)
+            // .onAppearAnalytics(event: .screen_load_nextsteps)
             .onAppear {
                 isNextSteps = true
             }
@@ -123,7 +123,7 @@ struct NextSteps: View {
     }
 
     private func signUp() {
-        Analytics.shared.log(event: .nextsteps_tapped_save_progress)
+        // Analytics.shared.log(event: .nextsteps_tapped_save_progress)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation {
             presentationMode.wrappedValue.dismiss()

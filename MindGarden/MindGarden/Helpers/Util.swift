@@ -136,6 +136,7 @@ extension UserDefaults {
         let isFirstLaunch = !DefaultsManager.standard.value(forKey: .hasBeenLaunchedBeforeFlag).boolValue
 //        UserDefaults.standard.bool(forKey: hasBeenLaunchedBeforeFlag)
         if isFirstLaunch {
+             Analytics.shared.log(event: .first_open)
             DefaultsManager.standard.set(value: true, forKey: .hasBeenLaunchedBeforeFlag)
 //            UserDefaults.standard.set(true, forKey: hasBeenLaunchedBeforeFlag)
 //            UserDefaults.standard.synchronize()

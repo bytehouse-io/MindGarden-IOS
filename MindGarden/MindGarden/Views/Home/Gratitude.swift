@@ -31,7 +31,7 @@ struct Gratitude: View, KeyboardReadable {
                 Spacer()
                 VStack(alignment: .center, spacing: 10) {
                     Button {
-                        Analytics.shared.log(event: .gratitude_tapped_prompts)
+                        // Analytics.shared.log(event: .gratitude_tapped_prompts)
                         withAnimation {
                             openPrompts.toggle()
                         }

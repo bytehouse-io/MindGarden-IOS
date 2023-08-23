@@ -162,7 +162,7 @@ struct LearnScene: View {
                 }
             }
         }
-        .onAppearAnalytics(event: .screen_load_learn)
+        // .onAppearAnalytics(event: .screen_load_learn)
     }
 
     struct LearnCard: View {
@@ -217,9 +217,9 @@ struct LearnScene: View {
                         .onTapGesture {
                             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                             if course.category == "meditation" {
-                                Analytics.shared.log(event: .learn_tapped_meditation_course)
+                                // Analytics.shared.log(event: .learn_tapped_meditation_course)
                             } else {
-                                Analytics.shared.log(event: .learn_tapped_life_course)
+                                // Analytics.shared.log(event: .learn_tapped_life_course)
                             }
                             learnCourse = course
                             showCourse = true
@@ -243,7 +243,7 @@ extension LearnScene {
             switch permission.authorizationStatus {
             case .authorized:
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
-                Analytics.shared.log(event: .notification_success_learn)
+                // Analytics.shared.log(event: .notification_success_learn)
                 if DefaultsManager.standard.value(forKey: .oneDayNotif).isNil
 //                    UserDefaults.standard.value(forKey: "oneDayNotif") == nil
                 {
@@ -262,7 +262,7 @@ extension LearnScene {
                 DefaultsManager.standard.set(value: true, forKey: .notifOn)
                 isNotifOn = true
             case .denied:
-                Analytics.shared.log(event: .notification_settings_learn)
+                // Analytics.shared.log(event: .notification_settings_learn)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
@@ -270,7 +270,7 @@ extension LearnScene {
                     }
                 }
             case .notDetermined:
-                Analytics.shared.log(event: .notification_settings_learn)
+                // Analytics.shared.log(event: .notification_settings_learn)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)

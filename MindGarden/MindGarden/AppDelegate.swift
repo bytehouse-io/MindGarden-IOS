@@ -74,6 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // OneSignal initialization
         OneSignal.initWithLaunchOptions(launchOptions)
         OneSignal.setAppId("7f964cf0-550e-426f-831e-468b9a02f012")
+        
+        Amplitude.instance().initializeApiKey("9faae146487745e64108a3ed733c0d8e") // MWM production api key	
 
 //        Purchases.logLevel = .debug
 //        Purchases.automaticAppleSearchAdsAttributionCollection = true
@@ -214,7 +216,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard let urlComponents = URLComponents(string: deepLink), let queryItems = urlComponents.queryItems else { return false }
             for item in queryItems {
                 if item.name == "referral" {
-                    Analytics.shared.log(event: .onboarding_came_from_referral)
+                    // Analytics.shared.log(event: .onboarding_came_from_referral)
                     DefaultsManager.standard.set(value: item.value ?? "", forKey: .referred)
                 }
             }
@@ -285,24 +287,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.notification.request.identifier == "oneDay" {
-            Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
+            // Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
         } else if response.notification.request.identifier == "introNotif" {
             NotificationCenter.default.post(name: .intro, object: nil)
-            Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
+            // Analytics.shared.log(event: .notification_tapped_oneDay_reminder)
         } else if response.notification.request.identifier == "threeDay" {
-            Analytics.shared.log(event: .notification_tapped_threeDay_reminder)
+            // Analytics.shared.log(event: .notification_tapped_threeDay_reminder)
         } else if response.notification.request.identifier == "streakNotStarted" {
-            Analytics.shared.log(event: .notification_tapped_streakNotStarted)
+            // Analytics.shared.log(event: .notification_tapped_streakNotStarted)
         } else if response.notification.request.identifier == "finishOnboarding" {
-            Analytics.shared.log(event: .notification_tapped_onboarding)
+            // Analytics.shared.log(event: .notification_tapped_onboarding)
         } else if response.notification.request.identifier == "⚙️ Widget has been unlocked" {
-            Analytics.shared.log(event: .notification_tapped_widget)
+            // Analytics.shared.log(event: .notification_tapped_widget)
             NotificationCenter.default.post(name: .widget, object: nil)
         } else if response.notification.request.identifier == "🛍 Your Store Page has been unlocked!" {
-            Analytics.shared.log(event: .notification_tapped_store)
+            // Analytics.shared.log(event: .notification_tapped_store)
             NotificationCenter.default.post(name: .store, object: nil)
         } else if response.notification.request.identifier == "🔑 Learn Page has unlocked!" {
-            Analytics.shared.log(event: .notification_tapped_learn)
+            // Analytics.shared.log(event: .notification_tapped_learn)
             NotificationCenter.default.post(name: .learn, object: nil)
         }
         completionHandler()

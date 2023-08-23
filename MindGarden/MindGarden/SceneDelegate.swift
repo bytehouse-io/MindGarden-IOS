@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let launchNum = DefaultsManager.standard.value(forKey: .launchNumber).integerValue
 //        DefaultsManager.standard.set(value: "done", forKey: K.defaults.onboarding)
 //        DefaultsManager.standard.set(value: ["Bijan 8", "Quote 1", "Tale 2", "New Users"], forKey: "oldSegments")
-        Analytics.shared.log(event: .launchedApp)
+        // Analytics.shared.log(event: .launchedApp)
         playSound(soundName: "background")
 
         if launchNum == 0 {
@@ -155,12 +155,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         numberOfMeds = Int.random(in: 1085 ..< 1111)
         launchedApp = true
-        Analytics.shared.log(event: .sceneDidBecomeActive)
+        // Analytics.shared.log(event: .sceneDidBecomeActive)
         SceneDelegate.bonusModel.updateBonus()
         SceneDelegate.userModel.updateSelf()
 
         if let player = player, playOnActive {
-            if UserDefaults.standard.bool(forKey: "isPlayMusic") {
+            if DefaultsManager.standard.value(forKey: .isPlayMusic).boolValue {
                 player.play()
             }
         }
@@ -183,7 +183,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to undo the changes made on entering the background.
         SceneDelegate.gardenModel.updateSelf()
 
-        var launchNum = UserDefaults.standard.integer(forKey: "launchNumber")
+        var launchNum = DefaultsManager.standard.value(forKey: .launchNumber).integerValue
         launchNum += 1
         DefaultsManager.standard.set(value: launchNum, forKey: .launchNumber)
 
@@ -266,12 +266,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // link, sign in the user anonymously and record the referrer UID in the
         // user's RTDB record.
         if user == nil && invitedBy != nil {
-            Analytics.shared.log(event: .onboarding_came_from_referral)
+            // Analytics.shared.log(event: .onboarding_came_from_referral)
             DefaultsManager.standard.set(value: invitedBy ?? "", forKey: .referred)
 //            DefaultsManager.standard.set(value: invitedBy, forKey: K.defaults.referred)
             let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
             let isLoggedIn = DefaultsManager.standard.value(forKey: .loggedIn).boolValue
-            if onboardingValue == .done || onboardingValue == .garden && isLoggedIn
+            if onboardingValue == .done || onboardingValue == .garden && !isLoggedIn
 //                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" && UserDefaults.standard.bool(forKey: K.defaults.loggedIn)
             {
                 router.currentPage = .authentication

@@ -30,7 +30,7 @@ struct DiscoverTab: View {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 selectedTab = item.tabName
                                 if selectedTab == .journey {
-                                    Analytics.shared.log(event: .screen_load_journey)
+                                    // Analytics.shared.log(event: .screen_load_journey)
                                 }
                             }
                         }

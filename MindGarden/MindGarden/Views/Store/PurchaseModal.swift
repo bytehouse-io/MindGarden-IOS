@@ -170,7 +170,7 @@ struct PurchaseModal: View {
                                 switch Plant.badgeDict[(userModel.willBuyPlant ?? Plant.plants[0]).price] {
                                 case "⭐️ Rate the app":
                                     if !UserDefaults.standard.bool(forKey: "tappedRate") {
-                                        Analytics.shared.log(event: .store_tapped_rate_app)
+                                        // Analytics.shared.log(event: .store_tapped_rate_app)
                                         withAnimation {
                                             if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
                                                 DefaultsManager.standard.set(value: true, forKey: .tappedRate)
@@ -184,7 +184,7 @@ struct PurchaseModal: View {
                                         viewRouter.currentPage = .middle
                                     }
                                 case "💌 Refer a friend":
-                                    Analytics.shared.log(event: .store_tapped_refer_friend)
+                                    // Analytics.shared.log(event: .store_tapped_refer_friend)
                                     withAnimation {
                                         tappedRefer = true
                                         showProfile = true
@@ -192,7 +192,7 @@ struct PurchaseModal: View {
                                 case "👨‍🌾 Become a pro user":
                                     if !UserDefaults.standard.bool(forKey: "isPro") {
                                         withAnimation {
-                                            Analytics.shared.log(event: .pricing_from_store)
+                                            // Analytics.shared.log(event: .pricing_from_store)
                                             fromPage = "store"
                                             viewRouter.currentPage = .pricing
                                         }
@@ -201,7 +201,7 @@ struct PurchaseModal: View {
                                     if let url = URL(string: "https://www.reddit.com/r/MindGarden/") {
                                         UIApplication.shared.open(url)
                                     }
-                                    Analytics.shared.log(event: .store_tapped_discord)
+                                    // Analytics.shared.log(event: .store_tapped_discord)
                                     if !UserDefaults.standard.bool(forKey: "reddit") {
                                         DefaultsManager.standard.set(value: true, forKey: .reddit)
                                     }
@@ -216,7 +216,7 @@ struct PurchaseModal: View {
                                     }
                                 }
                             } else {
-                                Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
+                                // Analytics.shared.log(event: .store_tapped_purchase_modal_buy)
                                 if userModel.coins >= userModel.willBuyPlant?.price ?? 0 {
                                     withAnimation {
                                         showConfirm = true

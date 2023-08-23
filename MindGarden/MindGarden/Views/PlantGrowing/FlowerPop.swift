@@ -68,7 +68,7 @@ struct FlowerPop: View {
                                 .cornerRadius(25)
                                 .onTapGesture {
                                     withAnimation {
-                                        Analytics.shared.log(event: .store_animation_continue)
+                                        // Analytics.shared.log(event: .store_animation_continue)
                                         let impact = UIImpactFeedbackGenerator(style: .light)
                                         impact.impactOccurred()
                                         userModel.triggerAnimation = false

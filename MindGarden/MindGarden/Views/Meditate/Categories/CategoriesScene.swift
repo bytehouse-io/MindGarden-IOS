@@ -132,7 +132,7 @@ struct CategoriesScene: View {
                                 .font(Font.fredoka(.semiBold, size: 18))
                                 .foregroundColor(Clr.black2)
                             Button {
-                                Analytics.shared.log(event: .categories_tapped_request)
+                                // Analytics.shared.log(event: .categories_tapped_request)
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 withAnimation {
@@ -211,7 +211,7 @@ struct CategoriesScene: View {
                 }
             }
         }
-        .onAppearAnalytics(event: .screen_load_categories)
+        // .onAppearAnalytics(event: .screen_load_categories)
     }
 
     var meditations: [Meditation] {
@@ -288,12 +288,12 @@ struct CategoriesScene: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
                 fromPage = ""
-                Analytics.shared.log(event: .pricing_from_locked)
-                Analytics.shared.log(event: .categories_tapped_locked_meditation)
+                // Analytics.shared.log(event: .pricing_from_locked)
+                // Analytics.shared.log(event: .categories_tapped_locked_meditation)
                 presentationMode.wrappedValue.dismiss()
                 viewRouter.currentPage = .pricing
             } else {
-                Analytics.shared.log(event: .categories_tapped_meditation)
+                // Analytics.shared.log(event: .categories_tapped_meditation)
                 model.selectedMeditation = item
                 if isSearch {
                     tappedMed = true
@@ -320,7 +320,7 @@ struct CategoriesScene: View {
         var body: some View {
             Button {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                Amplitude.instance().logEvent("search_selected_category", withEventProperties: ["category": category.value])
+//                Amplitude.instance().logEvent("search_selected_category", withEventProperties: ["category": category.value])
                 withAnimation {
                     selected = category
                 }

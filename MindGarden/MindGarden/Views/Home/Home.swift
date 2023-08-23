@@ -180,7 +180,7 @@ struct Home: View {
                 // self.runCounter(counter: $coins, start: 0, end: coins, speed: 0.015)
             }
         }
-        .onAppearAnalytics(event: .screen_load_home)
+        // .onAppearAnalytics(event: .screen_load_home)
         .onReceive(NotificationCenter.default.publisher(for: .notification))
         { _ in
             withAnimation {

@@ -43,7 +43,7 @@ struct BreathMiddle: View {
                     HStack {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .breathwrk_middle_tapped_back)
+                            // Analytics.shared.log(event: .breathwrk_middle_tapped_back)
                             withAnimation {
                                 viewRouter.currentPage = viewRouter.previousPage
                             }
@@ -112,7 +112,7 @@ struct BreathMiddle: View {
                                 Spacer()
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .breathwrk_middle_duration_1)
+                                    // Analytics.shared.log(event: .breathwrk_middle_duration_1)
                                     withAnimation {
                                         duration = 30
                                     }
@@ -125,7 +125,7 @@ struct BreathMiddle: View {
                                 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .breathwrk_middle_duration_3)
+                                    // Analytics.shared.log(event: .breathwrk_middle_duration_3)
                                     withAnimation {
                                         duration = 60
                                     }
@@ -138,7 +138,7 @@ struct BreathMiddle: View {
                                 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .breathwrk_middle_duration_5)
+                                    // Analytics.shared.log(event: .breathwrk_middle_duration_5)
                                     withAnimation {
                                         duration = 180
                                     }
@@ -151,7 +151,7 @@ struct BreathMiddle: View {
                                 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .breathwrk_middle_duration_10)
+                                    // Analytics.shared.log(event: .breathwrk_middle_duration_10)
                                     withAnimation {
                                         duration = 300
                                     }
@@ -248,7 +248,7 @@ struct BreathMiddle: View {
 
     private func likeAction() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        Analytics.shared.log(event: .breathwrk_middle_favorited)
+        // Analytics.shared.log(event: .breathwrk_middle_favorited)
         medModel.favorite(id: breathWork.id)
         isFavorited.toggle()
     }

@@ -89,7 +89,7 @@ struct IAPModal: View {
                             VStack {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .IAP_tapped_freeze)
+                                    // Analytics.shared.log(event: .IAP_tapped_freeze)
                                     onPurchase(type: .freeze)
                                 } label: {
                                     PurchaseBox(width: g.size.width, height: g.size.height, img: Img.freezestreak, title: "Freeze Streak (2x)", subtitle: "Protect your streak (twice) if you a miss a day of meditation. ", price: freezePrice, type: .freeze)
@@ -98,7 +98,7 @@ struct IAPModal: View {
                                 Button {
                                     guard !userModel.isPotion && !userModel.isChest else { return }
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .IAP_tapped_potion)
+                                    // Analytics.shared.log(event: .IAP_tapped_potion)
                                     onPurchase(type: .potion)
                                 } label: {
                                     PurchaseBox(isEnabled: !userModel.isPotion && !userModel.isChest, width: g.size.width, height: g.size.height, img: Img.sunshinepotion, title: "Sunshine Potion", subtitle: "Potion will activate & triple coins after every meditation for 1 WEEK", price: potionPrice, type: .potion)
@@ -107,7 +107,7 @@ struct IAPModal: View {
                                 Button {
                                     guard !userModel.isPotion && !userModel.isChest else { return }
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .IAP_tapped_chest)
+                                    // Analytics.shared.log(event: .IAP_tapped_chest)
                                     onPurchase(type: .chest)
                                 } label: {
                                     PurchaseBox(isEnabled: !userModel.isPotion && !userModel.isChest, width: g.size.width, height: g.size.height, img: Img.sunshinechest, title: "Sunshine Chest", subtitle: "Potion will activate & triple coins after every meditation for 3 WEEKs", price: chestPrice, type: .chest)

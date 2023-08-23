@@ -209,11 +209,11 @@ struct ProfileScene: View {
                                                     VStack {
                                                         if !UserDefaults.standard.bool(forKey: "isPro") {
                                                             Row(title: "Unlock Pro", img: Image(systemName: "heart.fill"), action: {
-                                                                Analytics.shared.log(event: .profile_tapped_goPro)
+                                                                // Analytics.shared.log(event: .profile_tapped_goPro)
                                                                 withAnimation {
                                                                     presentationMode.wrappedValue.dismiss()
                                                                     showProfile = true
-                                                                    Analytics.shared.log(event: .pricing_from_profile)
+                                                                    // Analytics.shared.log(event: .pricing_from_profile)
                                                                     fromPage = "profile"
                                                                     viewRouter.currentPage = .pricing
                                                                 }
@@ -227,10 +227,10 @@ struct ProfileScene: View {
                                                                 if let player = player {
                                                                     if player.isPlaying {
                                                                         player.pause()
-                                                                        Analytics.shared.log(event: .profile_tapped_background_on)
+                                                                        // Analytics.shared.log(event: .profile_tapped_background_on)
                                                                         backgroundMusicOn = false
                                                                     } else {
-                                                                        Analytics.shared.log(event: .profile_tapped_background_off)
+                                                                        // Analytics.shared.log(event: .profile_tapped_background_off)
                                                                         player.play()
                                                                         backgroundMusicOn = true
                                                                     }
@@ -241,34 +241,36 @@ struct ProfileScene: View {
                                                             Divider()
                                                             Row(title: "Notifications", img: Image(systemName: "bell.fill"), action: {
                                                                 showNotification = true
-                                                                Analytics.shared.log(event: .profile_tapped_notifications)
+                                                                // Analytics.shared.log(event: .profile_tapped_notifications)
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                             Divider()
                                                             Row(title: "Garden", img: Image(systemName: "calendar"), action: {
                                                                 showGarden = true
-                                                                Analytics.shared.log(event: .profile_tapped_garden)
+                                                                // Analytics.shared.log(event: .profile_tapped_garden)
                                                             }, showNotif: $showNotif, showMindful: $showMindful)
                                                                 .frame(height: 40)
                                                         }
                                                         Divider()
 //                                                            Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
-//                                                                Analytics.shared.log(event: .profile_tapped_email)
+//                                                                // Analytics.shared.log(event: .profile_tapped_email)
 //
 //                                                            }, showNotif: $showNotif, showMindful: $showMindful)
 //                                                                .frame(height: 40)
 //                                                            Divider()
                                                         Row(title: "Restore Purchases", img: Image(systemName: "arrow.triangle.2.circlepath"), action: {
-                                                            Analytics.shared.log(event: .profile_tapped_restore)
+                                                            // Analytics.shared.log(event: .profile_tapped_restore)
                                                             
                                                             MWMManager.shared.restorePurchases { result in
                                                                 if result.isAnyPremiumFeatureUnlocked {
                                                                     DefaultsManager.standard.set(value: true, forKey: .isPro)
+                                                                     Analytics.shared.logActual(event: .is_premium, with: ["is_premium": true])
                                                                     restorePurchase = true
-                                                                } else {
-                                                                    DefaultsManager.standard.set(value: false, forKey: .isPro)
-                                                                }
+                                                            } else {
+                                                                DefaultsManager.standard.set(value: false, forKey: .isPro)
+                                                                 Analytics.shared.logActual(event: .is_premium, with: ["is_premium": false])
                                                             }
+                                                        }
                                                             // removing revenue cat
 //                                                                Purchases.shared.restoreTransactions { purchaserInfo, _ in
 //                                                                    if purchaserInfo?.entitlements.all["isPro"]?.isActive == true {
@@ -282,7 +284,7 @@ struct ProfileScene: View {
                                                             .frame(height: 40)
                                                         Divider()
                                                         Row(title: "Contact Us", img: Image(systemName: "envelope.fill"), action: {
-                                                            Analytics.shared.log(event: .profile_tapped_feedback)
+                                                            // Analytics.shared.log(event: .profile_tapped_feedback)
                                                             withAnimation(.spring()) {
                                                                 showFeedbackOption = true
                                                             }
@@ -290,7 +292,7 @@ struct ProfileScene: View {
                                                             .frame(height: 40)
                                                         Divider()
                                                         Row(title: "Add Widget", img: Image(systemName: "gearshape.fill"), action: {
-                                                            Analytics.shared.log(event: .profile_tapped_add_widget)
+                                                            // Analytics.shared.log(event: .profile_tapped_add_widget)
                                                             withAnimation {
                                                                 presentationMode.wrappedValue.dismiss()
                                                                 profileModel.showWidget = true
@@ -322,7 +324,7 @@ struct ProfileScene: View {
                                                         .neoShadow()
                                                     VStack {
                                                         Row(title: "Invite Friends", img: Image(systemName: "arrowshape.turn.up.right.fill"), action: {
-                                                            Analytics.shared.log(event: .profile_tapped_invite)
+                                                            // Analytics.shared.log(event: .profile_tapped_invite)
                                                             actionSheet()
                                                         }, showNotif: $showNotif, showMindful: $showMindful)
                                                             .frame(height: 40)
@@ -333,7 +335,7 @@ struct ProfileScene: View {
                                                             .frame(height: 40)
                                                         Divider()
                                                         Row(title: "Request Feature/Med", img: Image(systemName: "hand.raised.fill"), action: {
-                                                            Analytics.shared.log(event: .profile_tapped_roadmap)
+                                                            // Analytics.shared.log(event: .profile_tapped_roadmap)
                                                             if let url = URL(string: "https://discord.gg/SZXnxtyBV5") {
                                                                 UIApplication.shared.open(url)
                                                             }
@@ -341,7 +343,7 @@ struct ProfileScene: View {
                                                             .frame(height: 40)
                                                         Divider()
                                                         Row(title: "Feedback Form", img: Image(systemName: "doc.on.clipboard"), action: {
-                                                            Analytics.shared.log(event: .profile_tapped_feedback)
+                                                            // Analytics.shared.log(event: .profile_tapped_feedback)
                                                             showFeedbackOption = true
                                                         }, showNotif: $showNotif, showMindful: $showMindful)
                                                             .frame(height: 40)
@@ -360,7 +362,7 @@ struct ProfileScene: View {
                                                         .neoShadow()
                                                     VStack {
                                                         Row(title: "Join the Community", img: Img.redditIcon, action: {
-                                                            Analytics.shared.log(event: .profile_tapped_discord)
+                                                            // Analytics.shared.log(event: .profile_tapped_discord)
                                                             if let url = URL(string: "https://discord.gg/SZXnxtyBV5") {
                                                                 UIApplication.shared.open(url)
                                                                 DefaultsManager.standard.set(value: true, forKey: .reddit)
@@ -369,14 +371,14 @@ struct ProfileScene: View {
                                                             .frame(height: K.isSmall() ? 30 : 40)
                                                         Divider()
                                                         Row(title: "Daily Inspiration", img: Img.instaIcon, action: {
-                                                            Analytics.shared.log(event: .profile_tapped_instagram)
+                                                            // Analytics.shared.log(event: .profile_tapped_instagram)
                                                             if let url = URL(string: "https://www.instagram.com/mindgardn/") {
                                                                 UIApplication.shared.open(url)
                                                             }
                                                         }, showNotif: $showNotif, showMindful: $showMindful)
                                                             .frame(height: K.isSmall() ? 30 : 40)
                                                         Row(title: "Talking to Strangers", img: Img.tiktokIcon, action: {
-                                                            Analytics.shared.log(event: .profile_tapped_instagram)
+                                                            // Analytics.shared.log(event: .profile_tapped_instagram)
                                                             if let url = URL(string: "https://www.tiktok.com/@mindgardn?lang=en") {
                                                                 UIApplication.shared.open(url)
                                                             }
@@ -417,8 +419,9 @@ struct ProfileScene: View {
 
                                         Button {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                            DefaultsManager.standard.set(value: false, forKey: .loggedIn)
                                             if let _ = Auth.auth().currentUser?.email {
-                                                Analytics.shared.log(event: .profile_tapped_logout)
+                                                // Analytics.shared.log(event: .profile_tapped_logout)
                                                 presentationMode.wrappedValue.dismiss()
                                                 tappedSignOut = true
                                                 profileModel.signOut()
@@ -427,7 +430,7 @@ struct ProfileScene: View {
                                                     viewRouter.currentPage = .onboarding
                                                 }
                                             } else {
-                                                Analytics.shared.log(event: .profile_tapped_create_account)
+                                                // Analytics.shared.log(event: .profile_tapped_create_account)
                                                 presentationMode.wrappedValue.dismiss()
                                                 withAnimation {
                                                     fromPage = "profile"
@@ -494,7 +497,7 @@ struct ProfileScene: View {
                             title: Text("Are you sure?"),
                             message: Text("All data will be deleted"),
                             primaryButton: .destructive(Text("Yes"), action: {
-                                Analytics.shared.log(event: .profile_tapped_delete_account)
+                                // Analytics.shared.log(event: .profile_tapped_delete_account)
                                 profileModel.signOut()
                                 OneSignal.sendTag("deleted", value: "true")
                                 // if user signs out -> send them to meditate page
@@ -505,7 +508,7 @@ struct ProfileScene: View {
                             secondaryButton: .default(Text("Cancel"))
                         )
                     }
-                    .onAppearAnalytics(event: .screen_load_profile)
+                    // .onAppearAnalytics(event: .screen_load_profile)
                 } //: VStack
                 VisualEffectView(effect: UIBlurEffect(style: .dark))
                     .ignoresSafeArea()
@@ -591,7 +594,7 @@ struct ProfileScene: View {
     }
 
     private func rateFunc() {
-        Analytics.shared.log(event: .profile_tapped_rate)
+        // Analytics.shared.log(event: .profile_tapped_rate)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
             DefaultsManager.standard.set(value: true, forKey: .tappedRate)
@@ -684,10 +687,10 @@ struct ProfileScene: View {
                                         .onChange(of: notifOn) { val in
                                             DefaultsManager.standard.set(value: val, forKey: .notifOn)
                                             if val {
-                                                Analytics.shared.log(event: .profile_tapped_toggle_on_notifs)
+                                                // Analytics.shared.log(event: .profile_tapped_toggle_on_notifs)
                                                 showNotif = true
                                             } else { // turned off
-                                                Analytics.shared.log(event: .profile_tapped_toggle_off_notifs)
+                                                // Analytics.shared.log(event: .profile_tapped_toggle_off_notifs)
                                                 DefaultsManager.standard.set(value: false, forKey: .notifOn)
                                                 let center = UNUserNotificationCenter.current()
                                                 center.removePendingNotificationRequests(withIdentifiers: ["1", "2", "3", "4", "5", "6", "7"]) // To remove all pending notifications which are not delivered yet but scheduled.
@@ -700,18 +703,18 @@ struct ProfileScene: View {
                                             if title == "Dates on Tile" {
                                                 DefaultsManager.standard.set(value: val, forKey: .tileDates)
                                                 if val {
-                                                    Analytics.shared.log(event: .profile_tapped_garden_date_on)
+                                                    // Analytics.shared.log(event: .profile_tapped_garden_date_on)
                                                 } else { // turned off
-                                                    Analytics.shared.log(event: .profile_tapped_garden_date_off)
+                                                    // Analytics.shared.log(event: .profile_tapped_garden_date_off)
                                                 }
                                             } else {
                                                 DefaultsManager.standard.set(value: val, forKey: .mindful)
                                                 if val {
-                                                    Analytics.shared.log(event: .profile_tapped_toggle_on_mindful)
+                                                    // Analytics.shared.log(event: .profile_tapped_toggle_on_mindful)
                                                     showMindful = true
                                                 } else { // turned off
                                                     NotificationHelper.deleteMindfulNotifs()
-                                                    Analytics.shared.log(event: .profile_tapped_toggle_off_mindful)
+                                                    // Analytics.shared.log(event: .profile_tapped_toggle_off_mindful)
                                                 }
                                             }
                                         }.toggleStyle(SwitchToggleStyle(tint: Clr.gardenGreen))

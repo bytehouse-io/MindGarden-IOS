@@ -56,7 +56,7 @@ struct SingleDay: View {
                                     HStack {
                                         if sessionCounter - 1 >= 0 {
                                             Button {
-                                                Analytics.shared.log(event: .garden_tapped_single_previous_session)
+                                                // Analytics.shared.log(event: .garden_tapped_single_previous_session)
                                                 withAnimation {
                                                     if sessionCounter > 0 {
                                                         sessionCounter -= 1
@@ -84,7 +84,7 @@ struct SingleDay: View {
                                         Spacer()
                                         if sessionCounter + 1 < totalSessions {
                                             Button {
-                                                Analytics.shared.log(event: .garden_tapped_single_next_session)
+                                                // Analytics.shared.log(event: .garden_tapped_single_next_session)
                                                 withAnimation {
                                                     if sessionCounter < totalSessions - 1 {
                                                         sessionCounter += 1
@@ -275,7 +275,7 @@ struct SingleDay: View {
                                               
                                               withAnimation {
                                                   showOnboardingModal = false
-                                                  Analytics.shared.log(event: .onboarding_finished_single)
+                                                  // Analytics.shared.log(event: .onboarding_finished_single)
                                               }
                                           } label: {
                                               Capsule()
@@ -317,10 +317,10 @@ struct SingleDay: View {
             showLoading = true
             print(gardenModel.totalSessions, "brokie", UserDefaults.standard.bool(forKey: "singleTile"))
 
-            Analytics.shared.log(event: .screen_load_single)
+            // Analytics.shared.log(event: .screen_load_single)
             if !UserDefaults.standard.bool(forKey: "singleOnboarding1") {
                 DefaultsManager.standard.set(value: true, forKey: .singleOnboarding1)
-                Analytics.shared.log(event: .screen_load_single_onboarding)
+                // Analytics.shared.log(event: .screen_load_single_onboarding)
                 if gardenModel.totalSessions <= 1 {
                     showOnboardingModal = true
                 }
@@ -419,7 +419,7 @@ struct SingleDay: View {
 
     private func showRating() {
         if (gardenModel.numMeds + gardenModel.numBreaths) == 1 {
-            Analytics.shared.log(event: .show_onboarding_rating)
+            // Analytics.shared.log(event: .show_onboarding_rating)
             if let scene = UIApplication.shared.activeScene {
                 SKStoreReviewController.requestReview(in: scene)
                 showOnboardingModal = false

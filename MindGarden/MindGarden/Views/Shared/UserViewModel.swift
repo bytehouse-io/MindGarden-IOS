@@ -376,7 +376,7 @@ class UserViewModel: ObservableObject {
             DefaultsManager.standard.set(value: false, forKey: .isPro)
             let identify = AMPIdentify()
                 .set("plan_type", value: NSString(utf8String: "free"))
-            Amplitude.instance().identify(identify ?? AMPIdentify())
+//            Amplitude.instance().identify(identify ?? AMPIdentify())
             if UserDefaults.standard.bool(forKey: "freeTrial") && !UserDefaults.standard.bool(forKey: "freeTrialTo50") {
                 // cancelled free trial
                 show50Off = true
@@ -419,18 +419,18 @@ class UserViewModel: ObservableObject {
             if !unlockedStrawberry {
                 coins -= willBuyPlant?.price ?? 0
                 selectedPlant = willBuyPlant
-                Amplitude.instance().logEvent("store_bought_plant", withEventProperties: ["plant": plant.title])
+//                Amplitude.instance().logEvent("store_bought_plant", withEventProperties: ["plant": plant.title])
             }
 
             if unlockedStrawberry {
                 triggerAnimation = true
-                Amplitude.instance().logEvent("badge_unlocked_plant", withEventProperties: ["plant": plant.title])
+//                Amplitude.instance().logEvent("badge_unlocked_plant", withEventProperties: ["plant": plant.title])
             }
 
             ownedPlants.append(plant)
 
             if realTree {
-                Analytics.shared.log(event: .store_bought_real_tree)
+                // Analytics.shared.log(event: .store_bought_real_tree)
                 plantedTrees.append(dateFormatter.string(from: Date()))
             }
 

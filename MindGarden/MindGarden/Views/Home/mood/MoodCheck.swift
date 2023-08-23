@@ -106,7 +106,7 @@ struct MoodCheck: View {
             userModel.selectedMood = moodSelected
             viewRouter.currentPage = .mood
         }
-        Analytics.shared.log(event: .plus_selected_mood)
+        // Analytics.shared.log(event: .plus_selected_mood)
     }
 
     private func showPopupWithAnimation(completion: @escaping () -> Void) {
@@ -146,20 +146,20 @@ struct SingleMood: View {
         ZStack {
             VStack(spacing: 2) {
                 Button {
-                    Analytics.shared.log(event: .mood_tapped_done)
+                    // Analytics.shared.log(event: .mood_tapped_done)
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    switch mood {
-                    case .angry: Analytics.shared.log(event: .mood_tapped_angry)
-                    case .sad: Analytics.shared.log(event: .mood_tapped_sad)
-                    case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
-                    case .okay: Analytics.shared.log(event: .mood_tapped_okay)
-                    case .happy: Analytics.shared.log(event: .mood_tapped_happy)
-                    case .bad: Analytics.shared.log(event: .mood_tapped_bad)
-                    case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
-                    case .good: Analytics.shared.log(event: .mood_tapped_good)
-                    case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
-                    case .none: Analytics.shared.log(event: .mood_tapped_x)
-                    }
+//                    switch mood {
+//                    case .angry: // Analytics.shared.log(event: .mood_tapped_angry)
+//                    case .sad: // Analytics.shared.log(event: .mood_tapped_sad)
+//                    case .stressed: // Analytics.shared.log(event: .mood_tapped_stress)
+//                    case .okay: // Analytics.shared.log(event: .mood_tapped_okay)
+//                    case .happy: // Analytics.shared.log(event: .mood_tapped_happy)
+//                    case .bad: // Analytics.shared.log(event: .mood_tapped_bad)
+//                    case .veryBad: // Analytics.shared.log(event: .mood_tapped_veryBad)
+//                    case .good: // Analytics.shared.log(event: .mood_tapped_good)
+//                    case .veryGood: // Analytics.shared.log(event: .mood_tapped_veryGood)
+//                    case .none: // Analytics.shared.log(event: .mood_tapped_x)
+//                    }
                     if moodSelected == mood {
                         moodSelected = .none
                     } else {

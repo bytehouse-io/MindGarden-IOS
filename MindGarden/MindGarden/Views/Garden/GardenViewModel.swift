@@ -159,7 +159,7 @@ class GardenViewModel: ObservableObject {
             DefaultsManager.standard.set(value: numGrads, forKey: .numGrads)
             identify?
                 .set("mood_sessions", value: NSNumber(value: numMoods))
-            Amplitude.instance().identify(identify ?? AMPIdentify())
+//            Amplitude.instance().identify(identify ?? AMPIdentify())
         }
 
         entireHistory = entireHistory.sorted { lhs, rhs in
@@ -353,9 +353,30 @@ class GardenViewModel: ObservableObject {
                 let moodObj = moods[moods.count - 1]
                 mood = Mood.getMood(str: moodObj["mood"] ?? "none")
             }
-
-            let dayString = Date().intToAbrev(weekDay: Int(lastFive[day].get(.weekday)) ?? 1)
-            returnFive.append((dayString, plant, mood))
+            
+            var previousDayNumber = 0
+            var dayNumber = 0
+            
+            print(grid[selYear]?[String(selMon)])
+            
+            if let days = grid[selYear]?[String(selMon)] as? [String: [String: Any]] {
+                for i in 1 ..< (Int(lastFive[day].get(.day)) ?? 2) {
+                    if days["\(i)"] != nil {
+                        dayNumber += 1
+                    } else {
+                        dayNumber = 1
+                    }
+                }
+            }
+            if dayNumber == 0 {
+                dayNumber = 1
+            }
+//            if dayNumber != 1 && previousDayNumber > dayNumber {
+//                dayNumber = previousDayNumber
+//                dayNumber += 1
+//            }
+            returnFive.append(("\(dayNumber)", plant, mood))
+            previousDayNumber  = dayNumber
         }
 
         self.lastFive = returnFive.reversed()

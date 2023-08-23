@@ -57,16 +57,16 @@ struct ReasonScene: View {
                                 MGAudio.sharedInstance.stopSound()
                                 MGAudio.sharedInstance.playSound(soundFileName: "waterdrops.mp3")
                             }
-                            Analytics.shared.log(event: .reason_tapped_continue)
+                            // Analytics.shared.log(event: .reason_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             selected.forEach { item in
                                 arr.append(item.title)
-                                Analytics.shared.log(event: item.event)
+                                // Analytics.shared.log(event: item.event)
                             }
                             let stringRepresentation = arr.joined(separator: " | ")
                             let identify = AMPIdentify()
                                 .set("reasons", value: NSString(utf8String: stringRepresentation))
-                            Amplitude.instance().identify(identify ?? AMPIdentify())
+//                            Amplitude.instance().identify(identify ?? AMPIdentify())
 
                             if selected.count > 0 {
                                 for reason in selected {
@@ -109,7 +109,7 @@ struct ReasonScene: View {
         .onDisappear {
             meditationModel.getFeaturedMeditation()
         }
-        .onAppearAnalytics(event: .screen_load_reason)
+        // .onAppearAnalytics(event: .screen_load_reason)
         .transition(.move(edge: .trailing))
     }
 

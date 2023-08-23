@@ -23,7 +23,7 @@ struct QuickStart: View {
                         .frame(height: 16)
                     ForEach(quickStartTabList) { item in
                         Button {
-                            Amplitude.instance().logEvent("quickstart_selected_category", withEventProperties: ["category": item.name])
+//                            Amplitude.instance().logEvent("quickstart_selected_category", withEventProperties: ["category": item.name])
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation(.linear(duration: 0.3)) {
                                 category = item.title

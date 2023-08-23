@@ -45,7 +45,7 @@ struct PromptsView: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     #if !targetEnvironment(simulator)
-                                        Amplitude.instance().logEvent("prompts_tapped_tab", withEventProperties: ["tab": item.tabName])
+//                                        Amplitude.instance().logEvent("prompts_tapped_tab", withEventProperties: ["tab": item.tabName])
                                     #endif
                                     print("logging, \("prompts_tab_\(item.tabName)")")
 
@@ -83,7 +83,7 @@ struct PromptsView: View {
                                     viewRouter.currentPage = .pricing
                                 } else {
                                     #if !targetEnvironment(simulator)
-                                        Amplitude.instance().logEvent("prompt_selected", withEventProperties: ["prompts": prompt.title])
+//                                        Amplitude.instance().logEvent("prompt_selected", withEventProperties: ["prompts": prompt.title])
                                     #endif
                                     print("logging, \("prompt_\(prompt.title)")")
                                     question = prompt.description

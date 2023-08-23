@@ -186,8 +186,8 @@ struct StartDayView: View {
                                             let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
                                             print(userModel.completedDayTitle, "reviver")
                                             storylyViewProgrammatic.resume()
-                                            Analytics.shared.log(event: .home_tapped_introDay)
-                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day": userModel.completedDayTitle])
+                                            // Analytics.shared.log(event: .home_tapped_introDay)
+//                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day": userModel.completedDayTitle])
                                         }
                                     }
                                 }
@@ -229,7 +229,7 @@ struct StartDayView: View {
                         .opacity(playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(0.3), value: playEntryAnimation)
                         .onTapGesture {
-                            Analytics.shared.log(event: .home_tapped_mood)
+                            // Analytics.shared.log(event: .home_tapped_mood)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 NotificationCenter.default.post(name: .mood, object: nil)
@@ -313,7 +313,7 @@ struct StartDayView: View {
                             .opacity(playEntryAnimation ? 1 : 0)
                             .animation(.spring().delay(0.275), value: playEntryAnimation)
                             .onTapGesture {
-                                Analytics.shared.log(event: .home_tapped_journal)
+                                // Analytics.shared.log(event: .home_tapped_journal)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     userModel.elaboration = ""
@@ -327,7 +327,7 @@ struct StartDayView: View {
                         VStack(spacing: 5) {
                             HStack(spacing: 15) {
                                 Button {
-                                    Analytics.shared.log(event: .home_tapped_featured_breath)
+                                    // Analytics.shared.log(event: .home_tapped_featured_breath)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         medModel.selectedBreath = medModel.featuredBreathwork
@@ -338,10 +338,12 @@ struct StartDayView: View {
                                         .offset(y: playEntryAnimation ? 0 : 100)
                                         .opacity(playEntryAnimation ? 1 : 0)
                                         .animation(.spring().delay(0.3), value: playEntryAnimation)
-                                }.buttonStyle(ScalePress())
+                                }
+                                .buttonStyle(ScalePress())
+                                
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    Analytics.shared.log(event: .home_tapped_featured_meditation)
+                                    // Analytics.shared.log(event: .home_tapped_featured_meditation)
                                     withAnimation {
                                         if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(medModel.featuredMeditation?.id ?? 0) {
                                             viewRouter.currentPage = .pricing
@@ -359,8 +361,11 @@ struct StartDayView: View {
                                         .offset(y: playEntryAnimation ? 0 : 100)
                                         .opacity(playEntryAnimation ? 1 : 0)
                                         .animation(.spring().delay(0.3), value: playEntryAnimation)
-                                }.buttonStyle(ScalePress())
-                            }.opacity(gardenModel.isMeditationDone ? 0.5 : 1)
+                                }
+                                .buttonStyle(ScalePress())
+                            }
+                            .opacity(gardenModel.isMeditationDone ? 0.5 : 1)
+                            
                             HStack {
                                 Spacer()
                                 Text("Breathwork")
@@ -385,7 +390,8 @@ struct StartDayView: View {
                     .offset(y: playEntryAnimation ? 0 : 100)
                     .opacity(playEntryAnimation ? 1 : 0)
                     .animation(.spring().delay(0.3), value: playEntryAnimation)
-                }.padding(.leading, 12)
+                }
+                .padding(.leading, 12)
             }
         }
         .onReceive(gardenModel.$grid) { _ in
@@ -428,19 +434,21 @@ struct StartDayView: View {
             HStack(alignment: .top) {
                 ForEach(Mood.allMoodCases(), id: \.id) { item in
                     Button {
-                        Analytics.shared.log(event: .home_selected_mood)
-                        switch item {
-                        case .angry: Analytics.shared.log(event: .mood_tapped_angry)
-                        case .sad: Analytics.shared.log(event: .mood_tapped_sad)
-                        case .stressed: Analytics.shared.log(event: .mood_tapped_stress)
-                        case .okay: Analytics.shared.log(event: .mood_tapped_okay)
-                        case .happy: Analytics.shared.log(event: .mood_tapped_happy)
-                        case .bad: Analytics.shared.log(event: .mood_tapped_bad)
-                        case .veryBad: Analytics.shared.log(event: .mood_tapped_veryBad)
-                        case .good: Analytics.shared.log(event: .mood_tapped_good)
-                        case .veryGood: Analytics.shared.log(event: .mood_tapped_veryGood)
-                        case .none: Analytics.shared.log(event: .mood_tapped_x)
-                        }
+                        // Analytics.shared.log(event: .home_selected_mood)
+//                        switch item {
+//                        case .angry: // Analytics.shared.log(event: .mood_tapped_angry)
+//                        case .sad: // Analytics.shared.log(event: .mood_tapped_sad)
+//                        case .stressed: // Analytics.shared.log(event: .mood_tapped_stress)
+//                        case .okay: // Analytics.shared.log(event: .mood_tapped_okay)
+//                        case .happy: // Analytics.shared.log(event: .mood_tapped_happy)
+//                        case .bad: // Analytics.shared.log(event: .mood_tapped_bad)
+//                        case .veryBad: // Analytics.shared.log(event: .mood_tapped_veryBad)
+//                        case .good: // Analytics.shared.log(event: .mood_tapped_good)
+//                        case .veryGood: // Analytics.shared.log(event: .mood_tapped_veryGood)
+//                        case .none: // Analytics.shared.log(event: .mood_tapped_x)
+//                        }
+                         Analytics.shared.logActual(event: .mood_check_mood_selected, with: ["selected_mood": item.title])
+//                        Amplitude.instance().logEvent("mood_check_mood_selected", withEventProperties: ["selected_mood": item])
                         withAnimation {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             userModel.selectedMood = item

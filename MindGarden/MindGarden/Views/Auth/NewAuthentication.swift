@@ -45,7 +45,8 @@ struct NewAuthentication: View {
                             HStack {
                                 LottieView(fileName: "turtle")
                                     .offset(x: 75, y: -75)
-                            }.frame(width: UIScreen.screenWidth, height: 125, alignment: .center)
+                            } //: HStack
+                            .frame(width: UIScreen.screenWidth, height: 125, alignment: .center)
                             //                            .resizable()
                             //                            .aspectRatio(contentMode: .fit)
                         } else {
@@ -97,8 +98,8 @@ struct NewAuthentication: View {
                                             .onReceive(viewModel.validatedEmail) {
                                                 self.isEmailValid = $0 == "invalid"
                                             }
-                                    }
-                                }
+                                    } //: HStack
+                                } //: ZStack
                                 .frame(width: UIScreen.screenWidth * 0.9, height: 100)
                                 .frame(height: 100)
                                 ZStack(alignment: .leading) {
@@ -119,8 +120,8 @@ struct NewAuthentication: View {
                                             .onReceive(viewModel.validatedPassword) {
                                                 self.isPasswordValid = $0 == "invalid"
                                             }
-                                    }
-                                }
+                                    } //: HStack
+                                } //: ZStack
                                 .frame(width: UIScreen.screenWidth * 0.9, height: 60)
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -139,11 +140,11 @@ struct NewAuthentication: View {
                                             .foregroundColor(Color.white)
                                             .font(Font.fredoka(.bold, size: 20))
                                             .padding()
-                                    }
+                                    } //: ZStack
                                     .padding(20)
                                     .frame(width: UIScreen.screenWidth * 0.9, height: 100)
                                     .disabled(true)
-                                }
+                                } //: Button
                                 .disabled(signUpDisabled)
                                 .onReceive(viewModel.validatedCredentials) {
                                     guard let credentials = $0 else {
@@ -157,20 +158,9 @@ struct NewAuthentication: View {
                                     }
                                     self.signUpDisabled = false
                                 }
-                            }.padding(.bottom, -30)
-                                .padding(.top, tappedSignIn ? -60 : 0)
-                            //                    if viewModel.isSignUp {
-                            //                        HStack {
-                            //                            CheckBoxView(checked: $viewModel.checked)
-                            //                                .frame(height: 45)
-                            //                            Text("Sign me up for the MindGarden Newsletter 🗞")
-                            //                                .font(Font.fredoka(.medium, size: 18))
-                            //                                .foregroundColor(Clr.black2)
-                            //                                .lineLimit(2)
-                            //                                .minimumScaleFactor(0.5)
-                            //                        }.frame(height: 60)
-                            //                            .padding(.horizontal, 20)
-                            //                    }
+                            } //: VStack
+                            .padding(.bottom, -30)
+                            .padding(.top, tappedSignIn ? -60 : 0)
                             if !viewModel.isSignUp {
                                 Text("Forgot Password?")
                                     .font(Font.fredoka(.medium, size: 18))
@@ -178,7 +168,7 @@ struct NewAuthentication: View {
                                     .underline()
                                     .padding(.top, 20)
                                     .onTapGesture {
-                                        Analytics.shared.log(event: .authentication_tapped_forgot_password)
+                                        // Analytics.shared.log(event: .authentication_tapped_forgot_password)
                                         showForgotAlert = true
                                     }
                             }
@@ -190,15 +180,16 @@ struct NewAuthentication: View {
                             } else {
                                 viewModel.suwa
                             }
-                        }
+                        } //: VStack
                         .frame(height: 60)
                         .oldShadow()
                         .disabled(viewModel.falseAppleId)
                         .frame(width: UIScreen.screenWidth * 0.8)
                         .padding(10)
                         .padding(.top, K.isSmall() ? 0 : 25)
+                        
                         Button {
-                            Analytics.shared.log(event: .authentication_tapped_google)
+                            // Analytics.shared.log(event: .authentication_tapped_google)
                             viewModel.signInWithGoogle()
                         } label: {
                             VStack {
@@ -211,13 +202,14 @@ struct NewAuthentication: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                 }
-                            }.frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 60)
+                            } //: VStack
+                            .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 60)
                                 .oldShadow()
-                        }
+                        } //: Button
                         if !showFields {
                             Button {
                                 withAnimation {
-                                    Analytics.shared.log(event: .authentication_tapped_signup_email)
+                                    // Analytics.shared.log(event: .authentication_tapped_signup_email)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     showFields = true
                                 }
@@ -236,15 +228,16 @@ struct NewAuthentication: View {
                                                 .font(Font.fredoka(.semiBold, size: 20))
                                         }.offset(x: -20)
                                     )
-                            }.frame(height: 60)
-                                .padding(.top, 20)
-                                .buttonStyle(NeumorphicPress())
-                                .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
+                            } //: Button
+                            .frame(height: 60)
+                            .padding(.top, 20)
+                            .buttonStyle(NeumorphicPress())
+                            .frame(width: UIScreen.screenWidth * 0.8, height: K.isPad() ? 250 : 70, alignment: .center)
                         }
 
                         if !tappedSignOut && !DefaultsManager.standard.value(forKey: .loggedIn).boolValue {
                             Button {
-                                Analytics.shared.log(event: .tapped_already_have_account)
+                                // Analytics.shared.log(event: .tapped_already_have_account)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if !viewModel.isSignUp {
                                     withAnimation {
@@ -263,9 +256,10 @@ struct NewAuthentication: View {
                                         .font(Font.fredoka(.semiBold, size: 20))
                                         .foregroundColor(.gray)
                                         .underline()
-                                }
-                            }.frame(width: 250, height: 50, alignment: .center)
-                                .padding(.top, K.isSmall() ? 10 : 25)
+                                } //: VStack
+                            } //: Button
+                            .frame(width: 250, height: 50, alignment: .center)
+                            .padding(.top, K.isSmall() ? 10 : 25)
                         }
                     } //: VStack
                     .frame(height: UIScreen.screenHeight / 1)
@@ -284,7 +278,7 @@ struct NewAuthentication: View {
                     trailing: Button {
                         withAnimation {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            Analytics.shared.log(event: .newAuthentication_tapped_x)
+                            // Analytics.shared.log(event: .newAuthentication_tapped_x)
                             if tappedRefer {
                                 viewRouter.currentPage = .meditate
                             } else {
@@ -336,7 +330,7 @@ struct NewAuthentication: View {
                 viewModel.forgotPassword()
             }
         }))
-        .onAppearAnalytics(event: .screen_load_newAuthenticaion)
+        // .onAppearAnalytics(event: .screen_load_newAuthenticaion)
         .onAppear {
             if fromPage == "profile" {
                 DefaultsManager.standard.set(value: true, forKey: .authx)

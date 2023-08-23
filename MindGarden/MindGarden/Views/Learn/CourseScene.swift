@@ -187,9 +187,9 @@ struct CourseScene: View {
                                                         DefaultsManager.standard.set(value: [course.id], forKey: .completedCourses)
                                                     }
                                                     if course.category == "meditation" {
-                                                        Analytics.shared.log(event: .learn_finished_meditation_course)
+                                                        // Analytics.shared.log(event: .learn_finished_meditation_course)
                                                     } else {
-                                                        Analytics.shared.log(event: .learn_finished_life_course)
+                                                        // Analytics.shared.log(event: .learn_finished_life_course)
                                                     }
                                                     completed = true
                                                     isPlaying = true

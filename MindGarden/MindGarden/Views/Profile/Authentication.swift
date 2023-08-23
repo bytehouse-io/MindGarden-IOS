@@ -139,7 +139,7 @@ struct Authentication: View {
                                     .underline()
                                     .padding(5)
                                     .onTapGesture {
-                                        Analytics.shared.log(event: .authentication_tapped_forgot_password)
+                                        // Analytics.shared.log(event: .authentication_tapped_forgot_password)
                                         showForgotAlert = true
                                     }
                             }
@@ -159,7 +159,7 @@ struct Authentication: View {
                             .frame(height: K.isPad() ? 250 : 70)
                             .neoShadow()
                             .onTapGesture {
-                                Analytics.shared.log(event: .authentication_tapped_google)
+                                // Analytics.shared.log(event: .authentication_tapped_google)
                                 viewModel.signInWithGoogle()
                             }
                         //                        Button {
@@ -233,9 +233,9 @@ struct Authentication: View {
             }
             //                viewModel.isLoading = true
             if viewModel.isSignUp {
-                Analytics.shared.log(event: .screen_load_onboarding_signup)
+                // Analytics.shared.log(event: .screen_load_onboarding_signup)
             } else {
-                Analytics.shared.log(event: .screen_load_onboarding_signin)
+                // Analytics.shared.log(event: .screen_load_onboarding_signin)
             }
             if !tappedSignIn {
                 viewModel.falseAppleId = false

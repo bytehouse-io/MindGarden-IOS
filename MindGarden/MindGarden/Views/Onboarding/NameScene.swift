@@ -81,7 +81,7 @@ struct NameScene: View {
                         // CONTINUE BUTTON
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
-                            Analytics.shared.log(event: .name_tapped_continue)
+                            // Analytics.shared.log(event: .name_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation(.easeOut(duration: 0.3)) {
                                 DispatchQueue.main.async {
@@ -110,10 +110,11 @@ struct NameScene: View {
                         .disabled(name.isEmpty)
                     } //: VStack
                     .frame(width: width * 0.9)
-                        .padding(.bottom, g.size.height * 0.15)
+                    .padding(.bottom, g.size.height * 0.15)
                 } //: ZStack
             } //: GeometryReader
-            .onAppearAnalytics(event: .screen_load_name)
+            // .onAppearAnalytics(event: .screen_load_name)
+             .onAppearAnalytics(event: .onboarding_completed)
         } //: ZStack
         .transition(.move(edge: .trailing))
     }

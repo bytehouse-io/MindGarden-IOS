@@ -58,7 +58,7 @@ struct BonusModal: View {
                                     if bonusModel.dailyBonus == "" || (bonusModel.formatter.date(from: bonusModel.dailyBonus) ?? Date()) - Date() < 0 {
                                         place = .button1
                                         playCoinAnimation()
-                                        Analytics.shared.log(event: .home_claim_daily)
+                                        // Analytics.shared.log(event: .home_claim_daily)
                                         bonusModel.saveDaily(plusCoins: 30)
                                         coins += 30
                                         bonusModel.totalBonuses -= 1
@@ -102,7 +102,7 @@ struct BonusModal: View {
                                                 place = .button2
                                                 playCoinAnimation()
                                                 streakCoins = true
-                                                Analytics.shared.log(event: .home_claim_seven)
+                                                // Analytics.shared.log(event: .home_claim_seven)
                                                 bonusModel.saveSeven()
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                                     self.streakCoins.toggle()
@@ -123,7 +123,7 @@ struct BonusModal: View {
                                                 place = .button3
                                                 playCoinAnimation()
                                                 self.streakCoins = true
-                                                Analytics.shared.log(event: .home_claim_thirty)
+                                                // Analytics.shared.log(event: .home_claim_thirty)
                                                 bonusModel.saveThirty()
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                                     self.streakCoins.toggle()

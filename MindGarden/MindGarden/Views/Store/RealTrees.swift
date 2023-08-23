@@ -75,7 +75,7 @@ struct RealTrees: View {
                         .neoShadow()
                     Button {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        Analytics.shared.log(event: .store_tapped_buy_real_tree)
+                        // Analytics.shared.log(event: .store_tapped_buy_real_tree)
                         withAnimation {
                             userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
                                 plt.title == "Real Tree"

@@ -311,9 +311,9 @@ class MeditationViewModel: ObservableObject {
     func favorite(id: Int) {
         let breathWork = Breathwork.breathworks.first { $0.id == id }
         if id < 0 {
-            Amplitude.instance().logEvent("favorited_breathwork", withEventProperties: ["breathwork": breathWork?.title ?? ""])
+//            Amplitude.instance().logEvent("favorited_breathwork", withEventProperties: ["breathwork": breathWork?.title ?? ""])
         } else {
-            Amplitude.instance().logEvent("favorited_meditation", withEventProperties: ["meditation": selectedMeditation?.returnEventName() ?? ""])
+//            Amplitude.instance().logEvent("favorited_meditation", withEventProperties: ["meditation": selectedMeditation?.returnEventName() ?? ""])
         }
 
         if let email = Auth.auth().currentUser?.email {

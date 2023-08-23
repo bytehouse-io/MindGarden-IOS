@@ -86,7 +86,7 @@ struct Store: View {
                         if tabType == .store {
 //                            Button {
 //                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                                Analytics.shared.log(event: .pricing_from_home)
+//                                // Analytics.shared.log(event: .pricing_from_home)
 //                                withAnimation {
 //                                    fromPage = "store"
 //                                    viewRouter.currentPage = .pricing
@@ -150,7 +150,7 @@ struct Store: View {
                                     if isShop && !(tabType == .store) {
                                         ForEach(Plant.badgePlants.prefix(Plant.badgePlants.count / 2), id: \.self) { plant in
                                             Button {
-                                                Analytics.shared.log(event: .store_tapped_badge_tile)
+                                                // Analytics.shared.log(event: .store_tapped_badge_tile)
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 userModel.willBuyPlant = plant
                                                 withAnimation {
@@ -179,7 +179,7 @@ struct Store: View {
                                                             showModal = true
                                                         }
                                                     } else {
-                                                        Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
+//                                                        Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
                                                         DefaultsManager.standard.set(value: plant.title, forKey: .selectedPlant)
                                                         userModel.selectedPlant = plant
                                                     }
@@ -243,9 +243,9 @@ struct Store: View {
                 swipedTrees = false
             }
             if !isShop {
-                Analytics.shared.log(event: .screen_load_plant_select)
+                // Analytics.shared.log(event: .screen_load_plant_select)
             } else {
-                Analytics.shared.log(event: .screen_load_shop_page)
+                // Analytics.shared.log(event: .screen_load_shop_page)
             }
             //            let _ = storylyViewProgrammatic.openStory(storyGroupId: 41611, play: .StoryGroup)
             DispatchQueue.main.async {
@@ -298,7 +298,7 @@ struct Store: View {
                 if isShop && !(tabType == .store) {
                     ForEach(Plant.badgePlants.suffix(Plant.badgePlants.count / 2 + (Plant.badgePlants.count % 2 == 0 ? 0 : 1)), id: \.self) { plant in
                         Button {
-                            Analytics.shared.log(event: .store_tapped_badge_tile)
+                            // Analytics.shared.log(event: .store_tapped_badge_tile)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             userModel.willBuyPlant = plant
                             withAnimation {
@@ -322,16 +322,16 @@ struct Store: View {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if isShop {
-                                    Analytics.shared.log(event: .store_tapped_plant_tile)
+                                    // Analytics.shared.log(event: .store_tapped_plant_tile)
                                     userModel.willBuyPlant = plant
                                     withAnimation {
                                         showModal = true
                                     }
                                 } else {
-                                    Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
+//                                    Amplitude.instance().logEvent("selectedPlant", withEventProperties: ["plant": plant.title])
                                     DefaultsManager.standard.set(value: plant.title, forKey: .selectedPlant)
                                     userModel.selectedPlant = plant
-                                    Analytics.shared.log(event: .home_selected_plant)
+                                    // Analytics.shared.log(event: .home_selected_plant)
                                 }
                             } label: {
                                 PlantTile(width: width, height: height, plant: plant, isShop: isShop)
@@ -384,7 +384,7 @@ struct Store: View {
             switch permission.authorizationStatus {
             case .authorized:
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
-                Analytics.shared.log(event: .notification_success_store)
+                // Analytics.shared.log(event: .notification_success_store)
                 if UserDefaults.standard.value(forKey: "oneDayNotif") == nil {
                     NotificationHelper.addOneDay()
                 }
@@ -398,7 +398,7 @@ struct Store: View {
                 DefaultsManager.standard.set(value: true, forKey: .notifOn)
                 isNotifOn = true
             case .denied:
-                Analytics.shared.log(event: .notification_settings_store)
+                // Analytics.shared.log(event: .notification_settings_store)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
@@ -406,7 +406,7 @@ struct Store: View {
                 }
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
             case .notDetermined:
-                Analytics.shared.log(event: .notification_settings_learn)
+                // Analytics.shared.log(event: .notification_settings_learn)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
@@ -446,7 +446,7 @@ struct Store: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                             Button {
-                                Analytics.shared.log(event: .store_tapped_success_modal_okay)
+                                // Analytics.shared.log(event: .store_tapped_success_modal_okay)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     showSuccess = false

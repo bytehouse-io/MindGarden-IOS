@@ -20,9 +20,9 @@ struct JourneyRow: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             meditationModel.selectedMeditation = meditation
             if viewRouter.currentPage == .learn {
-                Analytics.shared.log(event: .discover_tapped_journey_med)
+                // Analytics.shared.log(event: .discover_tapped_journey_med)
             } else {
-                Analytics.shared.log(event: .home_tapped_journey_med)
+                // Analytics.shared.log(event: .home_tapped_journey_med)
             }
             withAnimation {
                 if isLocked {

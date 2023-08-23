@@ -49,7 +49,7 @@ struct MoodElaborate: View {
                         .padding(.trailing, 10)
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "signedUp" {
                         CloseButton {
-                            Analytics.shared.log(event: .mood_tapped_x)
+                            // Analytics.shared.log(event: .mood_tapped_x)
                             withAnimation {
                                 viewRouter.currentPage = .meditate
                             }
@@ -86,9 +86,9 @@ struct MoodElaborate: View {
                                         DefaultsManager.standard.set(value: num, forKey: .numMoods)
                                         let identify = AMPIdentify()
                                             .set("num_moods", value: NSNumber(value: num))
-                                        Amplitude.instance().identify(identify ?? AMPIdentify())
+//                                        Amplitude.instance().identify(identify ?? AMPIdentify())
                                         #if !targetEnvironment(simulator)
-                                            Amplitude.instance().logEvent("tapped_mood", withEventProperties: ["selected_mood": item])
+//                                            Amplitude.instance().logEvent("tapped_mood", withEventProperties: ["selected_mood": item])
                                         #endif
                                         print("logging, \("tapped_mood_\(item)")")
 
@@ -102,7 +102,9 @@ struct MoodElaborate: View {
                                             userModel.coins += 20
                                         }
 
-                                        Amplitude.instance().logEvent("mood_elaborate", withEventProperties: ["elaboration": item])
+//                                        Amplitude.instance().logEvent("mood_elaborate", withEventProperties: ["elaboration": item])
+//                                        Amplitude.instance().logEvent("mood_check_feeling_selected", withEventProperties: ["selected_feeling": item])
+                                         Analytics.shared.logActual(event: .mood_check_mood_selected, with: ["selected_feeling": item])
                                         var moodSession = [String: String]()
                                         moodSession["timeStamp"] = Date.getTime()
                                         moodSession["elaboration"] = item
@@ -224,7 +226,7 @@ struct MoodElaborate: View {
             moodelaborate.getAllSubMoods()
             subMoodList = moodelaborate.submoodList.filter { $0.mood == userModel.selectedMood.title }
         }
-        .onAppearAnalytics(event: .screen_load_mood_elaborate)
+        // .onAppearAnalytics(event: .screen_load_mood_elaborate)
     }
 
     var editButton: some View {

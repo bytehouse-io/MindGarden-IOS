@@ -137,10 +137,10 @@ struct FreeTrialView: View {
                     withAnimation {
                         isReminderOn = false
                     }
-                    Analytics.shared.log(event: .experience_tapped_not_now)
+                    // Analytics.shared.log(event: .experience_tapped_not_now)
                 }),
                 secondaryButton: .default(Text("Ok"), action: {
-                    Analytics.shared.log(event: .experience_tapped_okay_push)
+                    // Analytics.shared.log(event: .experience_tapped_okay_push)
                     promptNotif()
                 })
             )
@@ -150,12 +150,12 @@ struct FreeTrialView: View {
     func promptNotif() {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             if accepted {
-                Analytics.shared.log(event: .pricing_notif_accepted)
+                // Analytics.shared.log(event: .pricing_notif_accepted)
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()
                 NotificationHelper.freeTrial()
             } else {
-                Analytics.shared.log(event: .pricing_notif_denied)
+                // Analytics.shared.log(event: .pricing_notif_denied)
                 let current = UNUserNotificationCenter.current()
                 current.getNotificationSettings(completionHandler: { permission in
                     switch permission.authorizationStatus {
@@ -165,7 +165,7 @@ struct FreeTrialView: View {
                         }
                     case .denied:
                         isReminderOn = false
-                        Analytics.shared.log(event: .notification_go_to_settings)
+                        // Analytics.shared.log(event: .notification_go_to_settings)
                         DispatchQueue.main.async {
                             if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                                 UIApplication.shared.open(appSettings)
@@ -174,7 +174,7 @@ struct FreeTrialView: View {
                     case .notDetermined:
                         isReminderOn = false
                         DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
-                        Analytics.shared.log(event: .notification_go_to_settings)
+                        // Analytics.shared.log(event: .notification_go_to_settings)
                         DispatchQueue.main.async {
                             if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                                 UIApplication.shared.open(appSettings)

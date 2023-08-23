@@ -31,7 +31,7 @@ enum AnalyticEvent {
     case goalview_tapped_50 //
     case goalview_tapped_continue //
     case goalview_tapped_back //
-    
+
 
     // experience
     case screen_load_experience //
@@ -271,10 +271,13 @@ enum AnalyticEvent {
     case finished_tapped_gratitude //
     case finished_tapped_mood //
     case finished_set_reminder //
-    
-    case meditationCompleted_tapped_continue
-    case meditationCompleted_tapped_heart
-    
+
+//    case meditationCompleted_tapped_continue
+//    case meditationCompleted_tapped_heart
+
+    case meditation_started
+    case meditation_ended
+
     case congratulations_tapped_continue
     case congratulations_tapped_heart
 
@@ -424,6 +427,16 @@ enum AnalyticEvent {
     case widget_tapped_meditate
     case widget_tapped_logMood
     case widget_tapped_journal
+    
+    // paul provided
+    
+    case onboarding_completed
+    case is_premium
+    case app_entered
+    case first_open
+    case mood_check_journal_entry_entered
+    case mood_check_feeling_selected
+    case mood_check_mood_selected
 }
 
 extension AnalyticEvent {
@@ -829,14 +842,32 @@ extension AnalyticEvent {
         case .widget_tapped_logMood: return "widget_tapped_logMood"
         case .widget_tapped_journal: return "widget_tapped_journal"
             
-        case .meditationCompleted_tapped_continue: return "meditationCompleted_tapped_continue"
-        case .meditationCompleted_tapped_heart: return  "meditationCompleted_tapped_heart"
+//        case .meditationCompleted_tapped_continue: return "meditationCompleted_tapped_continue"
+//        case .meditationCompleted_tapped_heart: return  "meditationCompleted_tapped_heart"
         
         case .congratulations_tapped_continue: return "congratulations_tapped_continue"
         case .congratulations_tapped_heart: return "congratulations_tapped_heart"
             
         case .hooray_tapped_continue: return "hooray_tapped_continue"
         case .onboarding_single_go_to_home: return "onboarding_single_go_to_home"
+        case .meditation_started:
+            return "meditation_started"
+        case .meditation_ended:
+            return "meditation_ended"
+        case .onboarding_completed:
+            return "onboarding_completed"
+        case .is_premium:
+            return "is_premium"
+        case .app_entered:
+            return "app_entered"
+        case .first_open:
+            return "first_open"
+        case .mood_check_journal_entry_entered:
+            return "mood_check_journal_entry_entered"
+        case .mood_check_feeling_selected:
+            return "mood_check_feeling_selected"
+        case .mood_check_mood_selected:
+            return "mood_check_mood_selected"
         }
     }
 }

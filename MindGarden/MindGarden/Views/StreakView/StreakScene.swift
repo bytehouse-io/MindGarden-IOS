@@ -119,19 +119,18 @@ struct StreakScene: View {
                 BubbleEffectView(replay: $replay)
             }
         }
-
         .onChange(of: isSharePresented) { value in
             showButtons = !value
         }
         .sheet(isPresented: $isSharePresented) {
             ShareView(img: img)
         }
-        .onAppearAnalytics(event: .screen_load_streak)
+        // .onAppearAnalytics(event: .screen_load_streak)
         .onAppear {
             if [3, 7, 10, 14, 21, 30].contains(bonusModel.streakNumber) {
                 replay = true
             }
-            Amplitude.instance().logEvent("streak_logged", withEventProperties: ["number": bonusModel.streakNumber])
+//            Amplitude.instance().logEvent("streak_logged", withEventProperties: ["number": bonusModel.streakNumber])
             MGAudio.sharedInstance.stopSound()
             MGAudio.sharedInstance.playSounds(soundFileNames: ["fire_ignite.mp3", "fire.mp3"])
             self.animate()

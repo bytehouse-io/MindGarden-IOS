@@ -85,7 +85,7 @@ struct MeditationGoalView: View {
                                 .foregroundColor(Clr.darkgreen)
                                 .padding()
                                 .onTapGesture {
-                                    Analytics.shared.log(event: .goalview_tapped_back)
+                                    // Analytics.shared.log(event: .goalview_tapped_back)
                                     MGAudio.sharedInstance.playBubbleSound()
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
@@ -127,7 +127,7 @@ struct MeditationGoalView: View {
                                         DispatchQueue.main.async {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             MGAudio.sharedInstance.playBubbleSound()
-                                            Analytics.shared.log(event: .goalview_tapped_continue)
+                                            // Analytics.shared.log(event: .goalview_tapped_continue)
                                             viewRouter.progressValue += 0.1
                                             viewRouter.currentPage = .name
                                         }
@@ -170,12 +170,12 @@ struct GoalDetailView: View {
             MGAudio.sharedInstance.playBubbleSound()
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
-                switch goal.type {
-                case .seven:   Analytics.shared.log(event: .goalview_tapped_7)
-                case .fourteen:  Analytics.shared.log(event: .goalview_tapped_14)
-                case .thirty:  Analytics.shared.log(event: .goalview_tapped_30)
-                case .fifty:  Analytics.shared.log(event: .goalview_tapped_50)
-                }
+//                switch goal.type {
+//                case .seven:   // Analytics.shared.log(event: .goalview_tapped_7)
+//                case .fourteen:  // Analytics.shared.log(event: .goalview_tapped_14)
+//                case .thirty:  // Analytics.shared.log(event: .goalview_tapped_30)
+//                case .fifty:  // Analytics.shared.log(event: .goalview_tapped_50)
+//                }
                 isSelected = true
                 selectedGoal = goal
                 DefaultsManager.standard.set(value: goal.title, forKey: .meditationGoal)

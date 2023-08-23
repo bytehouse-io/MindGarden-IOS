@@ -36,7 +36,7 @@ struct DiscoverScene: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .onTapGesture {
-                                Analytics.shared.log(event: .discover_tapped_search)
+                                // Analytics.shared.log(event: .discover_tapped_search)
                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                 impact.impactOccurred()
                                 medSearch = true
@@ -69,7 +69,7 @@ struct DiscoverScene: View {
                 learnNotif = false
             }
         }
-        .onAppearAnalytics(event: .screen_load_discover)
+        // .onAppearAnalytics(event: .screen_load_discover)
     }
 
     var tabView: some View {

@@ -52,7 +52,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             // Request
             .signUp,
             onRequest: { [self] request in
-                Analytics.shared.log(event: .authentication_tapped_apple)
+                // Analytics.shared.log(event: .authentication_tapped_apple)
                 request.requestedScopes = [.fullName, .email]
                 let nonce = randomNonceString()
                 currentNonce = nonce
@@ -156,7 +156,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                     // Request
                     .signIn,
                     onRequest: { [self] request in
-                        Analytics.shared.log(event: .authentication_tapped_apple)
+                        // Analytics.shared.log(event: .authentication_tapped_apple)
                         request.requestedScopes = [.fullName, .email]
                         let nonce = randomNonceString()
                         currentNonce = nonce
@@ -261,18 +261,18 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     private func goToHome() {
         OneSignal.sendTag("first_name", value: DefaultsManager.standard.value(forKey: .name).stringValue)
         if isSignUp && checked {
-            Analytics.shared.log(event: .authentication_signuped_newsletter)
+            // Analytics.shared.log(event: .authentication_signuped_newsletter)
             OneSignal.sendTag("newsletter", value: "true")
         }
 
         if isSignUp {
             let identify = AMPIdentify()
                 .set("sign_up_date", value: NSString(utf8String: dateFormatter.string(from: Date())))
-            Amplitude.instance().identify(identify ?? AMPIdentify())
+//            Amplitude.instance().identify(identify ?? AMPIdentify())
             OneSignal.sendTag("signedUp", value: "true")
-            Analytics.shared.log(event: .authentication_signup_successful)
+            // Analytics.shared.log(event: .authentication_signup_successful)
         } else {
-            Analytics.shared.log(event: .authentication_signin_successful)
+            // Analytics.shared.log(event: .authentication_signin_successful)
             DefaultsManager.standard.set(value: true, forKey: .showedChallenge)
             DefaultsManager.standard.set(value: false, forKey: .newUser)
         }
@@ -468,7 +468,7 @@ extension AuthenticationViewModel {
             if let onesignalId = OneSignal.getDeviceState().userId {
 //                Purchases.shared.setOnesignalID(onesignalId)
             }
-            Amplitude.instance().setUserId(email)
+//            Amplitude.instance().setUserId(email)
 //            Purchases.shared.logIn(email) { _, _, _ in }
             // TODO: - Paywall.identify
 //            Paywall.identify(userId: email)
@@ -593,7 +593,7 @@ extension AuthenticationViewModel {
     func getData() {
         DefaultsManager.standard.set(value: true, forKey: .day7)
         DefaultsManager.standard.set(value: true, forKey: .showWidget)
-        DefaultsManager.standard.set(value: true, forKey: .signedIn)
+        DefaultsManager.standard.set(value: true, forKey: .loggedIn)
         DefaultsManager.standard.set(value: UUID().uuidString, forKey: .giftQuotaId)
         if let email = Auth.auth().currentUser?.email {
             db.collection(K.userPreferences).document(email).getDocument { snapshot, _ in

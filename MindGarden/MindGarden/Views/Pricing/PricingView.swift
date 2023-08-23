@@ -266,11 +266,11 @@ struct PricingView: View {
                 ios14 = false
             }
             if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .signedUp {
-                Analytics.shared.log(event: .screen_load_pricing_onboarding)
+                // Analytics.shared.log(event: .screen_load_pricing_onboarding)
             }
             purchasesOffering()
         }
-        .onAppearAnalytics(event: fiftyOff ? .screen_load_50pricing : fromInfluencer != "" ? .screen_load_14pricing : .screen_load_pricing)
+        // .onAppearAnalytics(event: fiftyOff ? .screen_load_50pricing : fromInfluencer != "" ? .screen_load_14pricing : .screen_load_pricing)
     }
 }
 
@@ -325,6 +325,8 @@ extension PricingView {
         }
         DefaultsManager.standard.set(value: true, forKey: .bonsai)
         DefaultsManager.standard.set(value: true, forKey: .isPro)
+         Analytics.shared.logActual(event: .is_premium, with: ["is_premium": true])
+
         UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
         WidgetCenter.shared.reloadAllTimelines()
         userWentPro = true
@@ -439,7 +441,7 @@ extension PricingView {
                 }
             } else {
                 // Handle error
-                Amplitude.instance().logEvent(event3)
+//                Amplitude.instance().logEvent(event3)
             }
         }
 

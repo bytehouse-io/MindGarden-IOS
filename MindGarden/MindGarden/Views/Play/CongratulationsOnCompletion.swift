@@ -96,7 +96,7 @@ struct CongratulationsOnCompletion: View {
 //                                        moodFromFinished = true
 //                                        withAnimation(.easeOut) {
 //                                            hideConfetti = true
-//                                            Analytics.shared.log(event: .home_tapped_categories)
+//                                            // Analytics.shared.log(event: .home_tapped_categories)
 //                                            let impact = UIImpactFeedbackGenerator(style: .light)
 //                                            impact.impactOccurred()
 //                                            NotificationCenter.default.post(name: Notification.Name("mood"), object: nil)
@@ -125,7 +125,7 @@ struct CongratulationsOnCompletion: View {
 //                                    .onTapGesture {
 //                                        withAnimation {
 //                                            hideConfetti = true
-//                                            Analytics.shared.log(event: .home_tapped_categories)
+//                                            // Analytics.shared.log(event: .home_tapped_categories)
 //                                            let impact = UIImpactFeedbackGenerator(style: .light)
 //                                            impact.impactOccurred()
 //                                            viewRouter.previousPage = .meditationCompleted
@@ -162,7 +162,7 @@ struct CongratulationsOnCompletion: View {
 //                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude"
                 DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude
             {
-                Analytics.shared.log(event: .onboarding_finished_meditation)
+                // Analytics.shared.log(event: .onboarding_finished_meditation)
                 DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.garden.rawValue, forKey: .onboarding)
 //                DefaultsManager.standard.set(value: "garden", forKey: K.defaults.onboarding)
                 isOnboarding = true

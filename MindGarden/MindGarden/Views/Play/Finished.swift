@@ -153,7 +153,7 @@ struct Finished: View {
                                                             moodFromFinished = true
                                                             withAnimation(.easeOut) {
                                                                 hideConfetti = true
-                                                                Analytics.shared.log(event: .home_tapped_categories)
+                                                                // Analytics.shared.log(event: .home_tapped_categories)
                                                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                                                 impact.impactOccurred()
                                                                 NotificationCenter.default.post(name: .mood, object: nil)
@@ -182,7 +182,7 @@ struct Finished: View {
                                                         .onTapGesture {
                                                             withAnimation {
                                                                 hideConfetti = true
-                                                                Analytics.shared.log(event: .home_tapped_categories)
+                                                                // Analytics.shared.log(event: .home_tapped_categories)
                                                                 let impact = UIImpactFeedbackGenerator(style: .light)
                                                                 impact.impactOccurred()
                                                                 viewRouter.previousPage = .garden
@@ -282,7 +282,7 @@ struct Finished: View {
                                 .padding(.horizontal)
                                 // TODO: -> change not now in saveProgress modal to trigger showStreak
                                 .onTapGesture {
-                                    Analytics.shared.log(event: .finished_tapped_finished)
+                                    // Analytics.shared.log(event: .finished_tapped_finished)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         let launchNum = UserDefaults.standard.integer(forKey: "dailyLaunchNumber")
@@ -381,7 +381,7 @@ struct Finished: View {
                 session[K.defaults.duration] = String(minutesMed)
                 // Log Analytics
                 #if !targetEnvironment(simulator)
-                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
+//                    Amplitude.instance().logEvent("finished_breathwork", withEventProperties: ["breathwork": model.selectedBreath?.title ?? "default"])
                 #endif
                 print("logging, \("finished_\(model.selectedMeditation?.returnEventName() ?? "")")")
             } else {
@@ -393,7 +393,7 @@ struct Finished: View {
                 }
                 // Log Analytics
                 #if !targetEnvironment(simulator)
-                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
+//                    Amplitude.instance().logEvent("finished_meditation", withEventProperties: ["meditation": model.selectedMeditation?.returnEventName() ?? ""])
                 #endif
                 print("logging, \("finMed_\(model.selectedMeditation?.returnEventName() ?? "")")")
             }
@@ -424,24 +424,24 @@ struct Finished: View {
             favorited = model.isFavorited
             // onboarding
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" {
-                Analytics.shared.log(event: .onboarding_finished_meditation)
+                // Analytics.shared.log(event: .onboarding_finished_meditation)
                 DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.garden.rawValue, forKey: .onboarding)
                 isOnboarding = true
             } else {
                 OneSignal.sendTag("firstMeditation", value: "true")
             }
         }
-        .onAppearAnalytics(event: .screen_load_finished)
+        // .onAppearAnalytics(event: .screen_load_finished)
         .alert(isPresented: $triggerRating) {
             Alert(title: Text("🧑‍🌾 Are you enjoying MindGarden so far?"), message: Text(""),
                   primaryButton: .default(Text("Yes!")) {
-                      Analytics.shared.log(event: .rating_tapped_yes)
+                      // Analytics.shared.log(event: .rating_tapped_yes)
                       showRating = true
                 DefaultsManager.standard.set(value: true, forKey: .reviewedApp)
 
                   },
                   secondaryButton: .default(Text("No")) {
-                      Analytics.shared.log(event: .rating_tapped_no)
+                      // Analytics.shared.log(event: .rating_tapped_no)
                       dismiss()
                   })
         }
@@ -471,10 +471,10 @@ struct Finished: View {
     }
 
     private func likeAction() {
-        Analytics.shared.log(event: .play_tapped_favorite)
+        // Analytics.shared.log(event: .play_tapped_favorite)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let med = model.selectedMeditation {
-//                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
+//                    // Analytics.shared.log(event: "favorited_\(med.returnEventName())")
             model.favorite(id: med.id)
         }
         favorited.toggle()

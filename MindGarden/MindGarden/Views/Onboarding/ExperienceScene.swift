@@ -53,26 +53,26 @@ struct ExperienceScene: View {
                         // CONTINUE BUTTON
                         Button {
                             MGAudio.sharedInstance.playBubbleSound()
-                            Analytics.shared.log(event: .experience_tapped_continue)
+                            // Analytics.shared.log(event: .experience_tapped_continue)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             if selected != "" {
                                 switch selected {
                                 case Experience.often.title:
                                     OneSignal.sendTag("often", value: "true")
-                                    Analytics.shared.log(event: .experience_tapped_alot)
+                                    // Analytics.shared.log(event: .experience_tapped_alot)
                                 case Experience.nowAndThen.title:
                                     OneSignal.sendTag("tried", value: "true")
-                                    Analytics.shared.log(event: .experience_tapped_some)
+                                    // Analytics.shared.log(event: .experience_tapped_some)
                                 case Experience.never.title:
                                     OneSignal.sendTag("never", value: "true")
-                                    Analytics.shared.log(event: .experience_tapped_none)
+                                    // Analytics.shared.log(event: .experience_tapped_none)
                                 default:
                                     break
                                 }
 
                                 let identify = AMPIdentify()
                                     .set("experience", value: NSString(utf8String: selected))
-                                Amplitude.instance().identify(identify ?? AMPIdentify())
+//                                Amplitude.instance().identify(identify ?? AMPIdentify())
 
                                 withAnimation(.easeOut(duration: 0.3)) {
                                     DispatchQueue.main.async {
@@ -111,17 +111,17 @@ struct ExperienceScene: View {
                 title: Text("You'll need to turn on Push"),
                 message: Text("In order to fully experience MindGarden you'll need to turn on notifications"),
                 primaryButton: .default(Text("Not now"), action: {
-                    Analytics.shared.log(event: .experience_tapped_not_now)
+                    // Analytics.shared.log(event: .experience_tapped_not_now)
                 }),
                 secondaryButton: .default(Text("Ok"), action: {
-                    Analytics.shared.log(event: .experience_tapped_okay_push)
+                    // Analytics.shared.log(event: .experience_tapped_okay_push)
                     promptNotif()
                 })
             )
         }
         .transition(.move(edge: .trailing))
         .onAppear {
-            Analytics.shared.log(event: .screen_load_experience)
+            // Analytics.shared.log(event: .screen_load_experience)
         }
     }
 
@@ -129,12 +129,12 @@ struct ExperienceScene: View {
         OneSignal.promptForPushNotifications(userResponse: { accepted in
             if accepted {
                 DefaultsManager.standard.set(value: "", forKey: .meditationReminder)
-                Analytics.shared.log(event: .onboarding_notification_on)
+                // Analytics.shared.log(event: .onboarding_notification_on)
                 NotificationHelper.addOneDay()
                 NotificationHelper.addThreeDay()
                 NotificationHelper.addOnboarding()
             } else {
-                Analytics.shared.log(event: .onboarding_notification_off)
+                // Analytics.shared.log(event: .onboarding_notification_off)
             }
         })
     }

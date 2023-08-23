@@ -222,17 +222,17 @@ struct FloatingMenu: View {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         switch type {
         case .profile:
-            Analytics.shared.log(event: .home_tapped_profile)
+            // Analytics.shared.log(event: .home_tapped_profile)
             activeSheet = .profile
         case .bonus:
-            Analytics.shared.log(event: .home_tapped_bonus)
+            // Analytics.shared.log(event: .home_tapped_bonus)
             withAnimation {
                 DispatchQueue.main.async {
                     showModal = true
                 }
             }
         case .favorites:
-            Analytics.shared.log(event: .home_tapped_favorites)
+            // Analytics.shared.log(event: .home_tapped_favorites)
             withAnimation {
                 sheetTitle = "Your Favorites"
                 sheetType = medModel.favoritedMeditations.reversed()
@@ -240,14 +240,14 @@ struct FloatingMenu: View {
             }
 
         case .recent:
-            Analytics.shared.log(event: .home_tapped_recents)
+            // Analytics.shared.log(event: .home_tapped_recents)
             withAnimation {
                 sheetTitle = "Your Recents"
                 sheetType = userModel.completedMeditations.compactMap { Int($0) }.reversed().unique()
                 showRecFavs = true
             }
         case .plantselect:
-            Analytics.shared.log(event: .home_tapped_plant_select)
+            // Analytics.shared.log(event: .home_tapped_plant_select)
             activeSheet = .plant
         }
     }

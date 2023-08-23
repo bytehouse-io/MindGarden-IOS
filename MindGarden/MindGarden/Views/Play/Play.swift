@@ -356,7 +356,7 @@ struct Play: View {
             ReferralView(url: $giftUrl)
         }
         .animation(.easeIn)
-        .onAppearAnalytics(event: .screen_load_play)
+        // .onAppearAnalytics(event: .screen_load_play)
         .onChange(of: viewRouter.currentPage) { _ in
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
             if viewRouter.currentPage == .finished {
@@ -703,7 +703,7 @@ struct Play: View {
                     StopPlaying()
                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        Analytics.shared.log(event: .play_tapped_back)
+                        // Analytics.shared.log(event: .play_tapped_back)
                         model.stop()
                         viewRouter.currentPage = .meditate
                     }
@@ -718,7 +718,7 @@ struct Play: View {
             .onTapGesture {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
-                    Analytics.shared.log(event: .play_tapped_sound)
+                    // Analytics.shared.log(event: .play_tapped_sound)
                     showNatureModal = true
                 }
             }
@@ -739,10 +739,10 @@ struct Play: View {
     }
 
     private func likeAction() {
-        Analytics.shared.log(event: .play_tapped_favorite)
+        // Analytics.shared.log(event: .play_tapped_favorite)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let med = model.selectedMeditation {
-//                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
+//                    // Analytics.shared.log(event: "favorited_\(med.returnEventName())")
             model.favorite(id: med.id)
         }
         favorited.toggle()
@@ -861,11 +861,11 @@ struct SoundButton: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 if selectedType == type {
-                    Analytics.shared.log(event: .play_tapped_sound_noSound)
+                    // Analytics.shared.log(event: .play_tapped_sound_noSound)
                     selectedType = .noSound
                     player?.pause()
                 } else {
-                    Analytics.shared.log(event: AnalyticEvent.getSound(sound: type ?? .rain))
+                    // Analytics.shared.log(event: AnalyticEvent.getSound(sound: type ?? .rain))
                     selectedType = type
                     change()
                 }

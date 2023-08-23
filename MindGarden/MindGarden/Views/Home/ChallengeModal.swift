@@ -28,7 +28,7 @@ struct ChallengeModal: View {
                     VStack(alignment: .center, spacing: 0) {
                         HStack {
                             Button {
-                                Analytics.shared.log(event: .challenge_tapped_x)
+                                // Analytics.shared.log(event: .challenge_tapped_x)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
@@ -91,7 +91,7 @@ struct ChallengeModal: View {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 shown = false
-                                Analytics.shared.log(event: .challenge_tapped_accept)
+                                // Analytics.shared.log(event: .challenge_tapped_accept)
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                                 DefaultsManager.standard.set(value: challengeDate, forKey: .challengeDate)
                                 viewRouter.currentPage = .middle

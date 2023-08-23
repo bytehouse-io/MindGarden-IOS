@@ -54,7 +54,7 @@ struct HomeViewScroll: View {
                             } //: HStack
                             .onTapGesture {
                                 withAnimation {
-                                    Analytics.shared.log(event: .home_tapped_streak)
+                                    // Analytics.shared.log(event: .home_tapped_streak)
                                     showModal = true
                                 }
                             }
@@ -69,7 +69,7 @@ struct HomeViewScroll: View {
                             } //: HStack
                             .onTapGesture {
                                 withAnimation {
-                                    Analytics.shared.log(event: .home_tapped_real_tree)
+                                    // Analytics.shared.log(event: .home_tapped_real_tree)
                                     NotificationCenter.default.post(name: .trees, object: nil)
                                 }
                             }
@@ -110,7 +110,7 @@ struct HomeViewScroll: View {
                         if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
                             Button {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                Analytics.shared.log(event: .pricing_from_home)
+                                // Analytics.shared.log(event: .pricing_from_home)
                                 withAnimation {
                                     fromPage = "home"
                                     viewRouter.currentPage = .pricing

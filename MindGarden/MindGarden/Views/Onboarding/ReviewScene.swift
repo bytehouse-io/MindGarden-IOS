@@ -178,21 +178,26 @@ struct ReviewScene: View {
                             action: {
                                 showLoading = true
                                 MGAudio.sharedInstance.playBubbleSound()
-                                Analytics.shared.log(event: .review_tapped_tutorial)
+                                // Analytics.shared.log(event: .review_tapped_tutorial)
                                 fromOnboarding = true
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 fromPage = "onboarding2"
                                 DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.signedUp.rawValue, forKey: .onboarding)
                                 DefaultsManager.standard.set(value: true, forKey: .onboarded)
+                                let data: [String: Any] = [
+                                    "name": DefaultsManager.standard.value(forKey: .name).stringValue
+                                ]
+                                 Analytics.shared.logActual(event: .onboarding_completed, with: data) // "Triggered when the user has completed the action at a certain step of the onboarding (click ""next"", enter name, enter information, etc).
                                 withAnimation {
                                     viewRouter.progressValue = 1
                                     if onReviewCompletion != nil {
                                         onReviewCompletion?()
+                                         Analytics.shared.log(event: .app_entered) // Triggers when the user passes the paywall. Must be sent only once, when user has passed the paywall.
                                     } else {
                                         // goto home screen now
                                         viewRouter.currentPage = .meditate
                                         if fromInfluencer != "" {
-                                            Analytics.shared.log(event: .user_from_influencer)
+                                            // Analytics.shared.log(event: .user_from_influencer)
                                             viewRouter.currentPage = .pricing
                                         } else {
                                             viewRouter.currentPage = .pricing
@@ -220,7 +225,7 @@ struct ReviewScene: View {
 //                            shouldPresent: $showPaywall,
 //                            onPresent: { paywallInfo in
 //                                print("paywall info is", paywallInfo)
-//                                Analytics.shared.log(event: .screen_load_superwall)
+//                                // Analytics.shared.log(event: .screen_load_superwall)
 //                            },
 //                            onDismiss: { result in
 //                                switch result.state {
@@ -228,10 +233,10 @@ struct ReviewScene: View {
 //                                    print("User dismissed the paywall.")
 //                                case let .purchased(productId: productId):
 //                                    switch productId {
-//                                    case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+//                                    case "io.mindgarden.pro.monthly": // Analytics.shared.log(event: .monthly_started_from_superwall)
 //                                        DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                    case "io.mindgarden.pro.yearly":
-//                                        Analytics.shared.log(event: .yearly_started_from_superwall)
+//                                        // Analytics.shared.log(event: .yearly_started_from_superwall)
 //                                        DefaultsManager.standard.set(value: true, forKey: "freeTrial")
 //                                        DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                        if UserDefaults.standard.bool(forKey: "isNotifOn") {
@@ -253,7 +258,7 @@ struct ReviewScene: View {
 //                        .buttonStyle(NeumorphicPress())
 
 //                        Button {
-//                            Analytics.shared.log(event: .review_tapped_explore)
+//                            // Analytics.shared.log(event: .review_tapped_explore)
 //                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
 //                            if let segments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
@@ -268,17 +273,17 @@ struct ReviewScene: View {
 //                            withAnimation {
 //                                viewRouter.progressValue = 1
 //                                if fromInfluencer != "" {
-//                                    Analytics.shared.log(event: .user_from_influencer)
+//                                    // Analytics.shared.log(event: .user_from_influencer)
 //                                    viewRouter.currentPage = .pricing
 //                                } else {
 //                                    Paywall.present { info in
-//                                        Analytics.shared.log(event: .screen_load_superwall)
+//                                        // Analytics.shared.log(event: .screen_load_superwall)
 //                                    } onDismiss: {  didPurchase, productId, paywallInfo in
 //                                        switch productId {
-//                                        case "io.mindgarden.pro.monthly": Analytics.shared.log(event: .monthly_started_from_superwall)
+//                                        case "io.mindgarden.pro.monthly": // Analytics.shared.log(event: .monthly_started_from_superwall)
 //                                            DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                        case "io.mindgarden.pro.yearly":
-//                                            Analytics.shared.log(event: .yearly_started_from_superwall)
+//                                            // Analytics.shared.log(event: .yearly_started_from_superwall)
 //                                            DefaultsManager.standard.set(value: true, forKey: "freeTrial")
 //                                            DefaultsManager.standard.set(value: true, forKey: "isPro")
 //                                            if UserDefaults.standard.bool(forKey: "isNotifOn") {
@@ -308,7 +313,7 @@ struct ReviewScene: View {
                 .frame(height: UIScreen.screenHeight + 50)
         }
         .transition(.move(edge: .trailing))
-        .onAppearAnalytics(event: .screen_load_review)
+        // .onAppearAnalytics(event: .screen_load_review)
         .onAppear {
             if UserDefaults.standard.string(forKey: "experience") != nil {
                 switch UserDefaults.standard.string(forKey: "experience") {

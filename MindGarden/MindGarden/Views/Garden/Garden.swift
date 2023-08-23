@@ -127,7 +127,7 @@ struct Garden: View {
                             Spacer()
                             HStack {
                                 Button {
-                                    Analytics.shared.log(event: .garden_tapped_plant_select)
+                                    // Analytics.shared.log(event: .garden_tapped_plant_select)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
 //                                    showPlant = true
                                     activeSheet = .plant
@@ -143,7 +143,7 @@ struct Garden: View {
                                 }
                                 .buttonStyle(ScalePress())
                                 Button {
-                                    Analytics.shared.log(event: .garden_tapped_settings)
+                                    // Analytics.shared.log(event: .garden_tapped_settings)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         gardenSettings = true
@@ -161,7 +161,7 @@ struct Garden: View {
                                 }
                                 .buttonStyle(ScalePress())
                                 Button {
-                                    Analytics.shared.log(event: .garden_tapped_settings)
+                                    // Analytics.shared.log(event: .garden_tapped_settings)
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         if UserDefaults.standard.bool(forKey: "isPro") {
@@ -223,14 +223,14 @@ struct Garden: View {
                                             )
                                     } //: ZStack
                                     .onTapGesture {
-                                        Analytics.shared.log(event: .garden_tapped_single_day)
+                                        // Analytics.shared.log(event: .garden_tapped_single_day)
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         day = col + (row * 7) + 1 - gardenModel.placeHolders
                                         let monthTile = gardenModel.monthTiles[row]?[day]
                                         if monthTile?.0?.title != "Ice Flower" {
                                             if !tappedTile {
                                                 if monthTile?.0 != nil || monthTile?.1 != nil {
-                                                    Analytics.shared.log(event: .onboarding_finished_single)
+                                                    // Analytics.shared.log(event: .onboarding_finished_single)
                                                     if plant != nil || mood != nil {
                                                         self.plant = plant
                                                         self.mood = mood
@@ -262,7 +262,7 @@ struct Garden: View {
                                     Button {
                                         withAnimation {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .garden_previous_month)
+                                            // Analytics.shared.log(event: .garden_previous_month)
                                             if gardenModel.selectedMonth == 1 {
                                                 gardenModel.selectedMonth = 12
                                                 gardenModel.selectedYear -= 1
@@ -279,7 +279,7 @@ struct Garden: View {
                                     Button {
                                         withAnimation {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .garden_next_month)
+                                            // Analytics.shared.log(event: .garden_next_month)
                                             if gardenModel.selectedMonth == 12 {
                                                 gardenModel.selectedMonth = 1
                                                 gardenModel.selectedYear += 1
@@ -404,11 +404,11 @@ struct Garden: View {
                                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                                 withAnimation {
                                                     if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "meditate" {
-                                                        Analytics.shared.log(event: .onboarding_finished_calendar)
+                                                        // Analytics.shared.log(event: .onboarding_finished_calendar)
                                                         DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.calendar.rawValue, forKey: .onboarding)
                                                     } else if UserDefaults.standard.string(forKey: K.defaults.onboarding) == DefaultsManager.OnboardingScreens.calendar.rawValue {
                                                         DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.stats.rawValue, forKey: .onboarding)
-                                                        Analytics.shared.log(event: .onboarding_finished_stats)
+                                                        // Analytics.shared.log(event: .onboarding_finished_stats)
                                                     }
                                                     forceRefresh.toggle()
                                                 }
@@ -494,7 +494,7 @@ struct Garden: View {
                     EmptyView()
                 }
             }
-            .onAppearAnalytics(event: .screen_load_garden)
+            // .onAppearAnalytics(event: .screen_load_garden)
         }
     }
 
@@ -575,7 +575,7 @@ struct Garden: View {
         )
         .onTapGesture {
             withAnimation {
-                Analytics.shared.log(event: .garden_tapped_monthly_stats)
+                // Analytics.shared.log(event: .garden_tapped_monthly_stats)
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 activeSheet = .profile
             }

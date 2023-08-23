@@ -70,7 +70,7 @@ struct JournalView: View, KeyboardReadable {
                                     if #available(iOS 15.0, *) {
                                         isFocused = false
                                     }
-                                    Analytics.shared.log(event: .journal_tapped_x)
+                                    // Analytics.shared.log(event: .journal_tapped_x)
                                     //                                placeholderReflection = "\"I write because I don’t know what I think until I read what I say.\"\n— Flannery O’Connor"
                                     placeholderQuestion = "What's one thing you're grateful for right now?"
                                     presentationMode.wrappedValue.dismiss()
@@ -242,7 +242,7 @@ struct JournalView: View, KeyboardReadable {
                     isFocused = false
                 }
             }
-            .onAppearAnalytics(event: .screen_load_journal)
+            // .onAppearAnalytics(event: .screen_load_journal)
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
             }
@@ -316,7 +316,7 @@ struct JournalView: View, KeyboardReadable {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
-                Analytics.shared.log(event: .journal_tapped_shuffle)
+                // Analytics.shared.log(event: .journal_tapped_shuffle)
                 question = Journal.prompts.shuffled()[0].description
             }
         } label: {
@@ -336,7 +336,7 @@ struct JournalView: View, KeyboardReadable {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 if !fromProfile {
-                    Analytics.shared.log(event: .journal_tapped_prompts)
+                    // Analytics.shared.log(event: .journal_tapped_prompts)
                     showPrompts = true
                 }
             }
@@ -364,6 +364,8 @@ struct JournalView: View, KeyboardReadable {
                     updateJournelData(url: "")
                 }
             }
+            
+             Analytics.shared.log(event: .mood_check_journal_entry_entered)
         } label: {
             HStack {
                 Text("Done")
@@ -431,7 +433,7 @@ struct JournalView: View, KeyboardReadable {
         num += 1
         let identify = AMPIdentify()
             .set("num_gratitudes", value: NSNumber(value: num))
-        Amplitude.instance().identify(identify ?? AMPIdentify())
+//        Amplitude.instance().identify(identify ?? AMPIdentify())
         if num == 30 {
             userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })
             userModel.buyPlant(unlockedStrawberry: true)
@@ -447,7 +449,7 @@ struct JournalView: View, KeyboardReadable {
             if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .mood {
                 DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.gratitude.rawValue, forKey: .onboarding)
             }
-            Analytics.shared.log(event: .gratitude_tapped_done)
+            // Analytics.shared.log(event: .gratitude_tapped_done)
             var journalObj = [String: String]()
             journalObj["timeStamp"] = Date.getTime()
             journalObj["gratitude"] = text

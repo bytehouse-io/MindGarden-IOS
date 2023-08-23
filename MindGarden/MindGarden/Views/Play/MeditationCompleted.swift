@@ -278,11 +278,12 @@ struct ShareAndContinueFooter: View {
                         .padding(.horizontal)
                         // TODO: -> change not now in saveProgress modal to trigger showStreak
                         .onTapGesture {
-                            if isFirst {
-                                Analytics.shared.log(event: .meditationCompleted_tapped_continue)
-                            } else {
-                                Analytics.shared.log(event: .congratulations_tapped_continue)
-                            }
+                            // Analytics.shared.logActual(event: .meditation_ended, with: ["cause": "meditation_completed"])
+//                            if isFirst {
+//                                // Analytics.shared.log(event: .meditationCompleted_tapped_continue)
+//                            } else {
+//                                // Analytics.shared.log(event: .congratulations_tapped_continue)
+//                            }
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
                                 let launchNum = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
@@ -340,13 +341,14 @@ struct ShareAndContinueFooter: View {
     // MARK: - Helper Functions
     private func likeAction() {
         if isFirst {
-            Analytics.shared.log(event: .meditationCompleted_tapped_heart)
+            // Analytics.shared.log(event: .meditation_ended)
+//            // Analytics.shared.log(event: .meditationCompleted_tapped_heart)
         } else {
-            Analytics.shared.log(event: .congratulations_tapped_heart)
+            // Analytics.shared.log(event: .congratulations_tapped_heart)
         }
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let med = model.selectedMeditation {
-    //                    Analytics.shared.log(event: "favorited_\(med.returnEventName())")
+    //                    // Analytics.shared.log(event: "favorited_\(med.returnEventName())")
             model.favorite(id: med.id)
         }
         favorited.toggle()

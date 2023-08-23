@@ -62,12 +62,12 @@ struct ReasonItem: Identifiable, Hashable {
 
     var event: AnalyticEvent {
         switch type {
-        case .sleep: return .reason_tapped_sleep
-        case .focus: return .reason_tapped_focus
-        case .anxiety: return .reason_tapped_stress
-        case .improveMood: return .reason_tapped_improveMood
-        case .morePresent: return .reason_tapped_bePresent
-        case .tryingItOut: return .reason_tapped_trying
+        case .sleep: return .mood_check_feeling_selected
+        case .focus: return .mood_check_feeling_selected
+        case .anxiety: return .mood_check_feeling_selected
+        case .improveMood: return .mood_check_feeling_selected
+        case .morePresent: return .mood_check_feeling_selected
+        case .tryingItOut: return .mood_check_feeling_selected
         }
     }
 

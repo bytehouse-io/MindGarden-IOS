@@ -188,6 +188,7 @@ struct ContentView: View {
                                         )
                                         .frame(height: geometry.size.height)
                                         .navigationViewStyle(StackNavigationViewStyle())
+                                        .navigationViewStyle(StackNavigationViewStyle())
                                         .environmentObject(bonusModel)
                                         .environmentObject(viewRouter)
                                     case .congratulationsOnCompletion:
@@ -336,7 +337,7 @@ struct ContentView: View {
                                     trigger: {
                                         DefaultsManager.standard.set(value: true, forKey: .fiveHundredBonus)
 //                                        DefaultsManager.standard.set(value: true, forKey: "500bonus")
-                                        Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
+                                        // Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
                                         bonusModel.tripleBonus()
                                     }
                                 ) {
@@ -362,7 +363,7 @@ struct ContentView: View {
                                         Button {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
-                                                Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
+                                                // Analytics.shared.log(event: .home_tapped_see_you_tomorrow)
                                                 DefaultsManager.standard.set(value: true, forKey: .fiveHundredBonus)
                                                 userModel.showDay1Complete = false
                                                 bonusModel.tripleBonus()
@@ -412,7 +413,7 @@ struct ContentView: View {
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                             withAnimation {
                                                 userModel.showCoinAnimation = false
-                                                Analytics.shared.log(event: .onboarding_finished_single_course)
+                                                // Analytics.shared.log(event: .onboarding_finished_single_course)
                                             }
                                         } label: {
                                             Capsule()
@@ -470,12 +471,12 @@ struct ContentView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .gratitude)) { _ in
             withAnimation {
-                Analytics.shared.log(event: .widget_tapped_journal)
+                // Analytics.shared.log(event: .widget_tapped_journal)
                 viewRouter.currentPage = .journal
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .mood)) { _ in
-            Analytics.shared.log(event: .widget_tapped_meditate)
+            // Analytics.shared.log(event: .widget_tapped_meditate)
             withAnimation {
                 addMood = true
             }
@@ -485,7 +486,7 @@ struct ContentView: View {
             viewRouter.currentPage = .pricing
         }
         .onReceive(NotificationCenter.default.publisher(for: .meditate)) { _ in
-            Analytics.shared.log(event: .widget_tapped_meditate)
+            // Analytics.shared.log(event: .widget_tapped_meditate)
             selectedTab = .search
             viewRouter.currentPage = .learn
         }
@@ -507,7 +508,7 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: .breathwork))
         { _ in
             withAnimation {
-                Analytics.shared.log(event: .widget_tapped_breathwork)
+                // Analytics.shared.log(event: .widget_tapped_breathwork)
                 middleToSearch = "Breathwork"
                 selectedTab = .search
                 viewRouter.currentPage = .learn
@@ -564,9 +565,9 @@ struct ContentView: View {
         case .moodCheck:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            Analytics.shared.log(event: .plus_tapped_mood)
+            // Analytics.shared.log(event: .plus_tapped_mood)
             if isOnboarding {
-                Analytics.shared.log(event: .onboarding_finished_mood)
+                // Analytics.shared.log(event: .onboarding_finished_mood)
             }
 
             withAnimation {
@@ -580,10 +581,10 @@ struct ContentView: View {
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
-            Analytics.shared.log(event: .plus_tapped_gratitude)
+            // Analytics.shared.log(event: .plus_tapped_gratitude)
 
             if isOnboarding {
-                Analytics.shared.log(event: .onboarding_finished_gratitude)
+                // Analytics.shared.log(event: .onboarding_finished_gratitude)
             }
 
             withAnimation(.easeOut(duration: 0.4)) {
@@ -594,9 +595,9 @@ struct ContentView: View {
         case .meditate:
             selectedPopupOption = .none
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            Analytics.shared.log(event: .plus_tapped_meditate)
+            // Analytics.shared.log(event: .plus_tapped_meditate)
             if isOnboarding {
-                Analytics.shared.log(event: .onboarding_finished_meditation)
+                // Analytics.shared.log(event: .onboarding_finished_meditation)
             }
             withAnimation {
                 // Hide popup with animation
@@ -609,7 +610,7 @@ struct ContentView: View {
                 DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude
 //                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude"
             {
-                Analytics.shared.log(event: .onboarding_finished_gratitude)
+                // Analytics.shared.log(event: .onboarding_finished_gratitude)
                 withAnimation {
                     meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
                         med.id == 22

@@ -35,18 +35,38 @@ final class Analytics: ObservableObject {
     /// This function shuold only be called from within the `logSubject` Combine subject, never directly from code.
     /// To log an event from code, use the `log(event:)` function above.
     func logActual(event: AnalyticEvent) {
+        logActual(event: event, with: [:])
+//        #if !targetEnvironment(simulator)
+//            Firebase.Analytics.logEvent(event.eventName, parameters: [:])
+////            AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
+//            Amplitude.instance().logEvent(event.eventName)
+////            Paywall.track(name: event.eventName)
+//            // prepare activity report content.
+//            let eventInfo: [String: Any] = ["eventName": event.eventName, "otherKey": 2]
+//            let eventInfoStringData = try! JSONSerialization.data(withJSONObject: eventInfo, options: [])
+//            guard let eventInfoString = String(data: eventInfoStringData, encoding: .utf8) else { return }
+//
+//            // send the activity report
+//            MWM.sendActivityReport(withKind: "event.eventName", withContent: eventInfoString)
+//
+//        #endif
+//        print("logging, \(event.eventName)")
+    }
+    
+    func logActual(event: AnalyticEvent, with data: [String: Any]) {
         #if !targetEnvironment(simulator)
-            Firebase.Analytics.logEvent(event.eventName, parameters: [:])
-//            AppsFlyerLib.shared().logEvent(event.eventName, withValues: [AFEventParamContent: "true"])
-            Amplitude.instance().logEvent(event.eventName)
-//            Paywall.track(name: event.eventName)
-            // prepare activity report content.
-            let eventInfo: [String: Any] = ["someKey": "someValue", "otherKey": 2]
-            let eventInfoStringData = try! JSONSerialization.data(withJSONObject: eventInfo, options: [])
-            guard let eventInfoString = String(data: eventInfoStringData, encoding: .utf8) else { return }
+//        Firebase.Analytics.logEvent(event.eventName, parameters: data)
+        Amplitude.instance().logEvent(event.eventName, withEventProperties: data)
+        // prepare activity report content.
+        var eventInfo: [String: Any] = ["eventName": event.eventName, "otherKey": 2]
+        if !data.isEmpty {
+            eventInfo["data"] = data
+        }
+        let eventInfoStringData = try! JSONSerialization.data(withJSONObject: eventInfo, options: [])
+        guard let eventInfoString = String(data: eventInfoStringData, encoding: .utf8) else { return }
 
-            // send the activity report
-            MWM.sendActivityReport(withKind: "example", withContent: eventInfoString)
+        // send the activity report
+//        MWM.sendActivityReport(withKind: event.eventName, withContent: eventInfoString)
 
         #endif
         print("logging, \(event.eventName)")
@@ -67,7 +87,7 @@ extension View {
     func onAppearAnalytics(event: AnalyticEvent?) -> some View {
         onAppear {
             guard let event = event else { return }
-            Analytics.shared.log(event: event)
+            // Analytics.shared.log(event: event)
         }
     }
 }

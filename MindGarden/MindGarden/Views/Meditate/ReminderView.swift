@@ -73,9 +73,9 @@ struct ReminderView: View {
                                                     OneSignal.promptForPushNotifications(userResponse: { accepted in
                                                         if accepted {
                                                             if isNextSteps {
-                                                                Analytics.shared.log(event: .nextsteps_created_reminder)
+                                                                // Analytics.shared.log(event: .nextsteps_created_reminder)
                                                             } else {
-                                                                Analytics.shared.log(event: .finished_set_reminder)
+                                                                // Analytics.shared.log(event: .finished_set_reminder)
                                                             }
                                                             NotificationHelper.addOneDay()
                                                             NotificationHelper.addThreeDay()
@@ -148,7 +148,7 @@ struct ReminderView: View {
                 }
             case .notDetermined:
                 DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
-                Analytics.shared.log(event: .notification_go_to_settings)
+                // Analytics.shared.log(event: .notification_go_to_settings)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
@@ -158,7 +158,7 @@ struct ReminderView: View {
                 return
             case .denied:
                 DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
-                Analytics.shared.log(event: .notification_go_to_settings)
+                // Analytics.shared.log(event: .notification_go_to_settings)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)

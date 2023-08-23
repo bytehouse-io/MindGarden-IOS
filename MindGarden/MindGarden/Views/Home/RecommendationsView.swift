@@ -23,7 +23,7 @@ struct RecommendationsView: View {
     @State private var isOnboarding = false
     @State private var moodCoins = 1
     @State private var rowOpacity = 1.0
-//    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode
 
     // MARK: - Body
     
@@ -57,7 +57,7 @@ struct RecommendationsView: View {
             
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
                 if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
-                    Analytics.shared.log(event: .onboarding_load_recs)
+                    // Analytics.shared.log(event: .onboarding_load_recs)
                     isOnboarding = true
                     var count = 0
                     let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -71,7 +71,7 @@ struct RecommendationsView: View {
                     }
                 }
             } else {
-                Analytics.shared.log(event: .screen_load_recs)
+                // Analytics.shared.log(event: .screen_load_recs)
             }
         }
     }
@@ -88,7 +88,7 @@ struct RecommendationsView: View {
                     Spacer()
                     CloseButton {
                         withAnimation {
-                            Analytics.shared.log(event: .recommendations_tapped_x)
+                            // Analytics.shared.log(event: .recommendations_tapped_x)
                             if !isOnboarding {
                                 viewRouter.currentPage = .meditate
                             }
@@ -183,7 +183,7 @@ struct RecommendationsView: View {
                 Mood.getMoodImage(mood: userModel.selectedMood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height:50)
+                    .frame(height: 50)
                 Text("Based on how you're feeling, we chose these for you:")
                     .foregroundColor(Clr.black2)
                     .font(Font.fredoka(.regular, size: 20))
@@ -219,7 +219,7 @@ struct RecommendationsView: View {
             } //: HStack
             
             Button {
-                Analytics.shared.log(event: .recs_tapped_see_more)
+                // Analytics.shared.log(event: .recs_tapped_see_more)
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 withAnimation {
                     viewRouter.currentPage = .learn
@@ -277,18 +277,19 @@ struct MeditationRow: View {
                 if isBreathwork {
                     medModel.selectedBreath = breathwork
                     viewRouter.currentPage = .breathMiddle
-                    Analytics.shared.log(event: .recommendations_tapped_breath)
+                    // Analytics.shared.log(event: .recommendations_tapped_breath)
                 } else {
                     if id != 22 {
-                        Analytics.shared.log(event: .recommendations_tapped_med)
+                        // Analytics.shared.log(event: .recommendations_tapped_med)
                     }
                     medModel.selectedMeditation = meditation
                     if meditation.type == .course {
                         viewRouter.currentPage = .middle
                     } else {
                         if id == 22 {
-                            Analytics.shared.log(event: .onboarding_tapped_30_second)
+                            // Analytics.shared.log(event: .onboarding_tapped_30_second)
                         }
+                        // Analytics.shared.logActual(event: .meditation_started, with: ["meditation_id": id])
                         viewRouter.currentPage = .play
                     }
                 }

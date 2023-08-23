@@ -130,13 +130,13 @@ struct MiddleSelect: View {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[0].id) {
-                                        Analytics.shared.log(event: .middle_tapped_locked_recommended)
+                                        // Analytics.shared.log(event: .middle_tapped_locked_recommended)
                                         fromPage = "middle"
                                         withAnimation {
                                             viewRouter.currentPage = .pricing
                                         }
                                     } else {
-                                        Analytics.shared.log(event: .middle_tapped_recommended)
+                                        // Analytics.shared.log(event: .middle_tapped_recommended)
                                         model.selectedMeditation = model.recommendedMeds[0]
                                         if model.selectedMeditation?.type == .course {
                                             viewRouter.currentPage = .middle
@@ -151,13 +151,13 @@ struct MiddleSelect: View {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[1].id) {
-                                        Analytics.shared.log(event: .middle_tapped_locked_recommended)
+                                        // Analytics.shared.log(event: .middle_tapped_locked_recommended)
                                         fromPage = "middle"
                                         withAnimation {
                                             viewRouter.currentPage = .pricing
                                         }
                                     } else {
-                                        Analytics.shared.log(event: .middle_tapped_recommended)
+                                        // Analytics.shared.log(event: .middle_tapped_recommended)
                                         model.selectedMeditation = model.recommendedMeds[1]
                                         if model.selectedMeditation?.type == .course {
                                             viewRouter.currentPage = .middle
@@ -195,12 +195,12 @@ struct MiddleSelect: View {
                 lastPlayed = id
             }
         }
-        .onAppearAnalytics(event: .screen_load_middle)
+        // .onAppearAnalytics(event: .screen_load_middle)
     }
 
     var backButton: some View {
         Button {
-            Analytics.shared.log(event: .middle_tapped_back)
+            // Analytics.shared.log(event: .middle_tapped_back)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
                 viewRouter.currentPage = viewRouter.previousPage
@@ -223,7 +223,7 @@ struct MiddleSelect: View {
     private func likeAction() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let med = model.selectedMeditation {
-            Analytics.shared.log(event: .middle_tapped_favorite)
+            // Analytics.shared.log(event: .middle_tapped_favorite)
             model.favorite(id: med.id)
         }
     }
@@ -244,7 +244,7 @@ struct MiddleSelect: View {
             Button {
                 if state == .locked { return }
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                Analytics.shared.log(event: .middle_tapped_row)
+                // Analytics.shared.log(event: .middle_tapped_row)
                 tappedMeditation = true
                 model.selectedMeditation = meditation
                 withAnimation {
@@ -286,7 +286,7 @@ struct MiddleSelect: View {
 
                     LikeButton(isLiked: isFavorited, size: 25.0) {
                         if state != .locked {
-                            Analytics.shared.log(event: .middle_tapped_row_favorite)
+                            // Analytics.shared.log(event: .middle_tapped_row_favorite)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             model.favorite(id: meditation.id)
                             isFavorited.toggle()

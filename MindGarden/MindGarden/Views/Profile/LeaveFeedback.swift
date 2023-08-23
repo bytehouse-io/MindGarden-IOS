@@ -157,7 +157,7 @@ struct LeaveFeedback: View {
 
     var requestFeature: some View {
         Button {
-            Analytics.shared.log(event: .profile_tapped_roadmap)
+            // Analytics.shared.log(event: .profile_tapped_roadmap)
             if let url = URL(string: "https://discord.gg/SZXnxtyBV5/") {
                 UIApplication.shared.open(url)
             }
@@ -302,7 +302,7 @@ struct LeaveFeedback: View {
     }
 
     private func rateFunc() {
-        Analytics.shared.log(event: .profile_tapped_rate)
+        // Analytics.shared.log(event: .profile_tapped_rate)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         if let windowScene = UIApplication.shared.windows.first?.windowScene { SKStoreReviewController.requestReview(in: windowScene)
             DefaultsManager.standard.set(value: true, forKey: .tappedRate)

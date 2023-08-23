@@ -20,6 +20,9 @@
 		0B3AA79029B0BED800386163 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA78F29B0BED800386163 /* FirebaseStorage */; };
 		0B3AA79229B0C0C500386163 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = 0B3AA79129B0C0C500386163 /* FirebaseDynamicLinks */; };
 		182CF8EF29D88A5D001E1FB9 /* LeavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182CF8EE29D88A5D001E1FB9 /* LeavesView.swift */; };
+		183733E22A79548B00F1B632 /* AnalyticServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6B5160270A36FB000118E8 /* AnalyticServices.swift */; };
+		183734192A795CAB00F1B632 /* AnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB2E3C7270F9AC700F5C23C /* AnalyticEvent.swift */; };
+		1837341A2A79831700F1B632 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE17B8AF26C06C20002CF8C2 /* Sound.swift */; };
 		184899FB29F3C81D0095B61E /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FA29F3C81C0095B61E /* HelperFunctions.swift */; };
 		184899FD29F44BD30095B61E /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
 		184899FF29F826D00095B61E /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FE29F826D00095B61E /* UIApplication+Extension.swift */; };
@@ -1836,6 +1839,7 @@
 				FE135BD0277BA75800614A4E /* Utils.swift in Sources */,
 				58E419A02898DE210042F492 /* ViewRouter.swift in Sources */,
 				58E419A12898DE2C0042F492 /* Plant.swift in Sources */,
+				183734192A795CAB00F1B632 /* AnalyticEvent.swift in Sources */,
 				58E419A72898E5390042F492 /* MoodModel.swift in Sources */,
 				5898541928954E4C002999A0 /* LargeWidget.swift in Sources */,
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
@@ -1845,11 +1849,13 @@
 				5820EEA428B8E1B1002DC784 /* String+Extensions.swift in Sources */,
 				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
 				FE48B44427791B5B00CA7B63 /* MindGardenWidget.intentdefinition in Sources */,
+				1837341A2A79831700F1B632 /* Sound.swift in Sources */,
 				58E419AA2898E6650042F492 /* CategoryModel.swift in Sources */,
 				18633ECC2A015AA7009B7730 /* DefaultsManager.swift in Sources */,
 				58E419A62898E42C0042F492 /* Colors+Generated.swift in Sources */,
 				58E4199F2898DE000042F492 /* Breathwork.swift in Sources */,
 				58DB9A78289D7C8B00F930DE /* Numbers+Extension.swift in Sources */,
+				183733E22A79548B00F1B632 /* AnalyticServices.swift in Sources */,
 				58E419A22898DE560042F492 /* QuickStartModel.swift in Sources */,
 				58E82A56283E88C700E224D4 /* CurrentStreak.swift in Sources */,
 				FE135BD1277BC48000614A4E /* Date+Extensions.swift in Sources */,

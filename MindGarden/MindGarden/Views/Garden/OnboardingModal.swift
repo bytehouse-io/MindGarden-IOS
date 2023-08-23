@@ -51,51 +51,54 @@ struct OnboardingModal: View {
 //                                .frame(height: g.size.height * 0.3)
 //                                .padding()
                             HStack(spacing: 10) {
-                            
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            shown = false
-                                            Analytics.shared.log(event: .onboarding_finished_single_okay)
-                                            DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.done.rawValue, forKey: .onboarding)
-                                        }
-                                    } label: {
-                                        Capsule()
-                                            .fill(Color.gray)
-                                            .overlay(
-                                                Text("Not now")
-                                                    .font(Font.fredoka(.bold, size: 18))
-                                                    .foregroundColor(.white)
-                                                    .lineLimit(1)
-                                                    .minimumScaleFactor(0.5)
-                                            )
-                                            .frame(width: g.size.width * 0.3, height: g.size.height * 0.06)
-                                    }.buttonStyle(NeumorphicPress())
-                                    Button {
-                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        withAnimation {
-                                            shown = false
-                                            Analytics.shared.log(event: .onboarding_single_go_to_home)
-                                            viewRouter.currentPage = .meditate
-                                        }
-                                    } label: {
-                                        Capsule()
-                                            .fill(Clr.brightGreen)
-                                            .overlay(
-                                                Text("Go to home")
-                                                    .font(Font.fredoka(.bold, size: 18))
-                                                    .foregroundColor(.white)
-                                                    .lineLimit(1)
-                                                    .minimumScaleFactor(0.5)
-                                            )
-                                            .frame(width: g.size.width * 0.4, height: g.size.height * 0.06)
-                                    }.buttonStyle(NeumorphicPress())
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        shown = false
+                                        // Analytics.shared.log(event: .onboarding_finished_single_okay)
+                                        DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.done.rawValue, forKey: .onboarding)
+                                    }
+                                } label: {
+                                    Capsule()
+                                        .fill(Color.gray)
+                                        .overlay(
+                                            Text("Not now")
+                                                .font(Font.fredoka(.bold, size: 18))
+                                                .foregroundColor(.white)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.5)
+                                        )
+                                        .frame(width: g.size.width * 0.3, height: g.size.height * 0.06)
+                                }
+                                .buttonStyle(NeumorphicPress())
                                 
+                                Button {
+                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    withAnimation {
+                                        shown = false
+                                        // Analytics.shared.log(event: .onboarding_single_go_to_home)
+                                        viewRouter.currentPage = .meditate
+                                    }
+                                } label: {
+                                    Capsule()
+                                        .fill(Clr.brightGreen)
+                                        .overlay(
+                                            Text("Go to home")
+                                                .font(Font.fredoka(.bold, size: 18))
+                                                .foregroundColor(.white)
+                                                .lineLimit(1)
+                                                .minimumScaleFactor(0.5)
+                                        )
+                                        .frame(width: g.size.width * 0.4, height: g.size.height * 0.06)
+                                }
+                                .buttonStyle(NeumorphicPress())
                             }
-                        }.frame(width: g.size.width * 0.65, height: g.size.height * (isUnlocked ? 0.55 : 0.75), alignment: .center)
-                    }.frame(width: g.size.width * 0.85, height: g.size.height * (isUnlocked ? 0.6 : 0.80), alignment: .center)
-                        .background(Clr.darkWhite)
-                        .cornerRadius(12)
+                        }
+                        .frame(width: g.size.width * 0.65, height: g.size.height * (isUnlocked ? 0.55 : 0.75), alignment: .center)
+                    }
+                    .frame(width: g.size.width * 0.85, height: g.size.height * (isUnlocked ? 0.6 : 0.80), alignment: .center)
+                    .background(Clr.darkWhite)
+                    .cornerRadius(12)
                     Spacer()
                 }
                 if isUnlocked {

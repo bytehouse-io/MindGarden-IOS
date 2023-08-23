@@ -105,7 +105,7 @@ struct HoorayView: View {
                 ContinueButton(
                     action: {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        Analytics.shared.log(event: .hooray_tapped_continue)
+                        // Analytics.shared.log(event: .hooray_tapped_continue)
 //                        presentationMode.wrappedValue.dismiss()
                         showRecs = true
                     },
@@ -132,7 +132,7 @@ struct HoorayView: View {
 
             if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
                 if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
-                    Analytics.shared.log(event: .onboarding_load_recs)
+                    // Analytics.shared.log(event: .onboarding_load_recs)
                     isOnboarding = true
                     var count = 0
                     let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -146,7 +146,7 @@ struct HoorayView: View {
                     }
                 }
             } else {
-                Analytics.shared.log(event: .screen_load_recs)
+                // Analytics.shared.log(event: .screen_load_recs)
             }
         }
         .fullScreenCover(isPresented: $showRecs) {

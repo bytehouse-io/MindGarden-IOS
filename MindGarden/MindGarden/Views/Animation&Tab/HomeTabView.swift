@@ -48,7 +48,7 @@ struct HomeTabView: View {
 
     private func setSelectedTab(selectedTab: TabType) {
         let tabName = selectedTab.rawValue.capitalized
-        Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
+        // Analytics.shared.log(event: AnalyticEvent.getTab(tabName: tabName))
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation(.linear(duration: 0.4)) {
             let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue

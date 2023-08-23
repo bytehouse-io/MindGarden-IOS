@@ -29,7 +29,7 @@ struct SaveProgressModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                Analytics.shared.log(event: .finished_save_progress)
+                                // Analytics.shared.log(event: .finished_save_progress)
                                 fromOnboarding = true
                                 shown = false
                                 viewRouter.currentPage = .authentication
@@ -51,7 +51,7 @@ struct SaveProgressModal: View {
                         Button {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                             withAnimation {
-                                Analytics.shared.log(event: .finished_not_now)
+                                // Analytics.shared.log(event: .finished_not_now)
                                 shown = false
                                 DefaultsManager.standard.set(value: true, forKey: .saveProgress)
                             }

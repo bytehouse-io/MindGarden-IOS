@@ -32,11 +32,11 @@ struct ProfileTab: View {
                             withAnimation {
                                 selectedTab = item.tabName
                                 if selectedTab == .profile {
-                                    Analytics.shared.log(event: .profile_tapped_profile)
+                                    // Analytics.shared.log(event: .profile_tapped_profile)
                                 } else if selectedTab == .settings {
-                                    Analytics.shared.log(event: .profile_tapped_settings)
+                                    // Analytics.shared.log(event: .profile_tapped_settings)
                                 } else if selectedTab == .referral {
-                                    Analytics.shared.log(event: .profile_tapped_refer)
+                                    // Analytics.shared.log(event: .profile_tapped_refer)
                                 }
                             }
                         }

@@ -24,19 +24,19 @@ class StorylyManager: StorylyDelegate {
                               story: Storyly.Story)
     {
         if story.media.actionUrl == "notification" {
-            Analytics.shared.log(event: .story_notification_swipe)
+            // Analytics.shared.log(event: .story_notification_swipe)
             storylyViewProgrammatic.dismiss(animated: true)
             NotificationCenter.default.post(name: .notification, object: nil)
         } else if story.media.actionUrl == "referral" {
-            Analytics.shared.log(event: .story_notification_swipe)
+            // Analytics.shared.log(event: .story_notification_swipe)
             storylyViewProgrammatic.dismiss(animated: true)
             NotificationCenter.default.post(name: .referrals, object: nil)
         } else if story.media.actionUrl == "gratitude" {
-            Analytics.shared.log(event: .story_notification_swipe_gratitude)
+            // Analytics.shared.log(event: .story_notification_swipe_gratitude)
             storylyViewProgrammatic.dismiss(animated: true)
             NotificationCenter.default.post(name: .gratitude, object: nil)
         } else if story.media.actionUrl == "trees" {
-            Analytics.shared.log(event: .story_swipe_trees_future)
+            // Analytics.shared.log(event: .story_swipe_trees_future)
             storylyViewProgrammatic.dismiss(animated: true)
             NotificationCenter.default.post(name: .trees, object: nil)
         }
@@ -62,7 +62,7 @@ class StorylyManager: StorylyDelegate {
                       storyComponent _: Storyly.StoryComponent?)
     {
         if let story = story {
-            Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
+//            Amplitude.instance().logEvent("opened_story", withEventProperties: ["title": "\(story.title)"])
             let components = story.title.components(separatedBy: " ")
             var storyArray = UserDefaults.standard.array(forKey: "storySegments") as? [String]
             var unique = Array(Set(storyArray ?? [""]))

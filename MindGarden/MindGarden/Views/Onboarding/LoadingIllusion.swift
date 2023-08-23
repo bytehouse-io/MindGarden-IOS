@@ -45,7 +45,7 @@ struct LoadingIllusion: View {
             }
         }
         .onAppear {
-            Analytics.shared.log(event: .onboarding_loading_illusion)
+            // Analytics.shared.log(event: .onboarding_loading_illusion)
             meditateTimer = Timer.scheduledTimer(withTimeInterval: time, repeats: true) { _ in
                 withAnimation(.easeOut) {
                     index += 1

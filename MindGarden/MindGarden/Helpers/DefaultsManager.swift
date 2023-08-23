@@ -189,7 +189,7 @@ extension DefaultsManager {
         case firstStory
         case completedCourses
         case showedChallenge
-        case signedIn
+//        case signedIn
         case mindful
         case reddit
         case tileDates

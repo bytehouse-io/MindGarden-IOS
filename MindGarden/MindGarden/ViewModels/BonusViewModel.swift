@@ -301,7 +301,7 @@ class BonusViewModel: ObservableObject {
         var launchNum = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
 
         if launchNum == 7 {
-            Analytics.shared.log(event: .seventh_time_coming_back)
+            // Analytics.shared.log(event: .seventh_time_coming_back)
             if DefaultsManager.standard.value(forKey: .referTip).boolValue {
                 DefaultsManager.standard.set(value: true, forKey: .referTip)
                 updateTips(tip: "Tip Referrals")
@@ -326,7 +326,7 @@ class BonusViewModel: ObservableObject {
         DefaultsManager.standard.set(value: launchNum, forKey: .dailyLaunchNumber)
         let identify = AMPIdentify()
             .set("dailyLaunchNumber", value: NSNumber(value: launchNum))
-        Amplitude.instance().identify(identify ?? AMPIdentify())
+//        Amplitude.instance().identify(identify ?? AMPIdentify())
     }
 
     func updateStreak() {

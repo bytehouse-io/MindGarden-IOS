@@ -36,7 +36,7 @@ struct ConfirmModal: View {
                             .padding(.horizontal)
                         HStack(alignment: .center, spacing: 10) {
                             Button {
-                                Analytics.shared.log(event: .store_tapped_confirm_modal_cancel)
+                                // Analytics.shared.log(event: .store_tapped_confirm_modal_cancel)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     shown = false
@@ -51,7 +51,7 @@ struct ConfirmModal: View {
                                     .neoShadow()
                             }
                             Button {
-                                Analytics.shared.log(event: .store_tapped_confirm_modal_confirm)
+                                // Analytics.shared.log(event: .store_tapped_confirm_modal_confirm)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     if userModel.willBuyPlant?.title == "Real Tree" {

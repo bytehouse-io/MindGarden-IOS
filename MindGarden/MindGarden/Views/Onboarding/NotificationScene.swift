@@ -157,12 +157,12 @@ struct NotificationScene: View {
 //                                .frame(width: g.size.width * 0.6)
                             Spacer()
                             Button {
-                                Analytics.shared.log(event: .notification_tapped_turn_on)
+                                // Analytics.shared.log(event: .notification_tapped_turn_on)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation {
                                     OneSignal.promptForPushNotifications(userResponse: { accepted in
                                         if accepted {
-                                            Analytics.shared.log(event: .onboarding_notification_on)
+                                            // Analytics.shared.log(event: .onboarding_notification_on)
                                             promptNotification()
                                         } else {
                                             promptNotification()
@@ -190,9 +190,9 @@ struct NotificationScene: View {
                                     .onTapGesture {
                                         let identify = AMPIdentify()
                                             .set("reminder_set", value: NSNumber(0))
-                                        Amplitude.instance().identify(identify ?? AMPIdentify())
+//                                        Amplitude.instance().identify(identify ?? AMPIdentify())
                                         DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
-                                        Analytics.shared.log(event: .notification_tapped_skip)
+                                        // Analytics.shared.log(event: .notification_tapped_skip)
                                         withAnimation {
                                             withAnimation(.easeOut(duration: 0.5)) {
                                                 DispatchQueue.main.async {
@@ -261,7 +261,7 @@ struct NotificationScene: View {
                         ])
         }
         .transition(.move(edge: .trailing))
-        .onAppearAnalytics(event: .screen_load_notification)
+        // .onAppearAnalytics(event: .screen_load_notification)
 //            .alert(isPresented: $showAlert) {
 //                Alert(title: Text("Turn on Notifications"), message: Text("We'll do our best not to annoy you"), dismissButton: .default(Text("Go to Settings"), action: {
 //                    if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
@@ -279,7 +279,7 @@ struct NotificationScene: View {
             case .authorized:
                 let identify = AMPIdentify()
                     .set("reminder_set", value: NSNumber(1))
-                Amplitude.instance().identify(identify ?? AMPIdentify())
+//                Amplitude.instance().identify(identify ?? AMPIdentify())
 
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)
                 DefaultsManager.standard.set(value: dateTime, forKey: .meditationReminder)
@@ -326,7 +326,7 @@ struct NotificationScene: View {
                     }
                 }
             case .denied:
-                Analytics.shared.log(event: .notification_go_to_settings)
+                // Analytics.shared.log(event: .notification_go_to_settings)
                 DispatchQueue.main.async {
                     if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                         UIApplication.shared.open(appSettings)
@@ -335,7 +335,7 @@ struct NotificationScene: View {
             case .notDetermined:
                 if fromSettings || tappedTurnOn {
                     DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
-                    Analytics.shared.log(event: .notification_go_to_settings)
+                    // Analytics.shared.log(event: .notification_go_to_settings)
                     DispatchQueue.main.async {
                         if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                             UIApplication.shared.open(appSettings)
@@ -386,7 +386,7 @@ struct BottomSheetView<Content: View>: View {
                 .font(Font.fredoka(.bold, size: 18))
                 .foregroundColor(Clr.darkgreen)
                 .onTapGesture {
-                    Analytics.shared.log(event: .notification_tapped_done)
+                    // Analytics.shared.log(event: .notification_tapped_done)
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     self.isOpen.toggle()
                 }

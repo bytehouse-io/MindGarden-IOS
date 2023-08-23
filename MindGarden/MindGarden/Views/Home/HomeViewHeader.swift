@@ -49,7 +49,7 @@ struct HomeViewHeader: View {
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
-//                                Analytics.shared.log(event: .home_tapped_sound)
+//                                // Analytics.shared.log(event: .home_tapped_sound)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
 
                                 if let player = player {
@@ -71,7 +71,7 @@ struct HomeViewHeader: View {
                             .foregroundColor(Clr.darkgreen)
                             .font(.system(size: 22))
                             .onTapGesture {
-                                Analytics.shared.log(event: .home_tapped_profile)
+                                // Analytics.shared.log(event: .home_tapped_profile)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 activeSheet = .profile
                             }
@@ -159,7 +159,7 @@ struct HomeViewHeader: View {
                                         .onTapGesture {
                                             DefaultsManager.standard.set(value: true, forKey: .plusCoins)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .home_tapped_IAP)
+                                            // Analytics.shared.log(event: .home_tapped_IAP)
                                             withAnimation { showIAP.toggle() }
                                         }
                                 } else {
@@ -167,7 +167,7 @@ struct HomeViewHeader: View {
                                         .onTapGesture {
                                             DefaultsManager.standard.set(value: true, forKey: .plusCoins)
                                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                            Analytics.shared.log(event: .home_tapped_IAP)
+                                            // Analytics.shared.log(event: .home_tapped_IAP)
                                             withAnimation { showIAP.toggle() }
                                         }
                                 }

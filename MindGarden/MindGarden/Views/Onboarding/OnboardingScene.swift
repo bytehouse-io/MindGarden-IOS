@@ -91,7 +91,7 @@ struct OnboardingScene: View {
                         VStack {
                             Button {
                                 MGAudio.sharedInstance.playBubbleSound()
-                                Analytics.shared.log(event: .onboarding_tapped_continue)
+                                // Analytics.shared.log(event: .onboarding_tapped_continue)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation(.easeOut(duration: 0.4)) {
                                     DispatchQueue.main.async {
@@ -117,7 +117,7 @@ struct OnboardingScene: View {
                             
                             Button {
                                 MGAudio.sharedInstance.playBubbleSound()
-                                Analytics.shared.log(event: .onboarding_tapped_sign_in)
+                                // Analytics.shared.log(event: .onboarding_tapped_sign_in)
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 tappedSignIn = true
                                 withAnimation {
@@ -144,24 +144,24 @@ struct OnboardingScene: View {
             } //: GeometryReader
             .navigationBarTitle("", displayMode: .inline)
         } //: NavigationView
-        .onAppearAnalytics(event: .screen_load_onboarding)
+        // .onAppearAnalytics(event: .screen_load_onboarding)
         .onAppear {
             DefaultsManager.standard.set(value: "onboarding", forKey: .onboarding)
             if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
                 let identify = AMPIdentify()
                     .set("abTest1.53", value: NSNumber(value: num))
-                Amplitude.instance().identify(identify ?? AMPIdentify())
+//                Amplitude.instance().identify(identify ?? AMPIdentify())
             }
             ATTrackingManager.requestTrackingAuthorization { status in
                 switch status {
-                case .authorized:
-                    Analytics.shared.log(event: .onboarding_tapped_allowed_att)
+                case .authorized: break
+                    // Analytics.shared.log(event: .onboarding_tapped_allowed_att)
                 case .notDetermined:
                     print("test")
                 case .restricted:
                     print("restricted")
-                default:
-                    Analytics.shared.log(event: .onboarding_tapped_denied_att)
+                default: break
+                    // Analytics.shared.log(event: .onboarding_tapped_denied_att)
                 }
             }
         }
