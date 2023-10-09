@@ -26,7 +26,8 @@ struct JourneyScene: View {
                 VStack {
                     LottieView(fileName: "sloth")
                         .offset(x: -65)
-                }.frame(width: 100, height: 100)
+                }
+                .frame(width: 100, height: 100)
                 Text("Only 1% complete the roadmap.\n Email team@mindgarden.io with  a screenshot, we'd like to give you gift.\n-💚 MindGarden Team")
                     .font(Font.fredoka(.medium, size: 20))
                     .multilineTextAlignment(.leading)
@@ -56,7 +57,8 @@ struct JourneyScene: View {
                             HStack(spacing: 10) {
                                 let item = model.roadMapArr[idx]
                                 let isPlayed = userModel.shouldBeChecked(id: item, roadMapArr: model.roadMapArr, idx: idx)
-                                let isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item)
+                                let isLocked = !DefaultsManager.standard.value(forKey: .isPro).boolValue && !Meditation.unlockedMeditations.contains(item) // for intro to be unlocked
+//                                && Meditation.lockedMeditations.contains(item)
                                 VStack(spacing: 5) {
                                     DottedLine()
                                         .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
@@ -79,7 +81,8 @@ struct JourneyScene: View {
                                 JourneyRow(width: width * 0.85, meditation: Meditation.allMeditations.first { $0.id == item } ?? Meditation.allMeditations[0], meditationModel: model, viewRouter: viewRouter)
                                     .padding([.horizontal, .bottom])
                                     .opacity(isLocked ? 0.5 : 1.0)
-                            }.frame(width: width * 0.9, alignment: .trailing)
+                            }
+                            .frame(width: width * 0.9, alignment: .trailing)
                         }
                     }
 
@@ -115,14 +118,17 @@ struct JourneyScene: View {
                         }
                         .padding()
                         .background(Clr.yellow)
-                    }.opacity(isAward ? 1.0 : 0.4)
-                        .frame(height: 44, alignment: .center)
-                        .buttonStyle(BonusPress())
-                        .cornerRadius(15)
-                        .neoShadow()
-                }.frame(width: width)
+                    }
+                    .opacity(isAward ? 1.0 : 0.4)
+                    .frame(height: 44, alignment: .center)
+                    .buttonStyle(BonusPress())
+                    .cornerRadius(15)
+                    .neoShadow()
+                }
+                .frame(width: width)
             }
-        }.onAppear {
+        }
+        .onAppear {
             model.getUserMap()
             let completedMeditations = userModel.completedMeditations
             model.roadMapArr.forEach { id in

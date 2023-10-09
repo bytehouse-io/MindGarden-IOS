@@ -125,7 +125,8 @@ struct PromptsView: View {
                                         .frame(width: UIScreen.screenWidth * 0.85, height: UIScreen.screenHeight * 0.115, alignment: .center)
                                         .cornerRadius(16)
                                         .padding()
-                                    }.opacity(!UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture ? 0.5 : 1)
+                                    }
+                                    .opacity(!UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture ? 0.5 : 1)
                                     if !UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture {
                                         Img.lockIcon
                                             .resizable()

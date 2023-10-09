@@ -41,7 +41,10 @@ class MeditationViewModel: ObservableObject {
     var timer: Timer?
     var forwardCounter = 0
     var shouldStreakUpdate = false
-
+    
+    @Published var coin: Int = 0
+    @Published var recs = [-4, 71, 23]
+    
     @Published var roadMaplevel: Int = 1
     @Published var roadMapArr: [Int] = []
     @Published var featuredBreathwork = Breathwork.breathworks[0]
@@ -189,7 +192,7 @@ class MeditationViewModel: ObservableObject {
             med.type != .lesson && med.id != 22 && med.id != 45 && med.id != 55 && med.id != 56 && med.type != .weekly
         }
 
-        if !UserDefaults.standard.bool(forKey: "isPro") {
+        if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
             filtedMeds = filtedMeds.filter { med in
                 !Meditation.lockedMeditations.contains(med.id)
             }

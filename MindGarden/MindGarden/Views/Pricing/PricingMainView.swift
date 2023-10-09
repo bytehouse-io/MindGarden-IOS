@@ -13,9 +13,9 @@ struct PricingMainView: UIViewControllerRepresentable {
     typealias UIViewControllerType = PricingViewHelperViewController
     @EnvironmentObject var viewRouter: ViewRouter
     
-    
     func makeUIViewController(context: Context) -> PricingViewHelperViewController {
         let vc = PricingViewHelperViewController()
+        vc.viewRouter = viewRouter
         return vc
     }
     

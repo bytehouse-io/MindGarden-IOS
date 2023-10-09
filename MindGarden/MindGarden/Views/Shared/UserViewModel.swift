@@ -277,6 +277,9 @@ class UserViewModel: ObservableObject {
         selectedPlant = Plant.allPlants.first(where: { plant in
             plant.title == DefaultsManager.standard.value(forKey: .selectedPlant).stringValue
         })
+        if let plants = UserDefaults.standard.value(forKey: K.defaults.plants) as? [String] {
+            plantedTrees = plants.filter({ $0 == "Real Tree" })
+        }
     }
 
     func shouldBeChecked(id: Int, roadMapArr: [Int], idx: Int) -> Bool {
@@ -508,5 +511,16 @@ class UserViewModel: ObservableObject {
                 }
             }
         }
+    }    
+}
+
+extension Array where Element == Plant {
+    func hasPlant(_ plantName: String) -> Bool {
+        self.first(where: { $0.title == plantName }) != nil
+    }
+    
+    mutating func addRealTree() -> [Plant] {
+        self.append(Plant.plants.first!)
+        return self
     }
 }

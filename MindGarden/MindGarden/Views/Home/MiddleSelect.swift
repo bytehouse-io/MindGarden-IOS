@@ -25,9 +25,12 @@ struct MiddleSelect: View {
     @State private var tappedMeditation: Bool = false
     @State private var lastPlayed: Int = -1
     @State private var showPlant = false
+    
     enum currentState {
         case locked, checked, playable
     }
+    
+    var incomingCase: MiddleIncomingCase
 
     var body: some View {
         GeometryReader { g in
@@ -120,7 +123,10 @@ struct MiddleSelect: View {
                             
                             VStack {
                                 ForEach(Array(zip(model.selectedMeditations.indices, model.selectedMeditations)), id: \.0) { idx, meditation in
-                                    MiddleRow(width: g.size.width / 1.2, meditation: meditation, viewRouter: viewRouter, model: model, didComplete: (meditation.type == .lesson || meditation.type == .single_and_lesson) && userModel.completedMeditations.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation", tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed)
+                                    MiddleRow(width: g.size.width / 1.2, meditation: meditation,
+                                              viewRouter: viewRouter,
+                                              model: model, didComplete: (meditation.type == .lesson || meditation.type == .single_and_lesson) && userModel.completedMeditations.contains(String(meditation.id)) && meditation.belongsTo != "Timed Meditation" && meditation.belongsTo != "Open-ended Meditation", tappedMeditation: $tappedMeditation, idx: idx, lastPlayed: $lastPlayed, incomingCase: incomingCase)
+//                                    .environmentObject(viewRouter)
                                 }
                             } //: VStack
 
@@ -129,7 +135,9 @@ struct MiddleSelect: View {
                             HStack(spacing: 15) {
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[0].id) {
+                                    if !DefaultsManager.standard.value(forKey: .isPro).boolValue
+//                                        && Meditation.lockedMeditations.contains(model.recommendedMeds[0].id)
+                                    {
                                         // Analytics.shared.log(event: .middle_tapped_locked_recommended)
                                         fromPage = "middle"
                                         withAnimation {
@@ -139,18 +147,22 @@ struct MiddleSelect: View {
                                         // Analytics.shared.log(event: .middle_tapped_recommended)
                                         model.selectedMeditation = model.recommendedMeds[0]
                                         if model.selectedMeditation?.type == .course {
-                                            viewRouter.currentPage = .middle
+                                            viewRouter.currentPage = .middle(incomingCase: incomingCase)
                                         } else {
+                                            viewRouter.previousPage = .meditate
                                             viewRouter.currentPage = .play
                                         }
                                     }
                                 } label: {
                                     HomeSquare(width: g.size.width, height: g.size.height * 0.8, meditation: model.recommendedMeds[0], breathwork: nil)
-                                }.buttonStyle(NeumorphicPress())
+                                }
+                                .buttonStyle(NeumorphicPress())
 
                                 Button {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(model.recommendedMeds[1].id) {
+                                    if !DefaultsManager.standard.value(forKey: .isPro).boolValue
+//                                        && Meditation.lockedMeditations.contains(model.recommendedMeds[1].id)
+                                    {
                                         // Analytics.shared.log(event: .middle_tapped_locked_recommended)
                                         fromPage = "middle"
                                         withAnimation {
@@ -160,8 +172,9 @@ struct MiddleSelect: View {
                                         // Analytics.shared.log(event: .middle_tapped_recommended)
                                         model.selectedMeditation = model.recommendedMeds[1]
                                         if model.selectedMeditation?.type == .course {
-                                            viewRouter.currentPage = .middle
+                                            viewRouter.currentPage = .middle(incomingCase: incomingCase)
                                         } else {
+                                            viewRouter.previousPage = .meditate
                                             viewRouter.currentPage = .play
                                         }
                                     }
@@ -203,13 +216,27 @@ struct MiddleSelect: View {
             // Analytics.shared.log(event: .middle_tapped_back)
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation {
-                viewRouter.currentPage = viewRouter.previousPage
+                switch incomingCase {
+                case .journeyMiddle:
+                    viewRouter.currentPage = .journey
+                case .homeCategory:
+                    viewRouter.currentPage = .meditate
+                case .quickStartCategory:
+                    viewRouter.currentPage = .quickStart
+                case .journeyCategory:
+                    viewRouter.currentPage = .journey
+                case .discoverCategory:
+                    viewRouter.currentPage = .quickStart
+                case .home:
+                    viewRouter.currentPage = .meditate
+                }
             }
         } label: {
             Image(systemName: "arrow.backward")
                 .font(.title)
                 .foregroundColor(Clr.brightGreen)
-        }.offset(x: -10)
+        }
+        .offset(x: -10)
     }
 
     var heart: some View {
@@ -239,15 +266,28 @@ struct MiddleSelect: View {
         @State var isFavorited: Bool = false
         let idx: Int
         @Binding var lastPlayed: Int
+        
+//        @EnvironmentObject var viewRouter: ViewRouter
+        
+        var incomingCase: MiddleIncomingCase
 
         var body: some View {
             Button {
+                if meditation.title != "What is Meditation?" && !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+                    fromPage = ""
+                    viewRouter.previousPage = .middle(incomingCase: incomingCase)
+                    viewRouter.currentPage = .pricing
+                    return
+                }
+                
                 if state == .locked { return }
+
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 // Analytics.shared.log(event: .middle_tapped_row)
                 tappedMeditation = true
                 model.selectedMeditation = meditation
                 withAnimation {
+                    viewRouter.previousPage = .middle(incomingCase: incomingCase)
                     viewRouter.currentPage = .play
                 }
             } label: {
@@ -264,24 +304,32 @@ struct MiddleSelect: View {
                         .minimumScaleFactor(0.05)
                         .multilineTextAlignment(.leading)
                     Spacer()
-                    switch state {
-                    case .locked:
-                        Image(systemName: "lock.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 20))
-                            .padding(.horizontal, 10)
-                    case .checked:
-                        Image(systemName: "checkmark.circle.fill")
-                            .renderingMode(.template)
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 20))
-                            .padding(.horizontal, 10)
-                    case .playable:
-                        Image(systemName: "play.fill")
-                            .foregroundColor(Clr.darkgreen)
-                            .font(.system(size: 20))
-                            .padding(.trailing, 15)
+                    
+                    if DefaultsManager.standard.value(forKey: .isPro).boolValue || meditation.title == "What is Meditation?" {
+                        switch state {
+                        case .locked:
+                            Image(systemName: "lock.fill")
+                                .renderingMode(.template)
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.system(size: 20))
+                                .padding(.horizontal, 10)
+                        case .checked:
+                            Image(systemName: "checkmark.circle.fill")
+                                .renderingMode(.template)
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.system(size: 20))
+                                .padding(.horizontal, 10)
+                        case .playable:
+                            Image(systemName: "play.fill")
+                                .foregroundColor(Clr.darkgreen)
+                                .font(.system(size: 20))
+                                .padding(.trailing, 15)
+                        }
+                    } else {
+                        Img.lockIcon
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40, height: 40)
                     }
 
                     LikeButton(isLiked: isFavorited, size: 25.0) {
@@ -316,7 +364,7 @@ struct MiddleSelect: View {
 @available(iOS 14.0, *)
 struct MiddleSelect_Previews: PreviewProvider {
     static var previews: some View {
-        MiddleSelect()
+        MiddleSelect(incomingCase: .journeyMiddle)
             .environmentObject(MeditationViewModel())
             .environmentObject(ViewRouter())
     }

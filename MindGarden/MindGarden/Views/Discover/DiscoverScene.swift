@@ -12,7 +12,7 @@ var learnNotif = false
 struct DiscoverScene: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
-    @State private var selectedTab: TopTabType = .quickStart
+    @State var selectedTab: TopTabType /* = .quickStart */
     @State private var tappedSearch = false
     var body: some View {
         ZStack(alignment: .top) {
@@ -46,6 +46,7 @@ struct DiscoverScene: View {
                     .frame(height: 36)
                     .padding(.vertical, 4)
                     .padding(.horizontal, 28)
+                    
                     DiscoverTab(selectedTab: $selectedTab)
                         .padding(.horizontal, 24)
                         .frame(height: 36)
@@ -59,13 +60,13 @@ struct DiscoverScene: View {
             }
         }
         .sheet(isPresented: $tappedSearch) {
-            CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false))
+            CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false), incomingCase: .discover)
                 .frame(height: UIScreen.screenHeight - 90)
         }
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             if learnNotif {
-                selectedTab = .learn
+                selectedTab = .quickStart
                 learnNotif = false
             }
         }
@@ -93,11 +94,11 @@ struct DiscoverScene: View {
     }
 }
 
-struct DiscoverScene_Previews: PreviewProvider {
-    static var previews: some View {
-        DiscoverScene()
-    }
-}
+//struct DiscoverScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DiscoverScene()
+//    }
+//}
 
 struct Arc: Shape {
     let startAngle: Angle

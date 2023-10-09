@@ -95,7 +95,7 @@ struct OnboardingScene: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 withAnimation(.easeOut(duration: 0.4)) {
                                     DispatchQueue.main.async {
-                                        viewRouter.progressValue = 0.2
+                                        viewRouter.progressValue = 0.1
                                         viewRouter.currentPage = .experience
                                     }
                                 }

@@ -77,7 +77,7 @@ struct ExperienceScene: View {
                                 withAnimation(.easeOut(duration: 0.3)) {
                                     DispatchQueue.main.async {
                                         viewRouter.currentPage = .reason
-                                        viewRouter.progressValue += 0.2
+                                        viewRouter.progressValue += 0.3
                                     }
                                 }
                             }

@@ -101,7 +101,7 @@ struct HomeViewHeader: View {
                                         .onTapGesture {
                                             withAnimation {
                                                 medModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                                viewRouter.currentPage = .middle
+                                                viewRouter.currentPage = .middle(incomingCase: .journeyMiddle)
                                             }
                                         }
                                 }
@@ -130,15 +130,16 @@ struct HomeViewHeader: View {
                                         .foregroundColor(Clr.darkgreen)
                                         .frame(height: 30, alignment: .bottom)
                                         .offset(x: -5)
-                                }.offset(x: -5)
-                                    .onTapGesture {
-                                        withAnimation {
-                                            userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
-                                                plt.title == "Real Tree"
-                                            })
-                                            showPurchase = true
-                                        }
+                                }
+                                .offset(x: -5)
+                                .onTapGesture {
+                                    withAnimation {
+                                        userModel.willBuyPlant = Plant.allPlants.first(where: { plt in
+                                            plt.title == "Real Tree"
+                                        })
+                                        showPurchase = true
                                     }
+                                }
 
                                 HStack {
                                     Img.streak

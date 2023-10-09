@@ -81,8 +81,9 @@ struct ReasonScene: View {
 
                                 withAnimation(.easeOut(duration: 0.5)) {
                                     DispatchQueue.main.async {
-                                        viewRouter.progressValue += 0.1
-                                        viewRouter.currentPage = .meditationGoal
+                                        viewRouter.progressValue += 0.3
+//                                        viewRouter.currentPage = .meditationGoal // due to new onboarding it is removed
+                                        viewRouter.currentPage = .name
                                     }
                                 }
                             }

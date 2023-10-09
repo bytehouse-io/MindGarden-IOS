@@ -25,8 +25,9 @@ struct ShowRecsScene: View {
                     HStack {
                         CloseButton {
                             presentationMode.wrappedValue.dismiss()
-                        }.padding(.leading, 32)
-                            .padding(.top)
+                        }
+                        .padding(.leading, 32)
+                        .padding(.top)
                         Spacer()
                         Text(title)
                             .foregroundColor(Clr.black2)
@@ -35,8 +36,9 @@ struct ShowRecsScene: View {
                         Spacer()
                         CloseButton {}.opacity(0)
                             .padding(.trailing, 32)
-                    }.padding(.top)
-                        .frame(width: width, alignment: .center)
+                    }
+                    .padding(.top)
+                    .frame(width: width, alignment: .center)
 
                     ScrollView(showsIndicators: false) {
                         ForEach(0 ... max(0, meditations.count - 1), id: \.self) { index in
@@ -51,9 +53,11 @@ struct ShowRecsScene: View {
                                     withAnimation {
                                         animateRow = true
                                     }
-                                }.padding(.horizontal, 32)
+                                }
+                                .padding(.horizontal, 32)
                         }
-                    }.frame(width: width, alignment: .center)
+                    }
+                    .frame(width: width, alignment: .center)
                 }
             }
         }

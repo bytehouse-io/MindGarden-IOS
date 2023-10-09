@@ -232,9 +232,12 @@ struct JournalView: View, KeyboardReadable {
             .sheet(isPresented: $showPrompts) {
                 PromptsView(question: $question)
             }
-            .fullScreenCover(isPresented: $showHooray) {
-                HoorayView(recs: $recs, coin: $coin)
+            .fullScreenCover(isPresented: $showRecs) {
+                RecommendationsView(recs: $recs, coin: $coin)
             }
+//            .fullScreenCover(isPresented: $showHooray) {
+//                HoorayView(recs: $recs, coin: $coin)
+//            }
 //            .transition(.move(edge: .trailing))
             .onDisappear {
                 fromProfile = false
@@ -462,7 +465,8 @@ struct JournalView: View, KeyboardReadable {
             withAnimation {
                 if moodFirst {
                     if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude {
-                        showHooray = true
+//                        showHooray = true // this is removed due to FTUE
+                        showRecs = true
                     } else {
                         showRecs = true
                     }

@@ -108,7 +108,8 @@ struct PlantTile: View {
                                     .offset(x: -3)
                             }
 
-                        }.frame(width: width * 0.35 * 0.85, alignment: .leading)
+                        }
+                        .frame(width: width * 0.35 * 0.85, alignment: .leading)
                     }
                 } else {
                     Capsule()
@@ -124,7 +125,11 @@ struct PlantTile: View {
                         .neoShadow()
                 }
             }
-        }.opacity(isBadge && !isOwned ? 0.55 : 1)
+        }
+        .opacity(isBadge && !isOwned ? 0.55 : 1)
+        .onAppear {
+            print(plant.title)
+        }
     }
 }
 

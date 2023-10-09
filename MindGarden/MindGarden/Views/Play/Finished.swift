@@ -217,7 +217,7 @@ struct Finished: View {
                                         Spacer()
                                     }
                                     VStack {
-                                        Text("You completed your \(gardenModel.allTimeSessions.ordinal) session!")
+                                        Text("You completed your \((gardenModel.allTimeSessions/2).ordinal) session!")
                                             .font(Font.fredoka(.regular, size: 20))
                                             .foregroundColor(Clr.black2)
                                             .padding([.horizontal])
@@ -315,12 +315,12 @@ struct Finished: View {
                     .background(!K.isSmall() ? .clear : Clr.darkWhite)
                     .padding()
                     .position(x: g.size.width / 2, y: g.size.height - g.size.height / (K.hasNotch() ? ios14 ? 7 : 9 : 4))
-                    if showUnlockedModal {
-                        Color.black
-                            .opacity(0.55)
-                            .edgesIgnoringSafeArea(.all)
-                        Spacer()
-                    }
+//                    if showUnlockedModal {
+//                        Color.black
+//                            .opacity(0.55)
+//                            .edgesIgnoringSafeArea(.all)
+//                        Spacer()
+//                    }
                 } //: GeometryReader
             } //: ZStack
         } //: NavigationView

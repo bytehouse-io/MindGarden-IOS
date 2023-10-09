@@ -65,6 +65,7 @@ struct HomeSquare: View {
                         }
                         .padding(.top, 5)
                         .foregroundColor(Clr.lightTextGray)
+                        
                         HStack(spacing: 4) {
                             Image(systemName: isBreath ? "eye" : "person.fill")
                                 .resizable()
@@ -78,9 +79,11 @@ struct HomeSquare: View {
                         }
                         .padding(.top, 5)
                         .foregroundColor(Clr.lightTextGray)
+                        
                         Spacer()
-                    }.padding(.leading, isSmaller ? 15 : 20)
-                        .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
+                    }
+                    .padding(.leading, isSmaller ? 15 : 20)
+                    .frame(width: width * 0.25, height: height * (K.hasNotch() ? 0.18 : 0.2), alignment: .top)
                     Group {
                         if isBreath {
                             breathWork.img
@@ -99,10 +102,13 @@ struct HomeSquare: View {
                                     .frame(width: width * (isSmaller ? 0.14 : 0.17), height: height * 0.14, alignment: .center)
                             }
                         }
-                    }.padding(.leading, -16)
-                        .padding(.top, isSmaller ? 30 : 20)
+                    }
+                    .padding(.leading, -16)
+                    .padding(.top, isSmaller ? 30 : 20)
 
-                }.offset(x: -4)
+                }
+                .offset(x: -4)
+                
                 if meditation.isNew {
                     Capsule()
                         .fill(Clr.redGradientBottom)
@@ -117,7 +123,8 @@ struct HomeSquare: View {
                         .position(x: width * (viewRouter.currentPage == .learn || searchScreen ? 0.385 : 0.34), y: viewRouter.currentPage == .learn || searchScreen ? 20 : 17)
                         .opacity(0.8)
                 }
-            }.opacity(isLocked ? 0.45 : 1)
+            }
+            .opacity(isLocked ? 0.45 : 1)
             if isLocked {
                 Img.lockIcon
                     .resizable()
@@ -125,16 +132,19 @@ struct HomeSquare: View {
                     .frame(width: 20, height: 20)
                     .position(x: UIScreen.main.bounds.width * (viewRouter.currentPage == .learn || searchScreen ? 0.275 : 0.2), y: height * (K.hasNotch() ? 0.225 : 0.25) * 0.8 + (viewRouter.currentPage == .learn || searchScreen ? 0 : 10) - (isSmaller ? 10 : 0))
             }
-        }.onAppear {
+        }
+        .onAppear {
             if width != UIScreen.screenWidth {
                 isSmaller = true
             }
             if let work = breathwork {
                 isBreath = true
                 breathWork = work
-                isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Breathwork.lockedBreaths.contains(work.id)
+                isLocked = !DefaultsManager.standard.value(forKey: .isPro).boolValue
+//                && Breathwork.lockedBreaths.contains(work.id)
             } else {
-                isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id)
+                isLocked = !DefaultsManager.standard.value(forKey: .isPro).boolValue && !Meditation.unlockedMeditations.contains(meditation.id)
+//                && Meditation.lockedMeditations.contains(meditation.id)
             }
         }
     }

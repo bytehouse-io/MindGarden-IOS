@@ -16,6 +16,7 @@ import SwiftUI
 
 var launchedApp = false
 var showProfile = false
+var showSetting = false
 enum Sheet: Identifiable {
     case profile, plant, search, streak, mood
     var id: Int {
@@ -110,7 +111,7 @@ struct Home: View {
                 case .plant:
                     Store(isShop: false)
                 case .search:
-                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false))
+                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false), incomingCase: .home)
                 case .streak:
                     EmptyView()
                 case .mood:
@@ -128,7 +129,7 @@ struct Home: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .intro)) { _ in
             model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-            viewRouter.currentPage = .middle
+            viewRouter.currentPage = .middle(incomingCase: .home)
         }
         .onAppear {
             let onboarding = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
@@ -161,11 +162,11 @@ struct Home: View {
                 if onboarding == .done || onboarding == .garden {
                     if DefaultsManager.standard.value(forKey: .introLink).boolValue {
                         model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                        viewRouter.currentPage = .middle
+                        viewRouter.currentPage = .middle(incomingCase: .home)
                         DefaultsManager.standard.set(value: false, forKey: .introLink)
                     } else if DefaultsManager.standard.value(forKey: .happinessLink).boolValue {
                         model.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 14 })
-                        viewRouter.currentPage = .middle
+                        viewRouter.currentPage = .middle(incomingCase: .home)
                         DefaultsManager.standard.set(value: false, forKey: .happinessLink)
                     }
                 }

@@ -25,23 +25,31 @@ struct JourneyRow: View {
                 // Analytics.shared.log(event: .home_tapped_journey_med)
             }
             withAnimation {
-                if isLocked {
-                    if viewRouter.currentPage == .learn {
-                        fromPage = "discover"
+//                if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+//                    fromPage = ""
+//                    viewRouter.previousPage = .journey
+//                    viewRouter.currentPage = .pricing
+//                } else {
+                    if isLocked {
+//                        if viewRouter.currentPage == .journey {
+//                            fromPage = "journey"
+//                        } else {
+//                            fromPage = "home"
+//                        }
+                        viewRouter.currentPage = .pricing
                     } else {
-                        fromPage = "home"
-                    }
-                    viewRouter.currentPage = .pricing
-                } else {
-                    withAnimation {
-                        if meditation.type == .course {
-                            viewRouter.currentPage = .middle
-                        } else {
-                            viewRouter.currentPage = .play
+//                        viewRouter.previousPage = .journey
+                        withAnimation {
+                            if meditation.type == .course {
+                                viewRouter.currentPage = .middle(incomingCase: .journeyMiddle)
+                            } else {
+                                viewRouter.previousPage = .journey
+                                viewRouter.currentPage = .play
+                            }
                         }
                     }
                 }
-            }
+//            }
         } label: {
             ZStack {
                 Rectangle()
@@ -96,9 +104,11 @@ struct JourneyRow: View {
                                 .foregroundColor(Clr.black2)
                                 .font(Font.fredoka(.semiBold, size: 12))
                         }
-                    }.frame(width: width * 0.4, height: UIScreen.screenHeight * 0.2, alignment: .leading)
-                        .padding()
-                        .padding(.leading, 10)
+                    }
+                    .frame(width: width * 0.4, height: UIScreen.screenHeight * 0.2, alignment: .leading)
+                    .padding()
+                    .padding(.leading, 10)
+                    
                     if meditation.imgURL != "" {
                         UrlImageView(urlString: meditation.imgURL)
                             .aspectRatio(contentMode: .fit)
@@ -113,15 +123,24 @@ struct JourneyRow: View {
                             .padding()
                             .offset(x: -30)
                     }
-
-                }.frame(width: width * 0.825, height: UIScreen.screenHeight * 0.225, alignment: .leading)
+                }
+                .frame(width: width * 0.825, height: UIScreen.screenHeight * 0.225, alignment: .leading)
+//                .opacity(!DefaultsManager.standard.value(forKey: .isPro).boolValue ? 0.5 : 1)
+//                if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+//                    Img.lockIcon
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 40, height: 40)
+//                }
             }
-        }.buttonStyle(BonusPress())
-            .cornerRadius(16)
-            .neoShadow()
-            .onAppear {
-                isLocked = !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(meditation.id)
-            }
+        }
+        .buttonStyle(BonusPress())
+        .cornerRadius(16)
+        .neoShadow()
+        .onAppear {
+            isLocked = !UserDefaults.standard.bool(forKey: "isPro") && !Meditation.unlockedMeditations.contains(meditation.id)
+//            && Meditation.lockedMeditations.contains(meditation.id)
+        }
     }
 }
 

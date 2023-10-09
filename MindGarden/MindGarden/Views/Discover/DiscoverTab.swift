@@ -21,7 +21,8 @@ struct DiscoverTab: View {
                     .offset(x: selectedTab == .learn ? 2 : -2)
                 if selectedTab == .quickStart { Spacer() }
                 if selectedTab == .journey { Spacer() }
-            }.padding(.horizontal, 3)
+            }
+            .padding(.horizontal, 3)
             HStack(alignment: .center) {
                 ForEach(discoverTabList) { item in
                     Button {
@@ -31,6 +32,16 @@ struct DiscoverTab: View {
                                 selectedTab = item.tabName
                                 if selectedTab == .journey {
                                     // Analytics.shared.log(event: .screen_load_journey)
+                                }
+                                
+                                switch selectedTab {
+                                case .journey:
+                                    fromPage = "journey"
+                                case .quickStart:
+                                    fromPage = "quickStart"
+                                case .learn:
+                                    fromPage = "learn"
+                                default: break
                                 }
                             }
                         }
@@ -43,11 +54,13 @@ struct DiscoverTab: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.leading, item.name == "Courses" ? 10 : 0)
                                 .padding(.trailing, selectedTab != .learn && item.name == "Library" ? 5 : 0)
-                        }.foregroundColor(selectedTab == item.tabName ? .white : .white)
-                            .frame(maxWidth: .infinity)
+                        }
+                        .foregroundColor(selectedTab == item.tabName ? .white : .white)
+                        .frame(maxWidth: .infinity)
                     }
                 }
-            }.padding(.vertical, 3)
+            }
+            .padding(.vertical, 3)
         }
         .padding(5)
         .frame(height: 42, alignment: .top)

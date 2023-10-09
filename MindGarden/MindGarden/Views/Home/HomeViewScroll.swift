@@ -172,8 +172,9 @@ struct HomeViewScroll: View {
                     } //: VStack
                     .offset(y: -height * 0.125)
                 }
-            }.frame(height: height + (K.isSmall() ? 125 : 0))
-                .padding(.bottom)
+            }
+            .frame(height: height + (K.isSmall() ? 125 : 0))
+            .padding(.bottom)
         }
     }
 }

@@ -184,6 +184,7 @@ struct ReviewScene: View {
                                 fromPage = "onboarding2"
                                 DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.signedUp.rawValue, forKey: .onboarding)
                                 DefaultsManager.standard.set(value: true, forKey: .onboarded)
+                                DefaultsManager.standard.set(value: true, forKey: .review)
                                 let data: [String: Any] = [
                                     "name": DefaultsManager.standard.value(forKey: .name).stringValue
                                 ]
@@ -198,8 +199,10 @@ struct ReviewScene: View {
                                         viewRouter.currentPage = .meditate
                                         if fromInfluencer != "" {
                                             // Analytics.shared.log(event: .user_from_influencer)
+                                            fromPage = "home"
                                             viewRouter.currentPage = .pricing
                                         } else {
+                                            fromPage = "home"
                                             viewRouter.currentPage = .pricing
                                         }
                                     }

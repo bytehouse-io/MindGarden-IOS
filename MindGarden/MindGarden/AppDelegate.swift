@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MWM.initWithLaunchInfo(
             launchOptions,
             legacyFeatures: nil,
-            verbose: true,
+//            verbose: true,
             uiElementsProvider: self,
             uiElementsIDs: uiElementsIDs,
             capabilities: nil,

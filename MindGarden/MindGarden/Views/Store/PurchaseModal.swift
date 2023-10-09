@@ -58,7 +58,8 @@ struct PurchaseModal: View {
                                 .opacity(0)
                                 .frame(width: 30)
                                 .padding(.leading, 24)
-                        }.frame(height: 75)
+                        }
+                        .frame(height: 75)
                         if Plant.badgePlants.contains(userModel.willBuyPlant ?? Plant.plants[0]) {
                             userModel.willBuyPlant?.coverImage
                                 .resizable()
@@ -87,14 +88,15 @@ struct PurchaseModal: View {
                                     + Text(" Learn More")
                                     .font(Font.fredoka(.bold, size: 18))
                                     .foregroundColor(Clr.darkgreen)
-                            }.padding(.horizontal, 20)
-                                .minimumScaleFactor(0.05)
-                                .lineLimit(8)
-                                .padding(.vertical, 10)
-                                .onTapGesture {
-                                    guard let url = URL(string: "https://trees.org/our-work/") else { return }
-                                    UIApplication.shared.open(url)
-                                }
+                            }
+                            .padding(.horizontal, 20)
+                            .minimumScaleFactor(0.05)
+                            .lineLimit(8)
+                            .padding(.vertical, 10)
+                            .onTapGesture {
+                                guard let url = URL(string: "https://trees.org/our-work/") else { return }
+                                UIApplication.shared.open(url)
+                            }
                         } else {
                             HStack(spacing: 5) {
                                 Text("\(userModel.willBuyPlant?.description ?? "")")
@@ -181,7 +183,7 @@ struct PurchaseModal: View {
                                 case "🌸 Finish Intro Course":
                                     withAnimation {
                                         meditateModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                        viewRouter.currentPage = .middle
+                                        viewRouter.currentPage = .middle(incomingCase: .journeyMiddle)
                                     }
                                 case "💌 Refer a friend":
                                     // Analytics.shared.log(event: .store_tapped_refer_friend)

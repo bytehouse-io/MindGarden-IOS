@@ -125,6 +125,7 @@ struct StartDayView: View {
                     .neoShadow()
                 VStack(spacing: 30) {
                     if !userModel.completedEntireCourse {
+                        // Intro/Day 1
                         Button {} label: {
                             ZStack {
                                 Img.shortVideoBG
@@ -140,7 +141,8 @@ struct StartDayView: View {
                                             Text("📸 Watch")
                                                 .foregroundColor(Clr.black2)
                                                 .font(Font.fredoka(.semiBold, size: 16))
-                                        }.frame(width: 100, height: 40)
+                                        }
+                                        .frame(width: 100, height: 40)
                                             .addBorder(Color.black, width: 1.5, cornerRadius: 16)
                                     }
                                     .frame(height: 85)
@@ -172,29 +174,32 @@ struct StartDayView: View {
                                     Spacer()
                                 }
                                 .padding(.horizontal, 35)
-                            }.frame(width: UIScreen.screenWidth * 0.75, height: 170)
+                            }
+                            .frame(width: UIScreen.screenWidth * 0.75, height: 170)
                                 .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                                .padding(.horizontal, 12)
-                                .offset(y: playEntryAnimation ? 0 : 100)
-                                .opacity(playEntryAnimation ? 1 : 0)
-                                .animation(.spring().delay(0.275), value: playEntryAnimation)
-                                .opacity(userModel.completedIntroDay ? 0.5 : 1)
-                                .onTapGesture {
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        if !userModel.completedIntroDay {
-                                            let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
-                                            print(userModel.completedDayTitle, "reviver")
-                                            storylyViewProgrammatic.resume()
-                                            // Analytics.shared.log(event: .home_tapped_introDay)
-//                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day": userModel.completedDayTitle])
-                                        }
+                            .padding(.horizontal, 12)
+                            .offset(y: playEntryAnimation ? 0 : 100)
+                            .opacity(playEntryAnimation ? 1 : 0)
+                            .animation(.spring().delay(0.275), value: playEntryAnimation)
+                            .opacity(userModel.completedIntroDay ? 0.5 : 1)
+                            .onTapGesture {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    if !userModel.completedIntroDay {
+                                        let _ = storylyViewProgrammatic.openStory(storyGroupId: 58519 + (Int(userModel.completedDayTitle) ?? 0), play: .StoryGroup)
+                                        print(userModel.completedDayTitle, "reviver")
+                                        storylyViewProgrammatic.resume()
+                                        // Analytics.shared.log(event: .home_tapped_introDay)
+                                        //                                            Amplitude.instance().logEvent("intro/day", withEventProperties: ["day": userModel.completedDayTitle])
                                     }
                                 }
-                        }.buttonStyle(ScalePress())
-                            .opacity(userModel.completedIntroDay ? 1 : tileOpacity)
-                            .animation(Animation.easeInOut(duration: 0.75).repeatForever(autoreverses: true), value: tileOpacity)
+                            }
+                        }
+                        .buttonStyle(ScalePress())
+                        .opacity(userModel.completedIntroDay ? 1 : tileOpacity)
+                        .animation(Animation.easeInOut(duration: 0.75).repeatForever(autoreverses: true), value: tileOpacity)
                     }
+                    // Mood Check
                     Button {} label: {
                         ZStack {
                             Img.whiteClouds
@@ -213,13 +218,15 @@ struct StartDayView: View {
                                         .font(Font.fredoka(.medium, size: 16))
                                         .lineLimit(2)
                                         .minimumScaleFactor(0.05)
-                                }.padding(.leading, 16)
+                                }
+                                .padding(.leading, 16)
                                 if !gardenModel.isMoodDone {
                                     SelectMood.frame(height: 85)
                                 } else {
                                     DailyMood
                                 }
-                            }.padding(.horizontal, 35)
+                            }
+                            .padding(.horizontal, 35)
                         }
                         .frame(width: UIScreen.screenWidth * 0.75)
                         .addBorder(Color.black, width: 1.5, cornerRadius: 16)
@@ -235,7 +242,9 @@ struct StartDayView: View {
                                 NotificationCenter.default.post(name: .mood, object: nil)
                             }
                         }
-                    }.buttonStyle(ScalePress())
+                    }
+                    .buttonStyle(ScalePress())
+                    // Journal
                     Button {} label: {
                         ZStack {
                             Img.journelBG
@@ -283,7 +292,8 @@ struct StartDayView: View {
                                                 .frame(maxWidth: .infinity)
                                             }
                                         }
-                                    }.frame(height: 85)
+                                    }
+                                    .frame(height: 85)
                                 } else {
                                     HStack {
                                         Spacer()
@@ -306,32 +316,40 @@ struct StartDayView: View {
                                 }
                             }
                             .padding(.horizontal, 35)
-                        }.frame(width: UIScreen.screenWidth * 0.75, height: 170)
-                            .addBorder(Color.black, width: 1.5, cornerRadius: 16)
-                            .padding(.horizontal, 12)
-                            .offset(y: playEntryAnimation ? 0 : 100)
-                            .opacity(playEntryAnimation ? 1 : 0)
-                            .animation(.spring().delay(0.275), value: playEntryAnimation)
-                            .onTapGesture {
-                                // Analytics.shared.log(event: .home_tapped_journal)
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation {
-                                    userModel.elaboration = ""
-                                    viewRouter.currentPage = .journal
-                                }
+                        }
+                        .frame(width: UIScreen.screenWidth * 0.75, height: 170)
+                        .addBorder(Color.black, width: 1.5, cornerRadius: 16)
+                        .padding(.horizontal, 12)
+                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .opacity(playEntryAnimation ? 1 : 0)
+                        .animation(.spring().delay(0.275), value: playEntryAnimation)
+                        .onTapGesture {
+                            // Analytics.shared.log(event: .home_tapped_journal)
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            withAnimation {
+                                userModel.elaboration = ""
+                                viewRouter.currentPage = .journal
                             }
-                            .opacity(gardenModel.isGratitudeDone ? 0.5 : 1)
-                    }.buttonStyle(ScalePress())
+                        }
+                        .opacity(gardenModel.isGratitudeDone ? 0.5 : 1)
+                    }
+                    .buttonStyle(ScalePress())
 
                     ZStack {
                         VStack(spacing: 5) {
                             HStack(spacing: 15) {
                                 Button {
                                     // Analytics.shared.log(event: .home_tapped_featured_breath)
-                                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                    withAnimation {
-                                        medModel.selectedBreath = medModel.featuredBreathwork
-                                        viewRouter.currentPage = .breathMiddle
+                                    if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+//                                        fromPage = ""
+//                                        viewRouter.previousPage = .
+                                        viewRouter.currentPage = .pricing
+                                    } else {
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                        withAnimation {
+                                            medModel.selectedBreath = medModel.featuredBreathwork
+                                            viewRouter.currentPage = .breathMiddle
+                                        }
                                     }
                                 } label: {
                                     HomeSquare(width: width - 50, height: height * 0.7, meditation: Meditation.allMeditations.first(where: { $0.id == 67 }) ?? Meditation.allMeditations[0], breathwork: medModel.featuredBreathwork)
@@ -345,16 +363,19 @@ struct StartDayView: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     // Analytics.shared.log(event: .home_tapped_featured_meditation)
                                     withAnimation {
-                                        if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(medModel.featuredMeditation?.id ?? 0) {
-                                            viewRouter.currentPage = .pricing
-                                        } else {
+//                                        if !DefaultsManager.standard.value(forKey: .isPro).boolValue
+////                                            && Meditation.lockedMeditations.contains(medModel.featuredMeditation?.id ?? 0)
+//                                        {
+//                                            viewRouter.currentPage = .pricing
+//                                        } else {
                                             medModel.selectedMeditation = medModel.featuredMeditation
                                             if medModel.featuredMeditation?.type == .course {
-                                                viewRouter.currentPage = .middle
+                                                viewRouter.currentPage = .middle(incomingCase: .home)
                                             } else {
+                                                viewRouter.previousPage = .meditate
                                                 viewRouter.currentPage = .play
                                             }
-                                        }
+//                                        }
                                     }
                                 } label: {
                                     HomeSquare(width: width - 50, height: height * 0.7, meditation: medModel.featuredMeditation ?? Meditation.allMeditations[0], breathwork: nil)
@@ -366,24 +387,7 @@ struct StartDayView: View {
                             }
                             .opacity(gardenModel.isMeditationDone ? 0.5 : 1)
                             
-                            HStack {
-                                Spacer()
-                                Text("Breathwork")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.regular, size: 16))
-                                Spacer()
-                                Text("OR")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.medium, size: 16))
-                                Spacer()
-                                Text("Meditation")
-                                    .foregroundColor(Clr.black2)
-                                    .font(Font.fredoka(.regular, size: 16))
-                                Spacer()
-                            }
-                            .frame(height: 30)
-                            .offset(x: -5)
-                            .padding(.top, 10)
+                            breathworkORMeditation
                         }
                     }
                     .frame(width: UIScreen.screenWidth * 0.75)
@@ -413,6 +417,8 @@ struct StartDayView: View {
         .onReceive(NotificationCenter.default.publisher(for: .updateStart)) { _ in
             updateStartDay()
         }
+        
+        
     }
 
     private func updateStartDay() {
@@ -420,8 +426,8 @@ struct StartDayView: View {
             playEntryAnimation = true
         }
 
-        if let newSegments = UserDefaults.standard.array(forKey: "storySegments") as? [String] {
-//            DefaultsManager.standard.set(value: newSegments, forKey: "oldSegments")
+        if let newSegments = DefaultsManager.standard.value(forKey: .storySegments).arrayValue as? [String] {
+            DefaultsManager.standard.set(value: newSegments, forKey: .oldSegments)
         }
     }
 
@@ -465,6 +471,27 @@ struct StartDayView: View {
                 }
             }.padding(10)
         }
+    }
+    
+    var breathworkORMeditation: some View {
+        HStack {
+            Spacer()
+            Text("Breathwork")
+                .foregroundColor(Clr.black2)
+                .font(Font.fredoka(.regular, size: 16))
+            Spacer()
+            Text("OR")
+                .foregroundColor(Clr.black2)
+                .font(Font.fredoka(.medium, size: 16))
+            Spacer()
+            Text("Meditation")
+                .foregroundColor(Clr.black2)
+                .font(Font.fredoka(.regular, size: 16))
+            Spacer()
+        }
+        .frame(height: 30)
+        .offset(x: -5)
+        .padding(.top, 10)
     }
 
     var DailyMood: some View {

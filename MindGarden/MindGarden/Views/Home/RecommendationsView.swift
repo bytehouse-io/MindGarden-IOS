@@ -73,6 +73,8 @@ struct RecommendationsView: View {
             } else {
                 // Analytics.shared.log(event: .screen_load_recs)
             }
+            model.coin = coin
+            model.recs = recs
         }
     }
     
@@ -284,12 +286,13 @@ struct MeditationRow: View {
                     }
                     medModel.selectedMeditation = meditation
                     if meditation.type == .course {
-                        viewRouter.currentPage = .middle
+                        viewRouter.currentPage = .middle(incomingCase: .home)
                     } else {
                         if id == 22 {
                             // Analytics.shared.log(event: .onboarding_tapped_30_second)
                         }
                         // Analytics.shared.logActual(event: .meditation_started, with: ["meditation_id": id])
+                        viewRouter.previousPage = .meditate
                         viewRouter.currentPage = .play
                     }
                 }

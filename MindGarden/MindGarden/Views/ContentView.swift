@@ -102,7 +102,7 @@ struct ContentView: View {
                                     case .meditate:
                                         Home()
                                             .navigationViewStyle(StackNavigationViewStyle())
-                                            .disabled(isOnboarding)
+//                                            .disabled(isOnboarding)
                                             .environmentObject(profileModel)
                                             .environmentObject(bonusModel)
                                             .environmentObject(authModel)
@@ -144,15 +144,23 @@ struct ContentView: View {
                                             .environmentObject(userModel)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .learn:
-                                        DiscoverScene()
+                                        DiscoverScene(selectedTab: .learn)
                                             .environmentObject(bonusModel)
                                             .environmentObject(userModel)
-                                    case .categories:
-                                        CategoriesScene(showSearch: .constant(false), isBack: .constant(false))
+                                    case .journey:
+                                        DiscoverScene(selectedTab: .journey)
+                                            .environmentObject(bonusModel)
+                                            .environmentObject(userModel)
+                                    case .quickStart:
+                                        DiscoverScene(selectedTab: .quickStart)
+                                            .environmentObject(bonusModel)
+                                            .environmentObject(userModel)
+                                    case .categories(let incomingCase):
+                                        CategoriesScene(showSearch: .constant(false), isBack: .constant(false), incomingCase: incomingCase)
                                             .frame(height: geometry.size.height + 10)
                                             .navigationViewStyle(StackNavigationViewStyle())
-                                    case .middle:
-                                        MiddleSelect()
+                                    case .middle(let incomingCase):
+                                        MiddleSelect(incomingCase: incomingCase)
                                             .frame(height: geometry.size.height + 10)
                                     case .breathMiddle:
                                         BreathMiddle()
@@ -184,7 +192,7 @@ struct ContentView: View {
                                             userModel: userModel,
                                             gardenModel: gardenModel,
                                             bonusModel: bonusModel,
-                                            onDismiss: .congratulationsOnCompletion
+                                            onDismiss: .finished
                                         )
                                         .frame(height: geometry.size.height)
                                         .navigationViewStyle(StackNavigationViewStyle())
@@ -214,12 +222,13 @@ struct ContentView: View {
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .name:
-                                        NameScene()
+                                        NameScene(onReviewCompletion: onReviewCompletion)
                                             .frame(height: geometry.size.height - (!K.hasNotch() ? 40 : 0))
                                             .navigationViewStyle(StackNavigationViewStyle())
                                     case .pricing:
 //                                        PricingView()
                                         PricingMainView()
+                                            .environmentObject(viewRouter)
                                             .frame(height: geometry.size.height + 80)
                                             .navigationViewStyle(StackNavigationViewStyle())
                                             .environmentObject(userModel)
@@ -284,10 +293,14 @@ struct ContentView: View {
                             } //: VStack
                             .edgesIgnoringSafeArea(.all)
                             let onboardingValue = DefaultsManager.standard.value(forKey: .onboarding).onboardingValue
-                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories || viewRouter.currentPage == .learn || viewRouter.currentPage == .shop || (viewRouter.currentPage == .finished && onboardingValue != .meditate && onboardingValue != .gratitude) {
+                            if viewRouter.currentPage == .meditate || viewRouter.currentPage == .garden || viewRouter.currentPage == .categories(incomingCase: .home) || viewRouter.currentPage == .categories(incomingCase: .quickStart) || viewRouter.currentPage == .categories(incomingCase: .journey) || viewRouter.currentPage == .categories(incomingCase: .discover) || viewRouter.currentPage == .learn || viewRouter.currentPage == .quickStart || viewRouter.currentPage == .journey || viewRouter.currentPage == .shop
+//                                || (viewRouter.currentPage == .finished && onboardingValue != .meditate && onboardingValue != .gratitude)
+                            {
                                 ZStack {
                                     Rectangle()
-                                        .opacity(addMood || addGratitude || isOnboarding || userModel.showDay1Complete || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
+                                        .opacity(addMood || addGratitude ||
+//                                                 isOnboarding ||
+                                                 userModel.showDay1Complete || profileModel.showWidget || userModel.showCoinAnimation ? 0.3 : 0.0)
                                         .foregroundColor(Clr.black1)
                                         .edgesIgnoringSafeArea(.all)
                                         .frame(height: geometry.size.height + (viewRouter.currentPage == .finished ? 160 : 10))
@@ -372,7 +385,7 @@ struct ContentView: View {
                                             Capsule()
                                                 .fill(Clr.darkgreen)
                                                 .overlay(
-                                                    Text("See you tomorrow")
+                                                    Text("Keep exploring your mindgarden")
                                                         .font(Font.fredoka(.bold, size: 20))
                                                         .foregroundColor(.white)
                                                         .lineLimit(1)
@@ -426,9 +439,10 @@ struct ContentView: View {
                                                         .minimumScaleFactor(0.5)
                                                 )
                                             
-                                        }.buttonStyle(NeumorphicPress())
-                                            .frame(height: 45)
-                                            .padding(.vertical, 25)
+                                        }
+                                        .buttonStyle(NeumorphicPress())
+                                        .frame(height: 45)
+                                        .padding(.vertical, 25)
                                     } //: VStack
                                     .frame(width: geometry.size.width * 0.85, alignment: .center)
                                     .padding()
@@ -615,6 +629,7 @@ struct ContentView: View {
                     meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { med in
                         med.id == 22
                     })
+                    viewRouter.previousPage = .meditate
                     viewRouter.currentPage = .play
                 }
             } else {

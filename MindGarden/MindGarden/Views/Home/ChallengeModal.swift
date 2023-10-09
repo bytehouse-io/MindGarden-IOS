@@ -94,7 +94,7 @@ struct ChallengeModal: View {
                                 // Analytics.shared.log(event: .challenge_tapped_accept)
                                 meditationModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
                                 DefaultsManager.standard.set(value: challengeDate, forKey: .challengeDate)
-                                viewRouter.currentPage = .middle
+                                viewRouter.currentPage = .middle(incomingCase: .journeyMiddle)
                                 DefaultsManager.standard.set(value: true, forKey: .showedChallenge)
                                 if let oneId = UserDefaults.standard.value(forKey: "oneDayNotif") as? String {
                                     UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [oneId])

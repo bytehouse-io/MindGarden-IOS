@@ -98,9 +98,12 @@ struct RealTrees: View {
                                         .foregroundColor(Clr.black2)
                                         .font(Font.fredoka(.medium, size: 20))
                                 }
-                            ).addBorder(Color.black, width: 1.5, cornerRadius: 24)
-                    }.frame(height: 60)
-                        .buttonStyle(NeoPress())
+                            )
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 24)
+                    }
+                    .frame(height: 60)
+                    .buttonStyle(NeoPress())
+                    
                     (Text("Trees for the Future (TREES) trains communities on sustainable  land use so that they can grow vibrant economies, thriving food systems, and a healthier planet.")
                         .font(Font.fredoka(.medium, size: 16))
                         .foregroundColor(Clr.black2)
@@ -114,8 +117,10 @@ struct RealTrees: View {
                         UIApplication.shared.open(url)
                     }
                     Spacer()
-                }.frame(width: width * 0.85)
-            }.padding(.bottom, 50)
+                }
+                .frame(width: width * 0.85)
+            }
+            .padding(.bottom, 50)
         }
     }
 }

@@ -19,7 +19,10 @@ struct MeditationCompleted: View {
     var onDismiss: Page
     @State private var playEntryAnimation = false
     @State private var playAnim = false
-
+    
+    @State private var moodCoins = 1
+    @State private var isOnboarding = false
+    @State private var rowOpacity = 1.0
 
     @EnvironmentObject var viewRouter: ViewRouter
 
@@ -192,6 +195,60 @@ struct MeditationCompleted: View {
             gardenModel.save(key: "sessions", saveValue: session, coins: userModel.coins) {
          
             }
+            
+                if
+    //                UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude"
+                    DefaultsManager.standard.value(forKey: .onboarding).onboardingValue == .gratitude
+                {
+                    // Analytics.shared.log(event: .onboarding_finished_meditation)
+                    DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.garden.rawValue, forKey: .onboarding)
+    //                DefaultsManager.standard.set(value: "garden", forKey: K.defaults.onboarding)
+                    isOnboarding = true
+                }
+                if model.shouldStreakUpdate {
+                    bonusModel.updateStreak()
+                }
+
+                if !userModel.ownedPlants.contains(where: { plt in plt.title == "Cherry Blossoms" }) && UserDefaults.standard.bool(forKey: "unlockedCherry") {
+                    userModel.willBuyPlant = Plant.badgePlants.first(where: { p in
+                        p.title == "Cherry Blossoms"
+                    })
+                    userModel.buyPlant(unlockedStrawberry: true)
+                }
+            
+                if let moods = gardenModel.grid[Date().get(.year)]?[Date().get(.month)]?[Date().get(.day)]?["moods"] as? [[String: String]] {
+                    if moods.count == 1 {
+                        moodCoins = 20
+                    } else {
+                        moodCoins = max(20 / ((moods.count - 1) * 3), 1)
+                    }
+                } else {
+                    moodCoins = 20
+                }
+                withAnimation(.spring()) {
+                    playAnim = true
+                    playEntryAnimation = true
+                }
+
+                if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "gratitude" && !UserDefaults.standard.bool(forKey: "review") {
+                    if UserDefaults.standard.integer(forKey: "numMeds") == 0 {
+                        // Analytics.shared.log(event: .onboarding_load_recs)
+                        isOnboarding = true
+                        var count = 0
+                        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                            count += 1
+                            if count == 1 {
+                                timer.invalidate()
+                                withAnimation {
+                                    rowOpacity = 0.2
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // Analytics.shared.log(event: .screen_load_recs)
+                }
+            
         }
     }
 }

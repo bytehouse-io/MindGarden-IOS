@@ -272,6 +272,7 @@ struct Play: View {
                         }
                 }
                 NatureModal(show: $showNatureModal, sound: $selectedSound, sliderData: $sliderData, bellSlider: $bellSlider, vibrationOn: .constant(true), backgroundAnimationOn: $backgroundAnimationOn, change: self.changeSound, player: backgroundPlayer)
+                    .environmentObject(viewRouter)
                     .offset(y: showNatureModal ? 0 : g.size.height)
                     .animation(.default)
                 TutorialModal(show: $showTutorialModal)
@@ -361,9 +362,9 @@ struct Play: View {
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
             if viewRouter.currentPage == .finished {
                 StopPlaying()
+                model.stop()
             }
         }
-
         .onAppear {
             DispatchQueue.main.async {
                 envoyModel.getGiftQuota()
@@ -380,6 +381,7 @@ struct Play: View {
         .onDisappear {
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
             StopPlaying()
+            model.stop()
         }
     }
 
@@ -701,11 +703,13 @@ struct Play: View {
 
                 withAnimation {
                     StopPlaying()
-                    if UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude" {
+                    if DefaultsManager.standard.value(forKey: .onboarding).onboardingValue != .gratitude
+//                        UserDefaults.standard.string(forKey: K.defaults.onboarding) != "gratitude"
+                    {
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         // Analytics.shared.log(event: .play_tapped_back)
                         model.stop()
-                        viewRouter.currentPage = .meditate
+                        viewRouter.currentPage = viewRouter.previousPage
                     }
                 }
             }
@@ -790,8 +794,9 @@ struct Play: View {
                                             .minimumScaleFactor(0.5)
                                     )
                                     .frame(width: g.size.width * 0.7 * 0.5, height: g.size.height * 0.05)
-                            }.buttonStyle(NeumorphicPress())
-                                .padding()
+                            }
+                            .buttonStyle(NeumorphicPress())
+                            .padding()
                             Spacer()
                         }
                         .font(Font.fredoka(.regular, size: 18))
@@ -904,6 +909,7 @@ struct NatureModal: View {
     @Binding var bellSlider: SliderData
     @Binding var vibrationOn: Bool
     @Binding var backgroundAnimationOn: Bool
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var change: () -> Void
     var player: AVAudioPlayer?
@@ -949,14 +955,19 @@ struct NatureModal: View {
                         VibrationView
                         BackgroundAnimation
                         Button {
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation {
-                                show = false
+                            if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+                                fromPage = ""
+                                viewRouter.currentPage = .pricing
+                            } else {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                withAnimation {
+                                    show = false
+                                }
+                                DefaultsManager.standard.set(value: sliderData.sliderValue, forKey: .backgroundVolume)
+                                DefaultsManager.standard.set(value: bellSlider.sliderValue, forKey: .bellVolume)
+                                DefaultsManager.standard.set(value: vibrationOn, forKey: .vibrationMode)
+                                DefaultsManager.standard.set(value: backgroundAnimationOn, forKey: .backgroundAnimation)
                             }
-                            DefaultsManager.standard.set(value: sliderData.sliderValue, forKey: .backgroundVolume)
-                            DefaultsManager.standard.set(value: bellSlider.sliderValue, forKey: .bellVolume)
-                            DefaultsManager.standard.set(value: vibrationOn, forKey: .vibrationMode)
-                            DefaultsManager.standard.set(value: backgroundAnimationOn, forKey: .backgroundAnimation)
                         } label: {
                             ZStack {
                                 Capsule()

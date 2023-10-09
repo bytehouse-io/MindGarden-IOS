@@ -25,7 +25,7 @@ struct Breathwork: Hashable {
         hasher.combine(id)
     }
 
-    static let lockedBreaths = [-4, -5, -7]
+    static let lockedBreaths = [-4, -5, -7, -1, -2, -3, -6, -8]
     static func == (lhs: Breathwork, rhs: Breathwork) -> Bool {
         return lhs.id == rhs.id
     }

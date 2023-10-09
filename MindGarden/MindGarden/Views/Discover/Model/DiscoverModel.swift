@@ -33,8 +33,8 @@ struct MenuItem: Identifiable {
 
     var name: String {
         switch tabName {
-        case .journey: return "Journey"
-        case .quickStart: return "Quick Start"
+        case .journey: return "Classes"
+        case .quickStart: return "Meditation"
         case .learn: return "Library"
         case .store: return "Store"
         case .badge: return "Badge"

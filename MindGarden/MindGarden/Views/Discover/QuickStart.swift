@@ -16,7 +16,7 @@ struct QuickStart: View {
     var body: some View {
         ZStack {
             if isShowCategory {
-                CategoriesScene(isSearch: false, showSearch: .constant(true), isBack: $isShowCategory, isFromQuickstart: true, selectedCategory: category)
+                CategoriesScene(isSearch: false, showSearch: .constant(true), isBack: $isShowCategory, incomingCase: .quickStart, selectedCategory: category)
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     Spacer()
@@ -25,11 +25,18 @@ struct QuickStart: View {
                         Button {
 //                            Amplitude.instance().logEvent("quickstart_selected_category", withEventProperties: ["category": item.name])
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                            withAnimation(.linear(duration: 0.3)) {
-                                category = item.title
-                                middleToSearch = item.name
-                                isShowCategory = true
-                            }
+                            
+//                            if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+//                                fromPage = ""
+//                                viewRouter.previousPage = .quickStart
+//                                viewRouter.currentPage = .pricing
+//                            } else {
+                                withAnimation(.linear(duration: 0.3)) {
+                                    category = item.title
+                                    middleToSearch = item.name
+                                    isShowCategory = true
+                                }
+//                            }
                         } label: {
                             ZStack {
                                 Rectangle()
@@ -52,19 +59,30 @@ struct QuickStart: View {
                                 }
                                 .frame(height: 56.0, alignment: .center)
                                 .cornerRadius(28)
-                            }.padding(.horizontal, 24)
-                        }.padding(6)
-                            .offset(y: playEntryAnimation ? 0 : 100)
-                            .opacity(playEntryAnimation ? 1 : 0)
-                            .animation(.spring().delay(item.delay), value: playEntryAnimation)
-                            .buttonStyle(NeoPress())
+//                                .opacity(!DefaultsManager.standard.value(forKey: .isPro).boolValue ? 0.5 : 1)
+//                                if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+//                                    Img.lockIcon
+//                                        .resizable()
+//                                        .aspectRatio(contentMode: .fit)
+//                                        .frame(width: 40, height: 40)
+//                                }
+                            }
+                            .padding(.horizontal, 24)
+                        }
+                        .padding(6)
+                        .offset(y: playEntryAnimation ? 0 : 100)
+                        .opacity(playEntryAnimation ? 1 : 0)
+                        .animation(.spring().delay(item.delay), value: playEntryAnimation)
+                        .buttonStyle(NeoPress())
                     }
-                }.padding(.bottom, 100)
+                }
+                .padding(.bottom, 100)
                 Spacer()
                     .frame(height: 200)
             }
-        }.onAppear {
-            viewRouter.previousPage = .learn
+        }
+        .onAppear {
+//            viewRouter.previousPage = .learn
             withAnimation {
                 if middleToSearch != "" {
                     category = QuickStartMenuItem.getName(str: middleToSearch)

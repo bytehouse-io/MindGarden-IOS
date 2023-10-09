@@ -13,6 +13,14 @@ struct NameScene: View {
     @EnvironmentObject var userModel: UserViewModel
     @State private var name: String = ""
     @State var isFirstResponder = true
+    @State private var showLoading = false
+    
+    var onReviewCompletion: (() -> Void)? = nil
+
+    init(onReviewCompletion: (() -> Void)?) {
+        self.onReviewCompletion = onReviewCompletion
+    }
+    
     var body: some View {
         ZStack {
             GeometryReader { g in
@@ -37,10 +45,11 @@ struct NameScene: View {
                                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                     withAnimation {
                                         arr = []
-                                        viewRouter.progressValue -= 0.1
-                                        viewRouter.currentPage = .meditationGoal
+                                        viewRouter.progressValue -= 0.3
+                                        viewRouter.currentPage = .reason
                                     }
-                                }.offset(x: -20, y: 20)
+                                }
+                                .offset(x: -20, y: 20)
                         }
                         Spacer()
                         HStack {
@@ -87,8 +96,39 @@ struct NameScene: View {
                                 DispatchQueue.main.async {
                                     if !name.isEmpty {
                                         DefaultsManager.standard.set(value: name, forKey: .name)
-                                        viewRouter.progressValue += 0.2
-                                        viewRouter.currentPage = .notification
+//                                        viewRouter.progressValue += 0.2
+                                        //                                        viewRouter.currentPage = .notification // it is removed due to new oonboarding
+                                        
+                                        showLoading = true
+                                        // Analytics.shared.log(event: .review_tapped_tutorial)
+                                        fromOnboarding = true
+                                        fromPage = "onboarding2"
+                                        DefaultsManager.standard.set(value: DefaultsManager.OnboardingScreens.signedUp.rawValue, forKey: .onboarding)
+                                        DefaultsManager.standard.set(value: true, forKey: .onboarded)
+                                        DefaultsManager.standard.set(value: true, forKey: .review)
+                                        let data: [String: Any] = [
+                                            "name": name
+                                        ]
+                                        Analytics.shared.logActual(event: .onboarding_completed, with: data) // "Triggered when the user has completed the action at a certain step of the onboarding (click ""next"", enter name, enter information, etc).
+                                        withAnimation {
+                                            viewRouter.progressValue = 1
+                                            if onReviewCompletion != nil {
+                                                onReviewCompletion?()
+                                                Analytics.shared.log(event: .app_entered) // Triggers when the user passes the paywall. Must be sent only once, when user has passed the paywall.
+                                            } else {
+                                                // goto home screen now
+                                                viewRouter.currentPage = .meditate
+                                                if fromInfluencer != "" {
+                                                    // Analytics.shared.log(event: .user_from_influencer)
+                                                    fromPage = "home"
+                                                    viewRouter.currentPage = .pricing
+                                                } else {
+                                                    fromPage = "home"
+                                                    viewRouter.currentPage = .pricing
+                                                }
+                                            }
+                                        }
+                                        
                                         userModel.name = name
                                     }
                                 }
@@ -117,12 +157,16 @@ struct NameScene: View {
              .onAppearAnalytics(event: .onboarding_completed)
         } //: ZStack
         .transition(.move(edge: .trailing))
+        .fullScreenCover(isPresented: $showLoading) {
+            LoadingIllusion()
+                .frame(height: UIScreen.screenHeight + 50)
+        }
     }
 }
 
 struct NameScene_Previews: PreviewProvider {
     static var previews: some View {
-        NameScene()
+        NameScene(onReviewCompletion: nil)
     }
 }
 

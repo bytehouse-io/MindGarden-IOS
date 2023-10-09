@@ -11,24 +11,30 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct CategoriesScene: View {
+    
     var gridItemLayout = Array(repeating: GridItem(.flexible(), spacing: -35), count: 2)
+    
     @EnvironmentObject var viewRouter: ViewRouter
     @EnvironmentObject var model: MeditationViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State var searchText: String = ""
-    var isSearch: Bool = false
+    
     @Binding var showSearch: Bool
     @Binding var isBack: Bool
-    let isFromQuickstart: Bool
-    var selectedCategory: QuickStartType
+    @State var searchText: String = ""
     @State private var tappedMed = false
     @State private var showModal = false
+    
+    var isSearch: Bool = false
+//    let isFromQuickstart: Bool
+    let incomingCase: CategoryIncomingCase
+    var selectedCategory: QuickStartType
 
-    init(isSearch: Bool = false, showSearch: Binding<Bool>, isBack: Binding<Bool>, isFromQuickstart: Bool = false, selectedCategory: QuickStartType = .minutes3) {
+    init(isSearch: Bool = false, showSearch: Binding<Bool>, isBack: Binding<Bool>, /* isFromQuickstart: Bool = false,*/ incomingCase: CategoryIncomingCase, selectedCategory: QuickStartType = .minutes3) {
         self.isSearch = isSearch
         _showSearch = showSearch
         _isBack = isBack
-        self.isFromQuickstart = isFromQuickstart
+//        self.isFromQuickstart = isFromQuickstart
+        self.incomingCase = incomingCase
         self.selectedCategory = selectedCategory
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -39,7 +45,7 @@ struct CategoriesScene: View {
             ZStack {
                 Clr.darkWhite.edgesIgnoringSafeArea(.all).animation(nil)
                 VStack(alignment: .center) {
-                    if !isFromQuickstart {
+                    if incomingCase != .quickStart /* !isFromQuickstart */ {
                         if !isSearch {
                             HStack {
                                 backButton
@@ -51,7 +57,8 @@ struct CategoriesScene: View {
                                 backButton
                                     .opacity(0)
                                     .disabled(true)
-                            }.padding(.top, 50)
+                            }
+                            .padding(.top, 50)
                         } else {
                             // Search bar
                             HStack {
@@ -70,7 +77,8 @@ struct CategoriesScene: View {
                                 .background(Clr.darkWhite)
                                 .padding(.trailing)
                                 .oldShadow()
-                            }.padding(.top)
+                            }
+                            .padding(.top)
                         }
                     } else {
                         HStack {}
@@ -88,7 +96,8 @@ struct CategoriesScene: View {
                                 CategoryButton(category: .sadness, selected: $model.selectedCategory)
                                 CategoryButton(category: .sleep, selected: $model.selectedCategory)
                                 CategoryButton(category: .courses, selected: $model.selectedCategory)
-                            }.padding()
+                            }
+                            .padding()
                         }
                     }
                     ScrollView(showsIndicators: false) {
@@ -99,8 +108,23 @@ struct CategoriesScene: View {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                         withAnimation {
                                             fromPage = ""
-                                            viewRouter.previousPage = .learn
-                                            if !UserDefaults.standard.bool(forKey: "isPro"), Breathwork.lockedBreaths.contains(item.id) {
+                                            switch incomingCase {
+                                            case .quickStart, .discover:
+                                                viewRouter.previousPage = .quickStart
+                                            case .journey:
+                                                viewRouter.previousPage = .journey
+                                            case .home:
+                                                viewRouter.previousPage = .meditate
+                                            }
+//                                            if isFromQuickstart {
+//                                                viewRouter.previousPage = .search
+//                                            }
+//                                            else {
+//                                                viewRouter.previousPage = .search
+//                                            }
+                                            if !DefaultsManager.standard.value(forKey: .isPro).boolValue
+//                                                , Breathwork.lockedBreaths.contains(item.id)
+                                            {
                                                 viewRouter.currentPage = .pricing
                                             } else {
                                                 model.selectedBreath = item
@@ -110,20 +134,35 @@ struct CategoriesScene: View {
                                     } label: {
                                         HomeSquare(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75, meditation: Meditation.allMeditations[0], breathwork: item)
                                             .padding(.vertical, 8)
-                                    }.buttonStyle(NeoPress())
+                                    }
+                                    .buttonStyle(NeoPress())
                                 }
                             } else {
                                 ForEach(meditations, id: \.self) { item in
                                     Button {
                                         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                        viewRouter.previousPage = .learn
+                                        switch incomingCase {
+                                        case .quickStart, .discover:
+                                            viewRouter.previousPage = .quickStart
+                                        case .journey:
+                                            viewRouter.previousPage = .journey
+                                        case .home:
+                                            viewRouter.previousPage = .meditate
+                                        }
+//                                        if isFromQuickstart {
+//                                            viewRouter.previousPage = .search
+//                                        }
+//                                        else {
+//                                            viewRouter.previousPage = .learn
+//                                        }
                                         withAnimation {
                                             didSelectcategory(item: item)
                                         }
                                     } label: {
                                         HomeSquare(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.75, meditation: item, breathwork: nil)
                                             .padding(.vertical, 8)
-                                    }.buttonStyle(NeoPress())
+                                    }
+                                    .buttonStyle(NeoPress())
                                 }
                             }
                         })
@@ -149,19 +188,26 @@ struct CategoriesScene: View {
                                     Text("Post a Request")
                                         .foregroundColor(.black)
                                         .font(Font.fredoka(.semiBold, size: 20))
-                                }.frame(width: g.size.width * 0.65, height: 50)
-                                    .background(Clr.yellow)
-                                    .cornerRadius(25)
-                            }.buttonStyle(NeumorphicPress())
-                        }.frame(height: 140)
-                            .padding(.bottom, isFromQuickstart ? 36 : 100)
-                    }.frame(height: UIScreen.screenHeight * (isFromQuickstart ? 0.65 : 0.9))
-                    if isFromQuickstart { Spacer().frame(height: 100) }
+                                }
+                                .frame(width: g.size.width * 0.65, height: 50)
+                                .background(Clr.yellow)
+                                .cornerRadius(25)
+                            }
+                            .buttonStyle(NeumorphicPress())
+                        }
+                        .frame(height: 140)
+                        .padding(.bottom, incomingCase == .quickStart /*isFromQuickstart*/ ? 36 : 100)
+                    }
+                    .frame(height: UIScreen.screenHeight * (incomingCase == .quickStart /*isFromQuickstart*/ ? 0.65 : 0.9))
+                    if incomingCase == .quickStart /*isFromQuickstart*/ {
+                        Spacer().frame(height: 100)
+                    }
                     Spacer()
                 }
-                .padding(.top, isFromQuickstart ? 40 : 0)
+                .padding(.top, incomingCase == .quickStart /*isFromQuickstart*/ ? 40 : 0)
                 .background(Clr.darkWhite)
             }
+            
             if showModal {
                 Color.black
                     .offset(y: -100)
@@ -174,12 +220,14 @@ struct CategoriesScene: View {
                         }
                     }
             }
+            
             MiddleModal(shown: $showModal)
-                .offset(y: showModal ? (isFromQuickstart ? -80 : 0) : g.size.height)
+                .offset(y: showModal ? (incomingCase == .quickStart /*isFromQuickstart*/ ? -80 : 0) : g.size.height)
                 .edgesIgnoringSafeArea(.top)
                 .animation(.default, value: showModal)
                 .transition(.move(edge: .bottom))
-            if isFromQuickstart {
+            
+            if incomingCase == .quickStart /*isFromQuickstart*/ {
                 HStack {
                     backButton
                         .offset(x: -10)
@@ -190,8 +238,9 @@ struct CategoriesScene: View {
                     Spacer()
                     backButton.opacity(0).disabled(true)
                     Spacer()
-                }.frame(width: UIScreen.screenWidth, height: 50)
-                    .padding(.horizontal, 35)
+                }
+                .frame(width: UIScreen.screenWidth, height: 50)
+                .padding(.horizontal, 35)
             }
         }
         .onAppear {
@@ -205,8 +254,18 @@ struct CategoriesScene: View {
             searchScreen = false
             if tappedMed {
                 if model.selectedMeditation?.type == .course {
-                    viewRouter.currentPage = .middle
+                    switch incomingCase {
+                    case .home:
+                        viewRouter.currentPage = .middle(incomingCase: .homeCategory)
+                    case .quickStart:
+                        viewRouter.currentPage = .middle(incomingCase: .quickStartCategory)
+                    case .journey:
+                        viewRouter.currentPage = .middle(incomingCase: .journeyCategory)
+                    case .discover:
+                        viewRouter.currentPage = .middle(incomingCase: .discoverCategory)
+                    }
                 } else {
+                    viewRouter.previousPage = .meditate
                     viewRouter.currentPage = .play
                 }
             }
@@ -215,7 +274,7 @@ struct CategoriesScene: View {
     }
 
     var meditations: [Meditation] {
-        if isFromQuickstart {
+        if incomingCase == .quickStart /*isFromQuickstart*/ {
             return filterMeditation()
         } else {
             return !isSearch ? model.selectedMeditations : model.selectedMeditations.filter { (meditation: Meditation) -> Bool in
@@ -247,7 +306,7 @@ struct CategoriesScene: View {
     var backButton: some View {
         Button {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if !isFromQuickstart {
+            if incomingCase != .quickStart /*!isFromQuickstart*/ {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                 middleToSearch = ""
                 medSearch = false
@@ -284,9 +343,11 @@ struct CategoriesScene: View {
 
     private func didSelectcategory(item: Meditation) {
         withAnimation {
-            viewRouter.previousPage = .learn
+//            viewRouter.previousPage = .learn
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            if !UserDefaults.standard.bool(forKey: "isPro") && Meditation.lockedMeditations.contains(item.id) {
+            if !DefaultsManager.standard.value(forKey: .isPro).boolValue
+//                && Meditation.lockedMeditations.contains(item.id)
+            {
                 fromPage = ""
                 // Analytics.shared.log(event: .pricing_from_locked)
                 // Analytics.shared.log(event: .categories_tapped_locked_meditation)
@@ -300,7 +361,7 @@ struct CategoriesScene: View {
                     presentationMode.wrappedValue.dismiss()
                 } else {
                     if model.selectedMeditation?.type == .course {
-                        viewRouter.currentPage = .middle
+                        viewRouter.currentPage = .middle(incomingCase: .journeyMiddle)
                     } else {
                         DispatchQueue.main.async {
                             withAnimation {
@@ -347,7 +408,7 @@ struct CategoriesScene: View {
 struct CategoriesScene_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
-            CategoriesScene(showSearch: .constant(false), isBack: .constant(false))
+            CategoriesScene(showSearch: .constant(false), isBack: .constant(false), incomingCase: .quickStart)
         }
     }
 }

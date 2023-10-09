@@ -31,15 +31,15 @@ struct Store: View {
 
     @Environment(\.presentationMode) var presentationMode
 
-    // MARK: - Body
+    // MARK: - Body3
     
     var body: some View {
         // TODO: if tapped real tree open storly
         ZStack {
             Clr.darkWhite.edgesIgnoringSafeArea(.all)
             GeometryReader { g in
-                let width = g.size.width
-                let height = g.size.height
+//                let width = g.size.width
+//                let height = g.size.height
                 VStack {
                     if isShop {
                         StoreTab(selectedTab: $tabType)
@@ -58,9 +58,12 @@ struct Store: View {
                                     Image(systemName: "xmark")
                                         .font(.system(size: 18))
                                         .foregroundColor(Color.gray)
-                                }.frame(width: 30)
-                                    .padding(.leading, 24)
-                            }.buttonStyle(NeoPress())
+                                }
+                                .frame(width: 30)
+                                .padding(.leading, 24)
+                            }
+                            .buttonStyle(NeoPress())
+                            
                             Text("🌻 Plant Select")
                                 .font(Font.fredoka(.bold, size: 32))
                                 .minimumScaleFactor(0.005)
@@ -185,7 +188,8 @@ struct Store: View {
                                                     }
                                                 } label: {
                                                     PlantTile(width: g.size.width, height: g.size.height, plant: plant, isShop: isShop)
-                                                }.buttonStyle(NeumorphicPress())
+                                                }
+                                                .buttonStyle(NeumorphicPress())
                                             } else {
                                                 EmptyView()
                                             }
@@ -310,11 +314,12 @@ struct Store: View {
                             } else {
                                 PlantTile(width: width, height: height, plant: plant, isShop: isShop, isBadge: true)
                             }
-                        }.buttonStyle(NeumorphicPress())
+                        }
+                        .buttonStyle(NeumorphicPress())
                     }
                 } else {
                     ForEach(isShop ? Plant.packetPlants.suffix(Plant.packetPlants.count / 2 + (Plant.packetPlants.count % 2 == 0 ? 0 : 1))
-                        : userModel.ownedPlants.suffix(userModel.ownedPlants.count / 2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)), id: \.self)
+                        : getSuffixPlants(), id: \.self)
                     { plant in
                         if userModel.ownedPlants.contains(plant) && isShop && plant.title != "Real Tree" {
                             PlantTile(width: width, height: height, plant: plant, isShop: isShop, isOwned: true)
@@ -335,11 +340,19 @@ struct Store: View {
                                 }
                             } label: {
                                 PlantTile(width: width, height: height, plant: plant, isShop: isShop)
-                            }.buttonStyle(NeumorphicPress())
+                            }
+                            .buttonStyle(NeumorphicPress())
                         }
                     }
                 }
             }
+        }
+        
+        func getSuffixPlants() -> [Plant] {
+            var suffixPlants = Array(userModel.ownedPlants.suffix(userModel.ownedPlants.count / 2 + (userModel.ownedPlants.count % 2 == 0 ? 0 : 1)))
+            
+            suffixPlants = userModel.ownedPlants.hasPlant("Real Tree") && !suffixPlants.hasPlant("Real Tree") ? suffixPlants.addRealTree() : suffixPlants
+            return suffixPlants
         }
     }
 

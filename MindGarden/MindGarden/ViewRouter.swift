@@ -33,13 +33,13 @@ class ViewRouter: ObservableObject {
     @Published var progressValue: Float = 0.3
 }
 
-enum Page {
+enum Page: Equatable {
     case meditate
     case garden
     case shop
     case play
-    case categories
-    case middle
+    case categories(incomingCase: CategoryIncomingCase)
+    case middle(incomingCase: MiddleIncomingCase)
     case breathMiddle
     case authentication
     case finished
@@ -56,5 +56,25 @@ enum Page {
     case journal
     case meditationCompleted
     case congratulationsOnCompletion
+        
+    case journey
+//    case quickStart
+    case quickStart
 //    case loadingIllusion
+}
+
+enum CategoryIncomingCase: String, Equatable {
+    case home
+    case quickStart
+    case journey
+    case discover
+}
+
+enum MiddleIncomingCase: Equatable {
+    case journeyMiddle
+    case homeCategory
+    case quickStartCategory
+    case journeyCategory
+    case discoverCategory
+    case home
 }

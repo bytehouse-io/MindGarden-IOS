@@ -21,6 +21,7 @@ struct LearnScene: View {
     @State private var completedCourses = [Int]()
     
     @EnvironmentObject var bonusModel: BonusViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
 
     // MARK: - Body
     
@@ -87,6 +88,7 @@ struct LearnScene: View {
                                         HStack(spacing: 20) {
                                             ForEach(meditationCourses, id: \.self) { course in
                                                 LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
+                                                    .environmentObject(viewRouter)
                                             } //: ForEach Loop
                                         } //: HStack
                                         .frame(height: height * 0.325 + 15)
@@ -122,6 +124,7 @@ struct LearnScene: View {
                                         HStack(spacing: 20) {
                                             ForEach(lifeCourses, id: \.self) { course in
                                                 LearnCard(width: width, height: height, course: course, showCourse: $showCourse, learnCourse: $learnCourse, completedCourses: $completedCourses)
+                                                    .environmentObject(viewRouter)
                                             }
                                         } //: HStack
                                         .frame(height: height * 0.325 + 15)
@@ -175,6 +178,7 @@ struct LearnScene: View {
         @Binding var learnCourse: LearnCourse
         @Binding var completedCourses: [Int]
         @State var completed = false
+        @EnvironmentObject var viewRouter: ViewRouter
         
         // MARK: - Body
         
@@ -185,44 +189,60 @@ struct LearnScene: View {
                     .cornerRadius(16)
                     .overlay(
                         ZStack {
-                            VStack(alignment: .leading, spacing: 0) {
-                                UrlImageView(urlString: course.img)
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(16)
-                                    .frame(width: width * 0.55, height: height * 0.2)
-                            } //: VStack
-                            .opacity(completed ? 0.5 : 1)
-                            if completed {
-                                Capsule()
-                                    .fill(Clr.yellow)
-                                    .overlay(
-                                        HStack(spacing: 2) {
-                                            Text("Completed")
-                                                .font(Font.fredoka(.semiBold, size: 12))
-                                                .minimumScaleFactor(0.05)
-                                                .lineLimit(1)
-                                                .foregroundColor(.black)
-                                            Image(systemName: "checkmark.seal.fill")
-                                                .foregroundColor(Clr.brightGreen)
-                                                .frame(width: 24)
-                                        } //: HStack
+                            ZStack {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    UrlImageView(urlString: course.img)
+                                        .aspectRatio(contentMode: .fit)
+                                        .cornerRadius(16)
+                                        .frame(width: width * 0.55, height: height * 0.2)
+                                } //: VStack
+                                .opacity(completed ? 0.5 : 1)
+                                if completed {
+                                    Capsule()
+                                        .fill(Clr.yellow)
+                                        .overlay(
+                                            HStack(spacing: 2) {
+                                                Text("Completed")
+                                                    .font(Font.fredoka(.semiBold, size: 12))
+                                                    .minimumScaleFactor(0.05)
+                                                    .lineLimit(1)
+                                                    .foregroundColor(.black)
+                                                Image(systemName: "checkmark.seal.fill")
+                                                    .foregroundColor(Clr.brightGreen)
+                                                    .frame(width: 24)
+                                            } //: HStack
+                                                .padding(3)
+                                        )
                                         .padding(3)
-                                    )
-                                    .padding(3)
-                                    .frame(width: 100, height: 40)
-                                    .position(x: 70, y: 40)
-                                    .rightShadow()
+                                        .frame(width: 100, height: 40)
+                                        .position(x: 70, y: 40)
+                                        .rightShadow()
+                                }
+                            } //: ZStack
+                            
+                            .opacity(!DefaultsManager.standard.value(forKey: .isPro).boolValue ? 0.5 : 1)
+                            if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+                                Img.lockIcon
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 40, height: 40)
                             }
-                        } //: ZStack
+                        }
                         .onTapGesture {
-                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            if course.category == "meditation" {
-                                // Analytics.shared.log(event: .learn_tapped_meditation_course)
+                            if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
+                                fromPage = ""
+                                viewRouter.previousPage = .learn
+                                viewRouter.currentPage = .pricing
                             } else {
-                                // Analytics.shared.log(event: .learn_tapped_life_course)
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                if course.category == "meditation" {
+                                    // Analytics.shared.log(event: .learn_tapped_meditation_course)
+                                } else {
+                                    // Analytics.shared.log(event: .learn_tapped_life_course)
+                                }
+                                learnCourse = course
+                                showCourse = true
                             }
-                            learnCourse = course
-                            showCourse = true
                         }
                     )
             } //: Button

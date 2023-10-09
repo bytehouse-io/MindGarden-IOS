@@ -55,6 +55,7 @@ struct HomeTabView: View {
             switch onboardingValue {
             case .done, .stats, .garden, .single:
                 switchTab(selectedTab)
+                return
             case .none, .signedUp, .mood, .gratitude, .meditate, .calendar:
                 break
             }
@@ -62,7 +63,7 @@ struct HomeTabView: View {
             if DefaultsManager.standard.value(forKey: .review).boolValue {
                 switchTab(selectedTab)
             }
-//            if UserDefaults.standard.string(forKey: K.defaults.onboarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
+//            if UserDefaults.standard.string(forKey: K.defaults.on4boarding) == "done" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "stats" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "garden" || UserDefaults.standard.string(forKey: K.defaults.onboarding) == "single" || UserDefaults.standard.bool(forKey: "review") {
 //
 //            }
         }
@@ -77,7 +78,7 @@ struct HomeTabView: View {
         case .shop:
             viewRouter.currentPage = .shop
         case .search:
-            viewRouter.currentPage = .learn
+            viewRouter.currentPage = .quickStart
         }
     }
 }

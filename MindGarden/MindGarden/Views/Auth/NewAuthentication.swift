@@ -286,7 +286,7 @@ struct NewAuthentication: View {
                                     viewRouter.currentPage = .meditate
                                 } else if fromPage == "singleIntro" {
                                     medModel.selectedMeditation = Meditation.allMeditations.first(where: { $0.id == 6 })
-                                    viewRouter.currentPage = .middle
+                                    viewRouter.currentPage = .middle(incomingCase: .journeyMiddle)
                                 } else if fromPage == "onboarding" {
                                     viewRouter.currentPage = .onboarding
                                 } else if fromPage == "update" {
