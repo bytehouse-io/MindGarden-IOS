@@ -5,7 +5,7 @@
 //  Created by Vishal Davara on 05/07/22.
 //
 
-import Amplitude
+//import Amplitude
 import SwiftUI
 
 var moodFirst = false
@@ -84,8 +84,8 @@ struct MoodElaborate: View {
                                         var num = UserDefaults.standard.integer(forKey: "numMoods")
                                         num += 1
                                         DefaultsManager.standard.set(value: num, forKey: .numMoods)
-                                        let identify = AMPIdentify()
-                                            .set("num_moods", value: NSNumber(value: num))
+//                                        let identify = AMPIdentify()
+//                                            .set("num_moods", value: NSNumber(value: num))
 //                                        Amplitude.instance().identify(identify ?? AMPIdentify())
                                         #if !targetEnvironment(simulator)
 //                                            Amplitude.instance().logEvent("tapped_mood", withEventProperties: ["selected_mood": item])
@@ -104,7 +104,7 @@ struct MoodElaborate: View {
 
 //                                        Amplitude.instance().logEvent("mood_elaborate", withEventProperties: ["elaboration": item])
 //                                        Amplitude.instance().logEvent("mood_check_feeling_selected", withEventProperties: ["selected_feeling": item])
-                                         Analytics.shared.logActual(event: .mood_check_mood_selected, with: ["selected_feeling": item])
+                                         MGAnalytics.shared.logActual(event: .mood_check_mood_selected, with: ["selected_feeling": item])
                                         var moodSession = [String: String]()
                                         moodSession["timeStamp"] = Date.getTime()
                                         moodSession["elaboration"] = item

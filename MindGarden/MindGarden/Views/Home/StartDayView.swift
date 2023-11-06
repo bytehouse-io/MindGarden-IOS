@@ -5,7 +5,7 @@
 //  Created by Vishal Davara on 04/07/22.
 //
 
-import Amplitude
+//import Amplitude
 import Lottie
 import SwiftUI
 
@@ -453,7 +453,7 @@ struct StartDayView: View {
 //                        case .veryGood: // Analytics.shared.log(event: .mood_tapped_veryGood)
 //                        case .none: // Analytics.shared.log(event: .mood_tapped_x)
 //                        }
-                         Analytics.shared.logActual(event: .mood_check_mood_selected, with: ["selected_mood": item.title])
+                         MGAnalytics.shared.logActual(event: .mood_check_mood_selected, with: ["selected_mood": item.title])
 //                        Amplitude.instance().logEvent("mood_check_mood_selected", withEventProperties: ["selected_mood": item])
                         withAnimation {
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()

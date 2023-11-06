@@ -4,7 +4,7 @@
 //  Created by Dante Kim on 9/2/21.
 //
 
-import Amplitude
+//import Amplitude
 import Combine
 import Firebase
 import FirebaseAuth
@@ -324,8 +324,8 @@ class BonusViewModel: ObservableObject {
             launchNum += 1
         }
         DefaultsManager.standard.set(value: launchNum, forKey: .dailyLaunchNumber)
-        let identify = AMPIdentify()
-            .set("dailyLaunchNumber", value: NSNumber(value: launchNum))
+//        let identify = AMPIdentify()
+//            .set("dailyLaunchNumber", value: NSNumber(value: launchNum))
 //        Amplitude.instance().identify(identify ?? AMPIdentify())
     }
 

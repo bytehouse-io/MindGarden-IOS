@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 2/26/22.
 //
 
-import Amplitude
+//import Amplitude
 //import AppsFlyerLib
 import Firebase
 //import Paywall

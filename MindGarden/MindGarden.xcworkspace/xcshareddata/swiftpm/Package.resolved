@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://code.musicworldmedia.com/external/mwmpublishingsdk-ios.git",
       "state" : {
-        "revision" : "1c816eb1493e4b5c610b7ba97d7c6c89447a7563",
-        "version" : "7.5.3"
+        "revision" : "809a6f1e7896353c0ede114ff54b4f21800b3604",
+        "version" : "7.7.1"
       }
     },
     {

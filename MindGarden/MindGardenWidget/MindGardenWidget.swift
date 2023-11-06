@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 12/26/21.
 //
 
-import Amplitude
+//import Amplitude
 import Firebase
 import Intents
 import SwiftUI

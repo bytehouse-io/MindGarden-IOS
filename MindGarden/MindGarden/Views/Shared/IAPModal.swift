@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 4/3/22.
 //
 
-import Amplitude
+//import Amplitude
 //import AppsFlyerLib
 //import Purchases
 import SwiftUI

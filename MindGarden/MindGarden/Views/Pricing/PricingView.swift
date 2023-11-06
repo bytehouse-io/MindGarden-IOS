@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 10/26/21.
 //
 
-import Amplitude
+//import Amplitude
 //import AppsFlyerLib
 import Firebase
 import FirebaseFirestore

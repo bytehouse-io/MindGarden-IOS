@@ -109,25 +109,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 appId: MWM.mwmAppID()
             )
             MWMSessions.setup(configuration: configuration)
-
-            // checking for MWMPublishingSDK onboarding screens
-            MWM.showOnboardingIfNeeded(
-                withPlacementKey: MWMModel.DynamicScreenPlacement.onboarding.rawValue,
-                on: window,
-                loaderViewController: nil
-            ) { _, _ in
-                self.router = ViewRouter()
-                let authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: self.router)
-                let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
-
-                // Use a UIHostingController as window root view controller.
-                let rootHost = UIHostingController(rootView: contentView
-                    .environmentObject(self.router)
-                    .environmentObject(SceneDelegate.medModel)
-                    .environmentObject(SceneDelegate.userModel)
-                    .environmentObject(SceneDelegate.gardenModel))
-                window.rootViewController = rootHost
-                storylyViewProgrammatic.rootViewController = rootHost
+            
+            if DefaultsManager.standard.value(forKey: .loggedIn).boolValue {
+                getReadyForHost(with: window)
+            } else {
+                // checking for MWMPublishingSDK onboarding screens
+                MWM.showOnboardingIfNeeded(
+                    withPlacementKey: MWMModel.DynamicScreenPlacement.onboarding.rawValue,
+                    on: window,
+                    loaderViewController: nil
+                ) { [weak self] _, _ in
+                    self?.getReadyForHost(with: window)
+                }
             }
 
 //            window.rootViewController = rootHost
@@ -140,6 +133,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         setNotificationStatus()
+    }
+    
+    func getReadyForHost(with window: UIWindow) {
+        router = ViewRouter()
+        let authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: router)
+        let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
+
+        // Use a UIHostingController as window root view controller.
+        let rootHost = UIHostingController(rootView: contentView
+            .environmentObject(router)
+            .environmentObject(SceneDelegate.medModel)
+            .environmentObject(SceneDelegate.userModel)
+            .environmentObject(SceneDelegate.gardenModel))
+        window.rootViewController = rootHost
+        storylyViewProgrammatic.rootViewController = rootHost
     }
 
     func sceneDidDisconnect(_: UIScene) {

@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 7/10/21.
 //
 
-import Amplitude
+//import Amplitude
 //import AppsFlyerLib
 import Firebase
 import OneSignal
@@ -326,7 +326,9 @@ struct Finished: View {
         } //: NavigationView
         .transition(.move(edge: .trailing))
         .fullScreenCover(isPresented: $showStreak, content: {
-            StreakScene(showStreak: $showStreak)
+            StreakScene(showStreak: $showStreak, openPricingPage: {
+                viewRouter.currentPage = .pricing
+            })
                 .environmentObject(bonusModel)
                 .environmentObject(viewRouter)
                 .background(Clr.darkWhite)

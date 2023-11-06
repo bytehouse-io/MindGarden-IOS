@@ -32,9 +32,9 @@ struct RecommendationsView: View {
             Clr.darkWhite.ignoresSafeArea()
             ScrollView(.vertical, showsIndicators: false) {
                 if !isOnboarding {
-                    EarnedCoins
+                    earnedCoins()
                 }
-                TodaysMeditation
+                todaysMeditation()
                     .padding(.top, 30)
                 Spacer()
             } //: ScrollView
@@ -78,7 +78,7 @@ struct RecommendationsView: View {
         }
     }
     
-    var EarnedCoins: some View {
+    @ViewBuilder func earnedCoins() -> some View {
         VStack {
             Spacer()
                 .frame(height: 20)
@@ -170,8 +170,8 @@ struct RecommendationsView: View {
         } //: VStack
     }
 
-    var TodaysMeditation: some View {
-        VStack(alignment:.leading) {
+    @ViewBuilder func todaysMeditation() -> some View {
+        VStack(alignment: .leading) {
             HStack {
                 Text("Today’s Meditations")
                     .foregroundColor(Clr.brightGreen)
@@ -181,7 +181,7 @@ struct RecommendationsView: View {
             } //: HStack
             .frame(width: UIScreen.screenWidth * 0.875)
             
-            HStack(spacing:16) {
+            HStack(spacing: 16) {
                 Mood.getMoodImage(mood: userModel.selectedMood)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -197,13 +197,13 @@ struct RecommendationsView: View {
             ForEach(0..<3) { idx in
                 if isOnboarding && idx == 0  { // onboarding
                     MeditationRow(id: 22, isBreathwork: false)
-                        .padding(.vertical,5)
+                        .padding(.vertical, 5)
                         .offset(y: playEntryAnimation ? 0 : 100)
                         .opacity(rowOpacity)
                         .animation(Animation.easeInOut(duration:0.5).repeatForever(autoreverses:true), value: rowOpacity)
                 } else {
                     MeditationRow(id: recs[idx], isBreathwork: idx == 0)
-                        .padding(.vertical,5)
+                        .padding(.vertical, 5)
                         .offset(y: playEntryAnimation ? 0 : 100)
                         .opacity(isOnboarding ? 0.3 : playEntryAnimation ? 1 : 0)
                         .animation(.spring().delay(Double((idx+1))*0.3), value: playEntryAnimation)
@@ -212,41 +212,41 @@ struct RecommendationsView: View {
             }
             
             if !isOnboarding {
-            HStack {
-                Spacer()
-                Text("OR")
-                    .foregroundColor(Clr.black2)
-                    .font(Font.fredoka(.medium, size: 16))
-                Spacer()
-            } //: HStack
-            
-            Button {
-                // Analytics.shared.log(event: .recs_tapped_see_more)
-                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                withAnimation {
-                    viewRouter.currentPage = .learn
-                }
-            } label: {
-                ZStack {
-                    Capsule()
-                        .fill(Clr.yellow)
-                        .frame(height: 44)
-                        .addBorder(Color.black, width: 1.5, cornerRadius: 22)
-                    HStack {
-                        Text("See More")
-                            .foregroundColor(Clr.black2)
-                            .font(Font.fredoka(.bold, size: 16))
-                        Image(systemName: "arrow.right")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height:16)
+                HStack {
+                    Spacer()
+                    Text("OR")
+                        .foregroundColor(Clr.black2)
+                        .font(Font.fredoka(.medium, size: 16))
+                    Spacer()
+                } //: HStack
+                
+                Button {
+                    // Analytics.shared.log(event: .recs_tapped_see_more)
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    withAnimation {
+                        viewRouter.currentPage = .learn
                     }
-                }
-            } //: Button
-            .buttonStyle(NeoPress())
-            .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
-            .offset(x: 5)
-            .disabled(isOnboarding)
+                } label: {
+                    ZStack {
+                        Capsule()
+                            .fill(Clr.yellow)
+                            .frame(height: 44)
+                            .addBorder(Color.black, width: 1.5, cornerRadius: 22)
+                        HStack {
+                            Text("See More")
+                                .foregroundColor(Clr.black2)
+                                .font(Font.fredoka(.bold, size: 16))
+                            Image(systemName: "arrow.right")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height:16)
+                        }
+                    }
+                } //: Button
+                .buttonStyle(NeoPress())
+                .frame(width: UIScreen.screenWidth * 0.875, alignment: .center)
+                .offset(x: 5)
+                .disabled(isOnboarding)
             }
         } //: VStack
         .frame(width: width * 0.9)

@@ -266,7 +266,9 @@ struct PurchaseModal: View {
             } //: VStack
         } //: GeometryReader
         .fullScreenCover(isPresented: $showProfile) {
-            ProfileScene(profileModel: profileModel)
+            ProfileScene(profileModel: profileModel, openPricingPage: {
+                viewRouter.currentPage = .pricing
+            })
                 .environmentObject(userModel)
                 .environmentObject(gardenModel)
                 .environmentObject(viewRouter)

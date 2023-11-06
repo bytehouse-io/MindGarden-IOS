@@ -104,14 +104,18 @@ struct Home: View {
             .sheet(item: $activeSheet) { item in
                 switch item {
                 case .profile:
-                    ProfileScene(profileModel: profileModel)
+                    ProfileScene(profileModel: profileModel, openPricingPage: {
+                        viewRouter.currentPage = .pricing
+                    })
                         .environmentObject(userModel)
                         .environmentObject(gardenModel)
                         .environmentObject(viewRouter)
                 case .plant:
                     Store(isShop: false)
                 case .search:
-                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false), incomingCase: .home)
+                    CategoriesScene(isSearch: searchScreen, showSearch: $showSearch, isBack: .constant(false), incomingCase: .home, openPricingPage: {
+                        viewRouter.currentPage = .pricing
+                    })
                 case .streak:
                     EmptyView()
                 case .mood:

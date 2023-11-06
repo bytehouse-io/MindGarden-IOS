@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 7/25/21.
 //
 
-import Amplitude
+//import Amplitude
 import Combine
 import Firebase
 import FirebaseFirestore
@@ -377,8 +377,8 @@ class UserViewModel: ObservableObject {
             buyBonsai()
         } else {
             DefaultsManager.standard.set(value: false, forKey: .isPro)
-            let identify = AMPIdentify()
-                .set("plan_type", value: NSString(utf8String: "free"))
+//            let identify = AMPIdentify()
+//                .set("plan_type", value: NSString(utf8String: "free"))
 //            Amplitude.instance().identify(identify ?? AMPIdentify())
             if UserDefaults.standard.bool(forKey: "freeTrial") && !UserDefaults.standard.bool(forKey: "freeTrialTo50") {
                 // cancelled free trial

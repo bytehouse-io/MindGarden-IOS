@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 12/6/21.
 //
 
-import Amplitude
+//import Amplitude
 import OneSignal
 //import Paywall
 import SwiftUI
@@ -188,12 +188,12 @@ struct ReviewScene: View {
                                 let data: [String: Any] = [
                                     "name": DefaultsManager.standard.value(forKey: .name).stringValue
                                 ]
-                                 Analytics.shared.logActual(event: .onboarding_completed, with: data) // "Triggered when the user has completed the action at a certain step of the onboarding (click ""next"", enter name, enter information, etc).
+                                 MGAnalytics.shared.logActual(event: .onboarding_completed, with: data) // "Triggered when the user has completed the action at a certain step of the onboarding (click ""next"", enter name, enter information, etc).
                                 withAnimation {
                                     viewRouter.progressValue = 1
                                     if onReviewCompletion != nil {
                                         onReviewCompletion?()
-                                         Analytics.shared.log(event: .app_entered) // Triggers when the user passes the paywall. Must be sent only once, when user has passed the paywall.
+                                         MGAnalytics.shared.log(event: .app_entered) // Triggers when the user passes the paywall. Must be sent only once, when user has passed the paywall.
                                     } else {
                                         // goto home screen now
                                         viewRouter.currentPage = .meditate

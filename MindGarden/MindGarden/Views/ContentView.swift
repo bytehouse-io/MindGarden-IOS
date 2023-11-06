@@ -147,14 +147,17 @@ struct ContentView: View {
                                         DiscoverScene(selectedTab: .learn)
                                             .environmentObject(bonusModel)
                                             .environmentObject(userModel)
+                                            .environmentObject(viewRouter)
                                     case .journey:
                                         DiscoverScene(selectedTab: .journey)
                                             .environmentObject(bonusModel)
                                             .environmentObject(userModel)
+                                            .environmentObject(viewRouter)
                                     case .quickStart:
                                         DiscoverScene(selectedTab: .quickStart)
                                             .environmentObject(bonusModel)
                                             .environmentObject(userModel)
+                                            .environmentObject(viewRouter)
                                     case .categories(let incomingCase):
                                         CategoriesScene(showSearch: .constant(false), isBack: .constant(false), incomingCase: incomingCase)
                                             .frame(height: geometry.size.height + 10)

@@ -4,7 +4,7 @@
 //
 //  Created by Dante Kim on 3/31/22.
 //
-import Amplitude
+//import Amplitude
 import Firebase
 import Foundation
 import Storyly

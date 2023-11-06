@@ -5,7 +5,7 @@
 //  Created by Vishal Davara on 29/06/22.
 //
 
-import Amplitude
+//import Amplitude
 import SwiftUI
 
 struct PromptsView: View {
@@ -14,6 +14,7 @@ struct PromptsView: View {
     @State var selectedTab: PromptsTabType = .gratitude
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewRouter: ViewRouter
+    var openPricingPage: (() -> ())?
 
     var body: some View {
         ZStack {
@@ -35,8 +36,9 @@ struct PromptsView: View {
                         .frame(width: UIScreen.screenWidth / 3, height: 30)
                     Spacer()
                     CloseButton {}.opacity(0)
-                }.padding(.horizontal, 32)
-                    .padding(.bottom)
+                }
+                .padding(.horizontal, 32)
+                .padding(.bottom)
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -69,10 +71,12 @@ struct PromptsView: View {
                             .frame(height: 32)
                             .buttonStyle(NeumorphicPress())
                         }
-                    }.frame(height: 45)
+                    }
+                    .frame(height: 45)
                 }
                 .frame(height: 45)
                 .padding(.leading, 32)
+                
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: -20) {
                         ForEach(selectedPrompts, id: \.self) { prompt in
@@ -80,7 +84,10 @@ struct PromptsView: View {
                                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
                                 if !UserDefaults.standard.bool(forKey: "isPro") && selectedTab == .bigPicture {
                                     fromPage = "journal"
-                                    viewRouter.currentPage = .pricing
+                                    presentationMode.wrappedValue.dismiss()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                                        openPricingPage?()
+                                    })
                                 } else {
                                     #if !targetEnvironment(simulator)
 //                                        Amplitude.instance().logEvent("prompt_selected", withEventProperties: ["prompts": prompt.title])
@@ -119,8 +126,9 @@ struct PromptsView: View {
                                                     .multilineTextAlignment(.leading)
                                                     .lineLimit(3)
                                                     .frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
-                                            }.frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
-                                                .offset(x: -5)
+                                            }
+                                            .frame(width: UIScreen.screenWidth * (K.isSmall() ? 0.6 : 0.55), alignment: .leading)
+                                            .offset(x: -5)
                                         }
                                         .frame(width: UIScreen.screenWidth * 0.85, height: UIScreen.screenHeight * 0.115, alignment: .center)
                                         .cornerRadius(16)
@@ -138,9 +146,11 @@ struct PromptsView: View {
                             }
                             .padding(5)
                         }
-                    }.padding(.horizontal, 48)
+                    }
+                    .padding(.horizontal, 48)
                 }
-            }.frame(width: UIScreen.screenWidth)
+            }
+            .frame(width: UIScreen.screenWidth)
         }
         .ignoresSafeArea()
         .onAppear {

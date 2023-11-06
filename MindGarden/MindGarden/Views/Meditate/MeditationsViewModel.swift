@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 7/15/21.
 //
 
-import Amplitude
+//import Amplitude
 import AVKit
 import Combine
 import Firebase
@@ -225,29 +225,30 @@ class MeditationViewModel: ObservableObject {
                     med.id == 27 || med.id == 54 || med.id == 39
                 }
             }
-            let randomInt = Int.random(in: 0 ..< filtedMeds.count)
+            let randomInt = Int.getRandom(in: 0 ..< filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         case "Get more focused":
             var focusedMeds = filtedMeds.filter { med in
                 med.category == .focus
             }
             if focusedMeds.isEmpty { focusedMeds = filtedMeds }
-            let randomInt = Int.random(in: 0 ..< focusedMeds.count)
+            let randomInt = Int.getRandom(in: 0 ..< focusedMeds.count)
+     
             featuredMeditation = focusedMeds[randomInt]
         case "Managing Stress & Anxiety":
             filtedMeds = filtedMeds.filter { med in
                 med.category == .anxiety || med.category == .sadness
             }
-            let randomInt = Int.random(in: 0 ..< filtedMeds.count)
+            let randomInt = Int.getRandom(in: 0 ..< filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         case "Just trying it out":
             filtedMeds = filtedMeds.filter { med in
                 med.category == .beginners || med.category == .growth
             }
-            let randomInt = Int.random(in: 0 ..< filtedMeds.count)
+            let randomInt = Int.getRandom(in: 0 ..< filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         default:
-            let randomInt = Int.random(in: 0 ..< filtedMeds.count)
+            let randomInt = Int.getRandom(in: 0 ..< filtedMeds.count)
             featuredMeditation = filtedMeds[randomInt]
         }
         saveFeaturedMeditation()
@@ -287,10 +288,11 @@ class MeditationViewModel: ObservableObject {
             }
         }
 
-        let randomInt = Int.random(in: 0 ..< filteredMeds.count)
-        var randomInt2 = Int.random(in: 0 ..< filteredMeds.count)
+
+        let randomInt = Int.getRandom(in: 0 ..< filteredMeds.count)
+        var randomInt2 = Int.getRandom(in: 0 ..< filteredMeds.count)
         while randomInt2 == randomInt {
-            randomInt2 = Int.random(in: 0 ..< filteredMeds.count)
+            randomInt2 = Int.getRandom(in: 0 ..< filteredMeds.count)
         }
         recommendedMeds = [filteredMeds[randomInt], filteredMeds[randomInt2]]
     }

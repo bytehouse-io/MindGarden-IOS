@@ -5,11 +5,12 @@
 //  Created by Dante Kim on 5/25/21.
 //
 
-import Amplitude
+//import Amplitude
 //import AppsFlyerLib
 import AVFoundation
 import Firebase
 import FirebaseDynamicLinks
+import FirebaseAnalytics
 import GoogleSignIn
 import MWMPublishingSDK
 import NukeRemoteImageLoader
@@ -53,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FirebaseOptions.defaultOptions()?.deepLinkURLScheme = "mindgarden.page.link"
         FirebaseApp.configure()
+        
+        MWM.addPayloadInjector(self)
 
         let installationId = MWM.installationId()
         Crashlytics.crashlytics().setUserID(installationId)
@@ -63,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        AppsFlyerLib.shared().delegate = self
 //        AppsFlyerLib.shared().isDebug = true
 
-        Amplitude.instance().trackingSessionEvents = true
+//        Amplitude.instance().trackingSessionEvents = true
         // Initialize SDK
         // Set userId
         // Log an event
@@ -75,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         OneSignal.initWithLaunchOptions(launchOptions)
         OneSignal.setAppId("7f964cf0-550e-426f-831e-468b9a02f012")
         
-        Amplitude.instance().initializeApiKey("9faae146487745e64108a3ed733c0d8e") // MWM production api key	
+//        Amplitude.instance().initializeApiKey("9faae146487745e64108a3ed733c0d8e") // MWM production api key
 
 //        Purchases.logLevel = .debug
 //        Purchases.automaticAppleSearchAdsAttributionCollection = true
@@ -365,5 +368,16 @@ class SetRouteViewControlller: UIViewController {
 
         // Notify the hosting controller that it has been added as a child view controller
         hostingController.didMove(toParent: self)
+    }
+}
+
+extension AppDelegate: MWMEventPayloadInjector {
+    func getEventPayloadAdditionalFields() -> [String : NSObject] {
+        var fields: [String: NSObject] = [:]
+        
+        if let firebaseInstallationId = Analytics.appInstanceID() {
+            fields["firebase_app_instance_id"] = NSString(string: firebaseInstallationId)
+        }
+        return fields
     }
 }

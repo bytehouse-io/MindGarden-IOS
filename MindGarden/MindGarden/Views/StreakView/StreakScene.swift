@@ -5,7 +5,7 @@
 //  Created by Vishal Davara on 28/02/22.
 //
 
-import Amplitude
+//import Amplitude
 import Firebase
 import StoreKit
 import SwiftUI
@@ -28,6 +28,8 @@ struct StreakScene: View {
     @State private var showNextSteps = false
 
     @State var replay: Bool = false
+    
+    var openPricingPage: () -> ()
 
     var subTitle: String {
         switch bonusModel.streakNumber {
@@ -62,7 +64,9 @@ struct StreakScene: View {
                     CustomLottieAnimationView(filename: "flame 2", loopMode: .loop, isPlaying: .constant(true))
                         .frame(width: 500, height: 500, alignment: .center)
                         .opacity(timeRemaining <= 0 ? 1 : 0)
-                }.offset(y: 75)
+                }
+                .offset(y: 75)
+                
                 Spacer()
                 Text(title)
                     .streakTitleStyle()
@@ -109,9 +113,10 @@ struct StreakScene: View {
                                     .font(Font.fredoka(.bold, size: 24))
                                     .foregroundColor(.white)
                             ).addBorder(.black, width: 1.5, cornerRadius: 26)
-                    }.buttonStyle(NeumorphicPress())
-                        .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
-                        .padding(.top, 40)
+                    }
+                    .buttonStyle(NeumorphicPress())
+                    .shadow(color: Clr.shadow.opacity(0.3), radius: 5, x: 5, y: 5)
+                    .padding(.top, 40)
                 }
             }
             .offset(y: -145)
@@ -152,13 +157,16 @@ struct StreakScene: View {
     private func dismiss() {
         withAnimation {
             viewRouter.previousPage = .garden
-            viewRouter.currentPage = .pricing
+//            viewRouter.currentPage = .pricing
             let launchNum = DefaultsManager.standard.value(forKey: .dailyLaunchNumber).integerValue
             if launchNum % 3 == 0 && launchNum != 1 {
                 fromPage = "streak"
                 viewRouter.previousPage = .garden
                 if !DefaultsManager.standard.value(forKey: .isPro).boolValue {
-                    viewRouter.currentPage = .pricing
+                    presentationMode.wrappedValue.dismiss()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                        openPricingPage()
+                    })
                 } else {
                     viewRouter.currentPage = .garden
                 }
@@ -180,12 +188,12 @@ struct StreakScene: View {
     }
 }
 
-struct StreakScene_Previews: PreviewProvider {
-    static var previews: some View {
-        StreakScene(showStreak: .constant(true))
-            .environmentObject(BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
-    }
-}
+//struct StreakScene_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StreakScene(showStreak: .constant(true))
+//            .environmentObject(BonusViewModel(userModel: UserViewModel(), gardenModel: GardenViewModel()))
+//    }
+//}
 
 struct ShareView: View {
     @State var img: UIImage?

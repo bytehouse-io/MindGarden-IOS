@@ -34,6 +34,9 @@ struct ProfileScene: View {
     @EnvironmentObject var gardenModel: GardenViewModel
     @EnvironmentObject var viewRouter: ViewRouter
     @ObservedObject var profileModel: ProfileViewModel
+    
+    var openPricingPage: () -> ()
+    
     @State private var selection: TopTabType = .profile
     @State private var showNotification = false
     @State private var showGarden = false
@@ -247,11 +250,11 @@ struct ProfileScene: View {
                                                             MWMManager.shared.restorePurchases { result in
                                                                 if result.isAnyPremiumFeatureUnlocked {
                                                                     DefaultsManager.standard.set(value: true, forKey: .isPro)
-                                                                    Analytics.shared.logActual(event: .is_premium, with: ["is_premium": true])
+                                                                    MGAnalytics.shared.logActual(event: .is_premium, with: ["is_premium": true])
                                                                     restorePurchase = true
                                                                 } else {
                                                                     DefaultsManager.standard.set(value: false, forKey: .isPro)
-                                                                    Analytics.shared.logActual(event: .is_premium, with: ["is_premium": false])
+                                                                    MGAnalytics.shared.logActual(event: .is_premium, with: ["is_premium": false])
                                                                 }
                                                             }
                                                            
@@ -545,7 +548,7 @@ struct ProfileScene: View {
                     mindfulNotifs = false
                 } else if gardenSettings {
                     selection = .settings
-                    showGarden = true
+//                    showGarden = true
                 }
             }
             
@@ -577,7 +580,8 @@ struct ProfileScene: View {
                     // Analytics.shared.log(event: .pricing_from_profile)
                     fromPage = "home"
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
-                        viewRouter.currentPage = .pricing
+                        openPricingPage()
+//                        viewRouter.currentPage = .pricing
                     })
                 }
             }, showNotif: $showNotif, showMindful: $showMindful)
@@ -776,7 +780,7 @@ struct ProfileScene: View {
 
 struct ProfileScene_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileScene(profileModel: ProfileViewModel())
+        ProfileScene(profileModel: ProfileViewModel(), openPricingPage: {})
     }
 }
 

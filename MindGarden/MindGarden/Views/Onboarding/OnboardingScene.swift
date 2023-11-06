@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 6/6/21.
 //
 
-import Amplitude
+//import Amplitude
 import AppTrackingTransparency
 import Lottie
 import OneSignal
@@ -148,8 +148,8 @@ struct OnboardingScene: View {
         .onAppear {
             DefaultsManager.standard.set(value: "onboarding", forKey: .onboarding)
             if let num = UserDefaults.standard.value(forKey: "abTest") as? Int {
-                let identify = AMPIdentify()
-                    .set("abTest1.53", value: NSNumber(value: num))
+//                let identify = AMPIdentify()
+//                    .set("abTest1.53", value: NSNumber(value: num))
 //                Amplitude.instance().identify(identify ?? AMPIdentify())
             }
             ATTrackingManager.requestTrackingAuthorization { status in

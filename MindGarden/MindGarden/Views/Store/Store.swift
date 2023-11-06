@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 6/14/21.
 //
 
-import Amplitude
+//import Amplitude
 import OneSignal
 import SwiftUI
 

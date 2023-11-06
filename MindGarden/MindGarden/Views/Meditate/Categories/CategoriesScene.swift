@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 7/14/21.
 //
 
-import Amplitude
+//import Amplitude
 import Combine
 import SwiftUI
 
@@ -28,14 +28,16 @@ struct CategoriesScene: View {
 //    let isFromQuickstart: Bool
     let incomingCase: CategoryIncomingCase
     var selectedCategory: QuickStartType
+    var openPricingPage: (() -> ())?
 
-    init(isSearch: Bool = false, showSearch: Binding<Bool>, isBack: Binding<Bool>, /* isFromQuickstart: Bool = false,*/ incomingCase: CategoryIncomingCase, selectedCategory: QuickStartType = .minutes3) {
+    init(isSearch: Bool = false, showSearch: Binding<Bool>, isBack: Binding<Bool>, /* isFromQuickstart: Bool = false,*/ incomingCase: CategoryIncomingCase, selectedCategory: QuickStartType = .minutes3, openPricingPage: (() -> ())? = nil) {
         self.isSearch = isSearch
         _showSearch = showSearch
         _isBack = isBack
 //        self.isFromQuickstart = isFromQuickstart
         self.incomingCase = incomingCase
         self.selectedCategory = selectedCategory
+        self.openPricingPage = openPricingPage
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
     }
@@ -125,7 +127,14 @@ struct CategoriesScene: View {
                                             if !DefaultsManager.standard.value(forKey: .isPro).boolValue
 //                                                , Breathwork.lockedBreaths.contains(item.id)
                                             {
-                                                viewRouter.currentPage = .pricing
+                                                presentationMode.wrappedValue.dismiss()
+                                                if let openPricingPage = openPricingPage {
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                                                        openPricingPage()
+                                                    })
+                                                } else {
+                                                    viewRouter.currentPage = .pricing
+                                                }
                                             } else {
                                                 model.selectedBreath = item
                                                 viewRouter.currentPage = .breathMiddle
@@ -352,7 +361,13 @@ struct CategoriesScene: View {
                 // Analytics.shared.log(event: .pricing_from_locked)
                 // Analytics.shared.log(event: .categories_tapped_locked_meditation)
                 presentationMode.wrappedValue.dismiss()
-                viewRouter.currentPage = .pricing
+                if let openPricingPage = openPricingPage {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+                        openPricingPage()
+                    })
+                } else {
+                    viewRouter.currentPage = .pricing
+                }
             } else {
                 // Analytics.shared.log(event: .categories_tapped_meditation)
                 model.selectedMeditation = item

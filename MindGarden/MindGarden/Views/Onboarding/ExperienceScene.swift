@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 9/5/21.
 //
 
-import Amplitude
+//import Amplitude
 import OneSignal
 import SwiftUI
 
@@ -70,8 +70,8 @@ struct ExperienceScene: View {
                                     break
                                 }
 
-                                let identify = AMPIdentify()
-                                    .set("experience", value: NSString(utf8String: selected))
+//                                let identify = AMPIdentify()
+//                                    .set("experience", value: NSString(utf8String: selected))
 //                                Amplitude.instance().identify(identify ?? AMPIdentify())
 
                                 withAnimation(.easeOut(duration: 0.3)) {

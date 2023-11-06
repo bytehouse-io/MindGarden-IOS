@@ -7,12 +7,12 @@ target 'MindGarden' do
 
   # Pods for MindGarden
 #   pod 'FirebaseFirestore'
-   pod 'Amplitude-iOS', '~> 4.9.3'
+#   pod 'Amplitude-iOS', '~> 4.9.3'
    pod 'lottie-ios', '~> 3.5.0'
    pod 'AppsFlyerFramework'
    pod 'Purchases'
 #   pod 'Firebase/DynamicLinks'
-   pod 'Amplitude', '~> 8.5.0'
+#   pod 'Amplitude', '~> 8.5.0'
 #   pod 'Firebase/Crashlytics'
    # pod 'EnvoySDK'
    

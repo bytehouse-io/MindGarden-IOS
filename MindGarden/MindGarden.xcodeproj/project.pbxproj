@@ -26,6 +26,8 @@
 		184899FB29F3C81D0095B61E /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FA29F3C81C0095B61E /* HelperFunctions.swift */; };
 		184899FD29F44BD30095B61E /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
 		184899FF29F826D00095B61E /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FE29F826D00095B61E /* UIApplication+Extension.swift */; };
+		185B8B7A2AE6CF6F008B4496 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185B8B792AE6CF6F008B4496 /* Int+Extension.swift */; };
+		185B8B7B2AEA72F1008B4496 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185B8B792AE6CF6F008B4496 /* Int+Extension.swift */; };
 		18633ECC2A015AA7009B7730 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184899FC29F44BD20095B61E /* DefaultsManager.swift */; };
 		187658352A1FB81A00B66BB3 /* PricingMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187658342A1FB81A00B66BB3 /* PricingMainView.swift */; };
 		187658382A1FD62200B66BB3 /* MWMPublishingData.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */; };
@@ -354,6 +356,7 @@
 		184899FA29F3C81C0095B61E /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		184899FC29F44BD20095B61E /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		184899FE29F826D00095B61E /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
+		185B8B792AE6CF6F008B4496 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		187658342A1FB81A00B66BB3 /* PricingMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingMainView.swift; sourceTree = "<group>"; };
 		187658362A1FD62000B66BB3 /* MWMPublishingData.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWMPublishingData.bundle; sourceTree = "<group>"; };
 		187658372A1FD62100B66BB3 /* Mindgarden.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Mindgarden.storekit; sourceTree = "<group>"; };
@@ -1134,6 +1137,7 @@
 				FE9BE35627434023004FEBF0 /* String+Extensions.swift */,
 				FE1CA3D427B4556C0074C497 /* Array+Extensions.swift */,
 				184899FE29F826D00095B61E /* UIApplication+Extension.swift */,
+				185B8B792AE6CF6F008B4496 /* Int+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1845,6 +1849,7 @@
 				FE48B43F27791B5500CA7B63 /* MindGardenWidget.swift in Sources */,
 				58DB9A77289D7BB900F930DE /* GardenViewModel.swift in Sources */,
 				58D914362930D18000388230 /* MeditationsViewModel.swift in Sources */,
+				185B8B7B2AEA72F1008B4496 /* Int+Extension.swift in Sources */,
 				58B5AA9B28A79F8200BDC379 /* ImageLoader.swift in Sources */,
 				5820EEA428B8E1B1002DC784 /* String+Extensions.swift in Sources */,
 				58E419AB2898E75E0042F492 /* Meditation.swift in Sources */,
@@ -1887,6 +1892,7 @@
 				FEEC651826781FC800ECD32D /* PurchaseModal.swift in Sources */,
 				58DEE5AC2867390400A04CA2 /* BreathworkPlay.swift in Sources */,
 				FE9815FE26E54DC200A4992D /* ExperienceScene.swift in Sources */,
+				185B8B7A2AE6CF6F008B4496 /* Int+Extension.swift in Sources */,
 				FE349D74275ACB2F006B4378 /* ReasonScene.swift in Sources */,
 				589DCB0628732975005A8D7E /* StartDayView.swift in Sources */,
 				1882E71129DBE023005D6DF2 /* PricingBoxView.swift in Sources */,

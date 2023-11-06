@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 7/2/21.
 //
 
-import Amplitude
+//import Amplitude
 import Combine
 import Foundation
 import SwiftUI

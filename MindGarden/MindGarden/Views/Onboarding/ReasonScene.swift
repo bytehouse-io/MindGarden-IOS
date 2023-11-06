@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 9/5/21.
 //
 
-import Amplitude
+//import Amplitude
 import OneSignal
 import SwiftUI
 
@@ -64,8 +64,8 @@ struct ReasonScene: View {
                                 // Analytics.shared.log(event: item.event)
                             }
                             let stringRepresentation = arr.joined(separator: " | ")
-                            let identify = AMPIdentify()
-                                .set("reasons", value: NSString(utf8String: stringRepresentation))
+//                            let identify = AMPIdentify()
+//                                .set("reasons", value: NSString(utf8String: stringRepresentation))
 //                            Amplitude.instance().identify(identify ?? AMPIdentify())
 
                             if selected.count > 0 {

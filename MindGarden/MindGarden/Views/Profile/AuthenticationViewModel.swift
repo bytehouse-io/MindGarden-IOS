@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 7/4/21.
 //
 
-import Amplitude
+//import Amplitude
 import AuthenticationServices
 import Combine
 import CryptoKit
@@ -266,8 +266,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         }
 
         if isSignUp {
-            let identify = AMPIdentify()
-                .set("sign_up_date", value: NSString(utf8String: dateFormatter.string(from: Date())))
+//            let identify = AMPIdentify()
+//                .set("sign_up_date", value: NSString(utf8String: dateFormatter.string(from: Date())))
 //            Amplitude.instance().identify(identify ?? AMPIdentify())
             OneSignal.sendTag("signedUp", value: "true")
             // Analytics.shared.log(event: .authentication_signup_successful)
@@ -279,16 +279,27 @@ class AuthenticationViewModel: NSObject, ObservableObject {
 
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         withAnimation {
-            if fromPage == "journal" {
-                viewRouter.currentPage = .journal
-            } else {
-                if fromOnboarding {
-                    viewRouter.currentPage = .garden
-                    fromOnboarding = false
-                } else {
-                    viewRouter.currentPage = .meditate
-                }
-            }
+            let router = ViewRouter()
+            let authModel = AuthenticationViewModel(userModel: SceneDelegate.userModel, viewRouter: router)
+            let contentView = ContentView(bonusModel: SceneDelegate.bonusModel, profileModel: SceneDelegate.profileModel, authModel: authModel)
+
+            // Use a UIHostingController as window root view controller.
+            let rootHost = UIHostingController(rootView: contentView
+                .environmentObject(router)
+                .environmentObject(SceneDelegate.medModel)
+                .environmentObject(SceneDelegate.userModel)
+                .environmentObject(SceneDelegate.gardenModel))
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController = rootHost
+//            if fromPage == "journal" {
+//                viewRouter.currentPage = .journal
+//            } else {
+//                if fromOnboarding {
+//                    viewRouter.currentPage = .garden
+//                    fromOnboarding = false
+//                } else {
+//                    viewRouter.currentPage = .meditate
+//                }
+//            }
         }
     }
 
@@ -645,11 +656,11 @@ extension AuthenticationViewModel {
 //                                UserDefaults(suiteName: K.widgetDefault)?.setValue(true, forKey: "isPro")
 //                                WidgetCenter.shared.reloadAllTimelines()
 //                            }
-//                            self.userModel.updateSelf()
-//                            SceneDelegate.gardenModel.updateSelf()
-//                            SceneDelegate.bonusModel.updateBonus()
-//                            SceneDelegate.medModel.updateSelf()
-//                            self.goToHome()
+                            self.userModel.updateSelf()
+                            SceneDelegate.gardenModel.updateSelf()
+                            SceneDelegate.bonusModel.updateBonus()
+                            SceneDelegate.medModel.updateSelf()
+                            self.goToHome()
 //                        }
                     }
                 }

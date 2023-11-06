@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 6/29/21.
 //
 
-import Amplitude
+//import Amplitude
 import SwiftUI
 
 struct MoodCheck: View {

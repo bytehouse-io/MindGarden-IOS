@@ -5,7 +5,7 @@
 //  Created by Vishal Davara on 28/05/22.
 //
 
-import Amplitude
+//import Amplitude
 import SwiftUI
 
 struct QuickStart: View {

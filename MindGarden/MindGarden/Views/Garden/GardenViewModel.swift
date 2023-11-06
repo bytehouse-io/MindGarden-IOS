@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 8/6/21.
 //
 
-import Amplitude
+//import Amplitude
 import Combine
 import Firebase
 import FirebaseFirestore
@@ -149,16 +149,16 @@ class GardenViewModel: ObservableObject {
             // TODO: get old timestamp sorting code from github
 //            DefaultsManager.standard.set(value: ids, forKey: "recent")
             // TODO: instead of timestamp, save entire date.
-            let identify = AMPIdentify()
-                .set("breathwork_sessions", value: NSNumber(value: numBreaths))
-            identify?
-                .set("meditation_sessions", value: NSNumber(value: numMeds))
+//            let identify = AMPIdentify()
+//                .set("breathwork_sessions", value: NSNumber(value: numBreaths))
+//            identify?
+//                .set("meditation_sessions", value: NSNumber(value: numMeds))
             DefaultsManager.standard.set(value: numBreaths + numMeds, forKey: .numSessions)
-            identify?
-                .set("journal_sessions", value: NSNumber(value: numGrads))
+//            identify?
+//                .set("journal_sessions", value: NSNumber(value: numGrads))
             DefaultsManager.standard.set(value: numGrads, forKey: .numGrads)
-            identify?
-                .set("mood_sessions", value: NSNumber(value: numMoods))
+//            identify?
+//                .set("mood_sessions", value: NSNumber(value: numMoods))
 //            Amplitude.instance().identify(identify ?? AMPIdentify())
         }
 

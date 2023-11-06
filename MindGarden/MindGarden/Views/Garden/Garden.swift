@@ -480,7 +480,10 @@ struct Garden: View {
             .sheet(item: $activeSheet) { item in
                 switch item {
                 case .profile:
-                    ProfileScene(profileModel: profileModel)
+                    ProfileScene(profileModel: profileModel, openPricingPage: {
+                        fromPage = "garden"
+                        viewRouter.currentPage = .pricing
+                    })
                         .environmentObject(userModel)
                         .environmentObject(gardenModel)
                         .environmentObject(viewRouter)
@@ -489,7 +492,9 @@ struct Garden: View {
                 case .search:
                     EmptyView()
                 case .streak:
-                    StreakScene(showStreak: $showStreak)
+                    StreakScene(showStreak: $showStreak, openPricingPage: {
+                        viewRouter.currentPage = .pricing
+                    })
                 case .mood:
                     EmptyView()
                 }

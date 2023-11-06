@@ -5,7 +5,7 @@
 //  Created by Vishal Davara on 29/06/22.
 //
 
-import Amplitude
+//import Amplitude
 import Combine
 import Firebase
 import FirebaseStorage
@@ -230,7 +230,9 @@ struct JournalView: View, KeyboardReadable {
             }
             .ignoresSafeArea()
             .sheet(isPresented: $showPrompts) {
-                PromptsView(question: $question)
+                PromptsView(question: $question, openPricingPage: {
+                    viewRouter.currentPage = .pricing
+                })
             }
             .fullScreenCover(isPresented: $showRecs) {
                 RecommendationsView(recs: $recs, coin: $coin)
@@ -368,7 +370,7 @@ struct JournalView: View, KeyboardReadable {
                 }
             }
             
-             Analytics.shared.log(event: .mood_check_journal_entry_entered)
+             MGAnalytics.shared.log(event: .mood_check_journal_entry_entered)
         } label: {
             HStack {
                 Text("Done")
@@ -434,8 +436,8 @@ struct JournalView: View, KeyboardReadable {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
         var num = UserDefaults.standard.integer(forKey: "numGrads")
         num += 1
-        let identify = AMPIdentify()
-            .set("num_gratitudes", value: NSNumber(value: num))
+//        let identify = AMPIdentify()
+//            .set("num_gratitudes", value: NSNumber(value: num))
 //        Amplitude.instance().identify(identify ?? AMPIdentify())
         if num == 30 {
             userModel.willBuyPlant = Plant.badgePlants.first(where: { $0.title == "Camellia" })

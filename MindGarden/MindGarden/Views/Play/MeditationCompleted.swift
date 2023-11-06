@@ -388,7 +388,9 @@ struct ShareAndContinueFooter: View {
 
         }
         .fullScreenCover(isPresented: $showStreak, content: {
-            StreakScene(showStreak: $showStreak)
+            StreakScene(showStreak: $showStreak, openPricingPage: {
+                viewRouter.currentPage = .pricing
+            })
                 .environmentObject(bonusModel)
                 .environmentObject(viewRouter)
                 .background(Clr.darkWhite)

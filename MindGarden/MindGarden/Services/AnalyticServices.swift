@@ -5,18 +5,18 @@
 //  Created by Dante Kim on 10/3/21.
 //
 
-import Amplitude
+//import Amplitude
 //import AppsFlyerLib
 import Combine
-import Firebase
+import FirebaseAnalytics
 import MWMPublishingSDK
 import OneSignal
 import OSLog
 //import Paywall
 import SwiftUI
 
-final class Analytics: ObservableObject {
-    static let shared = Analytics()
+final class MGAnalytics: ObservableObject {
+    static let shared = MGAnalytics()
     var logSubject = PassthroughSubject<AnalyticEvent, Never>()
     private var cancellables = Set<AnyCancellable>()
 
@@ -55,8 +55,8 @@ final class Analytics: ObservableObject {
     
     func logActual(event: AnalyticEvent, with data: [String: Any]) {
         #if !targetEnvironment(simulator)
-//        Firebase.Analytics.logEvent(event.eventName, parameters: data)
-        Amplitude.instance().logEvent(event.eventName, withEventProperties: data)
+        Analytics.logEvent(event.eventName, parameters: data)
+//        Amplitude.instance().logEvent(event.eventName, withEventProperties: data)
         // prepare activity report content.
         var eventInfo: [String: Any] = ["eventName": event.eventName, "otherKey": 2]
         if !data.isEmpty {
@@ -66,7 +66,7 @@ final class Analytics: ObservableObject {
         guard let eventInfoString = String(data: eventInfoStringData, encoding: .utf8) else { return }
 
         // send the activity report
-//        MWM.sendActivityReport(withKind: event.eventName, withContent: eventInfoString)
+        MWM.sendActivityReport(withKind: event.eventName, withContent: eventInfoString)
 
         #endif
         print("logging, \(event.eventName)")

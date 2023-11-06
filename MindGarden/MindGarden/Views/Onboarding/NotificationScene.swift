@@ -5,7 +5,7 @@
 //  Created by Dante Kim on 9/5/21.
 //
 
-import Amplitude
+//import Amplitude
 import Lottie
 import OneSignal
 import SwiftUI
@@ -188,8 +188,8 @@ struct NotificationScene: View {
                                     .foregroundColor(.gray)
                                     .padding()
                                     .onTapGesture {
-                                        let identify = AMPIdentify()
-                                            .set("reminder_set", value: NSNumber(0))
+//                                        let identify = AMPIdentify()
+//                                            .set("reminder_set", value: NSNumber(0))
 //                                        Amplitude.instance().identify(identify ?? AMPIdentify())
                                         DefaultsManager.standard.set(value: false, forKey: .isNotifOn)
                                         // Analytics.shared.log(event: .notification_tapped_skip)
@@ -277,8 +277,8 @@ struct NotificationScene: View {
         current.getNotificationSettings(completionHandler: { permission in
             switch permission.authorizationStatus {
             case .authorized:
-                let identify = AMPIdentify()
-                    .set("reminder_set", value: NSNumber(1))
+//                let identify = AMPIdentify()
+//                    .set("reminder_set", value: NSNumber(1))
 //                Amplitude.instance().identify(identify ?? AMPIdentify())
 
                 DefaultsManager.standard.set(value: true, forKey: .isNotifOn)

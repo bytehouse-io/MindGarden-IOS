@@ -12,6 +12,8 @@ var learnNotif = false
 struct DiscoverScene: View {
     @EnvironmentObject var userModel: UserViewModel
     @EnvironmentObject var bonusModel: BonusViewModel
+    @EnvironmentObject var viewRouter: ViewRouter
+
     @State var selectedTab: TopTabType /* = .quickStart */
     @State private var tappedSearch = false
     var body: some View {
@@ -60,7 +62,9 @@ struct DiscoverScene: View {
             }
         }
         .sheet(isPresented: $tappedSearch) {
-            CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false), incomingCase: .discover)
+            CategoriesScene(isSearch: true, showSearch: $tappedSearch, isBack: .constant(false), incomingCase: .discover, openPricingPage: {
+                viewRouter.currentPage = .pricing
+            })
                 .frame(height: UIScreen.screenHeight - 90)
         }
         .edgesIgnoringSafeArea(.all)
